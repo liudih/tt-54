@@ -1,0 +1,28 @@
+@(product: valueobjects.product.ProductBadge)
+@import services.base._
+@import services.base.utils._
+
+@if(null!=product){
+	<div class="discount_icon">
+	@product.getPrice().getDiscountOption().asScala.map{ d =>
+		@if(product.getPrice().isDiscounted()){
+			@Utils.percent(d)
+		}
+	}</div>
+	<a class="product_img" href="@controllers.product.routes.Product.view(product.getUrl)">
+	@img(product.getImageUrl,product.getTitle,560,560,null)	
+	</a>
+	<a class="product_title" href="@controllers.product.routes.Product.view(product.getUrl)">
+	@if(product.getTitle()!=null && product.getTitle().length>95){
+	    	@product.getTitle.substring(0,95)...
+	    }else{
+	    	@product.getTitle
+	    }</a>
+	@if(product.getPrice!=null){
+	<!-- real-time price -->
+	<div class="product_price lineBlock">@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitPrice)</div>
+	<!-- past price -->
+	<div class="product_priceGR lineBlock">@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitBasePrice)</div>
+	}
+
+}

@@ -1,0 +1,25 @@
+form input.error {padding-left:20px;
+    border:1px solid red;
+    background-color:#fdecec;
+    font-color:red;
+}
+
+.onCorrect
+{
+    background:#E9FFEB url() no-repeat;
+    padding-left:25px;
+   font-size: 15px;
+  line-height:22px; 
+   vertical-align:middle;
+}
+
+label.error{
+  background-image:url('del.gif');
+  background-repeat:no-repeat;
+  padding-left:18px;
+  color: red;
+}
+
+label.checked {
+    background:url("") no-repeat 0px 0px;
+}

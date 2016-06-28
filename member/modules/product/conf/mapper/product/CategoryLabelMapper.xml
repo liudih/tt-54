@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.CategoryLabelMapper" >
+  <resultMap id="BaseResultMap" type="dto.product.CategoryLabel" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+    <result column="ctype" property="ctype" jdbcType="VARCHAR" />
+    <result column="icategoryid" property="icategoryid" jdbcType="INTEGER" />
+    <result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, iwebsiteid, ctype, icategoryid, ccreateuser
+  </sql>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_category_label
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="dto.product.CategoryLabel" >
+    insert into t_category_label (iwebsiteid, ctype, 
+      icategoryid, ccreateuser)
+    values (#{iwebsiteid,jdbcType=INTEGER}, #{ctype,jdbcType=VARCHAR}, 
+      #{icategoryid,jdbcType=INTEGER}, #{ccreateuser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="batchInsert" parameterType="List">
+	  insert into t_category_label (iwebsiteid, ctype, 
+      icategoryid, ccreateuser) values 
+	  <foreach collection ="list" item ="item" index ="index" separator =",">
+		  (#{item.iwebsiteid}, #{item.ctype}, #{item.icategoryid}, #{item.ccreateuser})
+	  </foreach>
+	</insert>
+</mapper>

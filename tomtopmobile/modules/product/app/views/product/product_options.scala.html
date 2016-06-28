@@ -1,0 +1,15 @@
+@(product: valueobjects.product.ProductBadge)
+@import services.base._
+@import services.base.utils._
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+ 	  	@controllers.base.routes.Assets.at("css/css/ProductOptions.css")
+  }
+@if(product!=null){
+<div class="buyPopBox popBoxNone">
+	<div class="buyPopCon">
+		@product_pop_common(product)
+		<a class="buyContinue iconClose" href="javascript:;" onclick="addCart(this)" >Continue</a>
+	</div>
+	<div class="blackPop"> </div>
+</div>
+}

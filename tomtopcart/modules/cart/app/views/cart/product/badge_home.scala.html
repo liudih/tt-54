@@ -1,0 +1,59 @@
+@(product: valueobjects.product.ProductBadge,
+	startLabel: Html,
+	endLabel: Html,
+	isTime: Boolean = false,
+	isReview: Boolean = true
+	)
+@baseUrl = @{play.Play.application().configuration().getString("main_website")}
+@import services.base._
+@import services.base.utils._
+@if(product != null && product.getPrice()!=null){
+	@startLabel
+		@product.getPrice().getDiscountOption().asScala.map{ d =>
+			@if(product.getPrice().isDiscounted()){
+				<span class="discount">
+					@Utils.percent(d)
+				</span>
+			}
+		}
+	   	<a class="publiceImg" href="@if(product.getUrl()!=null){@baseUrl/@product.getUrl()@Html(".html")}">
+			@img(product.getImageUrl(),product.getTitle(),190,190,null)				   
+	    </a>
+	    <p class="publicTitle b2" >
+	    <a title="@product.getTitle" href="@if(product.getUrl()!=null){@baseUrl/@product.getUrl()@Html(".html")}">
+	    	@if(product.getTitle()!=null && product.getTitle().length>40){
+		    	@product.getTitle.substring(0,40)...
+		    }else{
+		    	@product.getTitle
+		    }
+	    </a></p>
+	    <p class="ns_zhe">
+	    @if(product.getPrice().isDiscounted()){
+	    	<span class="originalPrice"><span class="currency">@product.getPrice.getSymbol()</span> @Utils.money(product.getPrice.getUnitBasePrice, product.getPrice.getCurrency())</span>
+		}else{
+			<span class="originalPrice"></span>
+		}
+        </p>
+	    <p class="publicPrice">
+			<span class="presentPrice">@product.getPrice.getSymbol()@Utils.money(product.getPrice.getUnitPrice, product.getPrice.getCurrency())</span>
+	    </p>
+	    @if(isReview){
+	    	@if(null !=product.getExtended()){
+	    		 @product.getExtended().map{ i=>
+					@i
+			 	 }
+	    	}
+	    	
+	    }
+		@if(isTime){
+	         	@product.getPrice().getValidToOption().asScala.map { validTo =>
+				 <div class="retroclockbox_xs" style="margin:5px 2px;" id="retroclockbox_xs_@product.getListingId" data="@DateFormatUtils.untilNowInMilliseconds(validTo)"></div>
+		    }
+		 }
+	<div class="might_like_btn">
+	@*<input type="submit" value="@Messages("add_to_cart")" onclick="additem('@product.getListingId()');" />*@
+	</div>
+	@endLabel
+	
+	
+}

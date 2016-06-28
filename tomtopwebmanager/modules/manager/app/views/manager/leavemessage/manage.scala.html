@@ -1,0 +1,346 @@
+@(vo:valueobjects.base.Page[dto.LeaveMsgInfo], 
+topicList:List[entity.manager.ProfessionSkillTopic],
+ilanguageid:Integer, itopicid:Integer, bishandle:Boolean,
+users:List[dto.AdminUser],pretreatmentuserid:Integer,handleuserid:Integer
+) 
+
+@import views.html.helper._
+@import services.base._ 
+@import services.base.utils._
+@languagelist =@{services.base.lang.LanguageService.getInstance().getAllSimpleLanguages()}
+
+@views.html.manager.main {
+
+	@helper.javascriptRouter("js_LeaveMessageRoutes")(
+		controllers.manager.routes.javascript.LeaveMessage.handle,
+		controllers.manager.routes.javascript.LeaveMessage.searchLeaveMessagePage
+	)
+	@services.base.HtmlUtils.misc().addTailOnce{
+		 <script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/bootstrap-paginator.js")'></script>
+	}
+
+<div class="container-fluid">
+	<!-- BEGIN PAGE HEADER-->
+	<div class="row-fluid">
+		<div class="span12">
+			<!-- BEGIN STYLE CUSTOMIZER -->
+			<div class="color-panel hidden-phone">
+				<div class="color-mode-icons icon-color"></div>
+				<div class="color-mode-icons icon-color-close"></div>
+				<div class="color-mode">
+					<p>THEME COLOR</p>
+					<ul class="inline">
+						<li class="color-black current color-default" data-style="default"></li>
+						<li class="color-blue" data-style="blue"></li>
+						<li class="color-brown" data-style="brown"></li>
+						<li class="color-purple" data-style="purple"></li>
+						<li class="color-grey" data-style="grey"></li>
+						<li class="color-white color-light" data-style="light"></li>
+					</ul>
+					<label> <span>Layout</span> <select
+						class="layout-option m-wrap small">
+							<option value="fluid" selected="">Fluid</option>
+							<option value="boxed">Boxed</option>
+					</select>
+					</label> <label> <span>Header</span> <select
+						class="header-option m-wrap small">
+							<option value="fixed" selected="">Fixed</option>
+							<option value="default">Default</option>
+					</select>
+					</label> <label> <span>Sidebar</span> <select
+						class="sidebar-option m-wrap small">
+							<option value="fixed">Fixed</option>
+							<option value="default" selected="">Default</option>
+					</select>
+					</label> <label> <span>Footer</span> <select
+						class="footer-option m-wrap small">
+							<option value="fixed">Fixed</option>
+							<option value="default" selected="">Default</option>
+					</select>
+					</label>
+				</div>
+			</div>
+			<!-- END BEGIN STYLE CUSTOMIZER -->
+			<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+
+			<h3 class="page-title">
+				客户留言管理 <small>客户留言列表</small>
+			</h3>
+			<ul class="breadcrumb">
+				<li><i class="icon-home"></i> <a href="/sysadmin">Home</a> <i
+					class="icon-angle-right"></i></li>
+				<li><a href="#">客户留言管理 </a> <i class="icon-angle-right"></i></li>
+				<li><a href="#">客户留言列表</a></li>
+			</ul>
+			<!-- END PAGE TITLE & BREADCRUMB-->
+
+		</div>
+	</div>
+	<!-- END PAGE HEADER-->
+	<div class="row-fluid">
+		<div class="span12">
+			<!-- BEGIN EXAMPLE TABLE PORTLET-->
+			<div class="portlet box light-grey">
+				<div class="portlet-title">
+					<div class="caption">
+						<i class="icon-edit"></i>客户留言列表
+					</div>
+				</div>
+				<div class="portlet-body">
+					<div id="sample_editable_1_wrapper"
+						class="dataTables_wrapper form-inline" role="grid">
+							<div class="row-fluid">
+								@form(controllers.manager.routes.LeaveMessage.search(), 'id->"search_leave_message_form"){ 
+									<div class="span2">
+										<label class="control-label">主题</label>
+										<div>
+											<select id="leave_message_topic" name="leave_message_topic">
+												<option value="-1"></option> 
+												@for( i<- topicList){
+												
+													@if(i.getIid() == itopicid){
+														<option value="@i.getIid()" selected="selected">@i.getCtitle()</option>
+													}else{
+														<option value="@i.getIid()">@i.getCtitle()</option>
+													}
+												}
+											</select>
+										</div>
+									</div>
+									<div class="span2">
+										<label class="control-label">语言</label>
+										@views.html.manager.category.languageChoose("ilanguageid_search",languagelist, ilanguageid)
+									</div>
+									<div class="span2">
+										<label class="control-label">处理情况</label>
+										<div>
+											<select id="leave_message_bishandle" name="leave_message_bishandle">
+												@if(bishandle == null){
+													<option value="-1" selected="selected"></option>
+													<option value="true">已处理</option>
+													<option value="false">未处理</option>
+												}else {
+													@if(bishandle){
+														<option value="-1"></option> 
+														<option value="true" selected="selected">已处理</option>
+														<option value="false">未处理</option>
+													}else{
+														<option value="-1"></option> 
+														<option value="true">已处理</option>
+														<option value="false" selected="selected">未处理</option>
+													}
+												}
+												
+											</select>
+										</div>
+									</div>
+									<div class="span2">
+										<label class="control-label">预处理人</label>
+										<div>
+											<select id="leave_message_p_user" name="leave_message_p_user">
+												<option value="-1"></option> 
+												@for( i<- users){
+													@if(pretreatmentuserid==i.getIid()){
+														<option value="@i.getIid()" selected="selected">@i.getCusername()</option>
+													}else{
+														<option value="@i.getIid()">@i.getCusername()</option>
+													}
+												}
+											</select>
+										</div>
+									</div>
+									<div class="span2">
+										<label class="control-label">处理人</label>
+										<div>
+											<select id="leave_message_handle" name="leave_message_handle">
+												<option value="-1"></option> 
+												@for( i<- users){
+													@if(handleuserid==i.getIid()){
+														<option value="@i.getIid()" selected="selected">@i.getCusername()</option>
+													}else{
+														<option value="@i.getIid()">@i.getCusername()</option>
+													}
+												}
+											</select>
+										</div>
+									</div>
+									<div class="span2">
+										<label class="control-label">&nbsp;</label>
+										<div>
+										<input class="btn green" type="submit" id = "leave_message_search_btn" value="Search">
+										</div>
+									</div>
+								}
+							</div>
+						<br />
+						<table class="table table-striped table-hover table-bordered"
+							id="user_table">
+							<thead>
+								<tr>
+									<th>编号</th>
+									<th>
+									<p class="inlineBlock">邮箱</p>
+									<p class="inlineBlock">用户名</p>
+									<p class="inlineBlock">留言时间</p>
+									<p class="inlineBlock">ip</p>
+									</th>
+									<th>留言主题</th>
+									<th>内容</th>
+									<th>主题类型</th>
+									<th>语言</th>
+									<th>预处理人</th>
+									<th>
+									<p class="inlineBlock">处理人</p>
+									<p class="inlineBlock">处理时间</p>
+									<p class="inlineBlock">处理状态</p>
+									</th>
+									<th>
+									<p class="inlineBlock">回复人</p>
+									<p class="inlineBlock">回复时间</p>
+									</th>
+									<th>回复内容</th>
+									<th>Edit</th>
+									<th>回复</th>
+								</tr>
+							</thead>
+							<tbody>
+								@vo.getList().map{u=>
+								<tr class="" id="@u.getIid()" tag="@u.getCalias()">
+									<td>@u.getIid()</td>
+									 <td>
+							    	<p class="order_ll_marT"><span class="order_ll_999">email:</span><span class="order_ll_red">@u.getCemail()</span></p>
+							    	<p class="order_ll_marT"><span class="order_ll_999">Name:</span>@u.getCalias()</p>
+							   		<p class="order_ll_marT"><span class="order_ll_999">Date:</span>@DateFormatUtils.getStrFromYYYYMMDDHHMMSS(u.getDcreatedate())</p>
+							   		<p class="order_ll_marT"><span class="order_ll_999">ip:</span><span class="order_ll_red">@u.getCip()</span></p>
+							   		</td>
+									<td>@u.getCtopic()</td>
+									<td>@u.getCcontent()</td>
+									<td>@u.getSkillName()</td>
+									<td>@u.getLanguageName()</td>
+									<td>@u.getPretreatmentUserName()</td>
+									<td>
+									<p class="order_ll_marT"><span class="order_ll_999">handler:</span><span class="order_ll_red">@u.getChandler()</span></p>
+									<p class="order_ll_marT"><span class="order_ll_999">handleDate:</span><span class="order_ll_red">@DateFormatUtils.getStrFromYYYYMMDDHHMMSS(u.getDhandledate())</span></p>
+									@if(u.isBishandle()){
+										<p class="order_ll_marT"><span class="order_ll_999">status:</span><span class="order_ll_red"><span class="badge badge-danger">已处理 </span></span></p>
+									}else{
+										<p class="order_ll_marT"><span class="order_ll_999">status:</span><span class="order_ll_red">未处理 </span></p>
+									}
+									
+									</td>
+									<td>
+									<p class="order_ll_marT"><span class="order_ll_999">replyuser:</span><span class="order_ll_red">@u.getReplyUserName()</span></p>
+									<p class="order_ll_marT"><span class="order_ll_999">replyDate:</span><span class="order_ll_red">@DateFormatUtils.getStrFromYYYYMMDDHHMMSS(u.getReplyDate())</span></p>
+									</td>
+									<td>@u.getReplyContent()</td>
+									@if(u.isBishandle()){
+										<td></td>
+									}else{
+										<td><a class="leave_message_operate" id="@u.getIid()" href="javacript:;">处理</a></td>
+									}
+									@if(u.isBishandle()){
+										<td></td>
+									}else{
+									<td>
+									<p class="order_ll_marT"><a data-toggle="modal" href="javacript:;" class="leave_msg_replay_win" data-target="#leave_msg_replay_win" name="leave_msg_replay_win" >email</a></p>
+									<p class="order_ll_marT"></p>
+									<p class="order_ll_marT"><a data-toggle="modal" href="javacript:;" class="leave_msg_replay_win_message" data-target="#leave_msg_replay_win_message" name="leave_msg_replay_win_message" >站内信</a></p>
+									</td>
+									}
+								</tr>
+								}
+							</tbody>
+						</table>
+						
+						<div class="row-fluid">
+							<div class="span6">
+								<div class="dataTables_info">
+									<input type="hidden" name = "pageNo" id = "pageNo" value="@vo.pageNo()"/>
+									<input type="hidden" name = "totalPages" id = "totalPages" value="@vo.totalPages()"/>
+								</div>
+							</div>
+							<div class="span6">
+								<div id="leave-message-paginator"></div>  
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<div id="leave_msg_replay_win" style="width:750px;" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+		    <h3>留言回复</h3>
+	</div>
+	<div class="modal-body">
+		 <div class="control-group" >
+		<label class="control-label">标题</label>
+		<div class="controls">
+			<input id="leave_msg_reply_title"/>
+		</div>
+	</div>
+	 <div class="control-group" >
+		<label class="control-label">内容</label>
+		<div class="controls">
+			<textarea name="ccontent" id ="leave_msg_reply_content" class="m-wrap" style="width: 700px; height: 105px; font-size: 24px !important;"></textarea>
+			<script type="text/javascript"> 
+				CKEDITOR.replace('leave_msg_reply_content', {
+					height : 200,
+					width : 720
+				});
+			</script>
+		</div>
+	</div>
+	</div>
+    <div class="modal-footer" style="margin-bottom: -20px;">
+	     <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
+         <button type="submit" class="btn blue">确定</button>
+   </div>
+</div>
+
+		<div id="leave_msg_replay_win_message" class="modal hide fade" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+			style="width: 940px; margin-left: -471px;">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true"></button>
+				<h3 id="myModalLabel">Send Message</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="control-group">
+							<label class="control-label">User Email</label>
+							<div class="controls">
+								<input type="text" name="cemail" />
+							</div>
+						</div>						
+						<div class="control-group">
+							<label class="control-label">subject</label>
+							<div class="controls">
+								<input type="text" name="subject"/>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">Content</label>
+							<div class="controls">
+								<textarea class="form-control" name='content' style="margin: 0px 0px 10px; width: 880px; height: 132px;" name="content"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>			
+			<div class="modal-footer" style="margin-bottom: -20px;">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">close</button>
+				<button class="btn blue" id="add-user-btn">send</button>
+			</div>
+			</div>
+
+
+	@services.base.HtmlUtils.misc().addTailOnce{
+	<link rel="stylesheet" type="text/css"  href="@controllers.manager.routes.Assets.at("css/manager/ordermanager.css")" />
+	<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/manager/leavemessage/manager.js")'></script>
+	} 
+}

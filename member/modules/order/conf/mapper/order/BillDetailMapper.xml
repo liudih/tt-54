@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.order.BillDetailMapper">
+	<insert id="batchInsert" parameterType="List">
+		insert into t_order_bill_detail (iorderid, ctype, iqty, cmsg, foriginalprice, fpresentprice, ftotalprice) values 
+		<foreach collection ="list" item ="item" index ="index" separator =",">
+			(#{item.iorderid}, #{item.ctype}, #{item.iqty}, #{item.cmsg}, #{item.foriginalprice}, #{item.fpresentprice}, #{item.ftotalprice})
+		</foreach>
+	</insert>
+</mapper>

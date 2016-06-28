@@ -1,0 +1,9 @@
+@(url: String, 
+ map: Map[String, String])
+@import views.html.helper._
+
+<form action="@url" method="get">
+	@map.map{e =>
+		<input name="@e._1" type="hidden" value="@e._2">
+	}
+</form>

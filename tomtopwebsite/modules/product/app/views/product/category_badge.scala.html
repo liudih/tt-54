@@ -1,0 +1,46 @@
+@(product: valueobjects.product.ProductBadge
+	)
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+@if(product != null){
+<li>
+    @product.getPrice().getDiscountOption().asScala.map{ d =>
+		@if(product.getPrice().isDiscounted()){
+			<span class="discount">@Utils.percent(d)</span>
+		}
+	}
+    <a class="publiceImg" href="@if(product.getUrl!=null){@controllers.product.routes.Product.view(product.getUrl)}">
+		@img(product.getImageUrl(),product.getTitle(),265,265,null)				   
+	</a>
+    <a class="publicTitle" title="@product.getTitle" href="@if(product.getUrl!=null){@controllers.product.routes.Product.view(product.getUrl)}">
+    @if(product.getTitle()!=null && product.getTitle().length>60){
+    	@product.getTitle.substring(0,60)...
+    }else{
+    	@product.getTitle
+    }
+    </a>
+	<p class="publicPriceYJ">
+		@if(product.getPrice().isDiscounted()){
+	    	<span class="originalPrice">
+	    		<span class="currency">@product.getPrice.getSymbol</span>
+	    		@Utils.money(product.getPrice.getUnitBasePrice)
+	    	</span>
+		}
+	</p>
+    <p class="publicPrice">
+    	<span class="presentPrice lineBlock">
+    		<span class="currency">@product.getPrice.getSymbol</span>@Utils.money(product.getPrice.getUnitPrice)
+    	</span>
+    	@if(product.getHtmlmap().get("freeship")!=null){
+    		@product.getHtmlmap().get("freeship")
+    	}
+    </p>
+    @product.getExtended().map{ i=>
+		@i
+	}
+   	@product.getHtmlmap().get("collect")
+   	@*@product.getHtmlmap().get("storage")*@
+    
+</li>
+}

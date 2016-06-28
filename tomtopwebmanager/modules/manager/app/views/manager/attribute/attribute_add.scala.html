@@ -1,0 +1,23 @@
+
+@helper.javascriptRouter("attributeRoutes")(
+	controllers.manager.routes.javascript.Attribute.getAttributeList
+)
+
+<div class="container-fluid">
+				<div class="control-group">
+					<label class="control-label">属性名：</label>
+					<div class="controls">
+						<input type="text" value="" name="cusername" placeholder="属性名" class="m-wrap medium span6">
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label">属性值：</label>
+					<div class="controls">
+						<input type="text" value="" name="cjobnumber" placeholder="属性值" class="m-wrap medium span6">
+					</div>
+				</div>
+			</div>
+			@services.base.HtmlUtils.misc().addTailOnce{
+				<script src="@controllers.manager.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.manager.routes.Assets.at("js/manager/attributedetail")" ></script>
+			}        

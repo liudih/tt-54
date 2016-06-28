@@ -1,0 +1,279 @@
+@(membervideos: valueobjects.interaction.InteractionProductMemberVideo)
+@import views.html.helper._
+@import services.base.utils._
+@helper.javascriptRouter("videoRoutes")(
+	controllers.interaction.routes.javascript.MemberVideo.addVideo,
+	controllers.member.routes.javascript.Login.login,
+	controllers.member.routes.javascript.Login.checkSign,
+	controllers.interaction.routes.javascript.ProductPhotos.checkIsUpload
+)
+
+<div id="membervideoslist" class="customer_box boxFramework">
+		  <div class="browse_title">
+				@Messages("customer.video")
+				<p class="postPhotos">
+					@*<a href="javascript:;">@Messages("see.all.videos")</a> @Messages("or")*@ 
+					<a href="javascript:;" id="postVideos">@Messages("post.videos")</a>
+				</p>
+				<div class="blockPopup_box" id="videodlg">
+                                    <div class="postPhotos_popBox customerADD_video scrollWZ">
+                                        <div class="customer_popClose"></div>
+                                		<div class="scrollBox">
+                                        	<div class="scrollY">
+                                                <p class="uploadVL">@Messages("upload.video"):</p>
+                                                <p class="uploadVR"><em></em>@Messages("get.40.tomtop.points")</p>
+                                                <div class="clear"></div>
+                                                <form class="upTT" autocomplete="off">
+                                                    Video Title: <input value="" placeholder="Video Title" type="text" id="title"><br/>
+                                                    Video URL: <input value="" placeholder="Video URL" type="text" id="url">
+                                                    <input value="@membervideos.getClistingid()" type="hidden" id="listingid">
+                                                </form>
+                                                <p class="webeg">eg:http://www.youtube.com/watch?v=xxx </p>
+                                                <input type="button" class="rightPaly_buyNow" value="@Messages("submit")" id="s">
+                                                <span id="showText" style="color:red;">Upload successfully</span>
+                                            	<div class="ADD_videoBox">
+                                             	   <div class="ADD_videoHide">
+                                                        <div class="ADD_videoHeight">
+                                                            <p class="ADD_videoTitle">@Messages("video.posting.guidelines"):</p>
+                                                            <p>@Messages("would.like.share.purchases.experiences.video")<br>
+                                                                  @Messages("products.video.must.purchased")<br>
+                                                                  @Messages("must.included.video.title.product.added.description")<br>
+                                                                  @Messages("youtube.channel.http.youtube.linksempire")<br>
+                                                                   @Messages("have.not.uploaded.video.youtube.yet")<span class="orange">http://www.youtube.com/tomtopvideo</span>
+                                                            </p>
+                                                            <p class="ADD_videoTitle">@Messages("what.is.in.the.video")</p>
+                                                            <p>@Messages("video.subject.product.links.your.description")<br>
+                                                                  @Messages("try.make.creative.useful.informative.possible")<br>
+                                                                  @Messages("make.original.plagiarized.videos.not.accepted")<br>
+                                                                  @Messages("length.Video.should.least.minutes")
+                                                            </p>
+                                                            <p class="ADD_videoTitle">@Messages("what.you.can.get")</p>
+                                                            <p>@Messages("once.video.approved.points.every.points")<br>
+                                                                  @Messages("video.official.youtube.channel")
+                                                                  <a class="orange" href="http://www.youtube.com/linksempire" target="_blank">http://www.youtube.com/linksempire</a>
+                                                                  @Messages("and.send.free.products.review.videos.successful")
+                                                            </p>
+                                                            <p class="ADD_videoTitle">@Messages("where.to.upload.your.video")</p>
+                                                            <p>
+                                                            	@Messages("purchased.items.link.video.appropriate.space")
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="blockPopup_black"></div>
+                            </div>
+                             <!--addVideoOver-->
+                        </div>
+	@if(membervideos.getProductMembervideos().size()!=0){
+	<div id="videoDIVpic_box" class="customerDIVpic_box">
+		<div class="browseLeft_click" style="opacity: 0;"></div>
+		<div class="customermove_box" style="width:1640px;">
+		
+		@membervideos.getProductMembervideos().map{ i =>
+			<div class="customermovepic">
+				<div class="browsepic_img writePic">
+					<li><img src="@controllers.base.routes.Assets.at("img/videos.jpg")"  width="135px;" height="100px;" data="@i.getCvideourl()"/>
+					</li>
+				</div>
+				<div class="blockPopup_box" style="display:none;">
+					<div class="customer_popBox scrollWZ" style="width:635px;">
+						<div class="customer_popClose"></div>
+						<!-- <div class="customer_popTitle">A</div> -->
+						<div class="customer_popPicBox">
+							<input value="0" type="hidden" name="nowIndex" class="nowIndex" />
+							<div class="customer_leftClick cursor"></div>
+							<div class="customer_rightClick cursor"></div>
+							<ul class="customer_bigPic">
+								@membervideos.getProductMembervideos().map{ j =>
+								<li class="writeVideo">
+								<iframe width="552" height="400" frameborder="0" src="@j.getCvideourl()" frameborder="0" allowfullscreen >
+								</iframe>
+								</li>
+								<div class="clear"></div>
+								}
+							</ul>
+						</div>
+						<ul class="customerSmallmove">
+                           @membervideos.getProductMembervideos().map{ j =>
+                                 <li><img src="@controllers.base.routes.Assets.at("img/videos.jpg")" width="50" height="50" data="@j.getCvideourl()"></li>
+                              }
+                        </ul>
+		            </div>
+		            <div class="blockPopup_black"></div>
+        		</div>
+		        <p>By @Utils.getIncompleteEmail(i.getCmemberemail)</p>
+			</div>
+		}
+		</div>
+		<div class="browseRight_click" style="opacity: 0;"></div>
+	</div>
+	}else {
+		<div class="customerDIVpic_box customerNoPhoto">
+			<p class="noPhoto">@Messages("be.the.first.to.post.video.of.this.product.and.get.a.massive")<span class="orange"> 40 @Messages("tomtop.points")!</span></p>
+		</div>			
+	}
+	<div class="blockPopup_box noPermissions">
+    <div class="postPhotos_popBox">
+        <div class="customer_popClose"></div>
+        <div class="ReviewsN">
+        	<em></em>
+        	<p class="ReviewsTitle">UploadVideos are only accepted from actual purchases!</p>
+            <p>Please ensure the review you are submitting is for the described product and is purchased from us. Click the back button on your browser and search again.</p>
+        </div>
+    </div>
+    <div class="blockPopup_black"></div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+      <div  class="modal-body" >
+     	<iframe id="playwindow" width="552" height="400" frameborder="0" src="" allowfullscreen="" >
+		</iframe>
+      </div>
+  </div>
+</div>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript">
+function youtubeUrl(url){
+	var code  = urlToCode(url);
+	if(code!=""){
+		return "https://www.youtube.com/embed/"+code;
+	}else{
+		return url;
+	}
+}
+
+function urlToCode(url){
+	var code = "";
+	if(url.indexOf("youtu.be/")!=-1){
+		code = url.substring(url.indexOf("youtu.be/")+9,url.length);
+	}
+	if(url.indexOf("www.youtube.com/watch?v=")!=-1){
+		code = url.substring(url.indexOf("?v=")+3,url.length);
+	}
+	if(url.indexOf("embed/")!=-1){
+		code = url.substring(url.indexOf("embed/")+6,url.length);
+	}
+	return code;
+}
+$(function(){
+	$(".customer_bigPic iframe").each(function(i,e){
+		var url = $(this).attr("src");
+		url = youtubeUrl(url);
+		$(this).attr("src",url);
+	});
+	$("#videoDIVpic_box .customermovepic").each(function(i,e){
+		var img = $(this).find("img:eq(0)");
+		var url = img.attr("data");
+		var code = urlToCode(url);
+		if(code!=""){
+			var imgUrl_small  = getScreen(code, 'small');
+			img.attr("src",imgUrl_small);
+		}
+	});
+	$("#videoDIVpic_box .customerSmallmove img").each(function(i,e){
+		var img = $(this);
+		var url = img.attr("data");
+		var code = urlToCode(url);
+		if(code!=""){
+			var imgUrl_small  = getScreen(code, 'small');
+			img.attr("src",imgUrl_small);
+		}
+	});
+});
+$('#postVideos').on('click',function(e){
+ 	var self=this;
+ 	var s =s || {};
+ 	s.url=videoRoutes.controllers.member.Login.checkSign().url
+ 	s.type='get';
+ 	async:false;
+ 	s.data={};
+ 	s.success=function(data){
+ 		if(data!=undefined && data){
+ 			var s =s || {};
+ 			s.url=videoRoutes.controllers.interaction.ProductPhotos.checkIsUpload(listingid).url;
+ 			s.type='get';
+ 			async:false;
+ 			s.success=function(dataa){
+ 			    if(dataa==="true"){
+ 			    	showPhotoDlg.call(self);
+ 		 			return;
+ 			    }else{
+ 			    	$(self).parents(".browse_title").siblings(".blockPopup_box").fadeIn();
+ 			    }
+ 			}
+ 			$.ajax(s);
+ 		}else{
+ 			$("#blogin").show();
+ 		}
+ 	}
+ 	$.ajax(s);
+ 	$("#showText").hide();
+ });
+
+$("#s").on("click",function(){
+	if(!checkNum()){
+		alert("You can't upload too many videos!");
+		return false;
+	}
+	var title=$("#title").val();
+	var url=$("#url").val();
+	if(url==""){
+		alert("The url is not empty!");
+		$("#url").focus();
+		return false;
+	}
+	var clistingid=$("#listingid").val();
+	var csku = $("input[name='csku']:eq(0)").val();
+	var list = [];
+   	var map = {};
+		map['title'] = title;
+		map['clistingid'] = clistingid;
+		map['url'] =url;
+		map['csku'] =csku;
+		list[0] = map;
+		data = $.toJSON(list);
+   	var url =videoRoutes.controllers.interaction.MemberVideo.addVideo(data).url;
+   	$.ajax({
+		url : url,
+		type : "post",
+		dataType : "json",
+		success : function(data) {
+			if(data===true){
+			$("#showText").show();
+			$("#title").val("");
+			$("#url").val("");
+			}
+		}
+	});
+});
+
+//一天最多上传5个视频 判断
+function checkNum(){
+	var flag = false;
+	var listingid = $("#add-form .clistingid:eq(0)").val();
+	$.ajax({
+		url : "@controllers.interaction.routes.MemberVideo.checkNum()",
+		type : "GET",
+		dataType : "json",
+		async : false,
+		data:{
+			"listingid": listingid
+		},
+		success : function(data) {
+			if (data.result == "success") {
+				flag = true;
+			}
+		}
+	});
+	return flag;
+}
+
+</script>
+}

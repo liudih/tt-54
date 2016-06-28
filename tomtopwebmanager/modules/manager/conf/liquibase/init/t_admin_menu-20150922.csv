@@ -1,0 +1,5 @@
+﻿"iid","cname","iparentid","ilevel","cclass","curl","ccreateuser","cenname"
+"120","仓库管理","0","1","3","","wzx","storageMgr"
+"121","仓库层级","120","2","29","/sysadmin/storage/storageparent","wzx","StorageMgr"
+"122","地区默认仓库","120","2","29","/sysadmin/storage/storagedefault","wzx","StorageDefault"
+"123","仓库可送达地区","120","2","29","/sysadmin/storage/storagearrival","wzx","StorageArrival"

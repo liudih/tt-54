@@ -1,0 +1,87 @@
+@import url(css/icon.css);
+
+.slides li a i{background-image:url(../images/Christmas/icon_categories.png)!important;}
+.slides .tabletpc{color:#f964ae;}
+.slides .computer{color:#5299ef;}
+.slides .rcmodels{color:#f68f60;}
+.slides .testequipment{color:#e264f9;}
+.slides .cameras{color:#6476f9;}
+.slides .lighting{color:#8e64f9;}
+.slides .home{color:#64aaf9;}
+.slides .apparel{color:#f97664;}
+.slides .health{color:#f9b564;}
+.slides .sports{color:#8ef549;}
+.slides .caraccessories{color:#49f5a2;}
+.slides .video{color:#f5cb4e;}
+.slides .musicalinstruments{color:#f59949;}
+.slides .toys{color:#49c6f5;}
+
+.header_nav,.header_login >li{background-image:url(../images/Christmas/icon_header.png)!important;}
+.product_price{color:#fa5252!important;}
+/*.Titleh5{border-bottom:10px solid transparent!important;
+	-moz-border-image:url(../images/Christmas/border.gif) 13 13 round;	
+-webkit-border-image:url(../images/Christmas/border.gif) 13 13 round;	
+-o-border-image:url(../images/Christmas/border.gif) 13 13 round;		
+border-image:url(../images/Christmas/border.gif) 13 13 round;}*/
+.Titleh5{border-bottom-color:#f85351!important;}
+.Titleh5 h5{color:#f85351!important;}
+.slider{margin-bottom:0px!important;}
+.TT_center,.ttApp,.downloadApp{background-color:#f85351!important;}
+.cn-wrapper li:hover{background-color:#f85351!important;}
+.quickNav_centerHome span:hover{background-color:#f85351!important;}
+
+.indexDailyDeals_box{position: relative;}
+.indexDailyDeals_box:after{content:"";z-index:-1;
+	width:100%;position:absolute;height:10px;background-image:url(../images/Christmas/borders.gif);background-repeat: repeat-x;
+	left:0px;top:7px;
+}
+.christmasImg img{width:100%;}
+.indexDailyDeals_box, .product_con{background-color:transparent!important;}
+.DailyDeals_left,.DailyDeals_Rtop{border-top:0px!important;}
+.headerFixed{background:url(../images/Christmas/caihong.gif) bottom center repeat-x #fff;height:58px;border-bottom:0px;}
+.topLeft_headImg{background:url(../images/Christmas/mySky.jpg) repeat;background-size:auto!important;}
+.messagesNumber{background-color:#fa5252!important;}
+.cartNumber:after{background-color:#fa5252!important;}
+.product_page_Expires{width:90%;text-align:center;}
+.topLeft_myName{color:#fff!important;}
+.product_page_Expires li{display:block;}
+.product_page_Expires li:first-child{font-size:28px;color:#fa5252;}
+.product_page_Expires .orange{font-size:24px!important;color:#fff!important;line-height:35px;margin-top:10px;
+background:url(../images/Christmas/titile.png) bottom center no-repeat transparent;background-size:auto 100%;height:42px;}
+
+
+.rightMore{font-size:0px!important;position:absolute;right:0px!important;top:-12px!important;width:40px;height:40px;background:url(../images/Christmas/liw.png) no-repeat;z-index: 99;}
+.Titleh5 .rightMore{top:0!important;}
+
+@media(min-width:50px) and (max-width:768px){
+	.product_page_Expires li:first-child{font-size:24px;}
+	.product_page_Expires .orange{font-size:20px!important;}
+	.Titleh5 .rightMore{top:-7px!important;}
+	.rightMore{width:30px;height:30px;background-size:100% auto;top:-6px!important;}
+}
+
+@media(min-width:50px) and (max-width:440px){
+	.DailyDeals_Rtop{border-top:1px solid #ccc!important;}
+}
+
+.addBanner{display:none;}
+
+.categoriesCon li a i{background-image:url(../images/Christmas/icon_categories.png)!important;}
+.header .header_cat{background-image:url(../images/Christmas/icon_header.png)!important;}
+
+.categoriesCon .tabletpc{color:#f964ae;}
+.categoriesCon .computer{color:#5299ef;}
+.categoriesCon .rcmodels{color:#f68f60;}
+.categoriesCon .testequipment{color:#e264f9;}
+.categoriesCon .cameras{color:#6476f9;}
+.categoriesCon .lighting{color:#8e64f9;}
+.categoriesCon .home{color:#64aaf9;}
+.categoriesCon .apparel{color:#f97664;}
+.categoriesCon .health{color:#f9b564;}
+.categoriesCon .sports{color:#8ef549;}
+.categoriesCon .caraccessories{color:#49f5a2;}
+.categoriesCon .video{color:#f5cb4e;}
+.categoriesCon .musicalinstruments{color:#f59949;}
+.categoriesCon .toys{color:#49c6f5;}
+
+.categoriesBox h5{color:#f85351!important;border-bottom-color:#f85351!important;}

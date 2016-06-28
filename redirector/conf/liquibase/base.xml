@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+
+	<changeSet author="liudi" id="t_shorturl-create">
+		<createTable tableName="t_shorturl" remarks="短连接表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="curl" type="VARCHAR(500)" remarks="原链接" />
+			<column name="cshorturl" type="VARCHAR(100)" remarks="短链接"/>
+			<column name="cshorturlcode" type="VARCHAR(10)" remarks="短链接随机数"/>
+			<column name="caid" type="VARCHAR(100)" remarks="aid"/>
+			<column name="ceid" type="VARCHAR(100)" remarks="任务id"/>
+			<column name="itasktype" type="INTEGER" remarks="任务类型"/>
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+	<changeSet author="liudi" id="t_shorturl-createIndex">
+	    <createIndex catalogName="cat"
+	            indexName="idx_cshorturl"
+	            schemaName="public"
+	            tableName="t_shorturl"
+	            unique="false">
+	        <column name="cshorturlcode" type="varchar(10)"/>
+	    </createIndex>
+	</changeSet>
+	
+	<changeSet author="liudi" id="t_visit_log-create">
+		<createTable tableName="t_visit_log" remarks="访问记录">
+			<column name="curl" type="VARCHAR(500)" remarks="url" />
+			<column name="cshorturlcode" type="VARCHAR(10)" remarks="短链接编码"/>
+			<column name="caid" type="VARCHAR(100)" remarks="AID" />
+			<column name="ctaskid" type="VARCHAR(100)" remarks="任务ID" />
+			<column name="itasktype" type="INTEGER" remarks="任务类型"/>
+			<column name="csource" type="VARCHAR(500)" remarks="跳转来源" />
+			<column name="cip" type="VARCHAR(50)" remarks="客户访问IP" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+		<createIndex tableName="t_visit_log" indexName="idx_visit_log_caid_dcreatedate_code">
+			<column name="caid" type="VARCHAR(200)" />
+			<column name="dcreatedate" type="DATETIME" />
+			<column name="cshorturlcode" type="VARCHAR(10)" />
+		</createIndex>
+	</changeSet>
+
+</databaseChangeLog>

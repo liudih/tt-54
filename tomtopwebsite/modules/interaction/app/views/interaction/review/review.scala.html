@@ -1,0 +1,11 @@
+@(sc: valueobjects.search.SearchContext)
+<li id="review-ui" class="sortA">
+	
+	@if(sc.extractFirst(classOf[extensions.interaction.search.sort.ReviewCountSortOrder]).isDefined()) {
+		@sc.extractFirst(classOf[extensions.interaction.search.sort.ReviewCountSortOrder]).asScala.map{c=>
+			<a data-name='review' @if(c.isAsc()){data-value='asc'}else{ data-value='desc'}>@Messages("review")<em class="sortUD"></em></a>
+		}
+	} else {
+		<a data-name='review' data-value='desc'>@Messages("review")<em class="sortUD"></em></a>
+	}
+</li>

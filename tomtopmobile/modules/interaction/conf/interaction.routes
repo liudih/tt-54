@@ -1,0 +1,30 @@
+GET    /assets/*file          		controllers.interaction.Assets.at(path="/public", file)
+
+GET    /collect                       @controllers.interaction.Collect.collect(lid: String?="", action: String?="")
+
+GET    /delcollect                    @controllers.interaction.Collect.delCollect(lids: String)
+
+GET    /membercollect                 @controllers.interaction.Collect.getcollect(listingid:String?="")
+
+GET    /wishlist                      @controllers.interaction.Collect.wishList()
+
+GET    /wishlist/edit                 @controllers.interaction.Collect.editWishlist()
+
+GET    /wishlist/more                 @controllers.interaction.Collect.wishAsynlist(p:Integer?=1)
+
+GET    /wishlist/edit/more            @controllers.interaction.Collect.wishAsynlistEdit(p:Integer?=1)
+
+GET    /reviewlist/:listingId         @controllers.interaction.ProductReview.showAll(listingId: String, p: Int ?= 1)
+
+GET    /product/:listingId/write      @controllers.interaction.ProductReview.addReview(listingId: String)
+
+POST   /product/:listingId/write      @controllers.interaction.ProductReview.doAddReview(listingId: String)
+
+POST   /product/:listingId/addpic     @controllers.interaction.ProductReview.doAddPicture(listingId: String)
+
+GET    /product-photos/get-preveiw          @controllers.interaction.ProductReview.getPreveiwImageWithSession(index:Int?=0)
+
+GET    /product-photos/del-preveiw          @controllers.interaction.ProductReview.delPreveiwImageWithSession(index:Int?=0)
+
+GET    /product-photos/at                   @controllers.interaction.ProductReview.at(iid:Int?=0)
+

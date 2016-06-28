@@ -1,0 +1,13 @@
+@(pid:String)
+@services.base.HtmlUtils.misc().addHeadOnce{
+<style>
+.at-cv-lightbox-background{opacity:0 !important;z-index:-100 !important;}
+#at-cv-lightbox-inner{ display:none !important}
+#at3lb {z-index: 200000000 !important;}
+#at3win {z-index: 200000001 !important;}
+</style>
+}
+<div class="addthis_sharing_toolbox" style="margin-top:20px;"></div>
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=@pid" async="async"></script>
+}

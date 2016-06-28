@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.base.CmsMenuMapper" >
+  
+   <select id="selectByPrimaryKey" resultType="dto.CmsMenu" parameterType="java.lang.Integer" >
+   select * from t_cms_menu
+    where  iid = #{iid,jdbcType=INTEGER}
+  </select>
+  
+	
+   <select id="getCmsMenuByLevelId" resultType="dto.CmsMenu" parameterType="dto.CmsMenu" >
+   select m.iid,m.iparentid,m.ilevel,m.ciconurl,m.curl,m.cclass,m.ccreateuser,m.dcreatedate,
+   m.clastupdateduser,m.dlastupdateddate,m.iisnominate,m.ctype, l.cmenuname as cname
+   
+   from t_cms_menu m left join t_cms_menu_language_map l on m.iid =l.imenuid 
+   
+    where m.ilevel = #{cmsMenu.ilevel,jdbcType=INTEGER}
+     <if test="cmsMenu.iparentid != null and cmsMenu.iparentid !=0" >
+        and m.iparentid = #{cmsMenu.iparentid,jdbcType=VARCHAR}
+     </if>
+     <if test="languageId != null and languageId !=''" >
+        and l.ilanguageid = #{languageId,jdbcType=INTEGER}
+     </if>
+     
+     
+      order by m.iid
+  </select>
+  
+  
+   <select id="getCmsMenuByLevelIdAndType" resultType="dto.CmsMenu" parameterType="java.util.Map">
+   	select m.iid,m.iparentid,m.ilevel,m.ciconurl,m.curl,m.cclass,m.ccreateuser,m.dcreatedate,
+   	m.clastupdateduser,m.dlastupdateddate,m.iisnominate,m.ctype, l.cmenuname as cname 
+    from t_cms_menu m left join t_cms_menu_language_map l on m.iid =l.imenuid
+    where  m.ilevel = #{cmsMenu.ilevel,jdbcType=INTEGER}
+     <if test="cmsMenu.iparentid != null and cmsMenu.iparentid !=0" >
+        and m.iparentid = #{cmsMenu.iparentid,jdbcType=VARCHAR}
+     </if>
+     <if test="cmsType != null and cmsType !=''" >
+        and m.ctype = #{cmsType,jdbcType=VARCHAR}
+     </if>
+     <if test="languageId != null and languageId !=''" >
+        and l.ilanguageid = #{languageId,jdbcType=INTEGER}
+     </if>
+     <if test="siteId != null and siteId !=''" >
+        and m.iid in (select w.imenuid from t_cms_menu_wetsite_map w where w.iwebsiteid = #{siteId,jdbcType=INTEGER})
+     </if>
+     <if test="device != null and device !=''" >
+     	and m.iid in (select w.imenuid from t_cms_menu_wetsite_map w where  w.cdevice = #{device,jdbcType=VARCHAR})
+     </if>
+      order by m.iid
+  </select>
+  
+
+  <select id="getCmsMenuByLevelIdAndSiteId" resultType="dto.CmsMenu" parameterType="java.util.Map">
+   	select m.iid,m.iparentid,m.ilevel,m.ciconurl,m.curl,m.cclass,m.ccreateuser,m.dcreatedate,
+   	m.clastupdateduser,m.dlastupdateddate,m.iisnominate,m.ctype, l.cmenuname as cname 
+    from t_cms_menu m left join t_cms_menu_language_map l on m.iid =l.imenuid
+    where  m.ilevel = #{levelId,jdbcType=INTEGER}
+     <if test="iparentid != null and iparentid !=0" >
+        and m.iparentid = #{iparentid,jdbcType=VARCHAR}
+     </if>
+     <if test="siteId != null and siteId !=''" >
+        and m.iid in (select w.imenuid from t_cms_menu_wetsite_map w where w.iwebsiteid = #{siteId,jdbcType=INTEGER})
+     </if>
+      order by m.iid
+  </select>
+  
+  
+   <select id="getNominatetCmsMenu" resultType="dto.CmsMenu" parameterType="java.util.Map" >
+   select m.iid,m.iparentid,m.ilevel,m.ciconurl,m.curl,m.cclass,m.ccreateuser,m.dcreatedate,
+   	m.clastupdateduser,m.dlastupdateddate,m.iisnominate,m.ctype, l.cmenuname as cname 
+   	 from t_cms_menu m left join t_cms_menu_language_map l on m.iid =l.imenuid
+    where  m.ilevel = #{levelId,jdbcType=INTEGER} and iisnominate= 1 
+     <if test="cmsType != null and cmsType !=''" >
+        and m.ctype = #{cmsType,jdbcType=VARCHAR}
+      </if>
+     
+     <if test="languageId != null and languageId !=''" >
+        and l.ilanguageid = #{languageId,jdbcType=INTEGER}
+     </if>
+     
+     <if test="siteId != null and siteId !=''" >
+        and m.iid in (select w.imenuid from t_cms_menu_wetsite_map w where w.iwebsiteid = #{siteId,jdbcType=INTEGER})
+     </if>
+     <if test="device != null and device !=''" >
+     	and m.iid in (select w.imenuid from t_cms_menu_wetsite_map w where  w.cdevice = #{device,jdbcType=VARCHAR})
+     </if>
+    order by m.iid
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_cms_menu
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+
+	<delete id="deleteCmsMenuMoreLanguage" parameterType="java.lang.Integer">
+		delete from t_cms_menu_language_map
+		where iid = #{iid,jdbcType=INTEGER}
+	</delete>
+
+	<delete id="deleteCmsMenuMoreWebsite" parameterType="java.lang.Integer">
+		delete from t_cms_menu_wetsite_map
+		where iid = #{iid,jdbcType=INTEGER}
+	</delete>
+  
+  <insert id="insert" parameterType="dto.CmsMenu" useGeneratedKeys="true" keyProperty="iid">
+    insert into t_cms_menu (cname, 
+      iparentid, ilevel,ciconurl,curl,cclass, iisnominate,
+      ccreateuser, dcreatedate, 
+      clastupdateduser, dlastupdateddate, ctype)
+    values (#{cname,jdbcType=VARCHAR}, #{iparentid,jdbcType=INTEGER}, 
+    #{ilevel,jdbcType=INTEGER},#{ciconurl,jdbcType=VARCHAR},#{curl,jdbcType=VARCHAR},
+    #{cclass,jdbcType=VARCHAR},#{iisnominate,jdbcType=INTEGER},
+      #{ccreateuser,jdbcType=VARCHAR}, #{dcreatedate,jdbcType=TIMESTAMP}, 
+      #{clastupdateduser,jdbcType=VARCHAR}, #{dlastupdateddate,jdbcType=TIMESTAMP},#{ctype,jdbcType=VARCHAR})
+  </insert>
+
+	<insert id="insertCmsMenuLanguage" parameterType="dto.CmsMenuLanguage"
+		useGeneratedKeys="true" keyProperty="iid">
+		insert into t_cms_menu_language_map(imenuid,
+		ilanguageid, cmenuname)
+		values (#{imenuid,jdbcType=INTEGER},
+		#{ilanguageid,jdbcType=INTEGER},#{cmenuname,jdbcType=VARCHAR})
+	</insert>
+	
+	<insert id="insertCmsMenuWebsite" parameterType="dto.CmsMenuWebsite"
+		useGeneratedKeys="true" keyProperty="iid">
+		insert into t_cms_menu_wetsite_map(imenuid,
+		iwebsiteid, cdevice)
+		values (#{imenuid,jdbcType=INTEGER},
+		#{iwebsiteid,jdbcType=INTEGER},#{cdevice,jdbcType=VARCHAR})
+	</insert>
+  
+
+  <update id="updateByPrimaryKeySelective" parameterType="dto.CmsMenu" >
+    update t_cms_menu
+    <set >
+      
+      <if test="cname != null" >
+        cname = #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="ctype != null" >
+        ctype = #{ctype,jdbcType=VARCHAR},
+      </if>
+      <if test="iparentid != null" >
+        iparentid = #{iparentid,jdbcType=INTEGER},
+      </if>
+      <if test="ilevel != null" >
+        ilevel = #{ilevel,jdbcType=INTEGER},
+      </if>
+      <if test="ciconurl != null" >
+        ciconurl = #{ciconurl,jdbcType=VARCHAR},
+      </if>
+      <if test="curl != null" >
+        curl = #{curl,jdbcType=VARCHAR},
+      </if>
+      <if test="cclass != null" >
+        cclass = #{cclass,jdbcType=VARCHAR},
+      </if>
+      <if test="iisnominate != null" >
+        iisnominate = #{iisnominate,jdbcType=INTEGER},
+      </if>
+    
+      <if test="ccreateuser != null" >
+        ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clastupdateduser != null" >
+        clastupdateduser = #{clastupdateduser,jdbcType=VARCHAR},
+      </if>
+      <if test="dlastupdateddate != null" >
+        dlastupdateddate = #{dlastupdateddate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=BIGINT}
+  </update>
+ 
+ 
+  <update id="updateByPrimaryKey" parameterType="dto.CmsMenu" >
+    update t_cms_menu
+    set 
+      cname = #{cname,jdbcType=VARCHAR},
+      ctype = #{ctype,jdbcType=VARCHAR},
+      iparentid = #{iparentid,jdbcType=INTEGER},
+      ilevel = #{ilevel,jdbcType=INTEGER},
+      ciconurl = #{ciconurl,jdbcType=VARCHAR},
+      curl = #{curl,jdbcType=VARCHAR},
+      cclass = #{cclass,jdbcType=VARCHAR},
+      iisnominate = #{iisnominate,jdbcType=INTEGER},
+      ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      clastupdateduser = #{clastupdateduser,jdbcType=VARCHAR},
+      dlastupdateddate = #{dlastupdateddate,jdbcType=TIMESTAMP}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

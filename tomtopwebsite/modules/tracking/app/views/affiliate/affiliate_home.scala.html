@@ -1,0 +1,86 @@
+@(isAid:Boolean)
+@views.html.member.base.master("affiliate-home"){
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/styles.css")?@version.BuildVersion.build()" />
+}
+    <div class="accountRight affilliate_Boxs affiliateBox">
+    	<a class="affilliate_topBanner" href="javascript:;">
+    	<img src="@controllers.base.routes.Assets.at("/images/affiliateBanner.jpg")"></a>
+    	@if(!isAid){
+        <ul class="lbBox">
+        	<li class="lineBlock affHome_li_left">
+            	<a class="affHome_Active" href="@controllers.affiliate.routes.AffiliateHome.Activate()">Active</a>
+                <p class="affHome_li_firstP">Click here to active your affiliate program.</p>
+                <p>After submitting your application form, a TOMTOP affiliate ID and URL will be given to you so you can start earning commission immediately. Commission collected will show up in your regular TOMTOP account.</p>
+            </li>
+        	<li class="lineBlock affHome_li_right">
+            	<p>3 Simple steps to start your affiliate program</p>
+                <ul>
+                	<li>Active for your TOMTOP affiliate account.</li>
+                	<li>Promote your affiliate URL.</li>
+                	<li>Redeem cash back.</li>
+                </ul>
+            </li>
+        </ul>
+        }
+    	<h6>TOMTOP Affiliate Program</h6>
+        <p class="marT">Welcome to TOMTOP Affiliate Program page! TOMTOP has a ripe experience in Affiliate marketing. We have our own Affiliate Program System, and TOMTOP is available 
+on ShareASale.com. We offer all the affiliates attractive tiered rates of commission. Besides, we constantly provide our affiliates with non-expiring exclusive coupon codes, 
+most popular deals, coolest banners, regularly updated datafeed, etc.</p>
+		<p class="marT">It's completely free for you to join us and start the business! We will pay commission to you for every valid transaction via your business or non-business channels. 
+6%---10% commission per sale. Want to make money with TOMTOP? Join our affiliate program today!</p>
+		<h6 class="marT">How does the affiliate program work?</h6>
+        <img class="marL" src="@controllers.base.routes.Assets.at("/images/affiliateProgramWork.jpg")">
+        <h5>Why Choose us?</h5>
+        <ul class="affiliateChoose affPub">
+            <li>@Messages("huge.product.data.feed")</li>
+			<li>@Messages("innovative.and.new.products.updated.daily")</li>
+			<li>@Messages("competitive.price.and.discount")</li>
+			<li>@Messages("promotions.launched.regularly")</li>
+			<li>@Messages("competitive.commission")</li>
+			<li>@Messages("product.updated.frequently")</li>
+        </ul>
+        <h5>@Messages("our.commission.policy")</h5>
+        <table class="policyTable" width="800" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="36%" class="bg1">@Messages("level.tomtop")</td>
+            <td width="13%" class=" bg1">@Messages("rate")</td>
+            <td width="51%" class="bg1 right_bordre">@Messages("to.reach.this.level.monthly.sales.amount")</td>
+            </tr>
+          <tr>
+            <td>@Messages("level") 1 <em class="Level1"></em></td>
+            <td>6%</td>
+            <td class="right_bordre">$0-$999 </td>
+            </tr>
+          <tr>
+            <td>@Messages("level") 2 <em class="Level2"></em></td>
+            <td>7%</td>
+            <td class="right_bordre">$1000-$4999 </td>
+            </tr>
+          <tr>
+            <td>@Messages("level") 3 <em class="Level3"></em></td>
+            <td>8%</td>
+            <td class="right_bordre">$5000-$9999 </td>
+            </tr>
+          <tr>
+            <td>@Messages("level") 4 <em class="Level4"></em></td>
+            <td>10%</td>
+            <td class="right_bordre">$10000-$19999 </td>
+            </tr>
+          <tr>
+            <td class="bottom_bordre">@Messages("level") 5 <em class="Level5"></em></td>
+            <td class="bottom_bordre">12%</td>
+            <td class="bottom_bordre right_bordre">@Messages("more.than.20000") </td>
+            </tr>
+        </table>
+        <h5>@Messages("what.we.can.provide")</h5>
+        <ul class="provide affPub">
+            <li>@Messages("competitive.commission.30.60.cookie.days")</li>
+			<li>@Messages("a.weekly.product.feed")</li>
+			<li>@Messages("daily.deal.and.weekly.deal.promotions")</li>
+			<li>@Messages("regularly.updated.banners.including.store.banners.and.promotional.banners")</li>
+			<li>@Messages("frequent.newsletters")</li>
+			<li>@Messages("professional.affiliate.team.support")</li>
+        </ul>
+    </div>
+}

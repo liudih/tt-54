@@ -1,0 +1,1 @@
+#GET   /test   @controllers.email.Email.test()

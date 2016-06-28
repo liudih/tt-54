@@ -1,0 +1,42 @@
+@(i: dto.member.MemberAddress,countryMap:Map[Integer,dto.Country],allCountrys: List[dto.Country],url: String)
+ <tr @if(i.getIid == 0){style="display:none;"} class="@if(i.getBdefault()==true){C_default chooseDefault chooseThis} else {chooseOther}" id="edit_tr@i.getIid">
+   <td class="chooseAS">
+  	 <input type="radio" id="address_radio@i.getIid" name="@if(i.getIaddressid() == 2){order_address_radio}else{address_radio}" @if(i.getBdefault()==true){checked="checked"} value="@i.getIid">
+   </td>
+   <td class="chooseName" id="name@i.getIid">@i.getCfirstname()&nbsp@i.getClastname()</td>
+   <td class="chooseAdds">
+	  <span id="address_info_@i.getIid">	
+		@i.getCstreetaddress()      &nbsp
+		@i.getCcity()               &nbsp
+		@i.getCprovince()           &nbsp
+		@if(null != countryMap && null != countryMap.get(i.getIcountry())){
+			@countryMap.get(i.getIcountry()).getCname            &nbsp
+		}
+		@i.getCpostalcode()         &nbsp
+		@i.getCtelephone()          &nbsp
+	  </span>
+    </td>
+    <td class="chooseEdit">
+    	<a class="addsClick" href="javascript:;">@Messages("edit")</a>
+        <div class="edit_box" name="edit_address">
+        	<p>@Messages("edit")</p>
+            <div class="clear"></div>
+            @modify_shipping_address_form(i,countryMap,allCountrys,url)
+        </div>
+     </td>
+     <td id="td_delete@i.getIid" class="@if(i.getBdefault()==true){chooseDef} else {chooseDelete}" name="shipping_delete" >
+     	<a href="javascript:;">@Messages("delete")</a>
+         <p class="deletePop">
+         	<i></i>@Messages("are.sure.delete.adddress")<br>
+           	<a name="delete_address" tag="@i.getIid"> <input type="button" value="@Messages("yes")"></a>
+             <input type="button" value="@Messages("no")">
+         </p>
+     </td>
+     <td id="default@i.getIid" class="chooseDef">
+	     <a href="javascript:;" name="set_default_address" tag="@i.getIid" val="shipping" @if(i.getBdefault()==true){cannotclick="true"}else{cannotclick="false"}>
+	    	 @Messages("default")
+	     </a>
+     </td>
+</tr>
+
+

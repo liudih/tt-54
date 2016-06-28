@@ -1,0 +1,26 @@
+@()
+<a class="cartNumber" href="/cart">0</a>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript">
+function getCartSize(){
+	$.ajax({
+		url: "/cart/getcartsize",
+		type: "get",
+		dataType: "json",
+		success:function(data){
+			if(typeof(data.size)!="undefined"){
+				$(".cartNumber").html(data.size);
+				var leftcart = $("#cartSizeLeft");
+				if(leftcart.length>0){
+					leftcart.html(data.size);
+				}
+			}
+		}
+	});
+}
+$(function(){
+	getCartSize();
+})
+</script>
+}

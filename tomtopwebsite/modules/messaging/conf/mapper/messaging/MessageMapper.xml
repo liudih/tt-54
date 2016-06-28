@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.messaging.MessageMapper">
+  <resultMap id="BaseResultMap" type="entity.messaging.Broadcast" >
+    <id column="iid" property="id" jdbcType="INTEGER" />
+    <result column="iwebsiteid" property="websiteId" jdbcType="INTEGER" />
+    <result column="isendid" property="sendId" jdbcType="INTEGER" />
+    <result column="cfrom" property="from" jdbcType="VARCHAR" />
+    <result column="csubject" property="subject" jdbcType="VARCHAR" />
+    <result column="ccontent" property="content" jdbcType="VARCHAR" />
+    <result column="itype" property="type" jdbcType="INTEGER" />
+    <result column="isendmethod" property="sendMethod" jdbcType="INTEGER" />
+    <result column="dcreatedate" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="t" property="table" jdbcType="VARCHAR" />
+    <result column="istatus" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="common-0" >
+    iid, iwebsiteid, isendid, cfrom, csubject, ccontent, itype, isendmethod, dcreatedate
+  </sql>
+ 
+ <sql id="common-1">
+	select a.iid,a.cfrom,a.csubject,a.dcreatedate,a.istatus,'b' as t
+	from t_message_broadcast a
+	where a.istatus=3 and a.iid not in
+	(
+	select ibroadcastid from t_message_info 
+	where cemail=#{userId} and ibroadcastid is not null
+	)
+ </sql>
+	
+ <sql id="common-2">
+	select iid,cfrom,csubject,dcreatedate,istatus,'i' as t
+	from t_message_info d
+	where (d.istatus = 4 or d.istatus = 1)
+	and cemail=#{userId}
+ </sql>
+ 
+ <sql id="common-3">
+	select iid,cfrom,csubject,dcreatedate,istatus,'i' as t
+	from t_message_info d
+	where d.istatus = 4
+	and cemail=#{userId}
+ </sql>
+  
+  <select id="getMyMessageTotal" resultType="int" parameterType="map">
+  	select count(*) from
+  	(
+  		<include refid="common-1"></include>
+		UNION ALL
+		<include refid="common-3"></include>
+  	)e
+  	
+  </select>
+  <select id="getMyMessageForPage" resultMap="BaseResultMap" parameterType="map">
+	<include refid="common-1"></include>
+	UNION ALL
+	<include refid="common-2"></include>
+	<if test="page != null and page != '' and pageSize != null and pageSize != '' ">
+    	ORDER BY istatus desc,dcreatedate desc limit ${pageSize} offset
+		(${page}-1)*${pageSize}
+    </if>
+    
+  </select>
+  
+  <update id="updateMessageStatus" parameterType="map">
+  	update t_message_info
+	set istatus=${status} 
+	<where>
+		<choose>
+			<when test="id != null and id != '' ">
+				iid = ${id}
+			</when>
+			<otherwise>
+				<if test="broadcastId != null and broadcastId != '' ">
+					ibroadcastid = ${ibroadcastid}
+				</if>
+				<if test="userId != null and userId != '' ">
+					and cemail = #{userId}
+				</if>
+			</otherwise>
+		</choose>
+	</where>
+  </update>
+  
+  <select id="getDetail" resultMap="BaseResultMap" parameterType="map">
+  	select 
+  	<include refid="common-0"></include>
+  	from t_message_info
+  	where iid = ${id}
+  </select>
+  
+  <select id="isExisted" resultType="int" parameterType="map">
+  	SELECT count(*) from t_message_info
+	where 1=1
+	<if test="broadcastId != null and broadcastId !='' ">
+		and ibroadcastid = ${broadcastId}
+	</if>
+	<if test="userId != null and userId != '' ">
+		and cemail = #{userId}
+	</if>
+	
+  </select>
+  
+  <insert id="insert" parameterType="map">
+  	insert into t_message_info(iwebsiteid, isendid, cfrom, csubject, ccontent, itype, isendmethod,istatus,cemail)
+  	values(#{websiteId},${sendId},#{from},#{subject},#{content},${type},${sendMethod},${status},#{email})
+  </insert>
+  
+</mapper>

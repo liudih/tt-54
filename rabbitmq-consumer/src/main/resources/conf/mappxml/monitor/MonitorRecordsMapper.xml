@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rabbit.conf.mapper.monitor.MonitorRecordsMapper">
+
+	<insert id="addMonitorRecords" parameterType="java.util.List">
+		insert into
+		t_rabbit_monitor (
+		record_key, 
+		opt_type,
+		record_state,
+		node_data,
+		fail_reason,
+		created_on,
+		created_by,
+		last_updated_on,
+		last_updated_by,
+		is_deleted)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+			#{item.recordKey,jdbcType=VARCHAR},
+			#{item.optType,jdbcType=VARCHAR},
+			#{item.recordState,jdbcType=VARCHAR},
+			#{item.nodeData,jdbcType=VARCHAR},
+			#{item.failReason,jdbcType=VARCHAR},
+			#{item.createdOn,jdbcType=VARCHAR},
+			#{item.createdBy,jdbcType=VARCHAR},
+			#{item.lastUpdatedOn,jdbcType=VARCHAR},
+			#{item.lastUpdatedBy,jdbcType=VARCHAR},
+			#{item.isDeleted,jdbcType=VARCHAR}
+			)
+		</foreach>
+	</insert>
+	<insert id="addMonitorRecord" parameterType="com.rabbit.dto.monitor.RabbitMonitorDto">
+		insert into
+		t_rabbit_monitor (
+		record_key, 
+		opt_type,
+		record_state,
+		node_data,
+		fail_reason,
+		created_on,
+		created_by,
+		last_updated_on,
+		last_updated_by,
+		is_deleted)
+		values(
+			#{rabbitMonitor.recordKey,jdbcType=VARCHAR},
+			#{rabbitMonitor.optType,jdbcType=VARCHAR},
+			#{rabbitMonitor.recordState,jdbcType=VARCHAR},
+			#{rabbitMonitor.nodeData,jdbcType=VARCHAR},
+			#{rabbitMonitor.failReason,jdbcType=VARCHAR},
+			#{rabbitMonitor.createdOn,jdbcType=VARCHAR},
+			#{rabbitMonitor.createdBy,jdbcType=VARCHAR},
+			#{rabbitMonitor.lastUpdatedOn,jdbcType=VARCHAR},
+			#{rabbitMonitor.lastUpdatedBy,jdbcType=VARCHAR},
+			#{rabbitMonitor.isDeleted,jdbcType=VARCHAR}
+			)
+	</insert>
+</mapper>

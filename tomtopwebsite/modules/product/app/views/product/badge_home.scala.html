@@ -1,0 +1,49 @@
+@(product: valueobjects.product.ProductBadge,
+	startLabel: Html,
+	endLabel: Html,
+	isTime: Boolean = false,
+	isReview: Boolean = true
+	)
+@import services.base._
+@import services.base.utils._
+@if(product != null && product.getPrice()!=null){
+	@startLabel
+		@product.getPrice().getDiscountOption().asScala.map{ d =>
+			@if(product.getPrice().isDiscounted()){
+				<span class="discount">
+					@Utils.percent(d)
+				</span>
+			}
+		}
+	   	<a class="publiceImg" href="@controllers.product.routes.Product.view(product.getUrl)">
+			@img(product.getImageUrl(),product.getTitle(),168,168,null)				   
+	    </a>
+	    <p class="publicTitle b2" >
+	    <a title="@product.getTitle" href="@controllers.product.routes.Product.view(product.getUrl)">
+	    	@if(product.getTitle()!=null && product.getTitle().length>40){
+		    	@product.getTitle.substring(0,40)...
+		    }else{
+		    	@product.getTitle
+		    }
+	    </a></p>
+	    <p class="publicPrice">
+			@if(product.getPrice().isDiscounted()){
+				<span class="presentPrice">@product.getPrice.getSymbol()@Utils.money(product.getPrice.getUnitPrice)</span>
+				/ <span class="originalPrice">@product.getPrice.getSymbol()@Utils.money(product.getPrice.getUnitBasePrice)</span>
+			} else {
+				<span class="presentPrice">@product.getPrice.getSymbol()@Utils.money(product.getPrice.getUnitBasePrice)</span>
+			}
+	    </p>
+	    @if(isReview){
+	    	 @product.getExtended().map{ i=>
+				@i
+		 	 }
+	    }
+
+		@if(isTime){
+	         	@product.getPrice().getValidToOption().asScala.map { validTo =>
+				 <div class="retroclockbox_xs" style="margin:5px 2px;" id="retroclockbox_xs_@product.getListingId" data="@DateFormatUtils.untilNowInMilliseconds(validTo)"></div>
+		    }
+		 }
+	@endLabel
+}

@@ -1,0 +1,33 @@
+[Unit]
+Description=TomTop Website on port %i etcd registration
+
+# Requirements
+Requires=etcd.service
+Requires=tomtopwebsite@%i.service
+
+# Dependency ordering and binding
+After=etcd.service
+After=tomtopwebsite@%i.service
+BindsTo=tomtopwebsite@%i.service
+
+[Service]
+
+# Start
+## Test whether service is accessible and then register useful information
+ExecStart=/bin/bash -c '\
+  while true; do \
+    curl -f localhost:%i/base/assets/favicon.ico; \
+    if [ $? -eq 0 ]; then \
+      etcdctl set /services/tomtopwebsite/%H:%i \'%H:%i\' --ttl 30; \
+    else \
+      etcdctl rm /services/tomtopwebsite/%H:%i; \
+    fi; \
+    sleep 20; \
+  done'
+
+# Stop
+ExecStop=/usr/bin/etcdctl rm /services/tomtopwebsite/%H:%i
+
+[X-Fleet]
+# Schedule on the same machine as the associated Apache service
+X-ConditionMachineOf=tomtopwebsite@%i.service

@@ -1,0 +1,73 @@
+@import "public.less";
+
+.CouponPoints_box{
+  li{margin-bottom:20px;}
+}
+.CouponPoints_Input{width:79%;.border();height:50px;padding:5px 10px;.radius();font-size:16px;}
+.CouponPoints_button{width:20%;margin-left:1%;height:50px;text-align:center;line-height:50px;font-size:18px;font-weight:bold;.radius();
+background-color:#ff9900;color:#fff;float:right;
+  &.coupon_cancel{background-color:#fff;.border();color:#666;}
+}
+.selectCode{position:relative;color:#868686;padding:0px 10px;line-height:50px;}
+
+.couponPaperBox{
+  width:90%;vertical-align:middle;background-color:#fff;.border();overflow:hidden;
+  table{
+    tr{height:100%;
+      td{border:0px;padding:20px 10px;}
+    }
+   }
+    .orange{position:absolute;right:5%;top:40%;}
+}
+.bg_color_gray{
+  .couponPaperBox{margin:0px 2%;margin-bottom:20px;position:relative;width:96%;
+    &:first-child{margin-top:20px;}
+  }
+}
+.coup_used{background:url("../../images/icon/used.png") no-repeat 15% 12px;background-size:90px auto;}
+
+.publicePop_conMP{margin-bottom:20px;}
+.curveBorder{height:100%;background:url("../../images/icon/curveBorder.gif") repeat-y right 0;text-align:center;width:30%;
+        font-size:30px;color:#ff6600;font-weight:bold;
+}
+.couponPaperTxt{font-size:14px;padding-left:2%;width:70%;
+  p{
+    &:first-child{font-weight:bold;.txtLength();width:80%;}
+  }
+}
+
+@media(min-width:50px) and (max-width:590px){
+  .downJT{right:10px;top:10px;width:30px;height:30px;.bkImg(0,-480px);}
+  .CouponPoints_button{font-size:16px;font-weight:normal;
+    &.coupon_cancel{background-color:#fff;.border();color:#666;}
+  }
+  .couponButton{width:90%;margin-left:30px;
+    a{width:40%;display:inline-block;}
+  }
+  .usedCoupons_mess{.messagesNumber{top:0px;}}
+  .bg_color_gray{
+    .couponPaperBox{margin:5px 2%;
+      &:first-child{margin-top:10px;}
+    }
+  }
+}
+@media(min-width:50px) and (max-width:320px){
+  .publicePop_conMP{margin-bottom:20px;}
+  .curveBorder{text-align:center;font-size:14px;}
+  .couponPaperTxt{font-size:12px;padding-left:2%;}
+  .couponPaperBox{width:88%;
+    table{tr{td{padding:8px 10px;}}}
+    .orange{position:relative;top:auto;right:auto;}
+  }
+  .coup_used{background-position:15% 10px;background-size:70px auto;}
+}
+@media(min-width:320px) and (max-width:590px){
+  .publicePop_conMP{margin-bottom:20px;
+    .couponPaperTxt{font-size:12px;padding-left:2%;}
+   }
+  .couponPaperBox{width:88%;
+    table{tr{td{padding:8px 10px;}}}
+    .orange{position:relative;top:auto;right:auto;}
+    .curveBorder{text-align:center;font-size:14px;}
+  }
+}

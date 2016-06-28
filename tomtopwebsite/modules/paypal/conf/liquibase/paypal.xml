@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd"
+	objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+	<changeSet author="reason" id="t_payment_paypal_account-create">
+		<createTable tableName="t_payment_paypal_account" remarks="paypal付款账号表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点号 " />
+			<column name="fbeginprice" type="FLOAT" remarks="开始价格" />
+			<column name="fendprice" type="FLOAT" remarks="结束价格" />
+			<column name="cpostaddress" type="VARCHAR(100)" remarks="post address" />
+			<column name="cbusiness" type="VARCHAR(100)" remarks="账号" />
+			<column name="citemname" type="VARCHAR(200)" remarks="title信息" />
+			<column name="creturnurl" type="VARCHAR(200)" remarks="成功返回路径" />
+			<column name="cnotifyurl" type="VARCHAR(200)" remarks="返回地址" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_payment_paypal_return_log-create">
+		<createTable tableName="t_payment_paypal_return_log"
+			remarks="paypal付款返回日志">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点号 " />
+			<column name="corderid" type="VARCHAR(80)" remarks="订单编号" />
+			<column name="ccontent" type="VARCHAR(5000)" remarks="明细" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="dropColumn-paypalpaymentaccount">
+		<dropColumn columnName="cpostaddress" tableName="t_payment_paypal_account" />
+	</changeSet>
+
+	<changeSet author="reason"
+		id="t_payment_paypal_account-init_data-20150330">
+		<loadData tableName="t_payment_paypal_account" file="init/t_payment_paypal_account.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="addColumn-paypalpaymentaccount">
+		<addColumn tableName="t_payment_paypal_account">
+			<column name="cfromkey" type="VARCHAR(200)" remarks="from_key" />
+		</addColumn>
+	</changeSet>
+
+<changeSet id="t_payment_paypal_account-addColumns" author="lijun">
+	<addColumn tableName="t_payment_paypal_account">
+		<column name="cuser" type="VARCHAR(200)"/>
+		<column name="cpwd" type="VARCHAR(200)"/>
+		<column name="csignature" type="VARCHAR(500)"/>
+	</addColumn>
+</changeSet>
+
+<changeSet id="t_payment_paypal_return_log-add-column" author="lijun">
+	<addColumn tableName="t_payment_paypal_return_log">
+		<column name="ctransactionid" type="VARCHAR(200)" remarks="交易成功后要回填交易号"></column>
+	</addColumn>
+</changeSet>
+</databaseChangeLog>

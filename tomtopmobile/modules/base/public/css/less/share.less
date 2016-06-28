@@ -1,0 +1,27 @@
+@import "public.less";
+
+.shareIcon{text-align:center;}
+.faceBook{.share(0px,0px);width:80px;height:80px;background-color:transparent;border:0px;}
+.paypal{.share(0px,-80px);width:80px;height:80px;background-color:transparent;border:0px;}
+.twitter{.share(0px,-160px);width:80px;height:80px;background-color:transparent;border:0px;}
+.google{.share(0px,-240px);width:80px;height:80px;background-color:transparent;border:0px;}
+
+.product_page_share{display:inline-block;.ground(#fff);.border(@C:#999999);height:42px;.radius();color:#585858;line-height:42px;padding-left:40px;padding-right:5px;
+  &:after{content:"";position:absolute;left:0px;top:0px;width:40px;height:40px;.bkImg(0px,-600px);background-size:100% auto;}
+}
+.sharePop_Box{
+  position:fixed;width:100%;height:100%;left:0px;top:0px;z-index:9999;display:none;
+  .shareConPop{width:100%;padding:5px;position:absolute;bottom:0px;left:0px;z-index:1;background-color:#fff;
+    .shareText{display:inline-block;height:80px;line-height:80px;font-size:18px;font-weight:bold;}
+    hr{margin:0px;}
+    .shareTxt_W{width:200px;text-align:left;margin:0 auto;}
+  }
+}
+
+@media (min-width:768px){
+  .sharePop_Box{
+    .shareConPop{padding:15px;
+      hr{margin:5px 0;}
+    }
+  }
+}

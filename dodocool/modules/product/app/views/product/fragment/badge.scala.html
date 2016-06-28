@@ -1,0 +1,23 @@
+@(product: dto.product.ProductMessage, width: Integer, height: Integer)
+@import views.html.product.image
+<dl class="pro_dl">
+	<dt class="pro_img">
+		<a href="@controllers.product.routes.Product.view(product.getUrl())" class="pro-info-a">
+			@image(product.getImageurl(), product.getTitle(), 265, 265, "pro-info-img")
+		</a>
+	</dt>
+	<dd class="pro_color">
+		@if(null != product.getAttribute()){
+				@product.getAttribute().map{p=>
+	                  <a title="@p._1" href="@controllers.product.routes.Product.view(p._2.getUrl())" class="color-bg @p._1" data-imgurl="@views.product.ImageUtils.getSrcPath(p._2.getImageurl(), width, height)" data-url="@controllers.product.routes.Product.view(p._2.getUrl())" data-title="@p._2.getTitle()"></a>
+	            }
+		}
+	</dd>
+	
+    <dd class="pro_info">
+    	<a href="@controllers.product.routes.Product.view(product.getUrl())" class="pro-info-title">@product.getTitle()</a>
+    </dd>
+</dl>
+
+
+ 

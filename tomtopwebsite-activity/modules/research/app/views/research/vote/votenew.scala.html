@@ -1,0 +1,211 @@
+@(
+	vo : valueobjects.research.vote.VoteComposite,
+	renderer : services.research.vote.VoteCompositeRenderer,
+	pageTitle : entity.activity.page.PageTitle,
+	page : entity.activity.page.Page
+)
+@import services.base.utils.DateFormatUtils
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+<title>Join us & Win Amazing Christmas Gift</title>
+<link type="image/x-icon" rel="icon" href="@controllers.base.routes.Assets.at("favicon.ico")" />
+<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/tomtop.css")" media="screen"/>
+<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/search.css")?@version.BuildVersion.build()" />
+<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/main.css")"/>
+<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/index.css")?@version.BuildVersion.build()" /> 
+<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/base/country.css")" />
+<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" />
+<script type="text/javascript" src="@controllers.base.routes.Assets.at("lib/jquery/jquery.min.js")"></script>
+<script type="text/javascript" src="@controllers.base.routes.Assets.at("js/lib/public.js")?@version.BuildVersion.build()"></script>
+<script type="text/javascript" src="@controllers.base.routes.Assets.at("js/lib/main.js")?@version.BuildVersion.build()"></script>
+<script type="text/javascript" src="@controllers.base.routes.Assets.at("js/lib/jquery.json.min.js")"></script>
+<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+<script type="text/javascript" src="@controllers.base.routes.Assets.at("js/lib/login.js")"></script>
+		
+<link type="text/css" rel="stylesheet" href="@controllers.research.routes.Assets.at("css/style2.css")" />
+<link type="text/css" rel="stylesheet" href="@controllers.research.routes.Assets.at("css/style.css")" />
+<script type="text/javascript" src="@controllers.research.routes.Assets.at("js/html5.js")"></script>
+<script type="text/javascript" src="@controllers.research.routes.Assets.at("js/main.js")"></script>
+<script type="text/javascript" src="@controllers.research.routes.Assets.at("js/snow.js")"></script>
+<script type="text/javascript" src="http://www.tomtop.com/activity/function.js"></script>
+<script>
+function fnScroll(obj,json01,json02,ScrollValue)
+{
+	window.onscroll=function()
+	{
+		var scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
+		if(scrollTop>ScrollValue)
+		{
+			fnMotion(obj,json01);
+		}
+		else
+		{
+			fnMotion(obj,json02);
+		}
+	}
+}
+
+window.onload=function ()
+{
+	var oA=document.getElementsByTagName('a');
+	fnPlusAid(oA);
+	var oBody=document.getElementsByTagName('body')[0];
+	fnRebate(oBody);
+	var oNavsTop=document.getElementById('navs-top');
+	var oNavsBottom=document.getElementById('navs-bottom');
+	fnFastTo(oBody,oNavsTop,oNavsBottom);
+	var oNav=document.getElementById('nav')
+	fnScroll(oNav,{opacity:100},{opacity:0},100);
+}
+</script>
+		@services.base.HtmlUtils.misc().getHead().map { h =>
+			@h
+		}
+</head>
+
+<body>
+<div class="head">
+    <table cellpadding="0" cellspacing="0" border="0">
+        <tbody>
+            <tr>
+                <td class="logo">
+                    <a href="http://www.tomtop.com" target="_blank"><img src="http://www.tomtop.com/img/images/edm/LOGO-20150703-200x50.png" alt="www.tomtop.com" /></a>
+                </td>
+                <td valign="bottom">
+                    <ul class="home">
+                        <li>
+                        <a href="http://www.tomtop.com" target="_blank" style="color:#03779e;">Home<em></em></a></li>
+                        <li>Join us & Win Amazing Christmas Gift</li>
+                    </ul>
+                </td>
+                <td valign="bottom">
+					@views.html.base.login.login_pop()
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="banner">
+    <div class="bannerMain">
+    	<img src="http://www.tomtop.com/img/images/edm/christmas-20151020-1200x580.jpg" alt="" />
+		<img src="http://www.tomtop.com/activity/images/edm/christmas-20151020-381x352.png" class="gaffer">
+    </div>
+</div>
+
+<div id="nav">
+  <div id="navs">
+    <div id="navs-top"><span></span></div>
+    <div id="navs-bottom"><span></span></div>
+  </div>
+</div>
+
+<div class="rules">
+	<p>Rules:<br />
+	1.Sign in our website and choose your favorite item, click “like” on this page.<br />
+	2.The most liked product will be sent as a gift.<br />
+	3.Only ten gifts will be sent randomly! We will post the lucky winner on this page! <br/>&nbsp;&nbsp;&nbsp;So stay tuned!</p>
+	<div class="decorative01"><img src="http://www.tomtop.com/activity/images/edm/christmas-20151020-185x168.png" /></div>
+	<div class="decorative02"><img src="http://www.tomtop.com/activity/images/edm/christmas-20151020-143x178.png" /></div>
+	<div class="decorative03"></div>
+</div>
+
+<section class="contentOut">
+	<div class="contentWarp">
+		<div class="likesAbs">
+				<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-532965a902fc0807" async></script> 
+		</div>
+					@renderer.renderFragment(vo,"vote-item")
+					<input type="hidden" id="votePageType" value="@page.getItype()">
+					<input type="hidden" id="votePageID" value="@page.getIid()">
+					<input type="hidden" id="voteBeginDate" value="@DateFormatUtils.getStrFromYYYYMMDDHHMMSS(page.getDenablestartdate())">
+					<input type="hidden" id="voteEndDate" value="@DateFormatUtils.getStrFromYYYYMMDDHHMMSS(page.getDenableenddate())">
+	</div>
+</section>
+<div class="Thanksgiving">
+	<a href="http://www.tomtop.com/activity/Thanksgiving-20151015.html" target="_blank">
+		<img src="http://www.tomtop.com/img/images/edm/Thanksgiving-20151015-1200x450.jpg">
+	</a>
+	<ul>
+			<li>Purchase $50<p>Get $5 OFF</p><span>Code: TOMTOP5</span></li>
+			<li>Purchase $100<p>Get $10 OFF</p><span>Code: TOMTOP10</span></li>
+			<li>Purchase $150<p>Get $15 OFF</p><span>Code: TOMTOP15</span></li>
+	</ul>
+</div>
+<div class="foot" id="bottom">
+    <div class="foots">
+        <ul>
+            <li>
+            	<span class="footFacebook"></span>
+                <a href="http://www.facebook.com/pages/TOMTOP/104613349590201" target="_blank">Like us <br />
+                	on Facebook</a>
+            </li>
+            <li>
+            	<span class="footTwitter"></span>
+            	<a href="http://twitter.com/tomtopfans" target="_blank">Fllow us<br />
+                	on Twitter</a></li>
+            <li>
+            	<span class="footPinterest"></span>
+                <a href="http://pinterest.com/tomtop" target="_blank">Pin us<br />
+                	on Pinterest</a></li>
+            <li>
+            	<span class="footTOMTOPblog"></span>
+                <a href="http://blog.tomtop.com/" target="_blank">Read us<br />
+                	on our blog</a></li>
+            <li>
+            	<span class="footYoutube"></span>
+                <a href="http://www.youtube.com/linksempire" target="_blank">Watch us<br />
+                	on Youtube</a></li>
+            <li>
+            	<span class="footGoogle"></span>
+                <a href="https://plus.google.com/u/0/b/116838174145341535107" target="_blank">Like us<br />
+                	on Google+</a></li>
+            <div class="clear"></div>
+        </ul>
+        <div class="Copyright">Copyright ©2004- 2015 TOMTOP Wholesale Center. All Rights Reserved.</div>
+    </div>
+</div>
+@services.base.HtmlUtils.misc().getTail().map { h =>
+	@h
+}
+<script>
+createSnow('', 200);
+</script>
+</body>
+
+<script type="text/javascript">
+    var _paq = _paq || [];
+    _paq.push(['trackPageView']);
+    _paq.push(['enableLinkTracking']);
+    (function () {
+        var u = "//piwik.tomtop.com/";
+        _paq.push(['setTrackerUrl', u + 'piwik.php']);
+        _paq.push(['setSiteId', 4]);
+        var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+        g.type = 'text/javascript';
+        g.async = true;
+        g.defer = true;
+        g.src = u + 'piwik.js';
+        s.parentNode.insertBefore(g, s);
+    })();
+</script>
+<noscript><p><img src="//piwik.tomtop.com/piwik.php?idsite=4" style="border:0;" alt=""/></p></noscript>
+<!-- End Piwik Code -->
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-M9TSMK"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push(
+{'gtm.start': new Date().getTime(),event:'gtm.js'}
+
+);var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M9TSMK');</script>
+<!-- End Google Tag Manager -->
+</html>
+
+

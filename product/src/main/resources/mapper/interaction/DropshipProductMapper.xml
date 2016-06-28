@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tomtop.interaction.mappers.DropshipProductMapper">
+	<resultMap id="BaseResultMap" type="com.tomtop.product.models.dto.DropshipProductDto">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="cemail" property="cemail" jdbcType="VARCHAR" />
+		<result column="csku" property="csku" jdbcType="VARCHAR" />
+		<result column="bstate" property="bstate" jdbcType="BIT" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+		<result column="dupdatestatedate" property="dupdatestatedate"
+			jdbcType="TIMESTAMP" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, cemail, csku, bstate, dcreatedate,
+		dupdatestatedate,iwebsiteid
+	</sql>
+	<select id="getDropshipProductDto" resultMap="BaseResultMap" parameterType="com.tomtop.product.models.dto.DropshipProductDto">
+		select
+		<include refid="Base_Column_List" />
+		from t_dropship_product
+		where cemail = #{cemail,jdbcType=VARCHAR}
+		 and csku = #{csku,jdbcType=VARCHAR} 
+		 and iwebsiteid = #{iwebsiteid,jdbcType=INTEGER} 
+		 and #{bstate,jdbcType=BIT}
+	</select>
+	<insert id="insertSelective" parameterType="com.tomtop.product.models.dto.DropshipProductDto">
+		insert into t_dropship_product
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				iid,
+			</if>
+			<if test="cemail != null">
+				cemail,
+			</if>
+			<if test="csku != null">
+				csku,
+			</if>
+			<if test="bstate != null">
+				bstate,
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate,
+			</if>
+			<if test="dupdatestatedate != null">
+				dupdatestatedate,
+			</if>
+			<if test="iwebsiteid != null">
+				iwebsiteid,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				#{iid,jdbcType=INTEGER},
+			</if>
+			<if test="cemail != null">
+				#{cemail,jdbcType=VARCHAR},
+			</if>
+			<if test="csku != null">
+				#{csku,jdbcType=VARCHAR},
+			</if>
+			<if test="bstate != null">
+				#{bstate,jdbcType=BIT},
+			</if>
+			<if test="dcreatedate != null">
+				#{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="dupdatestatedate != null">
+				#{dupdatestatedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="iwebsiteid != null">
+				#{iwebsiteid,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+</mapper>

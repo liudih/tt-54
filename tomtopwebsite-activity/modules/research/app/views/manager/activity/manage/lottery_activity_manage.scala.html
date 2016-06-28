@@ -1,0 +1,94 @@
+@(url : String)
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ <html xmlns="http://www.w3.org/1999/xhtml">
+	<head>	
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="@controllers.research.routes.Assets.at("js/activitymanage/demo.css")" type="text/css">
+		<script type="text/javascript" src="@controllers.base.routes.Assets.at("lib/jquery/jquery.min.js")"></script>
+		<script type="text/javascript" src="@controllers.base.routes.Assets.at("js/lib/jquery.json.min.js")"></script>
+		<script type="text/javascript" src="@controllers.research.routes.Assets.at("js/activitymanage/awardRotate.js")"></script>
+		<script type="text/javascript" src="@controllers.research.routes.Assets.at("js/activitymanage/rotate.js")" ></script>
+	</head>
+	<body> -->
+		<div class="black_banner"><img src="@controllers.research.routes.Assets.at("js/activitymanage/BALCK--20151119-1920_01_02.jpg")" alt="Black Friday" /></div>
+        <div class="contact">
+            <div class="man"><img src="@controllers.research.routes.Assets.at("js/activitymanage/man.png")" alt="man"></div>
+            <div class="cloud"><img src="@controllers.research.routes.Assets.at("js/activitymanage/cloud.png")" alt="cloud"></div>
+            <div class="turntable-bg"><img src="@controllers.research.routes.Assets.at("js/activitymanage/rate_bg.gif")" alt="pointer"></div>
+            <div class="pointer"><img src="@controllers.research.routes.Assets.at("js/activitymanage/start.png")" alt="pointer"></div>
+            <div class="rotate"><img style="transform: rotate(0deg);" id="rotate" src="@controllers.research.routes.Assets.at("js/activitymanage/rate.png")" alt="turntable"></div>
+            <div class="gold"><img src="@controllers.research.routes.Assets.at("js/activitymanage/gold.png")" alt="gold" /></div>
+            <div class="gold" style="left:360px; top:83px; transform:scale(0.5);"><img src="@controllers.research.routes.Assets.at("js/activitymanage/gold.png")" alt="gold" /></div>
+            <div class="gold" style="left:1163px; top:123px; transform:scale(0.5);"><img src="@controllers.research.routes.Assets.at("js/activitymanage/gold.png")" alt="gold" /></div>
+            <div class="gold" style="left:500px; top:600px; transform:scale(0.3);"><img src="@controllers.research.routes.Assets.at("js/activitymanage/gold.png")" alt="gold" /></div>
+        </div>
+        <div class="bg">
+            <div class="wrap">
+              <div class="title">Tip</div>
+              <div class="win">Congratulations! You’ve won the pirce:<span class="alert">xxxx</span></div>
+              <div style="height:37px;"></div>
+              <span class="close" >OK</span>
+            </div>
+           <div class="error">
+              <div class="title">Error</div>
+              <div class="win">Sorry, you’re not eligible for the drawing. Please go to place an order and check out. (Min. Order is $ 20)</div>
+              <div style="height:37px;"></div>
+              <span class="close" >OK</span>
+            </div>
+        </div>
+        <div class="ruler">
+        	<div class="ruler_title">
+            	<div class="t_txt">Rules</div>
+                <em style="left:30px;">&nbsp;</em>
+                <em style="right:30px;">&nbsp;</em>
+            </div>
+            <div class="rule_t">
+            	<ol>
+                    <li>This campaign is for all registered customers in Tomtop.</li>
+                    <li>One play per valid order number(above $20), and this order must be paid successfully.</li>                
+                    <li>Each valid order must purchase betwen 00:00:00(A.M) Nov. 23th and 12:00:00 (P.M) Dec. 10th, 2015(UTC+8)</li>                
+                    <li>The Coupon prizes will be send to your account automatically. Please check in the form of  “My Coupons”  It can be used on product without special discounts only. </li>                
+                    <li>The Order Refund prizes will be processed within 7 workdays in the form of “My Points”. </li>               
+                </ol>
+                <div style="margin-top:20px;"><b>Notes:</b><br />If the draw order has to be cancelled or refunded for some reasons, your prize will be withdraw at the same time.</div>
+            </div>
+            <div class="ruler_title" style="margin-top:58px;">
+            	<div class="t_txt">Congratulations to Winners!</div>
+                <em style="left:30px;">&nbsp;</em>
+                <em style="right:30px;">&nbsp;</em>
+            </div>
+            <div class="rule_t winner txtMarquee-top" style="margin-bottom:30px;">
+            	<div class="bd" style="height:334px;overflow:hidden;">
+                    <ul>
+	                    <li>ddm1234 <span>10% OFF COUPON</span></li>
+	                    <li>ddm1234 <span>40% OFF COUPON</span></li>
+	                    <li>ddm1234 <span>10% OFF COUPON</span></li>
+	                    <li>ddm1234 <span>60% OFF COUPON</span></li>
+	                    <li>ddm1234 <span>80% OFF COUPON</span></li>
+	                    <li>ddm1234 <span>100% OFF COUPON</span></li>
+	                    <li>ddm1234 <span>10% OFF COUPON</span></li>
+	                    <li>ddm1234 <span>20% OFF COUPON</span></li>
+	                    <li>ddm1234 <span>30% OFF COUPON</span></li>
+	                    <li>ddm1234 <span>40% OFF COUPON</span></li>
+	                    <li>ddm1234 <span>60% OFF COUPON</span></li>
+	                    <li>ddm1234 <span>80% OFF COUPON</span></li>
+	                    <li>ddm1234 <span>10% OFF COUPON</span></li>
+	                    <li>ddm1234 <span>10% OFF COUPON</span></li>
+	                    <li>ddm1234 <span>40% OFF COUPON</span></li>
+	                    <li>ddm1234 <span>10% OFF COUPON</span></li>
+                    </ul>
+                </div>
+            </div>
+            <script type="text/javascript">
+				$(function(){
+					$(".bd").myScroll({
+						speed:3000, //数值越大，速度越慢
+						rowHeight:42 //li的高度
+					});
+				});
+			</script>
+        </div>
+	<!-- </body>
+</html> -->
+

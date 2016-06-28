@@ -1,0 +1,5 @@
+"iid","cname","iparentid","ilevel","cclass","curl","ccreateuser","cenname"
+"149","Activity","0","1","149","","liulj","activity"
+"151","Lottery Filter Rule","149","2","151","/sysadmin/activity/luckdraw/qualification","liulj","lotteryfilterrule"
+"152","Lottery Rule","149","2","152","/sysadmin/activity/luckdraw/rule","liulj","lotteryrule"
+"153","Lottery Prize","149","2","153","/sysadmin/activity/luckdraw/prize","liulj","lotteryprize"

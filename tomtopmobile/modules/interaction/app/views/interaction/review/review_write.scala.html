@@ -1,0 +1,151 @@
+@(counts : Integer,
+	 scores : Double,
+     product: valueobjects.product.ProductBadge,
+     starsWidth:Integer,
+     fList : List[dto.interaction.Foverallrating],
+     email : String,
+     attributeMap :Map[String, String],
+     orderDetailId: String
+     )
+
+@import services.base._
+@import services.base.utils._
+@import views.html.home.img
+
+@views.html.base.sub_master("All Reviews"){
+
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+	@controllers.base.routes.Assets.at("css/accountOrder.css")
+}
+@if(product!=null){
+<div class="container bg_color_gray marTop_10">
+	<div class="shoppingCart_OrderlistBox">
+		<div class="shoppingCart_imgBox lineBlock">
+			@product.getPrice().getDiscountOption().asScala.map{ d =>
+				@if(product.getPrice().isDiscounted()){
+					<div class="discount_icon">@Utils.percent(d)</div>
+				}
+			}
+			<a href="@if(product.getUrl!=null){@controllers.product.routes.Product.view(product.getUrl)}">
+			@img(product.getImageUrl(),product.getTitle(),377,377,null,'alt->product.getTitle())
+			</a>
+		</div>
+		<div class="shoppingAdd_TxtBox lineBlock">
+			<a href="@if(product.getUrl!=null){@controllers.product.routes.Product.view(product.getUrl)}">
+				<h5>@product.getTitle</h5>
+			</a>
+			<div class="product_price lineBlock">
+				@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitPrice)
+			</div>
+			@if(product.getPrice().isDiscounted()){
+				<div class="product_priceGR lineBlock">@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitBasePrice)</div>
+			}
+			<ul class="product_attribute">
+				@if(null != attributeMap){
+	           		@attributeMap.map{ j=>
+	           		    <li class="lineBlock">@j._1:@j._2 </li>
+	           		}
+	           	}
+			</ul>
+			<!-- <p class="qtyAddres">QTY:<span>1</span></p> -->
+		</div>
+	</div>
+	<form action="@controllers.interaction.routes.ProductReview.doAddReview(product.getListingId)" enctype="multipart/form-data" id="writeReviewForm" > 
+	<ul class="startUL">
+        <li>
+        	<p class="startTxt lineBlock">Price:</p>
+        	<div class="writeReview_startBG lineBlock">
+	            <div class="writeReview_start start5" data-start="0" data="price" >
+	                <em> </em>
+	                <em> </em>
+	                <em> </em>
+	                <em> </em>
+	                <em> </em>
+	            </div>
+           	</div>
+        </li>
+        <li>
+        	<p class="startTxt lineBlock">Quality:</p>
+        	<div class="writeReview_startBG lineBlock">
+	            <div class="writeReview_start start5" data-start="0" data="quality">
+	                <em> </em>
+	                <em> </em>
+	                <em> </em>
+	                <em> </em>
+	                <em> </em>
+	            </div>
+           	</div>
+        </li>
+        <li>
+        	<p class="startTxt lineBlock">Usefulness:</p>
+        	<div class="writeReview_startBG lineBlock">
+	            <div class="writeReview_start start5" data-start="0" data="usefulness">
+	                <em> </em>
+	                <em> </em>
+	                <em> </em>
+	                <em> </em>
+	                <em> </em>
+	            </div>
+           	</div>
+        </li>
+        <li>
+        	<p class="startTxt lineBlock">Shipping:</p>
+        	<div class="writeReview_startBG lineBlock">
+	            <div class="writeReview_start start5" data-start="0" data="shipping">
+	                <em> </em>
+	                <em> </em>
+	                <em> </em>
+	                <em> </em>
+	                <em> </em>
+	            </div>
+           	</div>
+        </li>
+        <li>
+        	<p class="startTxt lineBlock"><b>Overall Rating:</b></p>
+        	<div class="writeReview_startBG lineBlock">
+	            <div class="writeReview_Score" data-start="0" id="scores" style="width: 100%;" >
+	                <em> </em>
+	                <em> </em>
+	                <em> </em>
+	                <em> </em>
+	                <em> </em>
+	            </div>
+           	</div>
+        </li>
+    </ul>
+    <div class="conveyPic">
+    	<textarea id="ccomment" name="ccomment" placeholder="At this moment, do you want to say something." class="writeReview_area"></textarea>
+    	<ul class="addPic_Box lbBox" id="postPhotos_popBox">
+            <li class="addPic lineBlock" id="addPic">
+            	<input type='file' name="picture" class='addPicInput'/>
+            	<input type="hidden" name="clistingid" value="@product.getListingId" />
+                <input type="hidden" name="index"/>
+            </li>
+            <div class="clear"></div>
+        </ul>
+        <p id="imgmsg" style="margin-left:20px; color:red; margin-top:10px"></p>
+    </div>
+	<div class="payTable">
+		<a class="button_orange span98" href="javascript:;" onclick="tijiao()" >Submit</a>
+	</div>
+	<input type="hidden" name="orderDetailId" value="@orderDetailId" class="orderDetailId" />
+	<input id="iprice" name="iprice" type="hidden" value="5" />
+	<input id="iquality" name="iquality" type="hidden" value="5"/>
+	<input id="iusefulness" name="iusefulness" type="hidden" value="5" />
+	<input id="ishipping" name="ishipping" type="hidden" value="5"/>
+	<input id="foverallrating" name="foverallrating" type="hidden" value="5"/>
+	<input type="hidden" id="addpicUrl" value="@controllers.interaction.routes.ProductReview.doAddPicture(product.getListingId)" />
+	<input type="hidden" id="getimgUrl" value="@controllers.interaction.routes.ProductReview.getPreveiwImageWithSession()" />
+	<input type="hidden" id="delimgUrl" value="@controllers.interaction.routes.ProductReview.delPreveiwImageWithSession()" />
+	<input type="hidden" id="atimgUrl" value="@controllers.interaction.routes.ProductReview.at()" />
+	<input type="hidden" name="indexs" value="" />
+	</form>
+</div>
+}
+@services.base.HtmlUtils.misc().addTailOnce{
+<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+<script  language="javascript" type="text/javascript" src='@controllers.interaction.routes.Assets.at("js/writeReviewValidate.js")'></script>
+<script  language="javascript" type="text/javascript" src='@controllers.interaction.routes.Assets.at("js/reviewUploadPhoto.js")'></script>
+}
+}

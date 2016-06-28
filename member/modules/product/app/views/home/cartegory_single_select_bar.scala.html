@@ -1,0 +1,48 @@
+@(catelist: List[dto.product.CategoryWebsiteWithName])
+    
+@if(catelist!=null && catelist.size()>0){   
+<ul class="HottestItems">
+	<li class="attributeTitle">@Messages("hottest.items")</li>
+	<li class="newArivals_sp" id="categoryCon">
+	    <span data=""><a class="all" href="javascript:void(0);"><i></i>@Messages("all")<em></em></a></span>
+	    @catelist.map{c =>
+				<span data="@c.getIcategoryid()"><a class="@controllers.product.Special.categoryNameToClassName(c.getCname())"
+				 href="javascript:;"><i></i>@c.getCname()<em></em></a></span>
+			}
+	    <div class="clear"></div>
+	</li>
+</ul>
+}
+
+@services.base.HtmlUtils.misc().addTailOnce{
+<script>
+	//类目筛选 	
+	$("#categoryCon span").click(function(){
+		var n = $(this);
+		n.addClass("spanActive");
+		n.siblings().removeClass("spanActive");
+		$("#category").val($("#categoryCon .spanActive:eq(0)").attr("data"));
+		$("#p").val(1)
+		$("#searchbar").submit();
+	});
+	$(function(){
+		//设置类目选中
+		var existCategory = $("input[name='category']:eq(0)").val();
+		var isexist = false;
+		$("#categoryCon span").each(function(i,e){
+			var n = $(e);
+			if(n.attr("data")==existCategory){
+				n.addClass("spanActive");
+				isexist = true;
+			}
+		})
+		if(!isexist){
+			$("#categoryCon span:eq(0)").addClass("spanActive");
+		}
+		//如果不存在category的input就生成
+		if(!document.getElementById("category")){
+			$("#searchbar").append('<input type="hidden" id="category" name="category" value="" />');
+		}		
+	})
+</script>
+}

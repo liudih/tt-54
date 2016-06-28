@@ -1,0 +1,125 @@
+@(cart: facades.cart.Cart, extra: com.fasterxml.jackson.databind.JsonNode)
+@helper.javascriptRouter("js_routes")(
+		controllers.loyalty.routes.javascript.MyCoupon.apply )
+@import views.html.helper._
+
+@if(extra == null) {
+<div id="tt-coupon" class="bulkrate bulkBott_H">
+	<div id="usable-coupon-div" style="display:none;">
+		<p id="order-couponcode-check"><span></span>@Messages("coupon.availablecoupon")</p>
+		
+		@form(controllers.loyalty.routes.MyCoupon.getMyUsableCoupon(), 'class->"cart_apply", 'style->"display: block;") {
+			<input type="hidden" id="order_couponcode_cartid" name="cartId" value="@cart.getId()">
+			<p class="red" style="display: none;">@Messages("coupon.code") "<strong></strong>" @Messages("is.not.valid")</p>
+		}
+		<ul class="" id="order_result_couponcode" style="display:none;"></ul>
+	</div>
+</div>
+
+<div id="alert_div" class="pu_pop popNone_s" style="display:none;">
+	<div class="pu_popBox">
+    	<div class="empty"></div>
+    	<div class="pu_popCon">
+                <p class="pu_popTxt"></p>
+                <a id="alert_cancel" href="javascript:;" class="hsInputs lineBlock">OK</a>
+        </div>
+    </div>
+	<div class="blockPopup_black"></div>
+</div>
+
+  @services.base.HtmlUtils.misc().addTailOnce{
+  <script type="text/javascript">
+	  function getavailablecode(first){
+		  $('#order_result_couponcode').empty();
+		  $('#order_result_couponcode').removeClass('orders_caYHJ');
+		  var url = "@controllers.loyalty.routes.MyCoupon.getMyUsableCoupon()";
+		  $.ajax({  
+		        type: 'GET',  
+		        dataType : "json",  
+		        data:{cartId:$('#order_couponcode_cartid').val()},
+		        url: url,  
+		        error: function () {
+		             
+		        },  
+		        success:function(data){
+			        if(data.length > 0){
+			        	
+			        	$('#usable-coupon-div').show();
+			        	var listHtml='';  
+			            for(var i=0 ; i < data.length ; i++){  
+			                listHtml += "<li><label><input type='radio' name='order-coupon-radio' value= " + data[i].code + " class='lineBlock' id='check" + i + "'/>"+
+			                "<p class='lineBlock'>" + data[i].code + "</p>";
+			                listHtml += "<p class='lineBlock'>" + data[i].value + "</p>";  
+			                listHtml += "</label></li>";
+			            }  
+			            var order="<div id='order_code_submit' name='order_code_submit_extra' id='order_couponcode'  class='hsInputs'>apply </div> ";
+			            listHtml+=order;
+			             $('#order_result_couponcode').addClass('orders_caYHJ');
+			        	 $('#order_result_couponcode').html(listHtml);
+			        	 $('#order_result_couponcode').attr('loaded',true);
+			        	 $("#order_code_submit").click(function(){
+			        		$(this).unbind('click');
+			       			getorder();
+			       	  	})
+			        }else{
+			        	var dp = $('#usable-coupon-div').css('display');
+			        	if("none" == dp){
+			        		return;
+			        	}
+			        	var p = $('#alert_div').find('p');
+				        p.empty();
+				        p.append('there is no cupone  which could be used for this article in the cart.');
+			        	$('#alert_div').show();
+			        }
+		        }  
+		    });  
+	  };
+	  //获取使用优惠券后的购物车
+	  function getorder(){
+		  var cartId=$('#order_couponcode_cartid').val();
+		  var code = $("input[name='order-coupon-radio']:checked").val();
+		  console.log('code='+code);
+		  var url=js_routes.controllers.loyalty.MyCoupon.apply(cartId,code).url;
+		  $.ajax({ 
+			
+			  type: 'POST',  
+		        dataType : "html",  
+		        url: url,
+		        error: function () {
+		           var p = $('#alert_div').find('p');
+		           p.empty();
+		           p.append('Promotion code and coupon cannot be used at the same time.');
+		           $('#alert_div').show();
+		        },  
+		        success:function(data){
+		        	window.location.reload();
+		        }
+		  })
+	  }
+  
+  $(function(){
+	   getavailablecode(true);
+	  
+	  $('#alert_cancel').click(function(){
+		  $('#alert_div').hide();
+	  });
+	  $("#order-couponcode-check").click(function(){
+		  var checked = $(this).attr('checked');
+		  if(!checked){
+			  $(this).attr('checked',true);
+			  $('#order_result_couponcode').show();
+			  @if(extra == null) {
+				  getavailablecode();
+			  }
+			  $(this).parent().parent().addClass('bulkClick');
+		  }else{
+			  $(this).attr('checked',false);
+			  $('#order_result_couponcode').hide();
+			  $(this).parent().parent().removeClass('bulkClick');
+		  }
+	  });
+
+  })
+  </script>
+  }
+  }

@@ -1,0 +1,88 @@
+@(frm: Form[forms.member.login.LoginForm],
+	 reg: Form[forms.member.register.RegisterForm],
+	 otherLogins: List[Html],
+	 backUrl: String,
+	 errorsMap:  Map[String, List[String]]
+  )
+@import views.html.helper._
+@views.html.base.master{
+     
+<div class="container login_page">
+        <h3>@Messages("sign.in.or.register.a.new.account")</h3>
+        @if(flash.get("login_message") != null){
+        	<span class="login_message">@flash.get("login_message")</span>
+        }
+    <div class="signIn">
+        <h4>@Messages("sign.in")</h4>
+      @form(controllers.member.routes.Login.login(backUrl),'class->"form-signin",'role->"form",'id->"loginForm",'autocomplete->"off") {
+         <ul>
+            <li>
+               	<em class="loginEmail"></em>
+            	<input id="email" class="search_txt inp" type="text" name="email" placeholder="@Messages("enter.your.email.address")">
+               		@if(errorsMap!=null && errorsMap.size()>0){
+               			@if(errorsMap.containsKey("email")){
+            	       	 	@errorsMap.get("email").map{e=>
+            	           		@e
+            	        	 }
+            	      	}
+            	    }
+            </li>
+            <li>
+            	<em class="loginLock"></em>
+                <input id="password" type="password" name="password" placeholder="@Messages("enter.your.password")">
+                  @if(errorsMap!=null && errorsMap.size()>0){
+            	   @if(errorsMap.containsKey("password")){
+            	        @errorsMap.get("password").map{e=>
+            	           @e
+            	        }
+            	   }
+            	}
+            </li>
+        </ul>
+        <p class="red">
+        @if(errorsMap!=null && errorsMap.size()>0){
+            	   @if(errorsMap.containsKey("accounterror")){
+            	        @errorsMap.get("accounterror").map{e=>
+            	           @e
+            	        }
+            	   }
+            	}
+            </p> 
+	 	@if(backUrl != null) {
+	 	<input type="hidden" name="backUrl" value="@backUrl" />
+	 	}
+        <div class="singInBotone">
+        	<input id="submit" class="log_sinIn" type="submit" value="@Messages("login")">
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="@controllers.member.routes.FindPassword.findPasswordForm()">@Messages("forgot.your.password")</a>
+        </div>
+      }
+        <div class="singInBottwo">
+        	@otherLogins.map{ b =>
+        		@b
+        	}
+        </div>
+        <hr>
+    </div>
+    @views.html.member.register.reg_inc(reg)
+    <div class="clear"></div>
+</div>
+
+	@services.base.HtmlUtils.misc().addHeadOnce{
+		<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/login.css")?@version.BuildVersion.build()" /> 
+	}
+
+	 @services.base.HtmlUtils.misc().addTailOnce{
+ 			<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+			<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+     		<script  language="javascript" type="text/javascript" src='@controllers.member.routes.Assets.at("js/member/loginValidation.js?uid=30044")'></script>
+     		<script  language="javascript" type="text/javascript" src='@controllers.member.routes.Assets.at("js/member/regValidation.js")'></script>
+			<script  language="javascript" type="text/javascript" src='@controllers.member.routes.Assets.at("js/member/emailAutoComplete.js")'></script>
+     		<script>
+	     		$(function(){
+	     			$.AutoComplete('#email');
+	     		});
+     		</script>
+     }
+
+}
+ 

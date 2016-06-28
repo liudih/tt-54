@@ -1,0 +1,16 @@
+@**
+ * 使用方式：
+ * （注意：PageNo 是 0 为基数）
+ *
+ * @views.html.base.paging(products){i =>
+ *   <a href="@routes.Product.list(i)">@i</a>
+ * }
+ *@
+@(result: valueobjects.base.Page[_])(func : (Int => Html))
+@if(result.totalPages > 1){
+<ul class="pagination">
+	@for(i <- 0 to result.totalPages-1) {
+		<li @if(i == result.pageNo){class="current"}>@func(i)</li>
+	}
+</ul>
+}

@@ -1,0 +1,2 @@
+@(reviewCount: Integer,highliht:Boolean)
+<li @if(highliht){ class="leftAct" } ><a href="@controllers.interaction.review.routes.MemberReview.reviewlist()">@Messages("my.review") (@reviewCount)</a></li>

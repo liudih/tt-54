@@ -1,0 +1,79 @@
+@(listingid: String, sku: String)
+@helper.javascriptRouter("theRoutes2")(
+	controllers.base.routes.javascript.Captcha.checkCaptcha,
+	controllers.interaction.routes.javascript.Wholesale.addData
+)
+<li class="wholesaleInquiry">
+	<span class="popname"><em></em>@Messages("wholesale.inquiry")</span> 
+	<div class="blockPopup_box" id="wholesaleBox">
+			<div class="postPhotos_popBox scrollWZ">
+				<div class="customer_popClose"></div>
+				<div class="scrollBox">
+				<p class="matchTitle">@Messages("wholesale.inquiry")</p>
+				<form action="@controllers.interaction.routes.Wholesale.addData()" name="theform1" id="theform1"
+				method="POST">
+				<input type="hidden" name="clistingid" value="@listingid"/> 
+				<input type="hidden" name="csku" value="@sku"/> 
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="120">@Messages("name") <span class="red">*</span></td>
+						<td><input type="text" name="cname"></td>
+					</tr>
+					<tr>
+						<td>@Messages("mobile.phone") <span class="red">*</span></td>
+						<td><input type="text" name="cphone"></td>
+					</tr>
+					<tr>
+						<td>@Messages("e-mail.address") <span class="red">*</span></td>
+						<td><input type="text" name="cemail"></td>
+					</tr>
+					<tr>
+						<td>@Messages("your.target.price") <span class="red">*</span></td>
+						<td><input type="text" name="ftargetprice"></td>
+					</tr>
+					<tr>
+						<td>@Messages("order.quantity") <span class="red">*</span></td>
+						<td><input type="text" name="iquantity"></td>
+					</tr>
+					<tr>
+						<td>@Messages("country.state") <span class="red">*</span></td>
+						<td><input type="text" name="ccountrystate"></td>
+					</tr>
+					<tr>
+						<td>@Messages("company.name") <span class="red">*</span></td>
+						<td><input type="text" name="ccompany"></td>
+					</tr>
+					<tr>
+						<td>@Messages("write.an.inquiry") <span class="red">*</span></td>
+						<td><textarea class="notes" name="cinquiry"></textarea></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>* @Messages("wholesale.inquiry.description1") <br> 
+						</td>
+					</tr>
+					<tr>
+                      <td>@Messages("verification.code") <span class="red">*</span></td>
+                      <td class="captchatd">
+	                      <input name="captcha" id="captcha2" type="text" class="code" />
+	                      <div class="code_txt" style="width:90px;min-width:90px;">
+	                      	<img class="captcha" src="@controllers.base.routes.Captcha.generate()" onclick="this.src='@controllers.base.routes.Captcha.generate()?r='+Math.random();" style="cursor:pointer;" title="change" width="70" height="30" />
+	                      </div> 
+                      <!-- <label class="edit_error">An account already.</label> -->
+                      </td>
+                    </tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td><input class="rightPaly_buyNow" type="submit"
+							value="@Messages("submit")" /></td>
+					</tr>
+				</table>
+				</form>
+				</div>
+			</div>
+			<div class="blockPopup_black"></div>
+</div>
+</li>
+@services.base.HtmlUtils.misc().addTailOnce{
+<script src="@controllers.interaction.routes.Assets.at("js/interaction/wholesale.js")" ></script>
+}

@@ -1,0 +1,9 @@
+ilanguageid,ishippingid,cname,ctitle,ccontent,cfreecontent
+1,5,MailTracking,ChinaLandMailTracking,"By Airmail, with track number 10-20 business days arrived. (Over 2kg, will be shipped with multiple packages) ",null
+1,6,ChinaEMS,EMS From China,"By EMS From China Warehouse, 5 - 10 business days arrived.",null
+1,7,ChinaDHL,DHL From China,"By DHL From China Warehouse, 3 - 5 business days arrived.",null
+1,8,United Kingdom Royalmail Without Track number,Royalmail Without Track number From UK,"By Royalmail  From United Kingdom Warehouse Without Track number, 2 - 5 business days arrived.",null
+1,9,United States USPS,USPS From  USA,"By USPS From United States Warehouse, 2 - 5 business days arrived.",null
+1,10,DE Post,DE Post,"By DE Post Without Tracking number, 2 - 3 business days arrived",null
+1,11,DE DHL,DE DHL,"By DE DHL, 2 - 3 business days arrived",null
+1,12,Free Shipping - Air Mail From China,"By Airmail, without track number 10-20 business days arrived. (Over 2kg, will be shipped with multiple packages)","This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.",null

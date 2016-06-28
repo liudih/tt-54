@@ -1,0 +1,1 @@
+order.cart.total=ES Total

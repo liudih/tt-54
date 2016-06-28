@@ -1,0 +1,27 @@
+@(banners: List[valueobjects.product.AdItem])
+@original = @{play.Play.application().configuration().getString("image.domain.original")}
+<!--  banner图开始  -->
+<div class="banner">
+@if(null!=banner){
+	<div class="flexslider">
+           <ul class="slides">
+	           	@if(null != banners && banners.size > 0){
+	           	  @banners.map{ banner=>
+	           	  	
+		              <li>
+		               <a href="@if(null != banner.getUrl){@banner.getUrl}"><img 
+		                src="
+		               @if(banner.getImgUrl().startsWith("/img")){
+	           	  		 @banner.getImgUrl().replace("/img",original)
+	           	  		}else{
+	           	  			@banner.getImgUrl()
+	           	  		}"
+		                alt="" /></a>  
+		              </li>
+	           	  }
+	           	}
+            </ul>
+       </div>
+   </div>
+}
+<!--  banner图结束  -->

@@ -1,0 +1,16 @@
+@(onemenus: List[dto.CmsMenu], twomenus: Map[Integer,List[dto.CmsMenu]])
+@if(null != onemenus){
+	@onemenus.map{r=>
+         <div class="list_box">
+	        <h4>@r.getCname()</h4>
+			<ul class="list-unstyled">
+				@if(null != twomenus && twomenus.containsKey(r.getIid())) {
+		    	 	@twomenus(r.getIid()).map{m=>
+			      	  <li><a href="@m.getCurl()" rel="nofollow" target="_top">@m.getCname()</a></li>
+			    	}
+	    	 	}
+			</ul>   
+         </div>
+	}
+}
+

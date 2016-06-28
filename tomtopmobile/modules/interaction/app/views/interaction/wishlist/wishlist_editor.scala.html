@@ -1,0 +1,84 @@
+@(product:valueobjects.base.Page[valueobjects.product.ProductBadge]) 
+
+@helper.javascriptRouter("collectRoutes")(
+	controllers.interaction.routes.javascript.Collect.delCollect
+)
+
+@views.html.base.sub_master() {
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+@controllers.base.routes.Assets.at("css/cart_page.css")
+ }
+
+
+<div class="container" id="badgeContent">
+
+  @product.getList().asScala.filter(p => p!=null).map{ p=>
+	@wish_edit_base(p)
+	
+	}
+
+	
+	<div class="productButtonBottom">
+			<a class="span45 button_cancel" href="javascript:;" id="iscancel">Cancel</a>
+			<a class="span45 button_orange" href="javascript:;" id="isRemove">Remove</a>
+	</div>
+</div>
+
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+ 	@controllers.base.routes.Assets.at("js/jquery.esn.autobrowse.min.js")
+ 	@controllers.base.routes.Assets.at("js/jstorage.min.js")
+ 	@controllers.product.routes.Assets.at("js/scroll_load.js")
+}
+
+@services.base.HtmlUtils.misc().addTailOnce{
+<script>
+   var arr="";
+   $(function(){
+	$("#iscancel").click(function(){
+		window.history.go(-1);
+	});
+	
+	  $("#isRemove").click(function(){
+		  arr="";
+		$(".input_control").each(function(i,e){
+			var ii = $(e).find("input[type=checkbox]:eq(0)");
+			if(ii[0].checked){
+		     arr += ii[0].value+",";
+			}
+		});
+        if(arr==""){
+        	ttmErrorAlert("Choose the item you want to delete.",3000);
+       	 return;
+        }else{
+        Dialog(
+        	   function (){
+        	   var delcollecturl = collectRoutes.controllers.interaction.Collect.delCollect(arr).url;
+        		$.get(delcollecturl, {
+        		}, function(data) {
+        		if (data.result == "success") {
+        		arr="";
+        		location.reload();
+        		} else {
+        		alert(data.result);
+        		}
+        	  }, "json"); 
+        		     	
+           }
+        		,"Are you sure you want to delete it?");
+      
+        }
+	});
+   })
+   
+</script>
+
+	<script type="text/javascript">
+	var moreurl = "@controllers.interaction.routes.Collect.wishAsynlistEdit()";
+	</script>
+	
+
+ }
+}
+
+
+

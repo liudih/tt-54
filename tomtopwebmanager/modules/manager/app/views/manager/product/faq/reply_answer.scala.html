@@ -1,0 +1,23 @@
+@(postId: Integer, answer: String)
+@import views.html.helper._
+<div id="update-answer@postId"  class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	@form(controllers.manager.routes.ProductFAQ.updatePostAnswer(), 'onsubmit->"return false"){
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+		    <h3>回复</h3>
+		</div>
+		<div class="modal-body">
+			<div class="control-group">
+				<label class="control-label">answer</label>
+				<div class="controls">
+					<input type="hidden" name="iid" value="@postId">
+					<textarea name="canswer" value="@answer" rows="8" cols="20" style="margin: 0px 0px 10px; width: 533px; height: 145px;">@answer</textarea>
+				</div>
+			</div>
+		</div>
+	    <div class="modal-footer" style="margin-bottom: -20px;">
+		     <button type="button" id="savaanswer" class="btn btn-default" data-dismiss="modal">关闭 </button>
+             <button type="submit" class="btn blue">保存</button>
+	    </div>
+	}
+</div>

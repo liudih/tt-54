@@ -1,0 +1,43 @@
+@(pBadge:valueobjects.interaction.PriceBadge)
+@import views.html.product.img
+
+        <table width="100%" cellspacing="0" cellpadding="0" border="1" class="myRevi">
+              <tbody>
+              <tr>
+                <th></th>
+                <th>@Messages("Products")</th>
+                <th>@Messages("details")</th>
+                <th>@Messages("date")</th>
+                <th>@Messages("nprice")</th>
+                <th>@Messages("links")</th>
+                <th>@Messages("status")</th>
+              </tr>
+              
+	              @pBadge.getPriceMatch().getList().asScala.map{p=>
+	              <tr>
+	                <td class="firImg descTd"><a href="@controllers.product.routes.Product.view(pBadge.getProductUrl()(p.getClistingid()))">
+	                	@img(pBadge.getImageUrl()(p.getClistingid()), pBadge.getTitleUrl()(p.getClistingid()), 100, 100, null)</a></td>
+	                <td class="match2Td">
+	                    <a href="@controllers.product.routes.Product.view(pBadge.getProductUrl()(p.getClistingid()))" class="txtClips">
+	                     @if(pBadge.getTitleUrl()(p.getClistingid())!=null && pBadge.getTitleUrl()(p.getClistingid()).length>50){
+							@pBadge.getTitleUrl()(p.getClistingid()).substring(0,50)...
+						    }else{
+							@pBadge.getTitleUrl()(p.getClistingid())
+						    }
+	                    </a>
+	                </td>
+	                <td class="match5Td">@p.getCinquiry()</td>
+	                <td class="match6Td">
+	                    @services.base.utils.DateFormatUtils.getDateTimeDDMMYYYY(p.getDcreatedate())
+	                </td>
+	                <td class="match3Td">@p.getFlowerprice()</td>
+	                <td class="match4Td">
+	                    <a href="@p.getCsourceurl()" target="_blank" class="txtClip">
+	                    @p.getCsourceurl()
+	                    </a>
+	                </td>
+	                <td class="match7Td">@p.getCstatic()</td>
+	              </tr>
+              }
+            </tbody>
+        </table>

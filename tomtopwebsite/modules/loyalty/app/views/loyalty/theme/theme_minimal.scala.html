@@ -1,0 +1,114 @@
+@(tc : entity.loyalty.ThemeCss,tt : entity.loyalty.ThemeTitle,theme : entity.loyalty.Theme)(body: Html)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@url = @{services.base.FoundationService._getCurrencyUri}
+
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>@tt.getCtitle()</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
+		<link type="text/css" rel="stylesheet" href="@controllers.loyalty.routes.Assets.at("css/common.css")">
+		<link type="image/x-icon" rel="icon" href="@controllers.base.routes.Assets.at("favicon.ico")" >
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/tomtop.css")" media="screen">
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/search.css")?@version.BuildVersion.build()" />
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/main.css")">
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/index.css")?@version.BuildVersion.build()" /> 
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/base/country.css")" />
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" />
+		<script type="text/javascript" src="@controllers.base.routes.Assets.at("lib/jquery/jquery.min.js")"></script>
+		<script type="text/javascript" src="@controllers.base.routes.Assets.at("js/lib/public.js")?@version.BuildVersion.build()"></script>
+		<script type="text/javascript" src="@controllers.base.routes.Assets.at("js/lib/main.js")?@version.BuildVersion.build()"></script>
+		<script type="text/javascript" src="@controllers.base.routes.Assets.at("js/lib/jquery.json.min.js")"></script>
+		<script type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+		<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+		<style type="text/css">
+			@tc.getCvalue()
+		</style>
+@services.base.HtmlUtils.misc().getHead().map { h =>
+	@h
+}		
+	</head>
+	<body>
+		<div class="theme_language">
+			<ul>
+		    	<li>
+		            <a href="http://www.tomtop.com@url">English</a>
+		        </li>
+		        <li>
+		            <a href="http://ru.tomtop.com@url">Русский</a>
+		        </li>
+		        <li>
+		            <a href="http://es.tomtop.com@url">Español</a>
+		        </li>
+		        <li>
+		            <a href="http://de.tomtop.com@url">Deutsch</a>
+		        </li>
+		        <li>
+		            <a href="http://fr.tomtop.com@url">Français</a>
+		        </li>
+		        <li>
+		            <a href="http://it.tomtop.com@url">Italiano</a>
+		        </li>
+		        <li>
+		            <a href="http://jp.tomtop.com@url">日本語</a>
+		        </li>
+		        <div class="theme_clear"></div>
+		    </ul>
+		</div>
+		<div class="head">
+		    <table cellpadding="0" cellspacing="0" border="0">
+		        <tbody>
+		            <tr>
+		                <td class="logo">
+		                    <div class="topNavigation_logo">
+					    		<div class="topNav_logoT"><a href="/"><img src="@controllers.base.routes.Assets.at("img/Tomtop_logo0603_01.png")" /></a></div>
+					            <div class="topNav_logoB"><img src="@controllers.base.routes.Assets.at("img/Tomtop_logo0603_02.png")" /></div>
+						    </div>
+		                </td>
+		                <td valign="bottom">
+		                    <ul class="home">
+		                        <li>
+		                            <a href="/" target="_blank" style="color:#03779e;">@Messages("home")<em></em></a>
+		                        </li>
+		                        <li>@tt.getCtitle()</li>
+		                    </ul>
+		                </td>
+		                <td>@tp.get("login-pop")</td>
+		            </tr>
+		        </tbody>
+		    </table>
+		</div>
+		<div class="banner">
+		    <div class="banners">
+		    	<img src="@theme.getCbannerurl()" alt="" />
+		    </div>
+		</div>
+		@body
+		<div class="foot" id="footer">
+		    <div class="foots">
+		        <ul>
+		            <li class="Facebook"><a href="http://www.facebook.com/pages/TOMTOP/104613349590201" target="_blank">Like us<br />
+		                on Facebook</a>
+		            </li>
+		            <li class="Twitter"><a href="http://twitter.com/tomtopfans" target="_blank">Fllow us<br />
+		                on Twitter</a></li>
+		            <li class="Pinterest"><a href="http://pinterest.com/tomtop" target="_blank">Pin us<br />
+		                on Pinterest</a></li>
+		            <li class="blog"><a href="http://blog.tomtop.com/" target="_blank">Read us<br />
+		                on our blog</a></li>
+		            <li class="Youtube"><a href="http://www.youtube.com/linksempire" target="_blank">Watch us<br />
+		                on Youtube</a></li>
+		            <li class="Google"><a href="https://plus.google.com/u/0/b/116838174145341535107" target="_blank">Like us<br />
+		                on Google+</a></li>
+		            <div class="theme_clear"></div>
+		        </ul>
+		        <div class="Copyright">Copyright ©2004- 2015 TOMTOP Wholesale Center. All Rights Reserved.(Build: @version.BuildVersion.build())</div>
+		    </div>
+		    <a id="bootom"></a>
+		</div>
+@services.base.HtmlUtils.misc().getTail().map { h =>
+	@h
+}
+	</body>
+</html>

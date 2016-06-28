@@ -1,0 +1,57 @@
+@import views.html.helper._
+@import services.search.criteria._
+@sc = @{play.mvc.Http.Context.current().args.get("searchContext").asInstanceOf[valueobjects.search.SearchContext]}
+@urlprefix = @{play.Play.application().configuration().getString("member.urlprefix")}
+
+
+@helper.javascriptRouter("jsSuggest")(controllers.search.routes.javascript.ProductSearch.suggest)
+@qoption = @{if(sc != null){sc.extractFirst(classOf[KeywordSearchCriteria])}else{play.libs.F.Option.None}}
+<form action="@urlprefix@controllers.search.routes.ProductSearch.search()" method="GET" id="product_search_form" class="lineBlock" role="search" autocomplete="off">
+		<div class="lineBlock headerSearch">
+			<div class="searchWarp">
+				<input id="search_txt" type="text"  name="q" placeholder="@Messages("search")"
+				value="@qoption.asScala.map(k=>k.getKeyword())">
+				<input class="btn btn-primary" type="submit" id="search" value="@Messages("search")" />
+			</div>
+			<ul class="searchHot lbBox" id="suggeste_list">
+			</ul>
+		</div>
+</form>
+@services.base.HtmlUtils.misc().addTailOnce{
+	<script>
+		
+		$(function() {
+			var text = $("#search_txt");
+			var kw = text.val();
+			$.get(jsSuggest.controllers.search.ProductSearch.suggest(kw).url,
+				function(data) {
+					var ul = $("#suggeste_list");
+					$.each(data,function(i, s) {
+							var $item = $("<li class='lineBlock' role='list' data-keywords='"+s.keywords+"'>"
+									+ "<a href='@urlprefix/product?q="
+									+ s.keywords
+									+ "'>"
+									+ s.keywords
+									+ "</a></li>");
+
+							ul.append($item);
+						});
+					ul.show();
+				});
+
+		});
+		$("#product_search_form").on("blur", "#search_txt", function(e) {
+			$(this).siblings("#suggeste_list").fadeOut();
+		});
+
+		$("#search").click(function() {
+			var text = $("#search_txt").val();
+			text = text.replace(/(^\s*)|(\s*$)/g, "");
+			if (text == "") {
+				return false;
+			} else {
+				$("#search_txt").val(text);
+			}
+		})
+	</script>
+}

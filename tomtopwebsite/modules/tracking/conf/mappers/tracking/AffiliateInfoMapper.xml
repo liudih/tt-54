@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mappers.tracking.AffiliateInfoMapper">
+	<resultMap id="BaseResultMap" type="entity.tracking.AffiliateInfo">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+		<result column="cemail" property="cemail" jdbcType="VARCHAR" />
+		<result column="caid" property="caid" jdbcType="VARCHAR" />
+		<result column="isalerid" property="isalerid" jdbcType="INTEGER" />
+		<result column="cpaypalemail" property="cpaypalemail" jdbcType="VARCHAR" />
+		<result column="breceivenotification" property="breceivenotification"
+			jdbcType="BIT" />
+		<result column="bstatus" property="bstatus" jdbcType="BIT" />
+		<result column="bexternal" property="bexternal" jdbcType="BIT" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, iwebsiteid, cemail, caid, isalerid, cpaypalemail,
+		breceivenotification, bstatus,
+		bexternal, dcreatedate
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_affiliate_info
+		where iid = #{iid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_affiliate_info
+		where iid = #{iid,jdbcType=INTEGER}
+	</delete>
+
+	<delete id="deleteByAid" parameterType="java.lang.String">
+		delete from t_affiliate_info
+		where caid = #{aid,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="entity.tracking.AffiliateInfo">
+		insert into t_affiliate_info (iid, iwebsiteid, cemail,
+		caid, isalerid, cpaypalemail,
+		breceivenotification, bstatus, bexternal,
+		dcreatedate)
+		values (#{iid,jdbcType=INTEGER}, #{iwebsiteid,jdbcType=INTEGER},
+		#{cemail,jdbcType=VARCHAR},
+		#{caid,jdbcType=VARCHAR}, #{isalerid,jdbcType=INTEGER}, #{cpaypalemail,jdbcType=VARCHAR},
+		#{breceivenotification,jdbcType=BIT}, #{bstatus,jdbcType=BIT},
+		#{bexternal,jdbcType=BIT},
+		#{dcreatedate,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="entity.tracking.AffiliateInfo">
+		insert into t_affiliate_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				iid,
+			</if>
+			<if test="iwebsiteid != null">
+				iwebsiteid,
+			</if>
+			<if test="cemail != null">
+				cemail,
+			</if>
+			<if test="caid != null">
+				caid,
+			</if>
+			<if test="isalerid != null">
+				isalerid,
+			</if>
+			<if test="cpaypalemail != null">
+				cpaypalemail,
+			</if>
+			<if test="breceivenotification != null">
+				breceivenotification,
+			</if>
+			<if test="bstatus != null">
+				bstatus,
+			</if>
+			<if test="bexternal != null">
+				bexternal,
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				#{iid,jdbcType=INTEGER},
+			</if>
+			<if test="iwebsiteid != null">
+				#{iwebsiteid,jdbcType=INTEGER},
+			</if>
+			<if test="cemail != null">
+				#{cemail,jdbcType=VARCHAR},
+			</if>
+			<if test="caid != null">
+				#{caid,jdbcType=VARCHAR},
+			</if>
+			<if test="isalerid != null">
+				#{isalerid,jdbcType=INTEGER},
+			</if>
+			<if test="cpaypalemail != null">
+				#{cpaypalemail,jdbcType=VARCHAR},
+			</if>
+			<if test="breceivenotification != null">
+				#{breceivenotification,jdbcType=BIT},
+			</if>
+			<if test="bstatus != null">
+				#{bstatus,jdbcType=BIT},
+			</if>
+			<if test="bexternal != null">
+				#{bexternal,jdbcType=BIT},
+			</if>
+			<if test="dcreatedate != null">
+				#{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="entity.tracking.AffiliateInfo">
+		update t_affiliate_info
+		<set>
+			<if test="iwebsiteid != null">
+				iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+			</if>
+			<if test="cemail != null">
+				cemail = #{cemail,jdbcType=VARCHAR},
+			</if>
+			<if test="caid != null">
+				caid = #{caid,jdbcType=VARCHAR},
+			</if>
+			<if test="isalerid != null">
+				isalerid = #{isalerid,jdbcType=INTEGER},
+			</if>
+			<if test="cpaypalemail != null">
+				cpaypalemail = #{cpaypalemail,jdbcType=VARCHAR},
+			</if>
+			<if test="breceivenotification != null">
+				breceivenotification = #{breceivenotification,jdbcType=BIT},
+			</if>
+			<if test="bstatus != null">
+				bstatus = #{bstatus,jdbcType=BIT},
+			</if>
+			<if test="bexternal != null">
+				bexternal = #{bexternal,jdbcType=BIT},
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="entity.tracking.AffiliateInfo">
+		update t_affiliate_info
+		set iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+		cemail = #{cemail,jdbcType=VARCHAR},
+		caid = #{caid,jdbcType=VARCHAR},
+		isalerid = #{isalerid,jdbcType=INTEGER},
+		cpaypalemail = #{cpaypalemail,jdbcType=VARCHAR},
+		breceivenotification = #{breceivenotification,jdbcType=BIT},
+		bstatus = #{bstatus,jdbcType=BIT},
+		bexternal = #{bexternal,jdbcType=BIT},
+		dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP}
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+</mapper>

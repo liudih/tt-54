@@ -1,0 +1,76 @@
+@(products: valueobjects.base.Page[valueobjects.product.ProductBadge],
+	catelist: List[dto.product.CategoryWebsiteWithName],
+	sc: valueobjects.search.SearchContext,
+	req: Map[String, Array[String]],
+	advertisingList : List[valueobjects.product.AdItem],
+	storage: dto.Storage,
+	hotlist: List[valueobjects.product.ProductBadge],
+	storageList : List[dto.StorageParent]
+	)	
+	
+
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+@import services.search.criteria._
+@import services.base._
+@import services.base.utils._
+
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/directories.css")?@version.BuildVersion.build()" /> 
+}
+@services.base.HtmlUtils.misc().addTail{
+	<script src="@controllers.product.routes.Assets.at("js/product/page_filter.js")" ></script>
+}
+@views.html.base.master {
+
+<div class="container LevelOne">
+	
+	 <div class="Bread_crumbs_Box">
+    	<ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="#"></a></li>
+            <li>
+                <dl>
+                    <dt><a class="Bread_link" href="#">@Messages("local.warehouse")</a></dt>
+                </dl>
+            </li>
+            <li class="curr-category">
+               @if(null != storage){
+	                    <a class="Bread_link" href="@controllers.product.routes.Product.storage(storage.getIid())">@storage.getCstoragename()  @Messages("warehouse")</a>
+               } 
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <div class="dirLeft lineBlock">
+        
+        @views.html.home.cartegory_single_select_bar_new(catelist,null)
+  
+        <div class="firBoxP">
+        	@freeship_or_newarrivals_filter(0)
+        </div>
+        @*<div class="firBoxP">
+        	<p class="dirTitle">WareHouse Options</p>
+            <ul class="firThisBox">
+            	@storageList.map{s=>
+            		<li>
+            		<a class="rightThis thisAci" data-name="storageid" data-value="@s.getIid()" href="javascript:;"><span></span></a>
+            		@s.getCstoragename()
+            		</li>
+            	}
+            </ul>
+        </div>*@
+        <div class="firBoxP border0">
+        	<p class="dirTitle">@Messages("hot.products")</p>
+            <ul class="pirListProduct">
+            	@hotlist.map{h=>
+            		@category_badge_hot(h)
+                }
+            </ul>
+        </div>
+    </div>
+    @product_right_temp(products,req,advertisingList,sc)
+</div>
+
+	@tp.get("member-browse-history")
+    	 
+}

@@ -1,0 +1,4 @@
+"iid","cname","iparentid","ilevel","cclass","curl","ccreateuser","cenname"
+"124","Google品类","0","1","124","/sysadmin/google/category","xin","GoogleCategoryMgr"
+"125","品类管理","124","2","125","/sysadmin/google/category/show","xin","ShowGoogleCategoryMgr"
+"140","品类Detail","124","2","126","/sysadmin/google/category/detail","xin","ShowGoogleDetailMgr"

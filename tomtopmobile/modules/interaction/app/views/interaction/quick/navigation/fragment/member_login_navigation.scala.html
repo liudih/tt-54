@@ -1,0 +1,10 @@
+@import views.html.helper._
+
+@(isLogin:Boolean)
+
+@if(isLogin){
+	<li><a href="@controllers.member.routes.MemberController.home()"><span class="login_Icon"> </span></a></li>
+}else{
+	<li><a href="@controllers.member.routes.Login.login()"><span class="login_Icon"> </span></a></li>
+}
+

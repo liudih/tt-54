@@ -1,0 +1,8 @@
+@(menuID: String)
+@menuRender = @{extensions.InjectorInstance.getInstance(classOf[services.dodocool.member.account.MemberAccountMenuRenderer])}
+
+<ul class="user-info">
+		@menuRender.getMenuItems("member", menuID).map{ i =>
+	    	@i
+	    }
+</ul>

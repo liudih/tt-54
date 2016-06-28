@@ -1,0 +1,55 @@
+@(vo: valueobjects.order_api.ShippingMethodInformations, 
+currency: dto.Currency)
+<div id="shipping-method">
+	<input id="shipping-method-input" name="shippingMethodId" value="" type="hidden">
+	<hr class="grayHR100">
+	<h5>Select Shipping Method:</h5>
+	@vo.getList().zipWithIndex.map{e =>
+		<ul onclick="bindClickForShippingMethod(this)" value="@e._1.getFreight()" methodId="@e._1.getId()" class="selectShippingMethod lbBox chooseOneBox">
+			<label class="chooseOneLabel">
+				<li class="lineBlock selectShippingMethod_L input_control">
+						<input type="radio" />
+						<div class="radio"><span> </span></div>
+				</li>
+				<li class="lineBlock selectShippingMethod_C">
+					<p class="mailWay">@e._1.getTitle()</p>
+					<p>@e._1.getContext()</p>
+				</li>
+				<li class="lineBlock selectShippingMethod_R">@currency.getCsymbol() @e._1.getFreight()</li>
+			</label>
+		</ul>
+	}
+</div>
+
+@services.base.HtmlUtils.misc().addTail{
+<script type="text/javascript">
+
+function bindClickForShippingMethod(node){
+	var methodId = $(node).attr('methodId');
+	$('#shipping-method-input').val(methodId);
+	$(node).find('div').addClass('aciCss');
+	var freight = $(node).attr('value');
+	var totalEle = $('#cartGrandTotal');
+	var total = parseFloat(getsubtotal());
+	var shipp = $('#shipCost');
+	
+	if ($("#cart_currency").val() == 'JPY') {
+		total = Math.round(total);
+		freight = Math.round(freight);
+		total = parseInt(total);
+		freight = parseInt(freight);
+		shipp.text(freight);
+		totalEle.text((total + freight));
+	} else {
+		total = parseFloat(total);
+		freight = parseFloat(freight);
+		shipp.text(freight.toFixed(2));
+		//修复总金额格式化留两位小数点 xcf
+		totalEle.text((total + freight).toFixed(2));
+	}
+}
+$(function() {
+	$('#shipping-method').find('ul:first').trigger('click');
+});
+</script>
+}

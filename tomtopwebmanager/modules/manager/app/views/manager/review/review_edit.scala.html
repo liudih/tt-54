@@ -1,0 +1,28 @@
+@(ic:dto.interaction.InteractionComment)
+@if(ic!=null){
+
+<input type="text" name="iid" value="@ic.getIid()" />
+<input type="text" name="email" value="@ic.getCmemberemail()" />
+<input type="text" name="siteid" value="@ic.getIwebsiteid()" />
+<div class="control-group">
+	<label class="control-label">状态：</label>
+	<div class="controls">
+		<select id="istate" name="istate" @if(ic.getIstate()!=0){disabled="disabled"} >
+			<option value="0" >未审核</option>
+			<option value="1" >审核通过</option>
+			<option value="2" >审核不通过</option>
+		</select>
+	</div>
+</div>@ic.getCplatform()
+@if(!"webvip".equals(ic.getCplatform())) {
+<div class="control-group" id="showpoint" style="display:none;">
+	<label class="control-label">输入积分<span class="required">*</span></label>
+	<div class="controls">
+		<input value="5" style="padding:0 !important;" type="text" id="points" name="points" placeholder="input points" class="m-wrap medium span6">
+	</div>
+</div>
+}else{
+	<input value="0" style="padding:0 !important;" type="hidden" id="points" name="points" placeholder="input points" class="m-wrap medium span6">
+}
+
+}

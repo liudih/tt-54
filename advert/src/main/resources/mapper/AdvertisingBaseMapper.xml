@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tomtop.advert.mappers.AdvertisingBaseMapper" >
+  
+  <select id="getAdvertisingByContext" resultType="com.tomtop.advert.models.Advertising" parameterType="com.tomtop.advert.models.AdertContext" >
+   select c.ctitle,a.iid,a.cimageurl,a.iposition,c.chrefurl,m.cbusinessid,c.cbgcolor,c.cbgimageurl,c.bbgimgtile
+    from t_advertising_base a inner join t_advertising_distribution m on m.iadvertisingid=a.iid
+   inner join t_advertising_content c on c.iadvertisingid=a.iid
+    where 1=1 and c.bstatus=true
+    <if test="device != null" >
+        and m.cdevice=#{device,jdbcType=VARCHAR}
+    </if>
+    <if test="businessId != null" >
+        and m.cbusinessid=#{businessId,jdbcType=VARCHAR}
+    </if>
+    <if test="languageId != null" >
+        and c.ilanguageid=#{languageId,jdbcType=INTEGER}
+    </if>
+    <if test="advertisingType != null" >
+        and m.itype=#{advertisingType,jdbcType=INTEGER}
+    </if>
+    <if test="websiteId != null" >
+        and m.iwebsiteid=#{websiteId,jdbcType=INTEGER}
+    </if>
+    <if test="positonId != null" >
+        and a.iposition=#{positonId,jdbcType=INTEGER}
+    </if>
+    order by c.iindex,a.iid  desc
+  </select>
+  
+   
+</mapper>

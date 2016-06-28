@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.member.MemberPhotoMapper">
+	<resultMap id="BaseResultMap" type="dto.member.MemberPhoto">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="cemail" property="cemail" jdbcType="VARCHAR" />
+		<result column="ccontenttype" property="ccontenttype" jdbcType="VARCHAR" />
+		<result column="bfile" property="bfile" jdbcType="BINARY" />
+		<result column="cmd5" property="cmd5" jdbcType="VARCHAR" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, cemail, ccontenttype, bfile, cmd5, dcreatedate,  iwebsiteid
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_member_photo
+		where iid = #{iid,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_member_photo
+		where iid = #{iid,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" parameterType="dto.member.MemberPhoto">
+		insert into t_member_photo
+		(cemail, ccontenttype, bfile, cmd5, iwebsiteid)
+		values ( #{cemail,jdbcType=VARCHAR},
+		#{ccontenttype,jdbcType=VARCHAR},
+		#{bfile,jdbcType=BINARY},
+		#{cmd5,jdbcType=VARCHAR},
+		#{iwebsiteid,jdbcType=INTEGER})
+	</insert>
+
+	<insert id="insertSelective" parameterType="dto.member.MemberPhoto">
+		insert into t_member_photo
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				iid,
+			</if>
+			<if test="cemail != null">
+				cemail,
+			</if>
+			<if test="ccontenttype != null">
+				ccontenttype,
+			</if>
+			<if test="bfile != null">
+				bfile,
+			</if>
+			<if test="cmd5 != null">
+				cmd5,
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate,
+			</if>
+			<if test="iwebsiteid != null">
+				iwebsiteid,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				#{iid,jdbcType=INTEGER},
+			</if>
+			<if test="cemail != null">
+				#{cemail,jdbcType=VARCHAR},
+			</if>
+			<if test="ccontenttype != null">
+				#{ccontenttype,jdbcType=VARCHAR},
+			</if>
+			<if test="bfile != null">
+				#{bfile,jdbcType=BINARY},
+			</if>
+			<if test="cmd5 != null">
+				#{cmd5,jdbcType=VARCHAR},
+			</if>
+			<if test="dcreatedate != null">
+				#{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="iwebsiteid != null">
+				#{iwebsiteid,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="dto.member.MemberPhoto">
+		update t_member_photo
+		<set>
+			<if test="cemail != null">
+				cemail = #{cemail,jdbcType=VARCHAR},
+			</if>
+			<if test="ccontenttype != null">
+				ccontenttype = #{ccontenttype,jdbcType=VARCHAR},
+			</if>
+			<if test="bfile != null">
+				bfile = #{bfile,jdbcType=BINARY},
+			</if>
+			<if test="cmd5 != null">
+				cmd5 = #{cmd5,jdbcType=VARCHAR},
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="dto.member.MemberPhoto">
+		update
+		t_member_photo
+		set 
+		cemail = #{cemail,jdbcType=VARCHAR},
+		ccontenttype=#{ccontenttype,jdbcType=VARCHAR},
+		bfile = #{bfile,jdbcType=BINARY},
+		cmd5 = #{cmd5,jdbcType=VARCHAR},
+		dcreatedate=#{dcreatedate,jdbcType=TIMESTAMP}
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+</mapper>

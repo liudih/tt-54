@@ -1,0 +1,26 @@
+@(ctx: play.mvc.Http.Context)
+@services.base.HtmlUtils.misc(ctx).addTailOnce{
+<script>
+function checkEmail(str){
+   var re = /^(\w-*\.*)+@@(\w-?)+(\.\w{2,})+$/
+   if(re.test(str)){
+       return true;
+   }else{
+       return false;
+   }
+}
+function sendEmail(node){
+	var url = "@controllers.loyalty.routes.SubscribeEmail.subscribe()";
+	var text = $(node).parent().find(".subscribeBox:eq(0)").val();
+	if(!checkEmail(text)){
+		return;
+	}
+	location.href = url+"?email="+text;
+}
+$(".subscribeBox").keydown(function(event) {
+	if(event.keyCode == 13) {
+		sendEmail(this);
+	}
+});
+</script>
+}

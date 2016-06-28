@@ -1,0 +1,48 @@
+@(otherLogins: List[Html])
+@import services.member._
+@country = @{services.base.FoundationService._getCountryObj()}
+@helper.javascriptRouter("js_routes")(
+    controllers.member.routes.javascript.Login.login
+)
+
+<input onclick="checkReview(this);" class="writeReview write_A_review" type="button" value="@Messages("write.a.review")" />
+@services.base.HtmlUtils.misc().addTailOnce{
+
+<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+
+@views.html.member.login.login_common(otherLogins)
+@views.html.member.login.loginredirect()
+
+
+<script type="text/javascript">
+var loginurl = "@controllers.member.routes.Login.loginForm()" + "?backUrl="+encodeURI(location.href);
+var listingid = $("input[name='clistingid']:eq(0)").val();
+function checkReview(self){
+	var s =s || {};
+	s.url="@controllers.interaction.review.routes.ProductReview.checkSign()";
+	s.type='get';
+	async:false;
+	s.data={
+			listingId: listingid
+	};
+	s.success=function(data){
+	    if(data.result=="success"){
+	    	//存订单id
+	    	$(self).parent().find(".orderDetailId:eq(0)").val(data.cid);
+	    	$(self).parent().find(".isVip").val(data.isvip);
+	    	$(self).closest("form").submit();
+	    }
+	    if(data.result=="nologin"){
+	    	//location.href = loginurl;
+	    	changeCaptcha($("#blogin div:eq(0)")[0]);
+	    	$("#blogin").show();
+	    }
+	    if(data.result=="error"){
+    		$(self).parent().siblings(".blockPopup_box").fadeIn();
+	    }
+	}
+	$.ajax(s);
+};								 
+</script>
+}

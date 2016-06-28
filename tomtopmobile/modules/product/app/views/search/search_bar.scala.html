@@ -1,0 +1,98 @@
+@import views.html.helper._
+@import services.search.criteria._
+@sc = @{play.mvc.Http.Context.current().args.get("searchContext").asInstanceOf[valueobjects.search.SearchContext]}
+
+@helper.javascriptRouter("jsSuggest")(controllers.search.routes.javascript.ProductSearch.suggest)
+@qoption = @{if(sc != null){sc.extractFirst(classOf[KeywordSearchCriteria])}else{play.libs.F.Option.None}}
+
+@form(controllers.search.routes.ProductSearch.search(),
+ 		'class->"topSearch_search", 'role->"search", 'autocomplete->"off") {
+<div class="search">
+ 	<div class="searchTxt_Div input_control">
+ 		<a class="searchCSS" href="javascript:;" id="search"> </a>
+ 		<input type="text" class="searchInp  txtInput" placeholder="Search" class="search_txt" 
+ 		name="q" id="search_txt" value="@qoption.asScala.map(k=>k.getKeyword())">
+ 		<i class="sClean"> </i>
+ 	</div>
+ </div>
+ <div class="hotSearches">
+    	<h5>Hot Searches</h5>
+    	<ul class="hotSearches_ul" id="suggeste_list">
+    	</ul>
+    </div>
+ 
+ }
+ 
+ @services.base.HtmlUtils.misc().addTailOnce{
+ 
+
+	
+
+<script>
+ 
+$(".search_txt").focus(function(){
+	$(this).siblings(".hotSearches_ul").css({"display":"block"})
+})
+ 
+function highlightkey(keyword,key){
+    
+	var reg = new RegExp(key)
+	var word=keyword.match(reg);
+	var heightword='<strong  style="color:#ff6600">'+word+'</strong>';
+	return word!=null?keyword.replace(word,heightword):keyword;
+	
+
+}
+
+$(document).ready(function(){
+	var kw = $("#search_txt").val();
+ 	$.get(jsSuggest.controllers.search.ProductSearch.suggest(kw).url,
+	function(data) {
+ 		var $item = "";
+		var ul = $("#suggeste_list");
+		$.each(data, function(i, s){
+			if(s!=null){
+				if(i==0){
+					$item += "<li class='searchFirst' role='list' data-keywords='"+s.keywords+"'>"+highlightkey(s.keywords,kw)+"<span style='float: right'>"+s.results+"</span></li>";
+				}
+				else if(i==1){
+					$item += "<li class='searchSecond' role='list' data-keywords='"+s.keywords+"'>"+highlightkey(s.keywords,kw)+"<span style='float: right'>"+s.results+"</span></li>";
+				}else if(i==2){
+					$item += "<li class='searchThird' role='list' data-keywords='"+s.keywords+"'>"+highlightkey(s.keywords,kw)+"<span style='float: right'>"+s.results+"</span></li>";
+				}else{
+					$item += "<li role='list' data-keywords='"+s.keywords+"'>"+highlightkey(s.keywords,kw)+"<span style='float: right'>"+s.results+"</span></li>";
+				}
+			}
+		});
+		ul.append($item);
+		ul.show();
+	});
+});
+ 
+ 
+ $("#search").click(function(){
+	   var text = $("#search_txt").val();
+	   text = text.replace(/(^\s*)|(\s*$)/g,"");
+	   $(this).closest("form").submit();
+	   if(text == ""){
+		   return false;
+	   } else{
+		   $("#search_txt").val(text);
+	   }
+ });
+ 
+ $('#suggeste_list').on("click", 'li[role=list]', function(ev){
+		
+		var target=ev.target;
+		var suggested = $(target).data("keywords");
+		if (suggested) {
+			
+			var text=$("#search_txt").val(suggested);
+			   $(this).closest("form").submit();
+			
+		}
+	});
+					
+</script>
+
+}

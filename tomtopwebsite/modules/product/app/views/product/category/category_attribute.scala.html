@@ -1,0 +1,37 @@
+@(attribute: valueobjects.product.category.CategoryAttributeMap)
+@if(attribute.getMsHashMap().size() > 0) {
+	<!-- 暂时屏蔽属性的展示 <p id="tags" class="suarchTitle">
+    </p>
+	
+	<div class="attributeBOX">
+    	<div class="attributeHid">
+            <ul>
+            @attribute.getMsHashMap().map{ e =>
+			@e._2.map{e2 =>
+                <li>
+                    <ol name="category-attribuct-key" id="@e._1">@e2._1:</ol>
+                    <ol>
+                    	<div class="attML_BOX" id="category-attribuct">
+                    	@e2._2.map{e3 =>
+                            <span role="attr" data-col="@e._1" data-key="@e3._1" ><a href="javascript:;">@e3._2<em></em></a></span>
+                            }
+                            <div class="clear"></div>
+                        </div>
+                    </ol>
+                    <span class="attM">More<em></em></span>
+                    <span class="attL">Less<em></em></span>
+                    <div class="clear"></div>
+                </li>
+                }
+                }
+            </ul>
+        </div>
+        <div class="searchUD">
+            <b>
+                <span class="attMs">More</span>
+                <span class="attLs">Less</span><em></em>
+            </b>
+            <span>(Color Size)</span>
+        </div>
+    </div> -->
+}

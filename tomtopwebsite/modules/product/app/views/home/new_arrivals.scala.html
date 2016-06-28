@@ -1,0 +1,29 @@
+@(newArrivalsMap: Map[String, List[valueobjects.product.ProductBadge]])
+@categoryName = @{newArrivalsMap.keySet.toArray}
+
+   <h3 class="category" id='f2'>@Messages("new.arrivals")<a href=" @controllers.product.routes.Product.newarrivals()">@Messages("more") >></a></h3>
+    <div class="newArrivals">
+  	  @newArrivalsMap.map{ p=>
+ 		<ul>
+	  	  	@p._2.map{ i=>
+	  	  		<li>
+	  	  		 @views.html.product.badge_home(i,null,null,false,false)
+	  	  		</li>
+	  	  	}
+	  	</ul>
+  	  }
+    </div>
+    <ul class="newArrivals_NA">
+    	<!-- <li class="newNA_Active">Keyboard</li> 表示默认选中 -->
+    	@for(l <- 0 to categoryName.length-1){
+    		@if(l == 0){
+    			<li class="newNA_Active">
+	    	 	  @categoryName(l)
+	    	 	</li>
+    		}else{
+	    		<li>
+	    	 	  @categoryName(l)
+	    	 	</li>
+    		}
+    	}
+    </ul>

@@ -1,0 +1,7 @@
+iid,clevelname,ftotal,discount,iproductcount
+1,Level-0,0.0,0.015,200
+2,Level-1,1000.0,0.03,500
+3,Level-2,5000.0,0.05,1000
+4,Level-3,25000.0,0.07,2000
+5,Level-4,100000.0,0.09,5000
+6,Level-5,500000.0,0.12,10000

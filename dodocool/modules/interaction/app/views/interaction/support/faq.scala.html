@@ -1,0 +1,25 @@
+@(productPosts: List[dto.interaction.ProductPost])
+@helper.javascriptRouter("faqRoutes")(
+	controllers.interaction.routes.javascript.Faq.search
+)
+@views.html.base.master{
+	<!--  主体内容开始  -->
+	<article class="common_wrapper">
+    	<section class="container">
+        	<h2>@Messages("faqs")</h2>
+            <div class="account_box">
+        		<h3 class="legend">@Messages("you.can.find.the.answer.by.using.searching")</h3>
+                <div class="frm_cont">
+                    <input type="text" id="key" name="key"/>
+                    <button type="submit" id="search_faq" title="Go" class="btn btn_go">&nbsp;@Messages("go") &nbsp;</button>
+                </div>
+                @views.html.interaction.support.faq_list.render(productPosts)
+            </div>
+        </section>
+    </article>
+	<!--  主体内容结束  -->
+	
+	@services.dodocool.base.HtmlUtils.misc().addTailOnce{
+		<script  language="javascript" type="text/javascript" src='@controllers.interaction.routes.Assets.at("js/support_faq.js")'></script>
+	}
+}

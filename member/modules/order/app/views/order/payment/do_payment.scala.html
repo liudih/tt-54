@@ -1,0 +1,25 @@
+@(paymentContext: valueobjects.order_api.payment.PaymentContext,
+  paymentProvider: extensions.payment.IPaymentProvider,
+  plugIns: List[extensions.payment.IPaymentHTMLPlugIn])
+  
+@views.html.cart.v2.checkout_new_member(2){
+	<hr>
+	
+	<div class="container payFWait" style="height: 300px;padding-top: 100px">
+		@if(paymentProvider.getDoPaymentHtml(paymentContext) == null){
+			<p>Can't found account with this payment method!</p>
+		}else {
+			<p class="loading">
+				<i>@Messages("redirecting")</i>
+				<img src="@controllers.base.routes.Assets.at("images/payment_wait.gif")">
+			</p>
+			@paymentProvider.getDoPaymentHtml(paymentContext)
+		}
+	</div>
+	
+    
+	@services.base.HtmlUtils.misc().addTailOnce{
+  		<script src="@controllers.base.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.order.routes.Assets.at("js/order/mpayment")" ></script>
+	}
+	@plugIns.map{p => @p.getHtml(paymentContext.getOrder.getOrder)}
+}

@@ -1,0 +1,68 @@
+@(
+    advertisingList : List[valueobjects.product.AdItem],
+    productPage: valueobjects.base.Page[valueobjects.product.ProductBadge],
+    catelist: List[dto.product.CategoryWebsiteWithName],
+    sc: valueobjects.search.SearchContext,
+    req: Map[String, Array[String]]
+)
+
+@tp = @{template.TemplateService.getInstance().getContents()}
+@import services.base._
+@views.html.base.master{
+	@HtmlUtils.misc().addHeadOnce{
+	 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/search.css")?@version.BuildVersion.build()" /> 
+	}
+    <div class="container LevelOne">
+    <div class="Bread_crumbs_Box">
+        <ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="/"></a></li>
+            <li>
+                <p>
+                    <a class="Bread_link" href="javascript:;">@Messages("hot")</a>
+                </p>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+    @if(advertisingList !=null && advertisingList.size()>0){
+    <div class="specialsBanner">	 
+	    @advertisingList.map{a=>
+			@Html(a.getDefaultShow())
+		}
+    </div>
+   	}
+	
+	@views.html.home.cartegory_single_select_bar(catelist)
+    @views.html.product.sortbar{
+    	<!-- 选中的品类 -->
+    	@if(sc.extractFirst(classOf[services.search.filter.CategorySearchFilter]).isDefined()) {
+		  	@sc.extractFirst(classOf[services.search.filter.CategorySearchFilter]).asScala.map{k =>
+		  		@k.getCategories().map{m => <input type="hidden" id="category" name="category" value="@m" />} 
+		  	}
+		}else{
+			<input type="hidden" id="category" name="category" value="" />
+		}
+	}(req)(sc)
+     
+    @if(productPage.getList!=null && productPage.getList().size>0){
+    	<ul class="arrangeClick arrangeLess block">
+           @productPage.getList().map{p=>
+             @views.html.product.gadget.badge_big(p)
+           }
+           <div class="clear"></div>
+        </ul>
+	 	<ul class="arrangeList">
+		 	@productPage.getList().map{p=>
+		   		@views.html.product.gadget.badge_list(p)
+		 	}
+			<div class="clear"></div>
+		</ul>
+	    <div class="arrayNEX">
+	         @views.html.product.gadget.pagination(sc.getResult().pageNo(),sc.getResult().totalPages())
+	    </div>
+    }else{
+    <h2 style="text-align:center;color:orange; margin-bottom: 50px;border:1px solid #e8e8e8;padding:150px 0 ;">Sorry, No Products Found!</h2>
+    }
+</div>
+@tp.get("member-browse-history")
+}

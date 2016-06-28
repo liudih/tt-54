@@ -1,0 +1,138 @@
+@(dropShipBases: List[dto.member.DropShipBase], statusMap: HashMap[Integer, String],
+levelMap: Map[Integer, String],
+grandMap: Map[String, Double],
+pageCount: Int, pageNum: Int, pageTotal: Int)
+@import views.html.helper._
+@helper.javascriptRouter("dropShipRoutes")(
+	controllers.manager.routes.javascript.DropShip.updateStatus,
+	controllers.manager.routes.javascript.DropShip.updateLevel
+)
+	<div id="search_dropship_html" style="padding-bottom: 100px;">
+		<div class="portlet-body">
+			<table class="order_ll_box" width="100%" border="0" cellspacing="1" cellpadding="0" id="oderlist">
+				<thead>
+					  <tr>
+					    <th class="order_ll_Id">
+					    	<p class="inlineBlock">mail</p>
+					    	<p class="inlineBlock">full name</p>
+					        <p class="inlineBlock">tel</p>
+					        <p class="inlineBlock">shop Url</p>
+					    </th>
+					    <th class="order_ll_dizhi">
+					    	<p class="inlineBlock">country</p>
+					        <p class="inlineBlock">skype/msn</p>
+					        <p class="inlineBlock">note</p>
+					    </th>
+					    <th class="order_ll_zhifu">
+					    	<p class="inlineBlock">paypal address</p>
+					    	<p class="inlineBlock">status</p>
+					    </th>
+					    <th class="order_ll_haoma">
+					    	<p class="inlineBlock">total</p>
+					        <p class="inlineBlock">dropshop Level</p>
+					    </th>
+					    <th class="order_ll_caozuo"><p class="inlineBlock">操作</p></th>
+					  </tr>
+				</thead>
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+				@if(dropShipBases != null && dropShipBases.size() > 0) {
+					@dropShipBases.map{i=>
+						<tr class="order_ll_infTR">
+						    <td>
+						    	<p class="order_ll_marT"><span class="order_ll_999">Mail:</span>@i.getCemail()</p>
+						    	<p class="order_ll_marT"><span class="order_ll_999">Na:</span>@i.getCfullname()</p>
+						    	<p class="order_ll_marT"><span class="order_ll_999">Tel:</span>@i.getCtelephone()</p>
+						    	<p class="order_ll_marT"><span class="order_ll_999">Shop:</span>
+						    		<a href="@i.getCshipurl()" target="_blank"><span class="order_ll_red">@i.getCshipurl()</span></a>
+						    	</p>
+						    </td>
+						    <td>
+						    	<div class="order_ll_marT">
+						        	<p class="order_ll_inline"><span class="order_ll_adds">Country :</span> @i.getCcountrysn()</p>
+						            <p class="order_ll_inline"><span class="order_ll_adds">Skype/MSN : </span> @i.getCskype()</p>
+						            <p class="order_ll_inline"><span class="order_ll_adds">Note :</span> @i.getCnote()</p>
+						        </div>
+						    </td>
+						    <td>
+						    	<p class="order_ll_marT">
+						    		<span class="order_ll_999">Pay Address:</span>@i.getCpaypaladdress()
+								</p>
+								<p class="order_ll_marT">
+						    		<span class="order_ll_999">Status:</span>@statusMap.get(i.getIstatus())
+								</p>
+						    </td>
+						    <td class="order_ll_center">
+						    	<p class="order_ll_marT">
+						    		<span class="order_ll_999">total：</span>@grandMap.get(i.getCemail())
+						    		
+								</p>
+						        <p class="order_ll_marT">
+							        <span class="order_ll_999">Dlevel：</span>@levelMap.get(i.getIdropshiplevel())
+								</p>
+						    </td>
+						    <td>
+						    	@if(i.getIstatus() == 0) {
+							    	<div class="order_ll_stateBox">
+							            <a class="order_ll_state" href="javascript:">审核</a>
+							            <ul class="dropdown-menu" id="updatestatus">
+											@statusMap.map{e =>
+												<li value="@e._1" data-dropshipid="@i.getIid()">@e._2</li>
+											}
+							            </ul>
+							        </div>
+						        }
+						        @if(i.getIstatus() == 1) {
+							        <div class="order_ll_stateBox">
+							            <a class="order_ll_state" href="javascript:">修改等级</a>
+							            <ul class="dropdown-menu" id="updatelevel">
+											@levelMap.map{e =>
+												<li value="@e._1" data-dropshipid="@i.getIid()">@e._2</li>
+											}
+							            </ul>
+							        </div>
+						        }
+						    </td>
+						  </tr>
+					}
+				} else {
+					 <tr class="order_ll_infTR">
+							<td colspan="5" style="text-align:center;"><h4>暂无dropship信息</h4></td>
+					 </tr>
+				}
+				</tbody>
+			</table>
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="dataTables_info">当前第 <span>@pageNum</span> 页|共 <span>@pageTotal</span> 页| 共 <span>@pageCount</span> 条记录</div>
+				</div>
+				<div class="span6">
+					<div class="dataTables_paginate paging_bootstrap pagination">
+						<input id="pagenum" value="@pageNum" type="hidden"> 
+						<input id="pagetotal" value="@pageTotal" type="hidden"> 
+						
+						@if(pageTotal>1){
+						<ul>
+							@if(1 == pageNum){
+							<li class="disabled"><a href="javascript:;">«</a></li>
+							}else{
+							<li><a href="javascript:;" tag="pageNum" value="1">«</a></li>
+							}
+							@for(i <- pageNum - 6 to pageNum + 6 if i >= 1; if i<= pageTotal) {
+								@if(i == pageNum){
+								<li class="disabled"><a href="javascript:;" tag="pageNum" value="@i">@i</a></li>
+								}else{
+								<li><a href="javascript:;" tag="pageNum" value="@i">@i</a></li>
+								}
+							}
+							@if(pageNum >= pageTotal){
+							<li class="disabled"><a href="javascript:;">»</a></li>
+							}else{
+							<li><a href="javascript:;" tag="pageNum" value="@pageTotal">»</a></li>
+							}
+						</ul>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

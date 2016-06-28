@@ -1,0 +1,27 @@
+@(product: valueobjects.product.ProductBadge
+	)
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+@if(product != null){
+<li class="lbBox">
+	<a class="lineBlock pirListImg" href="@if(product.getUrl!=null){@controllers.product.routes.Product.view(product.getUrl)}">
+		@img(product.getImageUrl(),product.getTitle(),277,277,null)				   
+	</a>
+    <div class="lineBlock pirListTxt">
+    	<a class="pirListTitle" title="@product.getTitle" href="@if(product.getUrl!=null){@controllers.product.routes.Product.view(product.getUrl)}">
+	    @if(product.getTitle()!=null && product.getTitle().length>40){
+	    	@product.getTitle.substring(0,40)...
+	    }else{
+	    	@product.getTitle
+	    }
+	    </a>
+    
+        <p class="pirListPrice">@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitPrice)</p>
+        @if(product.getPrice().isDiscounted()){
+	    	<p class="pirListPri">@product.getPrice.getSymbol 
+	    		@Utils.money(product.getPrice.getUnitBasePrice)</p>
+		}
+    </div>
+</li>
+}

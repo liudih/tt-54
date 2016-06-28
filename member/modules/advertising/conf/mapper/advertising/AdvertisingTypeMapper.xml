@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.advertising.AdvertisingTypeMapper" >
+ 
+  <resultMap id="BaseResultMap" type="dto.advertising.AdvertisingType" >
+    <id column="iid" property="iid" jdbcType="BIGINT" />
+    <result column="iadvertisingid" property="iadvertisingid" jdbcType="BIGINT" />
+    <result column="cadvertisingname" property="cadvertisingname" jdbcType="VARCHAR" />
+    <result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+    <result column="clastupdateduser" property="clastupdateduser" jdbcType="VARCHAR" />
+    <result column="dlastupdateddate" property="dlastupdateddate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select *
+    from t_advertising_type
+    where iid = #{iid,jdbcType=BIGINT} limit 1
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_advertising_type
+    where iid = #{iid,jdbcType=BIGINT}
+  </delete>
+  
+  
+  
+  <insert id="insert" parameterType="dto.advertising.AdvertisingType" useGeneratedKeys="true" keyProperty="iid" >
+    insert into t_advertising_type ( iadvertisingid, cadvertisingname,
+    ccreateuser, dcreatedate, clastupdateduser, dlastupdateddate)
+    values (#{iadvertisingid,jdbcType=BIGINT}, #{cadvertisingname,jdbcType=VARCHAR}
+      , #{ccreateuser,jdbcType=VARCHAR}, #{dcreatedate,jdbcType=TIMESTAMP}, 
+      #{clastupdateduser,jdbcType=VARCHAR}, #{dlastupdateddate,jdbcType=TIMESTAMP})
+  </insert>
+   
+ 
+  <update id="updateByPrimaryKey" parameterType="dto.advertising.AdvertisingType" >
+    update t_advertising_type
+    set 
+     iadvertisingid = #{iadvertisingid,jdbcType=BIGINT},
+      cadvertisingname = #{cadvertisingname,jdbcType=VARCHAR},
+       ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      clastupdateduser = #{clastupdateduser,jdbcType=VARCHAR},
+      dlastupdateddate = #{dlastupdateddate,jdbcType=TIMESTAMP}
+      
+    where iid = #{iid,jdbcType=BIGINT}
+  </update>
+</mapper>

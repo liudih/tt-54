@@ -1,0 +1,7 @@
+GET    /messaging/assets/*file      	  controllers.messaging.Assets.at(path="/public", file : String)
+GET    /messaging/my-message              @controllers.messaging.member.MyMessage.listMyMessage(p:Int?=1,pageSize:Int?=15)
+GET    /messaging/my-message-del          @controllers.messaging.member.MyMessage.delete()
+GET    /messaging/my-message-detail       @controllers.messaging.member.MyMessage.detail()
+#消息接口
+POST    /messaging/my-message-add     	  @controllers.messaging.member.MyMessage.add()
+GET    /messaging/markedAsRead     	  @controllers.messaging.member.MyMessage.markedAsRead()

@@ -1,0 +1,72 @@
+@(listingid: String, sku: String)
+
+@helper.javascriptRouter("theRoutes")(
+	controllers.base.routes.javascript.Captcha.checkCaptcha,
+	controllers.interaction.routes.javascript.PriceMatch.addData
+	
+)
+<li class="priceMatch">
+	<span class="popname"><em></em>@Messages("price.match")</span>
+	<div class="blockPopup_box" id="pricematchBox">
+		<div class="postPhotos_popBox scrollWZ" >
+			<div class="customer_popClose"></div>
+			<div class="scrollBox">
+			<p class="matchTitle">@Messages("price.match")</p>
+			<p>@Messages("price.match.description")</p>
+			<form action="@controllers.interaction.routes.PriceMatch.addData()" name="theform" id="theform"
+				method="POST">
+				<input type="hidden" name="clistingid" value="@listingid"/> 
+				<input type="hidden" name="csku" value="@sku"/> 
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="135">@Messages("lower.price") <span class="red">*</span></td>
+						<td class="free_s">
+							<input type="text" value="" name="flowerprice"/>
+							<!-- <label class="edit_error">An account already.</label> -->
+							<div class="free_txt"><em></em>@Messages("free.shipping")</div>
+						</td>
+					</tr>
+					<tr>
+						<td>@Messages("source.url") <span class="red">*</span></td>
+						<td><input type="text" value="" name="csourceurl" />
+						<!-- <label class="edit_error">An account already.</label> -->
+						</td>
+					</tr>
+					<tr>
+						<td>@Messages("your.e-mail.address") <span class="red">*</span></td>
+						<td><input type="text" value="" name="cemail" /></td>
+					</tr>
+					<tr>
+						<td>@Messages("notes.details") <span class="red">*</span></td>
+						<td><textarea class="notes" name="cinquiry"></textarea></td>
+					</tr>
+					<tr>
+                      <td>@Messages("verification.code") <span class="red">*</span></td>
+                      <td class="captchatd">
+	                      <input name="captcha" id="captcha-pricematch" type="text" class="code" />
+	                      <div class="code_txt" style="width:90px;min-width:90px;">
+	                      	<img class="captcha" src="@controllers.base.routes.Captcha.generate()" onclick="this.src='@controllers.base.routes.Captcha.generate()?r='+Math.random();" style="cursor:pointer;" title="change" width="70" height="30" />
+	                      </div> 
+                      <!-- <label class="edit_error">An account already.</label> -->
+                      </td>
+                    </tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td><input class="rightPaly_buyNow" type="submit"
+							value="@Messages("submit")" /></td>
+					</tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td>@Messages("if.you.have.any.questions.contact.us") wholesale@@tomtop.com</td>
+					</tr>
+				</table>
+			</form>
+			</div>
+
+		</div>
+		<div class="blockPopup_black"></div>
+	</div> <!--videoOver--></li>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+<script src="@controllers.interaction.routes.Assets.at("js/interaction/pricematch.js")" ></script>
+}

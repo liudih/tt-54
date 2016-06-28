@@ -1,0 +1,89 @@
+@(theme:entity.loyalty.Theme,
+  themeGroup:entity.loyalty.ThemeGroup,
+  ThemeGroupNames:List[entity.loyalty.ThemeGroupName],
+  langaugeidselected:Integer,
+  languageList: List[dto.SimpleLanguage],
+  themes:List[entity.loyalty.Theme],
+  themeGroupMap:Map[Integer,entity.loyalty.ThemeGroupName]
+  )
+@import views.html.helper._
+@helper.javascriptRouter("themeGroupTemplateList")(
+	controllers.manager.routes.javascript.ThemeGroupTemplate.getInitThemeGroups
+)
+
+<div class="row-fluid">
+	<div class="span12" >
+		<div><span style="color: red;">主题的标题(多国语言)</span></div>
+		<div class="tabbable tabbable-custom boxless">
+			<ul class="productDescription_navigation">
+			</ul>
+			<ul class="nav nav-tabs">
+				@for(e <- languageList){
+					<li @if(langaugeidselected==e.getIid()){class="active"}><a href="#taba_@e.getIid()" data-toggle="tab">@e.getCname()</a></li>
+				}
+			</ul>
+			<div class="tab-content" style="padding-top: 0px;">
+				@for(i <- 0 until languageList.length){
+					<div class="tab-pane @if(langaugeidselected==languageList(i).getIid()){active}" id="taba_@languageList(i).getIid()">
+						<div class="portlet box blue">
+							<div class="portlet-body form">
+								<div style="margin-top: 15px;">
+									<span style="display: inline-block; width: 100px;">@languageList(i).getCname() group name</span>		
+									<input name="languages[@i].ilanguageid" type="hidden" value="@languageList(i).getIid()"/>	
+									<input type="hidden" name="languages[@i].iid"  value="@if(themeGroupMap!=null && themeGroupMap.get(languageList(i).getIid) != null){@themeGroupMap.get(languageList(i).getIid).getIid()}">
+									<input name="languages[@i].cname" placeholder="请输入分组名称" value="@if(themeGroupMap!=null && themeGroupMap.get(languageList(i).getIid) != null){@themeGroupMap.get(languageList(i).getIid).getCname()}"/>
+								    <span style="color: red;font-weight: bolder;"></span>
+								</div>
+							</div>
+						</div>
+					</div>	
+				}
+				<div id="namemsg"></div>
+			</div>
+		</div>
+	</div>
+</div>	
+<div class="control-group">
+	<label class="control-label">分组号:<span class="required" >*</span></label>
+	<div class="controls"> 
+		<input type="text" name="iid" value="@themeGroup.getIid()" readonly="readonly">
+		<span style="color: red;font-weight: bolder;"></span>
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">专题号:<span class="required" >*</span></label>
+	<div class="controls"> 
+		<select name="ithemeid">
+			@if(themes!=null && themes.size()>0){
+					<option value="@themeGroup.getIthemeid()" selected="selected" style="display:none;">@theme.getCurl()</option>
+				@themes.map{i =>
+					<option value="@i.getIid()">@i.getCurl()</option>
+				}
+			}
+		</select>
+		<span style="color: red;font-weight: bolder;"></span>
+		<span id="update_theme_id"  style="color: red;font-weight: bolder;"></span>
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label" >排序号:
+		<span class="required">*</span>
+	</label>
+	<div class="controls">
+		<input type="text" name="isort" value="@themeGroup.getIsort()" placeholder="请输入排序号" class="m-wrap medium span6" required pattern=".{0,20}">
+		<span style="color: red;font-weight: bolder;"></span>
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">专题分组url：
+		<span class="required">*</span>
+		<span style="color: red;">（格式：https://www.baidu.com/）</span>
+	</label><br/>
+	<div class="controls">
+		<textarea name="curl" maxlength="1500" placeholder="请输入分组路径"  style="margin-top: -26px;width: 330px;height: 150px">@themeGroup.getCurl()</textarea>
+		<span style="color: red;font-weight: bolder;"></span>
+	</div>
+</div>
+
+
+

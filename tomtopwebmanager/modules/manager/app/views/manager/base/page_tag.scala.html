@@ -1,0 +1,57 @@
+@(
+ pageTotal:Integer,
+ pageNo:Integer
+ 
+)
+
+@if(pageTotal!=null && pageTotal>1){
+<div class="pull-right">
+ <div class="pagination">
+
+		<ul>
+			@if(1 == pageNo){
+			       	             
+               <li  class="disabled"><a href="javascript:;">«</a></li>
+            }else{
+                <li ><a href="?page=@(pageNo-1)">«</a></li>
+            }
+
+			@for(i <- 1 to pageTotal){
+			
+			   @if(i == pageNo){
+					 <li  class="disabled"><a href="javascript:;">@i</a></li>
+			   }else{
+					<li ><a href="?page=@i">@i</a></li>
+			  }
+			
+			}
+
+			@if(pageNo >= pageTotal){
+              <li class="disabled" ><a href="javascript:;">»</a></li>
+            }else{
+               <li  ><a href="?page=@(pageNo+1)">»</a></li>
+            }
+
+		</ul>
+
+	</div>
+ </div>
+@services.base.HtmlUtils.misc().addTailOnce{
+  <script>
+	 $(function(){
+         var url=location.href;
+		 if(url.indexOf('?')!=-1){
+			 var param=location.search.substring(1);
+			 $('.pagination li a').each(function(index){
+				 var target=$(this).attr('href');
+				 var _url=target+"&"+param;
+				 $(this).attr('href',_url);
+			 });
+		 }
+		
+		 
+     })
+   </script>
+	 
+} 
+}

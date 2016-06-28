@@ -1,0 +1,10 @@
+@(count:Int, isLogin:Boolean)
+
+@if(isLogin){
+	<a class="topLeft_navA" href="@controllers.interaction.routes.Collect.wishList()">
+}else{
+	<a class="topLeft_navA" href="@controllers.member.routes.Login.login()">
+}
+<span class="heart_Icon"> </span> My Wishlist <em class="leftArrow_Icon">
+</em> <span id="collectwishlistcount" class="messagesNumber">@if(isLogin){@count}</span>
+</a>

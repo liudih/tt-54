@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.CategoryLabelNameMapper" >
+  <resultMap id="BaseResultMap" type="dto.product.CategoryLabelName" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="icategorylabelid" property="icategorylabelid" jdbcType="INTEGER" />
+    <result column="ilanguageid" property="ilanguageid" jdbcType="INTEGER" />
+    <result column="curl" property="curl" jdbcType="VARCHAR" />
+    <result column="cprompt" property="cprompt" jdbcType="VARCHAR" />
+    <result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="dto.product.CategoryLabelName" extends="BaseResultMap" >
+    <result column="cimages" property="cimages" jdbcType="BINARY" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, icategorylabelid, ilanguageid, curl, cprompt, ccreateuser, cimages
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select iid, icategorylabelid, ilanguageid, curl, cprompt, ccreateuser, cimages
+    from t_category_label_name
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="dto.product.CategoryLabelName" >
+    insert into t_category_label_name (icategorylabelid, ilanguageid, 
+      curl, cprompt, ccreateuser, 
+      cimages)
+    values (#{icategorylabelid,jdbcType=INTEGER}, #{ilanguageid,jdbcType=INTEGER}, 
+      #{curl,jdbcType=VARCHAR}, #{cprompt,jdbcType=VARCHAR}, #{ccreateuser,jdbcType=VARCHAR}, 
+      #{cimages,jdbcType=BINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="dto.product.CategoryLabelName" >
+    insert into t_category_label_name
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="icategorylabelid != null" >
+        icategorylabelid,
+      </if>
+      <if test="ilanguageid != null" >
+        ilanguageid,
+      </if>
+      <if test="curl != null" >
+        curl,
+      </if>
+      <if test="cprompt != null" >
+        cprompt,
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser,
+      </if>
+      <if test="cimages != null" >
+        cimages,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="icategorylabelid != null" >
+        #{icategorylabelid,jdbcType=INTEGER},
+      </if>
+      <if test="ilanguageid != null" >
+        #{ilanguageid,jdbcType=INTEGER},
+      </if>
+      <if test="curl != null" >
+        #{curl,jdbcType=VARCHAR},
+      </if>
+      <if test="cprompt != null" >
+        #{cprompt,jdbcType=VARCHAR},
+      </if>
+      <if test="ccreateuser != null" >
+        #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="cimages != null" >
+        #{cimages,jdbcType=BINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dto.product.CategoryLabelName" >
+    update t_category_label_name
+    <set >
+      <if test="icategorylabelid != null" >
+        icategorylabelid = #{icategorylabelid,jdbcType=INTEGER},
+      </if>
+      <if test="ilanguageid != null" >
+        ilanguageid = #{ilanguageid,jdbcType=INTEGER},
+      </if>
+      <if test="curl != null" >
+        curl = #{curl,jdbcType=VARCHAR},
+      </if>
+      <if test="cprompt != null" >
+        cprompt = #{cprompt,jdbcType=VARCHAR},
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="cimages != null" >
+        cimages = #{cimages,jdbcType=BINARY},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

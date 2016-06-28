@@ -1,0 +1,50 @@
+@(begin:String,end:String,status:List[dto.order.OrderStatus])
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@import views.html.helper._
+@views.html.member.base.master("affiliate-report") {
+   <div class="accountRight affilliate_Boxs">
+        <h5>Order Report</h5>
+        <div class="xxkDiv tabs">
+            <ul class="blackXXK tags">
+                <li >Traffic</li>
+                <li class="xxkActi" >Sales Amount</li>
+                <li >Transactions</li>
+                <li >Commissions</li>
+                <div class="clear"></div>
+            </ul>
+        
+			<div class='xxkBOX boxRa '>
+			@tp.get("traffic-chart")
+			<div class="xxkBOX boxRa block" id="sales">
+			@traffic_table("traffic",begin,end)
+			@page_tag("traffic")
+			</div>
+			</div>
+
+	        <div class='xxkBOX boxRa block'>
+			@tp.get("sales-amount-chart")
+			<div class="xxkBOX boxRa block" id="sales">
+			@table_template("sales",status,begin,end)
+			@page_tag("sales")
+			</div>
+			</div>
+	        <div class="xxkBOX boxRa">
+			@tp.get("transactions-chart")
+			<div class="xxkBOX boxRa block" id="sales">
+			@table_template("transaction",status,begin,end)
+			@page_tag("transaction")
+			</div>
+			</div>
+	       <div class="xxkBOX boxRa">
+			@tp.get("commissions-chart")
+			<div class="xxkBOX boxRa block" id="sales">
+			@table_template("commisions",status,begin,end)
+			@page_tag("commisions")
+			</div>
+			</div>
+        </div>
+    </div>
+    
+@lib()
+}
+ 

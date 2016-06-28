@@ -1,0 +1,7 @@
+@(fragment: valueobjects.interaction.Comment)
+
+@comment_summary(fragment.getStarsWidth, fragment.getAverageScore, fragment.getReviewCount, fragment.getFoverallratings)
+@comment_list_common(fragment.getCommentList())
+<a href="@controllers.interaction.routes.ProductReview.showAll(fragment.getListingID())" class="reviews_more">More Reviews</a>
+
+

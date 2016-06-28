@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.ProductLabelMapper" >
+  <resultMap id="BaseResultMap" type="dto.product.ProductLabel" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+    <result column="ctype" property="ctype" jdbcType="VARCHAR" />
+    <result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+    <result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, iwebsiteid, ctype, clistingid,dcreatedate, ccreateuser
+  </sql>
+  <insert id="batchInsert" parameterType="List">
+	  insert into t_product_label (iwebsiteid, ctype, clistingid, ccreateuser) values 
+	  <foreach collection ="list" item ="item" index ="index" separator =",">
+		  (#{item.iwebsiteid}, #{item.ctype}, #{item.clistingid}, #{item.ccreateuser})
+	  </foreach>
+  </insert>
+</mapper>

@@ -1,0 +1,53 @@
+@(r: valueobjects.product.category.CategoryComposite,
+   partitioned: Map[valueobjects.product.category.CategoryComposite, List[Html]]
+)
+@urlprefix = @{play.Play.application().configuration().getString("member.urlprefix")}
+@if(r != null && null != partitioned && partitioned.size > 0) {
+    <li class="sidelist">
+       	<a href="@urlprefix@controllers.product.routes.CategoryProduct.showCategoryProduct(r.getSelf().getCpath())" class="sidelistA">@r.getSelf().getCname()
+       	<i class="icon-arr-R"> </i>
+       	</a>
+		
+         <div class="submenu lbBox">
+			<div class="lineBlock subSecond" name="second_subDt">
+	  			@partitioned.map{ line =>
+        	 		  @if(null != line._1 && null != line._1.getSelf()){
+        	 		  		<!-- 第一个有subSecondAci样式 -->
+        	 		    	<a class="subSecondA" href="@urlprefix@controllers.product.routes.CategoryProduct.showCategoryProduct(line._1.getSelf().getCpath())">@line._1.getSelf().getCname()</a>
+        	 		  }
+			    }	
+		   </div>
+	       @partitioned.map{ line =>
+     	   		<dl class="lineBlock subThird">
+			       <dd>
+		      	   	@line._2.zipWithIndex.map{ case(p,index)=>
+			      	   		@if(index > 0 && index%21==0){
+		      	   			 	</dd>
+			      	   			 @if( index != (line._2.size-1)){
+				      	   			<dd class="navDD lineBlock">
+			      	   			 }
+			      	   		} 
+			      	   	@p
+		      	   	}
+			       </dd>
+			     </dl>
+		    }
+		    <div class="lineBlock specialOffer">
+				<p class="lineBlock">@Messages("special.offer")</p>
+				<a href="@urlprefix/product/newarrivals">@Messages("new.arrivals")</a>
+				<a class="fz_red" href="@urlprefix/product/hot">@Messages("top.sellers")</a>
+				<a href="@urlprefix/product/special">@Messages("best.deals")</a>
+				<a class="fz_orange" href="@urlprefix/product/clearance">@Messages("clearance")</a>
+			</div>
+           <dl>
+               <dd class="offer3">
+                 @if(r.getSelf().isBhasbgimage && r.getSelf().getIbgimageid() != null){
+                	<a target="_blank"	href="@r.getSelf().getCbgimglink">
+					   <img border="0" alt="@r.getSelf().getCname()" src="@controllers.product.routes.CategoryAPI.getCategoryImage(r.getSelf().getIbgimageid(),"backgroundimages")">
+					</a>
+                 }
+               </dd>
+           </dl>
+       </div>
+    </li>
+}

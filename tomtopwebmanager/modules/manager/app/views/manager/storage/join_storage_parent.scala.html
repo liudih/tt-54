@@ -1,0 +1,44 @@
+@(storageParentList :List[dto.StorageParent],
+  allStorages :List[dto.Storage])
+@import views.html.helper._
+<div id="join-parent"  class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	@form(controllers.manager.storage.routes.StorageManagerController.updateStorageSub(), 'class->"memberIntegral"){
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+		    <h3>关联父级仓库</h3>
+		</div>
+		<div class="modal-body">
+			<div class="control-group">
+				<label class="control-label" style="display:inline-block;vertical-align:middle;">父级已有仓库</label>
+				<div class="controls">
+					<select name="iparentstorage" style="display:inline-block;vertical-align:middle;margin-top: -35px;margin-left: 120px;" >
+						@if(null != storageParentList && storageParentList.size >0){
+									@storageParentList.map{ n =>
+										<option value="@n.getIid()">@n.getCstoragename()</option>
+									}
+								}
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" style="display:inline-block;vertical-align:middle;">子仓库</label>
+				<div class="controls">
+					<select name="iid" style="display:inline-block;vertical-align:middle;margin-top: -35px;margin-left: 120px;" >
+						@if(null != allStorages && allStorages.size >0){
+									@allStorages.map{ n =>
+										<option value="@n.getIid()">@n.getCstoragename()</option>
+									}
+								}
+					</select>
+				</div>
+			</div>
+			
+		</div>
+	    <div class="modal-footer" style="margin-bottom: -20px;">
+		     <!-- <button type="button" class="btn closeArrival" onClick="closeStorageArrival()" data-dismiss="modal">关闭 </button>
+             <button type="submit" id="addArrival" onClick="addStorageArrival()" class="btn saveArrival">保存</button> -->
+             <button type="button" class="btn closeArrival"  onClick="closeStorageParent()" data-dismiss="modal">关闭 </button>
+             <button type="submit"  class="btn saveArrival">保存</button>
+	    </div>
+	    }
+</div>

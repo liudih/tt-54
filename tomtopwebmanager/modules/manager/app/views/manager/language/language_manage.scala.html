@@ -1,0 +1,65 @@
+@(lPage: valueobjects.base.Page[dto.Language])
+@import views.html.helper._
+
+@views.html.manager.main {
+	<h3 class="page-title">
+		Language management <small></small>
+	</h3>
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-home"></i>
+			<a href="javascript:;">语言管理</a> 
+			<i class="icon-angle-right"></i>
+		</li>
+		<li>
+			<a href="javascript:;">Language management</a>
+		</li>
+	</ul>
+	<div class="clearfix">
+		<form id="selectform">
+			<input type="hidden" name="cp" id="p" value="@lPage.pageNo()" />
+			<input type="hidden" id="totalPages" value="@lPage.totalPages()"/>
+		</form>
+	</div>
+	<table class="table table-striped table-hover table-bordered">
+		<thead>
+			<tr>
+				<th>语言名称</th>
+				<th>语言全称</th>
+			</tr>
+		</thead>
+		<tbody>
+		@if(lPage.getList.size>0){
+			@lPage.getList.map{ l=>
+				<tr>
+					<td>@l.getCname()</td>
+					<td>@l.getCfullname()</td>
+				</tr>
+			}
+		}
+		</tbody>
+	</table>
+	
+	<div class="row-fluid">
+		<div class="span">
+			<div class="dataTables_info">当前第@lPage.pageNo()页|共@lPage.totalPages()页|共@lPage.totalCount()条记录</div>
+		</div>
+		<div class="span">
+			<div id="advertising-paginator"></div>
+		</div>
+	</div>
+	
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/bootstrap-paginator.js")'></script>
+		<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/manager_common.js")'></script>
+		<script type="text/javascript">
+			//分页
+			$(function(){
+				var pageNo = $("#p").val();
+				var totalPages = $("#totalPages").val();
+				paginationCommon(pageNo,totalPages,"selectform","advertising-paginator");
+			});
+		</script>
+	}
+
+}

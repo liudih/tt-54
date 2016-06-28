@@ -1,0 +1,39 @@
+@(cart : facades.cart.Cart,
+	currency:dto.Currency,
+	isLogin:Boolean,
+	collectList:List[extensions.order.collect.ICollectProvider] = null,
+	isCart: Boolean = true
+	)
+@import services.base._
+@import services.base.utils._
+
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+ 	  	@controllers.base.routes.Assets.at("css/cart_page.css")
+}
+@views.html.base.sub_master("Shopping Cart"){
+	@if(cart.getAllItems().size()>0){
+ 		@*@views.html.mobile.cart.cart_product_list(cart,currency, isLogin,true)*@
+ 	}else{
+ 		<div class="container">
+			<div class="publicModuleBox">
+				<h5>Your shopping cart is empty.</h5>
+				<p><a class="button_blue" href="/">Continue Shopping</a></p>
+			</div>
+		</div>
+ 	}
+ 	
+ 	<!-- 收藏js事件 -->
+	@if(null !=collectList){
+		@collectList.map{c=>
+			@c.getHtml()
+		}
+	}
+	@services.base.HtmlUtils.misc().addTailOnce{
+	<script type="text/javascript">
+	var editnumUrl = "/cart/editnum";
+	var delurl = "/cart/delcart";
+	</script>
+	<script type="text/javascript" src='/cart/assets/js/cartview.js' ></script>
+	
+	}
+}

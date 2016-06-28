@@ -1,0 +1,2 @@
+"ccode","crules","cactions","cruleparams","cactionparams"
+"PROMO1","total-exceed","simple-discount","{""total-exceed"":{""amount"":50.0,""currency"":""USD"",""actionRuleId"":""total-exceed""}}","{""simple-discount"":{""type"":""SKU_INCLUSIVE"",""unit"":""PERCENT"",""value"":0.5,""includeSku"":[""F1028GR"",""HP001""],""excludeSku"":null,""actionId"":""simple-discount""}}"

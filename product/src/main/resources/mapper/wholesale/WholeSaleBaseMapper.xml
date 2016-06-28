@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tomtop.product.mappers.wholesale.WholeSaleBaseMapper">
+<resultMap id="BaseResultMap" type="com.tomtop.product.models.dto.wholesale.WholeSaleBaseDto">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="cfullname" property="cfullname" jdbcType="VARCHAR" />
+		<result column="cemail" property="cemail" jdbcType="VARCHAR" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+		<result column="ctelephone" property="ctelephone" jdbcType="VARCHAR" />
+		<result column="ccountrysn" property="ccountrysn" jdbcType="VARCHAR" />
+		<result column="cshipurl" property="cshipurl" jdbcType="VARCHAR" />
+		<result column="cskype" property="cskype" jdbcType="VARCHAR" />
+		<result column="ccomment" property="ccomment" jdbcType="VARCHAR" />
+		<result column="cshippingaddress" property="cshippingaddress"
+			jdbcType="VARCHAR" />
+		<result column="fpurchaseamount" property="fpurchaseamount"
+			jdbcType="DOUBLE" />
+		<result column="istatus" property="istatus" jdbcType="INTEGER" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+		<result column="ilanguageid" property="iwebsiteid" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, cfullname, cemail, iwebsiteid, ctelephone, ccountrysn,
+		cshipurl,
+		cskype, ccomment,
+		cshippingaddress, fpurchaseamount, istatus,
+		dcreatedate,ilanguageid
+	</sql>
+</mapper>

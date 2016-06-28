@@ -1,0 +1,27 @@
+@(categoryWebsiteWithNames: Map[Integer, String],
+nextcategorys: Map[Integer, String],
+products: List[dto.product.ProductMessage])
+
+@helper.javascriptRouter("contactRoutes")(
+	controllers.interaction.routes.javascript.Contact.getNextCategory,
+	controllers.interaction.routes.javascript.Contact.getProduct
+)
+@views.html.base.master{
+	<!--  主体内容开始  -->
+	<article class="sup_wrapper_con">
+    	<section class="sup_wrapper tl">
+        	<h2>@Messages("contact.technical.support")</h2>
+            <div class="account_box tech_support">
+            	<ul class="tab_ul">
+                	<li class="active"><a href="javascript:;">@Messages("email.support")</a></li>
+                	<li><a href="javascript:;">@Messages("hotline.support")</a></li>
+            	</ul>
+                <div class="tab_box tech_box">
+                	@views.html.interaction.support.email_support.render(categoryWebsiteWithNames, nextcategorys, products)
+                    @views.html.interaction.support.hotline_support.render()
+                </div>
+            </div>
+        </section>
+    </article>
+	<!--  主体内容结束  -->
+}

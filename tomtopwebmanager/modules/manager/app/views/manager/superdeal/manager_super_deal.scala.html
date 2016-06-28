@@ -1,0 +1,165 @@
+@(superDealPage: valueobjects.base.Page[dto.interaction.SuperDeal],
+	rootCategoryNameMap: Map[Integer,String],
+	rootCategoryId: Integer,
+	context:  valueobjects.interaction.SuperDealContext,	
+	sku: String,
+	websiteNameMap: Map[Integer, String]
+)
+
+@views.html.manager.main{
+	@helper.javascriptRouter("super_deal")(
+		controllers.manager.routes.javascript.SuperDeal.deleteSuperDeals,
+		controllers.manager.routes.javascript.SuperDeal.getSuperDealSkuInformation,
+		controllers.manager.routes.javascript.SuperDeal.changeSuperDealSearchCondition,
+		controllers.manager.routes.javascript.SuperDeal.updateSuperDealBshow
+   )
+	<h3 class="page-title">
+		Super deal管理 <small></small>
+	</h3>
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-home"></i>
+			<a href="/sysadmin">@Messages("home")</a> 
+			<i class="icon-angle-right"></i>
+		</li>
+		<li>
+			<a href="@controllers.manager.routes.SuperDeal.getSuperDeals()">Super Deal</a>
+			<!-- <i class="icon-angle-right"></i>  -->
+		</li>
+	</ul>
+	<div class="clearfix">
+		@if(null != context){
+			@if(null != context.getPriceRange && context.getPriceRange.size>0){
+				单价区间
+			    <input type="text" id="priceRangeLower" value="@context.getPriceRange.get(0)" tag="condition" disabled style="width:50px"> -
+		    	<input type="text" id="priceRangeHigher" value="@context.getPriceRange.get(1)"  tag="condition" disabled style="width:50px">
+			}
+			@if(null != context.getDiscountRange && context.getDiscountRange.size>0){
+				折扣区间
+			    <input type="text" id="discountRangeLower" value="@context.getDiscountRange.get(0)" tag="condition" disabled style="width:50px"> -
+		    	<input type="text" id="discountRangeHigher" value="@context.getDiscountRange.get(1)"  tag="condition" disabled style="width:50px">
+			}
+			浏览历史天数：
+			<input type="text" class="form-control"  id="browseTimeRange" value="@context.getBrowseTimeRange"  tag="condition" disabled style="width:50px">
+			浏览历史前多少名：
+			<input type="text" class="form-control"  id="browseLimitPerLine" value="@context.getBrowseLimit"  tag="condition" disabled style="width:50px">
+			销售排名近天数：
+			<input type="text" class="form-control"  id="saleTimeRange" value="@context.getSaleTimeRange"  tag="condition" disabled style="width:50px">
+			销售每产品线限制条数：
+			<input type="text" class="form-control"  id="SaleLimitPerLine" value="@context.getSaleLimit"  tag="condition" disabled style="width:50px">
+		}
+		<div class="btn-group">
+			<a data-toggle="modal">
+				<button id="modify_search_condition" class="btn green">
+					修改查询条件<i class="icon-plus"></i>
+				</button>
+			</a>
+		</div>
+		<br>
+		<div class="btn-group">
+			<a data-toggle="modal" data-target="#add-new-superdeal">
+				<button id="add_new_super_deal" class="btn green">
+					添加super deal<i class="icon-plus"></i>
+				</button>
+			</a>
+		</div>
+		过滤筛选：
+	 	<select class="span4" name="select_rootCategory">
+	 		<option value="@rootCategoryId">
+	 			@if(rootCategoryId == -1 && rootCategoryId != -2 && rootCategoryId != -3){All}else{
+	 				@if(rootCategoryId != -1 && rootCategoryId == -2 && rootCategoryId != -3){手动添加}else{
+	 					@if(rootCategoryId != -1 && rootCategoryId != -2 && rootCategoryId == -3){前台显示}else{
+		 					@rootCategoryNameMap.get(rootCategoryId)
+	 					}
+					}
+				}
+			</option>
+	 		<option value="-1">All</option>
+	 		<option value="-2">手动添加</option>
+	 		<option value="-3">前台显示</option>
+	 		@rootCategoryNameMap.keySet().map{k=>
+	 			<option value="@k">@rootCategoryNameMap.get(k)</option>
+	 		}
+		</select>
+		sku:<input type="text" id="search_sku" value="@sku"><button id="search">查询</button>
+		<form id="super_deal_form" style="height:1px">
+	        <input type="hidden" id="rootCategoryId_hidden_value" name="rootId" value="@rootCategoryId"/> 
+	        <input type="hidden" id="page_hidden_value" name="p" value="@superDealPage.pageNo()"/> 
+	        <input type="hidden" id="search_hidden_sku" name="sku" value="@sku"/>
+    	</form>
+	</div>
+	<table class="table table-striped table-hover table-bordered">
+		<thead>
+			<tr>
+				<th>编号</th>
+				<th>顶级品类</th>
+				<th>ListingId</th>
+				<th>sku</th>
+				<th>站点</th>
+				<th>创建人</th>
+				<th>创建时间</th>
+				<th>是否显示</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if(null != superDealPage && superDealPage.getList().size()>0){
+				@superDealPage.getList.map{a=>
+					<tr class="" id="tr_@a.getIid()">
+						<td>@a.getIid()</td>
+						<td class="center">@rootCategoryNameMap.get(a.getIcategoryrootid)</td>
+						<td class="center">@a.getClistingid()</td>
+						<td class="center" name="sku">@a.getCsku()</td>
+						<td class="center">@websiteNameMap.get(a.getIwebsiteid)</td>
+						<td class="center">@a.getCcreateuser()</td>
+						<td class="center">@a.getDate()</td>
+						<td class="center">
+							<select class="span1" name="show_or_not" tag="@a.getIid()">
+						 		<option value="@a.getBshow()">
+						 			@if(null != a.getBshow() && a.getBshow() == true){是}else{否}
+								</option>
+						 		<option value="1">是</option>
+						 		<option value="2">否</option>
+							</select>
+						</td>
+						<td><a class="delete" href="javascript:;" name="delete_superdeal" tag="@a.getIid()">Delete</a></td>
+					</tr>
+				}
+			}
+		</tbody>
+	</table>
+	<div class="row-fluid">
+		<div class="span">
+			<div class="dataTables_info">当前第@superDealPage.pageNo()页|共@superDealPage.totalPages()页</div>
+		</div>
+		<div class="span">
+			<div class="dataTables_paginate paging_bootstrap pagination">
+				@if(superDealPage.totalPages>1){ 
+					<ul>
+	      	              @if(1 == superDealPage.pageNo){
+	      	              	 <li  class="disabled"><a href="javascript:;">«</a></li>
+	      	              }else{
+	      	                 <li ><a id="prePage" tag="@superDealPage.pageNo">«</a></li>
+	      	              }
+	                      @for(i <- 1 to superDealPage.totalPages) {
+							 @if(i == superDealPage.pageNo){
+							      <li  class="disabled"><a href="javascript:;">@i</a></li>
+							 }else{
+							      <li ><a id="page@i" tag="@i">@i</a></li>
+							 }
+		                  }
+	       	              @if(superDealPage.pageNo >= superDealPage.totalPages){
+	       	                  <li class="disabled" ><a href="javascript:;">»</a></li>
+	       	              }else{
+	       	                  <li><a id="nextPage" tag="@superDealPage.pageNo">»</a></li>
+	       	              }
+					</ul>
+				}
+			</div>
+		</div>
+	</div>
+	@add_new_super_deal(superDealPage.totalPages,superDealPage.pageNo,superDealPage.pageSize)
+	@services.base.HtmlUtils.misc().addTailOnce{
+	  <script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/manager/superdeal.js")'></script>
+	}
+}

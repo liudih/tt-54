@@ -1,0 +1,39 @@
+@(frm:Form[forms.member.register.RegisterUpdateForm])
+@import views.html.helper._
+
+@views.html.member.base.master("profile-update"){
+	<div class="accountRight profileBox accouHomeBox">
+    	<h6>@Messages("my.profile")</h6>
+        <div class="profHi">
+        	@Messages("hi")@frm("caccount").value
+            <p class="orange">@Messages("you.not.vip.member")</p>
+            <p>
+            @Messages("cumulative.payment.amount.can.exchange.vip.membership.free") 
+            <a href="@controllers.help.routes.Help.viplevels()">@Messages("learn.more")&gt;&gt;</a>
+            </p>
+        </div>
+        <h6>@Messages("personal.profile")</h6>
+        <div class="xxkDiv">
+            <ul class="blackXXK">
+           
+                <li class="xxkActi">@Messages("change.your.profile")</li>
+                <li>@Messages("change.your.password")</li>
+               
+                <div class="clear"></div>
+            </ul>
+            @memberProfile(frm)
+            
+            @passwordChange(frm)
+            
+  
+        </div>
+    </div>
+
+
+@services.base.HtmlUtils.misc().addTailOnce{
+	    <script   type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.form.js")'></script>
+	    <script   type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+	    <script   type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+ 		<script   type="text/javascript" src='@controllers.base.routes.Assets.at("js/member/controller/member.js")' ></script>
+}
+}

@@ -1,0 +1,68 @@
+@(listingid: String, sku: String)
+@helper.javascriptRouter("theRoutes3")(
+	controllers.base.routes.javascript.Captcha.checkCaptcha,
+	controllers.interaction.routes.javascript.ReportError.addData
+)
+<li class="reportError">
+	<span class="popname"><em></em>@Messages("report.error")</span>
+	<div class="blockPopup_box" style="display: none" id="reportBox">
+			<div class="postPhotos_popBox scrollWZ">
+				<div class="customer_popClose"></div>
+				<div class="scrollBox">
+				<p class="matchTitle">@Messages("report.error")</p>
+				<p class="error_txts">@Messages("report.error.description1")<br>@Messages("report.error.description2")
+				</p>
+				<form action="@controllers.interaction.routes.ReportError.addData()" name="theform" id="theform2"
+				method="POST">
+				<input type="hidden" name="clistingid" value="@listingid"/> 
+				<input type="hidden" name="csku" value="@sku"/> 
+				<table width="100%" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="121">@Messages("where.is.error") <span class="red">*</span></td>
+						<td><select name="cerrortype">
+								<option value="@Messages("product.description")">@Messages("product.description")</option>
+								<option value="@Messages("product.price")">@Messages("product.price")</option>
+								<option value="@Messages("product.image")">@Messages("product.image")</option>
+								<option value="@Messages("others")">@Messages("others")</option>
+								<option value="@Messages("lack.info")">@Messages("lack.info")</option>
+								<option value="@Messages("wrong.category")">@Messages("wrong.category")</option>
+								<option value="@Messages("wrong.weight")">@Messages("wrong.weight")</option>
+								<option value="@Messages("dimension")">@Messages("dimension")</option>
+								<option value="@Messages("wrong.stock.status")">@Messages("wrong.stock.status")</option>
+								<option value="@Messages("poor.quality")">@Messages("poor.quality")</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td>@Messages("e-mail.address") <span class="red">*</span></td>
+						<td><input type="text" name="cemail" /></td>
+					</tr>
+					<tr>
+						<td>@Messages("write.an.inquiry") <span class="red">*</span></td>
+						<td><textarea class="notes" name="cinquiry"></textarea></td>
+					</tr>
+					<tr>
+                      <td>@Messages("verification.code") <span class="red">*</span></td>
+                      <td class="captchatd">
+	                      <input name="captcha" id="captcha3" type="text" class="code" style="width:105px;float:left;height:30px;" />
+	                      <div class="code_txt" style="width:90px;min-width:90px;float:left;margin-left:10px;">
+		                      <img class="captcha" src="@controllers.base.routes.Captcha.generate()" onclick="this.src='@controllers.base.routes.Captcha.generate()?r='+Math.random();" style="cursor:pointer;" title="change" width="70" height="30" />
+		                      <!-- <span>Refresh</span> -->
+	                      </div>
+                      <!-- <label class="edit_error">An account already.</label> -->
+                      </td>
+                    </tr>
+					<tr>
+						<td>&nbsp;</td>
+						<td><input class="rightPaly_buyNow" type="submit"
+							value="@Messages("submit")" /></td>
+					</tr>
+				</table>
+				</form>
+				</div>
+			</div>
+			<div class="blockPopup_black"></div>
+		</div>
+</li>
+@services.base.HtmlUtils.misc().addTailOnce{
+<script src="@controllers.interaction.routes.Assets.at("js/interaction/reportError.js")" ></script>
+}

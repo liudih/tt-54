@@ -1,0 +1,27 @@
+[Unit]
+Description=TomTop Website App UAT Environment
+Requires=docker.service
+Requires=tomtopwebsite-postgresql.service
+Requires=tomtopwebsite-redis.service
+Requires=tomtopwebsite-elasticsearch.service
+After=docker.service
+After=tomtopwebsite-postgresql.service
+After=tomtopwebsite-redis.service
+After=tomtopwebsite-elasticsearch.service
+
+[Service]
+TimeoutStartSec=0
+KillMode=none
+ExecStartPre=-/usr/bin/docker kill tomtopwebapp-uat
+ExecStartPre=-/usr/bin/docker rm tomtopwebapp-uat
+ExecStart=/bin/bash -c "/usr/bin/docker run --name tomtopwebapp-uat \
+        --privileged    -p 2022:22 -p 8090:80 -p 2443:443 -p \
+        -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+        -v /data/uatapp/.ssh:/root/.ssh \
+        -v /data/uatapp/www:/var/www \
+        --link tomtopwebsite-postgresql:tomtopwebsite-postgresql \
+        --link tomtopwebsite-redis:tomtopwebsite-redis \
+        --link tomtopwebsite-elasticsearch:tomtopwebsite-elasticsearch \
+        192.168.7.15:5000/tomtop/centos-ssh-java"
+ExecStop=/usr/bin/docker stop tomtopwebapp-uat
+Restart=always

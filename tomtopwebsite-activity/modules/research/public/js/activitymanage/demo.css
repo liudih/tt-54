@@ -1,0 +1,61 @@
+*{
+  padding:0; margin: 0;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+body{background-image:url(rotabg20151111.jpg);}
+html{overflow-x:hidden;}
+img{max-width: 100%;}
+.contact{ width: 1200px; margin: auto;position: relative;}
+.turntable-bg {
+  margin:auto;
+  width: 597px;
+  position: absolute;
+  left:535px;top:60px;
+  text-align: center;
+}
+.turntable-bg .mask {
+  width: 454px;
+  height: 451px;
+  position: absolute;
+  left: 116px;
+  top: 60px;
+  /*z-index:9;*/
+}
+.turntable-bg .pointer {
+  width: 174px;
+  position: absolute;
+  left: 203px;
+  top: 140px;
+  z-index: 8;
+  cursor:pointer;
+}
+.turntable-bg .rotate {
+  width: 450px;
+  position: absolute;
+  left: 60px;
+  top: 47px;
+}
+.man {
+  position: absolute;
+  left: 22px;
+  top: 227px;
+  z-index: 101;
+}
+.cloud {
+  position: absolute;
+  width: 1247px;
+  height: 68px;
+  left: 0px;
+  top: 735px;
+  z-index:102;
+  text-align: center;
+}
+.rotate{ width: 597px; position: absolute;left: 542px;top:197px;z-index: 100; text-align: center;}
+.pointer{ width: 207px; position: absolute;left: 736px;top:290px;z-index: 101; cursor: pointer; text-align: center;}
+.bg{background-image:url(black.png);width:100%; height:100%; position: fixed; top:0; left:0; z-index:999; display:none;}
+.wrap, .error{width:400px; background:#FFF; margin:-70px 0px 0px -200px; position:absolute; padding:10px; top:50%;left:50%; border-radius:4px; z-index:1000;}
+.error{ background-color:#681B4E;color:#FED718;}
+.error .title, .error .win{border-bottom:1px solid #812764;}
+.title{ height:30px; border-bottom:1px solid #ccc; line-height:30px; font-size:18px; font-weight: bold;text-align:left; padding-left:10px;}
+.win{ padding:16px 16px 16px 10px; border-bottom:1px solid #ccc; font-size:14px;}
+.alert{ font-weight: bold; clear:both; display:block; font-size:16px;}
+.closed{ padding:2px 20px; height:30px; line-height:30px; text-align:center; background-color:#f60; color:#FFF; cursor:pointer; position:absolute; right:10px; bottom:6px; border:none;}
+.gold{ position:absolute;}

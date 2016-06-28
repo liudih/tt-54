@@ -1,0 +1,89 @@
+@(countrys : List[dto.Country])
+@import views.html.helper._
+
+@views.html.member.base.master("dropShipping-uploadOrder") {
+	@services.base.HtmlUtils.misc().addHeadOnce {
+	  	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" />
+	  	<link rel="stylesheet" type="text/css" href="@controllers.base.routes.Assets.at("css/newshopping.css")" />
+	}
+	<div class="accountRight accouPlaceorder addressBookBox">
+		<ul class="blackXXK">
+			<li class="xxkActi">Place An Order</li>
+			<li class="">Upload Batch Orders</li>
+			<div class="clear"></div>
+		</ul>
+		
+		<div class="xxkBOX boxRa block" id="product_div" style="display: block;">
+			<input type="hidden" name="html_type" value="dropshipping_upload">
+			@form(controllers.order.routes.DropShipping.submitOrder(), 'id -> "simple_dropshipping_form"){
+				<input type="hidden" name="sku" id="csku_1">
+				<input type="hidden" name="qty" id="qty_1">
+				<h6>Please enter the SKU code and quantity of products:</h6>
+				<ul class="accSkuCode" name="product_ul">
+					<li class="lineBlock">*SKU : </li>
+					<li class="lineBlock marR" name="sku_li"><input type="text" name="sku_input" class="inputTxt_s" style="color: rgb(204, 204, 204);"></li>
+					<li class="lineBlock">*Quantity :</li>
+					<li class="lineBlock marR"><input type="text" name="qty_input" class="inputTxt_s digital" style="color: rgb(204, 204, 204);"></li>
+				</ul>
+				<ul class="accSkuCode" id="new_product_button">
+					<li class="lineBlock placeAdd"></li>
+					<li class="lineBlock placeReduction"></li>
+				</ul>
+				<div id="new_product_input" style="display:none">
+					<ul class="accSkuCode" name="product_ul">
+						<li class="lineBlock">*SKU : </li>
+						<li class="lineBlock marR" name="sku_li"><input type="text" name="sku_input" class="inputTxt_s" style="color: rgb(204, 204, 204);"></li>
+						<li class="lineBlock">*Quantity :</li>
+						<li class="lineBlock marR"><input type="text" name="qty_input" class="inputTxt_s digital" style="color: rgb(204, 204, 204);"></li>
+					</ul>
+				</div>
+				<h6>Please enter the Drop-shipping address:</h6>
+				@drop_shipping_address.render(countrys)
+			}
+		</div>
+		
+		<div class="xxkBOX boxRa" style="display: none;">
+			<p class="mar15">Upload batch orders is a faster way which enables Drop-shipping client to place multiple orders to different shipping addresses at same time. </p>
+			<p class="color333">How to Upload Batch orders? </p>
+			<ol class="batch_ol">
+				<li>1.Download excel sample</li>
+				<li>2.Transfer your data into the excel sample</li>
+				<li>3.Click the Browse and choose your excel sample</li>
+				<li>4.Click the Upload and Preview</li>
+				<li>5.Release payment for the total amount </li>
+			</ol>
+			<ul class="batch_ul">
+				<li><a href="@controllers.base.routes.Assets.at("samples/dropShipping_sample.xls")"><span class="blue">Click here to download</span></a> (New) Excel (version 97 to 2010) file format</li>
+				<!-- <li><span class="blue">Click here to download</span> (New) Significantly improved CSV compatibility features</li> -->
+				<!-- <li class="blue">Click here to download List of Country Names and Abbreviations (New) </li> -->
+			</ul>
+			@form(controllers.order.routes.DropShipping.uploadOrder(), 'enctype->"multipart/form-data"){
+				<table width="100%" cellspacing="0" cellpadding="0" border="0" class="wholesaleAC_Box placeTable_p">
+					<tbody>
+						<tr>
+							<td>Select Excel File: </td>
+							<td><input type="file" name="excel" accept=".xls,.xlsx"></td>
+						</tr>
+						<tr>
+							<td class="Description_T"><p class="Description_p">Description (optional): </p></td>
+							<td><textarea name="description" class="wholeTextAR"></textarea></td>
+						</tr>
+						<tr>
+							<td>&nbsp;</td>
+							<td><input type="submit" value="Sumbit" class="orangeInput shipSub"></td>
+						</tr>
+					</tbody>
+				</table>
+			}
+			<h6>Attention:</h6>
+			<ol class="Attention_ol">
+				<li>1. Column "Shipping method" is the option of shipping method. If need the tracking No. please fill in "0" for Airmail(Free shipping), "1" for Register Airmail($1.7 ) with tracking No., "2" for EMS,"3"for DHL.</li>
+				<li>2. All columns are required except "Your Order Number" and "State".</li>
+				<li>3. "Countrycode" column, Please use the abbreviation. Such as US .RU.</li>
+				<!-- <li>4. If there is no mistake of the excel file after checking, but still can't be uploaded. Please change to the CSV Formate and try again.</li>
+				<li>5. It will take a few minutes to validate your CSV file. Please be patient while your data is being validated.</li> -->
+				<li>4. Phone No. must be provided if select shipping method DHL / EMS.</li>
+			</ol>
+		</div>
+	</div>
+}

@@ -1,0 +1,38 @@
+@(title: String=null)(body: Html)
+@meta = @{services.base.utils.MetaUtils.currentMetaBuilder().build()}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=2.0">
+<meta name="description" content="@meta.getDescription()">
+        <meta name="keywords" content="@meta.getKeywords()">
+@meta.getProperties().map{p =>
+        	<meta property="@p._1" content="@p._2">
+        }
+<title>@meta.getTitle()</title>
+<link rel="icon" href="@controllers.mobile.routes.Assets.at("favicon.ico")" type="image/x-icon">
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/jquery-1.9.1.js")"></script>
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/main.js")"></script>
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/public.js")"></script>
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/scroll.js")"></script>
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/select_currency.js")"></script>
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/video.js")"></script>
+
+<link href="@controllers.mobile.routes.Assets.at("css/style.css")" rel="stylesheet" media="screen">
+<link href="@controllers.mobile.routes.Assets.at("css/bottom.css")" rel="stylesheet" media="screen">
+<link href="@controllers.mobile.routes.Assets.at("css/mobile.css")" rel="stylesheet" media="screen">
+<link href="@controllers.mobile.routes.Assets.at("css/top.css")" rel="stylesheet" media="screen">
+<link href="" rel="stylesheet" type="text/css">
+<link href="@controllers.mobile.routes.Assets.at("css/termsOf.css")" rel="stylesheet" media="screen">
+<link href="@controllers.mobile.routes.Assets.at("css/paymentMethod.css")" rel="stylesheet" type="text/css">
+<link href="@controllers.mobile.routes.Assets.at("css/productDescription_page.css")" rel="stylesheet" type="text/css">
+</head>
+<body>
+<p>   &nbsp;   </p>
+
+@body
+
+
+</body>
+</html>

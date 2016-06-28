@@ -1,0 +1,159 @@
+@(list :  valueobjects.base.Page[entity.tracking.CommissionHistory],
+	info : entity.tracking.AffiliateInfo,
+	startdate: String,
+	enddate: String,
+	searchname:String,
+	money:Double,
+	hstatus:Integer,
+	moneyLimit:Double)
+@import services.base._
+@import services.base.utils._
+@views.html.member.base.master("affiliate-payment"){
+<div class="accountRight affilliate_Boxs">
+    <h5>Withdrawals</h5>
+    <div class="balanceBox">
+    	<b>Account Balance (US $):</b> 
+        <span class="balancePrice">@Utils.money(money)</span> 
+        @*
+        @if(money>0 && money>=moneyLimit){
+        	<a class="hsInputs" href="javascript:;" onclick="getMoney();">Withdraw</a>
+        }else{
+        	<a class="withdraw_a" href="javascript:;">Withdraw</a>
+        }
+        *@
+        @if(info!=null){
+         Your Paypal account: 
+        <span class="blue">@info.getCpaypalemail()</span> 
+        @*<div class="withdraw_EditBox">
+        	<a class="withdraw_Edit" href="javascript:;">[ Edit ]</a>
+            <div class="withdraw_EditHide" style="width:210px;">
+            	<input value="" type="text" placeholder="@info.getCpaypalemail()">
+            	<input class="hsInputs" type="button" value="OK" />
+            </div>
+        </div>*@
+        }
+    </div>
+    <form id="theform">
+    <ul class="selectDate selectDate_search">
+        <li class="lineBlock">From <input name="startdate" id="dateinput1" value="@startdate" class="chartRili" type="text" /></li>
+        <li class="lineBlock">To <input name="enddate" id="dateinput2" value="@enddate" class="chartRili" type="text" /></li>
+        <li class="lineBlock"><input name="searchname" value="@searchname" class="chartRilis" type="text" placeholder="withdrawal ID or transaction ID" /> 
+        <a class="hsInputs" href="javascript:;" onclick="searchBtn();" >Search</a></li>
+        <li class="lineBlock ShowingfloatR">
+            <span class="showing_chart">Showing 1-@list.pageSize() of @list.totalCount() total</span>
+            Show
+            <a @if(list.pageSize()==10){class="chartSA"} href="javascript:;" onclick="setLimit(10)">10</a>
+            <a @if(list.pageSize()==20){class="chartSA"} href="javascript:;" onclick="setLimit(20)">20</a>
+            <a @if(list.pageSize()==40){class="chartSA"} href="javascript:;" onclick="setLimit(40)">40</a>
+         </li>
+    </ul>
+    <table class="affPaymentTable" width="100%" border="1" cellspacing="0" cellpadding="0">
+      <tr>
+        <th>Date</th>
+        <th>Withdrawal ID</th>
+        <th>Withdrawal Amount(US$)</th>
+        <th>Transaction ID</th>
+        <th><select name="hstatus" onchange="changeStatus(this)">
+        	<option value="-1">Commission Status</option>
+            <option value="10" @if(hstatus==10){selected="selected"}>Pending</option>
+            <option value="20" @if(hstatus==20){selected="selected"}>Processing</option>
+            <option value="30" @if(hstatus==30){selected="selected"}>Success</option>
+            <option value="0" @if(hstatus==0){selected="selected"}>Fail</option>
+        </select></th>
+        <th>Remark</th>
+      </tr>
+      @list.getList().map{l=>
+      <tr>
+        <td>@services.base.utils.DateFormatUtils.getDateTimeDDMMYYYY(l.getDcreatedate())</td>
+        <td>@l.getCwithdrawlid()</td>
+        <td>@if(l.getFamount()!=null){@Utils.money(l.getFamount())}</td>
+        <td>@l.getCtransactionid()</td>
+        <td>
+        @if(l.getIcommissionstatus()!=null){
+        @l.getIcommissionstatus().intValue() match {
+        	case 10 =>{Pending}
+        	case 20 =>{Processing}
+        	case 30 =>{Success}
+        	case 0 =>{Fail}
+        	case _ =>{Pending}
+        }
+        }
+        </td>
+        <td><a class="blue" href="@controllers.affiliate.routes.Commission.paymentDetail(l.getIid(),1,10)">Detail</a></td>
+      </tr>
+      }
+    </table>
+    
+    <input type="hidden" name="p" id="p" value="@list.pageNo()"/>
+    <input type="hidden" name="limit" id="limit" value="@list.pageSize()"/>
+    </form>
+    <div class="arrayNEX affNext">
+	    <div class="pagination-holder clearfix" >
+			<div id="light-pagination" class="pagination"></div>
+		</div>
+	</div>
+</div>
+@services.base.HtmlUtils.misc().addHeadOnce{
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/styles.css")?@version.BuildVersion.build()" />
+ 	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("js/plugins/datetimepicker/css/datetimepicker.css")" />
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/simplePagination.css")">
+}
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/plugins/datetimepicker/js/bootstrap-datetimepicker.min.js")' ></script>
+<script src="@controllers.base.routes.Assets.at("js/lib/jquery.simplePagination.js")" ></script>
+<script type="text/javascript">
+$(function(){
+	$('#dateinput1').datetimepicker({minView: "month", //选择日期后，不会再跳转去选择时分秒 
+	　　format: "yyyy-mm-dd", //选择日期后，文本框显示的日期格式 
+	　　autoclose:true //选择日期后自动关闭 
+	});
+	$('#dateinput2').datetimepicker({minView: "month", //选择日期后，不会再跳转去选择时分秒 
+	　　format: "yyyy-mm-dd", //选择日期后，文本框显示的日期格式 
+	　　autoclose:true //选择日期后自动关闭 
+	})
+});
+function setLimit(limit){
+	$("#p").val(1);
+	$("#limit").val(limit);
+	$("#theform").submit();
+}
+function searchBtn(){
+	$("#p").val(1);
+	$("#theform").submit();
+}
+function changeStatus(node){
+	$("#theform").submit();
+}
+$('#light-pagination').pagination({
+	pages: @list.totalPages(),
+	currentPage: @list.pageNo(),
+	hrefTextPrefix: 'javascript:void(',
+	hrefTextSuffix: ')',
+	cssStyle: 'light-theme',
+	selectOnClick: true,
+	onPageClick: function(pageNumber, event) {
+		$("#p").val(pageNumber);
+		$("#theform").submit();
+	}
+});
+function getMoney(){
+	if(!confirm("Are you sure to withdraw $@Utils.money(money) commission?")){
+		return false;
+	}
+	$.ajax({
+		url : "@controllers.affiliate.routes.Commission.getCommission()",
+		type : "get",
+		dataType : "json",
+		success : function(data) {
+			if(data.result=="success"){
+				alert("success!");
+				location.reload();
+			}			
+		},
+		complete : function(XHR, TS) {
+		}
+	});
+}
+</script>
+}
+}

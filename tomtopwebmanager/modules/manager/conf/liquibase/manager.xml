@@ -1,0 +1,1047 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+
+	<changeSet author="reason" id="t_admin_user-create">
+		<createTable tableName="t_admin_user" remarks="后台用户表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cusername" type="VARCHAR(20)" remarks="姓名" />
+			<column name="cjobnumber" type="VARCHAR(12)" remarks="工号" />
+			<column name="cpasswd" type="VARCHAR(50)" remarks="密码" />
+			<column name="cemail" type="VARCHAR(50)" remarks="邮箱" />
+			<column name="cphone" type="VARCHAR(50)" remarks="联系电话" />
+			<column name="bwebsiteadmin" type="BOOL" defaultValue="FALSE"
+				remarks="是否平台管理员" />
+			<column name="badmin" type="BOOL" defaultValue="FALSE"
+				remarks="是否超级管理员" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+
+	<changeSet author="reason" id="t_admin_role-create">
+		<createTable tableName="t_admin_role" remarks="后台角色表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="crolename" type="VARCHAR(20)" remarks="角色名称" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+
+	<changeSet author="reason" id="t_admin_user_role_map-create">
+		<createTable tableName="t_admin_user_role_map" remarks="后台用户角色对应表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iuserid" type="INTEGER" remarks="用户编号" />
+			<column name="iroleid" type="INTEGER" remarks="角色编号" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_admin_user_website_map-create">
+		<createTable tableName="t_admin_user_website_map" remarks="后台用户站点对应表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iuserid" type="INTEGER" remarks="用户编号" />
+			<column name="iwebsiteid" type="INTEGER" remarks="角色编号" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_admin_menu-create">
+		<createTable tableName="t_admin_menu" remarks="后台菜单表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cname" type="VARCHAR(30)" remarks="菜单名称" />
+			<column name="iparentid" type="INTEGER" remarks="父菜单编号" />
+			<column name="ilevel" type="INTEGER" remarks="级别" />
+			<column name="cclass" type="VARCHAR(18)" remarks="样式名称" />
+			<column name="curl" type="VARCHAR(50)" remarks="action路径" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_admin_menu_role_map-create">
+		<createTable tableName="t_admin_menu_role_map" remarks="角色菜单对应表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iroleid" type="INTEGER" remarks="角色编号" />
+			<column name="imenuid" type="INTEGER" remarks="菜单编号" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_admin_user-data">
+		<loadData tableName="t_admin_user" file="init/t_admin_user.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_admin_role-data">
+		<loadData tableName="t_admin_role" file="init/t_admin_role.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_admin_user_role_map-data">
+		<loadData tableName="t_admin_user_role_map" file="init/t_admin_user_role_map.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_admin_menu-data">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_admin_menu_role_map-data">
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="dropTable-create-t_admin_menu_role_map">
+		<dropTable cascadeConstraints="true" schemaName="public"
+			tableName="t_admin_menu_role_map" />
+
+		<createTable tableName="t_admin_menu_role_map" remarks="角色菜单对应表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iroleid" type="INTEGER" remarks="角色编号" />
+			<column name="imenuid" type="INTEGER" remarks="菜单编号" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="lij" id="t_admin_user_website_map-data">
+		<loadData tableName="t_admin_user_website_map" file="init/t_admin_user_website_map.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet id="t_admin_menu-add-column-20150330" author="xcf">
+		<addColumn tableName="t_admin_menu">
+			<column name="cenname" type="VARCHAR(40)" remarks="菜单英文名称" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_menu-alter-data-20150330">
+		<loadUpdateData tableName="t_admin_menu"
+			file="init/t_admin_menu_20150330.csv" primaryKey="iid"
+			relativeToChangelogFile="true">
+		</loadUpdateData>
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_menu_unique_constraint_cenname">
+		<addUniqueConstraint catalogName="menu"
+			columnNames="cenname" constraintName="t_admin_menu_cenname"
+			deferrable="true" disabled="true" initiallyDeferred="true"
+			schemaName="public" tableName="t_admin_menu" />
+	</changeSet>
+
+	<changeSet author="lij" id="t_admin_menu_role_map-20150331">
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150331.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="lij" id="t_admin_menu-data-20150331">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150331.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_menu-add-data-20150401">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150401.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="xcf" id="t_admin_menu_role_map-add-data-20150401">
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150401.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_menu-alter-data-20150402">
+		<loadUpdateData tableName="t_admin_menu"
+			file="init/t_admin_menu-20150402.csv" primaryKey="iid"
+			relativeToChangelogFile="true">
+		</loadUpdateData>
+	</changeSet>
+
+	<changeSet author="lij" id="t_admin_menu-alter-data-20150408">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150408.csv"
+			relativeToChangelogFile="true">
+		</loadData>
+	</changeSet>
+
+	<changeSet author="lij"
+		id="t_admin_menu_role_map-alter_map-data-20150408">
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150408.csv"
+			relativeToChangelogFile="true">
+		</loadData>
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_role-alter-data-201504100924">
+		<loadUpdateData tableName="t_admin_role"
+			file="init/t_admin_role-201504100924.csv" primaryKey="iid"
+			relativeToChangelogFile="true">
+		</loadUpdateData>
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_role-alter-data-201504100925">
+		<loadData tableName="t_admin_role" file="init/t_admin_role-201504100925.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_menu_role_map-alter-data-20150410">
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150410.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_user-alter-data-20150410">
+		<loadData tableName="t_admin_user" file="init/t_admin_user-20150410.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_user_role_map-alter-data-20150410">
+		<loadData tableName="t_admin_user_role_map" file="init/t_admin_user_role_map-20150410.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="linhl" id="t_admin_menu-alter-data-20150410">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150410.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_role-alter-data-20150411">
+		<loadData tableName="t_admin_role" file="init/t_admin_role-20150411.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_user-alter-data-20150411">
+		<loadUpdateData tableName="t_admin_user"
+			file="init/t_admin_user-20150411.csv" primaryKey="iid"
+			relativeToChangelogFile="true">
+		</loadUpdateData>
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_menu-alter-data-20150413">
+		<loadUpdateData tableName="t_admin_menu"
+			file="init/t_admin_menu-20150413.csv" primaryKey="iid"
+			relativeToChangelogFile="true">
+		</loadUpdateData>
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_menu-alter-data-20150414">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150414.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_menu_role_map-alter-data-20150414">
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150414.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="lij" id="t_admin_menu-alter-data-20150416">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150416.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="lij" id="t_admin_menu_role_map-alter-data-20150416">
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150416.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="liudi" id="t_admin_menu-add-data-2015041511">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015041511.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="liudi" id="t_admin_role-add-data-2015041511">
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015041511.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_role-alter-data-20150416">
+		<loadUpdateData tableName="t_admin_role"
+			file="init/t_admin_role-20150416.csv" primaryKey="iid"
+			relativeToChangelogFile="true">
+		</loadUpdateData>
+	</changeSet>
+
+	<changeSet author="liudi" id="t_admin_menu-del-data-2015041714">
+		<delete tableName="t_admin_menu_role_map">
+			<where>iid in (94,95)</where>
+		</delete>
+		<delete tableName="t_admin_menu">
+			<where>iid = 48</where>
+		</delete>
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_menu-alter-data-20150424">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150424.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_menu_role_map-alter-data-20150424">
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150424.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="chenj" id="t_admin_menu-add-data-2015042416">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015042416.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="chenj" id="t_admin_role-add-data-2015042416">
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015042416.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="xiaoch" id="t_admin_menu-add-data-20150430">
+		<loadUpdateData tableName="t_admin_menu"
+			file="init/t_admin_menu-20150430.csv" primaryKey="iid"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xiaoch" id="t_admin_menu-update-data-20150505">
+		<loadUpdateData tableName="t_admin_menu"
+			file="init/t_admin_menu-20150505.csv" primaryKey="iid"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="xiaoch" id="t_admin_menu_role_map-add-data-20150505">
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150505.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="chenj" id="t_admin_menu-add-data-2015050509">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015050509.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="chenj" id="t_admin_role-add-data-2015050509">
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015050509.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_user_skill-create">
+		<createTable tableName="t_user_skill_map" remarks="用户技能关系表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iuserid" type="INTEGER" remarks="角色编号" />
+			<column name="cskilltype" type="VARCHAR(20)" remarks="技能类型" />
+			<column name="iskillid" type="INTEGER" remarks="技能ID" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_profession_skill-create">
+		<createTable tableName="t_profession_skill" remarks="专业技能表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cskillname" type="VARCHAR(50)" remarks="技能名称" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_admin_menu-init-data-20150512">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150512.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_admin_role-add-data-20150512">
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150512.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="jiang" id="t_admin_menu-add-data-2015050914">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015050914.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="jiang" id="t_admin_role-add-data-2015050914">
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015050914.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="liudi" id="t_admin_menu-add-data-2015051117">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015051117.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015051117.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_customer_service_schedule-create">
+		<createTable tableName="t_customer_service_schedule"
+			remarks="客服排班表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iuserid" type="INTEGER" remarks="客服ID" />
+			<column name="cdayofweek " type="VARCHAR(12)" remarks="星期几" />
+			<column name="dstartdate" type="DATETIME" remarks="开始时间" />
+			<column name="denddate" type="DATETIME" remarks="结束时间" />
+			<column name="iweekofyear" type="INTEGER" remarks="一年的第几周" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_admin_menu-add-data-2015051316">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015051316.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015051316.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="lijun" id="init-crm-menu-20150513">
+		<loadData tableName="t_admin_menu"
+			file="init/t_admin_menu-messaging-20150513.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="fcl"
+		id="t_customer_service_schedule-add-test-data-20150515" context="test">
+		<loadData tableName="t_customer_service_schedule" file="samples/t_customer_service_schedule.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="fcl" id="t_profession_skill-add-test-data-20150515"
+		context="test">
+		<loadData tableName="t_profession_skill" file="samples/t_profession_skill.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="fcl" id="t_user_skill_map-add-test-data-20150515"
+		context="test">
+		<loadData tableName="t_user_skill_map" file="samples/t_user_skill_map.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="liudi" id="t_admin_menu-add-data-2015051514">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015051514.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015051514.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_profession_skill_topic-create-20150515">
+		<createTable tableName="t_profession_skill_topic" remarks="技能主题表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iskillid" type="INTEGER" remarks="技能ID" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言ID" />
+			<column name="ctitle" type="VARCHAR(150)" remarks="标题" />
+			<column name="cdescription" type="VARCHAR(1500)" remarks="描述" />
+			<column name="benable" type="BOOLEAN" defaultValue="true"
+				remarks="是否启用" />
+			<column name="icreateuser" type="INTEGER" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_admin_menu-add-data-2015051511">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015051511.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015051511.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xiaoch" id="t_admin_menu-add-data-201505131527.csv">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-201505131527.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xiaoch"
+		id="t_admin_menu_role_map-add-data-201505131527">
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-201505131527.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="lijun" id="t_admin_menu-add-couponSend-20150518">
+		<loadData tableName="t_admin_menu"
+			file="init/t_admin_menu-add-couponSend-20150518.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_livechat_msg_info-20150508">
+		<createTable tableName="t_livechat_msg_info" remarks="livechat信息记录表，包括客户与客服信息">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="csessionid" type="VARCHAR(100)" remarks="客户客服唯一id" />
+			<column name="cfromltc" type="VARCHAR(100)" remarks="来自于LTC" />
+			<column name="ctoltc" type="VARCHAR(100)" remarks="发送到LTC" />
+			<column name="cfromalias" type="VARCHAR(50)" remarks="名称" />
+			<column name="ctoalias" type="VARCHAR(50)" remarks="名称" />
+			<column name="ccontent" type="VARCHAR(1000)" remarks="内容" />
+			<column name="ctopic" type="VARCHAR(100)" remarks="类型" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="linhl" id="t_admin_menu-add-data-2015051913">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015051913.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015051913.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_customer_service_score_type-20150519">
+		<createTable tableName="t_customer_service_score_type"
+			remarks="客服评分类型表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cname" type="VARCHAR(40)" remarks="名字" />
+			<column name="cdescription" type="VARCHAR(240)" remarks="描述" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_customer_service_score-20150519">
+		<createTable tableName="t_customer_service_score" remarks="客服评分类型表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="csessionid" type="VARCHAR(100)" remarks="客户客服唯一id" />
+			<column name="ccustomerserviceltc" type="VARCHAR(100)"
+				remarks="客服LTC" />
+			<column name="ccustomerltc" type="VARCHAR(100)" remarks="客户LTC" />
+			<column name="ccustomerservicealias" type="VARCHAR(50)"
+				remarks="客服名称" />
+			<column name="ccustomeralias" type="VARCHAR(50)" remarks="客户名称" />
+			<column name="ccontent" type="VARCHAR(1000)" remarks="内容" />
+			<column name="ctopic" type="VARCHAR(100)" remarks="主题" />
+			<column name="itype" type="INTEGER" remarks="类型" />
+			<column name="iscore" type="INTEGER" remarks="分数" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_admin_menu-add-data-2015052010">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015052010.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015052010.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="jiang" id="t_admin_menu-update-data-2015052016">
+		<update tableName="t_admin_menu">
+			<column name="curl" type="VARCHAR" value="/sysadmin/reviews/manager" />
+			<where>iid = 18</where>
+		</update>
+	</changeSet>
+
+	<changeSet author="lij" id="t_admin_menu-add-data-20150520">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150520.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150520.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="Reason" id="t_admin_menu-add-data-2015052301">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015052301.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_livechat_leave_msg-20150522">
+		<createTable tableName="t_livechat_leave_msg" remarks="客户livechat留言表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cltc" type="VARCHAR(100)" remarks="客户LTC" />
+			<column name="ctopic" type="VARCHAR(50)" remarks="topic" />
+			<column name="cip" type="VARCHAR(100)" remarks="客户IP" />
+			<column name="cemail" type="VARCHAR(50)" remarks="客户邮箱" />
+			<column name="ccontent" type="VARCHAR(1000)" remarks="内容" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_livechat_leave_msg-add-column-20150525"
+		author="xcf">
+		<addColumn tableName="t_livechat_leave_msg">
+			<column name="ilanguageid" type="int" remarks="语言" />
+			<column name="chandler" type="VARCHAR(40)" remarks="处理人" />
+			<column name="bishandle" type="BOOLEAN" defaultValue="false"
+				remarks="是否处理" />
+			<column name="dhandledate" type="DATETIME"
+				defaultValueComputed="now()" remarks="处理时间" />
+		</addColumn>
+	</changeSet>
+	<changeSet author="fcl"
+		id="t_customer_service_score_type-addcolumn-20150525">
+		<addColumn tableName="t_customer_service_score_type">
+			<column name="ilanguageid" type="INTEGER" remarks="语言" />
+			<column name="ipriority" type="INTEGER" remarks="优先级" />
+		</addColumn>
+	</changeSet>
+	<changeSet id="t_livechat_leave_msg-add-column-20150603"
+		author="fcl">
+		<addColumn tableName="t_livechat_leave_msg">
+			<column name="ipretreatmentid" type="INTEGER" remarks="预处理人" />
+			<column name="ireplyuserid" type="INTEGER" remarks="回复人" />
+			<column name="creplycontent" type="VARCHAR(2000)" remarks="回复内容" />
+			<column name="dreplydate" type="DATETIME" remarks="回复时间" />
+		</addColumn>
+	</changeSet>
+	<changeSet author="xin" id="t_admin_menu-add-data-20150525">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu_20150525.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_menu-add-data-20150526">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150526.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_menu_role_map-add-data-20150526">
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150526.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="chenj" id="t_admin_menu-add-data-2015052711">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015052711.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="chenj" id="t_admin_menu_role_map-add-data-2015052711">
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015052711.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+
+	<changeSet author="lij" id="t_admin_menu-add-data-20150528">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150528.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150528.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet id="t_livechat_leave_msg-add-column-20150528"
+		author="xcf">
+		<addColumn tableName="t_livechat_leave_msg">
+			<column name="calias" type="VARCHAR(100)" remarks="用户别名" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_menu-add-data-2015052816">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015052816.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_menu_role_map-add-data-2015052816">
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015052816.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_menu-add-data-20150603">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150603.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_menu_role_map-add-data-20150603">
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150603.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_user_unique_constraint_cjobnumber">
+		<addUniqueConstraint catalogName="jobnumber"
+			columnNames="cjobnumber" constraintName="t_admin_user_cjobnumber"
+			deferrable="true" disabled="true" initiallyDeferred="true"
+			schemaName="public" tableName="t_admin_user" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_admin_user_unique_constraint_cusername">
+		<addUniqueConstraint catalogName="username"
+			columnNames="cusername" constraintName="t_admin_user_cusername"
+			deferrable="true" disabled="true" initiallyDeferred="true"
+			schemaName="public" tableName="t_admin_user" />
+	</changeSet>
+
+
+	<changeSet author="xcf" id="t_livechat_welcome_sentence">
+		<createTable tableName="t_livechat_welcome_sentence"
+			remarks="livechat欢迎语表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ilanguageid" type="INTEGER" remarks="语言" />
+			<column name="cwelcomesentence" type="VARCHAR(200)" remarks="欢迎语" />
+		</createTable>
+	</changeSet>
+
+
+
+	<changeSet author="xcf"
+		id="t_livechat_welcome_sentence-add-data-20150606">
+		<loadData tableName="t_livechat_welcome_sentence"
+			file="init/t_livechat_welcome_sentence-20150606.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_admin_menu-add-data-20150608">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150608.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150608.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="lij" id="t_admin_menu-add-data-201506091">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-201506091.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-201506091.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="liudi" id="t_admin_menu-add-data-2015061017">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015061017.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015061017.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_admin_menu-add-data-20150610">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150610.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150610.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xin" id="t_admin_menu-add-data-20150611">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150611.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150611.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="fcl" id="t_admin_menu-add-data-20150617">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150617.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150617.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="lijun" id="init-promoCode-menu-20150513">
+		<loadData tableName="t_admin_menu"
+			file="init/t_admin_menu-promoCode-20150706.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="jiang" id="t_admin_menu-add-data-2015081415">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150812.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150812.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="jiang" id="t_admin_menu-update-data-2015081415">
+		<update tableName="t_admin_menu">
+			<column name="cenname" type="VARCHAR" value="SuperDeal" />
+			<where>iid = 53</where>
+		</update>
+		<update tableName="t_admin_menu">
+			<column name="cenname" type="VARCHAR" value="CRM" />
+			<where>iid =64</where>
+		</update>
+		<update tableName="t_admin_menu">
+			<column name="cenname" type="VARCHAR" value="MessageManage" />
+			<where>iid =65</where>
+		</update>
+		<update tableName="t_admin_menu">
+			<column name="cenname" type="VARCHAR" value="CouponRule" />
+			<where>iid = 85</where>
+		</update>
+		<update tableName="t_admin_menu">
+			<column name="cenname" type="VARCHAR" value="CouponCode" />
+			<where>iid = 86</where>
+		</update>
+		<update tableName="t_admin_menu">
+			<column name="cenname" type="VARCHAR" value="SendCoupon" />
+			<where>iid = 87</where>
+		</update>
+		<update tableName="t_admin_menu">
+			<column name="cenname" type="VARCHAR" value="PromoCode" />
+			<where>iid =113</where>
+		</update>
+	</changeSet>
+
+	<changeSet author="lij" id="t_admin_menu-add-data-20150828">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150828.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20150828.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="renyy" id="t_admin_menu-add-data-2015083115">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015083115.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015083115.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="guozy" id="t_admin_menu-add-data-201508271551">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-201508271450.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015082750.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="guozy" id="t_admin_menu-add-data-2015009091113">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015090911.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015090911.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="guozy" id="t_admin_menu-add-data-20150091717">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015090917.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015090917.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="liulj" id="t_admin_menu-add-data-20150100601">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150100600.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-20150100600.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="liulj" id="t_admin_menu-add-data-20150101000">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20150101000.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-20150101000.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="jiang"
+		id="t_admin_menu-delete-data-delete-201509091500">
+		<delete tableName="t_admin_menu">
+			<where>iid = 17</where>
+		</delete>
+	</changeSet>
+
+
+	<changeSet author="wzx" id="t_admin_menu-add-data-2015091801">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015091801.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015091801.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="0" id="t_admin_menu-alter-data-20150922">
+		<loadUpdateData tableName="t_admin_menu"
+			file="init/t_admin_menu-20150922.csv" primaryKey="iid"
+			relativeToChangelogFile="true">
+		</loadUpdateData>
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015092201.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="yinf" id="t_admin_menu-update-data-20150928">
+		<loadUpdateData tableName="t_admin_menu"
+			file="init/t_admin_menu-20150928.csv" primaryKey="iid"
+			relativeToChangelogFile="true">
+		</loadUpdateData>
+	</changeSet>
+	<changeSet author="tonyren" id="t_admin_menu-add-data-201509231022">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-201509231019.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="tonyren" id="t_admin_menu-add-data-201509291442">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-201509291440.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="yinf" id="t_admin_menu-update-data-20150930">
+		<loadUpdateData tableName="t_admin_menu"
+			file="init/t_admin_menu-20150930.csv" primaryKey="iid"
+			relativeToChangelogFile="true">
+		</loadUpdateData>
+	</changeSet>
+
+	<changeSet author="guozy" id="t_admin_menu-add-data-2015100603">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20151006.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20151006.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="guozy" id="t_admin_menu-add-data-201510080">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20151008.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20151008.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xin" id="t_admin_menu-add-data-20151012">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20151012.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015101201.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+
+	<changeSet author="guozy" id="t_admin_menu-add-data-20151019">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20151019.csv"
+			relativeToChangelogFile="true" />
+
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20151019.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="liulj" id="t_admin_menu-add-data-2015101900">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015101900.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015101900.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="liulj" id="t_admin_menu-add-data-2015102300">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015102300.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015102300.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xin" id="t_admin_menu-add-data-2015102001">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015102001.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015102001.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+
+	<changeSet author="renyy" id="t_admin_menu-add-data-2015101601">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-201510160938.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet id="liulj" author="t_admin_menu-add-data-2015110300">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015110300.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="wuzx" id="t_admin_menu-add-date-2015102301">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20151023.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20151023.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="wuzx" id="t_admin_menu-add-date-2015102903">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20151029.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20151029.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="xin" id="t_admin_menu-add-data-2015101901">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015101901.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015101901.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="guozy" id="t_admin_menu-add-data-2015110600">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015110601.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015110601.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="guozy" id="t_admin_menu-add-data-2015120301">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-2015120301.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-2015120301.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="guozy" id="t_admin_menu-add-data-20151203">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20151203.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map" file="init/t_admin_menu_role_map-20151203.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	
+	<changeSet author="xin" id="t_admin_menu-add-data-20160125">
+		<loadData tableName="t_admin_menu" file="init/t_admin_menu-20160125.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_admin_menu_role_map"
+			file="init/t_admin_menu_role_map-20160125.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+</databaseChangeLog>

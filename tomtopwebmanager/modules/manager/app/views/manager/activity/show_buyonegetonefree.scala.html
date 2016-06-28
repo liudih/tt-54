@@ -1,0 +1,56 @@
+@(activityRelations : List[dto.product.ProductActivityRelation],
+	price: Map[Integer,Float],qty:Map[Integer,Integer],startDate:Map[Integer,String],endDate:Map[Integer,String],visible:Map[Integer,String])
+
+@views.html.manager.main {
+
+<h3 class="page-title">
+		Buy one Get one Free Detail <small></small>
+	</h3>
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-home"></i>
+			<a href="index.html">@Messages("home")</a> 
+			<i class="icon-angle-right"></i>
+		</li>
+		<li>
+			<a href="">Buy one Get one Free Dtail</a>
+		</li>
+	</ul>
+
+<table class="table table-condensed">
+	<tr>
+		<td><strong>编号</strong></td>
+		<td><strong>主产品</strong></td>
+		<td><strong>副产品</strong></td>
+		<td><strong>价格</strong></td>
+		<td><strong>数量</strong></td>
+		<td><strong>开始时间</strong></td>
+		<td><strong>结束时间</strong></td>
+		<td><strong>操作</strong></td>
+	</tr>
+	@activityRelations.asScala.map{p=>
+	<tr> 
+		<td name="aid" id="aid@p.getIid()" data-visible="@visible(p.getIid())" data-id="@p.getIid()" >@p.getIid()</td>
+		<td><a id="mspu@p.getIid()" name="mspu" data-id="@p.getIid()" data-value="@p.getCparentspu()">@p.getCparentspu()</a></td>
+		<td><a id="spu@p.getIid()" name="spu" data-id="@p.getIid()" data-value="@p.getCsubspu()">@p.getCsubspu()</a></td>
+		<td><input name="price" data-id="@p.getIid()" type="text" class="input-mini" value="@price(p.getIid())" id="price@p.getIid()"  /></td>
+		<td>
+			<input type="text" class="input-mini" value="@qty(p.getIid())" id="qty@p.getIid()" name="qty" data-id="@p.getIid()"/>
+			<input type="button" name="lock" value="" data-status="unlock" id="lock@p.getIid()" data-id="@p.getIid()"/>
+		</td>
+		<td><input type="text"  name="dfromdate" class="order_ll_date input-medium" placeholder="@startDate(p.getIid())" id="orderdatestart@p.getIid()" data-date-format="dd-mm-yyyy" value="@startDate(p.getIid())"></td>
+		<td><input id="orderdateend@p.getIid()" name="dtodate" type="text" data-date-format="dd-mm-yyyy" class="order_ll_date input-medium" placeholder="@endDate(p.getIid())" value="@endDate(p.getIid())"></td>
+		<td><input type="button" value="修改" class="update" id="update@p.getIid()" name="update" data-id="@p.getIid()"> <input type="button" id="stop@p.getIid()" value="停用" class="stop" data-id="@p.getIid()"> <input type="button" id="open@p.getIid()" value="启用" class="open" data-id="@p.getIid()"/></td>
+	</tr>
+	}
+	
+</table>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+		<link href="@controllers.manager.routes.Assets.at("css/manager/bootstrap-datetimepicker.css")" rel="stylesheet" type="text/css" media="screen"/>
+		<script src="@controllers.manager.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.manager.routes.Assets.at("js/manager/getonefree")" ></script>
+	}
+	
+
+}
+

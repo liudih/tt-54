@@ -1,0 +1,42 @@
+@(list: List[entity.tracking.AffiliateBanner],
+	aid:String)
+@list.map{ l=>
+<ul class="affBannerContent">
+	<li class="lineBlock affBannerPicture">
+	<img src="@controllers.affiliate.routes.AffiliateHome.getBannerImage(l.getIid())" 
+	alt="@l.getCtitle()" width="100" height="100"/></li>
+	<li class="lineBlock affBannerTitle" style="text-align: center;">
+    	<span class="blue">@l.getCtitle()</span>
+    </li>
+	<li class="lineBlock affBannerCategory">@l.getCategoryName()</li>
+	<li class="lineBlock affBannerAction">
+    	<select onchange="tanKuang(this)">
+        	<option value="0">Preview and Get Code</option>
+        	<option value="200">200 * 200 px</option>
+        	<option value="250">250 * 250 px</option>
+        	<option value="600">160 * 600 px</option>
+        </select>
+        <div class="account_x">
+            <div class="account_pop">
+                <div class="customer_popClose"></div>
+                <p class="adPreview_title">Ad Preview</p>
+                <ul class="iframePOP">
+                	<li class="lineBlock iframePic">
+                    	<img src="@controllers.affiliate.routes.AffiliateHome.getBannerImage(l.getIid())" width="200" height="200" />
+                    </li>
+                	<li class="lineBlock">
+                    	<p>The alt text for this ad is " <b>@l.getCtitle()</b>" and the ID is <b>@aid</b>. </p>
+                        <p>Copy and paste your ad code into your site's html where the ad should appear. </p>
+                        <input type="hidden" class="hidelink" value="@l.getClink()" />
+                        <div style="display:none;" class="hidedata"><a href="{3}" target="@if(l.getCtarget()!=null&&l.getCtarget()!=""){_@l.getCtarget()}else{_parent}"><img width="{1}" height="{2}" src="@controllers.affiliate.routes.AffiliateHome.getBannerImage(l.getIid()).absoluteURL(play.mvc.Http.Context.current().request())"/></a></div>
+                        <textarea></textarea>
+                        <a class="hsInputs copytextCls lineBlock" href="javascript:;">Get code</a>
+                        <span class="icon_success lineBlock">Get Code Succeed!</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="blockPopup_black"></div>
+        </div>
+    </li>
+</ul>
+}

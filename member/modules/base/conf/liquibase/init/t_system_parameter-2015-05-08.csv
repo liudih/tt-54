@@ -1,0 +1,9 @@
+iwebsiteid,cparameterkey,cparametervalue
+1,SuperDealPriceRangeLower,15.0
+1,SuperDealPriceRangeHigher,50.0
+1,SuperDealBrowseTimeRange,30
+1,SuperDealBrowseLimitPerLine,100
+1,SuperDealSaleTimeRange,30
+1,SuperDealSaleLimitPerLine,100
+1,SuperDealDiscountRangeLower,0.2
+1,SuperDealDiscountRangeHigher,1.0

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.advertising.AdvertisingContentMapper" >
+  <resultMap id="BaseResultMap" type="dto.advertising.AdvertisingContent" >
+    <id column="iid" property="iid" jdbcType="BIGINT" />
+    <result column="ctitle" property="ctitle" jdbcType="VARCHAR" />
+    <result column="chrefurl" property="chrefurl" jdbcType="VARCHAR" />
+    <result column="ilanguageid" property="ilanguageid" jdbcType="INTEGER" />
+    <result column="iadvertisingid" property="iadvertisingid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, iadvertisingid, ctitle,chrefurl,ilanguageid
+  </sql>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_advertising_content
+    where iid = #{iid,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_advertising_content
+    where iid = #{iid,jdbcType=BIGINT}
+  </delete>
+  
+  
+  <delete id="deleteContentById" parameterType="java.lang.Long" >
+    delete from t_advertising_content
+    where iadvertisingid = #{iadvertisingid,jdbcType=BIGINT}
+  </delete>
+  
+  
+  <insert id="insert" parameterType="dto.advertising.AdvertisingContent" >
+    insert into t_advertising_content (iadvertisingid, ctitle,chrefurl,ilanguageid)
+    values (#{iadvertisingid,jdbcType=INTEGER}, #{ctitle,jdbcType=VARCHAR}, 
+      #{chrefurl,jdbcType=VARCHAR},#{ilanguageid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" 
+    parameterType="dto.advertising.AdvertisingContent" useGeneratedKeys="true" keyProperty="iid" >
+    insert into t_advertising_content (iadvertisingid, ctitle,chrefurl,ilanguageid,
+     cbgimageurl,cbgcolor, iindex,bstatus, bbgimgtile,bhasbgimage)
+    values (#{iadvertisingid,jdbcType=INTEGER}, #{ctitle,jdbcType=VARCHAR}, 
+      #{chrefurl,jdbcType=VARCHAR},#{ilanguageid,jdbcType=INTEGER},#{cbgimageurl,jdbcType=VARCHAR}
+      ,#{cbgcolor,jdbcType=VARCHAR},#{iindex,jdbcType=INTEGER},#{bstatus,jdbcType=BOOLEAN}
+      ,#{bbgimgtile,jdbcType=BOOLEAN},#{bhasbgimage,jdbcType=BOOLEAN}
+      )
+      
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dto.advertising.AdvertisingContent" >
+    update t_advertising_content
+    <set >
+      <if test="iadvertisingid != null" >
+        iadvertisingid = #{iadvertisingid,jdbcType=INTEGER},
+      </if>
+      <if test="ctitle != null" >
+        ctitle = #{ctitle,jdbcType=VARCHAR},
+      </if>
+      <if test="chrefurl != null" >
+        chrefurl = #{chrefurl,jdbcType=VARCHAR},
+      </if>
+      <if test="ilanguageid != null" >
+        ilanguageid = #{ilanguageid,jdbcType=INTEGER},
+      </if>
+      <if test="cbgimageurl != null" >
+        cbgimageurl = #{cbgimageurl,jdbcType=VARCHAR},
+      </if>
+      <if test="cbgcolor != null" >
+        cbgcolor = #{cbgcolor,jdbcType=VARCHAR},
+      </if>
+      <if test="iindex != null" >
+        iindex = #{iindex,jdbcType=INTEGER},
+      </if>
+      <if test="bstatus != null" >
+        bstatus = #{bstatus,jdbcType=BOOLEAN},
+      </if>
+      <if test="bhasbgimage != null" >
+        bhasbgimage = #{bhasbgimage,jdbcType=BOOLEAN},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dto.advertising.AdvertisingContent" >
+    update t_advertising_content
+    set 
+     iadvertisingid = #{iadvertisingid,jdbcType=INTEGER},
+      ctitle = #{ctitle,jdbcType=VARCHAR},
+      chrefurl = #{chrefurl,jdbcType=VARCHAR},
+      ilanguageid = #{ilanguageid,jdbcType=INTEGER},
+      cbgimageurl = #{cbgimageurl,jdbcType=VARCHAR},
+      cbgcolor = #{cbgcolor,jdbcType=VARCHAR},
+      iindex = #{iindex,jdbcType=INTEGER},
+      bstatus = #{bstatus,jdbcType=BOOLEAN},
+      bhasbgimage = #{bhasbgimage,jdbcType=BOOLEAN}
+    where iid = #{iid,jdbcType=BIGINT}
+  </update>
+</mapper>

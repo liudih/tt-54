@@ -1,0 +1,9 @@
+@()
+@helper.javascriptRouter("ProductCollectRoutes")(
+	controllers.interaction.routes.javascript.Collect.collect,
+	controllers.interaction.routes.javascript.Collect.getcollect,
+	controllers.member.routes.javascript.Login.login
+)
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+ 	@controllers.base.routes.Assets.at("js/product_collect.js")
+}

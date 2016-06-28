@@ -1,0 +1,6 @@
+cpaymentid,iwebsiteid,fbeginprice,fendprice,cbusiness
+oceanpayment_directpay,1,0,10000,"{""account"":""140105"",""terminal"":""14010508"",""secureCode"":""12345678""}"
+oceanpayment_giropay,1,0,10000,"{""account"":""140105"",""terminal"":""14010508"",""secureCode"":""12345678""}"
+oceanpayment_InstantTransfer,1,0,10000,"{""account"":""140105"",""terminal"":""14010508"",""secureCode"":""12345678""}"
+oceanpayment_Teleingreso,1,0,10000,"{""account"":""140105"",""terminal"":""14010508"",""secureCode"":""12345678""}"
+

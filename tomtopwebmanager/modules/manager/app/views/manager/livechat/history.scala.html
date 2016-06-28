@@ -1,0 +1,133 @@
+@(vo:valueobjects.base.Page[entity.manager.LivechatMsgInfo],form:dto.HistoryMessageForm)
+
+@import services.manager.livechat._;
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" xmlns="http://www.w3.org/1999/xhtml"> <!--<![endif]-->
+
+<head>
+	<meta charset="utf-8" />
+
+	<title>LiveChat</title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	
+	<link rel="stylesheet" type="text/css" href="@controllers.manager.routes.Assets.at("css/manager/bootstrap.min.css")" />
+	<link rel="stylesheet" type="text/css" href="@controllers.manager.routes.Assets.at("css/skin.css")" />
+ 	<link rel="stylesheet" type="text/css" href="@controllers.manager.routes.Assets.at("css/styles.css")" />
+  	<link rel="stylesheet" type="text/css" href="@controllers.manager.routes.Assets.at("css/tomtop.css")" />
+  	<link rel="stylesheet" type="text/css" href="@controllers.manager.routes.Assets.at("css/styles.css")" /> 
+  	 <link href="@controllers.manager.routes.Assets.at("css/manager/bootstrap-datetimepicker.css")" rel="stylesheet" type="text/css" media="screen"/>
+ 
+	<script src="@controllers.livechat.routes.Assets.at("lib/jquery/jquery.min.js")"></script>
+	<script src="@controllers.manager.routes.Assets.at("js/livechat/lib/main.js")"></script>
+	<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/bootstrap-paginator.js")'></script>
+	<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/bootstrap-datetimepicker.js")'></script>
+	<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/manager/livechat/historymsg.js")'></script>
+  
+</head>
+
+<body>
+	@views.html.helper.javascriptRouter("js_HistoryMessageRoutes")(
+		controllers.manager.livechat.routes.javascript.LiveChat.searchHistoryMsgPage
+	)
+
+
+	<div>
+		<div class="container liveChat_history">
+			<h5>History</h5>
+
+			<form
+				action="@controllers.manager.livechat.routes.LiveChat.searchHistory()"
+				class="form-horizontal" id="search_history_form" method="GET">
+				<ul class="liveChat_historyData">
+					 
+					<li class="lineBlock historyData_inp">	
+						
+						<input id="histsory_msg_datestart" name="startDate" value="@services.base.utils.DateFormatUtils.getDateTimeYYYYMMDD(form.getStartDate())"
+						 type="text" data-date-format="dd-mm-yyyy" style="color: rgb(204, 204, 204);" 
+						 class="chartRili" placeholder="start:"/> -
+						 
+						<input id="histsory_msg_dateend" name="endDate" 
+						type="text" value="@services.base.utils.DateFormatUtils.getDateTimeYYYYMMDD(form.getEndDate())" data-date-format="dd-mm-yyyy" 
+						style="color: rgb(204, 204, 204);" class="chartRili" placeholder="end:" />
+					</li>
+					<li class="lineBlock">客服：<input name="customerServiceName" value="@form.getCustomerServiceName()"
+						style="color: rgb(204, 204, 204);" 
+						class="chartRili" placeholder="" type="text">
+					</li>
+					<li class="lineBlock">客户：<input name="customerName" value="@form.getCustomerName()"
+						style="color: rgb(204, 204, 204);"  class="chartRili"
+						placeholder="" type="text">
+					</li>
+					<li class="lineBlock">关键字：<input name="keyword" value="@form.getKeyword()"
+						style="color: rgb(204, 204, 204);" 
+						class="chartRili" placeholder="" type="text">
+					</li>
+					<li class="lineBlock"><input class="hsInput" value="Search"
+						type="submit"></li>
+				</ul>
+			</form>
+ 
+			
+			@vo.getList().zipWithIndex.map{u=>
+				@if(u._1.getCsessionid() != HistoryMsgAssistUtil.getValue("currentsessionid")){
+					@HistoryMsgAssistUtil.setValue("currentsessionid", u._1.getCsessionid())
+					@if(u._2 !=0) {
+						<hr style="height:1px;border:none;border-top:1px solid #555555;" />
+					}
+				}
+				
+				 @if(u._2 ==0) {
+				 	@HistoryMsgAssistUtil.setValue("currentclass", "liveChat_showL")
+				 }else{
+				  	@if(vo.getList().get(u._2).getCfromalias() != vo.getList().get(u._2-1).getCfromalias()){
+				  		@if("liveChat_showL" == HistoryMsgAssistUtil.getValue("currentclass")){
+				  			@HistoryMsgAssistUtil.setValue("currentclass", "liveChat_showR")
+				  		}else{
+				  			@HistoryMsgAssistUtil.setValue("currentclass", "liveChat_showL")
+				  		}
+				    } 
+				 }
+				
+				 <div class="@HistoryMsgAssistUtil.getValue("currentclass")">
+					<div class="lineBlock liveChat_text">
+						<div class="liveChat_nameDate">
+							<div class="lineBlock liveChat_name">@u._1.getCfromalias()</div>
+							<div class="lineBlock liveChat_date">@services.base.utils.DateFormatUtils.getStrFromYYYYMMDDHHMMSS(u._1.getDcreatedate())</div>
+						</div>
+						<div class="liveChat_infm">@Html(u._1.getCcontent())</div>
+					</div>
+				</div>
+				
+			}
+			 
+			 
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="dataTables_info">
+						<input type="hidden" name="pageNo" id="pageNo"
+							value="@vo.pageNo()" /> <input type="hidden" name="totalPages"
+							id="totalPages" value="@vo.totalPages()" />
+					</div>
+				</div>
+				<div class="span6">
+					<div id="history-message-paginator"></div>
+				</div>
+			</div>
+		</div>
+
+
+
+	</div>
+
+ 
+ 	
+</body>
+
+ 
+</html>                                             

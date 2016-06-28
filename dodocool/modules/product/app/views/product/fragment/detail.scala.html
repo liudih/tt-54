@@ -1,0 +1,63 @@
+@(vo: valueobjects.product.ProductComposite, render:services.dodocool.product.ProductCompositeRenderer)
+@import services.base._
+@views.html.base.master{
+	<!-- breadcrumb -->
+	@render.renderFragment(vo, "product_breadcrumb")
+	<article class="pro_wrapper_item">
+	  	<section class="pro_wrapper clearfix">
+	  		<div class="special_lt"> 
+	  			@render.renderFragment(vo,"product-images")
+		    	@render.renderFragment(vo, "product-share")
+	  		</div>
+	  		 <div class="detail_rt">
+	 			@render.renderFragment(vo, "base")
+	       		@render.renderFragment(vo, "product-multi-attribute")
+	 			@render.renderFragment(vo, "product-entity-map")
+		 		@render.renderFragment(vo, "product-amazon-link-url")
+	 		</div>
+	    </section>
+	</article>
+	<article class="pro_wrapper_con">
+	   	<section class="pro_wrapper clearfix">
+	   		<ul class="tab_ul" id="top_side">
+	           	<li><a class="first selected" style="padding:0 30px" href="#first">@Messages("overview")</a></li>
+	           	@**
+	           	<li><a class="second" href="#second">@Messages("customer.reviews")</a></li>
+	           	**@
+	           	@render.renderFragment(vo, "you-may-also-like-menu")
+	           	@** 
+	                <li><a class="third" href="#third">Customer FAQ</a></li>
+	                <li><a class="youLike" href="#carousel">You may also like</a></li>
+	                <li><a class="fiveth" href="#fiveth">Third Party Reviews</a></li>
+	                <p class="drivers"><a href="" target="_blank">Manuals &amp; Drivers &gt;&gt;</a></p>
+	           	**@
+	           </ul>
+	           <div class="tab_box">
+	           	<div class="proDescriptionWrapper" id="first" style="display:block">
+	           		@render.renderFragment(vo, "product-overview")           		
+	               	@render.renderFragment(vo, "you-may-also-like")
+	           	</div>
+	           	@** 
+	               <div id="second" class="proDescriptionWrapper" style="display:none">
+	               	@render.renderFragment(vo, "product-reviews")
+	               </div>
+	               **@
+	               <div id="third" class="proDescriptionWrapper" style="display:none"></div>
+	           </div>
+	   	</section>
+	</article>
+	    
+	<article class="pro_wrapper_con pro_wrapper_review">
+	   	<section class="pro_wrapper">
+	   		<div class="review_form">
+	   			@render.renderFragment(vo, "product-ask-question")
+	   			@render.renderFragment(vo, "product-faq")
+	   		</div>
+	   	</section>
+	</article>
+	
+	 @services.dodocool.base.HtmlUtils.misc().addHeadOnce{
+			<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/ckeditor/ckeditor.js")'></script>
+			<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/ckeditor/ckeditor.config.js")'></script>
+	 }
+}

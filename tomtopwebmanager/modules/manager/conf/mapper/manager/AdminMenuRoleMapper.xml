@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.manager.AdminMenuRoleMapper">
+
+	<select id="selectByPrimaryKey" resultType="entity.manager.MenuRoleMap"
+		parameterType="java.lang.Integer">
+		select *
+		from t_admin_menu_role_map
+		where iid = #{iid,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getMenuIdsByRoleIds" resultType="java.lang.Integer">
+		select distinct imenuid  from t_admin_menu_role_map r 
+		where 1=1  
+		<if test="list !=null and list.size>0">
+			AND r.iroleid in
+			<foreach item="item" index="index" collection="list" open="("
+				separator="," close=")">#{item}</foreach>
+		</if>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_admin_menu_role_map
+		where iid = #{iid,jdbcType=INTEGER}
+	</delete>
+
+	<delete id="deleteMenuRoleByRoleId" parameterType="java.lang.Integer">
+		delete from t_admin_menu_role_map
+		where iroleid = #{iroleid,jdbcType=INTEGER}
+	</delete>
+
+	<insert id="insert" parameterType="entity.manager.UserRoleMap">
+		insert into t_admin_menu_role_map (imenuid, iroleid, ccreateuser,
+		dcreatedate)
+		values ( #{imenuid,jdbcType=INTEGER}, #{iroleid,jdbcType=INTEGER},
+		#{ccreateuser,jdbcType=VARCHAR}, Now())
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="entity.manager.MenuRoleMap">
+
+		update t_admin_user_role_map
+		set imenuid = #{imenuid,jdbcType=INTEGER},
+		iroleid = #{iroleid,jdbcType=INTEGER},
+		ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+		dcreatedate = Now()
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+</mapper>

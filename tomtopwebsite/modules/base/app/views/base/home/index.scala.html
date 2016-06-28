@@ -1,0 +1,55 @@
+@(contents: Map[String, Html])
+
+@views.html.base.home.index_mini{
+	@services.base.HtmlUtils.misc().addHeadOnce{
+		<script src="@controllers.base.routes.Assets.at("js/base/home.js")"></script>
+	}
+	@contents("advert-home-top")
+	<div class="container indexCon" id="indexBody">
+	    @contents("daily-deals")
+ 		@defining(contents("super-deals")) { html =>
+			@if(html != null){
+				<h2 class='SuperDeals category' id="f1"><i>@Messages("super.deals")</i><a href='/interaction/superdeals'>@Messages("more") &gt;&gt;</a></h2>
+				@contents("super-deals")
+			}
+		} 
+		@contents("new-arrivals")
+		<div class="clear"></div>
+		@contents("send-email-home")
+		
+		<div class="indexExhibit">
+	     	<ul class="productDescription_navigation" id="f3">
+	        	<li class="productDescription_active"><a href="javascript:;">@Messages("featured.items")</a></li>
+	        	@contents("hot-sales-more-link")
+	        	@contents("clearance-sales-more-link")
+	        </ul>
+	        <ul class="indexExhibitPRO block">
+	        	@contents("featured-items")
+	        </ul>
+	        <ul class="indexExhibitPRO">
+	     	    @contents("hot-sales")
+	        </ul>
+	        <ul class="indexExhibitPRO">
+	            @contents("clearance-sales")
+	        </ul>
+		    <div class="HotCategories">
+		    	@contents("hot-categories")
+		    	@contents("hot-events")
+		    </div>
+	    </div>
+	    
+		<div class="indexRight">
+			@contents("hot_columns")
+			@contents("ad-right")
+			@contents("like-onfacebook")
+		</div>
+			
+		<div class="clear"></div>
+		
+		<div class="hotProduct_box boxFramework">
+		        @contents("hot-product")
+		        @contents("send-email-home-2")
+			   <div class="clear"></div>
+		</div>
+	</div>
+}

@@ -1,0 +1,17 @@
+@tp = @{services.cart.base.template.TemplateService.getInstance().getContents()}
+
+<div class="might_like">
+   <h3>@Messages("might_like")</h3>
+	<div class="browse_box boxFramework">
+	<div class="xxkDiv autoH history_publice" style="height:267px;" >
+	   		 @tp.get("member-browse-history-in-member-center")
+	
+	</div>
+	</div>
+</div>
+
+
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+	 @controllers.base.routes.Assets.at("css/shopping.css")
+	 @controllers.base.routes.Assets.at("css/newshopping.css")
+}

@@ -1,0 +1,11 @@
+@(isLogin : Boolean)
+
+	@if(isLogin){
+		<a class="topLeft_navA" href="@controllers.member.routes.MemberController.home()">
+	}else{
+		<a class="topLeft_navA" href="@controllers.member.routes.Login.login()">
+	}
+		<span class="login_Icon"> </span>
+		My TOMTOP
+		<em class="leftArrow_Icon"> </em>
+	</a>

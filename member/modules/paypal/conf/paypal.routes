@@ -1,0 +1,14 @@
+
+GET   /               @controllers.paypal.PayPalLogin.returnFromPayPal()
+
+POST   /payment		  @controllers.paypal.PayPalPayment.returnFormPayment()
+
+GET   /assets/*file   controllers.paypal.Assets.at(path="/public", file)
+
+GET   /ec   @controllers.paypal.ExpressCheckoutNvp.setExpressCheckout(ordernum : String)
+GET   /do-ec   @controllers.paypal.ExpressCheckoutNvp.DoExpressCheckoutPayment(token : String ?= null,PayerID : String ?= null,n : String)
+GET   /ec-cart   @controllers.paypal.ExpressCheckoutNvp.setExpressCheckoutForCart(storageid: Int?=1)
+GET   /ec-confirm-view   @controllers.paypal.ExpressCheckoutNvp.confirmOrderView(token : String ?= null,PayerID : String ?= null,n : String)
+POST   /ec-confirm   @controllers.paypal.ExpressCheckoutNvp.confirmOrder()
+GET   /ec-order   @controllers.paypal.ExpressCheckoutNvp.setExpressCheckoutForOrder(orderNum : String)
+GET   /ec-dropshipping   @controllers.paypal.ExpressCheckoutNvp.setExpressCheckoutForDropShipping(dropShippingID : String)

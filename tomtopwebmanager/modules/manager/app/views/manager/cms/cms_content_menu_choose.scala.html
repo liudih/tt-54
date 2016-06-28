@@ -1,0 +1,1 @@
+@(selectid: String, menuList: Collection[dto.CmsMenu],id: Integer = 0)	<select id="@selectid" name="@selectid">	@for( i<- menuList){		@if(i.getIid() == id){			<option value ="@i.getIid()" selected="selected">@i.getCname()</option>		}else{			<option value ="@i.getIid()">@i.getCname()</option>		}	}	</select>	

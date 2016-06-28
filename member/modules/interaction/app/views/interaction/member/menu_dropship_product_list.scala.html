@@ -1,0 +1,3 @@
+@(highliht:Boolean)
+@urlprefix = @{play.Play.application().configuration().getString("member.urlprefix")}
+<li @if(highliht){ class="leftAct"} ><a	href="@urlprefix@controllers.interaction.routes.Dropship.dropshipProductList()">@Messages("dropship.product.list")</a></li>

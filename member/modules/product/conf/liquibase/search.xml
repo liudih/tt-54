@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<!-- Search Suggestion -->
+	<changeSet author="kmtong" id="t_keyword_suggest-20150130">
+		<createTable tableName="t_keyword_suggest" remarks="关键字推荐">
+			<column name="iid" type="INT" autoIncrement="true" remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ckeyword" type="VARCHAR(500)" remarks="关键字" />
+			<column name="irank" type="INT" remarks="排行" />
+			<column name="icategoryid" type="INT" remarks="品类（如有）" />
+			<column name="ilanguageid" type="INT" remarks="语言ID" />
+			<column name="iwebsiteid" type="INT" remarks="站点ID" />
+			<column name="cinfo" type="VARCHAR(100)" remarks="额外显示信息" />
+			<column name="iresults" type="INT" remarks="预期结果数量" />
+			<column name="bmachine" type="BOOL" remarks="是否机器产生" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+		<createIndex tableName="t_keyword_suggest" indexName="idx_t_keyword_suggest_ckeyword">
+			<column name="ckeyword" type="VARCHAR(500)" />
+			<column name="ilanguageid" type="INT" />
+			<column name="iwebsiteid" type="INT" />
+		</createIndex>
+	</changeSet>
+
+	<!-- Search Suggestion -->
+	<changeSet author="kmtong" id="t_keyword_search_log-20150205">
+		<createTable tableName="t_keyword_search_log" remarks="关键字查询记录">
+			<column name="iid" type="INT" autoIncrement="true" remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="ilanguageid" type="INT" remarks="语言ID" />
+			<column name="ckeyword" type="VARCHAR(500)" remarks="关键字" />
+			<column name="iresults" type="INT" remarks="结果数量" />
+			<column name="cltc" type="VARCHAR(40)" remarks="长期跟踪Cookie: TT_LTC" />
+			<column name="cstc" type="VARCHAR(40)" remarks="短期跟踪Cookie: TT_STC" />
+			<column name="cip" type="VARCHAR(40)" remarks="IP地址" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_keyword_suggest-for-test"
+		context="test">
+		<loadData tableName="t_keyword_suggest" file="samples/t_keyword_suggest.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+</databaseChangeLog>

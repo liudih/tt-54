@@ -1,0 +1,6 @@
+@(pro: List[dto.product.ProductMessage])
+@if(null != pro && pro.size() > 0){
+	@pro.map{ i=> 
+		@views.html.product.fragment.badge.render(i, 190, 190)
+	}
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rabbit.conf.mapper.product.ProductBundleSaleMapper">
+	<resultMap id="BaseResultMap" type="com.rabbit.dto.product.ProductBundleSale">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+		<result column="cbundlelistingid" property="cbundlelistingid"
+			jdbcType="VARCHAR" />
+		<result column="fdiscount" property="fdiscount" jdbcType="DOUBLE" />
+		<result column="ipriority" property="ipriority" jdbcType="INTEGER" />
+		<result column="clastupdateuser" property="clastupdateuser"
+			jdbcType="VARCHAR" />
+		<result column="dlastupdatedate" property="dlastupdatedate"
+			jdbcType="TIMESTAMP" />
+		<result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<resultMap id="BaseResultMapLite" type="com.rabbit.dto.ProductBundleSaleLite">
+		<result column="curl" property="url" jdbcType="VARCHAR" />
+		<result column="fprice" property="price" jdbcType="DOUBLE" />
+		<result column="fdiscount" property="discount" jdbcType="DOUBLE" />
+		<result column="fSalePrice" property="salePrice" jdbcType="DOUBLE" />
+		<result column="ctitle" property="title" jdbcType="VARCHAR" />
+		<result column="cimageurl" property="imgUrl" jdbcType="VARCHAR" />
+		<result column="ismain" property="isMain" jdbcType="BOOLEAN" />
+		<result column="ipriority " property="priority" jdbcType="INTEGER" />
+		<result column="ccode" property="currency" jdbcType="VARCHAR" />
+		<result column="fexchangerate" property="exchangeRate"
+			jdbcType="DOUBLE" />
+		<result column="clistingid" property="listingId" jdbcType="VARCHAR" />
+		<result column="bactivity" property="bactivity" jdbcType="BOOLEAN" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, clistingid, cbundlelistingid, fdiscount, ipriority,
+		clastupdateuser,
+		dlastupdatedate,
+		ccreateuser, dcreatedate,bactivity
+	</sql>
+	<select id="getRelatedProductsForMainListingIDs" resultType="com.rabbit.dto.product.ProductBundleSale">
+		select
+		<include refid="Base_Column_List" />
+		from t_product_bundle_sale m
+		where m.clistingid in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach>
+		and exists(select csku from t_product_base a where
+		a.clistingid=m.cbundlelistingid and a.istatus=1)
+		and m.bavailable =
+		true and m.bvisible = true
+	</select>
+</mapper>

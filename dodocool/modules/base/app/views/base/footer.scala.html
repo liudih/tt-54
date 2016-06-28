@@ -1,0 +1,69 @@
+@languages = @{services.dodocool.base.LanguageService._getAllLanguagesInstance()}
+@currentLanguage = @{services.dodocool.base.FoundationService._getLanguageObj()}
+@share_url_facebook=@{services.configuration.ApplicationConfigService._getShareUrlFacebook()}
+@share_url_twitter=@{services.configuration.ApplicationConfigService._getShareUrlTwitter()}
+@share_url_youtube=@{services.configuration.ApplicationConfigService._getShareUrlYoutube()}
+@copyright=@{services.configuration.ApplicationConfigService._getFooterCopyright}
+@tp = @{services.dodocool.base.template.TemplateService.getInstance().getContents()}
+
+    <!--  footer搴曢儴寮�濮�  -->
+	<footer id="footer">
+    	<div class="container clearfix">
+        	<div class="lt">
+            	<!-- <div class="list_box">
+                	<h4>Best Sellers</h4>
+					<ul class="list-unstyled">
+						<li><a title="" href="">Astro Mini (Black)</a></li>
+                        <li><a title="" href="">40W Wall Charger</a></li>
+                        <li><a title="" href="">Lightning Cable</a></li>
+                        <li><a title="" href="">24W Car Charger</a></li>
+					</ul>
+                </div> -->
+                @tp.get("index-cms")
+              
+            </div>
+            <div class="rt">
+            	<div class="lang_box clearfix">
+                	<h5>@Messages("please.select.a.language")</h5>
+					<div class="dropdown rel fl">
+			 			<button type="button" class="btn">@if(null != currentLanguage ){@currentLanguage.getCfullname}<b class="caret"></b></button>
+		  	  			<ul class="menu">
+			  	  			@if(null != languages){
+				  	  			@languages.map{ i=>
+				  	  				@if(null != currentLanguage && ! i.getCfullname.equals(currentLanguage.getCfullname)){
+					  	  				<li><a href="" title="@i.getCfullname" value="@i.getIid">@i.getCfullname</a></li>
+				  	  				}
+				  	  			}
+			  	  			}
+			  			</ul>
+					</div>
+                </div>
+            	<div class="follow_box">
+                	<h5>@Messages("follow.us")</h5>
+                	<div class="follow_b_icn">
+                    	<a class="fb" target="_blank" rel="nofollow" href="@share_url_facebook"></a>
+     				 	<a class="tw" target="_blank" rel="nofollow" href="@share_url_twitter"></a>
+      					<a class="yb" target="_blank" rel="nofollow" href="@share_url_youtube"></a>
+                    </div>
+                </div>	
+            </div>
+        </div>
+    </footer>
+	<!--  footer搴曢儴缁撴潫  -->
+    <div class="copyright">
+    	<p>@copyright  <!--(Build: @version.BuildVersion.build())--></p>
+    </div>
+    
+    <div class="modal-backdrop"></div>
+    <div class="modal" id="boxModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"> 脳 </button>
+	          	<p class="modal-tilte">@Messages("thank.you.for.subscribing")</p>
+            </div>
+            <p class="modal-body">@Messages("please.enter.the.email")</p>
+            <div class="modal-footer">
+	         	<button type="button" class="btn">@Messages("ok")</button>
+	        </div>
+        </div>
+    </div>

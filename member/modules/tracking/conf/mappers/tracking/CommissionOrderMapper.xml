@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mappers.tracking.CommissionOrderMapper" >
+  <resultMap id="BaseResultMap" type="entity.tracking.CommissionOrder" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="icommissionid" property="icommissionid" jdbcType="INTEGER" />
+    <result column="iorderid" property="iorderid" jdbcType="INTEGER" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+    <result column="istatus" property="istatus" jdbcType="INTEGER" />
+    <result column="famount" property="famount" jdbcType="DOUBLE" />
+    <result column="cremark" property="cremark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, icommissionid, iorderid, dcreatedate, istatus, famount,cremark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_commission_order
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_commission_order
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.tracking.CommissionOrder" >
+    insert into t_commission_order (iid, icommissionid, iorderid, 
+      dcreatedate, istatus, famount
+      )
+    values (#{iid,jdbcType=INTEGER}, #{icommissionid,jdbcType=INTEGER}, #{iorderid,jdbcType=INTEGER}, 
+      #{dcreatedate,jdbcType=TIMESTAMP}, #{istatus,jdbcType=INTEGER}, #{famount,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.tracking.CommissionOrder" >
+    insert into t_commission_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="icommissionid != null" >
+        icommissionid,
+      </if>
+      <if test="iorderid != null" >
+        iorderid,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+      <if test="istatus != null" >
+        istatus,
+      </if>
+      <if test="famount != null" >
+        famount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="icommissionid != null" >
+        #{icommissionid,jdbcType=INTEGER},
+      </if>
+      <if test="iorderid != null" >
+        #{iorderid,jdbcType=INTEGER},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="istatus != null" >
+        #{istatus,jdbcType=INTEGER},
+      </if>
+      <if test="famount != null" >
+        #{famount,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.tracking.CommissionOrder" >
+    update t_commission_order
+    <set >
+      <if test="icommissionid != null" >
+        icommissionid = #{icommissionid,jdbcType=INTEGER},
+      </if>
+      <if test="iorderid != null" >
+        iorderid = #{iorderid,jdbcType=INTEGER},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="istatus != null" >
+        istatus = #{istatus,jdbcType=INTEGER},
+      </if>
+      <if test="famount != null" >
+        famount = #{famount,jdbcType=DOUBLE},
+      </if>
+      <if test="cremark != null" >
+        cremark = #{cremark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.tracking.CommissionOrder" >
+    update t_commission_order
+    set icommissionid = #{icommissionid,jdbcType=INTEGER},
+      iorderid = #{iorderid,jdbcType=INTEGER},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      istatus = #{istatus,jdbcType=INTEGER},
+      famount = #{famount,jdbcType=DOUBLE}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,311 @@
+@(vo:valueobjects.base.Page[forms.loyalty.theme.template.ThemeForm],
+searchObj:forms.loyalty.theme.template.ThemeForm,
+langaugeidselected:Integer,
+languagelist:List[dto.SimpleLanguage],
+websites:List[dto.Website],
+themeCsses:List[entity.loyalty.ThemeCss])
+@import views.html.helper._ 
+@import services.base.utils.DateFormatUtils
+
+
+@views.html.manager.main {
+<div class="container-fluid">
+		<!-- BEGIN PAGE HEADER-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN STYLE CUSTOMIZER -->
+				<div class="color-panel hidden-phone">
+					<div class="color-mode-icons icon-color"></div>
+					<div class="color-mode-icons icon-color-close"></div>
+					<div class="color-mode">
+						<p>THEME COLOR</p>
+						<ul class="inline">
+							<li class="color-black current color-default" data-style="default"></li>
+							<li class="color-blue" data-style="blue"></li>
+							<li class="color-brown" data-style="brown"></li>
+							<li class="color-purple" data-style="purple"></li>
+							<li class="color-grey" data-style="grey"></li>
+							<li class="color-white color-light" data-style="light"></li>
+						</ul>
+						<label> <span>Layout</span> <select
+							class="layout-option m-wrap small">
+								<option value="fluid" selected="">Fluid</option>
+								<option value="boxed">Boxed</option>
+						</select>
+						</label> <label> <span>Header</span> <select
+							class="header-option m-wrap small">
+								<option value="fixed" selected="">Fixed</option>
+								<option value="default">Default</option>
+						</select>
+						</label> <label> <span>Sidebar</span> <select
+							class="sidebar-option m-wrap small">
+								<option value="fixed">Fixed</option>
+								<option value="default" selected="">Default</option>
+						</select>
+						</label> <label> <span>Footer</span> <select
+							class="footer-option m-wrap small">
+								<option value="fixed">Fixed</option>
+								<option value="default" selected="">Default</option>
+						</select>
+						</label>
+					</div>
+				</div>
+				<!-- END BEGIN STYLE CUSTOMIZER -->
+				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+	
+				<h3 class="page-title">
+					Marketing <small>Theme</small>
+				</h3>
+				<ul class="breadcrumb">
+					<li><i class="icon-home"></i> <a href="/sysadmin">Home</a> <i
+						class="icon-angle-right"></i></li>
+					<li><a href="javascript:void">Marketing</a> <i class="icon-angle-right"></i></li>
+					<li><a href="@controllers.manager.routes.ThemeAction.manage(vo.pageNo())">Theme Manange</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- END PAGE HEADER-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN EXAMPLE TABLE PORTLET-->
+				<div class="portlet box light-grey">
+					<div class="portlet-title">
+						<div class="caption">
+							<i class="icon-edit"></i>Theme Manange
+						</div>
+					</div>
+					<div class="portlet-body">
+						<div class="span12">
+							@form(controllers.manager.routes.ThemeAction.manage(), 'id->"searchForm",'method->"get"){
+								<input type="hidden" name="p" value="@vo.pageNo">
+								url：<input type="text" id ="search_startDate" name="curl" value="@searchObj.getCurl">
+								enable:<select name="ienable">
+										<option value="">All</option>
+										<option value="0" @if(searchObj.getIenable == 0){selected="selected"}>No</option>
+										<option value="1" @if(searchObj.getIenable == 1){selected="selected"}>Yes</option>
+									</select>
+								<input class="btn green" type="submit" value="Search">
+							}
+						</div>
+						<div class="clearfix">
+							<div class="btn-group">
+								<button id="add_theme_btn" class="btn green" data-toggle="modal" data-target="#add-theme-modal">
+								添加主题 <i class="icon-plus"></i>
+								</button>
+							</div>
+						</div>
+						<div id="sample_editable_1_wrapper"
+							class="dataTables_wrapper form-inline" role="grid">
+							<table class="table table-striped table-hover table-bordered"
+								id="user_table">
+								<thead>
+									<tr>
+										<th>id</th>
+										<th>url</th>
+										<th>banner url</th>
+										<th>css</th>
+										<th>enable</th>
+										<th>enable start date</th>
+										<th>enable end date</th>
+										<th>create user</th>
+										<th>create date</th>
+										<th>update user</th>
+										<th>update date</th>
+										<th>Edit</th>
+										<th>Delete</th>
+									</tr>
+								</thead>
+								<tbody>
+									@vo.getList().map{s=>
+									<tr class="" id="@s.getIid()">
+										<td>@s.getIid()</td>
+										<td>@s.getCurl</td>
+										<td>@s.getCbannerurl</td>
+										<td>@s.getCcssname</td>
+										<td>@if(s.getIenable() == 1){Yes}else{No}</td>
+										<td>@DateFormatUtils.getStrFromYYYYMMDDHHMMSS(s.getDenablestartdate)</td>
+										<td>@DateFormatUtils.getStrFromYYYYMMDDHHMMSS(s.getDenableenddate)</td>
+										<td>@s.getCcreateuser</td>
+										<td>@DateFormatUtils.getDateTimeYYYYMMDD(s.getDcreatedate)</td>
+										<td>@s.getCupdateuser</td>
+										<td>@DateFormatUtils.getDateTimeYYYYMMDD(s.getDupdatedate)</td>
+										<td><a class="edit" name="edit_theme_a" data-toggle="modal"
+											data-target="#edit-theme-modal"
+											href="@controllers.manager.routes.ThemeAction.getTheme(s.getIid())"><i
+												class="icon-pencil"></i></a>
+										</td>
+										<td>@if(s.getIenable != 1){<a class="delete" href="@controllers.manager.routes.ThemeAction.deleteTheme(s.getIid())" style=""><i class="icon-trash"></i></a>}</td>
+									</tr>
+									}
+								</tbody>
+							</table>
+							<div class="row-fluid">
+								@if(vo != null) {
+									<div class="span6">
+										<div class="dataTables_info" id="sample_editable_1_info">当前第@vo.pageNo()页|共@vo.totalPages()页</div>
+									</div>
+									<div class="span6">
+										<div class="dataTables_paginate paging_bootstrap pagination">
+											@if(vo.totalPages()>=1){
+												<ul>
+													@if(1 >= vo.pageNo()){
+														<li class="disabled"><a href="javascript:;">«</a></li>
+													}else{
+														<li><a href="@controllers.manager.routes.ThemeAction.manage(vo.pageNo()-1)" value="@vo.pageNo()" tag="pageNum">«</a></li>
+													}
+													@for(i <- vo.pageNo - 5 to vo.pageNo + 5 if i > 0 ; if i <= vo.totalPages) {
+														@if(i == vo.pageNo){
+															<li class="disabled"><a href="javascript:;">@i</a></li>
+														}else{
+															<li><a href="@controllers.manager.routes.ThemeAction.manage(i)" value="@i" tag="pageNum">@i</a></li>
+														}
+													}
+													@if(vo.pageNo >= vo.totalPages){
+														<li class="disabled"><a href="javascript:;">»</a></li>
+													}else{
+														<li><a href="@controllers.manager.routes.ThemeAction.manage(vo.pageNo()+1)" value="@vo.pageNo()" tag="pageNum">»</a></li>
+													}
+												</ul>
+											}
+										</div>
+									</div>
+								}
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- END EXAMPLE TABLE PORTLET-->
+				<div id="edit-theme-modal" class="modal hide fade" tabindex="-1"
+					role="dialog" aria-labelledby="myThemeLabel" aria-hidden="true"
+					style="width: 640px">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true"></button>
+						<h3 id="myThemeLabel">修改主题</h3>
+					</div>
+					@form(controllers.manager.routes.ThemeAction.saveTheme(), 'class->"form-horizontal",'id->"editeForm"){
+						<input type="hidden" name="p" value="@vo.pageNo">
+						<div class="modal-body"></div>
+						<div class="modal-footer" style="margin-bottom: -20px;">
+							<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+							<button id="edit_theme_save" class="btn blue">保存</button>
+						</div>
+					}
+				</div>
+				<div id="add-theme-modal" class="modal hide fade" tabindex="-1"
+					role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+					style="width: 640px">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true"></button>
+						<h3 id="myModalLabel">添加主题</h3>
+					</div>
+					@form(controllers.manager.routes.ThemeAction.addTheme(), 'class->"form-horizontal",'id->"addform"){
+						<input type="hidden" name="p" value="@vo.pageNo">
+						<div class="modal-body">
+							<div class="control-group">
+								<label class="control-label">url<span class="required">*</span></label>
+								<div class="controls">
+									<input type="text" name="curl" id="curl">
+								</div>
+							</div>
+							<!-- BEGIN PAGE CONTENT-->
+							<div class="row-fluid">
+								<div class="span12" >
+								<div><span style="color: red;">主题的标题(多国语言)</span></div>
+									<div class="tabbable tabbable-custom boxless">
+										<ul class="productDescription_navigation">
+										</ul>
+										<ul class="nav nav-tabs">
+												@for(e <- languagelist){
+													<li @if(langaugeidselected==e.getIid()){class="active"}><a href="#tab_@e.getIid()" data-toggle="tab">@e.getCname()</a></li>
+												}
+										</ul>
+										<div class="tab-content" style="padding-top: 0px;"> 
+											@for(i <- 0 until languagelist.length){
+												<div class="tab-pane @if(langaugeidselected==languagelist(i).getIid()){active}" id="tab_@languagelist(i).getIid()">
+													<div class="portlet box blue">
+														<div class="portlet-body form">
+															<div style="margin-top: 15px;">
+															<span style="display: inline-block; width: 100px;">@languagelist(i).getCname() theme title</span>
+															<input type="hidden" name="langs[@i].ilanguageid" value="@languagelist(i).getIid">															
+															<input type="text" name="langs[@i].ctitle"/> 
+															</div>
+														</div>
+													</div>
+												</div>	
+											}
+											<div id="namemsg"></div>
+										</div>
+									</div>
+								</div>
+							</div>							
+							<div class="control-group">
+								<label class="control-label">bannerurl</label>
+								<div class="controls">
+									<input type="text" name="cbannerurl">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">css<span class="required">*</span></label>
+								<div class="controls">
+									<select name="icssid">
+										@if(themeCsses != null && themeCsses.size() > 0){
+											@themeCsses.map{e => 
+												<option value="@e.getIid" >@e.getCname</option>
+											}
+										}
+									</select>									
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">enable<span class="required">*</span></label>
+								<div class="controls">
+									<select name="ienable">
+										<option value="0" >No</option>
+										<option value="1" >Yes</option>
+									</select>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">website<span class="required">*</span></label>
+								<div class="controls">
+									<select name="iwebsiteid">
+										@websites.map{e => 										
+											<option value="@e.getIid">@e.getCcode</option>
+										};
+									</select>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">enable start date<span class="required">*</span></label>
+								<div class="controls">
+									<input id="denablestartdate" name="denablestartdate" class="m-wrap medium span6">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">enable end date<span class="required">*</span></label>
+								<div class="controls">
+									<input id="denableenddate" name="denableenddate" class="m-wrap medium span6">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer" style="margin-bottom: -20px;">
+							<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+							<button id="add_theme_save" class="btn blue">保存</button>
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+	@helper.javascriptRouter("jsThemeSku")(
+		controllers.manager.routes.javascript.ThemeAction.validateUrl
+	) 
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<script src="@controllers.manager.routes.Assets.at("lib/requirejs/require.js")"></script>
+		<script src="@controllers.manager.routes.Assets.at("js/manager/theme.js")" ></script>
+		<script src="@controllers.manager.routes.Assets.at("js/bootstrap-datetimepicker.js")" ></script>
+	}
+}
+

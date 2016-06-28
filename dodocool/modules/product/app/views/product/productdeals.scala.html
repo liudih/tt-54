@@ -1,0 +1,49 @@
+@(products: List[dto.product.ProductMessage])
+
+@views.html.base.master{
+	<!-- breadcrumb -->
+    <div class="breadcrumb">
+    	<ol class="clearfix">
+    		<li class="mr15">@Messages("your.position")</li>
+            <li><a href="/">@Messages("home")</a><span>&gt;</span></li>
+            <li class="active">@Messages("product.deals")</li>
+        </ol>
+    </div>
+	<!--  涓讳綋鍐呭寮�濮�  -->
+	<article class="pro_wrapper_item">
+    	<section class="pro_wrapper">
+        	<div class="category_con clearfix">
+                @if(products!=null && products.size()!=0){
+			      	@products.zipWithIndex.map{case (product, index)=>
+	      				@if(index==0){
+				      		<div class="lt fl">
+				                	<a class="publiceImg" href="@controllers.product.routes.Product.view(product.getUrl())">
+				                    	@views.html.product.singleimg(product.getImageurl())
+				                        <span class="discount"></span>
+				                    </a>
+				                    <h3 class="publicTitle"><a href="@controllers.product.routes.Product.view(product.getUrl())">@product.getTitle()</a></h3>
+			                </div>
+		           	 	}
+		           	}
+	           	 }
+				<div class="rt fr">
+					<ul class="clearfix">
+						@if(products!=null && products.size()!=0){
+					      	@products.zipWithIndex.map{case (product, index)=>
+			      				@if(index>0){
+						      		<li>
+						            	<a class="fl publiceImg" href="@controllers.product.routes.Product.view(product.getUrl())">@views.html.product.singleimg(product.getImageurl())</a>
+						            	<div class="publicCon">
+						                	<h3 class="publicTitle"><a href="@controllers.product.routes.Product.view(product.getUrl())">@product.getTitle()</a></h3>
+						                </div>
+						            </li>
+				           	 	}
+				           	}
+			           	 }
+			        </ul>
+			     </div>
+            </div>
+        </section>
+    </article>
+	<!--  涓讳綋鍐呭缁撴潫  -->
+}

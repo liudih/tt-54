@@ -1,0 +1,10 @@
+@(sc: valueobjects.search.SearchContext)
+<li id="sale-ui" class="sortA">
+	@if(sc.extractFirst(classOf[services.search.sort.SaleCountSortOrder]).isDefined()) {
+		@sc.extractFirst(classOf[services.search.sort.SaleCountSortOrder]).asScala.map{c=>
+			<a data-name='sale' @if(c.isAsc()){data-value='asc'}else{ data-value='desc'}>@Messages("sale")<em class="sortUD"></em></a>
+		}
+	} else {
+		<a data-name='sale' data-value='desc'>@Messages("sale")<em class="sortUD"></em></a>
+	}
+</li>

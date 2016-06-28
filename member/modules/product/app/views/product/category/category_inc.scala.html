@@ -1,0 +1,52 @@
+@(r: valueobjects.product.category.CategoryComposite,
+   partitioned: Map[valueobjects.product.category.CategoryComposite, List[Html]]
+)
+@urlprefix = @{play.Play.application().configuration().getString("member.urlprefix")}
+@if(r != null && null != partitioned && partitioned.size > 0) {
+    <li class="sidelist">
+         <h4>
+       		 <a href="@urlprefix/@r.getSelf().getCpath()" class="">@r.getSelf().getCname()</a>
+		</h4>
+         <div class="submenu width4 lbBox">
+			<div class="subDt lineBlock" name="second_subDt">
+	  			@partitioned.map{ line =>
+					<div class="subDtNat ">
+	        	 		  @if(null != line._1 && null != line._1.getSelf()){
+	        	 		    	<a href="@urlprefix/@line._1.getSelf().getCpath()">@line._1.getSelf().getCname()</a>
+	        	 		  }
+	        	 	</div>
+			    }
+				<div class="clear"></div>	
+		   </div>
+	       @partitioned.map{ line =>
+     	   		<dl class="subPic"> 
+			       <dd class="navDD  lineBlock">
+		      	   	@line._2.zipWithIndex.map{ case(p,index)=>
+			      	   		@if(index > 0 && index%21==0){
+		      	   			 	</dd>
+			      	   			 @if( index != (line._2.size-1)){
+				      	   			<dd class="navDD lineBlock">
+			      	   			 }
+			      	   		} 
+			      	   	@p
+		      	   	}
+			       </dd>
+			     </dl>
+		    }
+           <dl class="lineBlock SpecialOffer">
+               <dt class="special-offer">@Messages("special.offer")</dt>
+               <dd class="new_a"><a href="@controllers.product.routes.Product.newarrivals(0,1,30,0,1)&category=@r.getSelf().getIcategoryid()">@Messages("new.arrival")</a></dd>
+               <dd class="top_s"><a href="@controllers.product.routes.Product.hot()?category=@r.getSelf().getIcategoryid()">@Messages("top.sellers")</a></dd>         
+           </dl>
+           <dl>
+               <dd class="offer3">
+                 @if(r.getSelf().isBhasbgimage && r.getSelf().getIbgimageid() != null){
+                	<a target="_blank"	href="@r.getSelf().getCbgimglink">
+					   <img border="0" alt="@r.getSelf().getCname()" src="@controllers.product.routes.CategoryAPI.getCategoryImage(r.getSelf().getIbgimageid(),"backgroundimages")">
+					</a>
+                 }
+               </dd>
+           </dl>
+       </div>
+    </li>
+}

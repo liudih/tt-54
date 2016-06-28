@@ -1,0 +1,30 @@
+@(mis: valueobjects.member.MemberInSession)
+
+<input type="hidden" name="userName" value="@mis.getUsername">
+<input type="hidden" name="userEmail" value="@mis.getEmail">
+<li>
+	<p>
+		<img src="@controllers.payment.impl.routes.Assets.at("/images/PayPal08_1.jpg")">
+	</p>
+</li>
+<li>
+	<ul class="boleto_ul">
+		<li>
+			<div class="lineBlock">Type</div> <select class="lineBlock"
+			name="pay_typeCode">
+				@*<option value="directboleto">Directboleto</option>*@
+				<option value="boleto">Boleto</option>
+				<option value="_tef">Transferências Bancária</option>
+		</select>
+		</li>
+		@*<li>
+			<div class="lineBlock">CPF</div> <input class="lineBlock inputTxt_s"
+			type="text" name="pay_cpf">
+			<div class="lineBlock red" style="display: none;">Insira o seu
+				CPF. Somente números.</div>
+		</li>
+		<li class="color999">Insira o seu CPF para a criação do Boleto
+			Bancário.</li>*@
+	</ul>
+</li>
+<input class="spayOut" type="button" value="Continue" tag="submit_button">

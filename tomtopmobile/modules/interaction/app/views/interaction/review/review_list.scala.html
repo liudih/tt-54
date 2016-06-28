@@ -1,0 +1,31 @@
+@(  badge: valueobjects.product.ProductBadge,
+	  scores : Double,
+      pages : valueobjects.base.Page[dto.ReviewsCountList] ,
+      starsWidth : Integer,
+      fList : List[dto.interaction.Foverallrating]
+    )
+@import services.base._
+@import services.base.utils._
+
+@views.html.base.sub_master("All Reviews"){
+
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+	@controllers.base.routes.Assets.at("css/reviewList_page.css")
+}
+@services.base.HtmlUtils.misc().addHeadScriptOnce{
+	@controllers.base.routes.Assets.at("js/hhSwipe.js")
+}
+<div class="container">
+	@views.html.interaction.fragment.comment_summary(starsWidth, scores, pages.totalCount(), fList)
+	<div id="badgeContent">
+	@views.html.interaction.fragment.comment_list_common(pages.getList())
+	</div>
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript">
+var moreurl = "@controllers.interaction.routes.ProductReview.showAll(badge.getListingId())";
+
+
+</script>
+}
+}

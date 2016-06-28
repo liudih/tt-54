@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet author="kmtong" id="t_affiliate_base-20150420">
+		<createTable tableName="t_affiliate_base" remarks="联盟基础信息">
+			<column name="caid" type="VARCHAR(200)" remarks="主键AID">
+				<constraints nullable="false" />
+			</column>
+			<column name="iwebsiteid" type="INT" remarks="Website ID">
+				<constraints nullable="false" />
+			</column>
+			<column name="itype" type="INT" remarks="类型" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+		<addUniqueConstraint columnNames="iwebsiteid, caid"
+			tableName="t_affiliate_base" />
+		<createIndex tableName="t_affiliate_base"
+			indexName="idx_t_affiliate_base_iwebsiteid_caid">
+			<column name="iwebsiteid" type="INT" />
+			<column name="caid" type="VARCHAR(200)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_affiliate_referrer-20150420">
+		<createTable tableName="t_affiliate_referrer" remarks="联盟Referrer信息">
+			<column name="creferrer" type="VARCHAR(200)" remarks="主键Referrer前缀">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="caid" type="VARCHAR(200)" remarks="外键AID">
+				<constraints nullable="false" />
+			</column>
+			<column name="iwebsiteid" type="INT" remarks="Website ID">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addForeignKeyConstraint constraintName="fk_t_affiliate_referrer_aid"
+			baseTableName="t_affiliate_referrer" baseColumnNames="iwebsiteid,caid"
+			referencedTableName="t_affiliate_base" referencedColumnNames="iwebsiteid,caid" />
+	</changeSet>
+
+	<changeSet author="chris" id="t_visit_log-20150420">
+		<createTable tableName="t_visit_log" remarks="联盟访问记录">
+			<column name="caid" type="VARCHAR(200)" remarks="主键AID" />
+			<column name="iwebsiteid" type="INT" remarks="Website ID" />
+			<column name="cip" type="VARCHAR(100)" remarks="客户访问IP" />
+			<column name="cpath" type="VARCHAR(500)" remarks="路径" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+		<createIndex tableName="t_visit_log" indexName="idx_visit_log_caid_dcreatedate">
+			<column name="caid" type="VARCHAR(200)" />
+			<column name="dcreatedate" defaultValue="now()" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="kmtong"
+		id="t_affiliate_base-init_shareasales-20150420">
+		<loadData tableName="t_affiliate_base" file="init/t_affiliate_base.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_affiliate_referrer" file="init/t_affiliate_referrer.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="chris" id="t_affiliate_info-20150423">
+		<createTable tableName="t_affiliate_info" remarks="联盟用户信息表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INT" remarks="Website ID" />
+			<column name="cemail" type="VARCHAR(100)" remarks="会员邮箱" />
+			<column name="caid" type="VARCHAR(200)" remarks="AID" />
+			<column name="csalerid" type="INT" remarks="业务员登录后台的id" />
+			<column name="cpaypalemail" type="VARCHAR(100)" remarks="paypal邮箱" />
+			<column name="breceivenotification" type="BOOL" remarks="是否接收通知（0不接受，1接收默认）" />
+			<column name="bstatus" type="BOOL" remarks="是否激活（0未激活，1激活默认）" />
+			<column name="bexternal" type="BOOL" remarks="是否外部人员（0否，1是默认）" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_visit_log-added_source_column-20150423"
+		author="kmtong">
+		<addColumn tableName="t_visit_log">
+			<column name="csource" type="VARCHAR(200)" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="chris" id="t_affiliate_banner-20150423">
+		<createTable tableName="t_affiliate_banner" remarks="联盟营销banner">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INT" remarks="Website ID" />
+			<column name="ctitle" type="VARCHAR(200)" remarks="标题" />
+			<column name="clink" type="VARCHAR(500)" remarks="链接" />
+			<column name="cbannertype" type="VARCHAR(200)" remarks="banner类型" />
+			<column name="bbannerfile" type="BLOB" remarks="二进制文件数据" />
+			<column name="iwidth" type="INT" remarks="图片宽" />
+			<column name="iheight" type="INT" remarks="图片高" />
+			<column name="ctarget" type="VARCHAR(50)" remarks="位置" />
+			<column name="bstatus" type="BOOL" remarks="是否禁用（0禁用，1启用默认）" />
+			<column name="brelnofollow" type="BOOL" remarks="是否跟踪（0否默认，1是）" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="chris" id="t_affiliate_info-alter_column-20150424">
+		<renameColumn newColumnName="isalerid" oldColumnName="csalerid"
+			remarks="业务员登录后台的id" tableName="t_affiliate_info" />
+	</changeSet>
+
+	<changeSet author="chris" id="t_commission_history-20150427">
+		<createTable tableName="t_commission_history" remarks="佣金历史记录表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="caid" type="VARCHAR(200)" remarks="AID" />
+			<column name="cwithdrawlid" type="VARCHAR(200)" remarks="每笔佣金生成的ID" />
+			<column name="famount" type="FLOAT" remarks="佣金金额" />
+			<column name="ctransactionid" type="VARCHAR(200)" remarks="papay交易ID" />
+			<column name="icommissionstatus" type="INT" remarks="佣金处理状态" />
+			<column name="cremark" type="VARCHAR(500)" remarks="操作日志" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="chris" id="t_commission_order-20150427">
+		<createTable tableName="t_commission_order" remarks="佣金订单表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icommissionid" type="INT" remarks="佣金表commission_history的主键" />
+			<column name="iorderid" type="INT" remarks="订单id" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+		<addForeignKeyConstraint constraintName="fk_t_commission_order_icommissionid"
+			baseTableName="t_commission_order" baseColumnNames="icommissionid"
+			referencedTableName="t_commission_history" referencedColumnNames="iid" />
+	</changeSet>
+
+	<changeSet author="chris" id="t_commission_status_log-20150427">
+		<createTable tableName="t_commission_status_log" remarks="佣金订单表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ibeforestatus" type="INT" remarks="佣金改变前状态" />
+			<column name="iafterstatus" type="INT" remarks="佣金改变后状态" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="liudi"
+		id="t_commission_history-alter-Column-20150504">
+		<dropColumn columnName="cwithdrawlid" tableName="t_commission_history" />
+		<addColumn tableName="t_commission_order">
+			<column name="istatus" type="INT" remarks="订单佣金状态" />
+			<column name="famount" type="FLOAT" remarks="每笔佣金金额" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_affiliate_banner-added_source_column-20150504"
+		author="chris">
+		<addColumn tableName="t_affiliate_banner">
+			<column name="icategoryid" type="INT" remarks="品类ID" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="xiaoch" id="t_affiliate_banner-add-Column-20150511">
+		<addColumn tableName="t_affiliate_banner">
+			<column name="cdescription" type="VARCHAR(1500)" remarks="描述" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="liudi" id="t_affiliate_info-alter-Column-2015051116">
+		<addUniqueConstraint columnNames="caid"
+			constraintName="const_aid" tableName="t_affiliate_info" />
+	</changeSet>
+
+	<changeSet author="liudi" id="t_commission_order-add-Column-2015051314">
+		<addColumn tableName="t_commission_order">
+			<column name="dpaymentdate" type="DATETIME" remarks="订单付款时间" />
+			<column name="fcommission" type="FLOAT" remarks="订单佣金金额" />
+			<column name="cremark" type="VARCHAR(2000)" remarks="备注" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="liudi"
+		id="t_commission_history-add-Column-2015051417">
+		<addColumn tableName="t_commission_history">
+			<column name="cwithdrawlid" type="VARCHAR(50)" remarks="每笔佣金生成的ID" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_visit_log-added_eid_column-20150514" author="chris">
+		<addColumn tableName="t_visit_log">
+			<column name="ceid" type="VARCHAR(200)" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="chris" id="t_visit_log-alter-column-20150521">
+		<modifyDataType columnName="cpath" newDataType="VARCHAR(2000)"
+			tableName="t_visit_log" />
+	</changeSet>
+	
+	<changeSet id="t_visit_log-add_column-20150728" author="liudi">
+		<addColumn tableName="t_visit_log">
+			<column name="itasktype" type="INTEGER" remarks="任务类型" />
+		</addColumn>
+	</changeSet>
+
+</databaseChangeLog>

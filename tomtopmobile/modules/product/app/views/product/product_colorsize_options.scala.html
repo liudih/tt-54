@@ -1,0 +1,14 @@
+@(product: valueobjects.product.ProductBadge)
+@import services.base._
+@import services.base.utils._
+
+@if(product!=null){
+<div class="buyPopBox popBoxNone">
+	<div class="buyPopCon">
+		@product_pop_common(product)
+		 <a class="addToCart popBoxFilter span48 lineBlock iconClose" href="javascript:;" onclick="addCart(this)"><span>Add to Cart</span></a>
+		 <a class="BuyNow popBoxFilter span48 lineBlock" href="javascript:;" type="buynow" onclick="addCart(this)"><span>Buy Now</span></a>
+	</div>
+	<div class="blackPop"> </div>
+</div>
+}

@@ -1,0 +1,5 @@
+iwebsiteid,cparameterkey,cparametervalue
+1,DailyDealCreateDateOfMonthLower,6
+1,DailyDealCreateDateOfMonthHight,12
+1,DailyDealContainsCategory,"277;806;864;1"
+1,DailyDealNotContainsProductLabal,"dodocool;clearstocks"

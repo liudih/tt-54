@@ -1,0 +1,44 @@
+@(cartItemlist : TreeMap[Integer, Collection[valueobjects.cart.CartItem]],
+	 currency: dto.Currency,
+	 storageMap: Map[Integer, dto.StorageParent],
+	 laterItemlist: List[valueobjects.cart.CartItem],
+	 isLogin : Boolean,
+	 storageid: String,
+	 cartStorageids: List[Integer],
+	 collectList:List[extensions.order.collect.ICollectProvider] = null
+	 )
+@import services.base._
+@import services.base.utils._
+
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+ 	  	@controllers.base.routes.Assets.at("css/cart_page.css")
+}
+@views.html.base.sub_master("Shopping Cart"){
+	<input type="hidden" id="currencycode" value="@currency.getCcode()" />
+	@if(cartItemlist!=null && cartItemlist.size()>0){
+ 		@views.html.mobile.cart.cart_product_list(cartItemlist, storageMap, cartStorageids, null, currency, isLogin,true)
+ 	}else{
+ 		<div class="container">
+			<div class="publicModuleBox">
+				<h5>Your shopping cart is empty.</h5>
+				<p><a class="button_blue" href="/">Continue Shopping</a></p>
+			</div>
+		</div>
+ 	}
+ 	<input type="hidden" id="thestorageid" value="@storageid" />
+ 	<!-- 收藏js事件 -->
+	@if(null !=collectList){
+		@collectList.map{c=>
+			@c.getHtml()
+		}
+	}
+	@services.base.HtmlUtils.misc().addTailOnce{
+	<script type="text/javascript">
+	var editnumUrl = "/cart/editnum";
+	var delurl = "/cart/delcart";
+	</script>
+	<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/jquery.json.min.js")'></script>
+	<script type="text/javascript" src='/cart/assets/js/cartview.js' ></script>
+	
+	}
+}

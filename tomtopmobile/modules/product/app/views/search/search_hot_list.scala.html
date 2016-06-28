@@ -1,0 +1,24 @@
+@helper.javascriptRouter("jsSuggest")(controllers.search.routes.javascript.ProductSearch.suggest)
+
+<div class="hotSearches">
+    	<h5>Hot Searches</h5>
+    	<ul class="hotSearches_ul" id="suggeste_list">
+    		<li class="searchFirst">buy scarves</li>
+    		<li class="searchSecond">buy hats</li>
+    		<li class="searchThird">3d nail art</li>
+    		<li>50 cent headphones</li>
+    		<li>airbrush makeup kit</li>
+    		<li>3d nail art</li>
+    		<li>50 cent headphones</li>
+    		<li>airbrush makeup kit</li>
+    	</ul>
+    </div>
+    
+@services.base.HtmlUtils.misc().addTailOnce{	
+
+	<script>  
+	    $(document).ready(function(){
+	  		
+		});
+	</script>
+}

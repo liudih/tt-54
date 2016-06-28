@@ -1,0 +1,2 @@
+@urlprefix = @{play.Play.application().configuration().getString("member.defaultdomain")}
+<li><a href="@urlprefix@controllers.interaction.routes.Collect.wishList()">@Messages("wish.list")</a></li>

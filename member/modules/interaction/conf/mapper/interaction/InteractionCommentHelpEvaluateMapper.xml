@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.interaction.review.InteractionCommentHelpEvaluateMapper" >
+  <resultMap id="BaseResultMap" type="dto.interaction.InteractionCommentHelpEvaluate" >
+    <result column="icommentid" property="icommemtid" jdbcType="INTEGER" />
+    <result column="helpfulcode" property="helpfulcode" jdbcType="INTEGER" />
+    <result column="cmemberemail" property="cmemberemail" jdbcType="INTEGER" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    icommentid, helpfulcode, cmemberemail, dcreatedate
+  </sql>
+  
+  <insert id="insertSelective" parameterType="dto.interaction.InteractionCommentHelpEvaluate" >
+    insert into t_interaction_comment_help_evaluate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="icommentid != null" >
+        icommentid,
+      </if>
+      <if test="helpfulcode != null" >
+        helpfulcode,
+      </if>
+      <if test="cmemberemail != null" >
+        cmemberemail,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="icommentid != null" >
+        #{icommentid,jdbcType=INTEGER},
+      </if>
+      <if test="helpfulcode != null" >
+        #{helpfulcode,jdbcType=INTEGER},
+      </if>
+      <if test="cmemberemail != null" >
+        #{cmemberemail,jdbcType=INTEGER},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+	
+</mapper>

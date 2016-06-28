@@ -1,0 +1,25 @@
+@(lasturl: String)
+@views.html.base.master{
+<!--  主体内容开始  -->
+<article class="common_wrapper">
+	<section class="container">
+		<div class="account_box common_tips">
+			<div class="common_tips_icon">
+				<img src="@controllers.base.routes.Assets.at("images/tip_120_1.png")">
+			</div>
+			<div class="common_tips_con">
+				<div class="e404">
+					<b>404</b> <i>@Messages("page.not.found")</i>
+				</div>
+				<h3>@Messages("we.could.not.find.what.you.are.looking.for")</h3>
+				@Messages("Suggestions"):
+				<br> • @Messages("if.you.typed.in.a.specific.url.check.for.errors.and.resubmit")<br /> 
+					• @Messages("type.what.you.are.looking.for.into.our.search.bar")<br />
+				<div class="back">
+					<a href="/">« @Messages("return.to.the.home.page")</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</article>
+}

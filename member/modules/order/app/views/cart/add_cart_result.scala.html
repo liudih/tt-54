@@ -1,0 +1,11 @@
+@(vo: valueobjects.order_api.cart.CartComposite, renderer: services.cart.CartCompositeRenderer)
+
+@views.html.base.master {
+
+<div class="row">
+	<div class="col-sm-12">
+		@renderer.renderFragment(vo, "add-cart-result")	
+	</div>
+</div>
+
+}

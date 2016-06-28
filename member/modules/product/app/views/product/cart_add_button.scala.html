@@ -1,0 +1,33 @@
+@()
+@urlprefix = @{play.Play.application().configuration().getString("cart.url")}
+<div class="addto_cart" >
+	<input id="urlprefix" value="@urlprefix" type="hidden"></input>
+	<input class="rightPaly_addToCart" name="add-to-cart-button" type="button" value="@Messages("add.to.cart")" />
+	<div class="addTo_cartHide" style="display: none;" >
+		<div class="add_toCart_result">
+			<div style="text-align:center;" class="loading" aria-hidden="true">
+				<img style="width:40px;height:40px;margin-top:30px;" src="@controllers.base.routes.Assets.at("img/loading-middle.gif")"/>
+		 	</div>
+			<span class="addTo_sj"></span>
+			<span class="addTo_close"></span> 
+			<div class="fail-add" style="display: none;">
+				<h2 style="color:red;">@Messages("add.fail")</h2>
+			</div>
+			<div class="success-add" style="display: none;">
+				<p class="cart_title">
+					<em></em>
+					<span class="productTotal">1</span>@Messages("item.added.to.cart")
+				</p>
+				<p class="cart_txt">
+					<b class="success-qty"></b>
+					@Messages("total.item.in.your.cart")
+					<br>
+					<span>@Messages("cart.total")</span>
+					<span class="orange total-price-2" ></span>
+				</p>
+				<input type="button" value="@Messages("view.cart")" class="viewCart" />
+				<input type="button" value="@Messages("continue.shopping")" class="continueShopping" />
+			</div>
+		</div>
+	</div>
+</div>

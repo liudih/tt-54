@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.cart.CartItemListMapper">
+	<resultMap id="BaseResultMap" type="dto.cart.CartItemList">
+		<result column="ccartitemid" property="ccartitemid" jdbcType="INTEGER" />
+		<result column="bismain" property="bismain" jdbcType="BIT" />
+		<result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+		<result column="iqty" property="iqty" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="BaseResultMapLite" type="dto.CartItemLite">
+		<result column="cuuid" property="cuuid" jdbcType="VARCHAR" />
+		<result column="cmemberemail" property="cmemberemail" jdbcType="VARCHAR" />
+		<result column="iitemtype" property="iitemtype" jdbcType="INTEGER" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+		<result column="ccartitemid" property="ccartitemid" jdbcType="INTEGER" />
+		<result column="icartbaseid" property="icartbaseid" jdbcType="INTEGER" />
+		<result column="bismain" property="bismain" jdbcType="BIT" />
+		<result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+		<result column="iqty" property="iqty" jdbcType="INTEGER" />
+		<result column="istorageid" property="istorageid" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		 ccartitemid, bismain, clistingid, iqty
+	</sql>
+	<insert id="insert" parameterType="dto.cart.CartItemList">
+		insert into t_cart_item_list ( ccartitemid, bismain,
+		clistingid, iqty, istorageid)
+		values ( #{ccartitemid,jdbcType=VARCHAR},
+		#{bismain,jdbcType=BIT},
+		#{clistingid,jdbcType=VARCHAR}, #{iqty,jdbcType=INTEGER}, #{istorageid,jdbcType=INTEGER})
+	</insert>
+</mapper>

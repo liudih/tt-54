@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.interaction.PriceMatchMapper">
+	<resultMap id="BaseResultMap" type="dto.interaction.PriceMatch">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+		<result column="csku" property="csku" jdbcType="VARCHAR" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+		<result column="csourceurl" property="csourceurl" jdbcType="VARCHAR" />
+		<result column="cemail" property="cemail" jdbcType="VARCHAR" />
+		<result column="flowerprice" property="flowerprice" jdbcType="DOUBLE" />
+		<result column="cinquiry" property="cinquiry" jdbcType="VARCHAR" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+		<result column="cuseremail" property="cuseremail" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, clistingid, csku,iwebsiteid, csourceurl, cemail,
+		flowerprice,
+		cinquiry, dcreatedate,cuseremail
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_price_match
+		where iid = #{iid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_price_match
+		where iid = #{iid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="dto.interaction.PriceMatch">
+		insert into t_price_match
+		(iid, clistingid, csku,
+		csourceurl, cemail, flowerprice,
+		cinquiry,
+		dcreatedate)
+		values (#{iid,jdbcType=INTEGER},
+		#{clistingid,jdbcType=VARCHAR},
+		#{csku,jdbcType=VARCHAR},
+		#{csourceurl,jdbcType=VARCHAR}, #{cemail,jdbcType=VARCHAR},
+		#{flowerprice,jdbcType=DOUBLE},
+		#{cinquiry,jdbcType=VARCHAR},
+		#{dcreatedate,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="dto.interaction.PriceMatch">
+		insert into t_price_match
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				iid,
+			</if>
+			<if test="clistingid != null">
+				clistingid,
+			</if>
+			<if test="csku != null">
+				csku,
+			</if>
+			<if test="iwebsiteid != null">
+				iwebsiteid,
+			</if>
+			<if test="csourceurl != null">
+				csourceurl,
+			</if>
+			<if test="cemail != null">
+				cemail,
+			</if>
+			<if test="flowerprice != null">
+				flowerprice,
+			</if>
+			<if test="cinquiry != null">
+				cinquiry,
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate,
+			</if>
+			<if test="cuseremail != null">
+				cuseremail,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				#{iid,jdbcType=INTEGER},
+			</if>
+			<if test="clistingid != null">
+				#{clistingid,jdbcType=VARCHAR},
+			</if>
+			<if test="csku != null">
+				#{csku,jdbcType=VARCHAR},
+			</if>
+			<if test="iwebsiteid != null">
+				#{iwebsiteid,jdbcType=INTEGER},
+			</if>
+			<if test="csourceurl != null">
+				#{csourceurl,jdbcType=VARCHAR},
+			</if>
+			<if test="cemail != null">
+				#{cemail,jdbcType=VARCHAR},
+			</if>
+			<if test="flowerprice != null">
+				#{flowerprice,jdbcType=DOUBLE},
+			</if>
+			<if test="cinquiry != null">
+				#{cinquiry,jdbcType=VARCHAR},
+			</if>
+			<if test="dcreatedate != null">
+				#{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="cuseremail != null">
+				#{cuseremail,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="dto.interaction.PriceMatch">
+		update t_price_match
+		<set>
+			<if test="clistingid != null">
+				clistingid = #{clistingid,jdbcType=VARCHAR},
+			</if>
+			<if test="csku != null">
+				csku = #{csku,jdbcType=VARCHAR},
+			</if>
+			<if test="csourceurl != null">
+				csourceurl = #{csourceurl,jdbcType=VARCHAR},
+			</if>
+			<if test="cemail != null">
+				cemail = #{cemail,jdbcType=VARCHAR},
+			</if>
+			<if test="flowerprice != null">
+				flowerprice = #{flowerprice,jdbcType=DOUBLE},
+			</if>
+			<if test="cinquiry != null">
+				cinquiry = #{cinquiry,jdbcType=VARCHAR},
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="dto.interaction.PriceMatch">
+		update
+		t_price_match
+		set clistingid = #{clistingid,jdbcType=VARCHAR},
+		csku =
+		#{csku,jdbcType=VARCHAR},
+		csourceurl = #{csourceurl,jdbcType=VARCHAR},
+		cemail = #{cemail,jdbcType=VARCHAR},
+		flowerprice =
+		#{flowerprice,jdbcType=DOUBLE},
+		cinquiry =
+		#{cinquiry,jdbcType=VARCHAR},
+		dcreatedate =
+		#{dcreatedate,jdbcType=TIMESTAMP}
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+</mapper>

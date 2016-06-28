@@ -1,0 +1,71 @@
+@(
+bagde:valueobjects.product.ProductBadge,
+types:List[dto.ProductPostType],
+postPage :valueobjects.base.Page[dto.ProductPost],
+node: valueobjects.product.category.CategoryReverseComposite,
+loginEmail:String
+)
+@helper.javascriptRouter("js_routes")(
+
+   
+)
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  	<link rel="stylesheet" href='@controllers.base.routes.Assets.at("css/product.css")' /> 
+ }
+@views.html.base.master {
+<div class="container">
+    		
+    		<div class="Bread_crumbs_Box">
+            	<ul class="Bread_crumbs">
+            	   <li class="Bread_home"><a href="/"></a></li>
+                   @views.html.product.fragment.breadcrumb(node)
+                    
+                    <div class="clear"></div>
+                </ul>
+            </div>
+                        
+<!--QA-->
+          <div class="ProductQA review_list boxFramework">
+            			<div class="browse_title"><a href="@controllers.product.routes.Product.view(bagde.getUrl)">@Messages("back.to.product.page")</a></div>
+                        <ul class="reviewLise_pro">
+                        	<li>@img(bagde.getImageUrl(), bagde.getTitle(),250,250,null)</li>
+                            <li class="reviewLise_txt">
+                            	<p>@bagde.getTitle() </p>
+                                <p>@Messages("sale.price")<span>@bagde.getPrice.getSymbol @Utils.money(bagde.getPrice.getUnitBasePrice)</span></p>
+                            </li>
+                        </ul>
+                        <div class="review_page qa_page">
+                           <div class="qa_nag">
+                              <div class="browse_title">@Messages("product.q.a") </div>
+                        	   @type_list(types,bagde.getListingId)
+                        	</div>
+                        	@page_tag(postPage,bagde.getListingId)
+                        	
+                        </div>
+                        
+                        
+                          @if(postPage != null&&postPage.getList().size()>0){ 
+                             @list_inc(postPage.getList())
+                          }
+                        
+                     
+                        <div class="ProductQA_input reviewsBackC">
+                        	@askbtn()
+                        	@page_tag(postPage,bagde.getListingId)
+                             <!--Askpop-->
+                                @dialog(types,bagde.getListingId,loginEmail)
+                             <!--Askpopover-->
+                        </div>
+            </div>
+<!--QAover-->
+</div>
+
+}
+
+
+
+
+

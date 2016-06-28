@@ -1,0 +1,26 @@
+@(page: Integer,size: Integer)
+@import scala.util.Random; val rd = new Random(); val random = rd.nextInt();
+
+@services.base.HtmlUtils.misc().addHeadOnce{
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/simplePagination.css")">
+}
+<div class="pagination-holder clearfix" >
+	<div id="light-pagination@random" class="pagination"></div>
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+  	<script src="@controllers.base.routes.Assets.at("js/lib/jquery.simplePagination.js")" ></script>
+  	<script>
+	$('#light-pagination@random').pagination({
+		pages: @size,
+		currentPage: @(page+1),
+		hrefTextPrefix: 'javascript:void(',
+		hrefTextSuffix: ')',
+		cssStyle: 'light-theme',
+		selectOnClick: true,
+		onPageClick: function(pageNumber, event) {
+			$("#p").val(pageNumber);
+			$("#searchbar").submit();
+		}
+	});
+	</script>
+}

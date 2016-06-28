@@ -1,0 +1,464 @@
+@(token: String,
+PayerID: String,
+orderNum : String,
+address : dto.member.MemberAddress,
+shipToCountry : String,
+shipToCountryCode : String,
+countrys : List[dto.Country],
+order : dto.order.Order,
+currency : dto.Currency,
+items : List[valueobjects.order_api.OrderItem] )
+
+@import services.base.utils._
+@import views.html.mobile.img
+
+@meta = @{services.base.utils.MetaUtils.currentMetaBuilder().build()}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=2.0">
+<meta name="description" content="@meta.getDescription()">
+        <meta name="keywords" content="@meta.getKeywords()">
+@meta.getProperties().map{p =>
+        	<meta property="@p._1" content="@p._2">
+        }
+<title>@meta.getTitle()</title>
+<link rel="icon" href="@controllers.mobile.routes.Assets.at("favicon.ico")" type="image/x-icon">
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/jquery-1.9.1.js")"></script>
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/main.js")"></script>
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/public.js")"></script>
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/scroll.js")"></script>
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/select_currency.js")"></script>
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/video.js")"></script>
+
+<link href="@controllers.mobile.routes.Assets.at("css/style.css")" rel="stylesheet" media="screen">
+<link href="@controllers.mobile.routes.Assets.at("css/bottom.css")" rel="stylesheet" media="screen">
+<link href="@controllers.mobile.routes.Assets.at("css/mobile.css")" rel="stylesheet" media="screen">
+<link href="@controllers.mobile.routes.Assets.at("css/top.css")" rel="stylesheet" media="screen">
+<link href="@controllers.mobile.routes.Assets.at("css/termsOf.css")" rel="stylesheet" media="screen">
+<link href="@controllers.mobile.routes.Assets.at("css/paymentMethod.css")" rel="stylesheet" type="text/css">
+<link href="@controllers.mobile.routes.Assets.at("css/shippingAddress_page.css")" rel="stylesheet" type="text/css">
+</head>
+<body>
+<p>   &nbsp;   </p>
+<div id="loading" style="display:none;position: fixed;width: 100%;height: 100%;z-index: 999; top: 0px;left:0px;background:rgba(0,0,0,0.5);">
+<img src="@controllers.mobile.routes.Assets.at("images/loading.gif")" style="position: absolute;left: 50%;top: 50%;margin-left: -23px;margin-top: -23px;">
+</div>
+
+<div class="container">
+	<div class="stepBox">
+		<ul class="lbBox stepWarp">
+			<li class="lineBlock active">
+				<span>1</span>
+				<p>shopping Cart</p>
+			</li>
+			<li class="lineBlock active">
+				<span>2</span>
+				<p>SHIPPING & PLACE ORDER</p>
+				<em> </em>
+			</li>
+			<li class="lineBlock">
+				<span>3</span>
+				<p>PAYMENT</p>
+				<em> </em>
+			</li>
+		</ul>
+	</div>
+	<div class="address_con_W">
+		<h5>Shipping Address</h5>
+		<ul class="lbBox marT">
+			<li class="lineBlock address_infCon">
+				<b class="address_name"> 
+					<span id="shipToFirstName">@address.getCfirstname</span>&nbsp;
+	                <span id="shipToLastName">@address.getClastname</span>
+	             </b>
+				<p class="address_txt">  
+					<span id="shipToStreet1">@address.getCstreetaddress</span>
+				</p>
+				<p class="address_txt">
+	                <span id="shipToCity">@address.getCcity</span>
+	                <span id="shipToState">@address.getCprovince</span>
+	                <span id="shipToZipCode">@address.getCpostalcode</span>  
+                 </p>
+                <p> <span id="shipToCountry">@shipToCountry</span></p>
+				<p class="address_phone" id="shipToTel">@address.getCtelephone</p>
+			</li>
+			<li class="lineBlock address_choose">
+				<a id="shipAddressEdit" class="address_PaypalIcon popBoxFilter" style="display: inline-block;"></a> <span ></span>
+				<div class="publicePop_Box popBoxNone" id="pop_address">
+					<div class="publicePop_con">
+						<div class="input_control span45 lineBlock">
+							<input class="txtInput addPop_input" type="text" name="firstName" placeholder="Enter your first name" maxlength="50" />
+	    					<i class="sClean"> </i>
+						</div>
+						<div class="input_control span45 lineBlock floatR">
+							<input class="txtInput addPop_input" type="text" name="lastName" placeholder="Enter your last name" maxlength="50" />
+	    					<i class="sClean"> </i>
+						</div>
+						<div class="input_control">
+							<input class="txtInput addPop_input" type="text" name="address1" placeholder="Street" maxlength="150" />
+	    					<i class="sClean"> </i>
+						</div>
+						<div class="countriesSelect input_control" id="country_select">
+						 <input id="search_country" class="txtInput placeholder_country placeholder_countryClick" type="text" name="countryCode" placeholder="Country" value="@shipToCountry" />
+	    						<i class="sClean"> </i>
+	                            <div class="select_country select_countryNone" id="country_label">
+	                                  <ul class="country_list">
+	                                   @countrys.map{c => 
+                                			<li cid="@c.getIid" code="@c.getCshortname">@c.getCname</li>
+                              		 	 }
+	                                  </ul>
+	                             </div>
+						</div>
+						<div class="input_control">
+							<input class="txtInput addPop_input" type="text" name="province" placeholder="State / Province / Region" maxlength="500" />
+	    					<i class="sClean"> </i>
+						</div>
+						<div class="span45 input_control lineBlock">
+							<input class="txtInput addPop_input" type="text" name="city" placeholder="City" maxlength="60" />
+						</div>
+						<div class="span45 input_control lineBlock floatR">
+							<input class="txtInput addPop_input" type="text" name="zipCode" placeholder="Zip / Postal Code" maxlength="60" />
+						</div>
+						<div class="input_control">
+							<input class="txtInput addPop_input" type="number"  name="telephone" placeholder="Phone Number" maxlength="30" />
+						</div>
+						<div class="filter_popBottom">
+							<a href="javascript:;" class="wihteInput lineBlock closePop" id="cancel_btn">Cancel</a>
+							<a href="javascript:;" class="orangeInput lineBlock" id="ok_btn">Save</a>
+						</div>
+					</div>
+					<div class="blackPop"> </div>
+				</div>
+			</li>
+		</ul>
+		<div id="shipMethod" class="newshopping_address orderD_con" >
+	
+		<hr class="grayHR">
+		</div>
+	</div>
+	
+	<h5 class="marT marL">Product List</h5>
+	@items.map{ i => 
+	<div class="shoppingCart_listBox">
+		<div class="shoppingCart_imgBox lineBlock">
+			<div class="discount_icon">14</div>
+			@img(i.getCimageurl(), i.getCtitle(), 100, 100, null)
+		</div>
+		<div class="shoppingAdd_TxtBox lineBlock">
+			<h5>@i.getCtitle()</h5>
+			<div class="product_price lineBlock">@currency.getCsymbol @Utils.money(i.getUnitPrice)</div>
+			<ul class="product_attribute">
+				<li class="lineBlock">
+				@if(null !=i.getAttributeMap){
+					@i.getAttributeMap.map{ j=> 
+						 @if(null != j._1 && j._1.length>0){@j._1.substring(0,1).toUpperCase@j._1.substring(1)}
+						: @j._2 &nbsp; } 
+				}
+				</li>
+			</ul>
+			<p class="qtyAddres">QTY:<span>@i.getIqty</span></p>
+		</div>
+	</div>
+	}
+	<div class="conW98">
+		<table class="cart_orderPriceTable marT" width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td>Order subtotal:</td>
+				<td><span id="subtotal">@currency.getCsymbol &nbsp;@Utils.money(order.getFordersubtotal,currency.getCcode)</span></td>
+			</tr>
+			<tr>
+				<td>Coupon(abc):</td>
+				<td>@currency.getCsymbol @Utils.money(order.getFextra,currency.getCcode)</td>
+			</tr>
+			<tr>
+				<td>Shipping Cost:</td>
+				<td>@currency.getCsymbol &nbsp;<span id="shipCost">@Utils.money(0.00,currency.getCcode)</span></td>
+			</tr>
+			<tr>
+				<td class="GrandTotal">Grand Total:</td>
+				<td class="GrandTotalNumber">
+					@currency.getCsymbol &nbsp;
+					<span id="grandTotal" total="@Utils.money(order.getFgrandtotal,currency.getCcode)">
+						@Utils.money(order.getFgrandtotal,currency.getCcode)
+					</span>
+				</td>
+			</tr>
+		</table>
+		<div class="leaveMessage_Box">
+			<div class="slideToggle_click checkbox_div"><span class="checkbox1"> </span> Leave a Message</div>
+			<div class="leaveMessage_input slideToggle_box">
+			     <textarea class="textareaBox" id="msg" maxlength="500"></textarea>
+			     <p>*Write anything you like to require more on your placed order, such as the shipping and other order related requirements.</p>
+			</div>
+		</div>
+		<div style="width:100%;height:120px;"> </div>
+		<div id="proPayBut" class="productButtonBottom" style="display: block;">
+			<a id="placeButton" class="orangeInput width100 marT" href="javascript:vaildSubmit()">Place Your Order</a>
+		</div>
+	</div>
+<form id="confirmOrderForm" action="ecpay" method="post" style="display:none;">
+<input name="ptoken" type="hidden" value="@token"/>
+<input name="PayerID" type="hidden" value="@PayerID"/>
+<input name="orderNum" type="hidden" value="@orderNum"/>
+<input name="firstName" type="hidden" value=""/>
+<input name="lastName" type="hidden" value="" />
+<input name="countryCode" type="hidden" value="1"/>
+<input name="address1" type="hidden" value="" />
+<input name="city" type="hidden" value="" />
+<input name="province" type="hidden" value="" />
+<input name="zipCode" type="hidden" value="" />
+<input name="telephone" type="hidden" value="" />
+<input name="shippingMethodIdValue" type="hidden"/>
+<textarea name="leaveMessage" id="leaveMessage" ></textarea>
+<input type="hidden" name="country" value="@shipToCountry" />
+<input type="hidden" name="countrysn" value="@shipToCountryCode" />
+</form>
+</div>
+
+<script type="text/javascript">
+	var orderForm = {
+		'firstName' : '@address.getCfirstname',
+		'lastName' : '@address.getClastname',
+		'countryCode' : '@shipToCountryCode',
+		'address1' : '@address.getCstreetaddress',
+		'city' : '@address.getCcity',
+		'province' : '@address.getCprovince',
+		'zipCode' : '@address.getCpostalcode',
+		'telephone' : '@address.getCtelephone'
+		};
+	$(function() {
+		@if(shipToCountryCode == null){
+			ttAlert('shipping unavailable');
+		}else{
+			refreshShipMethod('@shipToCountryCode');
+		}
+	});
+	
+	//修改地址事件
+	$('#shipAddressEdit').click(function() {
+		$('#pop_address').find('input[name]').each(function() {
+			var name = $(this).attr('name');
+			if ('firstName' == name) {
+				var fn = $('#shipToFirstName').text() || '';
+				$(this).val(fn);
+			} else if ('lastName' == name) {
+				var fn = $('#shipToLastName').text() || '';
+				$(this).val(fn);
+			} else if ('address1' == name) {
+				var fn = $('#shipToStreet1').text() || '';
+				$(this).val(fn);
+			} else if ('city' == name) {
+				var fn = $('#shipToCity').text() || '';
+				$(this).val(fn);
+			} else if ('province' == name) {
+				var fn = $('#shipToState').text() || '';
+				$(this).val(fn);
+			} else if ('zipCode' == name) {
+				var fn = $('#shipToZipCode').text() || '';
+				$(this).val(fn);
+			} else if ('telephone' == name) {
+				var fn = $('#shipToTel').text() || '';
+				$(this).val(fn);
+			} else if ('countryCode' == name) {
+				var fn = $('#shipToCountry').text() || '';
+				$(this).val(fn);
+			}
+			$("#pop_address").show();
+		});
+	});
+	$('#ok_btn').click(function(){
+		var isSubmit = true;
+		$('#pop_address').find('input[name]').each(function(){
+			var v =  $(this).val().trim();
+			if(!v){
+				$(this).addClass('input_error');
+				isSubmit = false;
+			 }else{
+				 $(this).removeClass('input_error'); 
+			 }
+		});
+		if(isSubmit){
+			fillAddress();
+			$(".popBoxNone").hide();
+			$(".publice_show").fadeOut();
+		}
+
+	});
+	function fillAddress() {
+		var address = {};
+		$('#pop_address').find('input[name]').each(function() {
+			var name = $(this).attr('name');
+			var value = $(this).val();
+			address[name] = value || '';
+		});
+		var ac = $("#confirmOrderForm input[name='countrysn']:eq(0)").val();
+		//邮寄方式
+		if(orderForm.countryCode != ac){
+			$('#shipMethod').empty();
+			refreshShipMethod(ac);
+		} 
+		
+		orderForm = address;
+		$('#shipToFirstName').text(address.firstName);
+		$("#confirmOrderForm input[name='firstName']").val(address.firstName);
+		$('#shipToLastName').text(address.lastName);
+		$("#confirmOrderForm input[name='lastName']").val(address.lastName);
+		$('#shipToStreet1').text(address.address1);
+		$("#confirmOrderForm input[name='address1']").val(address.address1);
+		$('#shipToCity').text(address.city);
+		$("#confirmOrderForm input[name='city']").val(address.city);
+		$('#shipToState').text(address.province);
+		$("#confirmOrderForm input[name='province']").val(address.province);
+		$('#shipToZipCode').text(address.zipCode);
+		$("#confirmOrderForm input[name='zipCode']").val(address.zipCode);
+		var c = $("#confirmOrderForm input[name='country']:eq(0)").val();
+		$('#shipToCountry').text(c);
+		$('#shipToTel').text(address.telephone);
+		$("#confirmOrderForm input[name='telephone']").val(address.telephone);
+	}
+	
+	function vaildSubmit(){
+		var firstName = $('#shipToFirstName').text();
+		var lastName = $('#shipToLastName').text();
+		var street = $('#shipToStreet1').text();
+		var city = $('#shipToCity').text();
+		var state = $('#shipToState').text();
+		var zipCode = $('#shipToZipCode').text();
+		var country = $('#shipToCountry').text();
+		var tel = $('#shipToTel').text();
+		var boo = true;
+		if(firstName == null || $.trim(firstName) == ''){
+			boo = false;
+		}
+		if(lastName == null || $.trim(lastName) == ''){
+			boo = false;
+		}
+		if(street == null || $.trim(street) == ''){
+			boo = false;
+		}
+		if(city == null || $.trim(city) == ''){
+			boo = false;
+		}
+		if(state == null || $.trim(state) == ''){
+			boo = false;
+		}
+		if(zipCode == null || $.trim(zipCode) == ''){
+			boo = false;
+		}
+		if(country == null || $.trim(country) == ''){
+			boo = false;
+		}
+		if(tel == null || $.trim(tel) == ''){
+			boo = false;
+		}
+		var s = $("#shipping-method ul");
+		if(s.length == 0 ){
+			alert("please select shipping method");
+			return false;
+		}
+		if(boo == false){
+			$('#shipAddressEdit').trigger('click');
+			$('#ok_btn').trigger('click');
+		}else{
+			var msg = $('#msg').val();
+			//alert(msg);
+			if(msg != null && $.trim(msg) != ''){
+				$('#leaveMessage').val(msg);
+			}
+			$('#loading').show();
+			$('#confirmOrderForm').submit();
+		}
+	}
+	
+	function refreshShipMethod(shipToCountryCode){
+		//alert(shipToCountryCode);
+		$('#placeButton').hide();
+		$.ajax({url: '/mobile/api/refresh-ship-method', 
+			type: 'GET', 
+			data:{'orderNum' : "@orderNum",'shipToCountryCode' : shipToCountryCode}, 
+			dataType: 'html', 
+			timeout: 1000 * 20, 
+			error: function(){}, 
+			success: function(html){
+				$('#shipMethod').empty();
+				$('#shipMethod').append(html);
+				$('#placeButton').show();
+				$('#shipping-method').find('ul:first').trigger('click');
+			} 
+		}); 
+	}
+
+	$("#country_select").find('li').click(function() {
+		var codeid = $(this).attr('cid');
+		var code = $(this).attr('code');
+		var text = $(this).text();
+		$('#search_country').val(text);
+		//$('#country').val(code);
+		//$('#country_select').hide();
+		$('#country_label').hide();
+		//alert(codeid);
+		$("#confirmOrderForm input[name='countryCode']").val(codeid);
+		$("#confirmOrderForm input[name='country']:eq(0)").val($(this).html());
+		$("#confirmOrderForm input[name='countrysn']:eq(0)").val(code);
+	});
+	 function countryHide(){
+			$(".select_countryNone").hide();
+	 }
+	$(".placeholder_countryClick").blur(function(){
+		window.setTimeout("javascript:countryHide()",200);
+	})
+	
+	function ttAlert(tip){
+		var errorBox = $('#errorBox');
+		if(errorBox.length == 0){
+			var ele = [];
+			ele.push('<div id="errorBox" style="display: block" class="pu_pop popNone_s">');
+			ele.push('<div class="ns_pop_box">');
+			ele.push('<div class="btn_pop_close"></div>');
+			ele.push('<div class="pop_title">');
+			ele.push('<h3>Error</h3>');
+			ele.push('</div>');
+			ele.push('<div class="pop_con">');
+			ele.push('<p id="errorBoxTxt"></p>');
+			ele.push('</div>');
+			ele.push('<div class="pop_input_box">');
+			ele.push('<input id="errorBoxOkBtn" type="button" class="pop_input_confirm" value="OK">');
+			ele.push('</div>');
+			ele.push('</div>');
+			ele.push('<div class="blockPopup_black"></div>');
+			ele.push('</div>');
+			$('body').append(ele.join(''));
+			$('#errorBoxOkBtn').click(function() {
+				$('#errorBox').hide();
+			});
+			$('#errorBox').find('.btn_pop_close').click(function() {
+				$('#errorBox').hide();
+			});
+		}
+		
+		$('#errorBox').show();
+		$('#errorBoxTxt').text((tip || ''));
+	}
+	
+	function bindClickForShippingMethod(node){
+		var methodId = $(node).attr('methodId');
+		//alert(methodId);
+		$("#confirmOrderForm input[name='shippingMethodIdValue']").val(methodId);
+		//$('#shippingMethodIdValue').val(methodId);
+		$(node).find('div').addClass('aciCss');
+		$(node).siblings().find('div').removeClass('aciCss');
+		var freight = $(node).attr('value');
+		var totalEle = $('#grandTotal');
+		var shipp = $('#shipCost');
+		var total = totalEle.attr('total');
+		total = parseFloat(total);
+		freight = parseFloat(freight);
+		shipp.text(freight.toFixed(2));
+		//修复总金额格式化留两位小数点 xcf
+		totalEle.text((total + freight).toFixed(2));
+	} 
+</script>
+</body>
+</html>

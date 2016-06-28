@@ -1,0 +1,870 @@
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>TOMTOP</title>
+<link rel="stylesheet/less" type="text/css" href="js/skin.less" />
+<link rel="stylesheet/less" type="text/css" href="js/shopping.less" />
+<link rel="stylesheet/less" type="text/css" href="js/login.less" />
+<script type="text/javascript" src="js/less-1.3.3.min.js"></script>
+<link href="css/tomtop.css" rel="stylesheet" media="screen"> 
+<script src="js/jquery-1.9.1.js"></script>
+<script src="js/main.js"></script>
+</head>
+
+<body>  
+    
+<div class="container accountBox">
+    <div class="Bread_crumbs_Box">
+        <ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="#"></a></li>
+            <li>
+                <dl>
+                    <dt><a class="Bread_link" href="#">Fashion & Clothing</a></dt>
+                    <dd>
+                        <ul>
+                            <li><a href="#">Expedited Shipping</a></li>
+                            <li><a href="#">Outdoor & Traveling Supplies</a></li>
+                            <li><a href="#">Swimming Supplies</a></li>
+                        </ul>
+                    </dd>
+                </dl>
+            </li>
+            <li class="curr-category">
+                <a href="#">Men's Outerwear</a>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <ul class="accountLeft">
+    	<li class="leftCategory"><em></em>Account</li>
+            <li><a href="javascript:;">My Profile</a></li>
+            <li><a href="javascript:;">My Message <span class="blue">(2)</span></a></li>
+            <li><a href="javascript:;">Shipping Address</a></li>
+            <li><a href="javascript:;">Billing Address</a></li>
+            <li><a href="javascript:;">My Points</a></li>
+            <li><a href="javascript:;">My VIP<em class="vipIco">VIP0</em></a></li>
+    	<li class="leftCategory"><em></em>Order</li>
+            <li><a href="javascript:;">My Order</a></li>
+            <li><a href="javascript:;">My RMA</a></li>
+            <li><a href="javascript:;">My Ticket</a></li>
+            <li class="leftAct"><a href="javascript:;">Order Tracking</a></li>
+    	<li class="leftCategory"><em></em>Shopping</li>
+            <li><a href="javascript:;">Shopping Cart <span class="color999">(1)</span></a></li>
+            <li><a href="javascript:;">Wish List <span class="color999">(215)</span></a></li>
+            <li><a href="javascript:;">Product Requests</a></li>
+            <li><a href="javascript:;">Price Match</a></li>
+    	<li class="leftCategory"><em></em>Payment</li>
+            <li><a href="javascript:;">My Coupons</a></li>
+    	<li class="leftCategory"><em></em>Community</li>
+            <li><a href="javascript:;">My Product Posts</a></li>
+            <li><a href="javascript:;">My Reviews</a></li>
+            <li><a href="javascript:;">My Subscriptions</a></li>
+    	<li class="leftCategory"><em></em>Customer Service</li>
+            <li><a href="javascript:;">Feedback</a></li>
+            <li><a href="javascript:;">My Complaints</a></li>
+            <li><a href="javascript:;">Phone Call</a></li>
+            <li><a href="javascript:;">Online Service-Live Chat</a></li>
+    	<li class="leftCategory"><em></em>Partner</li>
+            <li><a href="javascript:;">Wholesale</a></li>
+            <li><a href="javascript:;">Dropship</a></li>
+            <li><a href="javascript:;">Affiliate</a></li>
+    	<li class="leftCategory"><em></em>Help Center</li>
+            <li><a href="javascript:;">Help</a></li>
+    </ul>
+    <div class="accountRight orderBox orderDropBox">
+        <div class="xxkDiv">
+            <ul class="blackXXK">
+                <li class="xxkActi"><p>My Orders</p><span class="xxkNumber">(5)</span></li>
+                <li><p>Payment Pending</p><span class="xxkNumber">(2)</span></li>
+                <li><p>Payment Confirmed</p><span class="xxkNumber">(0)</span></li>
+                <li><p>Dispatched</p><span class="xxkNumber">(0)</span></li>
+                <li><p>Refunded</p><span class="xxkNumber">(0)</span></li>
+                <li class="Recycle">
+                    <a class="lineBlock Export" href="javascript:;"><em></em><span class="blue">Export</span>(.csv)</a>
+                    <a class="lineBlock delete_accDh" href="javascript:;"><em></em>Recycle Bin</a>
+                </li>
+                <div class="clear"></div>
+            </ul>
+            <ul class="reviewTT_ul">
+                <li>
+                    <select>
+                        <option>Last 3 Months</option>
+                        <option>Last 6 Months</option>
+                        <option>Last Year</option>
+                        <option>All Date</option>
+                    </select>
+                </li>
+                <li>
+                    <select>
+                        <option>Order status</option>
+                        <option>Payment Pending</option>
+                        <option>Payment Confirmed</option>
+                        <option>Processing</option>
+                        <option>Dispatched</option>
+                        <option>Order Cancelled</option>
+                        <option>Refunded</option>
+                    </select>
+                </li>
+                <li>
+                    <select>
+                        <option>Order status</option>
+                        <option>Payment Pending</option>
+                        <option>Payment Confirmed</option>
+                        <option>Processing</option>
+                        <option>Dispatched</option>
+                        <option>Order Cancelled</option>
+                        <option>Refunded</option>
+                    </select>
+                </li>
+                <li class="searchInp"><input type="text" placeholder="Product name" ><input class="orderSearch" type="button" value="Search"></li>
+                <li class="showNub">Show <a class="showAc" href="javascript:;">10</a>  <a href="javascript:;">20</a>  <a href="javascript:;">40</a></li>
+                <div class="clear"></div>
+            </ul>
+            <div class="xxkBOX boxRa block">
+                <ul class="accOrdeTT">
+                	<li class="details1">Order Details</li>
+                	<li class="price2">Price</li>
+                	<li class="qty3">Qty</li>
+                	<li class="method4">Order status</li>
+                	<li class="status5">Tracking Info</li>
+                	<li class="options6">Options</li>
+                </ul>
+               
+                <table class="orderTab" width="100%" border="1" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td colspan="4" class="orderTabTT">
+                        <a class="rightThis" href="javascript:;"><span class=""></span></a>
+                        <p>Order No. <b class="blue">4619452</b></p>
+                        <p>Order date: 12/14/2014</p>
+                        <p>Total: <b class="orange">$6.46</b></p> 
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="orderInfTD">
+                    	<ul class="orderInfUl">
+                        	<li class="orderImg"><img src="images/delete/orderAccP1.jpg"></li>
+                        	<li class="orderInf">
+                            	<a class="blue" href="javascript:;">Wltoys A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck...</a>
+                                <p class="marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                            </li>
+                        	<li class="pro_price">
+                                <p class="oldPrice">US$ 3.64</p>
+                                <p class="newPrice">US$ 3.23</p>
+                                <p class="priceTxt">Save USD $0.41</p>
+                                <p class="priceOff"><em></em><span>11</span>% OFF</p>
+                            </li>
+                        	<li class="pro_Nb">1</li>
+                            <div class="clear"></div>
+                        </ul>
+                    	<ul class="orderInfUl">
+                        	<li class="orderImg"><img src="images/delete/orderAccP1.jpg"></li>
+                        	<li class="orderInf">
+                            	<a class="blue" href="javascript:;">Wltoys A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck...</a>
+                                <p class="marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                            </li>
+                        	<li class="pro_price">
+                                <span class="middle"></span>
+                                <p class="newPrice">US$ 3.23</p>
+                            </li>
+                        	<li class="pro_Nb">1</li>
+                            <div class="clear"></div>
+                        </ul>
+                    	<ul class="orderInfUl">
+                        	<li class="orderImg"><img src="images/delete/orderAccP1.jpg"></li>
+                        	<li class="orderInf">
+                            	<a class="blue" href="javascript:;">Wltoys A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck...</a>
+                                <p class="marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                            </li>
+                        	<li class="pro_price">
+                                <span class="middle"></span>
+                                <p class="newPrice">US$ 3.23</p>
+                            </li>
+                        	<li class="pro_Nb">1</li>
+                            <div class="clear"></div>
+                        </ul>
+                    	<ul class="orderInfUl">
+                        	<li class="orderImg"><img src="images/delete/orderAccP1.jpg"></li>
+                        	<li class="orderInf">
+                            	<a class="blue" href="javascript:;">Wltoys A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck...</a>
+                                <p class="marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                            </li>
+                        	<li class="pro_price">
+                                <span class="middle"></span>
+                                <p class="newPrice">US$ 3.23</p>
+                            </li>
+                        	<li class="pro_Nb">1</li>
+                            <div class="clear"></div>
+                        </ul>
+                    	<ul class="orderInfUl">
+                        	<li class="orderImg"><img src="images/delete/orderAccP1.jpg"></li>
+                        	<li class="orderInf">
+                            	<a class="blue" href="javascript:;">Wltoys A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck...</a>
+                                <p class="marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                            </li>
+                        	<li class="pro_price">
+                                <span class="middle"></span>
+                                <p class="newPrice">US$ 3.23</p>
+                            </li>
+                        	<li class="pro_Nb">1</li>
+                            <div class="clear"></div>
+                        </ul>
+                    </td>
+                    <td class="orderLogo">Payment<br>Pending</td>
+                    <td class="orderPro" valign="middle">
+                        <a class="orderMiddle" href="javascript:;">Untracked<br>RI329277646CN</a>
+                        <a class="orderMiddle" href="javascript:;">Untracked<br>RI329277646CN</a>
+                    </td>
+                    <td class="orderView">
+                    	<a class="blue" href="accountOrder_detail.html">View</a>
+                        <a class="hsA" href="javascript:;">Completed</a><br><img src="images/PayPal01.jpg">
+                        <a class="rubbish" href="javascript:;"></a>
+                    </td>
+                  </tr>
+                </table>
+                <table class="orderTab" width="100%" border="1" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td colspan="4" class="orderTabTT">
+                        <a class="rightThis" href="javascript:;"><span class=""></span></a>
+                        <p>Order No. <b class="blue">4619452</b></p>
+                        <p>Order date: 12/14/2014</p>
+                        <p>Total: <b class="orange">$6.46</b></p> 
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="orderInfTD">
+                    	<ul class="orderInfUl">
+                        	<li class="orderImg"><img src="images/delete/orderAccP1.jpg"></li>
+                        	<li class="orderInf">
+                            	<a class="blue" href="javascript:;">Wltoys A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck...</a>
+                                <p class="marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                            </li>
+                        	<li class="pro_price">
+                                <p class="oldPrice">US$ 3.64</p>
+                                <p class="newPrice">US$ 3.23</p>
+                                <p class="priceTxt">Save USD $0.41</p>
+                                <p class="priceOff"><em></em><span>11</span>% OFF</p>
+                            </li>
+                        	<li class="pro_Nb">1</li>
+                            <div class="clear"></div>
+                        </ul>
+                    </td>
+                    <td class="orderLogo">Payment<br>Pending</td>
+                    <td class="orderPro">Payment Pending</td>
+                    <td class="orderView">
+                    	<a class="blue" href="accountOrder_detail.html">View</a>
+                        <a class="orderCheckout" href="javascript:;"><em></em>Checkout</a>
+                        <img src="images/PayPal01.jpg">
+                        <a class="rubbish" href="javascript:;"></a>
+                    </td>
+                  </tr>
+                </table>
+                <ul class="orderAll_bot">
+                	<li>
+                    <a href="javascript:;" class="rightAll"><span></span></a>
+                    <a href="javascript:;" class="delete"><p class="reMAll">Remove all</p>
+                        <p class="deletePop">
+                            <i></i>Remove all from your cart?<br>
+                            <input type="button" value="Yes"><input type="button" value="No">
+                        </p>
+                    </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" class="heart">
+                            <em></em>Add all to wish list
+                            <p class="deletePop">
+                                <i></i>Add all to wish list?<br>
+                                <input type="button" value="Yes"><input type="button" value="No">
+                            </p>
+                        </a>
+                	</li>
+                    <li class="orderInp"><input type="submit" value="Place Your Order" class="spayOut"></li>
+                </ul>
+                <div class="arrayNEX">
+                    <div class="review_pageNum">
+                        <a class="review_prev" href="javascript:;"><em></em>Prev</a>
+                        <a href="javascript:;">1</a>
+                        <a class="review_active" href="javascript:;">2</a>
+                        <a href="javascript:;">3</a>
+                        <a href="javascript:;">4</a>
+                        <a href="javascript:;">5</a>
+                        <a href="javascript:;">6</a>
+                        <span class="other">....</span>
+                        <a href="javascript:;">10</a>
+                        <a class="review_next" href="javascript:;">Next<em></em></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="xxkBOX boxRa">
+                <ul class="accOrdeTT">
+                	<li class="details1">Order Details</li>
+                	<li class="price2">Price</li>
+                	<li class="qty3">Qty</li>
+                	<li class="method4">Payment Method</li>
+                	<li class="status5">Order status</li>
+                	<li class="options6">Options</li>
+                </ul>
+                <table class="orderTab" width="100%" border="1" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td colspan="4" class="orderTabTT">
+                        <a class="rightThis" href="javascript:;"><span class=""></span></a>
+                        <p>Order No. <b class="blue">4619452</b></p>
+                        <p>Order date: 12/14/2014</p>
+                        <p>Total: <b class="orange">$6.46</b></p> 
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="orderInfTD">
+                    	<ul class="orderInfUl">
+                        	<li class="orderImg"><img src="images/delete/orderAccP1.jpg"></li>
+                        	<li class="orderInf">
+                            	<a class="blue" href="javascript:;">Wltoys A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck...</a>
+                                <p class="marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                            </li>
+                        	<li class="pro_price">
+                                <p class="oldPrice">US$ 3.64</p>
+                                <p class="newPrice">US$ 3.23</p>
+                                <p class="priceTxt">Save USD $0.41</p>
+                                <p class="priceOff"><em></em><span>11</span>% OFF</p>
+                            </li>
+                        	<li class="pro_Nb">1</li>
+                            <div class="clear"></div>
+                        </ul>
+                    	<ul class="orderInfUl">
+                        	<li class="orderImg"><img src="images/delete/orderAccP1.jpg"></li>
+                        	<li class="orderInf">
+                            	<a class="blue" href="javascript:;">Wltoys A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck...</a>
+                                <p class="marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                            </li>
+                        	<li class="pro_price">
+                                <span class="middle"></span>
+                                <p class="newPrice">US$ 3.23</p>
+                            </li>
+                        	<li class="pro_Nb">1</li>
+                            <div class="clear"></div>
+                        </ul>
+                    </td>
+                    <td class="orderLogo">Payment<br>Pending</td>
+                    <td class="orderPro">Payment Pending</td>
+                    <td class="orderView">
+                    	<a class="blue" href="javascript:;">View</a>
+                        <a class="orderCheckout" href="javascript:;"><em></em>Checkout</a>
+                        <a class="rubbish" href="javascript:;"></a>
+                    </td>
+                  </tr>
+                </table>
+                <table class="orderTab" width="100%" border="1" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td colspan="4" class="orderTabTT">
+                        <a class="rightThis" href="javascript:;"><span class=""></span></a>
+                        <p>Order No. <b class="blue">4619452</b></p>
+                        <p>Order date: 12/14/2014</p>
+                        <p>Total: <b class="orange">$6.46</b></p> 
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="orderInfTD">
+                    	<ul class="orderInfUl">
+                        	<li class="orderImg"><img src="images/delete/orderAccP1.jpg"></li>
+                        	<li class="orderInf">
+                            	<a class="blue" href="javascript:;">Wltoys A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck...</a>
+                                <p class="marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                            </li>
+                        	<li class="pro_price">
+                                <p class="oldPrice">US$ 3.64</p>
+                                <p class="newPrice">US$ 3.23</p>
+                                <p class="priceTxt">Save USD $0.41</p>
+                                <p class="priceOff"><em></em><span>11</span>% OFF</p>
+                            </li>
+                        	<li class="pro_Nb">1</li>
+                            <div class="clear"></div>
+                        </ul>
+                        <ul class="cartListToge">
+                        	<p class="listTogeTitle">Frequently Buy Together<i></i></p>
+                            <ol>
+                                <a href="javascript:;" class="inBlock pro_img"><img width="75" height="75" src="images/delete/cart01.jpg"></a>
+                                <div class="inBlock pro_info">
+                                    <a class="blue" href="javascript:;">Xiaomi Redmi Note 4G Smart Phone Android MIUI V5 Snapdragon400 MSM8928 </a>
+                                    <p class="parameter marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                                </div>
+                                <div class="inBlock pro_price">
+                                    <p class="oldPrice">US$ 3.64</p>
+                                    <p class="newPrice">US$ 3.23</p>
+                                    <p class="priceTxt">Save USD $0.41</p>
+                                    <p class="priceOff"><em></em><span>11</span>% OFF</p>
+                                </div>
+                                <span class="inBlock">1</span>
+                             </ol>
+                            <ol>
+                                <a href="javascript:;" class="inBlock pro_img"><img width="75" height="75" src="images/delete/cart01.jpg"></a>
+                                <div class="inBlock pro_info">
+                                    <a class="blue" href="javascript:;">Xiaomi Redmi Note 4G Smart Phone Android MIUI V5 Snapdragon400 MSM8928 </a>
+                                    <p class="parameter marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                                </div>
+                                <div class="inBlock pro_price">
+                                    <p class="oldPrice">US$ 3.64</p>
+                                    <p class="newPrice">US$ 3.23</p>
+                                    <p class="priceTxt">Save USD $0.41</p>
+                                    <p class="priceOff"><em></em><span>11</span>% OFF</p>
+                                </div>
+                                <span class="inBlock">1</span>
+                             </ol>
+                        </ul>
+                    </td>
+                    <td class="orderLogo">Payment<br>Pending</td>
+                    <td class="orderPro">Payment Pending</td>
+                    <td class="orderView">
+                    	<a class="blue" href="javascript:;">View</a>
+                        <a class="orderCheckout" href="javascript:;"><em></em>Checkout</a>
+                        <a class="rubbish" href="javascript:;"></a>
+                    </td>
+                  </tr>
+                </table>
+                <ul class="orderAll_bot">
+                	<li>
+                    <a href="javascript:;" class="rightAll"><span></span></a>
+                    <a href="javascript:;" class="delete">Remove all
+                        <p class="deletePop">
+                            <i></i>Remove all from your cart?<br>
+                            <input type="button" value="Yes"><input type="button" value="No">
+                        </p>
+                    </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" class="heart">
+                            <em></em>Add all to wish list
+                            <p class="deletePop">
+                                <i></i>Add all to wish list?<br>
+                                <input type="button" value="Yes"><input type="button" value="No">
+                            </p>
+                        </a>
+                	</li>
+                    <li class="orderInp"><input type="submit" value="Place Your Order" class="spayOut"></li>
+                </ul>
+                <div class="arrayNEX">
+                    <div class="review_pageNum">
+                        <a class="review_prev" href="javascript:;"><em></em>Prev</a>
+                        <a href="javascript:;">1</a>
+                        <a class="review_active" href="javascript:;">2</a>
+                        <a href="javascript:;">3</a>
+                        <a href="javascript:;">4</a>
+                        <a href="javascript:;">5</a>
+                        <a href="javascript:;">6</a>
+                        <span class="other">....</span>
+                        <a href="javascript:;">10</a>
+                        <a class="review_next" href="javascript:;">Next<em></em></a>
+                    </div>
+                </div>
+            </div>
+            <div class="xxkBOX boxRa">
+                <ul class="accOrdeTT">
+                	<li class="details1">Order Details</li>
+                	<li class="price2">Price</li>
+                	<li class="qty3">Qty</li>
+                	<li class="method4">Payment Method</li>
+                	<li class="status5">Order status</li>
+                	<li class="options6">Options</li>
+                </ul>
+                <table class="orderTab" width="100%" border="1" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td colspan="4" class="orderTabTT">
+                        <a class="rightThis" href="javascript:;"><span class=""></span></a>
+                        <p>Order No. <b class="blue">4619452</b></p>
+                        <p>Order date: 12/14/2014</p>
+                        <p>Total: <b class="orange">$6.46</b></p> 
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="orderInfTD">
+                    	<ul class="orderInfUl">
+                        	<li class="orderImg"><img src="images/delete/orderAccP1.jpg"></li>
+                        	<li class="orderInf">
+                            	<a class="blue" href="javascript:;">Wltoys A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck...</a>
+                                <p class="marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                            </li>
+                        	<li class="pro_price">
+                                <p class="oldPrice">US$ 3.64</p>
+                                <p class="newPrice">US$ 3.23</p>
+                                <p class="priceTxt">Save USD $0.41</p>
+                                <p class="priceOff"><em></em><span>11</span>% OFF</p>
+                            </li>
+                        	<li class="pro_Nb">1</li>
+                            <div class="clear"></div>
+                        </ul>
+                    	<ul class="orderInfUl">
+                        	<li class="orderImg"><img src="images/delete/orderAccP1.jpg"></li>
+                        	<li class="orderInf">
+                            	<a class="blue" href="javascript:;">Wltoys A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck...</a>
+                                <p class="marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                            </li>
+                        	<li class="pro_price">
+                                <span class="middle"></span>
+                                <p class="newPrice">US$ 3.23</p>
+                            </li>
+                        	<li class="pro_Nb">1</li>
+                            <div class="clear"></div>
+                        </ul>
+                    </td>
+                    <td class="orderLogo">Payment<br>Pending</td>
+                    <td class="orderPro">Payment confirmed</td>
+                    <td class="orderView">
+                    	<a class="blue" href="javascript:;">View</a>
+                        <a class="rubbish" href="javascript:;"></a>
+                    </td>
+                  </tr>
+                </table>
+                <table class="orderTab" width="100%" border="1" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td colspan="4" class="orderTabTT">
+                        <a class="rightThis" href="javascript:;"><span class=""></span></a>
+                        <p>Order No. <b class="blue">4619452</b></p>
+                        <p>Order date: 12/14/2014</p>
+                        <p>Total: <b class="orange">$6.46</b></p> 
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="orderInfTD">
+                    	<ul class="orderInfUl">
+                        	<li class="orderImg"><img src="images/delete/orderAccP1.jpg"></li>
+                        	<li class="orderInf">
+                            	<a class="blue" href="javascript:;">Wltoys A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck...</a>
+                                <p class="marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                            </li>
+                        	<li class="pro_price">
+                                <p class="oldPrice">US$ 3.64</p>
+                                <p class="newPrice">US$ 3.23</p>
+                                <p class="priceTxt">Save USD $0.41</p>
+                                <p class="priceOff"><em></em><span>11</span>% OFF</p>
+                            </li>
+                        	<li class="pro_Nb">1</li>
+                            <div class="clear"></div>
+                        </ul>
+                        <ul class="cartListToge">
+                        	<p class="listTogeTitle">Frequently Buy Together<i></i></p>
+                            <ol>
+                                <a href="javascript:;" class="inBlock pro_img"><img width="75" height="75" src="images/delete/cart01.jpg"></a>
+                                <div class="inBlock pro_info">
+                                    <a class="blue" href="javascript:;">Xiaomi Redmi Note 4G Smart Phone Android MIUI V5 Snapdragon400 MSM8928 </a>
+                                    <p class="parameter marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                                </div>
+                                <div class="inBlock pro_price">
+                                    <p class="oldPrice">US$ 3.64</p>
+                                    <p class="newPrice">US$ 3.23</p>
+                                    <p class="priceTxt">Save USD $0.41</p>
+                                    <p class="priceOff"><em></em><span>11</span>% OFF</p>
+                                </div>
+                                <span class="inBlock">1</span>
+                             </ol>
+                            <ol>
+                                <a href="javascript:;" class="inBlock pro_img"><img width="75" height="75" src="images/delete/cart01.jpg"></a>
+                                <div class="inBlock pro_info">
+                                    <a class="blue" href="javascript:;">Xiaomi Redmi Note 4G Smart Phone Android MIUI V5 Snapdragon400 MSM8928 </a>
+                                    <p class="parameter marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                                </div>
+                                <div class="inBlock pro_price">
+                                    <p class="oldPrice">US$ 3.64</p>
+                                    <p class="newPrice">US$ 3.23</p>
+                                    <p class="priceTxt">Save USD $0.41</p>
+                                    <p class="priceOff"><em></em><span>11</span>% OFF</p>
+                                </div>
+                                <span class="inBlock">1</span>
+                             </ol>
+                        </ul>
+                    </td>
+                    <td class="orderLogo">Payment<br>Pending</td>
+                    <td class="orderPro">Payment confirmed</td>
+                    <td class="orderView">
+                    	<a class="blue" href="javascript:;">View</a>
+                        <a class="rubbish" href="javascript:;"></a>
+                    </td>
+                  </tr>
+                </table>
+                <ul class="orderAll_bot">
+                	<li>
+                    <a href="javascript:;" class="rightAll"><span></span></a>
+                    <a href="javascript:;" class="delete">Remove all
+                        <p class="deletePop">
+                            <i></i>Remove all from your cart?<br>
+                            <input type="button" value="Yes"><input type="button" value="No">
+                        </p>
+                    </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" class="heart">
+                            <em></em>Add all to wish list
+                            <p class="deletePop">
+                                <i></i>Add all to wish list?<br>
+                                <input type="button" value="Yes"><input type="button" value="No">
+                            </p>
+                        </a>
+                	</li>
+                </ul>
+                <div class="arrayNEX">
+                    <div class="review_pageNum">
+                        <a class="review_prev" href="javascript:;"><em></em>Prev</a>
+                        <a href="javascript:;">1</a>
+                        <a class="review_active" href="javascript:;">2</a>
+                        <a href="javascript:;">3</a>
+                        <a href="javascript:;">4</a>
+                        <a href="javascript:;">5</a>
+                        <a href="javascript:;">6</a>
+                        <span class="other">....</span>
+                        <a href="javascript:;">10</a>
+                        <a class="review_next" href="javascript:;">Next<em></em></a>
+                    </div>
+                </div>
+            </div>
+            <div class="xxkBOX boxRa">
+                <ul class="accOrdeTT">
+                	<li class="details1">Order Details</li>
+                	<li class="price2">Price</li>
+                	<li class="qty3">Qty</li>
+                	<li class="method4">Payment Method</li>
+                	<li class="status5">Order status</li>
+                	<li class="options6">Options</li>
+                </ul>
+                <table class="orderTab" width="100%" border="1" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td colspan="4" class="orderTabTT">
+                        <a class="rightThis" href="javascript:;"><span class=""></span></a>
+                        <p>Order No. <b class="blue">4619452</b></p>
+                        <p>Order date: 12/14/2014</p>
+                        <p>Total: <b class="orange">$6.46</b></p> 
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="orderInfTD">
+                    	<ul class="orderInfUl">
+                        	<li class="orderImg"><img src="images/delete/orderAccP1.jpg"></li>
+                        	<li class="orderInf">
+                            	<a class="blue" href="javascript:;">Wltoys A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck...</a>
+                                <p class="marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                            </li>
+                        	<li class="pro_price">
+                                <p class="oldPrice">US$ 3.64</p>
+                                <p class="newPrice">US$ 3.23</p>
+                                <p class="priceTxt">Save USD $0.41</p>
+                                <p class="priceOff"><em></em><span>11</span>% OFF</p>
+                            </li>
+                        	<li class="pro_Nb">1</li>
+                            <div class="clear"></div>
+                        </ul>
+                    	<ul class="orderInfUl">
+                        	<li class="orderImg"><img src="images/delete/orderAccP1.jpg"></li>
+                        	<li class="orderInf">
+                            	<a class="blue" href="javascript:;">Wltoys A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck...</a>
+                                <p class="marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                            </li>
+                        	<li class="pro_price">
+                                <span class="middle"></span>
+                                <p class="newPrice">US$ 3.23</p>
+                            </li>
+                        	<li class="pro_Nb">1</li>
+                            <div class="clear"></div>
+                        </ul>
+                    </td>
+                    <td class="orderLogo">Payment<br>Pending</td>
+                    <td class="orderPro">Processing</td>
+                    <td class="orderView">
+                    	<a class="blue" href="javascript:;">View</a>
+                        <a class="rubbish" href="javascript:;"></a>
+                    </td>
+                  </tr>
+                </table>
+                <table class="orderTab" width="100%" border="1" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td colspan="4" class="orderTabTT">
+                        <a class="rightThis" href="javascript:;"><span class=""></span></a>
+                        <p>Order No. <b class="blue">4619452</b></p>
+                        <p>Order date: 12/14/2014</p>
+                        <p>Total: <b class="orange">$6.46</b></p> 
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="orderInfTD">
+                    	<ul class="orderInfUl">
+                        	<li class="orderImg"><img src="images/delete/orderAccP1.jpg"></li>
+                        	<li class="orderInf">
+                            	<a class="blue" href="javascript:;">Wltoys A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck...</a>
+                                <p class="marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                            </li>
+                        	<li class="pro_price">
+                                <p class="oldPrice">US$ 3.64</p>
+                                <p class="newPrice">US$ 3.23</p>
+                                <p class="priceTxt">Save USD $0.41</p>
+                                <p class="priceOff"><em></em><span>11</span>% OFF</p>
+                            </li>
+                        	<li class="pro_Nb">1</li>
+                            <div class="clear"></div>
+                        </ul>
+                        <ul class="cartListToge">
+                        	<p class="listTogeTitle">Frequently Buy Together<i></i></p>
+                            <ol>
+                                <a href="javascript:;" class="inBlock pro_img"><img width="75" height="75" src="images/delete/cart01.jpg"></a>
+                                <div class="inBlock pro_info">
+                                    <a class="blue" href="javascript:;">Xiaomi Redmi Note 4G Smart Phone Android MIUI V5 Snapdragon400 MSM8928 </a>
+                                    <p class="parameter marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                                </div>
+                                <div class="inBlock pro_price">
+                                    <p class="oldPrice">US$ 3.64</p>
+                                    <p class="newPrice">US$ 3.23</p>
+                                    <p class="priceTxt">Save USD $0.41</p>
+                                    <p class="priceOff"><em></em><span>11</span>% OFF</p>
+                                </div>
+                                <span class="inBlock">1</span>
+                             </ol>
+                            <ol>
+                                <a href="javascript:;" class="inBlock pro_img"><img width="75" height="75" src="images/delete/cart01.jpg"></a>
+                                <div class="inBlock pro_info">
+                                    <a class="blue" href="javascript:;">Xiaomi Redmi Note 4G Smart Phone Android MIUI V5 Snapdragon400 MSM8928 </a>
+                                    <p class="parameter marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                                </div>
+                                <div class="inBlock pro_price">
+                                    <p class="oldPrice">US$ 3.64</p>
+                                    <p class="newPrice">US$ 3.23</p>
+                                    <p class="priceTxt">Save USD $0.41</p>
+                                    <p class="priceOff"><em></em><span>11</span>% OFF</p>
+                                </div>
+                                <span class="inBlock">1</span>
+                             </ol>
+                        </ul>
+                    </td>
+                    <td class="orderLogo">Payment<br>Pending</td>
+                    <td class="orderPro">Processing</td>
+                    <td class="orderView">
+                    	<a class="blue" href="javascript:;">View</a>
+                        <a class="rubbish" href="javascript:;"></a>
+                    </td>
+                  </tr>
+                </table>
+                <ul class="orderAll_bot">
+                	<li>
+                    <a href="javascript:;" class="rightAll"><span></span></a>
+                    <a href="javascript:;" class="delete">Remove all
+                        <p class="deletePop">
+                            <i></i>Remove all from your cart?<br>
+                            <input type="button" value="Yes"><input type="button" value="No">
+                        </p>
+                    </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" class="heart">
+                            <em></em>Add all to wish list
+                            <p class="deletePop">
+                                <i></i>Add all to wish list?<br>
+                                <input type="button" value="Yes"><input type="button" value="No">
+                            </p>
+                        </a>
+                	</li>
+                </ul>
+                <div class="arrayNEX">
+                    <div class="review_pageNum">
+                        <a class="review_prev" href="javascript:;"><em></em>Prev</a>
+                        <a href="javascript:;">1</a>
+                        <a class="review_active" href="javascript:;">2</a>
+                        <a href="javascript:;">3</a>
+                        <a href="javascript:;">4</a>
+                        <a href="javascript:;">5</a>
+                        <a href="javascript:;">6</a>
+                        <span class="other">....</span>
+                        <a href="javascript:;">10</a>
+                        <a class="review_next" href="javascript:;">Next<em></em></a>
+                    </div>
+                </div>
+            </div>
+            <div class="xxkBOX boxRa">
+                <ul class="accOrdeTT">
+                	<li class="details1">Order Details</li>
+                	<li class="price2">Price</li>
+                	<li class="qty3">Qty</li>
+                	<li class="method4">Payment Method</li>
+                	<li class="status5">Order status</li>
+                	<li class="options6">Options</li>
+                </ul>
+                <table class="orderTab" width="100%" border="1" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td colspan="4" class="orderTabTT">
+                        <a class="rightThis" href="javascript:;"><span class=""></span></a>
+                        <p>Order No. <b class="blue">4619452</b></p>
+                        <p>Order date: 12/14/2014</p>
+                        <p>Total: <b class="orange">$6.46</b></p> 
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="orderInfTD">
+                    	<ul class="orderInfUl">
+                        	<li class="orderImg"><img src="images/delete/orderAccP1.jpg"></li>
+                        	<li class="orderInf">
+                            	<a class="blue" href="javascript:;">Wltoys A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck...</a>
+                                <p class="marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                            </li>
+                        	<li class="pro_price">
+                                <p class="oldPrice">US$ 3.64</p>
+                                <p class="newPrice">US$ 3.23</p>
+                                <p class="priceTxt">Save USD $0.41</p>
+                                <p class="priceOff"><em></em><span>11</span>% OFF</p>
+                            </li>
+                        	<li class="pro_Nb">1</li>
+                            <div class="clear"></div>
+                        </ul>
+                    	<ul class="orderInfUl">
+                        	<li class="orderImg"><img src="images/delete/orderAccP1.jpg"></li>
+                        	<li class="orderInf">
+                            	<a class="blue" href="javascript:;">Wltoys A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck A929 1/8 Brushless 4 Wheel Drive Desert Rc Truck...</a>
+                                <p class="marT"><span>SKU: P1314</span><span>Color:White</span><span>Power:3W</span></p>
+                            </li>
+                        	<li class="pro_price">
+                                <span class="middle"></span>
+                                <p class="newPrice">US$ 3.23</p>
+                            </li>
+                        	<li class="pro_Nb">1</li>
+                            <div class="clear"></div>
+                        </ul>
+                    </td>
+                    <td class="orderLogo">Payment<br>Pending</td>
+                    <td class="orderPro">Processing</td>
+                    <td class="orderView">
+                    	<a class="blue" href="javascript:;">View</a>
+                        <a class="blue" href="javascript:;">Restore</a>
+                        <a class="blue" href="javascript:;">Delete</a>
+                    </td>
+                  </tr>
+                </table>
+                
+                <ul class="orderAll_bot">
+                	<li>
+                    <a href="javascript:;" class="rightAll"><span></span></a>
+                    <a href="javascript:;" class="delete">Batch Delete
+                        <p class="deletePop">
+                            <i></i>Are you sure that permanently delete orders?<br>
+                            <input type="button" value="Yes"><input type="button" value="No">
+                        </p>
+                    </a>
+                    </li>
+                    <li>
+                        <a href="javascript:;" class="heart">Batch Restore </a>
+                	</li>
+                </ul>
+                <div class="arrayNEX">
+                    <div class="review_pageNum">
+                        <a class="review_prev" href="javascript:;"><em></em>Prev</a>
+                        <a href="javascript:;">1</a>
+                        <a class="review_active" href="javascript:;">2</a>
+                        <a href="javascript:;">3</a>
+                        <a href="javascript:;">4</a>
+                        <a href="javascript:;">5</a>
+                        <a href="javascript:;">6</a>
+                        <span class="other">....</span>
+                        <a href="javascript:;">10</a>
+                        <a class="review_next" href="javascript:;">Next<em></em></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+    </div>
+</div>
+
+</body>
+</html>

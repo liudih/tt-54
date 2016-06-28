@@ -1,0 +1,106 @@
+@(memberIntegral : entity.loyalty.MemberIntegralHistory, statusMap: HashMap[Integer, String])
+@import views.html.helper._
+@if(memberIntegral != null){
+<div id="edit-memberIntegral-@memberIntegral.getIid()"  class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	@form(controllers.manager.routes.MemberIntegral.editMemberIntegral(), 'class->"memberIntegral", 'onsubmit->"return false"){
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+		    <h3>修改积分信息</h3>
+		</div>
+		<div class="modal-body">
+			<input type="hidden" name="iid" value="@memberIntegral.getIid()">
+			<div class="control-group">
+				<label class="control-label" style="display:inline-block;vertical-align:middle;margin-left: -300px;">用户邮箱</label>
+				<div class="controls">
+					<input type="text" name="cemail" value="@memberIntegral.getCemail()" style="display:inline-block;vertical-align:middle;margin-top: -35px;" class="m-wrap medium span6" readOnly>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" style="display:inline-block;vertical-align:middle;margin-left: -300px;">积分</label>
+				<div class="controls">
+					<input type="text" name="iintegral" value="@memberIntegral.getIintegral()" style="display:inline-block;vertical-align:middle;margin-top: -35px;" class="m-wrap medium span6 intragal" required>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" style="display:inline-block;vertical-align:middle;margin-left: -300px;">备注</label>
+				<div class="controls">
+					<input type="text" name="cremark" value="@memberIntegral.getCremark()" style="display:inline-block;vertical-align:middle;margin-top: -35px;" class="m-wrap medium span6" required>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" style="display:inline-block;vertical-align:middle;margin-left: -300px;">审核状态</label>
+				<div class="controls">
+					<select name="istatus" style="display:inline-block;vertical-align:middle;margin-top: -35px;" >
+						@statusMap.map{e =>
+							<option value="@e._1" @if(e._1 == memberIntegral.getIstatus()){selected="selected"}>@e._2</option>
+						}
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" style="display:inline-block;vertical-align:middle;margin-left: -300px;">积分类型</label>
+				<div class="controls">
+					<input type="text" name="cdotype" value="@memberIntegral.getCdotype()" class="m-wrap medium span6" style="display:inline-block;vertical-align:middle;margin-top: -35px;" readOnly>
+				</div>
+			</div>
+		</div>
+	    <div class="modal-footer" style="margin-bottom: -20px;">
+		     <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
+             <button type="submit" class="btn blue">保存</button>
+	    </div>
+	}
+</div>
+}else{
+	<div id="add-memberIntegral"  class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	@form(controllers.manager.routes.MemberIntegral.editMemberIntegral(), 'class->"memberIntegral", 'onsubmit->"return false", 'style->"text-align:left;"){
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+		    <h3>新增积分信息</h3>
+		</div>
+		<div class="modal-body">
+			<div class="control-group">
+				<label class="control-label" style="display:inline-block;vertical-align:middle;margin-left: 50px;">用户邮箱</label>
+				<div class="controls" class="controls" style="display:inline-block;vertical-align:middle;margin-left:50px;">
+					<input type="text" name="cemail" class="m-wrap medium span6" required>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" style="display:inline-block;vertical-align:middle;margin-left: 75px;">积分</label>
+				<div class="controls" class="controls" style="display:inline-block;vertical-align:middle;margin-left:50px;">
+					<input type="text" name="iintegral" class="m-wrap medium span6 intragal" required>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" style="display:inline-block;vertical-align:middle;margin-left: 75px;">备注</label>
+				<div class="controls" class="controls" style="display:inline-block;vertical-align:middle;margin-left:50px;">
+					<input type="text" name="cremark" class="m-wrap medium span6" required>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" style="display:inline-block;vertical-align:middle;margin-left: 50px;">审核状态</label>
+				<div class="controls" class="controls" style="display:inline-block;vertical-align:middle;margin-left:50px;">
+					<select name="istatus">
+						@statusMap.map{e =>
+							<option value="@e._1">@e._2</option>
+						}
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" style="display:inline-block;vertical-align:middle;margin-left: 50px;">积分类型</label>
+				<div class="controls" class="controls" style="display:inline-block;vertical-align:middle;margin-left:50px;">
+					<input type="text" name="cdotype" class="m-wrap medium span6" value="other" readOnly>
+			</div>
+			<div class="control-group">
+	        	<label class="control-label" style="display:inline-block;vertical-align:middle;margin-left: 50px;">站点选择</label>
+				<div class="controls" class="controls" style="display:inline-block;vertical-align:middle;margin-left:50px;">
+	            	@services.manager.ChooseService.getInstance().website("iwebsiteid", 1, true)
+	        </div>
+		</div>
+	    <div class="modal-footer" style="margin-bottom: -20px;">
+		     <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
+             <button type="submit" class="btn blue">保存</button>
+	    </div>
+	}
+</div>
+}

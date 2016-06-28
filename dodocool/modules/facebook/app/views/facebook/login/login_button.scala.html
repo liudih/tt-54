@@ -1,0 +1,16 @@
+@(appId: String, returnUrl: String)
+<div class="lg_span">
+                            <div class="lg_btn">
+                            
+                  <form action="@controllers.member.routes.Login.saveReferrerBeforeLogin("https://www.facebook.com/dialog/oauth")" class="lg_ico">
+<input type="hidden" name="client_id" value="@appId" />
+<input type="hidden" name="redirect_uri" value="@returnUrl" />
+<input type="hidden" name="response_type" value="code" />
+<input type="hidden" name="scope" value="email" />
+<input class="lineBlock log_Face" type="submit" value=""/>
+</form>
+                                <span class="lg_btn_txt">Sign In with Facebook</span>
+                            </div>
+                            <br>
+                            <em>We'll never post to your profile without your permission.</em>
+                        </div>

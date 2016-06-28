@@ -1,0 +1,96 @@
+@(otherLogins: List[Html])
+
+@import services.member._
+@country = @{services.base.FoundationService._getCountryObj()}
+<!--pop-->
+<div class="blockPopup_box noPhoto" id="blogin">
+	<div class="postPhotos_popBox">
+		
+		<div class="customer_popClose"></div>
+		<ul class="ControlNa">
+			<li class="controAc">@Messages("sign.in")</li>
+			<li>@Messages("register")</li>
+			<div class="clear"></div>
+		</ul>
+		<div class="signIn Control block">
+			<form style="margin:0px;" class="form-signin" role="form" id="loginForm" >
+			<ul>
+				<li>
+					<em class="loginEmail"></em>
+					<input name="email" class="errorInp" type="text" placeholder="@Messages("enter.your.email.address")" />
+					<!-- <label class="edit_error">An account already exists for this email address.</label> -->
+				</li>
+				<li>
+					<em class="loginLock"></em>
+					<input name="password" class="errorInp" type="password" placeholder="@Messages("enter.your.password")" />
+					<!-- <p class="edit_error"><em></em><i></i>An account already exists for this email address.</p> -->
+				</li>
+			</ul>
+			<p class="red" id="returnwrong" style="display:none;">The email address or password you entered is incorrect.</p>
+			<div class="singInBotone">
+				<input class="log_sinIn" type="submit" value="@Messages("login")">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="@controllers.member.routes.FindPassword.findPasswordForm()">@Messages("forgot.your.password")</a>
+			</div>
+			</form>
+			<div class="singInBottwo">
+				<!-- <input class="log_Face" type="button" value="@Messages("facebook")" /><br>
+				<input class="log_Paypal" type="button" value="@Messages("log.in.with.paypal")" /><br>
+				<input class="log_google" type="button" value="Log in with Google" /> -->
+				@otherLogins.map{ b =>
+	        		@b
+	        	}
+			</div>
+		</div>
+		
+		<div class="register Control">
+			<form id="regForm" >
+			<ul>
+				<li>
+					<em class="loginEmail"></em>
+					<input type="text" name="email" placeholder="@Messages("enter.your.email.address")">
+					<span class="rightUse" style="display:none;"></span>
+				</li>
+				<li>
+					<em class="loginLock"></em>
+					<input name="passwd" id="regpassword" type="password" placeholder="@Messages("enter.your.password")"/>
+					<span class="rightUse" style="display:none;"></span>
+				</li>
+				<li>
+					<em class="loginLock"></em>
+					<input name="confirm_password" type="password" placeholder="@Messages("confirm.your.password")" />
+				</li>
+			</ul>
+			<p>@Messages("your.shipping.destination")</p>
+ 				@views.html.base.select_country(country)
+ 				
+ 				<div class="registerYzm">
+	        	Code<span class="red">*</span>
+	        	<input  name="captcha" id="captcha" type="text" style="width:73px;"/>
+	        	<!-- <span class="rightUse"></span> -->
+	        	<!-- <label class="edit_error">Please make sure</label> -->
+	        	<div class="code_txt">
+					<img id="captchaimg" class="captcha" src="@controllers.base.routes.Captcha.generate()" onclick="this.src='@controllers.base.routes.Captcha.generate()?r='+Math.random();" style="cursor:pointer;" title="change" width="70" height="30" />
+				</div>
+	        </div>
+			<div class="clear"></div>
+			<label class="iAgreErr">
+				<input name="agree" type="checkbox" />
+				@Messages("i.agree.to.the.tomtop")
+				<span class="blue">@Messages("terms.and.conditions")</span>
+				<!-- <label class="edit_error">Please make sure</label> -->
+			</label>
+			<label>
+				<input type="checkbox" name="signupNewsletter" />
+				@Messages("yes.sign.up.our.newsletter.get.a.50.coupon.in.your.first.email")
+			</label>
+			<div class="creatInp">  
+				<hr>
+				<input type="submit" value="@Messages("create.my.account")" />
+			</div>
+			</form>
+		</div>
+		
+	</div>
+	<div class="blockPopup_black"></div>
+</div>
+<!--pop-->

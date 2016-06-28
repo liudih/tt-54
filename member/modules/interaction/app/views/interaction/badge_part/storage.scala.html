@@ -1,0 +1,7 @@
+@(slist : List[String]
+	)
+<div class="countryListBox">
+	@slist.map{s=>
+		<div class="lineBlock cur_@s"><em></em></div>
+	}
+</div>

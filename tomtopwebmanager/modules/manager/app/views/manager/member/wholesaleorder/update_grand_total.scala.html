@@ -1,0 +1,66 @@
+@(orderId: Integer, fgrandtotal: Double, symbol: String, min: Double,
+max: Double)
+<div class="control-group">
+	<label class="control-label">订单编号</label>
+	<div class="controls">
+		<input type="text" name="corderid" value="@orderId"
+			class="m-wrap medium span6"
+			style="margin-left: 120px; margin-top: -26px;" readOnly>
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">订单原价(@symbol)</label>
+	<div class="controls">
+		<input type="text" name="coldvalue" value="@fgrandtotal"
+			class="m-wrap medium span6"
+			style="margin-left: 120px; margin-top: -26px;" readOnly>
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">折扣(@min-@max)</label>
+	<div class="controls">
+		<input type="text" name="discount" value="@min" min="@min" max="@max"
+			class="m-wrap medium span6"
+			style="margin-left: 120px; margin-top: -26px;"> <input
+			type="button" name="enter" value="Enter" class="m-wrap"
+			style="margin-top: -40px;">
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">订单现价(@symbol)</label>
+	<div class="controls">
+		<input type="text" name="cnewvalue" class="price m-wrap medium span6"
+			style="margin-left: 120px; margin-top: -26px;" value="" readOnly>
+	</div>
+</div>
+<script>
+	var discount_e = $("input[name=discount]");
+	var total = @fgrandtotal;
+	var new_e = $("input[name=cnewvalue]");
+	var min = @min;
+	var max = @max;
+	
+	$(function(){
+		updateNew(@min);
+	});
+	
+	$("input[name=enter]").click(function(){
+		calculate(0);
+	});
+	
+	function calculate(i){
+		var discount = parseFloat(discount_e.val());
+		var temp = discount + i;
+		if (temp >= min && temp <= max) {
+			discount_e.val(temp);
+			updateNew(temp);
+		} else {
+			alert("Discount only between " + min+ " to " + max +"");
+		}
+	}
+	
+	function updateNew(temp){
+		var tempTotal = total - (total*temp);
+		new_e.val(tempTotal.toFixed(2));
+	}
+</script>

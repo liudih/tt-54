@@ -1,0 +1,129 @@
+GET    /has-modify                          @controllers.member.PasswordReset.hasModify()
+
+GET    /timeout                          @controllers.member.PasswordReset.timeout(cid : String)
+
+GET    /timesout                         @controllers.member.PasswordReset.timesout()
+
+GET    /findpass                         @controllers.member.FindPassword.findPasswordForm()
+
+POST   /findpass                         @controllers.member.FindPassword.findPassword()
+
+GET    /sendpass                         @controllers.member.FindPassword.findPasswordSend(email:String)
+
+GET    /findpassEmail                         @controllers.member.FindPassword.findPasswordEmail(email : String)
+
+GET    /resetpass                        @controllers.member.PasswordReset.passwordResetForm(cid :String?=null)
+
+POST   /resetpass                        @controllers.member.PasswordReset.passwordReset(backUrl: String ?= null)
+
+GET    /check                            @controllers.member.Register.checkEmail(email: String?="")
+
+GET    /register                         @controllers.member.Register.registerFrom()
+
+POST   /register                         @controllers.member.Register.register()
+
+GET    /regValide                        @controllers.member.Register.regValide(email : String)
+
+GET    /activateSuccess                  @controllers.member.Register.activateSuccess(email: String)
+
+POST   /registerajax                     @controllers.member.Register.registerAjax()
+
+GET    /register-done/:email             @controllers.member.Register.registerDone(email: String)
+
+GET    /continue-shopping             controllers.member.Login.redirectAfterLogin()
+
+GET    /activation                @controllers.member.Register.activate(email: String,activateCode: String)
+
+GET    /activation-success               @controllers.member.Register.activateSuccessful()
+
+GET    /has-been-activated    @controllers.member.Register.hasBeenActivated()
+
+GET    /has-been-sentemail    @controllers.member.Register.hasBeenSent()
+
+GET    /activation-in-progress/:email    @controllers.member.Register.notActivatedYet(email: String)
+
+GET    /register/:email/followup         @controllers.member.Register.followupQuestions(email: String)
+
+GET    /activation-email/resend   @controllers.member.Register.doResendActivationEmail()
+
+GET    /login                            @controllers.member.Login.loginForm(backUrl: String ?= null)
+
+POST   /login                            @controllers.member.Login.login(backUrl: String ?= null)
+
+POST   /loginajax                        @controllers.member.Login.loginAjax(backUrl: String ?= null)
+
+GET    /login-redirect/*targetUrl        controllers.member.Login.saveReferrerBeforeLogin(targetUrl: String)
+
+POST   /login-redirect/*targetUrl        controllers.member.Login.saveReferrerBeforeLogin(targetUrl: String)
+
+GET    /logout                           @controllers.member.Login.logout()
+
+GET    /checksign                        @controllers.member.Login.checkSign()
+
+POST   /profileupdate                    @controllers.member.Register.profileUpdate()
+
+#----------- address begin----------------
+GET    /shippingaddress                  @controllers.member.Address.shippingAddress(p: Int ?= 1)
+
+GET    /billingaddress                   @controllers.member.Address.billingAddress(p: Int ?= 1)
+
+POST   /addorupdatebilladdress           @controllers.member.Address.addOrUpdateBillAddress()
+
+POST   /addnewmemberaddress              @controllers.member.Address.addNewMemberAddress()
+
+POST   /modifymemberaddress              @controllers.member.Address.modifyMemberAddress()
+
+POST   /deletememberaddress              @controllers.member.Address.deleteMemberAddressBatchByIds()
+
+POST   /deletememberaddressbyid          @controllers.member.Address.deleteMemberAddressById()
+
+POST   /defaultshippingaddress           @controllers.member.Address.setDefaultShippingaddress()	
+
+POST   /image/push                       @controllers.member.Image.push()
+
+GET    /image/get                        @controllers.member.Image.get(uuid:String)
+
+POST   /registerupdate                   @controllers.member.Register.addRegister()
+
+POST   /allprovince                      @controllers.member.Address.getAllProvinceByCountryId()
+
+POST   /allCountry                       @controllers.member.Address.getAllCountry()
+
+#----------- address over----------------
+
+GET    /registerupdate                   @controllers.member.Register.registerUpdateFrom()
+
+GET    /home                             @controllers.member.Home.index()
+
+POST   /photo/pushwithSession            @controllers.member.Photo.pushWithSession()
+
+GET    /photo/getwithSession             @controllers.member.Photo.getWithSession()
+
+POST   /photo/push                       @controllers.member.Photo.push()
+
+GET    /photo/get                        @controllers.member.Photo.get(email:String)
+
+GET    /email/verify                     @controllers.member.Email.verify()
+
+GET    /email/activate                   @controllers.member.Email.activate(activatecode:String)
+
+POST   /registerupdate                   @controllers.member.Register.addRegister()
+
+GET    /assets/*file                     controllers.member.Assets.at(path="/public", file)
+
+POST   /checkoutpassword                 @controllers.member.Register.translatePassword()
+
+POST   /api/member/push                  @controllers.api.Member.push()
+
+#----------- dropship ----------------
+
+GET    /dropship/join                    @controllers.dropship.DropShip.join()
+
+POST   /dropship/update                  @controllers.dropship.DropShip.updateDropShip()
+
+GET    /dropship/updatesuccess           @controllers.dropship.DropShip.joinSuccess()
+
+GET    /dropship/ad                  	 @controllers.dropship.DropShip.ad()
+
+#------loginsection------
+GET   /getLoginSectionHtml              @controllers.member.Login.getLoginSectionHtml()

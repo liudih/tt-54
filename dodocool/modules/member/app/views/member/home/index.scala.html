@@ -1,0 +1,15 @@
+@(member:dto.member.MemberBase)
+
+@import views.html.helper._	
+@tp = @{services.dodocool.base.template.TemplateService.getInstance().getContents()}
+@current_website_name=@{services.configuration.ApplicationConfigService._getCurrentWebsiteName()}
+
+@views.html.member.base.master("home", member) {
+       <div class="user_main_in">
+       		<h3 class="profile_h3">@Messages("member.center")</h3>
+          	 <div class="">
+           	<p>@Messages("hi") <span class="name">@member.getCaccount()</span>! @Messages("welcome.to.the.member.center").</p>
+               <p class="log"></p>
+           </div>
+       </div>
+}

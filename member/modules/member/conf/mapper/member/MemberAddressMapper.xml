@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.member.MemberAddressMapper">
+	<resultMap id="BaseResultMap" type="dto.member.MemberAddress">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="cmemberemail" property="cmemberemail" jdbcType="VARCHAR" />
+		<result column="iaddressid" property="iaddressid" jdbcType="INTEGER" />
+		<result column="bdefault" property="bdefault" jdbcType="BIT" />
+		<result column="cfirstname" property="cfirstname" jdbcType="VARCHAR" />
+		<result column="cmiddlename" property="cmiddlename" jdbcType="VARCHAR" />
+		<result column="clastname" property="clastname" jdbcType="VARCHAR" />
+		<result column="ccompany" property="ccompany" jdbcType="VARCHAR" />
+		<result column="cstreetaddress" property="cstreetaddress"
+			jdbcType="VARCHAR" />
+		<result column="ccity" property="ccity" jdbcType="VARCHAR" />
+		<result column="icountry" property="icountry" jdbcType="INTEGER" />
+		<result column="cprovince" property="cprovince" jdbcType="VARCHAR" />
+		<result column="cpostalcode" property="cpostalcode" jdbcType="VARCHAR" />
+		<result column="ctelephone" property="ctelephone" jdbcType="VARCHAR" />
+		<result column="cfax" property="cfax" jdbcType="VARCHAR" />
+		<result column="cvatnumber" property="cvatnumber" jdbcType="VARCHAR" />
+		<result column="ishipAddressId" property="ishipAddressId" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, cmemberemail, iaddressid, bdefault, cfirstname,
+		cmiddlename,
+		clastname, ccompany,
+		cstreetaddress, ccity, icountry,
+		cprovince, cpostalcode, ctelephone, cfax, cvatnumber,ishipAddressId
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_member_address
+		where iid = #{iid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_member_address
+		where iid = #{iid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="dto.member.MemberAddress">
+		insert into t_member_address
+		(iid, cmemberemail, iaddressid,
+		bdefault, cfirstname, cmiddlename,
+		clastname, ccompany, cstreetaddress,
+		ccity, icountry, cprovince,
+		cpostalcode, ctelephone, cfax,
+		cvatnumber,ishipAddressId)
+		values
+		(#{iid,jdbcType=INTEGER}, #{cmemberemail,jdbcType=VARCHAR},
+		#{iaddressid,jdbcType=INTEGER},
+		#{bdefault,jdbcType=BIT},
+		#{cfirstname,jdbcType=VARCHAR}, #{cmiddlename,jdbcType=VARCHAR},
+		#{clastname,jdbcType=VARCHAR}, #{ccompany,jdbcType=VARCHAR},
+		#{cstreetaddress,jdbcType=VARCHAR},
+		#{ccity,jdbcType=VARCHAR},
+		#{icountry,jdbcType=INTEGER}, #{cprovince,jdbcType=VARCHAR},
+		#{cpostalcode,jdbcType=VARCHAR}, #{ctelephone,jdbcType=VARCHAR},
+		#{cfax,jdbcType=VARCHAR},
+		#{cvatnumber,jdbcType=VARCHAR},
+		#{ishipAddressId,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into t_member_address (cmemberemail, iaddressid,
+		bdefault,cfirstname, cmiddlename,
+		clastname, ccompany, cstreetaddress,
+		ccity,icountry, cprovince,cpostalcode, ctelephone, cfax,cvatnumber,ishipAddressId)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.cmemberemail,jdbcType=VARCHAR},
+			#{item.iaddressid,jdbcType=INTEGER},
+			#{item.bdefault,jdbcType=BIT},
+			#{item.cfirstname,jdbcType=VARCHAR},
+			#{item.cmiddlename,jdbcType=VARCHAR},
+			#{item.clastname,jdbcType=VARCHAR}, #{item.ccompany,jdbcType=VARCHAR},
+			#{item.cstreetaddress,jdbcType=VARCHAR},
+			#{item.ccity,jdbcType=VARCHAR},
+			#{item.icountry,jdbcType=INTEGER},
+			#{item.cprovince,jdbcType=VARCHAR},
+			#{item.cpostalcode,jdbcType=VARCHAR}, #{item.ctelephone,jdbcType=VARCHAR},
+			#{item.cfax,jdbcType=VARCHAR},
+			#{item.cvatnumber,jdbcType=VARCHAR},
+			#{item.ishipAddressId,jdbcType=INTEGER}
+			)
+		</foreach>
+	</insert>
+	<insert id="insertSelective" useGeneratedKeys="true"
+		keyProperty="iid" parameterType="dto.member.MemberAddress">
+		insert into t_member_address
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				iid,
+			</if>
+			<if test="cmemberemail != null">
+				cmemberemail,
+			</if>
+			<if test="iaddressid != null">
+				iaddressid,
+			</if>
+			<if test="bdefault != null">
+				bdefault,
+			</if>
+			<if test="cfirstname != null">
+				cfirstname,
+			</if>
+			<if test="cmiddlename != null">
+				cmiddlename,
+			</if>
+			<if test="clastname != null">
+				clastname,
+			</if>
+			<if test="ccompany != null">
+				ccompany,
+			</if>
+			<if test="cstreetaddress != null">
+				cstreetaddress,
+			</if>
+			<if test="ccity != null">
+				ccity,
+			</if>
+			<if test="icountry != null">
+				icountry,
+			</if>
+			<if test="cprovince != null">
+				cprovince,
+			</if>
+			<if test="cpostalcode != null">
+				cpostalcode,
+			</if>
+			<if test="ctelephone != null">
+				ctelephone,
+			</if>
+			<if test="cfax != null">
+				cfax,
+			</if>
+			<if test="cvatnumber != null">
+				cvatnumber,
+			</if>
+			<if test="ishipAddressId != null">
+				ishipAddressId,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				#{iid,jdbcType=INTEGER},
+			</if>
+			<if test="cmemberemail != null">
+				#{cmemberemail,jdbcType=VARCHAR},
+			</if>
+			<if test="iaddressid != null">
+				#{iaddressid,jdbcType=INTEGER},
+			</if>
+			<if test="bdefault != null">
+				#{bdefault,jdbcType=BIT},
+			</if>
+			<if test="cfirstname != null">
+				#{cfirstname,jdbcType=VARCHAR},
+			</if>
+			<if test="cmiddlename != null">
+				#{cmiddlename,jdbcType=VARCHAR},
+			</if>
+			<if test="clastname != null">
+				#{clastname,jdbcType=VARCHAR},
+			</if>
+			<if test="ccompany != null">
+				#{ccompany,jdbcType=VARCHAR},
+			</if>
+			<if test="cstreetaddress != null">
+				#{cstreetaddress,jdbcType=VARCHAR},
+			</if>
+			<if test="ccity != null">
+				#{ccity,jdbcType=VARCHAR},
+			</if>
+			<if test="icountry != null">
+				#{icountry,jdbcType=INTEGER},
+			</if>
+			<if test="cprovince != null">
+				#{cprovince,jdbcType=VARCHAR},
+			</if>
+			<if test="cpostalcode != null">
+				#{cpostalcode,jdbcType=VARCHAR},
+			</if>
+			<if test="ctelephone != null">
+				#{ctelephone,jdbcType=VARCHAR},
+			</if>
+			<if test="cfax != null">
+				#{cfax,jdbcType=VARCHAR},
+			</if>
+			<if test="cvatnumber != null">
+				#{cvatnumber,jdbcType=VARCHAR},
+			</if>
+			<if test="ishipAddressId != null">
+				#{ishipAddressId,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="dto.member.MemberAddress">
+		update t_member_address
+		<set>
+			<if test="cmemberemail != null and cmemberemail !=''">
+				cmemberemail = #{cmemberemail,jdbcType=VARCHAR},
+			</if>
+			<if test="iaddressid != null">
+				iaddressid = #{iaddressid,jdbcType=INTEGER},
+			</if>
+			<if test="bdefault != null">
+				bdefault = #{bdefault,jdbcType=BIT},
+			</if>
+			<if test="cfirstname != null and cfirstname !=''">
+				cfirstname = #{cfirstname,jdbcType=VARCHAR},
+			</if>
+			<if test="cmiddlename != null and cmiddlename !=''">
+				cmiddlename = #{cmiddlename,jdbcType=VARCHAR},
+			</if>
+			<if test="clastname != null and clastname !=''">
+				clastname = #{clastname,jdbcType=VARCHAR},
+			</if>
+			<if test="ccompany != null and ccompany !=''">
+				ccompany = #{ccompany,jdbcType=VARCHAR},
+			</if>
+			<if test="cstreetaddress != null and cstreetaddress !=''">
+				cstreetaddress = #{cstreetaddress,jdbcType=VARCHAR},
+			</if>
+			<if test="ccity != null and ccity !=''">
+				ccity = #{ccity,jdbcType=VARCHAR},
+			</if>
+			<if test="icountry != null">
+				icountry = #{icountry,jdbcType=INTEGER},
+			</if>
+			<if test="cprovince != null and cprovince !=''">
+				cprovince = #{cprovince,jdbcType=VARCHAR},
+			</if>
+			<if test="cpostalcode != null and cpostalcode !=''">
+				cpostalcode = #{cpostalcode,jdbcType=VARCHAR},
+			</if>
+			<if test="ctelephone != null and ctelephone !=''">
+				ctelephone = #{ctelephone,jdbcType=VARCHAR},
+			</if>
+			<if test="cfax != null and cfax !=''">
+				cfax = #{cfax,jdbcType=VARCHAR},
+			</if>
+			<if test="cvatnumber != null and cvatnumber!=''">
+				cvatnumber = #{cvatnumber,jdbcType=VARCHAR},
+			</if>
+			<if test="ishipAddressId != null">
+				ishipAddressId = #{ishipAddressId,jdbcType=INTEGER},
+			</if>
+		</set>
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="dto.member.MemberAddress">
+		update
+		t_member_address
+		set cmemberemail = #{cmemberemail,jdbcType=VARCHAR},
+		iaddressid = #{iaddressid,jdbcType=INTEGER},
+		bdefault =
+		#{bdefault,jdbcType=BIT},
+		cfirstname = #{cfirstname,jdbcType=VARCHAR},
+		cmiddlename = #{cmiddlename,jdbcType=VARCHAR},
+		clastname =
+		#{clastname,jdbcType=VARCHAR},
+		ccompany = #{ccompany,jdbcType=VARCHAR},
+		cstreetaddress = #{cstreetaddress,jdbcType=VARCHAR},
+		ccity =
+		#{ccity,jdbcType=VARCHAR},
+		icountry = #{icountry,jdbcType=INTEGER},
+		cprovince = #{cprovince,jdbcType=VARCHAR},
+		cpostalcode =
+		#{cpostalcode,jdbcType=VARCHAR},
+		ctelephone =
+		#{ctelephone,jdbcType=VARCHAR},
+		cfax = #{cfax,jdbcType=VARCHAR},
+		cvatnumber = #{cvatnumber,jdbcType=VARCHAR},
+		ishipAddressId = #{ishipAddressId,jdbcType=INTEGER}
+		where iid =
+		#{iid,jdbcType=INTEGER}
+	</update>
+</mapper>

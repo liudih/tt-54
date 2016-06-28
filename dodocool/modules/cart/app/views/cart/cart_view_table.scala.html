@@ -1,0 +1,48 @@
+@(cart: facades.cart.Cart,
+ currency: dto.Currency)
+
+@import views.html.product.image
+@import services.base.utils._
+<div class="table-responsive" id="cart_view_table">
+	<table>
+		<thead>
+			<tr>
+				<td>Items</td>
+				<td></td>
+				<td class="dr-qty">Quantity</td>
+				<td class="dr-remove">Remove</td>
+				<td class="dr-unitPrice">Price</td>
+				<td class="dr-Price">Item total</td>
+			</tr>
+		</thead>
+		<tbody id="tableBody">
+			@cart.getAllItems().map{si=>
+			<tr>
+				<td class="dr-img">
+					@image(si.getCimageurl(), si.getCtitle(), 150, 150, "img-responsive")
+				</td>
+				<td class="dr-info"><a href="@if(si.getCurl()!=null){@controllers.product.routes.Product.view(si.getCurl())}">@si.getCtitle()</a></td>
+				<td class="dr-qty">
+					<div class="btn-toolbar" role="toolbar">
+						<input class="qty_num_Reduction dr-refreshQtyImage" src="@controllers.base.routes.Assets.at("images/qtyMbMinus.png")" data-cartid="@si.getCid()" data-qty="@si.getIqty()" type="image"> 
+						<input value="@si.getIqty()" type="text" class="form-control"> 
+						<input class="qty_num_add dr-refreshQtyImage" src="@controllers.base.routes.Assets.at("images/qtyMbPlus.png")" data-cartid="@si.getCid()" data-qty="@si.getIqty()" type="image">
+					</div>
+				</td>
+				<td class="dr-remove">
+					<a class="glyphicon btn" onclick=""> 
+                        	<em> × </em>
+                            <p class="deletePop">
+                    			<i></i>Remove from your cart?<br />
+                    			<input class="btn_yes" onclick="delCart('@si.getCid()')" type="button" value="Yes">
+								<input class="btn_no" type="button" value="No">
+               				 </p>
+                     </a>
+				</td>
+				<td class="dr-unitPrice">@currency.getCsymbol @if(si.getPrice()!=null){@Utils.money(si.getPrice().getUnitPrice())}</td>
+				<td class="dr-Price">@currency.getCsymbol @Utils.money(si.getPrice().getPrice())</td>
+			</tr>
+			}
+		</tbody>
+	</table>
+</div>

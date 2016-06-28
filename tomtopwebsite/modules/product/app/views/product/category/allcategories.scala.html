@@ -1,0 +1,54 @@
+@(
+oneCategoryList: List[dto.Category],
+categoryMap: Map[Integer,Collection[dto.Category]]
+)
+ 
+@import services.base._
+ 
+@views.html.base.master{
+	@HtmlUtils.misc().addHeadOnce{
+	 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/search.css")?@version.BuildVersion.build()" /> 
+	 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/tomtop.css")" /> 
+	}
+	<div class="container LevelOne">
+	    <div class="Bread_crumbs_Box">
+	        <ul class="Bread_crumbs">
+	            <li class="Bread_home"><a href="/"></a></li>
+	            <li>
+	                <p>
+	                    <a class="Bread_link" href="@controllers.product.routes.CategoryProduct.getAllCategories()">@Messages("all.category")</a>
+	                </p>
+	            </li>
+	            <div class="clear"></div>
+	        </ul>
+	    </div>
+	    <div class="allcategoriesBox">
+	        <p class="allCategories">@Messages("all.category")</p>
+	        @oneCategoryList.map{r=>
+	        	@if(null == r.getCpath() || r.getCpath().isEmpty){
+	           		<p class="categoriesTT"><a href="#">@r.getCname()</a></p>
+	           	}else{
+	           		<p class="categoriesTT">
+	           			<a href="@controllers.product.routes.CategoryProduct.showCategoryProduct(r.getCpath())">@r.getCname()</a>
+	           		</p>
+	           	}
+	        	
+	        	<ul class="categoriesFL">
+		        	@if(categoryMap.containsKey(r.getIid())) {
+		        	  	@categoryMap(r.getIid()).map{m=>
+		        	  		@if(null == m.getCpath() || m.getCpath().isEmpty){
+			            		<li><a href="#">@m.getCname()</a></li>
+			            	}else{
+			            		<li>
+			            			<a href="@controllers.product.routes.CategoryProduct.showCategoryProduct(m.getCpath())">@m.getCname()</a>
+			            		</li>
+			            	}
+		        	  	}
+		        	}
+			    	<div class="clear"></div>
+			    </ul>
+	       	}
+	    </div>
+	</div>
+
+}                                 

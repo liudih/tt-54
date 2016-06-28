@@ -1,0 +1,4 @@
+@(c: valueobjects.product.category.CategoryComposite)
+@if(null != c){
+	<a href="@controllers.product.routes.CategoryProduct.showCategoryProduct(c.getSelf().getCpath())">@c.getSelf().getCname()</a>	
+}

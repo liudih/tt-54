@@ -1,0 +1,47 @@
+/*格式化*/
+/* {margin:0px; padding:0px; border:0px;}
+body {font-family:Verdana ,Arial, Helvetica, sans-serif; font-size:12px; color:#666; line-height:14px; background:#fff; overflow-X:hidden} */
+/* img {display:block; border:none;} */
+a {display:block; color:#666; text-decoration:none;}
+.theme_clear {clear:both;}
+/*语言*/
+.theme_language {width:100%; background:#333;}
+.theme_language ul {width:100%; min-width:320px; max-width:1200px; margin:auto;}
+.theme_language ul li {height:35px; padding:0px 10px 0px 10px; float:left; list-style:none; line-height:35px;}
+.theme_language ul li a{ color:#999;}
+.theme_language ul li:hover {background:#eee;}
+/*头部*/
+.head {width:100%; height:auto; padding:30px 0px; border-bottom:2px #000 solid; background:#fff;}
+.head table {width:100%; min-width:300px; max-width:1200px; margin:auto;}
+.logo {width:24%; min-width:100px; padding:0px 20px 0px 5px; border-right:1px #cdcdcd solid;}
+.logo img {width:100%; max-width:200px;}
+.home {margin-left:20px;}
+.home li {list-style:none; float:left; height:16px; line-height:16px;}
+.home li:first-child {width:60px; margin-right:10px;}
+.home li:first-child em {width:12px; height:14px; margin-left:10px; vertical-align:middle; display:inline-block; background:url(images/SpecialTopicBackground-20151005.png) no-repeat -6px -6px;}
+.head table span {text-align:center; font-size:16px; color:#1077C7; cursor:pointer; display:inline-block;}
+
+/*banner*/
+.banner {width:100%; height:auto;}
+.banners {width:100%; min-width:320px; max-width:1200px; margin:auto;}
+.banners img {width:100%;}
+/*页脚*/
+.foot {width:100%; height:auto; background:#dcdcdc;}
+.foots {width:100%; min-width:300px; max-width:1200px; height:auto; margin:auto;}
+.foots ul {padding:70px 0px 20px 0px; margin:0px 10px; border-bottom:1px #999 solid;}
+.foots ul li {width:16.66%; height:42px; margin:10px 0px; list-style:none; float:left;}
+.foots ul li a {padding:7px 0px 0px 60px; display:block;}
+.foots ul li a:hover {color:#09F;}
+.Facebook {background:url(http://www.tomtop.com/img/images/edm/Community-ljh20150503.png) no-repeat 0px -8px;}
+.Twitter {background:url(http://www.tomtop.com/img/images/edm/Community-ljh20150503.png) no-repeat 0px -126px;}
+.Pinterest {background:url(http://www.tomtop.com/img/images/edm/Community-ljh20150503.png) no-repeat 0px -245px;}
+.blog {background:url(http://www.tomtop.com/img/images/edm/Community-ljh20150503.png) no-repeat 0px -363px;}
+.Youtube {background:url(http://www.tomtop.com/img/images/edm/Community-ljh20150503.png) no-repeat 0px -482px;}
+.Google {background:url(http://www.tomtop.com/img/images/edm/Community-ljh20150503.png) no-repeat 0px -719px;}
+.Facebook:hover {background:url(http://www.tomtop.com/img/images/edm/Community-ljh20150503.png) no-repeat 0px -67px;}
+.Twitter:hover {background:url(http://www.tomtop.com/img/images/edm/Community-ljh20150503.png) no-repeat 0px -186px;}
+.Pinterest:hover {background:url(http://www.tomtop.com/img/images/edm/Community-ljh20150503.png) no-repeat 0px -304px;}
+.blog:hover {background:url(http://www.tomtop.com/img/images/edm/Community-ljh20150503.png) no-repeat 0px -423px;}
+.Youtube:hover {background:url(http://www.tomtop.com/img/images/edm/Community-ljh20150503.png) no-repeat 0px -541px;}
+.Google:hover {background:url(http://www.tomtop.com/img/images/edm/Community-ljh20150503.png) no-repeat 0px -778px;}
+.Copyright {margin:0px 10px; padding:50px 0px; text-align:center; border-top:1px #fff solid;}

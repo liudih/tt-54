@@ -1,0 +1,19 @@
+@(vo: valueobjects.product.ProductComposite, renderer: services.product.ProductCompositeRenderer, ctitle:String)
+
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@views.html.base.sub_master("Product Detail"){
+	@services.base.HtmlUtils.misc().addHeadCssOnce{
+	 	@controllers.base.routes.Assets.at("css/product_page.css")
+	}
+	@services.base.HtmlUtils.misc().addHeadScriptOnce{
+ 		@controllers.base.routes.Assets.at("js/hhSwipe.js")
+	}
+ 
+<div class="container">
+
+	<hr class="grayHR">
+	@renderer.renderFragment(vo, "comment")
+ 
+</div>
+
+}

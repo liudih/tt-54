@@ -1,0 +1,18 @@
+@(cart: facades.cart.Cart, extra: com.fasterxml.jackson.databind.JsonNode)
+@import views.html.helper._
+@if(extra == null) {
+<div class="bulkrate bulkBott_H">
+	<p class="bulkClick"><span></span>@Messages("coupon.code")<em></em></p>
+	<p class="bulk_hover" style="display: none;">
+		<em></em>@Messages("coupon.cannot.combined.with.discounted.items") <br>@Messages("can.used.normally.original.price.items") 
+	</p>
+	<div class="bulk_Pop" style="display: none;">
+			@form(controllers.loyalty.routes.Coupon.checkAndAddExtra(), 'class->"cart_apply", 'style->"display: block;", 'onsubmit->"return false") {
+				<input type="hidden" name="cartId" value="@cart.getId()">
+				<input name="couponCode" type="text"><input name="cart_submit_extra" type="button" value="@Messages("apply")" class="bulkApp">
+				<p class="red" style="display: none;">@Messages("coupon.code") "<strong></strong>" @Messages("is.not.valid")</p>
+			}
+	
+	</div>
+</div>
+}

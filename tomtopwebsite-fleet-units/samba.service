@@ -1,0 +1,28 @@
+[Unit]
+Description=Samba Public Share
+
+# Requirements
+Requires=docker.service
+
+# Dependency ordering
+After=docker.service
+
+[Service]
+
+TimeoutStartSec=0
+
+# Change killmode from "control-group" to "none" to let Docker remove
+# work correctly.
+KillMode=none
+
+# Pre-start and Start
+## Directives with "=-" are allowed to fail without consequence
+ExecStartPre=-/usr/bin/docker kill samba
+ExecStartPre=-/usr/bin/docker rm samba
+ExecStartPre=-/bin/bash -c "/usr/bin/docker pull 192.168.7.15:5000/jenserat/samba-publicshare"
+ExecStart=/bin/bash -c "docker run --name samba --publish 445:445 --publish 137:137 --publish 138:138 --publish 139:139 --volume /data/sambashare:/srv 192.168.7.15:5000/jenserat/samba-publicshare"
+
+# Stop
+ExecStop=/usr/bin/docker stop samba
+
+Restart=always

@@ -1,0 +1,11 @@
+@(appId: String, returnUrl: String, state: String)
+@*<form action="@controllers.member.routes.Login.saveReferrerBeforeLogin("https://accounts.google.com/o/oauth2/auth")" class="logIcon lineBlock">
+<input type="hidden" name="client_id" value="@appId" />
+<input type="hidden" name="redirect_uri" value="@returnUrl" />
+<input type="hidden" name="response_type" value="code" />
+<input type="hidden" name="state" value="@state" />
+<input type="hidden" name="scope" value="https://www.googleapis.com/auth/plus.login email" />
+<input class="lineBlock log_google" type="submit" value=""/>
+</form>*@
+
+<a class="lineBlock log_google" href="https://accounts.google.com/o/oauth2/auth?client_id=1031779384204-umd79kdejl4q5sdul1hjs32c93437jop.apps.googleusercontent.com&redirect_uri=http://www.tomtop.com/ttgoogle&response_type=code&state=state&scope=https://www.googleapis.com/auth/plus.login email" style="cursor: pointer;" ></a>

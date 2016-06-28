@@ -1,0 +1,13 @@
+@(cmsContentList: List[dto.CmsContent])
+
+	@views.html.mobile.sub_master(){
+	
+	   @cmsContentList.map{u=>
+	   	 	 @Html(u.getCcontent())  
+	   	 	 
+	   }
+       
+ }    
+
+       
+                                  

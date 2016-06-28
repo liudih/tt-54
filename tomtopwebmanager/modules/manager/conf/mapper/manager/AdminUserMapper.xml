@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.manager.AdminUserMapper" >
+
+  <resultMap id="BaseResultMap" type="entity.manager.AdminUser" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="cusername" property="cusername" jdbcType="VARCHAR" />
+    <result column="cpasswd" property="cpasswd" jdbcType="VARCHAR" />
+    <result column="cjobnumber" property="cjobnumber" jdbcType="VARCHAR" />
+    <result column="cemail" property="cemail" jdbcType="VARCHAR" />
+    <result column="cphone" property="cphone" jdbcType="VARCHAR" />
+    <result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+    <result column="badmin" property="badmin" jdbcType="BOOLEAN" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    iid, cusername, cpasswd, cjobnumber, cemail, cphone, ccreateuser, badmin,dcreatedate
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_admin_user
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  
+  
+  <select id="searchAdminUserPage" resultType="entity.manager.AdminUser" >
+   		select * from (
+			select a.* 
+			from t_admin_user a  left join t_admin_user_role_map r on a.iid=r.iuserid
+			where a.cusername  like '%${cusername}%' and a.cjobnumber  like '%${cjobnumber}%'  
+			 <if test="iroleid != null" >
+		        and r.iroleid=#{iroleid}
+		     </if>
+		) a  order by iid desc limit #{pageSize} offset (#{page}-1)*#{1}
+			
+  </select>
+  
+  <select id="searchAdminUserCount" resultType="java.lang.Integer" >
+   		select count(iid) from (
+			select a.* 
+			from t_admin_user a  left join t_admin_user_role_map r on a.iid=r.iuserid
+			where a.cusername like '%${cusername}%'  and a.cjobnumber  like '%${cjobnumber}%'  
+			 <if test="iroleid != null" >
+		        and r.iroleid=#{iroleid}
+		     </if>
+		) a 
+			
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_admin_user
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="entity.manager.AdminUser" useGeneratedKeys="true" keyProperty="iid" >
+    insert into t_admin_user (cusername, cpasswd, cjobnumber, cemail, cphone, ccreateuser, badmin)
+    values ( #{cusername,jdbcType=VARCHAR}, #{cpasswd,jdbcType=VARCHAR}, 
+      #{cjobnumber,jdbcType=VARCHAR}, #{cemail,jdbcType=VARCHAR}, #{cphone,jdbcType=VARCHAR}, 
+      #{ccreateuser,jdbcType=VARCHAR}, #{badmin,jdbcType=BOOLEAN})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.manager.AdminUser" useGeneratedKeys="true" keyProperty="iid" >
+    insert into t_admin_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="cusername != null" >
+        cusername,
+      </if>
+      <if test="cpasswd != null" >
+        cpasswd,
+      </if>
+      <if test="cjobnumber != null" >
+        cjobnumber,
+      </if>
+      <if test="cemail != null" >
+        cemail,
+      </if>
+      <if test="cphone != null" >
+        cphone,
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser,
+      </if>
+      <if test="badmin != null" >
+        badmin,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="cusername != null" >
+        #{cusername,jdbcType=VARCHAR},
+      </if>
+      <if test="cpasswd != null" >
+        #{cpasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="cjobnumber != null" >
+        #{cjobnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="cemail != null" >
+        #{cemail,jdbcType=VARCHAR},
+      </if>
+      <if test="cphone != null" >
+        #{cphone,jdbcType=VARCHAR},
+      </if>
+      <if test="ccreateuser != null" >
+        #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="badmin != null" >
+        #{badmin,jdbcType=BOOLEAN},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+ 
+  <update id="updateByPrimaryKeySelective" parameterType="entity.manager.AdminUser" >
+    update t_admin_user
+    <set >
+      <if test="cusername != null" >
+        cusername = #{cusername,jdbcType=VARCHAR},
+      </if>
+      <if test="cpasswd != null" >
+        cpasswd = #{cpasswd,jdbcType=VARCHAR},
+      </if>
+      <if test="cjobnumber != null" >
+        cjobnumber = #{cjobnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="cemail != null" >
+        cemail = #{cemail,jdbcType=VARCHAR},
+      </if>
+      <if test="cphone != null" >
+        cphone = #{cphone,jdbcType=VARCHAR},
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="badmin != null" >
+        badmin = #{badmin,jdbcType=BOOLEAN},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.manager.AdminUser" >
+
+    update t_admin_user
+    set cusername = #{cusername,jdbcType=VARCHAR},
+      cpasswd = #{cpasswd,jdbcType=VARCHAR},
+      cjobnumber = #{cjobnumber,jdbcType=VARCHAR},
+      cemail = #{cemail,jdbcType=VARCHAR},
+      cphone = #{cphone,jdbcType=VARCHAR},
+      ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      badmin = #{badmin,jdbcType=BOOLEAN},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.interaction.SuperDealMapper">
+	<resultMap id="BaseResultMap" type="dto.interaction.SuperDeal">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+		<result column="icategoryrootid" property="icategoryrootid"
+			jdbcType="INTEGER" />
+		<result column="csku" property="csku" jdbcType="VARCHAR" />
+		<result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+		<result column="bshow" property="bshow" jdbcType="BIT" />
+		<result column="iwebsiteid" property="iwebsiteid"
+			jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, clistingid, icategoryrootid, csku, ccreateuser, dcreatedate, bshow
+	</sql>
+	<select id="getSuperDealById" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_super_deals
+		where iid = #{iid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteSuperDealById" parameterType="java.lang.Integer">
+		delete from t_super_deals
+		where iid = #{iid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="dto.interaction.SuperDeal">
+		insert into t_super_deals (clistingid, icategoryrootid,
+		csku, ccreateuser,bshow
+		)
+		values (#{clistingid,jdbcType=VARCHAR}, #{icategoryrootid,jdbcType=INTEGER},
+		#{csku,jdbcType=VARCHAR}, #{ccreateuser,jdbcType=VARCHAR},#{bshow,jdbcType=BIT}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="dto.interaction.SuperDeal">
+		insert into t_super_deals
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="clistingid != null">
+				clistingid,
+			</if>
+			<if test="icategoryrootid != null">
+				icategoryrootid,
+			</if>
+			<if test="csku != null">
+				csku,
+			</if>
+			<if test="ccreateuser != null">
+				ccreateuser,
+			</if>
+			<if test="bshow != null" >
+		        bshow,
+		    </if>
+		    <if test="iwebsiteid != null">
+				iwebsiteid,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="clistingid != null">
+				#{clistingid,jdbcType=VARCHAR},
+			</if>
+			<if test="icategoryrootid != null">
+				#{icategoryrootid,jdbcType=INTEGER},
+			</if>
+			<if test="csku != null">
+				#{csku,jdbcType=VARCHAR},
+			</if>
+			<if test="ccreateuser != null">
+				#{ccreateuser,jdbcType=VARCHAR},
+			</if>
+			<if test="bshow != null" >
+		        #{bshow,jdbcType=BIT},
+		    </if>
+		    <if test="iwebsiteid != null">
+				#{iwebsiteid,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="dto.interaction.SuperDeal">
+		update t_super_deals
+		<set>
+			<if test="clistingid != null">
+				clistingid = #{clistingid,jdbcType=VARCHAR},
+			</if>
+			<if test="icategoryrootid != null">
+				icategoryrootid = #{icategoryrootid,jdbcType=INTEGER},
+			</if>
+			<if test="csku != null">
+				csku = #{csku,jdbcType=VARCHAR},
+			</if>
+			<if test="ccreateuser != null">
+				ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+		    <if test="bshow != null" >
+		        bshow = #{bshow,jdbcType=BIT},
+		    </if>
+		</set>
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="dto.interaction.SuperDeal">
+		update t_super_deals
+		set clistingid = #{clistingid,jdbcType=VARCHAR},
+		icategoryrootid = #{icategoryrootid,jdbcType=INTEGER},
+		csku = #{csku,jdbcType=VARCHAR},
+		ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+		dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+		bshow = #{bshow,jdbcType=BIT}
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+</mapper>

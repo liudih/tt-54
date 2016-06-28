@@ -1,0 +1,22 @@
+@(roots: List[valueobjects.product.category.CategoryComposite],
+ partitioned: Map[Integer, Map[valueobjects.product.category.CategoryComposite, List[Html]]],
+ storageIdAndNameMap: Map[Integer,String]
+ )
+@import views.html.helper._
+
+@if(roots != null && roots.size() > 0) {
+	       <div class="departments">
+	            <span class="navImgArr"> </span>
+				<p>Shop By Departments</p>
+				<i class="icon-arr"> </i>
+			</div>
+	            <ul class="pu_classifyNavWarp">
+	            	@category_storage_new(storageIdAndNameMap)
+	            	@roots.map{ r =>
+	            		@if(r.getSelf()!=null){
+							@category_inc_new(r, partitioned(r.getSelf().getIid()))
+						}
+			   		}
+	            </ul>
+	      
+ }

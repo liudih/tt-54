@@ -1,0 +1,23 @@
+@(
+page:valueobjects.base.Page[dto.ProductPost],
+listingid:String
+) 
+
+@if(page.totalPages>1){
+
+<div class="review_pageNum">
+	@if(1!=page.pageNo ){ <a class="review_prev"
+		href='@controllers.interaction.routes.Post.list(listingid,1,page.pageNo-1)'><em></em>@Messages("prev")</a>
+
+	} @for(i <- 1 to page.totalPages) { <a
+		href='@controllers.interaction.routes.Post.list(listingid,1,i)'
+		@if(i== page.pageNo){class="review_active"}>@i</a> }
+
+	@if(page.pageNo < page.totalPages ){ <a class="review_next"
+		href='@controllers.interaction.routes.Post.list(listingid,1,page.pageNo+1)'><em></em>@Messages("next")</a>
+
+	}
+
+
+</div>
+}

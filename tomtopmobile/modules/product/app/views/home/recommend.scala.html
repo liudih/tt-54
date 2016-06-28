@@ -1,0 +1,24 @@
+@(products :List[valueobjects.product.ProductBadge])
+
+<div class="Titleh5">
+	<h5>Recommend</h5>
+</div>
+<div id="badgeContent">
+	@if(null!=products && products.size()>0){ 
+		@products.map{p=> 
+			@views.html.product.badge_base(p)
+		}
+	}
+</div>
+
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+ 	@controllers.base.routes.Assets.at("js/jquery.esn.autobrowse.min.js")
+ 	@controllers.base.routes.Assets.at("js/jstorage.min.js")
+ 	@controllers.product.routes.Assets.at("js/scroll_load.js")
+}
+
+@services.base.HtmlUtils.misc().addTailOnce{
+	<script type="text/javascript">
+	var moreurl = "@controllers.product.routes.Product.recommendMore()";
+	</script>
+}

@@ -1,0 +1,17 @@
+@(appId: String, returnUrl: String, state: String)
+<div class="lg_span">
+                            <div class="lg_btn">
+                              
+                               <form action="@controllers.member.routes.Login.saveReferrerBeforeLogin("https://accounts.google.com/o/oauth2/auth")" class="lg_ico">
+<input type="hidden" name="client_id" value="@appId" />
+<input type="hidden" name="redirect_uri" value="@returnUrl" />
+<input type="hidden" name="response_type" value="code" />
+<input type="hidden" name="state" value="@state" />
+<input type="hidden" name="scope" value="https://www.googleapis.com/auth/plus.login email" />
+<input class="lineBlock log_google" type="submit" value=""/>
+</form>
+                                <span class="lg_btn_txt">Sign In with Google</span>
+                            </div>
+                            <br>
+                            <em>This will not give us access to your password, email, or anything else.</em>
+                        </div>

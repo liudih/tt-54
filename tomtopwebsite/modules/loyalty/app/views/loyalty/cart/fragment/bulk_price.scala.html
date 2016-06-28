@@ -1,0 +1,32 @@
+@(groupName: String, firstQty: Int, 
+	rates: List[entity.loyalty.BulkRate],
+	prices: Map[Integer, valueobjects.price.Price], symbol: String)
+	
+@import services.base.utils._
+	
+<p>@Messages("buy.n.and.save", firstQty)</p>
+<div class="product_VIP">
+	<em></em> <b>@Messages("buy.more.lower.prices")</b>
+	<p>@Messages("order") @firstQty @Messages("enjoy.savings.bulk.prices.shown.shopping.cart")</p>
+	<ul class="productVIP_level">
+		<li>
+			<ol>@Messages("qty.unit")
+			</ol>
+			<p>
+				<em class="vipIco">@groupName</em>@Messages("price") @symbol
+			</p>
+		</li>
+		@rates.map{ r =>
+		<li>
+			<ol>@r.getIqty()
+			</ol>
+			<p class="red">@Utils.money(prices(r.getIqty()).getUnitPrice())</p>
+		</li>
+		}
+		<div class="clear"></div>
+	</ul>
+	<p>
+		@Messages("looking.wholesale.prices.feel.free.to") <a
+			href="javascript:;">@Messages("contact.us")</a>
+	</p>
+</div>

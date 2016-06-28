@@ -1,0 +1,26 @@
+@(vo: valueobjects.order_api.OrderCount)
+
+<li class="lineBlock">
+	<a href="@controllers.order.member.routes.MemberOrderController.orderList(1)">
+		<p>@vo.getAll()</p>
+		<p>My Order</p>
+	</a>
+</li>
+<li class="lineBlock">
+	<a href="@controllers.order.member.routes.MemberOrderController.orderList(2)">
+		<p>@vo.getPending()</p>
+		<p>Payment Pending</p>
+	</a>
+</li>
+<li class="lineBlock">
+	<a href="@controllers.order.member.routes.MemberOrderController.orderList(3)">
+		<p>@vo.getDispatched()</p>
+		<p>Dispatched</p>
+	</a>
+</li>
+<li class="lineBlock">
+	<a href="@controllers.order.member.routes.MemberOrderController.orderList(4)">
+		<p>@vo.getRefunded()</p>
+		<p>Refunded</p>
+	</a>
+</li>

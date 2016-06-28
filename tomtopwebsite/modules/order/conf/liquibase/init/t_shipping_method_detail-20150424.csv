@@ -1,0 +1,20 @@
+cimageurl,ccode,ilanguageid,cname,ctitle,ccontent,cfreecontent,igroupid
+images/china_post.gif,PT,1,MailTracking,Airmail With Tracking Number,"By Airmail, with tracking number 10-20 business days arrived. (Over 2kg, will be shipped with multiple packages)",null,1
+images/china_post.gif,RSPT,1,null,Airmail With Tracking Number,"By Airmail, with tracking number 10-20 business days arrived. (Over 2kg, will be shipped with multiple packages)",null,1
+images/china_post.gif,MPT,1,null,Airmail With Tracking Number,"By Airmail, with tracking number 10-20 business days arrived. (Over 2kg, will be shipped with multiple packages)",null,1
+images/china_post.gif,RFPT,1,null,Airmail With Tracking Number,"By Airmail, with tracking number 10-20 business days arrived. (Over 2kg, will be shipped with multiple packages)",null,1
+images/ems.gif,E,1,ChinaEMS,China EMS,"By EMS From China Warehouse, 5 - 10 business days arrived.",null,2
+images/dhl.gif,D,1,ChinaDHL,China DHL,"By DHL From China Warehouse, 3 - 5 business days arrived.",null,4
+images/royal_mail.gif,PE,1,United Kingdom Royalmail Without Track number,Royalmail From UK Warehouse without tracking number,"By Royalmail From UK Warehouse Without Tracking number, 7-15 business days arrived",null,5
+images/usps.gif,UU3,1,United States USPS,UPS From USA Warehouse,"From USA Warehouse, 3-5business days arrived.",null,6
+images/usps.gif,DD9,1,DE Post,DE Post,"By DE Post Without Tracking number, 2 - 3 business days arrived",null,7
+images/dhl.gif,DD,1,DE DHL,DHL From Germany Warehouse,"From Germany Warehouse, 5-7business days arrived.",null,8
+images/china_post.gif,RSP,1,null,Airmail Without Tracking Number,"By Airmail, without tracking number 10-20 business days arrived. (Over 2kg, will be shipped with multiple packages)",null,9
+images/china_post.gif,P,1,Free Shipping - Air Mail From China,Airmail Without Tracking Number,"By Airmail, without tracking number 10-20 business days arrived. (Over 2kg, will be shipped with multiple packages)",null,9
+images/china_post.gif,MP,1,null,Airmail Without Tracking Number,"By Airmail, without tracking number 10-20 business days arrived. (Over 2kg, will be shipped with multiple packages)",null,9
+images/china_post.gif,RFP,1,null,Airmail Without Tracking Number,"By Airmail, without tracking number 10-20 business days arrived. (Over 2kg, will be shipped with multiple packages)",null,9
+images/china_post.gif,UE,1,United Kingdom UPS,UPS From UK Warehouse,"By UPS From UK Warehouse with Tracking number, 3-7 business days arrived",null,10
+images/eub.gif,H2,1,null,EUB to USA With Tracking Number,"By EUB, with tracking number 7-15 business days arrived. (Over 2kg, will be shipped with multiple packages)",null,11
+images/direct_line.gif,ZPE,1,null,Direct Line to Euro. Without Tracking Number,"By Direct Line, without tracking number 10-20 business days arrived.",null,12
+images/direct_line.gif,ZPTE,1,null,Direct Line to Euro. With Tracking Number,"By Direct Line, with tracking number 10-20 business days arrived.",null,13
+images/usps.gif,PTU3,1,null,USPS From USA Warheouse,"From USA Warehouse, 5-7business days arrived.",null,14

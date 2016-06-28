@@ -1,0 +1,161 @@
+@(vo: valueobjects.order_api.payment.PaymentContext,
+ historyMap: Map[String, dto.order.OrderStatusHistory],
+ dateUtil: services.base.utils.DateFormatUtils,
+ idMap: Map[Integer, dto.order.OrderStatus]
+)
+
+@order = @{vo.getOrder().getOrder()}
+@confirmed = @{historyMap.get(IOrderStatusService.PAYMENT_CONFIRMED)}
+@p_processing = @{historyMap.get(IOrderStatusService.PAYMENT_PROCESSING)}
+@processing = @{historyMap.get(IOrderStatusService.PROCESSING)}
+@dispatched = @{historyMap.get(IOrderStatusService.DISPATCHED)}
+@completed = @{historyMap.get(IOrderStatusService.COMPLETED)}
+@import services.order.IOrderStatusService
+
+<head>
+        <meta name="viewport" content="width=1200">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        
+		<link rel="icon" href="@controllers.base.routes.Assets.at("favicon.ico")" type="image/x-icon">
+        <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/main.css")">
+		<link href="@controllers.base.routes.Assets.at("css/tomtop.css")"> 
+		
+		<link href="http://192.168.220.56:81/tomtopwebresource/tomtop/css/newTop.css" rel="stylesheet" media="screen"> 
+		
+		<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/common_en.css?UNKNOWN")" />
+		<script src="@controllers.base.routes.Assets.at("lib/jquery/jquery.min.js")"></script>
+		<script src="@controllers.base.routes.Assets.at("js/lib/public.js?UNKNOWN")"></script>
+		<script src="@controllers.base.routes.Assets.at("js/lib/main.js?UNKNOWN")"></script>
+		<script src="@controllers.base.routes.Assets.at("js/base/home.js")"></script>
+		<script src="http://192.168.220.56:81/tomtopwebresource/tomtop/js/public.js")"></script>
+		<script src="http://192.168.220.56:81/tomtopwebresource/tomtop/js/jquery.lazyload.min.js")"></script>
+		
+		<script src="@controllers.base.routes.Assets.at("js/lib/common.js")"></script>
+		
+			
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/login.css?UNKNOWN")" /> 
+
+		
+    </head>
+
+<h6>@Messages("order.detail")</h6>
+
+<ul class="detailTT">
+	<li>@Messages("order.number") <b class="blue">@order.getCordernumber</b></li>
+	<li>@Messages("order.status") <b class="blue">@idMap.get(order.getIstatus()).getCname()</b></li>
+	@**<li class="detailDY"><a href="javascript:;"><em></em>@Messages("commercial.invoice")</a></li>**@
+</ul>
+
+<ul class="orderStatus">
+	<li class="statusAcc">
+		<p>
+			<span>@Messages("order.submitted")</span><br>
+			@dateUtil.getDate(order.getDcreatedate())
+		</p>
+	</li>	
+	
+	
+	<li @if(confirmed == null && p_processing == null){class="statusError"}else{class="statusAcc"}>
+		<ol></ol>
+		<p>	
+			@if(confirmed == null && p_processing == null){
+				<span>@Messages("payment.declined")</span>
+			}
+			@if(confirmed != null){
+				<span>@Messages("payment.success")</span>
+				<br>
+				@dateUtil.getDate(confirmed.getDcreatedate())
+			}
+			@if(p_processing != null && confirmed == null){
+				<span>@Messages("payment.processing")</span>
+				<br>
+				@dateUtil.getDate(p_processing.getDcreatedate())
+			}
+		</p>
+	</li>
+
+	<li @if(confirmed != null){@if(processing == null){class="statusError"}else{class="statusAcc"}}>
+		<ol></ol>
+		<p>	
+			<span>@Messages("order.processing")</span><br>
+			@if(processing != null){
+				@dateUtil.getDate(processing.getDcreatedate())
+			}
+		</p>
+	</li>
+	
+	<li @if(processing != null){@if(dispatched == null){class="statusError"}else{class="statusAcc"}}>
+		<ol></ol>
+		<p>
+			<span>@Messages("shippied")</span><br>
+			@if(dispatched != null){
+				@dateUtil.getDate(dispatched.getDcreatedate())
+			}
+		</p>
+	</li>
+	
+	<li @if(dispatched != null){@if(completed == null){class="statusError"}else{class="statusAcc"}}>
+		<ol></ol>
+		<p>
+			<span>@Messages("completed.orders")</span><br>
+			@if(completed != null){
+				@dateUtil.getDate(completed.getDcreatedate())
+			}
+		</p>
+	</li>
+</ul>
+
+<table width="100%" cellspacing="0" cellpadding="0" border="0" class="orderINFs">
+	<tbody>
+		<tr>
+			<th>@Messages("order.information")</th>
+			<th></th>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>@Messages("customer.name")</td>
+			<td>@order.getCfirstname() @order.getClastname()</td>
+		</tr>
+		<tr>
+			<td>@Messages("shipping.addresss")</td>
+			<td>
+				@order.getCstreetaddress() &nbsp&nbsp
+				@order.getCcity() &nbsp&nbsp
+				@order.getCprovince() &nbsp&nbsp
+				@order.getCcountry() &nbsp&nbsp
+				@order.getCpostalcode() &nbsp&nbsp
+				@order.getCtelephone() &nbsp&nbsp
+			</td>
+		</tr>
+		<tr>
+			<td>@Messages("shipping.method")</td>
+			<td>@if(vo.getShippingMethod() != null){@vo.getShippingMethod().getCtitle()}</td>
+		</tr>
+		<tr>
+			<td>@Messages("order.placed.date")</td>
+			<td>@services.base.utils.DateFormatUtils.getStrFromYYYYMMDDHHMMSS(order.getDcreatedate())</td>
+		</tr>
+		@if(dispatched != null) {
+			<tr>
+				<td>@Messages("shipped.date")</td>
+				<td>@services.base.utils.DateFormatUtils.getStrFromYYYYMMDDHHMMSS(dispatched.getDcreatedate())</td>
+			</tr>
+		}
+		@if(order.getCmessage()!= null) {
+			<tr>
+				<td>@Messages("your.message")</td>
+				<td>@order.getCmessage()</td>
+			</tr>
+		}
+		<tr>
+			<td></td>
+			<td></td>
+		</tr>
+	</tbody>
+</table>

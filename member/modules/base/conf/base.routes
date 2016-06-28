@@ -1,0 +1,47 @@
+GET    /                      @controllers.base.Home.home()
+
+GET    /country               @controllers.base.Country.getAllCountries()
+
+GET    /banner/:iid           @controllers.base.Banner.at(iid:Int)
+
+GET    /banner/bgimg/:iid     @controllers.base.Banner.bgimg(iid:Int)
+
+GET    /currency              @controllers.base.Currency.getAllCurrencies()
+
+GET    /website               @controllers.base.WebSite.getAllWebsites()
+
+GET    /storage               @controllers.base.Storage.getAllStorages()
+
+GET    /lang                  @controllers.base.Language.switchLanguage(id: Int ?= 1)
+
+GET    /language              @controllers.base.Language.getAllLanguage()
+
+POST   /regional              @controllers.base.Regional.regionalSettings() 
+
+POST   /regionaldefault       @controllers.base.Regional.regionalDefaultSetting() 
+
+POST   /switchCurrency        @controllers.base.Regional.switchCurrency() 
+POST   /switchCountry         @controllers.base.Regional.switchCountry() 
+
+GET    /captcha.png           @controllers.base.Captcha.generate()
+
+POST   /checkcaptcha          @controllers.base.Captcha.checkCaptcha()
+
+GET    /assets/*file          controllers.base.Assets.at(path="/public", file)
+
+GET    /translate             @controllers.base.Translate.testTranslate()
+
+#GET /platform			@controllers.base.Platform.getAllPlatform()
+
+GET    /cms                   @controllers.base.Cms.getAllCms()
+
+GET    /cms/detail/:imenuid   @controllers.base.Cms.getCmsContentByMenuId(imenuid:Integer)
+
+GET    /cms/customer          @controllers.base.Cms.cmsCustomer(imenuid:Integer)
+
+GET    /currency/get          @controllers.base.Currency.getCurrency()
+
+GET    /getvhost              @controllers.base.Vhost.getVhost()
+
+GET    /currency/:currency    @controllers.base.Currency.setCurrencyRate(currency:String)
+

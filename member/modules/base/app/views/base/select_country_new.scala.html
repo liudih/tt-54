@@ -1,0 +1,38 @@
+@** CSS defined in tomtop.css, should be defined here **@
+@(country : dto.Country)
+		
+		<p class="lineBlock">
+			@Messages("ship.to")
+		</p>
+		<div class="lineBlock selectFlag">
+			<div class="pu_navHover">
+				<span id="current_country_flage" class="flag_@country.getCshortname"><em> </em></span> 
+				<span class="flag_Txt">@country.getCname</span>
+				<i class="icon-arr"> </i>
+			</div>
+			<div class="pu_blockWarp country_all">
+				<div class="search_country">
+					<input type="text" name="country_filter">
+				</div> 
+					<ul class="country_list" id="notranslate">
+					</ul>
+				 
+			</div>
+		</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+@helper.javascriptRouter("jsCountry")(
+	controllers.base.routes.javascript.Country.getAllCountries,
+	controllers.base.routes.javascript.Assets.at
+) 
+<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/base/country/Country.js")'></script>
+}
+@services.base.HtmlUtils.misc().addTailOnce{
+<script>
+	var country = new Country();
+	country.init(jsCountry.controllers.base.Country.getAllCountries().url);
+	$("input[name=country_filter]").keyup(function() {
+		country.search(this);
+	});
+</script>
+}
+

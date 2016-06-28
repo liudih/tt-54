@@ -1,0 +1,12 @@
+@(menuID: String)(body: Html)
+
+@views.html.base.master{
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/login.css")?@version.BuildVersion.build()" /> 
+}
+<div class="container accountBox">
+
+@menu(menuID)
+@body
+</div>
+}

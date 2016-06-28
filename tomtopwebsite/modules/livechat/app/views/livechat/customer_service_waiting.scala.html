@@ -1,0 +1,79 @@
+@(myAlias: String)
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" xmlns="http://www.w3.org/1999/xhtml"> <!--<![endif]-->
+<head>
+	<link rel="stylesheet" href="@controllers.livechat.routes.Assets.at("css/skin.css")" />
+	<link rel="stylesheet" href="@controllers.livechat.routes.Assets.at("css/styles.css")" />
+	<link rel="stylesheet" href="@controllers.livechat.routes.Assets.at("css/tomtop.css")" />
+	<script src="@controllers.livechat.routes.Assets.at("lib/jquery/jquery.min.js")"></script>
+	<script src="@controllers.livechat.routes.Assets.at("js/livechat/logout.js")"></script>
+	<script>
+
+		function sendControl(control, dataCallback, errorCallback, doneCallback) {
+			$.ajax({
+				method : "POST",
+				url : "/livechat/control",
+				data : JSON.stringify(control),
+				dataType : "json",
+				contentType : "application/json",
+				processData : false,
+				success : dataCallback,
+				error : errorCallback,
+			}).done(doneCallback);
+		}
+
+		function accept(originAlias,topicalias) {
+			var ctl = {
+				type : "ACCEPT",
+				alias : originAlias,
+				topic : topicalias,
+			};
+			sendControl(ctl);
+		}
+		function quit() {
+			var ctl = {
+				type : "QUIT",
+			};
+			sendControl(ctl);
+		}
+		function established(sessionID) {
+		    redirect("/livechat/chatroom/init/1")
+		}
+		 
+		(function heartbeat() {
+			var pingctl = {
+				type : "PING",
+				alias : "@myAlias"
+			};
+			sendControl(pingctl, function(data) {
+				$.each(data, function(i, d) {
+					switch (d.type) {
+					case "RING":
+						accept(d.originAlias,d.topic);
+						break;
+					case "ESTABLISHED":
+						established(d.id);
+						break;
+					}
+				});
+			}, function() {
+				
+			}, function() {
+				setTimeout(heartbeat, 2000);
+			});
+		})();
+		
+	</script>
+</head>
+<body>
+	<div class="liveChat_waitBox">
+        <div class="liveChat_head"> </div>
+        <p class="liveChat_Wait">Waiting for connection..., please wait...</p>
+        
+    </div>
+
+</body>
+</html>

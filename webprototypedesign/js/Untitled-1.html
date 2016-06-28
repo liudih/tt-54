@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="jquery.js"></script>
+<style>
+li{display:none;}
+</style>
+<title>无标题文档</title>
+
+</head>
+
+<body>
+<script>
+$(document).ready(function(){
+	$("p").parents("li").siblings().css({"display":"block"})
+})
+</script>
+<ul>
+    <li>
+    	<ul>
+        	<li><p>111</p></li>
+        	<li>222</li>
+        	<li>333</li>
+        	<li>444</li>
+        </ul>
+    </li>
+    <li>
+    	<ul>
+        	<li>aaa</li>
+        	<li>bbb</li>
+        	<li>ccc</li>
+        	<li>ddd</li>
+        </ul>
+    </li>
+    <li>
+    	<ul>
+        	<li>!!!</li>
+        	<li>@@@</li>
+        	<li>###</li>
+        	<li>$$$</li>
+        </ul>
+    </li>
+    <li>
+    	<ul>
+        	<li>999</li>
+        	<li>888</li>
+        	<li>777</li>
+        	<li>666</li>
+        </ul>
+    </li>
+</ul>
+</body>
+</html>

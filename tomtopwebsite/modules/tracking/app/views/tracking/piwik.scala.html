@@ -1,0 +1,24 @@
+@(piwikUrl: String,
+  piwikSiteId: Int,
+  context: play.mvc.Http.Context)
+@import helpers.Scala2Java8._
+@services.base.HtmlUtils.misc(context).addTail{ () =>
+<!-- Piwik -->
+<script type="text/javascript">
+  var u="@piwikUrl";
+  var _paq = _paq || [];
+  _paq.push(['setTrackerUrl', u+'/piwik.php']);
+  _paq.push(['setSiteId', @piwikSiteId]);
+  @extensions.tracking.PiwikScriptAddition.ensureContext(context).map{ p =>
+  _paq.push([@Html(p)]);
+  }
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+  g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+</script>
+<noscript>
+<p><img src="@piwikUrl/piwik.php?idsite=@piwikSiteId&rec=1" style="border:0;" alt="" /></p>
+</noscript>
+<!-- End Piwik Code -->
+}

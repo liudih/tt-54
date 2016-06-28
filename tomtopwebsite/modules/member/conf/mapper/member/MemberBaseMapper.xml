@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.member.MemberBaseMapper">
+	<resultMap id="BaseResultMap" type="dto.member.MemberBase">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+		<result column="caccount" property="caccount" jdbcType="VARCHAR" />
+		<result column="cpasswd" property="cpasswd" jdbcType="VARCHAR" />
+		<result column="igroupid" property="igroupid" jdbcType="INTEGER" />
+		<result column="cprefix" property="cprefix" jdbcType="VARCHAR" />
+		<result column="csuffix" property="csuffix" jdbcType="VARCHAR" />
+		<result column="cfirstname" property="cfirstname" jdbcType="VARCHAR" />
+		<result column="cmiddlename" property="cmiddlename" jdbcType="VARCHAR" />
+		<result column="clastname" property="clastname" jdbcType="VARCHAR" />
+		<result column="cemail" property="cemail" jdbcType="VARCHAR" />
+		<result column="dbirth" property="dbirth" jdbcType="TIMESTAMP" />
+		<result column="ctaxnumber" property="ctaxnumber" jdbcType="VARCHAR" />
+		<result column="igender" property="igender" jdbcType="INTEGER" />
+		<result column="cforumsnickname" property="cforumsnickname"
+			jdbcType="VARCHAR" />
+		<result column="bactivated" property="bactivated" jdbcType="BOOLEAN" />
+		<result column="bnewsletter" property="bnewsletter" jdbcType="BOOLEAN" />
+		<result column="ccountry" property="ccountry" jdbcType="VARCHAR" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, iwebsiteid, caccount, cpasswd, igroupid, cprefix,
+		csuffix,
+		cfirstname, cmiddlename,
+		clastname, cemail, dbirth, ctaxnumber,
+		igender, cforumsnickname,
+		bactivated, bnewsletter, ccountry,
+		dcreatedate
+	</sql>
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into t_member_base(iwebsiteid, caccount, cpasswd, igroupid,
+		cprefix, csuffix, cfirstname, cmiddlename, clastname, cemail,
+		dbirth,ctaxnumber, igender, cforumsnickname,bactivated,
+		bnewsletter,
+		ccountry, caboutme, dcreatedate) values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.iwebsiteid,jdbcType=INTEGER},
+			#{item.caccount,jdbcType=VARCHAR},
+			#{item.cpasswd,jdbcType=VARCHAR},
+			#{item.igroupid,jdbcType=INTEGER},
+			#{item.cprefix,jdbcType=VARCHAR},
+			#{item.csuffix,jdbcType=VARCHAR},
+			#{item.cfirstname,jdbcType=VARCHAR},
+			#{item.cmiddlename,jdbcType=VARCHAR},
+			#{item.clastname,jdbcType=VARCHAR},
+			#{item.cemail,jdbcType=VARCHAR},
+			#{item.dbirth,jdbcType=TIMESTAMP},
+			#{item.ctaxnumber,jdbcType=VARCHAR},
+			#{item.igender,jdbcType=INTEGER},
+			#{item.cforumsnickname,jdbcType=VARCHAR},
+			#{item.bactivated,jdbcType=BOOLEAN},
+			#{item.bnewsletter,jdbcType=BOOLEAN},
+			#{item.ccountry,jdbcType=VARCHAR},
+			#{item.caboutme,jdbcType=VARCHAR},
+			#{item.dcreatedate,jdbcType=TIMESTAMP})
+		</foreach>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="dto.member.MemberBase">
+		update t_member_base
+		<set>
+			<if test="iwebsiteid != null">
+				iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+			</if>
+			<if test="caccount != null">
+				caccount = #{caccount,jdbcType=VARCHAR},
+			</if>
+			<if test="cpasswd != null">
+				cpasswd = #{cpasswd,jdbcType=VARCHAR},
+			</if>
+			<if test="igroupid != null">
+				igroupid = #{igroupid,jdbcType=INTEGER},
+			</if>
+			<if test="cprefix != null">
+				cprefix = #{cprefix,jdbcType=VARCHAR},
+			</if>
+			<if test="csuffix != null">
+				csuffix = #{csuffix,jdbcType=VARCHAR},
+			</if>
+			<if test="cfirstname != null">
+				cfirstname = #{cfirstname,jdbcType=VARCHAR},
+			</if>
+			<if test="cmiddlename != null">
+				cmiddlename = #{cmiddlename,jdbcType=VARCHAR},
+			</if>
+			<if test="clastname != null">
+				clastname = #{clastname,jdbcType=VARCHAR},
+			</if>
+			<if test="cemail != null">
+				cemail = #{cemail,jdbcType=VARCHAR},
+			</if>
+			<if test="dbirth != null">
+				dbirth = #{dbirth,jdbcType=TIMESTAMP},
+			</if>
+			<if test="ctaxnumber != null">
+				ctaxnumber = #{ctaxnumber,jdbcType=VARCHAR},
+			</if>
+			<if test="igender != null">
+				igender = #{igender,jdbcType=INTEGER},
+			</if>
+			<if test="cforumsnickname != null">
+				cforumsnickname = #{cforumsnickname,jdbcType=VARCHAR},
+			</if>
+
+			bactivated = #{bactivated,jdbcType=BOOLEAN},
+
+			bnewsletter =
+			#{bnewsletter,jdbcType=BOOLEAN},
+			<if test="ccountry != null">
+				ccountry = #{ccountry,jdbcType=VARCHAR},
+			</if>
+			<if test="caboutme != null">
+				caboutme = #{caboutme,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="dto.member.MemberBase">
+		update
+		t_member_base
+		set iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+		caccount
+		= #{caccount,jdbcType=VARCHAR},
+		cpasswd = #{cpasswd,jdbcType=VARCHAR},
+		caboutme = #{caboutme,jdbcType=VARCHAR},
+		igroupid =
+		#{igroupid,jdbcType=INTEGER},
+		cprefix = #{cprefix,jdbcType=VARCHAR},
+		csuffix = #{csuffix,jdbcType=VARCHAR},
+		cfirstname =
+		#{cfirstname,jdbcType=VARCHAR},
+		cmiddlename =
+		#{cmiddlename,jdbcType=VARCHAR},
+		clastname =
+		#{clastname,jdbcType=VARCHAR},
+		cemail = #{cemail,jdbcType=VARCHAR},
+		dbirth = #{dbirth,jdbcType=TIMESTAMP},
+		ctaxnumber =
+		#{ctaxnumber,jdbcType=VARCHAR},
+		igender = #{igender,jdbcType=INTEGER},
+		cforumsnickname = #{cforumsnickname,jdbcType=VARCHAR},
+		bactivated =
+		#{bactivated,jdbcType=BOOLEAN},
+		bnewsletter =
+		#{bnewsletter,jdbcType=BOOLEAN},
+		ccountry =
+		#{ccountry,jdbcType=VARCHAR}
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+	<select id="getUserNames" resultMap="BaseResultMap"
+		parameterType="java.util.List">
+		select * from t_member_base where cemail in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	<select id="getMemberCount" resultType="Integer">
+		select count(distinct m.iid) from t_member_base m
+		where
+				<if test="email != null">
+			m.cemail = #{email} and
+		</if>
+		<if test="siteId != null">
+			m.iwebsiteid = #{siteId} and
+		</if>
+		<if test="caccount != null">
+			m.caccount = #{caccount} and
+		</if>
+		<if test="contry != null">
+			m.ccountry = #{contry} and
+		</if>
+		<if test="vhost != null">
+			m.cvhost = #{vhost} and
+		</if>
+		<if test="bactivated != null">
+			m.bactivated = #{bactivated} and
+		</if>
+		<if test="bnewsletter != null">
+			m.bnewsletter = #{bnewsletter} and
+		</if>
+		<if test="start != null">
+			m.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			m.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			m.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="blackUserStatus != null">
+			<if test="blackUserStatus == 1">
+				m.cemail not in (select b.cemail from t_blacklist_user b where b.istatus=0) and 
+			</if>
+			<if test="blackUserStatus == 0">
+				m.cemail in (select b.cemail from t_blacklist_user b where b.istatus=#{blackUserStatus}) and 
+			</if>
+		</if>
+		cemail IS NOT NULL
+	</select>
+
+	<select id="getMemberMessage" resultType="dto.member.MemberBase">
+		select * from t_member_base m 
+		where
+		<if test="email != null">
+			m.cemail = #{email} and
+		</if>
+		<if test="siteId != null">
+			m.iwebsiteid = #{siteId} and
+		</if>
+		<if test="caccount != null">
+			m.caccount = #{caccount} and
+		</if>
+		<if test="blackUserStatus != null">
+			m.cemail in (select b.cemail from t_blacklist_user b where b.istatus=#{blackUserStatus}) and 
+		</if>
+		m.cemail IS NOT NULL
+		order by iid desc limit #{pageSize} offset
+		(#{pageSize} * (#{pageNum} - 1)) 
+	</select>
+	
+	<select id="getMemberMessageForDate" resultType="dto.member.MemberBase">
+		select * from t_member_base m 
+		where
+		<if test="email != null">
+			m.cemail = #{email} and
+		</if>
+		<if test="siteId != null">
+			m.iwebsiteid = #{siteId} and
+		</if>
+		<if test="caccount != null">
+			m.caccount = #{caccount} and
+		</if>
+		<if test="contry != null">
+			m.ccountry = #{contry} and
+		</if>
+		<if test="vhost != null">
+			m.cvhost = #{vhost} and
+		</if>
+		<if test="bactivated != null">
+			m.bactivated = #{bactivated} and
+		</if>
+		<if test="bnewsletter != null">
+			m.bnewsletter = #{bnewsletter} and
+		</if>
+		<if test="start != null">
+			m.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			m.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			m.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="blackUserStatus != null">
+			<if test="blackUserStatus == 1">
+				m.cemail not in (select b.cemail from t_blacklist_user b where b.istatus=0) and 
+			</if>
+			<if test="blackUserStatus == 0">
+				m.cemail in (select b.cemail from t_blacklist_user b where b.istatus=#{blackUserStatus}) and 
+			</if>
+		</if>
+		
+		m.cemail IS NOT NULL
+		order by iid desc limit #{pageSize} offset
+		(#{pageSize} * (#{pageNum} - 1)) 
+	</select>
+</mapper>

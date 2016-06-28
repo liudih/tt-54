@@ -1,0 +1,48 @@
+@()
+@top{
+<div class="shoppingCart_con">
+	<h5>@Messages("shopping.cart")</h5>
+</div>
+
+<div>
+<input type="button" value="add" onclick="add()" />
+<input type="button" value="update" onclick="update()" />
+<input type="button" value="del" onclick="del()" />
+
+
+</div>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+	<script>
+	function add(){
+		var list = [];
+		var map = {};
+		map['clistingid'] = "00833762-d914-1004-874c-d371c9ab96c0";
+		map['qty'] = 1;
+		map['storageid'] = 3;
+		list[0] = map;
+		
+//		var map2 = {};
+//		map2['clistingid'] = "0ca8cc64-d914-1004-874c-d371c9ab96c0-22";
+//		map2['qty'] = 33;
+//		map2['storageid'] = 1234;
+//		list[1] = map2;
+		
+		var dd = $.toJSON(list);
+		console.log(dd);
+		
+		//dd = '[{clistingid: "04716cb9-d914-1004-874c-d371c9ab96c0", qty: "1", storageid: 1}]';
+		$.ajax({
+			url: "/cart/savecartitem",
+			type: "POST",
+			dataType: "json",
+			contentType: "application/json",
+			data: dd,
+			success: function(data){
+				
+			}
+		});
+	}
+	</script>
+}
+}

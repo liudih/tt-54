@@ -1,0 +1,63 @@
+@(body: Html)
+@meta = @{services.base.utils.MetaUtils.currentMetaBuilder().build()}
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Cache-Control" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+	<title>@meta.getTitle() - TOMTOP</title>
+	<meta name="description" content="@meta.getDescription()">
+	<link rel="icon" href="@controllers.base.routes.Assets.at("favicon.ico")" type="image/x-icon"><meta name="keywords" content="@meta.getKeywords()">
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/base/country.css")" />
+	<link href="@controllers.base.routes.Assets.at("css/order/style.css")" rel="stylesheet" media="screen" /> 
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/model.css")" />
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/pay.css")" />
+
+	<script src="@controllers.base.routes.Assets.at("lib/jquery/jquery.min.js")"></script>
+	<script src="@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")" type="text/javascript"></script>
+	<script src="@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")" type="text/javascript"></script>
+	<script src="@controllers.base.routes.Assets.at("js/lib/public.js")?@version.BuildVersion.build()"></script>
+	<script src="@controllers.base.routes.Assets.at("js/lib/main.js")?@version.BuildVersion.build()"></script>
+	@services.base.HtmlUtils.misc().getHead().map { h =>
+		@h
+	}
+	</head>
+	<body>
+		@views.html.base.nav_live_chat()
+		<div class="container " id="top_s">
+			<div class="shoppingCart_top" >
+				<div class="topNavigation_logo navigationCart_logo lineBlock">
+			    		<div class="topNav_logoT"><a href="/"><img src="@controllers.base.routes.Assets.at("img/Tomtop_logo0603_01.png")" /></a></div>
+			            <div class="topNav_logoB"><img src="@controllers.base.routes.Assets.at("img/Tomtop_logo0603_02.png")" /></div>
+			    </div>
+				@tp.get("login-pop")
+			</div>
+			@body
+			<div class="container accountBox">
+				<div class="xxkDiv autoH">
+		         <ul class="blackXXK">
+		             <li class="xxkActi">@Messages("super.deals")</li>
+		             <li>@Messages("you.view.history")</li>
+		             <div class="clear"></div>
+		         </ul>
+			  	@tp.get("super-deals-in-member")
+		         <div class="clear"></div>
+		         @tp.get("member-browse-history-in-member-center")
+		         <div class="clear"></div>
+		   		</div>
+		   	</div>
+		</div>
+		<div class="hotProduct_box boxFramework">
+			@tp.get("hot-product")
+		    @tp.get("send-email-home-2")
+	    	<div class="clear"></div>
+		</div>
+		@views.html.base.footer()
+		@services.base.HtmlUtils.misc().getTail().map { h =>
+			@h
+		}
+	</body>
+</html>

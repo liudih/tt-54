@@ -1,0 +1,25 @@
+@(list: List[dto.topic.TopicPage])
+
+<h5 id="f5">
+	@Messages("hot.events")
+	<a href="@controllers.topic.routes.Topic.show()"> @Messages("more") >></a>
+</h5>
+@if(list!=null && !list.isEmpty){
+	<ul class="HotEvents">
+		@list.map{t=>
+			<li>
+				<a href="
+					@if(t.getChtmlurl!=null){
+						@if(t.getChtmlurl.startsWith("http://") || t.getChtmlurl.startsWith("https://")) {
+							@t.getChtmlurl
+						} else {
+							@controllers.topic.routes.Topic.showHtml(t.getChtmlurl)
+						}
+					}else{#}">
+					<img src="@controllers.topic.routes.Topic.showImage(t.getIid())" title="@t.getCtitle()">
+				</a>
+			</li>
+		}
+		<div class="clear"></div>
+	</ul>
+}

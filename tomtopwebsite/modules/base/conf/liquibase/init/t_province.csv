@@ -1,0 +1,485 @@
+icountryid,cname,cshortname,ccreateuser
+1,Alabama,AL,Reason
+1,Alaska,AK,Reason
+1,American Samoa,AS,Reason
+1,Arizona,AZ,Reason
+1,Arkansas,AR,Reason
+1,Armed Forces Africa,AF,Reason
+1,Armed Forces Americas,AA,Reason
+1,Armed Forces Canada,AC,Reason
+1,Armed Forces Europe,AE,Reason
+1,Armed Forces Middle East,AM,Reason
+1,Armed Forces Pacific,AP,Reason
+1,California,CA,Reason
+1,Colorado,CO,Reason
+1,Connecticut,CT,Reason
+1,Delaware,DE,Reason
+1,District of Columbia,DC,Reason
+1,Federated States Of Micronesia,FM,Reason
+1,Florida,FL,Reason
+1,Georgia,GA,Reason
+1,Guam,GU,Reason
+1,Hawaii,HI,Reason
+1,Idaho,ID,Reason
+1,Illinois,IL,Reason
+1,Indiana,IN,Reason
+1,Iowa,IA,Reason
+1,Kansas,KS,Reason
+1,Kentucky,KY,Reason
+1,Louisiana,LA,Reason
+1,Maine,ME,Reason
+1,Marshall Islands,MH,Reason
+1,Maryland,MD,Reason
+1,Massachusetts,MA,Reason
+1,Michigan,MI,Reason
+1,Minnesota,MN,Reason
+1,Mississippi,MS,Reason
+1,Missouri,MO,Reason
+1,Montana,MT,Reason
+1,Nebraska,NE,Reason
+1,Nevada,NV,Reason
+1,New Hampshire,NH,Reason
+1,New Jersey,NJ,Reason
+1,New Mexico,NM,Reason
+1,New York,NY,Reason
+1,North Carolina,NC,Reason
+1,North Dakota,ND,Reason
+1,Northern Mariana Islands,MP,Reason
+1,Ohio,OH,Reason
+1,Oklahoma,OK,Reason
+1,Oregon,OR,Reason
+1,Palau,PW,Reason
+1,Pennsylvania,PA,Reason
+1,Puerto Rico,PR,Reason
+1,Rhode Island,RI,Reason
+1,South Carolina,SC,Reason
+1,South Dakota,SD,Reason
+1,Tennessee,TN,Reason
+1,Texas,TX,Reason
+1,Utah,UT,Reason
+1,Vermont,VT,Reason
+1,Virgin Islands,VI,Reason
+1,Virginia,VA,Reason
+1,Washington,WA,Reason
+1,West Virginia,WV,Reason
+1,Wisconsin,WI,Reason
+1,Wyoming,WY,Reason
+35,Alberta,AB,Reason
+35,British Columbia,BC,Reason
+35,Manitoba,MB,Reason
+35,Newfoundland and Labrador,NL,Reason
+35,New Brunswick,NB,Reason
+35,Nova Scotia,NS,Reason
+35,Northwest Territories,NT,Reason
+35,Nunavut,NU,Reason
+35,Ontario,ON,Reason
+35,Prince Edward Island,PE,Reason
+35,Quebec,QC,Reason
+35,Saskatchewan,SK,Reason
+35,Yukon Territory,YT,Reason
+51,Niedersachsen,NDS,Reason
+51,Baden-Württemberg,BAW,Reason
+51,Bayern,BAY,Reason
+51,Berlin,BER,Reason
+51,Brandenburg,BRG,Reason
+51,Bremen,BRE,Reason
+51,Hamburg,HAM,Reason
+51,Hessen,HES,Reason
+51,Mecklenburg-Vorpommern,MEC,Reason
+51,Nordrhein-Westfalen,NRW,Reason
+51,Rheinland-Pfalz,RHE,Reason
+51,Saarland,SAR,Reason
+51,Sachsen,SAS,Reason
+51,Sachsen-Anhalt,SAC,Reason
+51,Schleswig-Holstein,SCN,Reason
+51,Thüringen,THE,Reason
+13,Wien,WI,Reason
+13,Niederösterreich,NO,Reason
+13,Oberösterreich,OO,Reason
+13,Salzburg,SB,Reason
+13,Kärnten,KN,Reason
+13,Steiermark,ST,Reason
+13,Tirol,TI,Reason
+13,Burgenland,BL,Reason
+13,Voralberg,VB,Reason
+39,Aargau,AG,Reason
+39,Appenzell Innerrhoden,AI,Reason
+39,Appenzell Ausserrhoden,AR,Reason
+39,Bern,BE,Reason
+39,Basel-Landschaft,BL,Reason
+39,Basel-Stadt,BS,Reason
+39,Freiburg,FR,Reason
+39,Genf,GE,Reason
+39,Glarus,GL,Reason
+39,Graubünden,GR,Reason
+39,Jura,JU,Reason
+39,Luzern,LU,Reason
+39,Neuenburg,NE,Reason
+39,Nidwalden,NW,Reason
+39,Obwalden,OW,Reason
+39,St. Gallen,SG,Reason
+39,Schaffhausen,SH,Reason
+39,Solothurn,SO,Reason
+39,Schwyz,SZ,Reason
+39,Thurgau,TG,Reason
+39,Tessin,TI,Reason
+39,Uri,UR,Reason
+39,Waadt,VD,Reason
+39,Wallis,VS,Reason
+39,Zug,ZG,Reason
+39,Zürich,ZH,Reason
+61,A Coruña,A Coruсa,Reason
+61,Alava,Alava,Reason
+61,Albacete,Albacete,Reason
+61,Alicante,Alicante,Reason
+61,Almeria,Almeria,Reason
+61,Asturias,Asturias,Reason
+61,Avila,Avila,Reason
+61,Badajoz,Badajoz,Reason
+61,Baleares,Baleares,Reason
+61,Barcelona,Barcelona,Reason
+61,Burgos,Burgos,Reason
+61,Caceres,Caceres,Reason
+61,Cadiz,Cadiz,Reason
+61,Cantabria,Cantabria,Reason
+61,Castellon,Castellon,Reason
+61,Ceuta,Ceuta,Reason
+61,Ciudad Real,Ciudad Real,Reason
+61,Cordoba,Cordoba,Reason
+61,Cuenca,Cuenca,Reason
+61,Girona,Girona,Reason
+61,Granada,Granada,Reason
+61,Guadalajara,Guadalajara,Reason
+61,Guipuzcoa,Guipuzcoa,Reason
+61,Huelva,Huelva,Reason
+61,Huesca,Huesca,Reason
+61,Jaen,Jaen,Reason
+61,La Rioja,La Rioja,Reason
+61,Las Palmas,Las Palmas,Reason
+61,Leon,Leon,Reason
+61,Lleida,Lleida,Reason
+61,Lugo,Lugo,Reason
+61,Madrid,Madrid,Reason
+61,Malaga,Malaga,Reason
+61,Melilla,Melilla,Reason
+61,Murcia,Murcia,Reason
+61,Navarra,Navarra,Reason
+61,Ourense,Ourense,Reason
+61,Palencia,Palencia,Reason
+61,Pontevedra,Pontevedra,Reason
+61,Salamanca,Salamanca,Reason
+61,Santa Cruz de Tenerife,Santa Cruz de Tenerife,Reason
+61,Segovia,Segovia,Reason
+61,Sevilla,Sevilla,Reason
+61,Soria,Soria,Reason
+61,Tarragona,Tarragona,Reason
+61,Teruel,Teruel,Reason
+61,Toledo,Toledo,Reason
+61,Valencia,Valencia,Reason
+61,Valladolid,Valladolid,Reason
+61,Vizcaya,Vizcaya,Reason
+61,Zamora,Zamora,Reason
+61,Zaragoza,Zaragoza,Reason
+68,Ain,1,Reason
+68,Aisne,2,Reason
+68,Allier,3,Reason
+68,Alpes-de-Haute-Provence,4,Reason
+68,Hautes-Alpes,5,Reason
+68,Alpes-Maritimes,6,Reason
+68,Ardèche,7,Reason
+68,Ardennes,8,Reason
+68,Ariège,9,Reason
+68,Aube,10,Reason
+68,Aude,11,Reason
+68,Aveyron,12,Reason
+68,Bouches-du-Rhône,13,Reason
+68,Calvados,14,Reason
+68,Cantal,15,Reason
+68,Charente,16,Reason
+68,Charente-Maritime,17,Reason
+68,Cher,18,Reason
+68,Corrèze,19,Reason
+68,Corse-du-Sud,2A,Reason
+68,Haute-Corse,2B,Reason
+68,Côte-d'Or,21,Reason
+68,Côtes-d'Armor,22,Reason
+68,Creuse,23,Reason
+68,Dordogne,24,Reason
+68,Doubs,25,Reason
+68,Drôme,26,Reason
+68,Eure,27,Reason
+68,Eure-et-Loir,28,Reason
+68,Finistère,29,Reason
+68,Gard,30,Reason
+68,Haute-Garonne,31,Reason
+68,Gers,32,Reason
+68,Gironde,33,Reason
+68,Hérault,34,Reason
+68,Ille-et-Vilaine,35,Reason
+68,Indre,36,Reason
+68,Indre-et-Loire,37,Reason
+68,Isère,38,Reason
+68,Jura,39,Reason
+68,Landes,40,Reason
+68,Loir-et-Cher,41,Reason
+68,Loire,42,Reason
+68,Haute-Loire,43,Reason
+68,Loire-Atlantique,44,Reason
+68,Loiret,45,Reason
+68,Lot,46,Reason
+68,Lot-et-Garonne,47,Reason
+68,Lozère,48,Reason
+68,Maine-et-Loire,49,Reason
+68,Manche,50,Reason
+68,Marne,51,Reason
+68,Haute-Marne,52,Reason
+68,Mayenne,53,Reason
+68,Meurthe-et-Moselle,54,Reason
+68,Meuse,55,Reason
+68,Morbihan,56,Reason
+68,Moselle,57,Reason
+68,Nièvre,58,Reason
+68,Nord,59,Reason
+68,Oise,60,Reason
+68,Orne,61,Reason
+68,Pas-de-Calais,62,Reason
+68,Puy-de-Dôme,63,Reason
+68,Pyrénées-Atlantiques,64,Reason
+68,Hautes-Pyrénées,65,Reason
+68,Pyrénées-Orientales,66,Reason
+68,Bas-Rhin,67,Reason
+68,Haut-Rhin,68,Reason
+68,Rhône,69,Reason
+68,Haute-Saône,70,Reason
+68,Saône-et-Loire,71,Reason
+68,Sarthe,72,Reason
+68,Savoie,73,Reason
+68,Haute-Savoie,74,Reason
+68,Paris,75,Reason
+68,Seine-Maritime,76,Reason
+68,Seine-et-Marne,77,Reason
+68,Yvelines,78,Reason
+68,Deux-Sèvres,79,Reason
+68,Somme,80,Reason
+68,Tarn,81,Reason
+68,Tarn-et-Garonne,82,Reason
+68,Var,83,Reason
+68,Vaucluse,84,Reason
+68,Vendée,85,Reason
+68,Vienne,86,Reason
+68,Haute-Vienne,87,Reason
+68,Vosges,88,Reason
+68,Yonne,89,Reason
+68,Territoire-de-Belfort,90,Reason
+68,Essonne,91,Reason
+68,Hauts-de-Seine,92,Reason
+68,Seine-Saint-Denis,93,Reason
+68,Val-de-Marne,94,Reason
+68,Val-d'Oise,95,Reason
+173,Alba,AB,Reason
+173,Arad,AR,Reason
+173,Argeş,AG,Reason
+173,Bacău,BC,Reason
+173,Bihor,BH,Reason
+173,Bistriţa-Năsăud,BN,Reason
+173,Botoşani,BT,Reason
+173,Braşov,BV,Reason
+173,Brăila,BR,Reason
+173,Bucureşti,B,Reason
+173,Buzău,BZ,Reason
+173,Caraş-Severin,CS,Reason
+173,Călăraşi,CL,Reason
+173,Cluj,CJ,Reason
+173,Constanţa,CT,Reason
+173,Covasna,CV,Reason
+173,Dâmboviţa,DB,Reason
+173,Dolj,DJ,Reason
+173,Galaţi,GL,Reason
+173,Giurgiu,GR,Reason
+173,Gorj,GJ,Reason
+173,Harghita,HR,Reason
+173,Hunedoara,HD,Reason
+173,Ialomiţa,IL,Reason
+173,Iaşi,IS,Reason
+173,Ilfov,IF,Reason
+173,Maramureş,MM,Reason
+173,Mehedinţi,MH,Reason
+173,Mureş,MS,Reason
+173,Neamţ,NT,Reason
+173,Olt,OT,Reason
+173,Prahova,PH,Reason
+173,Satu-Mare,SM,Reason
+173,Sălaj,SJ,Reason
+173,Sibiu,SB,Reason
+173,Suceava,SV,Reason
+173,Teleorman,TR,Reason
+173,Timiş,TM,Reason
+173,Tulcea,TL,Reason
+173,Vaslui,VS,Reason
+173,Vâlcea,VL,Reason
+173,Vrancea,VN,Reason
+63,Lappi,Lappi,Reason
+63,Pohjois-Pohjanmaa,Pohjois-Pohjanmaa,Reason
+63,Kainuu,Kainuu,Reason
+63,Pohjois-Karjala,Pohjois-Karjala,Reason
+63,Pohjois-Savo,Pohjois-Savo,Reason
+63,Etelä-Savo,Etelä-Savo,Reason
+63,Etelä-Pohjanmaa,Etelä-Pohjanmaa,Reason
+63,Pohjanmaa,Pohjanmaa,Reason
+63,Pirkanmaa,Pirkanmaa,Reason
+63,Satakunta,Satakunta,Reason
+63,Keski-Pohjanmaa,Keski-Pohjanmaa,Reason
+63,Keski-Suomi,Keski-Suomi,Reason
+63,Varsinais-Suomi,Varsinais-Suomi,Reason
+63,Etelä-Karjala,Etelä-Karjala,Reason
+63,Päijät-Häme,Päijät-Häme,Reason
+63,Kanta-Häme,Kanta-Häme,Reason
+63,Uusimaa,Uusimaa,Reason
+63,Itä-Uusimaa,Itä-Uusimaa,Reason
+63,Kymenlaakso,Kymenlaakso,Reason
+63,Ahvenanmaa,Ahvenanmaa,Reason
+58,Harjumaa,EE-37,Reason
+58,Hiiumaa,EE-39,Reason
+58,Ida-Virumaa,EE-44,Reason
+58,Jõgevamaa,EE-49,Reason
+58,Järvamaa,EE-51,Reason
+58,Läänemaa,EE-57,Reason
+58,Lääne-Virumaa,EE-59,Reason
+58,Põlvamaa,EE-65,Reason
+58,Pärnumaa,EE-67,Reason
+58,Raplamaa,EE-70,Reason
+58,Saaremaa,EE-74,Reason
+58,Tartumaa,EE-78,Reason
+58,Valgamaa,EE-82,Reason
+58,Viljandimaa,EE-84,Reason
+58,Võrumaa,EE-86,Reason
+125,Daugavpils,LV-DGV,Reason
+125,Jelgava,LV-JEL,Reason
+125,Jēkabpils,Jēkabpils,Reason
+125,Jūrmala,LV-JUR,Reason
+125,Liepāja,LV-LPX,Reason
+125,Liepājas novads,LV-LE,Reason
+125,Rēzekne,LV-REZ,Reason
+125,Rīga,LV-RIX,Reason
+125,Rīgas novads,LV-RI,Reason
+125,Valmiera,Valmiera,Reason
+125,Ventspils,LV-VEN,Reason
+125,Aglonas novads,Aglonas novads,Reason
+125,Aizkraukles novads,LV-AI,Reason
+125,Aizputes novads,Aizputes novads,Reason
+125,Aknīstes novads,Aknīstes novads,Reason
+125,Alojas novads,Alojas novads,Reason
+125,Alsungas novads,Alsungas novads,Reason
+125,Alūksnes novads,LV-AL,Reason
+125,Amatas novads,Amatas novads,Reason
+125,Apes novads,Apes novads,Reason
+125,Auces novads,Auces novads,Reason
+125,Babītes novads,Babītes novads,Reason
+125,Baldones novads,Baldones novads,Reason
+125,Baltinavas novads,Baltinavas novads,Reason
+125,Balvu novads,LV-BL,Reason
+125,Bauskas novads,LV-BU,Reason
+125,Beverīnas novads,Beverīnas novads,Reason
+125,Brocēnu novads,Brocēnu novads,Reason
+125,Burtnieku novads,Burtnieku novads,Reason
+125,Carnikavas novads,Carnikavas novads,Reason
+125,Cesvaines novads,Cesvaines novads,Reason
+125,Ciblas novads,Ciblas novads,Reason
+125,Cēsu novads,LV-CE,Reason
+125,Dagdas novads,Dagdas novads,Reason
+125,Daugavpils novads,LV-DA,Reason
+125,Dobeles novads,LV-DO,Reason
+125,Dundagas novads,Dundagas novads,Reason
+125,Durbes novads,Durbes novads,Reason
+125,Engures novads,Engures novads,Reason
+125,Garkalnes novads,Garkalnes novads,Reason
+125,Grobiņas novads,Grobiņas novads,Reason
+125,Gulbenes novads,LV-GU,Reason
+125,Iecavas novads,Iecavas novads,Reason
+125,Ikšķiles novads,Ikšķiles novads,Reason
+125,Ilūkstes novads,Ilūkstes novads,Reason
+125,Inčukalna novads,Inčukalna novads,Reason
+125,Jaunjelgavas novads,Jaunjelgavas novads,Reason
+125,Jaunpiebalgas novads,Jaunpiebalgas novads,Reason
+125,Jaunpils novads,Jaunpils novads,Reason
+125,Jelgavas novads,LV-JL,Reason
+125,Jēkabpils novads,LV-JK,Reason
+125,Kandavas novads,Kandavas novads,Reason
+125,Kokneses novads,Kokneses novads,Reason
+125,Krimuldas novads,Krimuldas novads,Reason
+125,Krustpils novads,Krustpils novads,Reason
+125,Krāslavas novads,LV-KR,Reason
+125,Kuldīgas novads,LV-KU,Reason
+125,Kārsavas novads,Kārsavas novads,Reason
+125,Lielvārdes novads,Lielvārdes novads,Reason
+125,Limbažu novads,LV-LM,Reason
+125,Lubānas novads,Lubānas novads,Reason
+125,Ludzas novads,LV-LU,Reason
+125,Līgatnes novads,Līgatnes novads,Reason
+125,Līvānu novads,Līvānu novads,Reason
+125,Madonas novads,LV-MA,Reason
+125,Mazsalacas novads,Mazsalacas novads,Reason
+125,Mālpils novads,Mālpils novads,Reason
+125,Mārupes novads,Mārupes novads,Reason
+125,Naukšēnu novads,Naukšēnu novads,Reason
+125,Neretas novads,Neretas novads,Reason
+125,Nīcas novads,Nīcas novads,Reason
+125,Ogres novads,LV-OG,Reason
+125,Olaines novads,Olaines novads,Reason
+125,Ozolnieku novads,Ozolnieku novads,Reason
+125,Preiļu novads,LV-PR,Reason
+125,Priekules novads,Priekules novads,Reason
+125,Priekuļu novads,Priekuļu novads,Reason
+125,Pārgaujas novads,Pārgaujas novads,Reason
+125,Pāvilostas novads,Pāvilostas novads,Reason
+125,Pļaviņu novads,Pļaviņu novads,Reason
+125,Raunas novads,Raunas novads,Reason
+125,Riebiņu novads,Riebiņu novads,Reason
+125,Rojas novads,Rojas novads,Reason
+125,Ropažu novads,Ropažu novads,Reason
+125,Rucavas novads,Rucavas novads,Reason
+125,Rugāju novads,Rugāju novads,Reason
+125,Rundāles novads,Rundāles novads,Reason
+125,Rēzeknes novads,LV-RE,Reason
+125,Rūjienas novads,Rūjienas novads,Reason
+125,Salacgrīvas novads,Salacgrīvas novads,Reason
+125,Salas novads,Salas novads,Reason
+125,Salaspils novads,Salaspils novads,Reason
+125,Saldus novads,LV-SA,Reason
+125,Saulkrastu novads,Saulkrastu novads,Reason
+125,Siguldas novads,Siguldas novads,Reason
+125,Skrundas novads,Skrundas novads,Reason
+125,Skrīveru novads,Skrīveru novads,Reason
+125,Smiltenes novads,Smiltenes novads,Reason
+125,Stopiņu novads,Stopiņu novads,Reason
+125,Strenču novads,Strenču novads,Reason
+125,Sējas novads,Sējas novads,Reason
+125,Talsu novads,LV-TA,Reason
+125,Tukuma novads,LV-TU,Reason
+125,Tērvetes novads,Tērvetes novads,Reason
+125,Vaiņodes novads,Vaiņodes novads,Reason
+125,Valkas novads,LV-VK,Reason
+125,Valmieras novads,LV-VM,Reason
+125,Varakļānu novads,Varakļānu novads,Reason
+125,Vecpiebalgas novads,Vecpiebalgas novads,Reason
+125,Vecumnieku novads,Vecumnieku novads,Reason
+125,Ventspils novads,LV-VE,Reason
+125,Viesītes novads,Viesītes novads,Reason
+125,Viļakas novads,Viļakas novads,Reason
+125,Viļānu novads,Viļānu novads,Reason
+125,Vārkavas novads,Vārkavas novads,Reason
+125,Zilupes novads,Zilupes novads,Reason
+125,Ādažu novads,Ādažu novads,Reason
+125,Ērgļu novads,Ērgļu novads,Reason
+125,Ķeguma novads,Ķeguma novads,Reason
+125,Ķekavas novads,Ķekavas novads,Reason
+123,Alytaus Apskritis,LT-AL,Reason
+123,Kauno Apskritis,LT-KU,Reason
+123,Klaipėdos Apskritis,LT-KL,Reason
+123,Marijampolės Apskritis,LT-MR,Reason
+123,Panevėžio Apskritis,LT-PN,Reason
+123,Šiaulių Apskritis,LT-SA,Reason
+123,Tauragės Apskritis,LT-TA,Reason
+123,Telšių Apskritis,LT-TE,Reason
+123,Utenos Apskritis,LT-UT,Reason
+123,Vilniaus Apskritis,LT-VL,Reason

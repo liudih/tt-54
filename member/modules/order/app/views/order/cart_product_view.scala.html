@@ -1,0 +1,24 @@
+@(carts :valueobjects.order_api.Carts,
+	currency:dto.Currency) 
+@import services.base._
+@import services.base.utils._
+<h6>@Messages("product.list")</h6>
+<table class="detailesTab" width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th class="itemTH">@Messages("item")</th>
+		<th class="descriptionTH">@Messages("description")</th>
+		<th class="priceTH">@Messages("price")</th>
+		<th class="quanTH">@Messages("qualitys")</th>
+		<th class="totalTH">@Messages("utotal")</th>
+	</tr>
+	<tr>
+		<td colspan="5">
+		@views.html.cart.cart_view_list(carts.getCart().getAllItems(),false,currency)
+			<div class="totalPrice">
+				<p>
+					@Messages("order.subtotal") <span>@currency.getCsymbol @Utils.money(carts.getCart().getTotal())</span>
+				</p>
+			</div>
+		</td>
+	</tr>
+</table>

@@ -1,0 +1,31 @@
+@import "public.less";
+
+.scroll{
+  margin:0 auto;max-width:1080px;
+  .scroll_box{overflow:hidden;visibility:hidden;position:relative;}
+  .scroll_wrap{overflow:hidden; position:relative;
+    img{max-width:100%;}
+  }
+  .scroll_wrap li{position:relative;display:block;width:100%;float:left;}
+  .scroll_wrap li a{display:block;margin:0 auto;position:relative;}
+  .scroll_position{position:absolute;width:100%;z-index:400px;bottom:0px;text-align:center;}
+  .scroll_position li{width:33.3%;height:3px;background:#fff;opacity:0.5;}
+  .scroll_position li a{font-size:0;}
+  .scroll_position li.on{background-color:#f87c02;opacity:1;}
+ }
+ 
+.product_banner{
+  width:85%;margin:0 auto;
+}
+
+
+//弹出大图样式
+.review_pic_up{
+  position:fixed;width:100%;height:100%;top:0px;left:0px;z-index:9999;display:none;
+  .relative{width:100%;height:100%;z-index:99999;text-align:center;
+    .scroll_box{
+      height:100%;
+      .scroll_wrap{height:100%;}
+    }
+  }
+}

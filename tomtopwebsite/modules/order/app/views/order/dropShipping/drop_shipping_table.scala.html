@@ -1,0 +1,104 @@
+@(dtos : List[dto.DropShippingOrderDTO],
+	dropShippingID : String,
+	cy : dto.Currency)
+	
+@import services.base._
+@import services.base.utils._
+@import views.html.helper._
+
+@views.html.base.master{
+	@services.base.HtmlUtils.misc().addHeadOnce{
+		<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/login.css")?@version.BuildVersion.build()" /> 
+	}
+	<div class="container accountBox">
+		<input type="hidden" name="html_type" value="dropshipping_confirm">
+		@form(controllers.order.routes.DropShipping.placeOrder(), 'id -> "place_dropShipping_form"){
+			<div class="accountRight accDownStatus">
+				<input type="hidden" name="ids">
+				<input type="hidden" name="shippingMethodIDs">
+				<input type="hidden" name="dropShippingID" value="@dropShippingID">
+				<table id="dropShippingOrder_table"class="download_table download_order myRevi" width="100%" cellspacing="0" cellpadding="0" border="1">
+					<tbody>
+						<tr>
+							<th class="tdRela">
+								<a class="rightAll" href="javascript:;">
+									<span class=""></span>
+								</a>
+							</th>
+							<th>Dropship Order NO.</th>
+							<th class="txtL">Order Details</th>
+							<th class="txtL">Shipping Address</th>
+							<th>Shipping Method</th>
+							<th>Total(@cy.getCsymbol)</th>
+							<th>Remark</th>
+						</tr>
+						@dtos.map{dto =>
+							<tr @if(StringUtils.notEmpty(dto.getCerrorlog)||dto.getShippingMethods.getList.isEmpty){class="redBack_down"}>
+								<td class="tdRela">
+									<a class="@if(StringUtils.isEmpty(dto.getCerrorlog)&& !dto.getShippingMethods.getList.isEmpty){rightThis}" href="javascript:;">
+										<span value="@dto.getIid" class="@if(StringUtils.isEmpty(dto.getCerrorlog)&& !dto.getShippingMethods.getList.isEmpty){afters}" name="orderID_span"></span>
+									</a>
+								</td>
+								<td class="order_noB">
+									<b>@dto.getCuserorderid</b>
+									<div>(@DateFormatUtils.getDateTimeDDMMYYYY(dto.getDcreatedate))</div>
+								</td>
+								<td class="downTa_Details txtL">
+									@dto.getDetails.map{detail =>
+										<ul class="lbBox">
+											<li class="lineBlock">SKU: @detail.getCsku</li>
+											<li class="lineBlock">QTY: @detail.getIqty</li>
+											<li class="lineBlock">@cy.getCsymbol @Utils.money(detail.getFtotalprice)</li>
+										</ul>
+									}
+								</td>
+								<td class="shoppAdd_acc">
+									<b>@dto.getCfirstname</b>
+									<div class="shoppAdd_as">@dto.getCstreetaddress</div>
+									<ul class="lbBox">
+										<li class="lineBlock">@dto.getCcountry</li>
+										<li class="lineBlock">@dto.getCpostalcode</li>
+										<li class="lineBlock">@dto.getCtelephone</li>
+									</ul>
+								</td>
+								<td>
+									<select class="firmOption_acc" name="shippingMethodID" id="@dto.getIid()_shippingMethod">
+										@dto.getShippingMethods.getList.zipWithIndex.map{s =>
+											@if(s._2==0){
+												<option value="@s._1.getId" selected="selected" price="@s._1.getFreight">@s._1.getTitle @cy.getCsymbol @s._1.getFreight</option>
+											}else{
+												<option value="@s._1.getId" price="@s._1.getFreight">@s._1.getTitle @cy.getCsymbol @s._1.getFreight</option>
+											}
+										}
+									</select>
+								</td>
+								<td class="orange" name="row_total" id="@dto.getIid()_rowTotal" value="@dto.getFtotal"></td>
+								<td class="downNote">@dto.getCerrorlog</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+				<ul class="accBottom_pay lbBox">
+					<li class="lineBlock accBottom_all">
+						<a class="rightAll" href="javascript:;">
+							<span></span>
+						</a>
+						Select all
+					</li>
+					<li class="lineBlock accBottom_payInp">
+						<div class="accBottom_payInpL">
+							<p class="accPricePay">
+								Total:
+								<b class="orange">@cy.getCsymbol <span id="dropshipping_total"></span></b>
+							</p>
+							<input class="spayOut" type="submit" value="Place Your Order">
+						</div>
+					</li>
+				</ul>
+			</div>
+		}
+	</div>
+	@services.base.HtmlUtils.misc().addTailOnce {
+	  	<script src="@controllers.base.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.order.routes.Assets.at("js/order/mdropshipping")" ></script>
+	}
+}

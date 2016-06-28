@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"  
+    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"  
+    xmlns:context="http://www.springframework.org/schema/context"  
+    xsi:schemaLocation="  
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd  
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+     http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd  
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd  
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">  
+  
+    <bean  
+        class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
+        <property name="locations">  
+            <value>classpath*:/rabbit_params.properties</value>  
+        </property>  
+    </bean>  
+      <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"  
+        init-method="init" destroy-method="close">  
+        <!-- 基本属性 url、user、password -->  
+        <property name="url" value="${dataSource.url}" />  
+        <property name="username" value="${dataSource.username}" />  
+        <property name="password" value="${dataSource.password}" />  
+        <property name="connectionProperties" value="${dataSource.driver}"></property>  
+        <!-- 配置初始化大小、最小、最大 -->  
+        <property name="initialSize" value="1" />  
+        <property name="minIdle" value="1" />  
+        <property name="maxActive" value="20" />  
+        <!-- 配置获取连接等待超时的时间 -->  
+        <property name="maxWait" value="60000" />  
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->  
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />  
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->  
+        <property name="minEvictableIdleTimeMillis" value="300000" />  
+        <property name="validationQuery" value="SELECT 'x'" />  
+        <property name="testWhileIdle" value="true" />  
+        <property name="testOnBorrow" value="false" />  
+        <property name="testOnReturn" value="false" />  
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->  
+        <property name="poolPreparedStatements" value="true" />  
+        <property name="maxPoolPreparedStatementPerConnectionSize"  
+            value="20" />  
+        <!-- 配置监控统计拦截的filters -->  
+        <property name="filters" value="stat" />  
+    </bean>  
+  
+	   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+        <property name="dataSource" ref="dataSource" />  
+       <property name="typeAliasesPackage" value="com.rabbit.dto" />
+       <property name="mapperLocations" value="classpath*:conf/mappxml/**/*.xml"/>
+    </bean>
+  
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>  
+        <property name="basePackage" value="com.rabbit.conf.mapper" />   
+    </bean>  
+  
+    <!-- transaction manager, use JtaTransactionManager for global tx -->  
+    <bean id="transactionManager"  
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+        <property name="dataSource" ref="dataSource" />  
+        <qualifier value="isap" />  
+    </bean>  
+  
+      
+    <!-- =================================================================== -->  
+    <!-- 数据源2 -->  
+    <bean id="dataSource2" class="com.alibaba.druid.pool.DruidDataSource"  
+        init-method="init" destroy-method="close">  
+       <property name="url" value="${order.dataSource.url}" />  
+        <property name="username" value="${order.dataSource.username}" />  
+        <property name="password" value="${order.dataSource.password}" />  
+        <property name="connectionProperties" value="${order.dataSource.driver}"></property>  
+        <!-- 配置初始化大小、最小、最大 -->  
+        <property name="initialSize" value="1" />  
+        <property name="minIdle" value="1" />  
+        <property name="maxActive" value="20" />  
+        <!-- 配置获取连接等待超时的时间 -->  
+        <property name="maxWait" value="60000" />  
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->  
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />  
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->  
+        <property name="minEvictableIdleTimeMillis" value="300000" />  
+        <property name="validationQuery" value="SELECT 'x'" />  
+        <property name="testWhileIdle" value="true" />  
+        <property name="testOnBorrow" value="false" />  
+        <property name="testOnReturn" value="false" />  
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->  
+        <property name="poolPreparedStatements" value="true" />  
+        <property name="maxPoolPreparedStatementPerConnectionSize"  
+            value="20" />  
+        <!-- 配置监控统计拦截的filters -->  
+        <property name="filters" value="stat" />  
+    </bean>  
+      
+    <bean id="sqlSessionFactory2" class="org.mybatis.spring.SqlSessionFactoryBean">  
+        <property name="dataSource" ref="dataSource2" />  
+        <property name="typeAliasesPackage" value="com.rabbit.dto" />
+       <property name="mapperLocations" value="classpath*:conf/ordermappxml/**/*.xml"/> 
+    </bean>  
+      
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory2"/>  
+        <property name="basePackage" value="com.rabbit.conf.ordermapper" />
+    </bean>  
+      
+    <bean id="transactionManager2"  
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+        <property name="dataSource" ref="dataSource2" />  
+        <qualifier value="insurance" />  
+    </bean>  
+  
+    <!-- 全注解方式 -->  
+    <tx:annotation-driven transaction-manager="transactionManager2" /> 
+      
+      
+      
+      <!-- =================================================================== -->  
+    <!-- 数据源3 -->  
+    <bean id="dataSource3" class="com.alibaba.druid.pool.DruidDataSource"  
+        init-method="init" destroy-method="close">  
+       <property name="url" value="${base.dataSource.url}" />  
+        <property name="username" value="${base.dataSource.username}" />  
+        <property name="password" value="${base.dataSource.password}" />  
+        <property name="connectionProperties" value="${order.dataSource.driver}"></property>  
+        <!-- 配置初始化大小、最小、最大 -->  
+        <property name="initialSize" value="1" />  
+        <property name="minIdle" value="1" />  
+        <property name="maxActive" value="20" />  
+        <!-- 配置获取连接等待超时的时间 -->  
+        <property name="maxWait" value="60000" />  
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->  
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />  
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->  
+        <property name="minEvictableIdleTimeMillis" value="300000" />  
+        <property name="validationQuery" value="SELECT 'x'" />  
+        <property name="testWhileIdle" value="true" />  
+        <property name="testOnBorrow" value="false" />  
+        <property name="testOnReturn" value="false" />  
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->  
+        <property name="poolPreparedStatements" value="true" />  
+        <property name="maxPoolPreparedStatementPerConnectionSize"  
+            value="20" />  
+        <!-- 配置监控统计拦截的filters -->  
+        <property name="filters" value="stat" />  
+    </bean>  
+      
+    <bean id="sqlSessionFactory3" class="org.mybatis.spring.SqlSessionFactoryBean">  
+        <property name="dataSource" ref="dataSource3" />  
+        <property name="typeAliasesPackage" value="com.rabbit.dto" />
+       <property name="mapperLocations" value="classpath*:conf/basemappxml/**/*.xml"/> 
+    </bean>  
+      
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory3"/>  
+        <property name="basePackage" value="com.rabbit.conf.basemapper" />
+    </bean>  
+      
+    <bean id="transactionManager3"  
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+        <property name="dataSource" ref="dataSource3" />  
+        <qualifier value="base" />  
+    </bean>  
+  
+    <!-- 全注解方式 -->  
+    <tx:annotation-driven transaction-manager="transactionManager3" /> 
+      
+      
+ <!-- ================================   image  =================================== -->  
+    <!-- 数据源3 -->  
+    <bean id="dataSource4" class="com.alibaba.druid.pool.DruidDataSource"  
+        init-method="init" destroy-method="close">  
+       <property name="url" value="${image.dataSource.url}" />  
+        <property name="username" value="${image.dataSource.username}" />  
+        <property name="password" value="${image.dataSource.password}" />  
+        <property name="connectionProperties" value="${image.dataSource.driver}"></property>  
+        <!-- 配置初始化大小、最小、最大 -->  
+        <property name="initialSize" value="1" />  
+        <property name="minIdle" value="1" />  
+        <property name="maxActive" value="20" />  
+        <!-- 配置获取连接等待超时的时间 -->  
+        <property name="maxWait" value="60000" />  
+        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->  
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />  
+        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->  
+        <property name="minEvictableIdleTimeMillis" value="300000" />  
+        <property name="validationQuery" value="SELECT 'x'" />  
+        <property name="testWhileIdle" value="true" />  
+        <property name="testOnBorrow" value="false" />  
+        <property name="testOnReturn" value="false" />  
+        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->  
+        <property name="poolPreparedStatements" value="true" />  
+        <property name="maxPoolPreparedStatementPerConnectionSize"  
+            value="20" />  
+        <!-- 配置监控统计拦截的filters -->  
+        <property name="filters" value="stat" />  
+    </bean>  
+    <bean id="sqlSessionFactory4" class="org.mybatis.spring.SqlSessionFactoryBean">  
+        <property name="dataSource" ref="dataSource4" />  
+        <property name="typeAliasesPackage" value="com.rabbit.dto" />
+    </bean>    
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory4"/>  
+        <property name="basePackage" value="com.rabbit.conf.imagemapper" />
+    </bean>  
+      
+    <bean id="transactionManager4"  
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+        <property name="dataSource" ref="dataSource4" />  
+        <qualifier value="image" />  
+    </bean>  
+  
+    <!-- 全注解方式 -->  
+    <tx:annotation-driven transaction-manager="transactionManager4" /> 
+      <!-- *******************************   订单同步处理    ********************************** -->
+    <!--   <bean id="orderDataSource" class="com.alibaba.druid.pool.DruidDataSource"  
+        init-method="init" destroy-method="close">  
+        <property name="url" value="${order.dataSource.url}" />  
+        <property name="username" value="${order.dataSource.username}" />  
+        <property name="password" value="${order.dataSource.password}" />  
+        <property name="connectionProperties" value="${order.dataSource.driver}"></property>  
+        <property name="initialSize" value="1" />  
+        <property name="minIdle" value="1" />  
+        <property name="maxActive" value="20" />  
+        <property name="maxWait" value="60000" />  
+        <property name="timeBetweenEvictionRunsMillis" value="60000" />  
+        <property name="minEvictableIdleTimeMillis" value="300000" />  
+        <property name="validationQuery" value="SELECT 'x'" />  
+        <property name="testWhileIdle" value="true" />  
+        <property name="testOnBorrow" value="false" />  
+        <property name="testOnReturn" value="false" />  
+        <property name="poolPreparedStatements" value="true" />  
+        <property name="maxPoolPreparedStatementPerConnectionSize"  
+            value="20" />  
+        <property name="filters" value="stat" />  
+    </bean>  
+  
+    <bean id="orderSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
+        <property name="dataSource" ref="orderDataSource" />  
+       <property name="typeAliasesPackage" value="com.rabbit.dto" />
+       <property name="mapperLocations" value="classpath:com/rabbit/conf/ordermappxml/**/*.xml"/>
+    </bean>  
+  
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">  
+        <property name="sqlSessionFactoryBeanName" value="orderSqlSessionFactory"/>  
+        <property name="basePackage" value="com.rabbit.conf.ordermapper" />  
+    </bean>  
+     <bean id="orderTransaction"  
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+        <property name="dataSource" ref="orderDataSource" />  
+        <qualifier value="isap" />  
+    </bean>  
+   -->
+</beans>

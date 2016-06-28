@@ -1,0 +1,101 @@
+@(recommendLabels: List[dto.label.RecommendLabelAndName], websiteid: Integer, device: String, 
+count: Integer, pageNum: Integer, pageTotal: Integer)
+@import views.html.helper._
+
+<div id="search_recommendlabelbase_html" style="padding-bottom: 100px;">
+	<div class="portlet box light-grey">
+		<div class="portlet-title">
+			<div class="caption"><i class="icon-globe"></i>推荐客户喜爱标签信息</div>
+		</div>
+		<div class="portlet-body">
+			<div class="clearfix">
+				<div class="btn-group">
+					<a  href="@controllers.manager.routes.RecommendLabel.RecommendLabelNameSaveOrEdit(0,null,null)">
+						<button id="" class="btn green">
+							新增 <i class="icon-plus"></i>
+						</button>
+					</a>
+				</div>
+				<div class="btn-group pull-right">
+				</div>
+			</div>
+			
+			@if(recommendLabels.size() > 0){
+				<table class="table table-striped table-bordered table-hover table-full-width dataTable" id="oderlist" aria-describedby="sample_2_info">
+					<thead>
+						<tr role="row">
+							<th rowspan="1" colspan="1" style="width: 10%;">标签名称</th>
+							<th rowspan="1" colspan="1" style="width: 10%;">标签内容</th>
+							<th rowspan="1" colspan="1" style="width: 20%;">图片</th>
+							<th rowspan="1" colspan="1" style="width: 50%;">设备</th>
+							<th rowspan="1" colspan="1" style="width: 179px;">编辑</th>
+							<th rowspan="1" colspan="1" style="width: 179px;">删除</th>
+						</tr>
+					</thead>
+	
+					<tbody role="alert" aria-live="polite" aria-relevant="all">
+					  @recommendLabels.asScala.map{i=>
+							<tr class="odd">
+								<td>@i.getClabelname()
+								</td>
+								<td>@i.getCvalue()
+								</td>
+								<td>	
+								@if(i.getCimageurl() != null) {
+									<div class="controls">
+										<br>
+									<img alt="" src="@controllers.interaction.routes.LabelImage.view(i.getIid(),i.getIlanguageid)">
+									</div>
+								}
+								</td>
+								<td>	
+								@i.getCdevice()
+								</td>
+								<td><a class="edit" href="@controllers.manager.routes.RecommendLabel.RecommendLabelNameSaveOrEdit(i.getIid(),i.getIwebsiteid(),i.getCdevice())">
+										<i class="icon-pencil"></i>
+									</a>
+								</td>
+								<td><a class="delete" href="javascript:delteRecommendLabel(@i.getIid());" ><i class="icon-trash"></i></a>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+				<div class="row-fluid">
+					<div class="span6">
+						<div class="dataTables_info">当前第 <span>@pageNum</span> 页|共 <span>@pageTotal</span> 页| 共 <span>@count</span> 条记录</div>
+					</div>
+					<div class="span6">
+						<div class="dataTables_paginate paging_bootstrap pagination">
+							<input id="pagenum" value="@pageNum" type="hidden"> 
+							<input id="pagetotal" value="@pageTotal" type="hidden"> 
+							
+							@if(pageTotal>1){
+							<ul>
+								@if(1 == pageNum){
+								<li class="disabled"><a href="javascript:;">«</a></li>
+								}else{
+								<li><a href="javascript:;" tag="pageNum" value="1">«</a></li>
+								}
+								@for(i <- pageNum - 6 to pageNum + 6 if i >= 1; if i<= pageTotal) {
+									@if(i == pageNum){
+									<li class="disabled"><a href="javascript:;" tag="pageNum" value="@i">@i</a></li>
+									}else{
+									<li><a href="javascript:;" tag="pageNum" value="@i">@i</a></li>
+									}
+								}
+								@if(pageNum >= pageTotal){
+								<li class="disabled"><a href="javascript:;">»</a></li>
+								}else{
+								<li><a href="javascript:;" tag="pageNum" value="@pageTotal">»</a></li>
+								}
+							</ul>
+							}
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+</div>
+

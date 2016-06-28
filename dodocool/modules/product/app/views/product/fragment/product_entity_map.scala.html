@@ -1,0 +1,12 @@
+@(entityMap: valueobjects.product.ProductEntityMap)
+@if(null != entityMap && null != entityMap.getEntityMap && entityMap.getEntityMap.size >0){
+	<h5>@Messages("product.specification")</h5>
+	 <ul class="pro-spe">
+		@entityMap.getEntityMap.zipWithIndex.map{ case (i, index)=>
+			<li @if(index%2==1){class="back"}>
+				<span class="pro-name">@i._1</span>
+				<span class="pro-value">@i._2</span>
+			</li>
+		}
+	</ul>
+}

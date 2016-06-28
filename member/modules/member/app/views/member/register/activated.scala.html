@@ -1,0 +1,34 @@
+@import views.html.helper._
+@views.html.base.master {
+<div class="container sendEmail">
+	<div class="sendBox sendSuc">
+	        <p class="sendTT">
+	            <em></em>
+	            <b>@Messages("your.account.is.successfully.activated")!</b>
+	       </p>
+	<a href="@controllers.member.routes.Home.index()" class="myAccount"><em></em>@Messages("show.my.account")</a>
+	<p class="countdown"><a href="/">@Messages("go.Shopping.countdown") (<span class="showbox"></span>)</a></p>
+	</div>
+</div>
+  @services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.member.routes.Assets.at("css/styles.css")?@version.BuildVersion.build()" /> 
+  }
+ @services.base.HtmlUtils.misc().addTailOnce{
+	<script>
+	    var timeout =10;
+	    var showbox = $(".showbox");
+	    function show() {
+	        showbox.html(timeout);
+	        timeout--;
+	        if (timeout == 0) {
+	            window.opener = null;
+	            window.location.href = "@controllers.base.routes.Home.home()";
+	        }
+	        else {
+	            setTimeout("show()", 1000);
+	        }
+	    }
+	    show();
+	</script>
+	}
+}

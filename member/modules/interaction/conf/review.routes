@@ -1,0 +1,32 @@
+GET    /product/:listingId                  @controllers.interaction.review.ProductReview.showAll(listingId: String, page: Int ?= 1)
+
+GET    /product/:listingId/write            @controllers.interaction.review.ProductReview.addReview(listingId: String)
+
+POST   /addevalute                          @controllers.interaction.review.ProductReview.addEvalute()
+
+GET    /checkUserSign                       @controllers.interaction.review.ProductReview.checkSign(listingId:String?=null)
+
+POST   /product/:listingId/write            @controllers.interaction.review.ProductReview.doAddReview(listingId: String)
+
+POST   /product/:listingId/addpic           @controllers.interaction.review.ProductReview.doAddPicture(listingId: String)
+
+GET    /product/list/id/:id/category/:cid   @controllers.interaction.review.ProductReview.list(id: Int, cid: Int)
+
+GET    /productphotos                       @controllers.interaction.review.ProductPhotos.showAll(clistingid: String)
+
+GET    /productphotos/others                @controllers.interaction.review.ShowOtherPhotos.getOtherPhotos(data: String)
+
+GET    /productvideos                       @controllers.interaction.review.ProductVideos.getAllVideo(clistingid: String)
+
+GET    /reviewlist                          @controllers.interaction.review.MemberReview.reviewlist(p: Int ?= 1,limit: Int ?= 10,status: Int ?=3, dateType: Int ?= 0, tab: Int ?=0)
+
+GET    /assets/*file                        controllers.interaction.review.Assets.at(path="/public",file: String)
+
+
+#======== publish API ==================
+POST   /api/review/push                     @controllers.api.Review.push()
+POST   /api/ebaycomment/push                @controllers.api.EbayComment.getEbayCommentByERP()
+#======================================
+
+
+

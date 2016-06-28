@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.base.CmsContentMapper" >
+  
+  <select id="getCmsContentAll" resultType="dto.CmsContent" parameterType="java.lang.Integer" >
+   select c.*,m.cname as cmenuname from t_cms_content c  inner join t_cms_menu m on c.imenuid = m.iid order by c.iid
+  </select>
+
+	<select id="getCmsContentByMenuId" resultType="dto.CmsContent">
+		select
+		c.iid,c.imenuid,c.ccreateuser,c.clastupdateduser,c.dlastupdateddate,
+		c.iisnominate,c.iisnominate,l.ckey,l.ctitle,l.ccontent
+		from t_cms_content c left join t_cms_content_language_map l
+		on c.iid = l.icmscontentid
+		left join t_cms_menu_wetsite_map m on m.imenuid=c.imenuid
+		where c.imenuid = #{0} and l.ilanguageid = #{1} and m.iwebsiteid=#{2}
+		
+		<if test="device != null" >
+         and m.cdevice=#{device}
+   		</if>
+		order by c.iid
+	</select>
+
+	<select id="getCmsContentByMenuIds" resultType="dto.CmsContent">
+		select
+		c.iid,c.imenuid,c.ccreateuser,c.clastupdateduser,c.dlastupdateddate,
+		c.iisnominate,c.iisnominate,l.ckey,l.ctitle,l.ccontent
+		from t_cms_content c left join t_cms_content_language_map l
+		on c.iid = l.icmscontentid
+		left join t_cms_menu_wetsite_map m on m.imenuid=c.imenuid
+		where 1=1 and l.ilanguageid = #{1} and m.iwebsiteid=#{2}
+		<if test="list !=null and list.size>0">
+			AND c.imenuid in
+			<foreach item="item" index="index" collection="list" open="("
+				separator="," close=")">#{item}</foreach>
+		</if>
+		<if test="device != null" >
+         and m.cdevice=#{device}
+   		</if>
+		order by c.iid
+	</select>
+
+	<select id="selectByPrimaryKey" resultType="dto.CmsContent"
+		parameterType="java.lang.Integer">
+		select
+		c.iid,c.imenuid,c.ccreateuser,c.clastupdateduser,c.dlastupdateddate,
+		c.iisnominate,c.iisnominate,l.ckey,l.ctitle,l.ccontent
+		from t_cms_content c left join t_cms_content_language_map l
+		on c.iid =
+		l.icmscontentid
+		where c.iid = #{0} and l.ilanguageid = #{1}
+	</select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_cms_content
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+
+	<delete id="deleteCmsContentMoreLanguage" parameterType="java.lang.Integer">
+		delete from
+		t_cms_content_language_map
+		where iid = #{iid,jdbcType=INTEGER}
+	</delete>
+  
+  <insert id="insert" parameterType="dto.CmsContent" useGeneratedKeys="true" keyProperty="iid">
+    insert into t_cms_content (imenuid, 
+      ckey, ctitle,ccontent, iisnominate, ccreateuser, dcreatedate, 
+      clastupdateduser, dlastupdateddate)
+    values (#{imenuid,jdbcType=INTEGER}, 
+      #{ckey,jdbcType=VARCHAR}, #{ctitle,jdbcType=VARCHAR},#{ccontent,jdbcType=VARCHAR},#{iisnominate,jdbcType=INTEGER},
+      #{ccreateuser,jdbcType=VARCHAR}, #{dcreatedate,jdbcType=TIMESTAMP}, 
+      #{clastupdateduser,jdbcType=VARCHAR}, #{dlastupdateddate,jdbcType=TIMESTAMP})
+  </insert>
+
+	<insert id="insertCmsContentLanguage" parameterType="dto.CmsContentLanguage"
+		useGeneratedKeys="true" keyProperty="iid">
+		insert into
+		t_cms_content_language_map(icmscontentid,
+		ilanguageid, ckey, ctitle, ccontent)
+		values
+		(#{icmscontentid,jdbcType=INTEGER},#{ilanguageid,jdbcType=INTEGER},
+		#{ckey,jdbcType=VARCHAR},#{ctitle,jdbcType=VARCHAR},#{ccontent,jdbcType=VARCHAR})
+	</insert>
+  
+  <insert id="insertSelective" 
+    parameterType="dto.CmsContent" useGeneratedKeys="true" keyProperty="iid" >
+  
+    insert into t_cms_content
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      
+      <if test="imenuid != null" >
+        imenuid,
+      </if>
+     
+      <if test="ckey != null" >
+        ckey,
+      </if>
+      <if test="ctitle != null" >
+        ctitle,
+      </if>
+      <if test="ccontent != null" >
+        ccontent,
+      </if>
+      <if test="iisnominate != null" >
+        iisnominate,
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+      <if test="clastupdateduser != null" >
+        clastupdateduser,
+      </if>
+      <if test="dlastupdateddate != null" >
+        dlastupdateddate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      
+     
+      <if test="imenuid != null" >
+        #{imenuid,jdbcType=INTEGER},
+      </if>
+      
+      <if test="ckey != null" >
+        #{ckey,jdbcType=VARCHAR},
+      </if>
+      <if test="ctitle != null" >
+        #{ctitle,jdbcType=VARCHAR},
+      </if>
+      <if test="ccontent != null" >
+        #{ccontent,jdbcType=VARCHAR},
+      </if>
+      <if test="iisnominate != null" >
+        #{iisnominate,jdbcType=INTEGER},
+      </if>
+      <if test="ccreateuser != null" >
+        #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clastupdateduser != null" >
+        #{clastupdateduser,jdbcType=VARCHAR},
+      </if>
+      <if test="dlastupdateddate != null" >
+        #{dlastupdateddate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dto.CmsContent" >
+    update t_cms_content
+    <set >
+      
+      <if test="imenuid != null" >
+        imenuid = #{imenuid,jdbcType=INTEGER},
+      </if>
+      <if test="ckey != null" >
+        ckey = #{ckey,jdbcType=VARCHAR},
+      </if>
+      <if test="ctitle != null" >
+        ctitle = #{ctitle,jdbcType=VARCHAR},
+      </if>
+      <if test="ccontent != null" >
+        ccontent = #{ccontent,jdbcType=VARCHAR},
+      </if>
+      <if test="iisnominate != null" >
+        iisnominate = #{iisnominate,jdbcType=INTEGER},
+      </if>
+    
+      <if test="ccreateuser != null" >
+        ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clastupdateduser != null" >
+        clastupdateduser = #{clastupdateduser,jdbcType=VARCHAR},
+      </if>
+      <if test="dlastupdateddate != null" >
+        dlastupdateddate = #{dlastupdateddate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dto.CmsContent" >
+    update t_cms_content
+    set 
+      imenuid = #{imenuid,jdbcType=INTEGER},
+      ckey = #{ckey,jdbcType=VARCHAR},
+      ctitle = #{ctitle,jdbcType=VARCHAR},
+      ccontent = #{ccontent,jdbcType=VARCHAR},
+      iisnominate = #{iisnominate,jdbcType=INTEGER},
+      ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      clastupdateduser = #{clastupdateduser,jdbcType=VARCHAR},
+      dlastupdateddate = #{dlastupdateddate,jdbcType=TIMESTAMP}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

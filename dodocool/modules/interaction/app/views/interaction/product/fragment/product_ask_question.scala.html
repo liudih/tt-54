@@ -1,0 +1,59 @@
+@(listingId: String, sku: String, isLogin: Boolean)
+@import views.html.helper._
+@placeholder=@{services.configuration.ApplicationConfigService._getCurrentWebsiteName() }
+@helper.javascriptRouter("product_comment")(
+	controllers.base.routes.javascript.Captcha.checkCaptcha,
+	controllers.interaction.routes.javascript.ProductFaq.comment
+)
+ <p class="titles">
+ 	@Messages("comment.please.ask.question1")<br>
+ 	@Messages("comment.please.ask.question2")<br>
+ 	@Messages("comment.please.ask.question3",placeholder)<br>
+ </p>
+ <form action="@controllers.interaction.routes.ProductFaq.comment()" class="form" id="comment_form" method="POST">	   			
+ 		<p>@Messages("title"):<span class="form_span">*</span></p>
+ 		<p class="frm_cont">
+ 			<input type="text" name="ctitle" id="comment_title"  style="width:64%" @if(isLogin==false){disabled="disabled"}/>
+ 		</p>
+ 		<span class="comment_error_red"></span>
+ 		<p>@Messages("comment"):<span class="form_span">*</span></p>
+ 		<div class="no_sign_textarea">
+		   @if(isLogin == false){
+     		    <span class="no_sign_notice">
+ 					<em>
+ 						<a href="@controllers.member.routes.Login.login()">@Messages("sign.in")</a>  |
+ 						<a href="@controllers.member.routes.Register.registerFrom()">@Messages("create.your.account")</a>
+  					</em>
+ 				</span>
+           } else {
+           	<textarea class="s_txtarea" id="comment_textarea" name="textarea_content"></textarea>
+           }
+    	</div>
+      	<span class="comment_error_red" id="ia_content_error"></span>     			
+      	<p>
+			@Messages("please.enter.code")<span class="form_span">*</span>
+		</p>
+		<div class="frm_cont">
+            <input type="text" id="captcha" name="captcha" style="width:25%"/>
+           	<img src="@controllers.base.routes.Captcha.generate()" id="identImg" onclick="change(this);" width="70" height="30">
+        </div>
+        <p id="captcha_comment_error" class="form_span"></p>
+		<p>
+	 		<span class="review_form_btn">
+			<input type="submit" class="btn sb_btn" value="Submit" id="comment_submit" @if(isLogin==false){disabled="disabled"}></span>
+		</p>
+		<input type="hidden" name="clistingid" value="@listingId">
+		<input type="hidden" name="csku" value="@sku">
+		<input type="hidden" name="cquestion" value="">
+</form>
+
+@services.dodocool.base.HtmlUtils.misc().addHeadOnce{
+  <script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.validate.min.js")'></script>
+  <script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+  <script src="@controllers.interaction.routes.Assets.at("js/product_ask_question.js")"></script>  
+  <script>
+	function change(imgObj){
+      imgObj.src="@controllers.base.routes.Captcha.generate()?date="+new Date().getTime();
+    }
+  </script>
+}

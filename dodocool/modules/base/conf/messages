@@ -1,0 +1,156 @@
+#login.html======
+sign.in=sign in
+sign.out=sign out
+register=register
+to.reset.your.password.enter.the.email.ddress.you.used.to.create.your.dodocool.account=To reset your password, enter the email address you used to create your Dodocool Account.
+email.address=Email address
+send=Send
+create.your.account=Create Your Account
+
+#header.html========
+products=products
+
+#footer.html========
+please.select.a.language=Please select a language
+follow.us=Follow us
+thank.you.for.subscribing=Thank You For Subscribing!
+please.enter.the.email=Please enter the email
+ok=OK
+
+#search.html=======
+your.position=Your Position:
+home=Home
+loading=Loading......
+your.search=Your search
+did.not.return.any.results=did not return any results.
+suggestions=Suggestions:
+make.sure.all.words.are.spelled.correctly=Make sure all words are spelled correctly.
+try.different.keywords=Try different keywords
+try.more.general.keywords=Try more general keywords
+try.fewer.keywords=Try fewer keywords
+
+#category.html========
+hot.sellers=Hot Sellers
+
+#product.html=========
+share.this.product=Share this product
+overview=Overview
+buy.at.amazon=Buy at Amazon
+choose.your.country=Choose your country:
+product.specification=Product Specification:
+customer.reviews=Customer Reviews
+you.may.also.like=you may also like
+
+#new arrivals===========
+learn.more=Learn More
+new.arrivals=New Arrivals
+product.deals=Product Deals
+
+#index.html=========
+become.a.dodo.user=Become a {0} user
+
+forgot.password.back=Forgot password back
+changed.password.link.has.been.used=Changed password link has been used
+back.to.home.page=back to HOME page
+changed.password.link.has.expired=Changed password link has expired
+password.reset=Password Reset
+new.password=New Password:
+confirm.new.password=Confirm New Password
+low=LOW
+medium=MEDIUM
+high=HIGH
+nickname=Nickname
+first.name=First Name
+last.name=Last Name
+password=Password
+gender=Gender
+birthday=Birthday
+month=Month
+day=Day
+year=Year
+country=Country
+
+#member.caccount======
+old.password=Old Password:
+save.changes=Save changes
+
+save.password.error=Failed to modify password!
+password.error=You enter a password error!
+
+confirm.password=Confirm password:
+create.custom.picture=Create custom picture
+upload.picture=Upload Picture:
+browse=Browse..
+preview=Preview:
+save=Save
+cancel=Cancel
+select.picture.computer.50.kb.max.jpg.gif.png.bmp.only= Select a picture file on your computer(50KB max,jpg,gif,png,bmp only)
+advised.pixel.image.best.upload=Please be advised, a 120x120 pixel image is best for upload;
+
+page.not.found=Page Not Found
+we.could.not.find.what.you.are.looking.for=We couldn''t find what you''re looking for.
+if.you.typed.in.a.specific.url.check.for.errors.and.resubmit=If you typed in a specific URL, check for errors and resubmit.
+type.what.you.are.looking.for.into.our.search.bar=Type what you're looking for into our search bar.
+return.to.the.home.page=Return to the Home Page
+to.proceed.you.can=To proceed,you can:
+do.not.try.so.hard=Don''t try so hard!
+oops.Something.went.wrong=Oops!Something went wrong!
+
+photo.size.error=error ! Your photo size is  {0} KB ,It can't  over {1} KB !
+image.format.error=Image format: jpeg,gif,png!
+upload.error=Failed to upload photos!
+
+#=======interaction.faq=================
+reply=Reply
+latest.post=Latest Post
+replies.count= Replies({0})
+
+#==============comment html================
+comment=Comment
+title=Title
+please.enter.code=Please enter the verification code - humans only!
+comment.please.ask.question1=Feel free to ask questions about this product here. 
+comment.please.ask.question2=Your question will be posted on this page. 	
+comment.please.ask.question3={0} Customer Support and the {0} user community will do their best to quickly answer your question.
+
+
+
+
+#====support html=============
+support=Support
+start.here=Start Here
+search.for.products.downloads.faqs=Search For Products Downloads,FAQs
+frequently.asked.questions=Frequently Asked Questions
+contact.technical.support=Contact Technical Support
+
+these.fields.are.mandatory = These fields are mandatory
+product.category=Product Category
+product=Product
+submit=Submit
+back=Back
+confirm.your.email.address=Confirm Your Email Address
+your.email.address=Your Email Address
+detailed.description.of.the.problem=Detailed Description of the Problem
+subject=Subject
+faqs=FAQs
+you.can.find.the.answer.by.using.searching=You can find the answer by using searching.
+go=Go
+email.support=E-Mail Support
+hotline.support= Hotline Support
+call=Call
+
+
+
+#======Member Center
+hi=Hi
+member.center=Member Center
+welcome.to.the.member.center=Welcome to the Member Center
+sign.in.with.your.account=Sign In With Your Account
+forgot.your.password=Forgot Your Password
+do.not.have.an.account.yet= Don't have an account yet
+create.your.dodocool.account=Create Your Dodocool Account
+login=Login
+required.fields=Required Fields
+you.can.sign.in.with.an.existing.account=You Can Sign In With an Existing Account
+login.customers=Login Customers
+

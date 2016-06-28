@@ -1,0 +1,52 @@
+@helper.javascriptRouter("checkout_loyalty")(
+	controllers.cart.routes.javascript.LoyaltyController.applyPromo,
+	controllers.cart.routes.javascript.LoyaltyController.applyCoupon,
+	controllers.cart.routes.javascript.LoyaltyController.getUsableCoupon,
+	controllers.cart.routes.javascript.LoyaltyController.getAllCurrentPrefer,
+	controllers.cart.routes.javascript.LoyaltyController.undoCurrentPrefer,
+	controllers.cart.routes.javascript.LoyaltyController.applyPoints,
+	controllers.cart.routes.javascript.LoyaltyController.undoCurrentPoint,
+	controllers.cart.routes.javascript.LoyaltyController.getMyUsablePoint
+)
+
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+ 	  	@controllers.base.routes.Assets.at("css/css/CouponPoints.css")
+}
+ 		<div class="conW98">
+		<h5 class="marT">Coupon &  Points:</h5>
+		
+		<ul class="CouponPoints_box marT">
+			<li id="checkout_promo_div" class="lbBox">
+				<input id="checkout_promo_input" class="lineBlock CouponPoints_Input" placeholder="Enter a coupon code"/>
+				<a id="checkout_promo_apply" class="lineBlock CouponPoints_button" href="javascript:;">Apply</a>
+				<a id="checkout_promo_cancel" class="lineBlock CouponPoints_button bg_color_white" style="display:none;" href="javascript:;">Cancel</a>
+			</li>
+			<li id="checkout_coupon_div" class="lbBox" style="display:none;">
+				<div class="lineBlock CouponPoints_Input selectCode popBoxFilter">
+					<div id="checkout_coupon_code" class="cleanInput" type="text" placeholder="Select a coupon code">Select a coupon code</div>
+					<span class="downJT"> </span>
+				</div>
+				<div class="publicePop_Box popBoxNone">
+					<div id="checkout_coupon_insert" class="publicePop_con">
+						<div class="couponButton">
+							<a class="wihteInput closePop" href="javascript:;">Cancel</a>
+							<a id="checkout_coupon_apply" class="orangeInput closePop" href="javascript:;">Apply</a>
+						</div>
+					</div>
+					<div class="blackPop"> </div>
+				</div>
+				<a id="checkout_coupon_canel" class="lineBlock CouponPoints_button bg_color_white" style="display:none;" href="javascript:;">Cancel</a>
+			</li>
+			<div style="display:none;" id="checkout_point_div" >
+			<li class="lbBox">
+				<input id="checkout_point_input" class="lineBlock CouponPoints_Input" type="number" placeholder="Enter TOMTOP points" />
+				<a id="checkout_point_apply" class="lineBlock CouponPoints_button">Apply</a>
+				<a id="checkout_point_cancel" class="lineBlock CouponPoints_button bg_color_white" style="display:none;" href="javascript:;">Cancel</a>
+			</li>
+			<li class="lineBlock marR">Your points <span id="checkout_totalpoint" class="blue">0</span></li>
+			<li class="lineBlock">Available points <span id="checkout_usablepoint" class="blue">0</span></li>
+			</div>
+		</ul>
+	</div> 
+	<script type="text/javascript" src='/cart/assets/js/cart_loyalty.js' ></script>
+	

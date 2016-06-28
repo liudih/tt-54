@@ -1,0 +1,108 @@
+@helper.javascriptRouter("productExplainRoutes")(
+	controllers.manager.routes.javascript.ProductExplain.productExplainEdit,
+	controllers.manager.routes.javascript.ProductExplain.productExplainDelete
+)
+@views.html.manager.main {
+<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN STYLE CUSTOMIZER -->
+						<div class="color-panel hidden-phone">
+							<div class="color-mode-icons icon-color"></div>
+							<div class="color-mode-icons icon-color-close"></div>
+							<div class="color-mode">
+								<p>THEME COLOR</p>
+								<ul class="inline">
+									<li class="color-black current color-default" data-style="default"></li>
+									<li class="color-blue" data-style="blue"></li>
+									<li class="color-brown" data-style="brown"></li>
+									<li class="color-purple" data-style="purple"></li>
+									<li class="color-grey" data-style="grey"></li>
+									<li class="color-white color-light" data-style="light"></li>
+								</ul>
+								<label>
+									<span>Layout</span>
+									<select class="layout-option m-wrap small">
+										<option value="fluid" selected="">Fluid</option>
+										<option value="boxed">Boxed</option>
+									</select>
+								</label>
+								<label>
+									<span>Header</span>
+									<select class="header-option m-wrap small">
+										<option value="fixed" selected="">Fixed</option>
+										<option value="default">Default</option>
+									</select>
+								</label>
+								<label>
+									<span>Sidebar</span>
+									<select class="sidebar-option m-wrap small">
+										<option value="fixed">Fixed</option>
+										<option value="default" selected="">Default</option>
+									</select>
+								</label>
+								<label>
+									<span>Footer</span>
+									<select class="footer-option m-wrap small">
+										<option value="fixed">Fixed</option>
+										<option value="default" selected="">Default</option>
+									</select>
+								</label>
+							</div>
+						</div>
+						<!-- END BEGIN STYLE CUSTOMIZER -->  
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+
+						<h3 class="page-title">
+							商品管理 <small>商品整体说明管理</small>
+						</h3>
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="/sysadmin">Home</a> 
+								<i class="icon-angle-right"></i>
+							</li>
+							<li><a href="#">商品整体说明管理</a></li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				
+				<!-- BEGIN PAGE CONTENT-->
+				<div class="row-fluid">
+					<div class="order_ll_select">
+						<div class="span4">
+						    <label for="websiteid">站点选择</label>
+							@services.manager.ChooseService.getInstance().website("iwebsiteid", null, true)
+						</div>
+						<div class="span4">
+						    <label class="control-label">语言</label>
+							@services.manager.ChooseService.getInstance().language("ilanguageid", -1)
+						</div>
+						<div class="order_ll_col" style="position:relative;">
+							<div class="order_ll_inline" style="position:absolute;right:0px;top:3px;text-align:right;padding-right:5px">
+					        	<a data-toggle="modal" data-target="#add-product_explain">
+					            	<input class="order_ll_Search" id="product_explain_messa" type="button" value="add" />
+					            </a>
+					        </div>
+							<div class="clear"></div>
+						</div> 
+					</div>
+				</div>
+				 @views.html.manager.productExplain.product_explain_message.render(null)
+				<div class="row-fluid" id="productmanager_modle" style="display:none">
+					<div id="productExplainEdit_modle">
+					</div>
+				</div>
+				<!-- END PAGE CONTENT -->
+
+</div>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+	<link rel="stylesheet" type="text/css"  href="@controllers.manager.routes.Assets.at("css/manager/ordermanager.css")" />
+	<script src="@controllers.manager.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.manager.routes.Assets.at("js/manager/productexplaindetail")" ></script>
+} 
+}

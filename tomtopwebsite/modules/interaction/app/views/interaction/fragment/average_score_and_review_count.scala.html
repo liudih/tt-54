@@ -1,0 +1,14 @@
+@(starsWidth: Integer, reviewCount: Integer)
+@_rateValue = @{if(starsWidth==0){1}else{starsWidth/20}}
+	@*<div class="productReviews" style="float:left;">
+	    <div class="productStar" style="width: @if(starsWidth == null || starsWidth == 0){0%} else {@starsWidth%}"></div> 
+	</div>*@
+	<div class="smallReviews">
+	    <div class="smallStar" style="width: @if(starsWidth == null || starsWidth == 0){0%} else {@starsWidth%}">
+		    <span  style="display:none" itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+		    	 <span  itemprop="ratingValue">@_rateValue</span> 
+		    	 <span  itemprop="reviewCount">@reviewCount</span>
+		    </span>
+	    </div>
+	</div>
+ @**	 @if(reviewCount != null){( <span class="orange" >@reviewCount</span> @Messages("reviews.upcase"))} **@

@@ -1,0 +1,13 @@
+# Route Definitions
+GET   /               @controllers.Application.index()
+
+# Prototype Assets
+GET   /assets/*path   controllers.Assets.at(prefix: String ?= "/public", path: String)
+
+->    /google         google.Routes
+->    /facebook       facebook.Routes
+->    /base           base.Routes
+->    /member         member.Routes
+->    /interaction    interaction.Routes
+->    /cart           cart.Routes
+->    /               product.Routes

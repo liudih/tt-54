@@ -1,0 +1,31 @@
+@(cart : facades.cart.Cart,
+	currency:dto.Currency,
+	isLogin:Boolean,
+	backurl:String)
+@import services.base._ 
+@import services.base.utils._ 
+
+@views.html.base.master{
+<!--  主体内容开始  -->
+<article class="common_wrapper">
+	<section class="container">
+		<div class="common_tips">
+			@cart_view_table.render(cart,currency)
+			
+			@cart_grand_total.render(cart,currency)
+			<div id="checkOutDiv" class="tc">
+				<a href="@backurl">
+					<button id="continueShopping" type="button" class="btn btn-default text-uppercase">continue shopping</button>
+				</a>
+				<div class="check_inner">
+					<img src="@controllers.base.routes.Assets.at("images/amazon-icon.jpg")" class="img-responsive" /> 
+					<a id="checkOut" href="@controllers.cart.routes.Cart.addToAmzonCart()" target="_blank"
+						type="button" class="btn btn-default text-uppercase">checkout</a>
+				</div>
+			</div>
+
+		</div>
+	</section>
+</article>
+<!--  主体内容结束  -->
+}

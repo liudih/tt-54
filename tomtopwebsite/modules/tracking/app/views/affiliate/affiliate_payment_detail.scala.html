@@ -1,0 +1,121 @@
+@(list: valueobjects.base.Page[ valueobjects.tracking.CommissionOrderVo],
+	hid:Integer,
+	hstatus:Integer,
+	searchname:String,
+	orderAmount:Double,
+	commissionAmount:Double)
+@import services.base._
+@import services.base.utils._
+@views.html.member.base.master("affiliate-payment"){
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/styles.css")?@version.BuildVersion.build()" />
+}
+<div class="accountRight affilliate_Boxs">
+    <h5>Withdrawal Detail</h5>
+    		<form id="theform" >
+    		<ul class="chartSearch">
+            	<li class="lineBlock">
+            	<input value="@searchname" name="searchname" class="chartRili" type="text" placeholder="Order ID or SKU" />
+            	<input class="hsInputs" type="button" value="Search" onclick="searchSubmit()" />
+            	</li>
+                <li class="lineBlock ShowingfloatR">
+		            <span class="showing_chart">Showing 1-@list.pageSize() of @list.totalCount() total</span>
+		            Show
+		            <a @if(list.pageSize()==10){class="chartSA"} href="javascript:;" onclick="setLimit(10)">10</a>
+		            <a @if(list.pageSize()==20){class="chartSA"} href="javascript:;" onclick="setLimit(20)">20</a>
+		            <a @if(list.pageSize()==40){class="chartSA"} href="javascript:;" onclick="setLimit(40)">40</a>
+		        </li>
+		         
+            </ul>
+            <table class="chartTables" width="100%" border="1" cellspacing="0" cellpadding="0">
+              <tr>
+                <th class="chartTables_ID">Order ID</th>
+                <th class="chartTables_Date">Date</th>
+                <th class="chartTables_SKU">SKU</th>
+                <th class="chartTables_Sale">Sale</th>
+                <th class="chartTables_Commission">Commission</th>
+                <th class="chartTables_status">Order status</th>
+                <th class="chartTables_Traffic">Traffic</th>
+                <th class="chartTables_Pending">
+		            <select name="hstatus" onchange="changeStatus(this)">
+			        	<option value="-1">Commission Status</option>
+			            <option value="10" @if(hstatus==10){selected="selected"}>unpaid</option>
+			            <option value="20" @if(hstatus==20){selected="selected"}>processing</option>
+			            <option value="30" @if(hstatus==30){selected="selected"}>paid</option>
+			            <option value="40" @if(hstatus==40){selected="selected"}>delete</option>
+		        	</select>
+                </th>
+              </tr>
+              
+              @list.getList().map{l=>
+              	<tr>
+	                <td>@l.getCordernumber()</td>
+	                <td>@services.base.utils.DateFormatUtils.getDateTimeDDMMYYYY(l.getDcreatedate())</td>
+	                <td>@l.getCsku()<br></td>
+	                <td>@l.getCsymbol() @Utils.money(l.getFgrandtotal())</td>
+	                <td>US$ @if(l.getFamount!=null){@Utils.money(l.getFamount())}</td>
+	                <td>@l.getStatusName()</td>
+	                <td>@l.getSource()</td>
+	                <td>
+	                @if(l.getIstatus()!=null){
+			        @l.getIstatus().intValue() match {
+			        	case 10 =>{unpaid}
+			        	case 20 =>{processing}
+			        	case 30 =>{paid}
+			        	case 40 =>{delete}
+			        	case _ =>{unpaid}
+			        }
+			        }
+					</td>
+	              </tr>
+              }
+              
+            </table>
+            <ul class="chartTotal">
+            	<li class="lineBlock">Total</li>
+            	<li class="lineBlock">US$ @Utils.money(orderAmount) <span>(sales)</span></li>
+            	<li class="lineBlock">US$ @Utils.money(commissionAmount) <span>(commission)</span></li>
+            </ul>
+	            <input type="hidden" name="hid" value="@hid"/>
+	            <input type="hidden" name="p" id="p" value="@list.pageNo()"/>
+	    		<input type="hidden" name="limit" id="limit" value="@list.pageSize()"/>
+            </form>
+            <div class="arrayNEX affNext">
+			    <div class="pagination-holder clearfix" >
+					<div id="light-pagination" class="pagination"></div>
+				</div>
+			</div>
+</div>
+
+@services.base.HtmlUtils.misc().addHeadOnce{
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/simplePagination.css")">
+}
+@services.base.HtmlUtils.misc().addTailOnce{
+<script src="@controllers.base.routes.Assets.at("js/lib/jquery.simplePagination.js")" ></script>
+<script type="text/javascript">
+function setLimit(limit){
+	$("#p").val(1);
+	$("#limit").val(limit);
+	$("#theform").submit();
+}
+function changeStatus(node){
+	$("#theform").submit();
+}
+function searchSubmit(){
+	$("#theform").submit();
+}
+$('#light-pagination').pagination({
+	pages: @list.totalPages(),
+	currentPage: @list.pageNo(),
+	hrefTextPrefix: 'javascript:void(',
+	hrefTextSuffix: ')',
+	cssStyle: 'light-theme',
+	selectOnClick: true,
+	onPageClick: function(pageNumber, event) {
+		$("#p").val(pageNumber);
+		$("#theform").submit();
+	}
+});
+</script>
+}
+}

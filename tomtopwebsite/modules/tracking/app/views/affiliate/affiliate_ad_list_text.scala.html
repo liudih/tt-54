@@ -1,0 +1,37 @@
+@(list: List[entity.tracking.AffiliateBanner],
+	aid:String)
+@list.map{ l=>
+<ul class="affBannerContent affBannerText_ul">
+	<li class="lineBlock affBannerTitle">
+    	<span class="blue">@l.getCtitle()</span>
+    </li>
+	<li class="lineBlock affBannerCategory">@l.getCategoryName()</li>
+	<li class="lineBlock affBannerAction">
+    	<a class="hsInputs" href="javascript:;" onclick="tanKuang2(this)">Preview and Get Code</a>
+        <div class="account_x">
+            <div class="account_pop">
+                <div class="customer_popClose"></div>
+                <p class="adPreview_title">Ad Preview</p>
+                <ul class="iframePOP">
+                	<li class="lineBlock showframe">
+                	
+                    	<!-- <h6>@l.getCtitle()</h6>
+                        <p>@l.getCtitle()</p>
+                        <br>
+                        <a class="blue" href="javascript:;">http://www.tomtop.com</a> -->
+                    </li>
+                	<li class="lineBlock">
+                    	<p>The alt text for this ad is " <b>@l.getCtitle()</b>" and the ID is <b>@aid</b>. </p>
+                        <p>Copy and paste your ad code into your site's html where the ad should appear. </p>
+                        <div style="display:none;" class="hidedata"><iframe src="@controllers.affiliate.routes.AffiliateHome.getHtml(l.getIid(),aid).absoluteURL(play.mvc.Http.Context.current().request())" width="120" height="200" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" hspace="0" allowtransparency="true"></iframe></div>
+                        <textarea></textarea>
+                        <a class="hsInputs copytextCls lineBlock" href="javascript:;">Get code</a>
+                        <span class="icon_success lineBlock">Get Code Succeed!</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="blockPopup_black"></div>
+        </div>
+    </li>
+</ul>
+}

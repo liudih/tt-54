@@ -1,0 +1,37 @@
+@(list :java.util.List[dto.ProductPost])
+@import services.base._
+@import services.base.utils._
+@list.map{p=>
+<ul class="ProductQ reviewsBackC">
+	<li>@Messages("q")</li>
+	<li class="ProductTitle">
+		<p>@p.getSelf.getCtitle()</p>
+		<p>@p.getSelf.getCquestion()</p>
+		<p class="ProductTitle_by">
+			@Messages("by") <span class="black">@p.getSelf.getCanswer()</span>
+		</p>
+	</li>
+	<li class="ProductTime"><p>@services.base.utils.DateFormatUtils.getDateMDY(p.getSelf.getDcreatedate)</p></li>
+	<li class="ProductUseful"></li>
+	<div class="clear"></div>
+</ul>
+<div class="clear"></div>
+<ul class="ProductA uselcheck">
+	<div class="productSJ"></div>
+	<li>@Messages("a")</li>
+	<li class="ProductTitle">@p.getSelf.getCrecoveryuser();
+		<p class="ProductTitle_by">
+			@Messages("by") <span class="black">@p.getSelf.getCrecoveryuser()</span>
+		</p>
+	</li>
+	<li class="ProductTime"><p>@services.base.utils.DateFormatUtils.getDateMDY(p.getSelf.getDrecoverydate)</p></li>
+	<li >
+		
+		@vote(p)
+	</li>
+	<div class="clear"></div>
+</ul>
+}
+
+
+

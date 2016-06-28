@@ -1,0 +1,1 @@
+GET   /product/list/id/:id/category/:cid   @controllers.interaction.share.ProductShare.list(id: Int, cid: Int)

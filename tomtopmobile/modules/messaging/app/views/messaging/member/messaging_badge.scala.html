@@ -1,0 +1,17 @@
+@(messages : valueobjects.base.Page[entity.messaging.Broadcast])
+
+@if(messages != null && messages.getList().size()>0){
+				@messages.getList().map{mes=>
+<li class="lbBox">
+	<div class="lineBlock span15">
+		<label class="input_control lineBlock"> <input type="checkbox">
+			<div class="checkbox chooseClick" t="@mes.getTable" messageId="@mes.getId">
+				<span></span>
+			</div>
+		</label>
+	</div> <a class="lineBlock span65 readClick @if(mes.getStatus != 1){blue}" href="javascript:;"
+	t="@mes.getTable" messageId="@mes.getId">@mes.getSubject</a>
+	<p class="lineBlock span2 textC">@mes.getCreateDateStr</p>
+</li>
+	}
+}

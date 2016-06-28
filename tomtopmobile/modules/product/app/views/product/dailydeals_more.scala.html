@@ -1,0 +1,125 @@
+@(todayProductList :List[valueobjects.product.ProductBadge],
+tomorrowProductList :List[valueobjects.product.ProductBadge],
+todayCountDown :Long,
+tomorrowCountDown :Long,
+advertList: List[valueobjects.product.MobileAdItem]
+)
+
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@import services.base._
+@import services.base.utils._
+@import views.html.home.img
+
+
+@views.html.base.sub_master("Daily Deals"){
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+ 	  	@controllers.base.routes.Assets.at("css/dailydeals.css")
+}
+<!-- start -->
+<div class="container">
+
+	<ul class="TAB_Nav publicTAB_css lbBox">
+	
+		<li class="lineBlock orangeTAB span5 aciCss">Daily Deals</li>
+		<li class="lineBlock orangeTAB span5">Tomorrow’s Deals</li>
+	</ul>
+	<div class="TAB_Con dealsIn block">
+		<ul class="product_page_Expires">
+		@if(null!=todayCountDown){
+			<li class="lineBlock">Deals ends in:</li>
+			}
+			<li id="today_remain" data="@todayCountDown" class="lineBlock orange"></li>
+		</ul>
+	@if(todayProductList!=null && todayProductList.size()>0){
+		@todayProductList.take(3).zipWithIndex.map{c =>
+		@dailydeals_badge(c._1,c._2) }
+		}
+	</div>
+	<div class="TAB_Con dealsStart">
+		<ul class="product_page_Expires">
+		@if(null!=tomorrowCountDown){
+			<li class="lineBlock">Deals start in:</li>
+			}
+			<li id="tomorrow_remain" data="@tomorrowCountDown"
+				class="lineBlock orange"></li>
+		</ul>
+	@if(tomorrowProductList!=null && tomorrowProductList.size()>0){
+		@tomorrowProductList.take(3).zipWithIndex.map{c =>
+		@dailydeals_badge(c._1,c._2) }
+		}
+	</div>
+</div>
+
+<div class="container">
+	@views.html.product.middle_advert_templet(advertList)
+	<!-- end -->
+	<div class="container">
+		@tp.get("recommend")
+	</div>
+</div>
+
+@services.base.HtmlUtils.misc().addTail{
+<script>
+	var todaySecond;
+	var tomorrowSecond;
+	var InterValObj;
+	function calculate(seconds) {
+		if (seconds > 0) {
+			var second = Math.floor(seconds % 60);
+			var minite = Math.floor((seconds / 60) % 60);
+			var hour = Math.floor((seconds / 3600) % 24);
+			var day = Math.floor((seconds / 3600) / 24);
+			if (second <= 9) {
+				second = '0' + second;
+			}
+			if (minite <= 9) {
+				minite = '0' + minite;
+			}
+			if (hour <= 9) {
+				hour = '0' + hour;
+			}
+			if (day <= 9) {
+				day = '0' + day;
+			}
+			return {
+				day : day,
+				hour : hour,
+				minite : minite,
+				second : second
+			}
+		}
+
+	}
+	function SetRemainTime() {
+		todaySecond = todaySecond - 1;
+		tomorrowSecond = tomorrowSecond - 1;
+
+		if (todaySecond > 0 && tomorrowSecond > 0) {
+
+			var todayRemain = calculate(todaySecond);
+			var tomorrowRemain = calculate(tomorrowSecond);
+
+			$('#today_remain').html(
+					todayRemain.day + ":" + todayRemain.hour + ":"
+							+ todayRemain.minite + ":" + todayRemain.second);
+			$('#tomorrow_remain').html(
+					tomorrowRemain.day + ":" + tomorrowRemain.hour + ":"
+							+ tomorrowRemain.minite + ":"
+							+ tomorrowRemain.second);
+		} else {
+			window.clearInterval(InterValObj);
+			location.href = "@controllers.product.routes.Product.dailyDeals()";
+		}
+	}
+	$(function() {
+		todaySecond = parseInt($("#today_remain").attr("data"));
+		tomorrowSecond = parseInt($("#tomorrow_remain").attr("data"));
+		if(todaySecond&&tomorrowSecond){
+		InterValObj = window.setInterval(function() {
+			SetRemainTime()
+		}, 1000);
+		}
+	})
+</script>
+} 
+}

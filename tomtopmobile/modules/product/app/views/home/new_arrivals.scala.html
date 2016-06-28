@@ -1,0 +1,11 @@
+@(newList: List[valueobjects.product.ProductBadge])
+
+<div class="Titleh5">
+	<h5>New Arrivals</h5>
+	<a class="rightMore" href="@controllers.product.routes.Product.newArrivals()">More >></a>
+</div>
+@if(null !=newList && newList.size()>0 ){
+	@newList.take(12).map{p=>
+		@views.html.product.badge_base(p)
+	}
+}

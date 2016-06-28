@@ -1,0 +1,29 @@
+@(productSalePrices:List[dto.product.ProductSalePrice])
+@import views.html.helper._
+@import services.base.utils.DateFormatUtils
+<div align="center">
+		<table class="table table-striped table-hover table-bordered" id="cmscontent_table">
+				<thead>
+					<tr>
+						<th>促销价</th>
+						<th>促销开始时间</th>
+						<th>促销结束时间</th>
+						<th>创建人</th>
+						<th>创建时间</th>						
+					</tr>
+				</thead>
+				<tbody>
+					@if(productSalePrices!=null && productSalePrices.size()>0){
+						@productSalePrices.map{e=>
+							<tr>
+									<td>@e.getFsaleprice()</td>
+									<td>@DateFormatUtils.getStrFromYYYYMMDDHHMMSS(e.getDbegindate())</td>
+									<td>@DateFormatUtils.getStrFromYYYYMMDDHHMMSS(e.getDenddate())</td>
+									<td>@e.getCcreateuser()</td>
+									<td>@DateFormatUtils.getStrFromYYYYMMDDHHMMSS(e.getDcreatedate())</td>
+							</tr>
+						}
+					}
+				</tbody>
+	</table>
+</div>

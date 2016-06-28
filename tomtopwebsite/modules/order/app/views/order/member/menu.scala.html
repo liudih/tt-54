@@ -1,0 +1,3 @@
+@(highliht:Boolean)
+@urlprefix = @{play.Play.application().configuration().getString("member.defaultdomain")}
+<li @if(highliht){ class="leftAct" } ><a href="@urlprefix@controllers.order.member.routes.MemberOrder.index()">@Messages("my.orders")</a></li>

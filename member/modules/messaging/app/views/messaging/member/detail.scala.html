@@ -1,0 +1,32 @@
+@(
+message : entity.messaging.Broadcast
+)=>HTML
+@import views.html.helper._	
+
+@services.base.HtmlUtils.misc().addHeadOnce{
+<script src="@controllers.base.routes.Assets.at("js/lib/jquery.json.min.js")"></script>
+}
+
+@views.html.member.base.master("") {
+      <div class="accountRight accountMessageBox" id="myMessageContainer">
+    	<h6>@Messages("messaging.myMessage")</h6>
+        <div class="xxkDiv">
+        	<ul class="blackXXK">
+                <li class="xxkActi inboxN_click">@Messages("messaging.inbox")</li>
+                <div class="clear"></div>
+            </ul>
+           	<div class="block">
+            	<h5>@Html(message.getSubject)</h5>
+                <p class="tontopTeam_message">@Messages("messaging.tomtopTeam")</p>
+                <div class="messageTT_box">
+               		@Html(message.getContent.replaceAll("\n", "<br/>"))
+                </div>
+                <p class="tontopTeam_messageTime">@message.getCreateDateStr</p>
+            </div>
+        </div>
+     </div>
+    
+    
+   
+    
+ }

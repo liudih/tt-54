@@ -1,0 +1,56 @@
+@(items : valueobjects.order_api.OrderItems,
+	order : dto.order.Order,
+	currency : dto.Currency) 
+@import services.base._
+@import services.base.utils._
+
+@import views.html.product.img
+
+
+<div class="newshopping_address">
+            <h2 class="h2_product">@Messages("product.list")</h2>
+            <dl class="product_list">
+                <dt>
+                    <span class="item">@Messages("item")</span>
+                    <span class="price">@Messages("price")</span>
+                    <span class="qty">@Messages("qualitys")</span>
+                    <span class="total">@Messages("utotal")</span>
+                </dt>
+                
+			
+			@items.getList.map{ i => 
+			<dd class="nobor">
+                    <div class="ns_item_img">
+                         <a class="inBlock" href="@if(i.getCurl()!=null){@controllers.product.routes.Product.view(i.getCurl())}">
+				        	@img(i.getCimageurl(), i.getCtitle(), 120, 120, null)
+				        </a>
+        
+                        <div class="ns_item_con">
+                            <h3>
+	                            <a href="@if(i.getCurl()!=null){@controllers.product.routes.Product.view(i.getCurl())}">
+					            	@i.getCtitle()
+					            </a>
+                            </h3>
+                            <p>@Messages("sku") <i>@i.getSku()</i></p>
+                            <p>@if(null !=i.getAttributeMap){
+								@i.getAttributeMap.map{ j=> 
+									@if(null != j._1 && j._1.length>0){@j._1.substring(0,1).toUpperCase@j._1.substring(1)}
+									: @j._2 &nbsp; } 
+								}
+							</p>
+                        </div>
+                    </div>
+                    <div class="ns_item_price">
+                      <p>@currency.getCsymbol @Utils.money(i.getUnitPrice,currency.getCcode())</p>
+                    </div>
+                    <div class="ns_item_qty">
+                        <span>@i.getIqty</span>
+                    </div>
+                    <div class="ns_item_total">
+                        <span>@currency.getCsymbol @Utils.money(i.getUnitPrice * i.getIqty,currency.getCcode())</span>
+                    </div>
+                </dd>
+           }
+           </dl>
+</div>
+			

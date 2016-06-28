@@ -1,0 +1,29 @@
+@()
+@urlprefix = @{play.Play.application().configuration().getString("member.urlprefix")}
+<li class="UnderSJ_top">
+	<dl>
+		<dt class="">
+			<a href="@urlprefix/product/gadget/0">@Messages("under")
+				$0.99</a><span></span>
+		</dt>
+		<dd>
+			<ul>
+				<li><a
+					href="@urlprefix/product/gadget/0">@Messages("under")
+						$0.99</a></li>
+				<li><a
+					href="@urlprefix/product/gadget/1">@Messages("under")
+						$1.99</a></li>
+				<li><a
+					href="@urlprefix/product/gadget/2">@Messages("under")
+						$2.99</a></li>
+				<li><a
+					href="@urlprefix/product/gadget/3">@Messages("under")
+						$3.99</a></li>
+				<li><a
+					href="@urlprefix/product/gadget/4">@Messages("under")
+						$4.99</a></li>
+			</ul>
+		</dd>
+	</dl>
+</li>

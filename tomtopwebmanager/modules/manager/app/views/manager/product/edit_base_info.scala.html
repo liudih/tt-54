@@ -1,0 +1,46 @@
+@(p: dto.product.ProductBase,
+statusMap: Map[Integer, String])
+
+<input type="hidden" name="clistingid" value="@p.getClistingid">
+<input type="hidden" name="iwebsiteid" value="@p.getIwebsiteid">
+<div class="control-group">
+	<label class="control-label">状态</label>
+	<div class="controls">
+		<select name="istatus">
+			@statusMap.map{s=>
+				<option value="@s._1" @if(s._1==p.getIstatus){selected="selected"}>@s._2</option>
+			}
+		</select>
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">数量</label>
+	<div class="controls">
+		<input type="text" name="iqty" value="@p.getIqty" class="m-wrap medium span6">
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">价格</label>
+	<div class="controls">
+		<input type="text" name="fprice" value="@p.getFprice" class="m-wrap medium span6">
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">重量</label>
+	<div class="controls">
+		<input type="text" name="fweight" value="@p.getFweight" class="m-wrap medium span6">
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">视频地址</label>
+	<div class="controls">
+		<input type="text" name="cvideoaddress" value="@p.getCvideoaddress" class="m-wrap medium span6">
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">是否特殊商品</label>
+	@services.manager.ChooseService.getInstance().yesOrNo("bspecial", p.getBspecial)
+</div>
+<script>
+
+</script>

@@ -1,0 +1,49 @@
+@(ofpHelper : plugins.mobile.order.OrderFragmentPluginHelper,
+	currency:dto.Currency,
+	items: List[valueobjects.cart.CartItem])
+
+@import views.html.helper._	
+@views.html.base.sub_master("Shipping & Orderlist"){
+
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+	@controllers.base.routes.Assets.at("css/shippingAddress_page.css")
+}
+
+@services.base.HtmlUtils.misc().addHeadScriptOnce{
+	@controllers.base.routes.Assets.at("js/scroll.js")
+}
+
+
+@form(controllers.order.routes.OrderController.placeOrder,'method->"post",'id->"paypal-form"){
+<input type="hidden" id="theCsymbol" value="@currency.getCsymbol()" />
+<input type="hidden" name="shipMethodCode" id="shipMethodCode" value="" />
+<input type="hidden" name="shipMethodId" id="shipMethodId" value="" />
+
+<div class="container">
+	@ofpHelper.renderPlugin("shipping-address",null)
+	@ofpHelper.renderPlugin("billing-address",null)
+	<div id="shipping-method-div">
+		<div id="shipping-method">
+			<hr class="grayHR100">
+			<h5>Select Shipping Method:</h5>
+			<div id="shipmethodContent">
+			
+			</div>
+		</div>
+	</div>
+	@views.html.mobile.cart.cart_product_list(null,null,null,items,currency, true,false)
+</div>
+}
+
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+	@controllers.base.routes.Assets.at("js/jquery.country.js")
+} 
+@services.base.HtmlUtils.misc().addTail{
+	<script type="text/javascript" src="/cart/assets/js/order_pay.js" ></script>
+	<script type="text/javascript" src="/cart/assets/js/shipping_address.js" ></script>
+	<script type="text/javascript" src="/cart/assets/js/shipping_new.js" ></script>
+}
+
+}
+
+

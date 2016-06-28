@@ -1,0 +1,12 @@
+@(rate: dto.CurrencyRate)
+
+<input type="hidden" name="id" value="@rate.getIid" class="m-wrap medium span6">
+<input type="hidden" name="code" value="@rate.getCcode" class="m-wrap medium span6">
+<div class="modal-body">
+	<div class="control-group">
+		<label class="control-label">标题</label>
+		<div class="controls">
+			<input type="text" name="rate" value="@rate.getFexchangerate" class="m-wrap medium span6">
+		</div>
+	</div>
+</div>

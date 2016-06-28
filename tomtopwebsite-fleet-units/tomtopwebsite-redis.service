@@ -1,0 +1,32 @@
+[Unit]
+Description=TomTop Website Redis
+
+# Requirements
+Requires=etcd.service
+Requires=docker.service
+
+# Dependency ordering
+After=etcd.service
+After=docker.service
+
+[Service]
+
+TimeoutStartSec=0
+
+# Change killmode from "control-group" to "none" to let Docker remove
+# work correctly.
+KillMode=none
+
+# Pre-start and Start
+## Directives with "=-" are allowed to fail without consequence
+ExecStartPre=-/usr/bin/docker kill tomtopwebsite-redis
+ExecStartPre=-/usr/bin/docker rm tomtopwebsite-redis
+ExecStartPre=-/bin/bash -c "/usr/bin/docker pull 192.168.7.15:5000/redis"
+ExecStart=/bin/bash -c "/usr/bin/docker run --name tomtopwebsite-redis \
+		-p 6379:6379 \
+		192.168.7.15:5000/redis"
+
+# Stop
+ExecStop=/usr/bin/docker stop tomtopwebsite-redis
+
+Restart=always

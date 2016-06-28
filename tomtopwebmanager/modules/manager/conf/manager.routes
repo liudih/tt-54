@@ -1,0 +1,886 @@
+GET      /                                        @controllers.manager.Application.index()
+
+GET      /login                                   @controllers.manager.Login.loginForm()
+
+POST     /login                                   @controllers.manager.Login.login()
+
+
+GET     /publicLogin                             @controllers.manager.Login.publicLogin(jobNumber:String,sysName:String,tp:String,signData:String,sid:String)
+
+GET      /assets/*file                            controllers.manager.Assets.at(path="/public", file)
+
+GET      /user/list                               @controllers.manager.AdminUser.userList(page:Int?=1)
+
+POST     /user/add                                @controllers.manager.AdminUser.addUser()
+
+GET      /user/edit                               @controllers.manager.AdminUser.editForm(iid:Int)
+
+GET      /user/delete                             @controllers.manager.AdminUser.deleteUser(iid:Int)
+
+POST     /user/edit                               @controllers.manager.AdminUser.editUser()
+
+GET      /user/resetPwdForm                       @controllers.manager.AdminUser.resetPwdForm(iid:Int)
+POST     /user/resetPwd                           @controllers.manager.AdminUser.resetPwd()
+GET      /user/exit                               @controllers.manager.AdminUser.exit()
+GET      /user/search                             @controllers.manager.AdminUser.search()
+
+GET      /user/modifypwdlist                      @controllers.manager.AdminUser.modifyPwdList()
+POST     /user/modifypwd                          @controllers.manager.AdminUser.modifyPwd(oldPwd:String,newPwdOne:String,newPwdTwo:String)
+POST     /user/checkoldpwd                        @controllers.manager.AdminUser.checkOldPwd(oldPwd:String)
+GET      /user/randompwd/:length                  @controllers.manager.AdminUser.generatePassword(length:Integer)
+GET      /user/validate/jobnumber                 @controllers.manager.AdminUser.validateJobNumber(jobNumber:String)
+GET      /user/validate/username                  @controllers.manager.AdminUser.validateUserName(userName:String)
+
+GET      /advertising/list                        @controllers.manager.Advertising.advertisingList(page:Int?=1)
+
+GET      /advertising/editAdvertContent           @controllers.manager.Advertising.editAdvertContent(iid:Long)
+GET      /advertising/editAdvertRelation          @controllers.manager.Advertising.editAdvertRelation(iid:Long)
+
+POST     /advertising/add                         @controllers.manager.Advertising.addAdvertising()
+
+GET      /advertising/delete                      @controllers.manager.Advertising.deleteAdvertising(iid:Int)
+GET      /advertising/deleteAdvertContent         @controllers.manager.Advertising.deleteAdvertContent(iid:Int)
+GET      /advertising/deleteAdvertRelation        @controllers.manager.Advertising.deleteAdvertRelation(iid:Int)
+
+POST     /advertising/editAdvertContentForm       @controllers.manager.Advertising.editAdvertContentForm()
+POST     /advertising/editAdvertRelationForm      @controllers.manager.Advertising.editAdvertRelationForm()
+
+GET      /advertising/content/:langId/:advertId   @controllers.manager.Advertising.getAdvertContentByAdvertIdAndLangId(advertId:Integer,langId:Integer)
+GET      /advertising/validateAdvertContent       @controllers.manager.Advertising.validateAdvertContent(advertId:Integer,langId:Integer)
+
+GET      /advertising/categoryRoot                @controllers.manager.Advertising.getCategoryList(websiteid:Int, languageid:Int)
+GET      /advertising/categoryChild               @controllers.manager.Advertising.getChildCategoriesByCategoryId(websiteid:Int, languageid:Int,categoryId:Int)
+
+POST     /advertising/search                      @controllers.manager.Advertising.search()
+GET      /advertising/searchAdvertPage            @controllers.manager.Advertising.searchAdvertisingPage(page:Int,ilanguageid:Int, iwebsiteid:Int,iposition:Int,itype:Int)
+
+GET      /advertising/type/manager                @controllers.manager.AdvertisingType.advertisingTypeManager()
+POST     /advertising/type/save                   @controllers.manager.AdvertisingType.addAdvertisingType()
+POST     /advertising/type/update                 @controllers.manager.AdvertisingType.updateAdvertisingType()
+GET      /advertising/type/delete                 @controllers.manager.AdvertisingType.deleteAdvertisingType(iid:Long)
+GET      /advertising/type/validatekey            @controllers.manager.AdvertisingType.validateKey(iadvertisingid:Long)
+
+GET      /advertising/position/manager            @controllers.manager.AdvertisingPosition.advertisingPositionManager()
+POST     /advertising/position/save               @controllers.manager.AdvertisingPosition.addAdvertisingPosition()
+POST     /advertising/position/update             @controllers.manager.AdvertisingPosition.updateAdvertisingPosition()
+GET      /advertising/position/delete             @controllers.manager.AdvertisingPosition.deleteAdvertisingPosition(iid:Long)
+GET      /advertising/position/validatekey        @controllers.manager.AdvertisingPosition.validateKey(ipositionid:Long)
+
+GET      /category/edit                           @controllers.manager.Category.categoryEdit(icategoryid: Int, languageid: Int, websiteId: Int)
+
+GET      /category/list                           @controllers.manager.Category.getCategoryList(websiteid: Int, languageid: Int)
+
+GET      /category/manager                        @controllers.manager.Category.categoryManager()
+
+POST     /category/update                         @controllers.manager.Category.categoryUpdate()
+
+POST   /category/addroot                        @controllers.manager.Category.addCategoryRoot()
+
+GET   /category/checkpath                       @controllers.manager.Category.checkCpath(cname: String ?= null,parentid: Integer ?= 0,parentid2: Integer ?= 0,siteId: Integer ?= 0)
+
+#GET  /category/img      						@controllers.manager.Category.view(iid: Int, imageType: String)
+
+GET    /category/attribute/manager              @controllers.manager.Category.getCategoryAttributeManager(categoryid: Int ?= 1, languageid: Int ?= 1)
+
+GET      /category/attribute/edit                 @controllers.manager.Category.getAttributeToCategory(categoryid: Int, attributekeyid: Int,languageid: Int)
+
+POST     /category/attribute/update               @controllers.manager.Category.updateCategoryAttribute()
+
+GET      /category/attribute/add                  @controllers.manager.Category.getAllAtributeByLanguageId(languageid: Int)
+
+
+GET      /category/recommend                      @controllers.manager.CategoryRecommend.categoryRecommendManager(parentid: Int ?= 0,parentid2: Int ?= 0,parentid3: Int ?= 0, sku:  String ?= null,createdate: String ?= null,siteid: Int ?= 0,sdevice: String ?= null)
+
+GET      /category/recommend/hist                 @controllers.manager.CategoryRecommend.categoryRecommendHist(parentid: Int ?= 0,parentid2: Int ?= 0,parentid3: Int ?= 0, sku:  String ?= null,createdate: String ?= null,siteid: Int ?= 0,sdevice: String ?= null)
+
+GET      /category/recommend/root                 @controllers.manager.CategoryRecommend.rootCategory(siteid: Int ?=0)
+
+GET      /category/recommend/jquery               @controllers.manager.CategoryRecommend.childCategory(categoryid: Int ?=0,siteid: Int ?=0)
+
+POST     /category/recommend/add                  @controllers.manager.CategoryRecommend.addCategoryRecommend()
+ 
+GET      /category/recommend/del                  @controllers.manager.CategoryRecommend.delete(id: Int ?= 0, sequence: Int ?=0,categoryid: Int ?= 0, returnid: Int ?=0,returnid2: Int ?=0,returnid3: Int ?=0,sku:  String ?= null,createdate: String ?= null,siteid: Int ?= 0,sdevice: String ?= null)
+
+GET      /category/recommend/ontop                @controllers.manager.CategoryRecommend.onTop(id: Int ?= 0, sequence: Int ?=0,categoryid: Int ?= 0, returnid: Int ?=0,returnid2: Int ?=0,returnid3: Int ?=0, sku:  String ?= null,createdate: String ?= null,siteid: Int ?= 0,sdevice: String ?= null)
+
+GET      /category/recommend/checksku             @controllers.manager.CategoryRecommend.checkSku(sku: String ?= null ,categoryid: Int ?=0,siteid: Int ?= 0,sdevice: String ?= null)
+
+GET		/category/recommend/updaterecsearch		 @controllers.manager.CategoryRecommend.updateRecommendSearch()
+
+GET      /category/recommend/import              @controllers.manager.CategoryRecommend.importRecommend()
+
+GET    /attribute/manager                       @controllers.manager.Attribute.getAttributeManager(categoryid: Int ?=1, languageid: Int ?=1)
+
+GET      /banner/list                             @controllers.manager.Banner.list(page:Int?=1,pageSize:Int?=15,websiteid:Int?=0,langugesid:Int?=0)
+
+GET      /banner/index                            @controllers.manager.Banner.index()
+
+GET      /banner/at/:iid                          @controllers.manager.Banner.at(iid:Int)
+
+POST     /banner/edit                             @controllers.manager.Banner.editBanner()
+
+POST     /banner/add                              @controllers.manager.Banner.addBanner()
+
+POST     /banner/down                             @controllers.manager.Banner.down(iindex:Int)
+
+POST     /banner/up                               @controllers.manager.Banner.up(iindex:Int)
+
+GET      /banner/edit                             @controllers.manager.Banner.editForm(iid:Int)
+
+POST     /banner/delete                           @controllers.manager.Banner.delete(iid:Int)
+
+POST     /attribute/update                        @controllers.manager.Attribute.updateAttribute()
+
+GET      /attribute/list                          @controllers.manager.Attribute.getAttributeList(ilanguageid: Int ?= 1)
+
+GET      /attribute/add                           @controllers.manager.Attribute.addAttribute()
+
+POST     /attribute/addAttributeValue             @controllers.manager.Attribute.addAttributeValue()
+
+GET      /collections/manager                     @controllers.manager.Collections.manager(page: Int ?= 1)
+
+GET      /collections/edit                        @controllers.manager.Collections.edit(id: Int)
+
+GET      /collections/delete                      @controllers.manager.Collections.delete(id: Int)
+
+POST     /collections/save                        @controllers.manager.Collections.save()
+
+POST     /attribute/add                           @controllers.manager.Attribute.addAttribute()
+
+POST     /ckeditor/upload                         @controllers.manager.Ckeditor.upload()
+
+GET      /cms/list                                @controllers.manager.Cms.list(page:Int?=1)
+
+POST     /cms/add                                 @controllers.manager.Cms.addCmsContent()
+
+GET      /cms/menu/level                          @controllers.manager.Cms.getCmsMenuByLevelId(level:Int ?=1, iparentid:Integer ?=null, siteId:Integer ?=null)
+
+GET      /cms/cmsMenuList                         @controllers.manager.Cms.getCmsMenuList()
+
+GET      /cms/manager                             @controllers.manager.Cms.cmsMenuList()
+
+GET      /cms/editMenu                            @controllers.manager.Cms.editCmsChildrenMenu(iparentid:Integer ?=null)
+
+GET      /cms/editMessageMenu                     @controllers.manager.Cms.editMessageMenu(iid:Integer ?=null)
+
+POST     /cms/updateMenu                          @controllers.manager.Cms.updateCmsMenu()
+
+POST     /cms/updateCmsContent                    @controllers.manager.Cms.updateCmsContent()
+
+GET      /cms/deleteCmsContent                    @controllers.manager.Cms.deleteCmsContent(iid:Int)
+
+GET      /cms/deleteCmsMenu                       @controllers.manager.Cms.deleteCmsMenu(iid:Int)
+
+POST     /cms/addCmsMenu                          @controllers.manager.Cms.addCmsMenu()
+
+POST     /cms/addChildrenMenu                     @controllers.manager.Cms.addChildrenMenu()
+
+GET      /cms/editContent                         @controllers.manager.Cms.editCmsContentForm(iid:Integer ?=null, page:Integer ?=null)
+
+POST     /cms/search                              @controllers.manager.Cms.search()
+
+GET      /cms/morelanguage/edit                   @controllers.manager.Cms.editCmsMenuLanguage(iid:Integer ?=null)
+GET      /cms/morelanguage/delete                 @controllers.manager.Cms.deleteCmsMenuMoreLanguage(iid:Integer ?=null)
+POST     /cms/morelanguage/add                    @controllers.manager.Cms.addCmsMenuMoreLanguage(imenuid:Integer ?=null, cname: String ?= null, ilanguageid:Integer ?=null)
+GET      /cms/morelanguage/validate               @controllers.manager.Cms.validateCmsMenuMoreLanguage(imenuid:Integer ?=null, ilanguageid:Integer ?=null)
+
+GET      /cms/morewebsite/edit                    @controllers.manager.Cms.editCmsMenuWebsite(iid:Integer ?=null)
+GET      /cms/morewebsite/delete                  @controllers.manager.Cms.deleteCmsMenuMoreWebsite(iid:Integer ?=null)
+POST     /cms/morewebsite/add                     @controllers.manager.Cms.addCmsMenuMoreWebsite(imenuid:Integer ?=null, iwebsiteid:Integer ?=null, cdevice:String?=null)
+GET      /cms/morewebsite/validate                @controllers.manager.Cms.validateCmsMenuMoreWebsite(imenuid:Integer ?=null, iwebsiteid:Integer ?=null, cdevice:String?=null)
+
+GET      /cmscontent/morelanguage/edit            @controllers.manager.Cms.editCmsContentLanguage(iid:Integer ?=null)
+GET      /cmscontent/morelanguage/delete          @controllers.manager.Cms.deleteCmsContentMoreLanguage(iid:Integer ?=null)
+POST     /cmscontent/morelanguage/add             @controllers.manager.Cms.addCmsContentMoreLanguage()
+GET      /cmscontent/morelanguage/validate        @controllers.manager.Cms.validateCmsContentMoreLanguage(icmscontentid:Integer ?=null, ilanguageid:Integer ?=null)
+POST     /cmscontent/morelanguage/get             @controllers.manager.Cms.getCmsContentByLangIdAndContentId(icmscontentid:Integer ?=null, ilanguageid:Integer ?=null)
+
+
+GET      /productExplain/manager                  @controllers.manager.ProductExplain.productExplainManager()
+
+GET      /productExplain/edit                     @controllers.manager.ProductExplain.productExplainEdit(websiteid:Int, languageid:Int)
+
+POST     /productExplain/update                   @controllers.manager.ProductExplain.productExplainUpdate()
+
+POST     /productExplain/delete                   @controllers.manager.ProductExplain.productExplainDelete()
+
+#--------order manager-----------
+GET      /order/manager                           @controllers.manager.Order.getOrderManager()
+
+POST     /order/updateOrderStatus                 @controllers.manager.Order.updateOrderStatus(orderid: Int, statusid: Int,ctransztion: String)
+
+POST     /order/search                            @controllers.manager.Order.search()
+
+POST     /order/updateorderprice                  @controllers.manager.Order.updateOrderPrice()
+
+POST     /order/updateordershippingprice          @controllers.manager.Order.updateOrderShippingPrice()
+
+GET      /order/getPaypalMessage                  @controllers.manager.Order.getPaypalMessage(ordernumber: String)
+
+GET      /order/exportOrderList                   @controllers.manager.Order.exportOrderList(siteId: String ?= null, paymentId: String ?= null, status: String ?= null, orderNumber: String ?= null, email: String ?= null, transactionId: String ?= null, start: String ?= null, end: String ?= null, vhost: String ?= null,paymentStart:String ?= null,paymentEnd:String ?= null,queryType:String?=null,code:String?=null)
+GET      /order/exportOrderDetailsList            @controllers.manager.Order.exportOrderDetailsList(siteId: String ?= null, paymentId: String ?= null, status: String ?= null, orderNumber: String ?= null, email: String ?= null, transactionId: String ?= null, start: String ?= null, end: String ?= null, vhost: String ?= null,paymentStart:String ?= null,paymentEnd:String ?= null,queryType:String?=null,code:String?=null)
+GET      /order/transaction						  @controllers.manager.OrderTransaction.getOrderTransactionManager()
+
+POST     /order/transaction/search                @controllers.manager.OrderTransaction.search()
+
+POST     /order/transaction/update				  @controllers.manager.OrderTransaction.updateTransaction()
+
+GET      /product/list                            @controllers.manager.Product.baseList(q: String ?= null, p: Int ?=1, status: Integer ?= 0, category: String ?= null, site: Integer ?= null)
+
+GET      /product/editAttribute                   @controllers.manager.Product.editAttribute(listingId: String)
+
+POST     /product/getValueItem                    @controllers.manager.Product.getValueItem(ikey: Int, count: Int)
+
+POST     /product/saveAttribute                   @controllers.manager.Product.saveAttribute()
+
+POST     /product/deleteEntityMap                 @controllers.manager.Product.deleteEntityMap(id: Int, listingId: String)
+
+POST     /product/updateProductCategory           @controllers.manager.Product.updateProductCategory()
+
+GET      /product/editTranslate/:listingId        @controllers.manager.Product.editTranslate(listingId: String)
+
+POST     /product/saveTranslate                   @controllers.manager.Product.saveTranslate()
+
+GET      /product/deleteTranslate                 @controllers.manager.Product.deleteTranslate(id: Int, listingId: String)
+
+GET      /product/categorytree                    @controllers.manager.Product.getCategoryCheckTree(websiteid: Int, languageid: Int, listingid: String)
+
+GET      /exchangeRate/manager                    @controllers.manager.ExchangeRate.index()
+
+GET      /exchangeRate/useLatestRate              @controllers.manager.ExchangeRate.useLatestRate(code: String, id: Int)
+
+POST     /exchangeRate/updateAndUseRate           @controllers.manager.ExchangeRate.updateAndUseRate()
+
+POST     /exchangeRate/addCurrencyRate           @controllers.manager.ExchangeRate.addCurrency()
+
+GET      /exchangeRate/edit                       @controllers.manager.ExchangeRate.edit(id: Int)
+
+GET      /product/editBaseInfo                    @controllers.manager.Product.editBaseInfo(listingId: String)
+
+GET      /product/editBaseInfo                    @controllers.manager.Product.editBaseInfo(listingId: String)
+
+POST     /product/saveBaseInfo                    @controllers.manager.Product.saveBaseInfo()
+
+POST     /product/updateSalePrice                 @controllers.manager.Product.updateSalePrice()
+
+GET      /product/editStorageMap                  @controllers.manager.Product.editStorageMap(listingId: String) 
+
+POST     /product/updateStorageMap                @controllers.manager.Product.updateStorageMap()
+
+GET	/product/editDetailsSalePrice				  @controllers.manager.Product.editDetailsSalePrice(listingId: String)
+
+GET	/product/editProductCategory				  @controllers.manager.Product.editProductCategory(listingId: String)
+
+#--------email template-----------
+GET      /emailtemplate                           @controllers.manager.EmailTemplate.manageEmailTemplate(page: Int ?= 1,websiteid: Int?=1, ctype: String ?= "all",language: Int ?= 0)
+
+POST     /addnewemailtemplate                     @controllers.manager.EmailTemplate.addNewEmailTemplate()
+
+POST     /editemailtemplate                       @controllers.manager.EmailTemplate.editEmailTemplate()
+
+POST     /deleteemailtemplate                     @controllers.manager.EmailTemplate.deleteEmailTemplate()
+
+POST     /getallemailtemplatetypes                @controllers.manager.EmailTemplate.getAllEmailTemplateTypes()
+
+POST     /addEmailVariable                        @controllers.manager.EmailTemplateVariable.addEmailVariable()
+
+POST     /editemailvariable                       @controllers.manager.EmailTemplateVariable.eiditEmailVariable()
+
+GET      /emailvariable                           @controllers.manager.EmailTemplateVariable.manageEmailVariable()
+
+POST     /deleteemailvariable                     @controllers.manager.EmailTemplateVariable.deleteEmailVariable()
+
+POST     /getemailtemplatevariable                @controllers.manager.EmailTemplateVariable.getEmailTemplateVariable()
+#--------email template-----------
+
+GET      /activity                                @controllers.manager.Activity.activitylist()
+POST     /activity/add                            @controllers.manager.Activity.addRuleRelation()
+POST     /activity/delete                         @controllers.manager.Activity.deleteRuleRelation(iid:Integer ?=null)
+
+#-------category label----------
+GET      /categorylabel                           @controllers.manager.CategoryLabel.getCategoryLabelList()
+
+GET      /categorylabel/add                       @controllers.manager.CategoryLabel.addCategoryLabelChoose(websiteId: Int, type: String)
+
+POST     /categorylabel/save                      @controllers.manager.CategoryLabel.saveCategoryLabel()
+
+GET      /categorylabelname/edit                  @controllers.manager.CategoryLabel.categoryLabelNameEdit(labelId: Int)
+
+POST     /categorylabelname/save                  @controllers.manager.CategoryLabel.categoryLabelNameSave()
+
+GET      /categorylabelname/img                   @controllers.manager.CategoryLabel.view(iid: Int)
+
+POST     /categorylabel/search                    @controllers.manager.CategoryLabel.search()
+
+POST     /categorylabel/delete                    @controllers.manager.CategoryLabel.deleteCategoryLabel(labelId: Int)
+
+
+#------tool--------------
+GET      /tool/pwiki                              @controllers.manager.Tool.toPwiki()
+
+
+#------upload file-------
+GET      /uploadfile                              @controllers.manager.UploadFile.uploadFileManager()
+
+GET      /uploadfile/add                          @controllers.manager.UploadFile.uploadFile()
+
+POST     /uploadfile/save                         @controllers.manager.UploadFile.saveFile()
+
+POST     /uploadfile/search                       @controllers.manager.UploadFile.search()
+
+POST     /uploadfile/delete                       @controllers.manager.UploadFile.deleteUploafile(iid:Integer ?=null)
+
+GET      /uploadfilepath                          @controllers.manager.UploadFilePath.uploadFilePathManager
+
+POST     /uploadfilepath/save                     @controllers.manager.UploadFilePath.saveUploadFilePath
+
+POST     /uploadfilepath/delete                   @controllers.manager.UploadFilePath.deleteUploadFilePath(iid:Integer ?=null)
+
+GET      /role/list                               @controllers.manager.AdminRole.roleManager()
+POST     /role/save                               @controllers.manager.AdminRole.addAdminRole()
+POST     /role/update                             @controllers.manager.AdminRole.updateAdminRole()
+GET      /role/delete                             @controllers.manager.AdminRole.deleteAdminRole(iid:Long)
+
+GET      /menurole/list                           @controllers.manager.AdminRole.roleFunctionManager()
+POST     /menurole/add                            @controllers.manager.AdminRole.addMenuRole(iroleid:Integer ?=null, chklist: String)
+GET      /menurole/menulist                       @controllers.manager.AdminRole.getMenuByRoleId(iroleid:Integer ?=null)
+
+#------client manager-------
+GET      /member/manager                          @controllers.manager.Member.memberManager()
+
+POST     /member/updatepassword                   @controllers.manager.Member.updatePassword()
+
+POST     /member/search                           @controllers.manager.Member.search()
+
+GET      /member/integral                         @controllers.manager.MemberIntegral.memberIntegralManager()
+
+POST     /member/integral/search                  @controllers.manager.MemberIntegral.search()
+
+POST     /member/integral/edit                    @controllers.manager.MemberIntegral.editMemberIntegral()
+
+GET      /member/bulk                             @controllers.manager.Member.showBulk(p: Int ?= 1, limit: Int ?=30)
+
+POST     /member/bulk/add                         @controllers.manager.Member.addBulk()
+
+GET      /member/bulk/toedit                      @controllers.manager.Member.toEditBulk(id: Int)
+
+POST     /member/bulk/edit                        @controllers.manager.Member.editBulk()
+
+GET      /member/bulk/del                         @controllers.manager.Member.delBulk(id:Integer?=null)
+
+GET      /member/getmembergroup                   @controllers.manager.Member.showMemberGroup(id:Integer?=null)
+
+GET      /member/bulkrate                         @controllers.manager.Member.showBulkrate(bulkid:Integer?=null,p: Int ?= 1, limit: Int ?=30)
+
+POST     /member/bulkrate/add                     @controllers.manager.Member.addBulkrate()
+
+GET      /member/bulkrate/toedit                  @controllers.manager.Member.toEditBulkrate(id: Int)
+
+POST     /member/bulkrate/edit                    @controllers.manager.Member.editBulkrate()
+
+GET      /member/bulkrate/del                     @controllers.manager.Member.delBulkrate(id:Integer?=null)
+
+GET     /member/seach/download					  @controllers.manager.Member.downloadMemberList(email:String ?=null,blackUserStatus:Integer?=null,contry:String ?= null,siteid:Integer ?= null,vhost: String?=null,bactivated: String?=null,bnewsletter: String?=null,start:String?=null,end:String?=null,pageSize:Integer?=30,pageNum:Integer?=1)
+
+GET     /member/role/search						  @controllers.manager.member.MemberRole.search(email:String ?=null,siteId:String ?=null,memberRole:String ?=null,page:Integer ?=1,pageSize:Integer ?=10)
+
+GET     /member/role/edit                         @controllers.manager.member.MemberRole.editForm(iid:Integer?=null,email:String?=null) 
+
+POST     /member/role/update					  @controllers.manager.member.MemberRole.updateMemberRole()
+
+GET      /sysparameter/list                       @controllers.manager.SystemParameter.list()
+POST     /sysparameter/add                        @controllers.manager.SystemParameter.addSysParameter()
+POST     /sysparameter/alter                      @controllers.manager.SystemParameter.alterSysParameter()
+GET      /sysparameter/delete                     @controllers.manager.SystemParameter.deleteSysParameter(iid:Integer?=null)
+GET      /sysparameter/validateKey                @controllers.manager.SystemParameter.validateKey(key: String, iid:Integer?=null)
+GET      /sysparameter/alllanguage                @controllers.manager.SystemParameter.getAlllanguage()
+GET      /sysparameter/allwebsite                 @controllers.manager.SystemParameter.getAllWetsite()
+
+#-------Product-FAQ--------------------
+
+GET      /product-faq                             @controllers.manager.ProductFAQ.index(page:Int?=1,pageSize:Int?=15)
+POST     /post/search                             @controllers.manager.ProductFAQ.search()
+POST     /post/updatepostanswer                   @controllers.manager.ProductFAQ.updatePostAnswer()
+
+#-------Affiliate--------------------
+GET      /affiliate/user                               @controllers.manager.Affiliate.index(page:Int?=1)
+POST      /affiliate/search                         @controllers.manager.Affiliate.search()
+POST     /affiliate/addUser                          @controllers.manager.Affiliate.doUser()
+GET      /affiliate/del                           @controllers.manager.Affiliate.delUser(aid:String?=null)
+GET      /affiliate/edits                          @controllers.manager.Affiliate.editForm(aid:String?=null) 
+POST     /affiliate/edit                          @controllers.manager.Affiliate.doEdit() 
+POST     /affiliate/checkcaid                     @controllers.manager.Affiliate.checkCaid()
+
+GET      /affiliate/banner                        @controllers.manager.Affiliate.getAffiliateBanners(page: Integer ?= 1, pageSize: Integer ?=10)
+GET      /affiliate/bannerid/:id                  @controllers.manager.Affiliate.getBanner(id:Integer)
+
+GET      /affiliate/checkEmail                    @controllers.manager.Affiliate.checkEmail(cemail:String?=null,website:Integer?=0)
+
+
+POST     /affiliate/banner/edit                   @controllers.manager.Affiliate.editBanner()
+POST     /affiliate/banner/delete                 @controllers.manager.Affiliate.delBanner(id: Int)
+POST     /affiliate/banner/add                    @controllers.manager.Affiliate.addBanner()
+GET      /affiliate/category                      @controllers.manager.Affiliate.getCategory(language:Int?=1,websiteid:Int?=1)
+
+GET      /affiliate/commission                    @controllers.manager.Commission.index(p:Int?=1, limit:Int?=10, startdate:String?="",enddate:String?="",aid:String?="",pid:String?="",status:Integer?=null)
+GET      /affiliate/commission/changeStatus       @controllers.manager.Commission.changeStatus(id:Int, originalStatus:Int, status:Int)
+GET      /affiliate/commission/edit               @controllers.manager.Commission.editTransaction(id:Integer)
+POST     /affiliate/commission/edit               @controllers.manager.Commission.doEditTransaction()
+GET      /affiliate/commission/orderlist          @controllers.manager.Commission.getOrder(cid:Int,p:Int?=1,limit:Int?=10,hstatus:Int?=-1)
+GET      /affiliate/commission/order/edit         @controllers.manager.Commission.editCommission(id:Integer,cid:Integer)
+POST     /affiliate/commission/order/edit         @controllers.manager.Commission.doEdit()
+GET      /affiliate/commission/order/status       @controllers.manager.Commission.changeOrderStatus(id:Integer,cid:Integer,status:Integer)
+
+
+	
+GET      /affiliate/statistics                    @controllers.manager.CommissionStatistics.statistics(sd:String?="",ed:String?="",aid:String?="",userid:Integer?=0,website:Integer?=0)
+GET      /affiliate/statistics/download           @controllers.manager.CommissionStatistics.download(sd:String?="",ed:String?="",aid:String?="",userid:Integer?=0,website:Integer?=0)
+GET      /affiliate/trafficreport                 @controllers.manager.CommissionStatistics.trafficReport(p:Int?=1,limit:Int?=30,sd:String?="",ed:String?="",aid:String?="",source:String?="",landing:String?="",userid:Integer?=0,website:Int?=1)
+
+#--------------superdeal------------------------
+GET      /superdeal                               @controllers.manager.SuperDeal.getSuperDeals(p : Integer ?= 1, pageSize: Integer ?=10,rootId: Integer ?=-1, sku: String ?= "")
+POST     /superdeal/add                           @controllers.manager.SuperDeal.addSuperDeals()
+POST     /superdeal/delete                        @controllers.manager.SuperDeal.deleteSuperDeals()
+POST     /superdeal/information                   @controllers.manager.SuperDeal.getSuperDealSkuInformation()
+POST     /superdeal/condition                     @controllers.manager.SuperDeal.changeSuperDealSearchCondition()
+GET      /superdeal/init                          @controllers.manager.SuperDeal.superdealInit()
+POST     /superdeal/show                          @controllers.manager.SuperDeal.updateSuperDealBshow()
+
+#-------Customer Service--------------------
+GET      /customerservice/manage                  @controllers.manager.CustomerService.manage(page:Int?=1)
+GET      /customerservice/edit                    @controllers.manager.CustomerService.edit(userID:Integer?=null)
+POST     /customerservice/save                    @controllers.manager.CustomerService.save()
+GET      /customerservice/skillmanage             @controllers.manager.CustomerService.skillManage(page:Int?=1)
+GET      /customerservice/skilledit               @controllers.manager.CustomerService.skillEdit(id:Int)
+POST     /customerservice/skillsave               @controllers.manager.CustomerService.skillSave()
+GET      /customerservice/skilldelete             @controllers.manager.CustomerService.skillDelete(id:Int,p:Int?=1)
+POST     /customerservice/skilladd                @controllers.manager.CustomerService.skillAdd()
+GET      /customerservice/schedulemanage          @controllers.manager.CustomerService.scheduleManage(page:Int?=1)
+GET      /customerservice/scheduledelete          @controllers.manager.CustomerService.scheduleDelete(id:Int,p:Int?=1)
+POST     /customerservice/scheduleadd             @controllers.manager.CustomerService.scheduleAdd()
+POST     /customerservice/schedulemanage          @controllers.manager.CustomerService.scheduleSearch()
+GET      /customerservice/topicmanage             @controllers.manager.CustomerService.topicManage(p:Int?=1)
+POST     /customerservice/topicadd                @controllers.manager.CustomerService.topicAdd()
+POST     /customerservice/topicmanage             @controllers.manager.CustomerService.topicSearch()
+GET      /customerservice/topicedit               @controllers.manager.CustomerService.topicEdit(id:Int)
+POST     /customerservice/topicsave               @controllers.manager.CustomerService.topicSave()
+GET      /customerservice/scoretype               @controllers.manager.CustomerService.scoreType(p:Int?=1)
+POST     /customerservice/scoretypeadd            @controllers.manager.CustomerService.scoreTypeAdd()
+GET      /customerservice/scoretypedelete         @controllers.manager.CustomerService.scoreTypeDelete(id:Int,p:Int?=1)
+GET      /customerservice/scoretypeedit           @controllers.manager.CustomerService.scoreTypeEdit(id:Int)
+POST     /customerservice/scoretypesave           @controllers.manager.CustomerService.scoreTypeSave()
+GET      /customerservice/scoremanage             @controllers.manager.CustomerService.scoreManage(p:Int?=1)
+POST     /customerservice/scoremanage             @controllers.manager.CustomerService.scoreSearch()
+
+GET      /leavemessage/manager                    @controllers.manager.LeaveMessage.manage(page:Int?=1)
+POST     /leavemessage/search                     @controllers.manager.LeaveMessage.search()
+GET      /leavemessage/searchPage                 @controllers.manager.LeaveMessage.searchLeaveMessagePage(page:Int,ilanguageid:Int, itopicid:Int, bishandle: String,pretreatmentuserid:Int,handlerid:Int)
+POST     /leavemessage/handle/:iid                @controllers.manager.LeaveMessage.handle(iid:Integer)
+POST     /leavemessage/reply/email                @controllers.manager.LeaveMessage.replyMessage()
+POST     /leavemessage/reply                      @controllers.manager.LeaveMessage.replyMsgBySystem()
+
+GET      /customerservice/sendmessage             @controllers.manager.CustomerService.messageIndex(p:Int?=1)
+POST     /customerservice/sendmessage             @controllers.manager.CustomerService.sendMessage()
+
+#-------Check--------------------
+POST     /check/frontend/user                     @controllers.manager.check.Frontend.emailExist()
+
+
+#-----------------add by lijun for crm message--------------------#
+GET      /crm/message-list                        @controllers.manager.crm.Message.showMessageList(page : Int ?=1,pageSize : Int ?= 15)
+POST     /crm/message-add                         @controllers.manager.crm.Message.addOrUpdateMessage()
+GET      /crm/message-publish                     @controllers.manager.crm.Message.publish(id : Int)
+GET      /crm/message-delete                      @controllers.manager.crm.Message.delete(id : Int)
+
+#-----livechat-----
+GET      /livechat/users/:pid/:lid                @controllers.manager.AdminUser.getLiveChatUsers(pid: Int,lid: Int)
+GET      /livechat/optimaluser/:pid/:lid          @controllers.manager.AdminUser.getLiveChatOptimalUsers(pid: Int,lid: Int)
+GET      /livechat/history                        @controllers.manager.livechat.LiveChat.searchHistory(sessionId:String ?=null)
+GET      /livechat/searchHistoryMsgPage           @controllers.manager.livechat.LiveChat.searchHistoryMsgPage(page:Int,cName:String, sName:String, key: String, sDate:String, eDate:String)
+GET      /livechat/sessionstatistics              @controllers.manager.livechat.LiveChat.getSessionStatistics()
+
+#---------------------------affiliate order report--------------------------------------#
+
+GET      /order/report/index                      @controllers.manager.OrderReport.index()
+
+POST     /order/report/list                       @controllers.manager.OrderReport.list()
+
+#---------review---------------
+GET      /reviews/manager                         @controllers.manager.Review.reviewsManagement(p: Int ?=1, pageSize:Int ?=15, sku: String ?="", status: Int ?=3, email: String?="", startDate: String?="", endDate: String?="", content: String?=null, websiteid: Integer?=1)
+POST     /reviews/verify                          @controllers.manager.Review.reviewVerify()
+POST     /reviews/batchverify                     @controllers.manager.Review.batchVerify()
+
+GET      /reviews/editcomment                     @controllers.manager.Review.editComment(id:Int)
+
+GET      /reviews/searchsku                       @controllers.manager.Review.searchforSku(skustr:String)
+POST     /reviews/add                             @controllers.manager.Review.saveReviewManger()
+POST     /reviews/update                          @controllers.manager.Review.updateReviewManger()
+GET      /reviews/vaildemail                      @controllers.manager.Review.vaildEmail(email:String ?="")
+GET      /reviews/vaildsku                        @controllers.manager.Review.vaildSku(sku:String ?="",websiteid:Int ?=1)
+GET      /reviews/vailddate                       @controllers.manager.Review.vaildDate(sku:String ?="")
+POST     /reviews/download                        @controllers.manager.Review.downloadTemplate()
+POST     /reviews/upload                          @controllers.manager.Review.upload()
+
+GET      /video/manager                           @controllers.manager.Video.videohome(p:Int?=1,limit:Int?=20,st:Int?=-1)
+
+POST     /video/verify                            @controllers.manager.Video.verify()
+
+POST     /video/batchverify                       @controllers.manager.Video.batchverify()
+
+GET      /photo/manager                           @controllers.manager.Photo.photohome(p:Int?=1,limit:Int?=20,st:Int?=-1)
+
+POST     /photo/verify                            @controllers.manager.Photo.verify()
+
+POST     /photo/batchverify                       @controllers.manager.Photo.batchverify()
+
+#------dropship-------
+GET      /dropship/manager                        @controllers.manager.DropShip.dropShipManager()
+
+GET      /dropshiporder/manager                   @controllers.manager.DropShipOrder.dropShipOrderManager()
+
+POST     /dropshiporder/search                    @controllers.manager.DropShipOrder.search()
+
+POST     /dropship/search                         @controllers.manager.DropShip.search()
+
+POST     /dropship/updatestatus                   @controllers.manager.DropShip.updateStatus(iid: Int, statusid: Int)
+
+POST     /dropship/updatelevel                    @controllers.manager.DropShip.updateLevel(iid: Int, levelid: Int)
+
+#-----------------Marketing Coupon--------------------#
+GET      /marketing/couponrule                    @controllers.manager.coupon.Rule.getAll(page:Int?=1,pageSize:Int?=15)
+GET      /marketing/send/list                     @controllers.manager.coupon.Send.list(page:Int?=1,pageSize:Int?=15)
+POST     /marketing/couponrule/add                @controllers.manager.coupon.Rule.add()
+GET      /marketing/couponruleid/:id              @controllers.manager.coupon.Rule.get(id:Int)
+POST     /marketing/couponrule/del                @controllers.manager.coupon.Rule.del(id:Int)
+GET      /couponSend/list                         @controllers.manager.coupon.Send.list(page:Int?=1,pageSize:Int?=15)
+POST     /couponSend/addOrUpdate                  @controllers.manager.coupon.Send.addOrUpdate()
+GET      /couponSend/delete                       @controllers.manager.coupon.Send.delete(id : Int)
+POST     /couponSend/publish                      @controllers.manager.coupon.Send.publish(id : Int)
+POST     /marketing/couponrule/edit               @controllers.manager.coupon.Rule.edit()
+GET      /couponSend/lock                         @controllers.manager.coupon.Send.lock(id : Int)
+GET      /couponSend/unlock                       @controllers.manager.coupon.Send.unlock(id : Int)
+GET      /marketing/couponcode                    @controllers.manager.coupon.Code.list(page:Int?=1,pageSize:Int?=15)
+POST     /marketing/couponcode/add                @controllers.manager.coupon.Code.add(amount:Int?=1,ruleId:Int)
+POST     /marketing/couponcode/del                @controllers.manager.coupon.Code.del(id:Int)
+GET      /marketing/couponrule/productcategory    @controllers.manager.coupon.Rule.getProductCategory(id:Int)
+POST     /marketing/couponrule/treecheck/add      @controllers.manager.coupon.Rule.addTreeCheck()
+GET      /marketing/couponrule/treecheckid        @controllers.manager.coupon.Rule.getTreeCheckByRuleId(ruleId:Integer)
+POST     /marketing/couponrule/status/on          @controllers.manager.coupon.Rule.ChangeStatusOn(id:Integer)
+POST     /marketing/couponrule/status/off         @controllers.manager.coupon.Rule.ChangeStatusOff(id:Integer)
+GET      /marketing/couponsend/reissue            @controllers.manager.coupon.Send.reissueCoupon()
+GET      /coupon/relation                         @controllers.manager.coupon.CouponSkuRelation.getAll(p:Int?=1,sku:String?=null)
+POST     /coupon/relation/add                     @controllers.manager.coupon.CouponSkuRelation.addRelation()
+GET      /coupon/relation/updateStatus            @controllers.manager.coupon.CouponSkuRelation.updateStatus(id:Integer,status:Boolean)
+GET      /coupon/relation/delRelation             @controllers.manager.coupon.CouponSkuRelation.delRelation(id:Integer)
+GET      /coupon/relation/checkSku                @controllers.manager.coupon.CouponSkuRelation.checkSku(sku:String)
+GET      /coupon/relation/checkStatus             @controllers.manager.coupon.CouponSkuRelation.checkStatus(sku:String)
+GET      /couponSend/website                      @controllers.manager.coupon.Send.getWebsiteById(id : Int)
+#------activity-------
+GET      /buyonegetonefree                        @controllers.manager.activity.ProductActivity.show(issuccess: Boolean?=false)
+
+
+POST     /copy                                    @controllers.manager.activity.ProductActivity.copyListing()
+
+GET      /copy/getPrice                           @controllers.manager.activity.ProductActivity.getPrice(price:String,sku:String)    
+
+GET      /copy/getsku                             @controllers.manager.activity.ProductActivity.getCskus(data:String)
+
+GET      /showcopy/getsku                         @controllers.manager.activity.ProductActivity.getSkuBySpu(data:String)
+
+GET      /copy/update                             @controllers.manager.activity.ProductActivity.updateByProduct(aid:Integer,mspu:String,spu:String,price:Double,qty:Integer,startDate:String,endDate:String)
+
+GET      /copy/showResult                         @controllers.manager.activity.ProductActivity.showProduct()
+
+GET      /copy/status                             @controllers.manager.activity.ProductActivity.changeStatus(aid:Integer,status:Boolean)
+#------wholesale-------
+GET      /wholesale/order                         @controllers.manager.WholeSale.manageOrder()
+POST     /wholesale/searchorder                   @controllers.manager.WholeSale.search()
+GET      /wholesale/edittotal                     @controllers.manager.WholeSale.editTotal(id:Int)
+POST     /wholesale/savetotal                     @controllers.manager.WholeSale.saveTotal()
+GET      /wholesale/manager                       @controllers.manager.wholesale.WholeSale.wholesaleManager()
+POST     /wholesale/search                        @controllers.manager.wholesale.WholeSale.search()
+POST     /wholesale/updatestatus                  @controllers.manager.wholesale.WholeSale.updateStatus(iid: Int, statusid: Int)
+GET      /wholesale/discount                      @controllers.manager.WholeSale.manageDiscount()
+POST     /wholesale/discount/search               @controllers.manager.WholeSale.searchDiscount()
+GET      /wholesale/discount/edit                 @controllers.manager.WholeSale.editDiscount(id:Int)
+GET      /wholesale/discount/delete               @controllers.manager.WholeSale.deleteDiscount(id:Int)
+POST     /wholesale/discount/save                 @controllers.manager.WholeSale.saveDiscount()
+
+GET      /promocode/view                          @controllers.manager.coupon.PromoCode.view(page : Int ?= 1,pageSize : Int ?= 15)
+POST     /promocode/add                           @controllers.manager.coupon.PromoCode.add()
+POST     /promocode/editassociationrule           @controllers.manager.coupon.PromoCode.editAssociationRule()
+
+GET      /rule/reopen                             @controllers.manager.coupon.Rule.reopen(ruleId : Int)
+
+GET      /appversion/list                         @controllers.manager.AppVersion.list()
+POST     /appversion/add                          @controllers.manager.AppVersion.addAppVersion()
+POST     /appversion/update                       @controllers.manager.AppVersion.updateAppVersion()
+GET      /appversion/delete                       @controllers.manager.AppVersion.deleteAppVersion(iid:Int)
+
+GET      /contactmanager/list                     @controllers.manager.Contact.list()
+
+#-----product label manager----------
+GET      /homepage/showsetting                    @controllers.manager.HomePageProductShowSetting.pageProductShowSetting(p: Integer?=1, siteId: Integer?=1, sku:String?=null, type: String?="hot")
+GET      /productlabel/updateTime                 @controllers.manager.HomePageProductShowSetting.updateProductLabelTime(id: Integer,labelType: String, siteId: Integer)
+
+#---------mayi api------------------
+POST     /mayiapi/orderlist                       @controllers.manager.api.OrderApiController.showOrders()
+POST     /mayiapi/orderdetaillist                 @controllers.manager.api.OrderApiController.showOrderDetails()
+POST     /mayiapi/visitLog                        @controllers.manager.api.VisitlogApiController.showVisitLog()			
+POST     /mayiapi/saveaid                         @controllers.manager.api.AidApiController.saveAid()
+
+#---------download----------------
+GET      /attachment                              @controllers.manager.attachment.AttachmentManager.index()
+
+GET      /uploadedit                              @controllers.manager.attachment.AttachmentManager.updateAttachment()
+
+POST     /savefile                                @controllers.manager.attachment.AttachmentManager.saveAttachment()
+
+POST     /search                                  @controllers.manager.attachment.AttachmentManager.search()
+
+DELETE   /delete/:iid                             @controllers.manager.attachment.AttachmentManager.deleteAttachment(iid:Int)
+
+GET      /attachmentdesc/edit                     @controllers.manager.attachment.AttachmentDescript.edit(iid:Int)
+
+POST     /attachmentdesc/update                   @controllers.manager.attachment.AttachmentDescript.updateAttachmentDesc()
+
+GET      /attachment/mapper                       @controllers.manager.attachment.ProductAttachment.index()
+
+POST     /attachment/mapper/search                @controllers.manager.attachment.ProductAttachment.search()
+
+POST     /attachment/mapper/add                   @controllers.manager.attachment.ProductAttachment.addProductAttachmentMapper()
+
+DELETE   /attachment/mapper/delete                @controllers.manager.attachment.ProductAttachment.deleteProductAttachmentMapper(iid:Int)
+
+GET      /attachmentdesc/search                   @controllers.manager.attachment.ProductAttachment.getDescByLanguageIdAndTitle(languageId:Int, title:String)
+
+#---------home basic messages manager---------------	
+GET    /home/manager                  			@controllers.manager.Seo.getSeoList(p: Int?=1)
+
+POST   /addseo              		   			@controllers.manager.Seo.addSeo()
+
+POST   /deleteseo				       			@controllers.manager.Seo.deleteSeo()
+
+POST   /updateseo				     		    @controllers.manager.Seo.updateSeo()
+
+POST   /searchseo			   					@controllers.manager.Seo.search()
+#---------back user------------------	
+POST	/addbackuser					     	@controllers.manager.BlackUser.addBlackUser()
+POST	/removeBlackUser					    @controllers.manager.BlackUser.removeBlackUser()
+
+#-base
+GET      /country/show                          @controllers.manager.Country.showCountrys(cp : Int ?= 1,limit : Int ?= 15)
+GET      /country/toEditCountryInfo             @controllers.manager.Country.toEditCountryInfo(ciid : Int)
+POST     /country/updateCountryInfo             @controllers.manager.Country.updateCountryInfo()
+
+GET      /language/list              			@controllers.manager.Language.list(lp : Int ?= 1,limit : Int ?= 15)
+
+#---------coupon code manager---------------	
+GET    /coupon/manager                  	    @controllers.manager.CouponCode.getList(p: Int?=1)
+
+POST   /coupon/searchCouponCode	   					@controllers.manager.CouponCode.search()
+
+GET    /coupon/downloadCouponCodes          @controllers.manager.CouponCode.downloadCouponCodes(ruleid: String ?= null, code: String ?=null)
+
+#---------wholesale inquiry manager---------------	
+GET   /wholesaleinquiry/manager                @controllers.manager.WholeSaleInquiry.getList(p: Int?=1)
+
+GET   /wholesaleinquery/downloadWholesaleinquiry   @controllers.manager.WholeSaleInquiry.downloadWholeSaleInquirys(startDate: String ?=null,endDate: String ?=null)
+
+POST   /searchwholesaleinquery	   				@controllers.manager.WholeSaleInquiry.search()
+
+GET     /attachmentdesc/search                  @controllers.manager.attachment.ProductAttachment.getDescByLanguageIdAndTitle(languageId:Int, title:String)
+
+#----------------storage-------------------------
+GET     /storage/storageSeach			         @controllers.manager.storage.StorageManagerController.storageParentSubList(type:String,cstorageName:String,page:Int,pageSize:Int)
+GET     /storage/storageparent         			 @controllers.manager.storage.StorageManagerController.storageParentInfo()
+GET     /storage/storagearrival            		 @controllers.manager.storage.StorageManagerController.storageArrivalInfo()
+GET     /storage/storagedefault            		 @controllers.manager.storage.StorageManagerController.storageDefaultInfo()
+POST    /storage/storageArrUp                  	 @controllers.manager.storage.StorageManagerController.updateStorageArrival()
+POST    /storage/storageDefup                  	 @controllers.manager.storage.StorageManagerController.updateStorageDefault()
+POST    /storage/storageSubup                  	 @controllers.manager.storage.StorageManagerController.updateStorageSub()
+GET 	/storage/storageDel 					 @controllers.manager.storage.StorageManagerController.deleteStorageRecord(type:String,iid:Int)
+GET 	/storage/storageParentDel 				 @controllers.manager.storage.StorageManagerController.deleteStorageParentRecord(storageName:String)
+
+
+POST 	/storage/addStorageArrival 				 @controllers.manager.storage.StorageManagerController.addStorageArrival()
+POST 	/storage/addStorageDefault 				 @controllers.manager.storage.StorageManagerController.addStorageDefault()
+POST 	/storage/addStorageParent 				 @controllers.manager.storage.StorageManagerController.addStorageParent()
+#POST 	/storage/addStorageSub 				 	@controllers.manager.storage.StorageManagerController.addStorageArrival()
+GET 	/customershare/managerCShare 			@controllers.manager.CustomerShareManagerController.queryCustomerShare(email:String ?= null,url:String ?= null,type:String ?= null,country:String ?= null,page:Int ?=1,pageSize:Int ?=1,pageRange:Int ?=1)
+GET    /customershare/export	   				@controllers.manager.CustomerShareManagerController.exportCustomerShare(email:String ?= null,url:String ?= null,type:String ?= null,country:String ?= null)
+POST    /searchwholesaleinquery	   				@controllers.manager.WholeSaleInquiry.search()
+
+#--------- theme css template manager---------------	
+GET    /themecss/manager                  	    @controllers.manager.ThemeCssTemplate.getList(p: Int?=1)
+
+POST   /themecss/searchThemeCss       	        @controllers.manager.ThemeCssTemplate.search()
+
+POST   /themecss/addThemeCss       	    		@controllers.manager.ThemeCssTemplate.addThemeCssTemplate()
+
+POST   /themecss/deleteThemeCss 			   	@controllers.manager.ThemeCssTemplate.deleteThemeCssTemplate()
+
+POST   /themecss/updateThemeCss 				@controllers.manager.ThemeCssTemplate.updateThemeCssTemplate()
+
+#--------- theme group template manager---------------	
+GET    /themegroup/manager                  	@controllers.manager.ThemeGroupTemplate.getInitThemeGroups(p: Int?=1)
+
+POST   /themegroup/searchThemeGroup       	    @controllers.manager.ThemeGroupTemplate.search()
+
+POST   /themegroup/addThemeGroup       	    	@controllers.manager.ThemeGroupTemplate.addThemeGroupTemplate()
+
+POST   /themegroup/deleteThemeGroup			   	@controllers.manager.ThemeGroupTemplate.deleteThemeGroupTemplate()
+
+POST   /themegroup/updateThemeGroup 			@controllers.manager.ThemeGroupTemplate.updateThemeGroupTemplate()
+
+GET   /themegroup/editThemeGroupList		    @controllers.manager.ThemeGroupTemplate.getThemeGroupTemplateAndThemeGroupName(themeGroupId:Int)
+
+#----------------theme---------------------------------
+GET      /marketing/theme                        @controllers.manager.ThemeAction.manage(p:Int?=1)
+GET      /marketing/theme/deleteTheme            @controllers.manager.ThemeAction.deleteTheme(id:Int,p:Int?=1)
+GET      /marketing/theme/getTheme               @controllers.manager.ThemeAction.getTheme(id:Int)
+POST     /marketing/theme/saveTheme              @controllers.manager.ThemeAction.saveTheme()
+POST     /marketing/theme/addTheme               @controllers.manager.ThemeAction.addTheme()
+GET      /marketing/themesku                     @controllers.manager.ThemeSkuAction.manage(p:Int?=1)
+GET      /marketing/themesku/deleteThemeSku      @controllers.manager.ThemeSkuAction.deleteThemeSku(id:Int,p:Int?=1)
+GET      /marketing/themesku/getThemeSku         @controllers.manager.ThemeSkuAction.getThemeSku(id:Int)
+GET      /marketing/themesku/getThemeGroup       @controllers.manager.ThemeSkuAction.getThemeGroup()
+POST     /marketing/themesku/saveThemeSku        @controllers.manager.ThemeSkuAction.saveThemeSku()
+POST     /marketing/themesku/addThemeSku         @controllers.manager.ThemeSkuAction.addThemeSku()
+GET      /marketing/themesku/validate            @controllers.manager.ThemeSkuAction.validate()
+GET      /marketing/theme/validateUrl            @controllers.manager.ThemeAction.validateUrl()
+
+#----------------google category-------------------------
+GET    /google/category/show                     @controllers.manager.google.category.GoogleCategory.googleCategoryManager(p: Int?=1,cname: String?=null)
+GET    /google/category/selectChirld             @controllers.manager.google.category.GoogleCategory.selectChildren(cid: Int)
+GET    /google/category/detail                   @controllers.manager.google.category.GoogleCategory.categoryDetail(cid: Int?=0,name: String?=null,p: Int?=1)
+POST   /google/category/addSku					 @controllers.manager.google.category.GoogleCategory.addSku()
+POST    /google/category/selectDetail			 @controllers.manager.google.category.GoogleCategory.selectDetail()
+POST   /google/category/addDetail				 @controllers.manager.google.category.GoogleCategory.addDetail()
+GET    /google/category/selectSkuDetail          @controllers.manager.google.category.GoogleCategory.selectSkuDetail(cid: Int,sku: String)
+POST   /google/category/delSku					 @controllers.manager.google.category.GoogleCategory.delSku()
+POST   /google/category/import					 @controllers.manager.google.category.GoogleCategory.importGoogleCategorys()
+GET    /google/category/checkSku                 @controllers.manager.google.category.GoogleCategory.checkSku(skus: String,cid: Int)
+GET    /google/category/checkAttr                @controllers.manager.google.category.GoogleCategory.checkAttr(attName: String,cid: Int,watt: Int)
+
+#---------------google feeds ------------
+GET    /google/category/feeds                    @controllers.manager.google.category.GoogleFeeds.getAll(p: Int?=1)
+POST   /google/category/addFeeds                 @controllers.manager.google.category.GoogleFeeds.addFeeds()
+POST    /google/category/delFeeds				 @controllers.manager.google.category.GoogleFeeds.delFeeds(id: Int)
+GET    /google/addRecord              			 @controllers.manager.google.category.GoogleFeeds.addRecord()
+GET    /google/updateRecord              		 @controllers.manager.google.category.GoogleFeeds.updateRecord()
+GET    /google/getCodeForRefreshToken            @controllers.manager.google.category.GoogleFeeds.getCodeForRefreshToken()
+GET    /google/addRefreshToken              	 @controllers.manager.google.category.GoogleFeeds.addRefreshToken(code: String)
+GET    /google/pushProductMerchants              @controllers.manager.google.category.GoogleFeeds.pushProductMerchants()
+GET  /google/category/searchProductMerchants     @controllers.manager.google.category.GoogleFeeds.pageProductMerchants()
+POST  /google/searchMerchants   		     	@controllers.manager.google.category.GoogleFeeds.searchProductMerchants()
+GET  /google/category/productMerchantDetail     @controllers.manager.google.category.GoogleFeeds.productMerchantsDetails(nodeId: String)
+GET  /google/category/autoProductMerchants      @controllers.manager.google.category.GoogleFeeds.autoPushProductMerchants()
+GET  /google/category/searchNoMerchants    		 @controllers.manager.google.category.GoogleFeeds.pageNoProductMerchants()
+POST  /google/searchNoMerchants   		     	@controllers.manager.google.category.GoogleFeeds.searchNoProductMerchants()
+GET  /google/pageSearchConfigData   		    @controllers.manager.google.category.GoogleFeeds.pageMerchantProductConfigData()
+POST  /google/searchConfigData   		     	@controllers.manager.google.category.GoogleFeeds.searchMerchantProductConfigData()
+GET  /google/pushConfigData   		     		@controllers.manager.google.category.GoogleFeeds.pushMerchantProductConfigData(cnodeids: String)
+GET  /google/deleteConfigData   		     	@controllers.manager.google.category.GoogleFeeds.deleteMerchantProductConfigData(cnodeids: String)
+GET  /google/deleteGoogleBackData   		    @controllers.manager.google.category.GoogleFeeds.deleteGoogleBackRecords(ids: String)
+GET  /google/pushSelectMerchantProduct   		@controllers.manager.google.category.GoogleFeeds.pushSelectMerchantProduct(ids: String)
+GET  /google/checkSwitch   		    			@controllers.manager.google.category.GoogleFeeds.checkSwitchManage(type:String,value:String)
+GET  /google/getSwitch   		    			@controllers.manager.google.category.GoogleFeeds.getSwitchs()
+GET  /google/pullDataLimit   		    		@controllers.manager.google.category.GoogleFeeds.pullMerchantsProductByIdList( lange: String, country: String, productdIdList: String, productId: String)
+GET  /google/pushDataLimit   		    		@controllers.manager.google.category.GoogleFeeds.pushMerchantsProductByLangeAndCountry( lange: String, country: String)
+GET  /google/getProductPriceTest				@controllers.manager.google.category.GoogleFeeds.getProductPriceTest( listingId: String, currency: String)	
+POST  /google/pullProductsByCnodeids  		    @controllers.manager.google.category.GoogleFeeds.pullMerchantsProductByProductCnodeidList( cnodeIdList:String)
+
+#---------------  google task ---------------
+GET    /google/addRecordNew              		@controllers.manager.google.category.GoogleFeedTask.addRecord()
+GET    /google/updateRecordNew              	@controllers.manager.google.category.GoogleFeedTask.updateRecord()
+GET    /google/deleteRecordNew              	@controllers.manager.google.category.GoogleFeedTask.deleteAllRecord()
+GET    /google/updateGoogleProductNew           @controllers.manager.google.category.GoogleFeedTask.updateProductPriceAndAvailability( lange: String, country: String, productdIdList: String, productId: String)
+GET    /google/deleteGoogleProductNew           @controllers.manager.google.category.GoogleFeedTask.deleteProductPriceAndAvailability( lange: String, country: String, productdIdList: String, status: Int?=-1)
+
+#--------- vote statistics manager---------------	
+GET    /votestatistics/manage              	    @controllers.manager.VoteRecordAction.getInitVoteRecord(p:Int?=1)
+
+POST   /votestatistics/search              	    @controllers.manager.VoteRecordAction.search()
+
+#----------------page---------------------------------
+GET      /marketing/page                        @controllers.manager.PageAction.manage(p:Int?=1)
+GET      /marketing/page/delete                 @controllers.manager.PageAction.delete(id:Int,p:Int?=1)
+GET      /marketing/page/get                    @controllers.manager.PageAction.get(id:Int)
+POST     /marketing/page/save                   @controllers.manager.PageAction.save()
+POST     /marketing/page/add                    @controllers.manager.PageAction.add()
+GET      /marketing/page/validate               @controllers.manager.PageAction.validate()
+GET      /marketing/pageitem                    @controllers.manager.PageItemAction.manage(p:Int?=1)
+GET      /marketing/pageitem/delete             @controllers.manager.PageItemAction.delete(id:Int,p:Int?=1)
+GET      /marketing/pageitem/get                @controllers.manager.PageItemAction.get(id:Int)
+POST     /marketing/pageitem/save               @controllers.manager.PageItemAction.save()
+POST     /marketing/pageitem/add                @controllers.manager.PageItemAction.add()
+GET      /marketing/pageitem/validate           @controllers.manager.PageItemAction.validate()
+
+#--------------------------------report---------------------
+GET      /report/skusalesreport       			@controllers.manager.skusalesreport.SkuSalesReportAction.manage(p:Int?=1)
+GET      /report/skusalesreport/exportexcel     @controllers.manager.skusalesreport.SkuSalesReportAction.exportexcel()
+
+#---------------google category relation-----
+GET    /google/category/relation                 @controllers.manager.google.category.GoogleRelation.getAll(p: Int?=1,cpath: String?=null)
+GET    /google/category/getWebChild              @controllers.manager.google.category.GoogleRelation.getWebChild(cid: Int)
+GET   /google/category/addRelation		         @controllers.manager.google.category.GoogleRelation.addRelation(gid: Int,wid: Int)
+GET    /google/category/checkRelation            @controllers.manager.google.category.GoogleRelation.checkRelation(gid: Int,wid: Int)
+GET    /google/category/getDetail                @controllers.manager.google.category.GoogleRelation.getDetail(gid: Int)
+GET    /google/category/delRelation              @controllers.manager.google.category.GoogleRelation.delRelation(cid: Int,gid: Int)
+#--------------google cateogry attribute
+GET   /google/category/selectAttr               @controllers.manager.google.category.GoogleCategory.selectAttr()
+POST  /google/category/addAttr                  @controllers.manager.google.category.GoogleCategory.addAttr()
+POST  /google/category/delAttr                  @controllers.manager.google.category.GoogleCategory.delAttr(iid: Int,cid: Int,cname: String,keyname: String)
+
+#--------------recommend label --------------------------
+GET     /recommendlabel/manager					@controllers.manager.RecommendLabel.recommendLabelManager(websiteid: Int?=1,device: String?="")
+
+POST    /recommendlabel/search					@controllers.manager.RecommendLabel.search()
+
+GET     /recommendlabel/saveOrEdit 				@controllers.manager.RecommendLabel.RecommendLabelNameSaveOrEdit(labelId: Integer ?= 0,siteId: Integer ?= null,cdevice: String ?= null)
+
+POST    /recommendlabel/save 					@controllers.manager.RecommendLabel.RecommendLabelNameSave()
+
+POST    /recommendlabel/update 					@controllers.manager.RecommendLabel.RecommendLabelNameUpdate()
+
+GET     /recommendlabel/delete                 @controllers.manager.RecommendLabel.deleteRecommendLabel(labelId: Integer?=0)
+
+#---------------------------activity-luckdraw----------------------------------
+GET      /activity/luckdraw/qualification            @controllers.manager.luckdraw.PageQualificationAction.manage(p:Int?=1)
+GET      /activity/luckdraw/qualification/delete     @controllers.manager.luckdraw.PageQualificationAction.delete(id:Int,p:Int?=1)
+GET      /activity/luckdraw/qualification/get        @controllers.manager.luckdraw.PageQualificationAction.get(id:Int)
+POST     /activity/luckdraw/qualification/save       @controllers.manager.luckdraw.PageQualificationAction.save()
+POST     /activity/luckdraw/qualification/add        @controllers.manager.luckdraw.PageQualificationAction.add()
+GET      /activity/luckdraw/qualification/validate   @controllers.manager.luckdraw.PageQualificationAction.validate()
+GET      /activity/luckdraw/rule           			 @controllers.manager.luckdraw.PageRuleAction.manage(p:Int?=1)
+GET      /activity/luckdraw/rule/delete    			 @controllers.manager.luckdraw.PageRuleAction.delete(id:Int,p:Int?=1)
+GET      /activity/luckdraw/rule/get       			 @controllers.manager.luckdraw.PageRuleAction.get(id:Int)
+POST     /activity/luckdraw/rule/save       		 @controllers.manager.luckdraw.PageRuleAction.save()
+POST     /activity/luckdraw/rule/add       			 @controllers.manager.luckdraw.PageRuleAction.add()
+GET      /activity/luckdraw/rule/validate   		 @controllers.manager.luckdraw.PageRuleAction.validate()
+GET      /activity/luckdraw/prize           		 @controllers.manager.luckdraw.PagePrizeAction.manage(p:Int?=1)
+GET      /activity/luckdraw/prize/delete    		 @controllers.manager.luckdraw.PagePrizeAction.delete(id:Int,p:Int?=1)
+GET      /activity/luckdraw/prize/get       		 @controllers.manager.luckdraw.PagePrizeAction.get(id:Int)
+POST     /activity/luckdraw/prize/save       		 @controllers.manager.luckdraw.PagePrizeAction.save()
+POST     /activity/luckdraw/prize/add       		 @controllers.manager.luckdraw.PagePrizeAction.add()
+GET      /activity/luckdraw/prize/validate   		 @controllers.manager.luckdraw.PagePrizeAction.validate()
+GET      /activity/luckdraw/prize/getRuleListByPageid @controllers.manager.luckdraw.PagePrizeAction.getRuleListByPageid()
+GET      /activity/luckdraw/prize/getCouponRules     @controllers.manager.luckdraw.PagePrizeAction.getCouponRules()
+
+#--------------page prize report label --------------------------
+GET    /activity/activityreport              	    @controllers.manager.PagePrizeReportAction.getInitPagePrizeReports(p:Int?=1)
+POST   /activity/activityreport/search         @controllers.manager.PagePrizeReportAction.search()
+GET    /activity/lotteryresult              	    @controllers.manager.PagePrizeReportAction.getInitPagePrizeLotteryResults(p:Int?=1)
+POST   /activity/lotteryresult/searchLottery           @controllers.manager.PagePrizeReportAction.searchLottery()
+#--------------payment log  --------------------------
+GET    /payment/paymentlog              	            @controllers.manager.PaymentLog.getInitPayments(p:Int?=1)
+POST   /payment/paymentlog/searchpaymentlog           @controllers.manager.PaymentLog.search()
+#--------------order report ----------
+GET    /report/orderReport                           @controllers.manager.order.report.OrderCountReport.orderView()
+POST    /report/orderReport                          @controllers.manager.order.report.OrderCountReport.orderView()
+GET    /report/orderReport/exportexcel               @controllers.manager.order.report.OrderCountReport.exportexcel()
+GET    /report/orderReport/getHost                   @controllers.manager.order.report.OrderCountReport.getHost(siteId: Int)
+
+
+GET     /order/getPaymentConfirm                 @controllers.manager.Order.getPaymentConfirm(orderid: Int, statusid: Int,ctransactionid: String)

@@ -1,0 +1,110 @@
+@(pageTitle : entity.activity.page.PageTitle,page : entity.activity.page.Page)(body: Html)
+@tp = @{services.base.activity.template.TemplateService.getInstance().getContents()}
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no,maximum-scale=1.0"/>
+		<meta content="yes" name="apple-mobile-web-app-capable"/>
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<title>@if(pageTitle!=null){@pageTitle.getCtitle()}</title>
+		<link type="image/x-icon" rel="icon" href="@controllers.base.routes.Assets.at("favicon.ico")" />
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/tomtop.css")" media="screen"/>
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/search.css")?@version.BuildVersion.build()" />
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/main.css")"/>
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/index.css")?@version.BuildVersion.build()" /> 
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/base/country.css")" />
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" />
+		<script type="text/javascript" src="@controllers.base.routes.Assets.at("lib/jquery/jquery.min.js")"></script>
+		<script type="text/javascript" src="@controllers.base.routes.Assets.at("js/lib/public.js")?@version.BuildVersion.build()"></script>
+		<script type="text/javascript" src="@controllers.base.routes.Assets.at("js/lib/main.js")?@version.BuildVersion.build()"></script>
+		<script type="text/javascript" src="@controllers.base.routes.Assets.at("js/lib/jquery.json.min.js")"></script>
+		<script type="text/javascript" src="@controllers.base.routes.Assets.at("js/lib/login.js")"></script>
+		<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+		<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+		<link type="text/css" rel="stylesheet" href="@controllers.research.routes.Assets.at("css/style.css")" />
+		<script type="text/javascript" src="@controllers.research.routes.Assets.at("js/html5.js")"></script>
+		<script type="text/javascript" src="@controllers.research.routes.Assets.at("js/main.js")"></script>
+		@services.base.HtmlUtils.misc().getHead().map { h =>
+			@h
+		}
+	</head>
+	<body>
+		<header class="contentOut contentBG">
+			<div class="headerNav contentNavWarp">
+				<a class="logo" href="http://www.tomtop.com" target="_blank"><img src="@controllers.research.routes.Assets.at("img/Tomtop_logo.png")"></a>
+				<div class="loginWarp">
+					@views.html.base.login.login_pop()
+				</div>
+			</div>
+			<div class="bannerWarp">
+				<div class="bannerBox">
+					<img src="@page.getCbannerurl()">
+				</div>
+			</div>
+		</header>
+		<section class="contentOut">
+			<div class="contentWarp">
+				@body
+			</div>
+		</section>
+		<footer class="contentOut contentBG">
+			<div class="contentNavWarp footerWarp">
+				<ul class="join_sns lbBox">
+		            <li class="spanFacebook lineBlock">
+		                <a href="http://www.facebook.com/pages/TOMTOP/104613349590201" target="_blank">
+		                <span class="spans"> </span> 
+		                <span class="join_snsTXT">Like us<br>on Facebook</span>
+		                </a>
+		            </li>
+		            <li class="spanTwitter lineBlock">
+		                <a href="http://twitter.com/tomtopfans" target="_blank">
+		                <span class="spans"> </span> 
+		                <span class="join_snsTXT">Fllow us<br>on Twitter</span>
+		                </a>
+		            </li>
+		            <li class="spanPinterest lineBlock">
+		                <a href="http://pinterest.com/tomtop" target="_blank">
+		                <span class="spans"> </span> 
+		                <span class="join_snsTXT">Pin us<br>on Pinterest</span>
+		                </a>
+		            </li>
+		            <li class="spanBlog lineBlock">
+		                <a href="http://blog.tomtop.com" target="_blank">
+		                <span class="spans"> </span> 
+		                <span class="join_snsTXT">Read us<br>on our blog</span>
+		                </a>
+		            </li>
+		            <li class="spanYoutube lineBlock">
+		                <a href="http://www.youtube.com/linksempire" target="_blank">
+		                <span class="spans"> </span> 
+		                <span class="join_snsTXT">Watch us<br>on Youtube</span>
+		                </a>
+		            </li>
+		            <li class="spanForum lineBlock">
+		                <a target="_blank" href="http://www.tomtop.com/forums">
+		                <span class="spans"> </span> 
+		                <span class="join_snsTXT">Join us <br>on Forum</span>
+		            </a>
+		            </li>
+		            <li class="spanGoogle lineBlock">
+		                <a href="https://plus.google.com/u/0/b/116838174145341535107" target="_blank">
+		                <span class="spans"> </span> 
+		                <span class="join_snsTXT">Like us<br>on Google+</span>
+		                </a>
+		            </li>
+		            <li class="spanVK lineBlock">
+		                <a href="https://plus.google.com/u/0/b/116838174145341535107" target="_blank">
+		                <span class="spans"> </span> 
+		                <span class="join_snsTXT">Fllow us<br>on VK</span>
+		                </a>
+		            </li>
+		        </ul>
+				<p class="copyright">Copyright ©2004- 2015 TOMTOP Wholesale Center. All Rights Reserved. </p>
+			</div>
+		</footer>
+		@services.base.HtmlUtils.misc().getTail().map { h =>
+			@h
+		}
+	</body>
+</html>

@@ -1,0 +1,51 @@
+
+@import views.html.helper._
+@import services.base.utils._
+
+@helper.javascriptRouter("checkout_loyalty")(
+	controllers.cart.routes.javascript.LoyaltyController.applyPromo,
+	controllers.cart.routes.javascript.LoyaltyController.applyCoupon,
+	controllers.cart.routes.javascript.LoyaltyController.getUsableCoupon,
+	controllers.cart.routes.javascript.LoyaltyController.getAllCurrentPrefer,
+	controllers.cart.routes.javascript.LoyaltyController.undoCurrentPrefer,
+	controllers.cart.routes.javascript.LoyaltyController.applyPoints,
+	controllers.cart.routes.javascript.LoyaltyController.undoCurrentPoint,
+	controllers.cart.routes.javascript.LoyaltyController.getMyUsablePoint
+)
+<div class="have_code">
+    <p><span>+</span>@Messages("checkout_step2.promotionCode")</p>
+    <div id="checkout_promo_div"><div class="have_code_input"><input type="text" id="checkout_promo_input" placeholder="Promo Code"/><input id="checkout_promo_apply" type="submit" value="@Messages("checkout_step2.Apply")"/><input id="checkout_promo_cancel" class="cancel" type="submit" value="Cancel" style="display:none;"/><div class="error_p" style="display:none;">@Messages("loyalty_promo_error")</div></div></div>
+    <div id="checkout_coupon_div" style="display:none;">
+    	<div class="have_code_input">
+	    	<div class="have_code_select">
+	    		<div id="checkout_coupon_code" class="current_num">Coupon Code</div>
+	    			<ul id="checkout_coupon_insert" class="current_list" style="display: none;"></ul>
+	    	</div>
+    	
+	    	<input id="checkout_coupon_apply" type="submit" value="@Messages("checkout_step2.Apply")"/>
+	    	<input id="checkout_coupon_canel" type="submit" class="cancel" value="Cancel" style="display:none;"/>
+	    	<div class="error_p" style="display:none;">@Messages("loyalty_coupon_error")</div>
+   		</div>
+    </div>
+    
+    <form id="checkout_undo_prefer" method="post" action="@controllers.cart.routes.LoyaltyController.undoCurrentPrefer()"></form>
+</div>
+
+<div id="checkout_point_div" class="have_code" style="display:none;">
+    <p><span>+</span>@Messages("points")</p>
+    <div class="have_code_input" style="display: none;">
+    	<input type="text" id="checkout_point_input" placeholder="Points"/>
+   		<input id="checkout_point_apply" type="submit" value="@Messages("checkout_step2.Apply")"/>
+		<input id="checkout_point_cancel" class="cancel" type="submit" value="Cancel" style="display:none;"/>
+		<div class="points_num">
+					Available points:
+					<span id="cart_usablepoint">0</span>
+		</div>
+		<div class="error_p" style="display:none;">@Messages("loyalty_point_error")</div>
+    </div>
+    <form id="checkout_undo_point" method="post" action="@controllers.cart.routes.LoyaltyController.undoCurrentPoint()"></form>
+</div>
+        
+        
+<script src="@controllers.base.routes.Assets.at("js/loyalty.js")"></script>
+

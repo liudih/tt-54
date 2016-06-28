@@ -1,0 +1,15 @@
+@(fragment: valueobjects.product.Recommendation)
+
+@if(fragment.getRecommendations().size() > 0) {
+<div class="right_folding"><em></em></div>
+    <div class="productDescription_rightHide">
+            <h6>@Messages("we.recommend")</h6>
+            <div class="productDescription_rightPicBox">
+		        @fragment.getRecommendations().map{ p =>
+					@views.html.product.badge(p,false)
+				}
+				<div class="clear"></div>
+             </div>
+   </div>
+                                    
+}

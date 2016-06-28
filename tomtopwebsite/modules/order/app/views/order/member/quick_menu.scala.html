@@ -1,0 +1,2 @@
+@urlprefix = @{play.Play.application().configuration().getString("member.defaultdomain")}
+<li><a href="@urlprefix@controllers.order.member.routes.MemberOrder.index()">@Messages("my.orders")</a></li>

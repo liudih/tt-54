@@ -1,0 +1,13 @@
+@(info:valueobjects.tracking.CommissionOrderVo)
+<input type="hidden" name="iid" value="@info.getIid()" />
+<input type="hidden" name="icommissionid" value="@info.getIcommissionid()" />
+<div class="row-fluid">
+	<div class="12">
+		<div class="control-group">			
+			<div class="controls">
+				<input type="text" name="famount" value="@info.getFamount()" />
+				<label class="control-label">Do not heigh <span style="color:red;">@info.getTheoryAmount()</span></label>
+			</div>
+		</div>		
+	</div>
+</div>

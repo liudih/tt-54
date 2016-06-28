@@ -1,0 +1,14 @@
+@(userForm: Form[forms.member.register.RegisterForm])
+@import views.html.helper._
+<html>
+<head></head>
+<body>
+@form(controllers.member.routes.Register.register) {
+@inputText(userForm("caccount"))
+@inputText(userForm("cemail"))
+@inputPassword(userForm("cpasswd"))
+@inputPassword(userForm("cpasswdagin"))
+<input type="submit">
+}
+</body>
+</html>

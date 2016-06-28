@@ -1,0 +1,23 @@
+@(currencty: dto.Currency)
+<div class="switcher-currency-c">
+    <h3>
+    	<span>@currencty.getCcode</span><em class="ship_xSJ"></em>
+	    <input id="current_currency" type="hidden" name="currency" value="@currencty.getCcode"/>
+    </h3>
+    <ul class="notranslate">
+        <div class="clear"></div>
+    </ul>
+</div>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+@helper.javascriptRouter("jsCurrency")(
+	controllers.base.routes.javascript.Currency.getAllCurrencies
+)
+<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/base/topbar/Currency.js")'></script>
+}
+@services.base.HtmlUtils.misc().addTailOnce{
+<script>
+	var currency = new Currency();
+	currency.init(jsCurrency.controllers.base.Currency.getAllCurrencies().url);
+</script>
+}

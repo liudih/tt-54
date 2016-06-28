@@ -1,0 +1,11 @@
+@import "public.less";
+
+.breadCrumbs{
+  width:95%;margin-left:2%;padding:10px 0px;
+  li{margin-right:25px;position:relative;
+    &:after{content:">>";position:absolute;left:-20px;top:1px;}
+    &:first-child{
+      &:after{content:"";}
+    }
+  }
+}

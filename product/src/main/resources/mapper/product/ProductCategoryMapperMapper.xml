@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tomtop.product.mappers.product.ProductCategoryMapperMapper">
+	<resultMap id="BaseResultMap" type="com.tomtop.product.models.dto.ProductCategoryMapperDto">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+		<result column="csku" property="csku" jdbcType="VARCHAR" />
+		<result column="icategory" property="icategory" jdbcType="INTEGER" />
+		<result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="DATE" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, clistingid, csku, icategory, ccreateuser, dcreatedate
+	</sql>
+	<insert id="batchInsert" parameterType="java.util.List">
+		insert into t_product_category_mapper (clistingid, csku,
+		icategory,
+		ccreateuser, dcreatedate
+		)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.clistingid,jdbcType=VARCHAR},
+			#{item.csku,jdbcType=VARCHAR},
+			#{item.icategory,jdbcType=INTEGER},
+			#{item.ccreateuser,jdbcType=VARCHAR},
+			#{item.dcreatedate,jdbcType=DATE}
+			)
+		</foreach>
+	</insert>
+	<insert id="insertSelective" parameterType="com.tomtop.product.models.dto.ProductCategoryMapperDto"
+		useGeneratedKeys="true" keyProperty="iid">
+		insert into t_product_category_mapper
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				iid,
+			</if>
+			<if test="clistingid != null">
+				clistingid,
+			</if>
+			<if test="csku != null">
+				csku,
+			</if>
+			<if test="icategory != null">
+				icategory,
+			</if>
+			<if test="ccreateuser != null">
+				ccreateuser,
+			</if>
+				dcreatedate,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				#{iid,jdbcType=INTEGER},
+			</if>
+			<if test="clistingid != null">
+				#{clistingid,jdbcType=VARCHAR},
+			</if>
+			<if test="csku != null">
+				#{csku,jdbcType=VARCHAR},
+			</if>
+			<if test="icategory != null">
+				#{icategory,jdbcType=INTEGER},
+			</if>
+			<if test="ccreateuser != null">
+				#{ccreateuser,jdbcType=VARCHAR},
+			</if>
+			<if test="dcreatedate != null">
+				#{dcreatedate,jdbcType=DATE},
+			</if>
+			<if test="dcreatedate == null">
+				now(),
+			</if>
+		</trim>
+	</insert>
+	<insert id="addCategory" parameterType="java.util.List">
+		insert into
+		t_product_category_mapper (clistingid, csku,
+		icategory, ccreateuser,
+		dcreatedate
+		)
+		values
+		(#{clistingid,jdbcType=VARCHAR},
+		#{csku,jdbcType=VARCHAR},
+		#{icategory,jdbcType=INTEGER},
+		#{ccreateuser,jdbcType=VARCHAR}, #{dcreatedate,jdbcType=DATE}
+		)
+	</insert>
+</mapper>

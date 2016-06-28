@@ -1,0 +1,8 @@
+@(result: valueobjects.base.Page[valueobjects.product.ProductBadge])
+@if(result.getList().size()!=0){
+	@result.getList().map{p=>
+		@views.html.product.badge_base(p)
+	}
+}else{
+    	<h2 style="text-align:center;color:orange; margin-bottom: 50px;border:1px solid #e8e8e8;padding:150px 0 ;">Sorry, No Products Found!</h2>
+}

@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.interaction.InteractionCommentMapper">
+	<resultMap id="BaseResultMap" type="dto.interaction.InteractionComment">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+		<result column="csku" property="csku" jdbcType="VARCHAR" />
+		<result column="cmemberemail" property="cmemberemail" jdbcType="VARCHAR" />
+		<result column="ccomment" property="ccomment" jdbcType="VARCHAR" />
+		<result column="cplatform" property="cplatform" jdbcType="VARCHAR" />
+		<result column="iprice" property="iprice" jdbcType="INTEGER" />
+		<result column="iquality" property="iquality" jdbcType="INTEGER" />
+		<result column="ishipping" property="ishipping" jdbcType="INTEGER" />
+		<result column="iusefulness" property="iusefulness" jdbcType="INTEGER" />
+		<result column="foverallrating" property="foverallrating" jdbcType="DECIMAL" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+		<result column="dauditdate" property="dauditdate" jdbcType="TIMESTAMP" />
+		<result column="istate" property="istate" jdbcType="INTEGER" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+		<result column="iorderid" property="iorderid" jdbcType="INTEGER" />
+		<result column="ctitle" property="ctitle" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="HelpCountResultMap" type="dto.interaction.InteractionComment" extends="BaseResultMap">
+		<result column="count" property="count" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		iid, clistingid, csku, cmemberemail, ccomment, ishipping, iusefulness, foverallrating, dcreatedate,
+		dauditdate, istate,cplatform,iwebsiteid,iorderid,ctitle
+	</sql>
+	<resultMap id="ReviewCountScoreMap" type="valueobjects.interaction.ReviewCountAndScore">
+		<result column="listingid" property="listingId" />
+		<result column="avgscore" property="avgScore" jdbcType="DECIMAL" />
+		<result column="reviewcount" property="reviewCount" jdbcType="INTEGER" />
+	</resultMap>
+
+	<insert id="insertSelective" useGeneratedKeys="true" 
+	  		keyProperty="iid" parameterType="dto.interaction.InteractionComment" >
+    insert into t_interaction_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="clistingid != null" >
+        clistingid,
+      </if>
+      <if test="csku != null" >
+        csku,
+      </if>
+      <if test="cmemberemail != null" >
+        cmemberemail,
+      </if>
+      <if test="ccomment != null" >
+        ccomment,
+      </if>
+      <if test="iprice != null" >
+        iprice,
+      </if>
+      <if test="iquality != null" >
+        iquality,
+      </if>
+      <if test="ishipping != null" >
+        ishipping,
+      </if>
+      <if test="iusefulness != null" >
+        iusefulness,
+      </if>
+      <if test="foverallrating != null" >
+        foverallrating,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+      <if test="istate != null" >
+        istate,
+      </if>
+      <if test="cplatform != null" >
+        cplatform,
+      </if>
+      <if test="iwebsiteid != null" >
+        iwebsiteid,
+      </if>
+      <if test="iorderid != null" >
+        iorderid,
+      </if>
+      <if test="ctitle != null" >
+        ctitle,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="clistingid != null" >
+        #{clistingid,jdbcType=VARCHAR},
+      </if>
+      <if test="csku != null" >
+        #{csku,jdbcType=VARCHAR},
+      </if>
+      <if test="cmemberemail != null" >
+        #{cmemberemail,jdbcType=VARCHAR},
+      </if>
+      <if test="ccomment != null" >
+        #{ccomment,jdbcType=VARCHAR},
+      </if>
+      <if test="iprice != null" >
+        #{iprice,jdbcType=INTEGER},
+      </if>
+      <if test="iquality != null" >
+        #{iquality,jdbcType=INTEGER},
+      </if>
+      <if test="ishipping != null" >
+        #{ishipping,jdbcType=INTEGER},
+      </if>
+      <if test="iusefulness != null" >
+        #{iusefulness,jdbcType=INTEGER},
+      </if>
+      <if test="foverallrating != null" >
+        #{foverallrating,jdbcType=DOUBLE},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="istate != null" >
+        #{istate,jdbcType=INTEGER},
+      </if>
+      <if test="cplatform != null" >
+        #{cplatform,jdbcType=VARCHAR},
+      </if>
+      <if test="iwebsiteid != null" >
+        #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="iorderid != null" >
+        #{iorderid,jdbcType=INTEGER},
+      </if>
+      <if test="ctitle != null" >
+          #{ctitle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+	
+	<select id="getScoreByListingIds" resultType="valueobjects.interaction.ReviewCountAndScore">
+		select clistingid as listingId,
+		round(cast(avg(foverallrating) as numeric),1) avgScore,
+		count(iid) as reviewCount
+		from t_interaction_comment where istate=1
+		<if test="list !=null and list.size>0">
+		and clistingid in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach>
+		</if>
+		group by clistingid
+	</select>
+
+	<update id="updateByPrimaryKeySelective" parameterType="dto.interaction.InteractionComment">
+		update t_interaction_comment
+		<set>
+			<if test="clistingid != null">
+				clistingid = #{clistingid,jdbcType=VARCHAR},
+			</if>
+			<if test="csku != null">
+				csku = #{csku,jdbcType=VARCHAR},
+			</if>
+			<if test="cmemberemail != null">
+				cmemberemail = #{cmemberemail,jdbcType=VARCHAR},
+			</if>
+			<if test="ccomment != null">
+				ccomment = #{ccomment,jdbcType=VARCHAR},
+			</if>
+			<if test="cplatform != null">
+				cplatform = #{cplatform,jdbcType=VARCHAR},
+			</if>
+			<if test="iprice != null">
+				iprice = #{iprice,jdbcType=INTEGER},
+			</if>
+			<if test="iquality != null">
+				iquality = #{iquality,jdbcType=INTEGER},
+			</if>
+			<if test="ishipping != null">
+				ishipping = #{ishipping,jdbcType=INTEGER},
+			</if>
+			<if test="iusefulness != null">
+				iusefulness = #{iusefulness,jdbcType=INTEGER},
+			</if>
+			<if test="foverallrating != null">
+				foverallrating = #{foverallrating,jdbcType=DOUBLE},
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="dauditdate != null">
+				dauditdate = #{dauditdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="istate != null">
+				istate = #{istate,jdbcType=INTEGER},
+			</if>
+			<if test="iwebsiteid != null">
+				iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+			</if>
+			<if test="iorderid != null">
+				iorderid = #{iorderid,jdbcType=INTEGER},
+			</if>
+		 	<if test="ctitle != null" >
+         		ctitle =  #{ctitle,jdbcType=VARCHAR},
+      		</if>
+		</set>
+		where dcreatedate &lt;= now() and iid = #{iid,jdbcType=INTEGER}
+	</update>
+	
+	<!-- add by wujirui  -->
+	<select id="getCommentHelpCount" resultMap="HelpCountResultMap">
+		select clistingid,"count"(clistingid) as count from t_interaction_comment where "length"(ccomment) > 80 group by clistingid having "count"(clistingid) > 5
+	</select>
+	
+	<select id="getCommentHelpCountByCliId" parameterType="java.lang.String" resultMap="HelpCountResultMap">
+		select <include refid="Base_Column_List" />
+		from t_interaction_comment t where clistingid = #{clistingid,jdbcType=VARCHAR} and "length"(ccomment) > 80;
+	</select>
+	
+	<select id="getCommentUsAudit" parameterType="java.lang.String" resultMap="HelpCountResultMap">
+		SELECT  <include refid="Base_Column_List" />
+		from t_interaction_comment ct where ct.istate = 0 and ct.foverallrating > 3 and length(ccomment) > 80  order by dcreatedate asc
+	</select>
+	
+	<update id="updateStateByIds" parameterType="dto.interaction.InteractionComment">
+		update t_interaction_comment set istate = 1, dauditdate = now() where iid in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">#{item}</foreach>
+	</update>
+	
+	<update id="batchVerify" parameterType="dto.interaction.InteractionComment">
+		update t_interaction_comment set istate=#{status}, dauditdate = now() where dcreatedate &lt;= now() and 
+		iid in <foreach item="item" index="index" collection="list" open="(" separator="," close=")">#{item}</foreach>
+	</update>
+</mapper>

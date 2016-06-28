@@ -1,0 +1,29 @@
+@(i: valueobjects.order_api.OrderList,
+	idMap: Map[Integer, dto.order.OrderStatus],
+	packMap: Map[Integer, List[dto.order.OrderPack]]
+	)
+@if(i!=null){
+<div class="orderInfBox">
+	<div class="orderNumber_box">
+		<b>Order No: @i.getOrder().getCordernumber()</b>
+		<p>Order date: @services.base.utils.DateFormatUtils.getDateTimeDDMMYYYY(i.getOrder().getDcreatedate())</p>
+		<p>Track Number: 
+		@packMap.get(i.getOrder.getIid).map{p=>
+	   		<a target="_blank" href="http://www.17track.net/en/result/post.shtml?nums=@p.getCtrackingnumber" class="orderMiddle">@Messages("untracked")<br>@p.getCtrackingnumber</a>
+    	}
+		</p>
+		<p>Order status: @idMap.get(i.getOrder().getIstatus()).getCname()</p>
+		<p class="orange"><b>Total: @i.getSymbol() @services.base.utils.Utils.money(i.getOrder().getFgrandtotal())</b></p>
+		<a class="orderPosi" href="@controllers.order.member.routes.MemberOrderController.orderDetail(i.getOrder().getCordernumber())"><span class="leftArrow_Icon"> </span></a>
+		@if(idMap.get(i.getOrder().getIstatus()).getCname()=="Payment Pending"){
+			<a class="button_orange orderButtonPosi" href="@controllers.order.routes.OrderController.viewOrder(i.getOrder().getCordernumber())">Place Order</a>
+		}
+		@if(idMap.get(i.getOrder().getIstatus()).getCname()=="Completed"){
+			<a class="button_blue orderButtonPosi" href="javascript:;">Completed</a>
+		}
+	</div>
+	@i.getOrderItems().map{ ii => 
+		@order_bundle(ii,i.getSymbol(),ii.isReview())
+	}
+</div>
+}

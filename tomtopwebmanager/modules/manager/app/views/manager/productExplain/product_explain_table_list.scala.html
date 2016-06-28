@@ -1,0 +1,44 @@
+@(productExplainForms: List[forms.product.ProductExplainForm])
+<div id="productExplainEdit_modle" style="padding-bottom: 100px;">
+	<div class="portlet-body">
+		<table class="order_ll_box" width="100%" border="0" cellspacing="1" cellpadding="0" id="oderlist">
+			<thead>
+				  <tr>
+				    <th class="order_ll_Id">
+				    	<p class="inlineBlock">类型</p>
+				    </th>
+				    <th class="order_ll_dizhi">
+				    	<p class="inlineBlock">详细信息</p>
+				    </th>
+				    <th class="order_ll_caozuo"><p class="inlineBlock">edit</p></th>
+				    <th class="order_ll_caozuo"><p class="inlineBlock">delete</p></th>
+				  </tr>
+			</thead>
+			<tbody role="alert" aria-live="polite" aria-relevant="all">
+			@if(productExplainForms != null) {
+				@productExplainForms.map{i=>
+					<tr class="order_ll_infTR">
+					    <td>
+					    	<p class="order_ll_marT"><span class="order_ll_999"></span>@i.getCtype()</p>
+					    </td>
+					    <td>
+					    	@Html(i.getCcontent())
+					    </td>
+					    <td>
+					    	<a data-toggle="modal" data-target="#update-product_explain@i.getIid()" name="#update-product_explain@i.getIid()">
+								edit
+							</a>
+							@views.html.manager.productExplain.product_explain_message.render(i)
+						</td>
+						<td><a class="delete" href="javascript:;" name="delete_product_explain" data-id="@i.getIid()">Delete</a></td>
+					  </tr>
+				}
+			} else {
+				 <tr class="order_ll_infTR">
+						<td colspan="6" style="text-align:center;"><h4>暂无订单信息</h4></td>
+				 </tr>
+			}
+			</tbody>
+		</table>
+	</div>
+</div>

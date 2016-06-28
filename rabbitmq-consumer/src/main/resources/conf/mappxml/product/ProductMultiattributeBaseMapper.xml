@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rabbit.conf.mapper.product.ProductMultiattributeBaseMapper">
+	<resultMap id="BaseResultMap" type="com.rabbit.dto.product.ProductMultiattributeBase">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+		<result column="cparentsku" property="cparentsku" jdbcType="VARCHAR" />
+		<result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+		<result column="clastupdateuser" property="clastupdateuser"
+			jdbcType="VARCHAR" />
+		<result column="dlastupdatedate" property="dlastupdatedate"
+			jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, iwebsiteid, cparentsku, ccreateuser, dcreatedate, clastupdateuser,
+		dlastupdatedate
+	</sql>
+	<insert id="batchInsert" parameterType="java.util.List">
+		insert into t_product_multiattribute_base (iwebsiteid, cparentsku,
+		ccreateuser, dcreatedate, clastupdateuser,
+		dlastupdatedate)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.iwebsiteid,jdbcType=INTEGER},
+			#{item.cparentsku,jdbcType=VARCHAR},
+			#{item.ccreateuser,jdbcType=VARCHAR},
+			#{item.dcreatedate,jdbcType=TIMESTAMP},
+			#{item.clastupdateuser,jdbcType=VARCHAR},
+			#{item.dlastupdatedate,jdbcType=TIMESTAMP})
+		</foreach>
+	</insert>
+</mapper>

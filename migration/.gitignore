@@ -1,0 +1,8 @@
+.classpath
+.project
+.settings
+target
+tmp
+/scripts/data
+/scripts/*.jar
+/scripts/source/sellpoint

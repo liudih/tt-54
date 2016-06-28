@@ -1,0 +1,190 @@
+@(vo:valueobjects.base.Page[entity.manager.ProfessionSkill])
+@import views.html.helper._
+
+@views.html.manager.main {
+	<div class="container-fluid">
+		<!-- BEGIN PAGE HEADER-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN STYLE CUSTOMIZER -->
+				<div class="color-panel hidden-phone">
+					<div class="color-mode-icons icon-color"></div>
+					<div class="color-mode-icons icon-color-close"></div>
+					<div class="color-mode">
+						<p>THEME COLOR</p>
+						<ul class="inline">
+							<li class="color-black current color-default" data-style="default"></li>
+							<li class="color-blue" data-style="blue"></li>
+							<li class="color-brown" data-style="brown"></li>
+							<li class="color-purple" data-style="purple"></li>
+							<li class="color-grey" data-style="grey"></li>
+							<li class="color-white color-light" data-style="light"></li>
+						</ul>
+						<label> <span>Layout</span> <select
+							class="layout-option m-wrap small">
+								<option value="fluid" selected="">Fluid</option>
+								<option value="boxed">Boxed</option>
+						</select>
+						</label> <label> <span>Header</span> <select
+							class="header-option m-wrap small">
+								<option value="fixed" selected="">Fixed</option>
+								<option value="default">Default</option>
+						</select>
+						</label> <label> <span>Sidebar</span> <select
+							class="sidebar-option m-wrap small">
+								<option value="fixed">Fixed</option>
+								<option value="default" selected="">Default</option>
+						</select>
+						</label> <label> <span>Footer</span> <select
+							class="footer-option m-wrap small">
+								<option value="fixed">Fixed</option>
+								<option value="default" selected="">Default</option>
+						</select>
+						</label>
+					</div>
+				</div>
+				<!-- END BEGIN STYLE CUSTOMIZER -->
+				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+	
+				<h3 class="page-title">
+					客服管理 <small>业务技能管理</small>
+				</h3>
+				<ul class="breadcrumb">
+					<li><i class="icon-home"></i> <a href="/sysadmin">Home</a> <i
+						class="icon-angle-right"></i></li>
+					<li><a href="#">客服管理</a> <i class="icon-angle-right"></i></li>
+					<li><a href="#">业务技能管理</a></li>
+				</ul>
+				<!-- END PAGE TITLE & BREADCRUMB-->
+	
+			</div>
+		</div>
+		<!-- END PAGE HEADER-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN EXAMPLE TABLE PORTLET-->
+				<div class="portlet box light-grey">
+					<div class="portlet-title">
+						<div class="caption">
+							<i class="icon-edit"></i>业务技能管理
+						</div>
+					</div>
+					<div class="portlet-body">
+						<div class="clearfix">
+							<div class="btn-group">
+								<button id="add_user_btn" class="btn green" data-toggle="modal" data-target="#add-skill-modal">
+								添加技能 <i class="icon-plus"></i>
+								</button>
+							</div>
+						</div>
+						<div id="sample_editable_1_wrapper"
+							class="dataTables_wrapper form-inline" role="grid">
+							<table class="table table-striped table-hover table-bordered"
+								id="user_table">
+								<thead>
+									<tr>
+										<th>名称</th>
+										<th>Edit</th>
+										<th>Delete</th>
+									</tr>
+								</thead>
+								<tbody>
+									@vo.getList().map{s=>
+									<tr class="" id="@s.getIid()">
+										<td>@s.getCskillname</td>
+										<td><a class="edit" name="edit_skill_a" data-toggle="modal"
+											data-target="#edit-skill-modal"
+											href="@controllers.manager.routes.CustomerService.skillEdit(s.getIid())"><i
+												class="icon-pencil"></i></a>
+										</td>
+										<td><a class="delete" href="@controllers.manager.routes.CustomerService.skillDelete(s.getIid())"><i class="icon-trash"></i></a></td>
+									</tr>
+									}
+								</tbody>
+							</table>
+							<div class="row-fluid">
+								@if(vo != null) {
+									<div class="span6">
+										<div class="dataTables_info" id="sample_editable_1_info">当前第@vo.pageNo()页|共@vo.totalPages()页</div>
+									</div>
+									<div class="span6">
+										<div class="dataTables_paginate paging_bootstrap pagination">
+											@if(vo.totalPages()>=1){
+												<ul>
+													@if(1 >= vo.pageNo()){
+														<li class="disabled"><a href="javascript:;">«</a></li>
+													}else{
+														<li><a href="@controllers.manager.routes.CustomerService.skillManage(vo.pageNo())" value="@vo.pageNo()" tag="pageNum">«</a></li>
+													}
+													@for(i <- vo.pageNo - 5 to vo.pageNo + 5 if i > 0 ; if i <= vo.totalPages) {
+														@if(i == vo.pageNo){
+															<li class="disabled"><a href="javascript:;">@i</a></li>
+														}else{
+															<li><a href="@controllers.manager.routes.CustomerService.skillManage(i)" value="@i" tag="pageNum">@i</a></li>
+														}
+													}
+													@if(vo.pageNo >= vo.totalPages){
+														<li class="disabled"><a href="javascript:;">»</a></li>
+													}else{
+														<li><a href="@controllers.manager.routes.CustomerService.skillManage(vo.pageNo())" value="@vo.pageNo()" tag="pageNum">»</a></li>
+													}
+												</ul>
+											}
+										</div>
+									</div>
+								}
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- END EXAMPLE TABLE PORTLET-->
+				<div id="edit-skill-modal" class="modal hide fade" tabindex="-1"
+					role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+					style="width: 640px">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true"></button>
+						<h3 id="myModalLabel">业务技能管理</h3>
+					</div>
+					@form(controllers.manager.routes.CustomerService.skillSave(), 'class->"form-horizontal"){
+						<input type="hidden" name="p" value="@vo.pageNo">
+						<div class="modal-body"></div>
+						<div class="modal-footer" style="margin-bottom: -20px;">
+							<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+							<button id="edit_skill_save" class="btn blue" name="submit">保存</button>
+						</div>
+					}
+				</div>
+				<div id="add-skill-modal" class="modal hide fade" tabindex="-1"
+					role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+					style="width: 640px">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true"></button>
+						<h3 id="myModalLabel">业务技能管理</h3>
+					</div>
+					@form(controllers.manager.routes.CustomerService.skillAdd(), 'class->"form-horizontal"){
+						<input type="hidden" name="p" value="@vo.pageNo">
+						<input type="hidden" name="iid" value="0">
+						<div class="modal-body">
+							<div class="control-group">
+								<label class="control-label">名称</label>
+								<div class="controls">
+									<input type="text" name="cskillname">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer" style="margin-bottom: -20px;">
+							<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+							<button id="edit_skill_save" class="btn blue" name="submit">保存</button>
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<script src="@controllers.manager.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.manager.routes.Assets.at("js/manager/mcustomerservice")" ></script>
+	}
+}

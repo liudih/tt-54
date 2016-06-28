@@ -1,0 +1,55 @@
+@(iid:Integer, memberEmail: String)
+@import views.html.helper._
+@helper.javascriptRouter("black")(
+	controllers.manager.routes.javascript.Member.memberManager
+)
+
+<div id="black-user@iid"  class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	@form(controllers.manager.routes.BlackUser.addBlackUser(),'class->"blackuser-form", 'method->"POST"){
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+		    <h3>黑名单客户</h3>
+		</div>
+		<div class="modal-body">
+			<input type="hidden" name="iid">
+			<div class="control-group">
+				<label class="control-label">用户邮箱</label>
+				<div class="controls">
+					<input type="text" name="cemail" value="@memberEmail" class="m-wrap medium span6" style="margin-left: 120px;margin-top: -26px;" readOnly>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">理由：</label>
+				<div class="controls">	
+					<textarea name="creason" maxlength="1500" placeholder="移至黑名单的理由" class="m-wrap medium span6" style="margin-left: 120px;margin-top: -26px;" required pattern=".{6,100}"></textarea>
+				</div>
+			</div>
+		</div>
+	    <div class="modal-footer" style="margin-bottom: -20px;">
+		     <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
+             <button id="submit_form" class="btn green">保存</button>
+	    </div>
+	}
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+	<script>
+	$(document).on("click","#submit_form",function(){
+		$('.blackuser-form').unbind();
+		$('.blackuser-form').submit(function(){
+			var form = $(this);
+			var url = form.attr("action");
+			var $this = this;
+			$.post(url, form.serialize(), function(data) {
+				if(data['dataMessages']==1){
+					alert("Add success！");
+				}
+				var url = black.controllers.manager.Member.memberManager().url;
+				window.location = url;
+			});
+			return false;
+		}); 
+	
+	});
+	</script>
+
+}

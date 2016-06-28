@@ -1,0 +1,58 @@
+@(products: Html)
+@import views.html.helper._
+@import views.html.product.img
+@import services.base._
+@import services.base.utils._
+@helper.javascriptRouter("wholesale")(
+	controllers.wholesale.routes.javascript.WholeSaleProductList.chooseProduct,
+	controllers.wholesale.routes.javascript.WholeSaleProductList.updateProductQty,
+	controllers.wholesale.routes.javascript.WholeSaleProductList.deleteProduct,
+	controllers.wholesale.routes.javascript.WholeSaleProductList.deleteAllProduct
+)
+@views.html.member.base.master("wholesalelist") {
+	@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" /> 
+	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/simplePagination.css")">
+	}
+	
+	<div class="accountRight accouReviewBox placeWhole_acc">
+    	<h6>@Messages("wholesale.list")</h6>
+        <p class="marT inquiryF">@Messages("please.search.for.items.on.tomtop.com.and.fill.in.the.following.inquiry.form")</p>
+        @form(controllers.wholesale.routes.WholeSaleProductList.addProduct, 'id->"wholesaleform" , 'onsubmit->"return false", 'autocomplete->"off"){
+	        <ul class="marT placdOrder_ul">
+	        	<li class="lineBlock">*@Messages("sku")  <input class="inputTxt_s" placeholder="VSPB101S" name="csku" type="text"></li>
+	        	<li class="lineBlock">*@Messages("qualitys") <input class="inputTxt_s number" placeholder="5" name="iqty" type="text" value="5"></li>
+	        	<li class="lineBlock"><a class="hsInputs" href="javascript:;" id="addWholeSale">@Messages("add")</a></li>
+	        </ul>
+        }
+		<div class="pu_pop popNone_s" style="display:none;top:0px;left:0px;">
+			<div class="pu_popBox">
+		    	<div class="empty"></div>
+		    	<div class="pu_popCon">
+		                <p class="pu_popTxt message"></p>
+		                <a href="javascript:;" class="hsInputd lineBlock cancel">@Messages("ok")</a>
+		        </div>
+		    </div>
+			<div class="blockPopup_black"></div>
+		</div>
+      	<ul class="choWishlist marT">
+       		<li class="allFirstLi">
+	           	<a href="javascript:;" class="rightAll chooseAll"><span class="aftersAll"></span></a>
+	               <a href="javascript:;" class="rightAll delete"><p class="reMAll">@Messages("remove.all")</p>
+	                   <p class="deletePop">
+	                       <i></i>@Messages("remove.all.from.your.wholesale.list")<br>
+	                       <input class="deleteAllYes" type="button" value="Yes"><input type="button" value="No">
+	                   </p>
+               </a>
+           </li>
+           <div class="clear"></div>
+        </ul>
+        <div id="wholeproduct-html" class="accouReviewBox placeWhole_acc">
+      		 @products
+        </div>
+    </div>
+	@services.base.HtmlUtils.misc().addTailOnce{
+ 		<script src="@controllers.base.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.wholesale.routes.Assets.at("js/wholesale/wholesaleproduct")" ></script>
+	}
+}
+

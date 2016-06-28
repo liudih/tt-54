@@ -1,0 +1,78 @@
+@(rlist : List[dto.ReviewsCountList])
+@baseUrl = @{play.Play.application().configuration().getString("image_request_base_url")}
+@if(rlist!=null && rlist.size()>0){
+@rlist.zipWithIndex.map{ reviews =>
+<hr class="grayHR" />
+<div class="review_people">
+	<ul class="productReviews_inf">
+		<li class="productReviews_hade lineBlock"></li>
+		<li class="productReviews_name lineBlock">@reviews._1.getbName()</li>
+		<li class="productReviews_date lineBlock">@reviews._1.getDcreatedate()</li>
+	</ul>
+	
+	<ul class="blockStar">
+    	<li class="hoveSTText lineBlock">Price:</li>
+        <li class="lineBlock">
+            <div class="productReviews">
+                <div class="productStar_Pr" style="width:@reviews._1.getIpriceStarWidth%">
+                	<div class="productStars_bk"> </div>
+                </div>
+            </div>
+        </li>
+    	<li class="hoveSTText lineBlock">Quality:</li>
+        <li class="lineBlock">
+            <div class="productReviews">
+                <div class="productStar_Qu" style="width:@reviews._1.getIqualityStarWidth%">
+                	<div class="productStars_bk"> </div>
+                </div>
+            </div>
+        </li>
+    	<li class="hoveSTText lineBlock">Usefulness:</li>
+        <li class="lineBlock">
+            <div class="productReviews">
+                <div class="productStar_Us" style="width:@reviews._1.getIusefulness%">
+                	<div class="productStars_bk"> </div>
+                </div>
+            </div>
+        </li>
+    	<li class="hoveSTText lineBlock">Shipping:</li>
+        <li class="lineBlock">
+            <div class="productReviews">
+                <div class="productStar_Sh" style="width:@reviews._1.getIshippingStarWidth%">
+                	<div class="productStars_bk"> </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+    
+    <div class="review_txtPic">
+    	<p class="review_txt_P">@reviews._1.getCcomment()</p>
+    	<div class="review_Pic_P">
+    		<ul class="review_Pic_Pul">
+    			@reviews._1.getCommentPhotosUrl.map{j=>
+				<li class="lineBlock proPic_click">
+					<img src="@baseUrl@j/xy/2000/2000" />
+				</li>
+			   }
+    		</ul>
+			<div class="review_pic_up popBoxClose">
+				<div class="scroll relative">
+					<div class="scroll_box" id="scroll_img@(reviews._2+1)" tag="@(reviews._2+1)">
+						<ul class="scroll_wrap">
+							@reviews._1.getCommentPhotosUrl.map{p=>
+								<li><a href="javascript:;">
+									<img src="@baseUrl@p/xy/2000/2000" />
+								</a></li>
+							}
+						</ul>
+					</div>
+				    <ul class="lbBox scroll_position">
+				    </ul>
+				</div>
+				<div class="blackPop"> </div>
+			</div>
+    	</div>
+    </div>
+</div>
+}
+}

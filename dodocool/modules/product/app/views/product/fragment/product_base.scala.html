@@ -1,0 +1,20 @@
+@(base: valueobjects.product.ProductBase, context: valueobjects.dodocool.product.ProductRenderContext)
+@current_website_name=@{services.configuration.ApplicationConfigService._getCurrentWebsiteName()}
+
+@if(null !=base && null != base.getProductBase){
+	@services.dodocool.base.HtmlUtils.misc().addHeadOnce{
+		<!-- facebook等分享的一些属性 -->
+		<meta property="fb:app_id" content="284737934897635"/>
+		<meta property="og:title" content="@base.getProductBase().getCtitle()"/>
+		<meta property="og:type" content="website"/>
+		<meta property="og:description" content="@base.getProductBase().getCmetadescription()"/>
+		<meta property="og:site_name" content="@current_website_name" />
+		<meta property="og:availability" content="" />
+		<meta itemprop="name" content="@base.getProductBase().getCtitle()" />
+		<meta itemprop="description" content="@base.getProductBase().getCmetadescription()" />
+	}
+    	<h3>@base.getProductBase.getCtitle</h3> 
+    	@**
+    		@context.renderFragment("review-count-and-score")
+    	**@
+}

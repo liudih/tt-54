@@ -1,0 +1,188 @@
+@(
+address : List[dto.member.MemberAddress],
+isMember : Boolean,
+countrys : List[dto.Country],
+oc : valueobjects.order_api.OrderComposite,
+renderHelper : services.order.OrderCompositeRenderer,
+paymentRender : services.order.payment.OrderPaymentFragmentRenderer,
+order : dto.order.Order,
+currency : dto.Currency,
+prefer : List[valueobjects.loyalty.LoyaltyPrefer],
+storageid: Integer
+)
+
+@import views.html.helper._
+@import services.base.utils._
+
+@checkout_new_member(2){
+	@helper.javascriptRouter("js_ShippingAddressRoutes")(
+		controllers.member.routes.javascript.Address.getAllCountry,
+		controllers.member.routes.javascript.Address.getAllProvinceByCountryId,
+		controllers.member.routes.javascript.Address.addNewMemberAddress,
+		controllers.member.routes.javascript.Address.modifyMemberAddress,
+		controllers.member.routes.javascript.Address.deleteMemberAddressById,
+		controllers.member.routes.javascript.Address.deleteMemberAddressBatchByIds,
+		controllers.member.routes.javascript.Address.setDefaultShippingaddress,
+		controllers.member.routes.javascript.Address.addOrUpdateBillAddress
+    )
+    
+    @services.base.HtmlUtils.misc().addHeadScriptOnce{
+		@controllers.base.routes.Assets.at("js/lib/newshopping.js")
+	}
+	
+<div class="nav_ljh">
+   <div class="nav_ljhFix">
+      <div id="top"><a href="#top_s"></a></div>
+      <div class="livechat_ljh">
+        <a href="javascript:;" onClick="window.open('liveChat.html','LiveChat','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=750,height=470,left=80,top=40');"></a>
+        <div class="livechat01">@Messages("checkout_step2.liveChat")</div>
+        <div class="livechat02"></div>
+      </div>
+  </div>
+</div>
+
+<!--头部结.p束-->
+
+<div class="newshopping_box">
+    <div class="newshopping_box_left">
+<!--新购物车流程内容-->
+        <div class="newshopping_address">
+            <h2>@Messages("order.confirm.view.shippingAddress")</h2>
+            <ul id="ship_address_ul" class="ns_address_list" name="shipping">
+            @address.zipWithIndex.map{a => 
+            	@if(a._2 == 0){
+            		<li iid="@a._1.getIid" class="sel">
+            	
+            	}else{
+            		<li iid="@a._1.getIid">
+            	}
+               <input name="countryCode" style="display:none;" value="@a._1.getCountryCode">
+                <span name="iid" style="display:none;">@a._1.getIid</span>
+                    <h5>
+	                    <span name="cfirstname">@a._1.getCfirstname</span>&nbsp;
+	                    <span name="clastname">@a._1.getClastname</span>
+                     </h5>
+                    <p>
+	                    <span name="address1">@a._1.getCstreetaddress</span>
+	                   <!--  <span name="address2"></span> -->
+                    </p>
+                    <p>
+	                    <span name="ccity">@a._1.getCcity</span>
+	                    <span name="cprovince">@a._1.getCprovince</span>
+	                    <span name="cpostalcode">@a._1.getCpostalcode</span>  
+                    </p>
+                    <p name="countryName">@a._1.getCountryFullName</p>
+                    <p name="ctelephone">@a._1.getCtelephone</p>
+                     @if(a._1.getBdefault()==true){
+                     <div class="address_default_edit">
+                     	<a onclick="shipAddressEdit(this)" name="shipAddressEdit" class="a_edit" style="display:inline-block;">@Messages("checkout_step2.edit")</a>
+                     	<a class="a_address_default" style="display:none;" d=true>@Messages("checkout_step2.Default")</a>
+                     </div>
+	                 }else{
+	                 	<div class="address_default_edit" style="display:none;">
+	                 	<a onclick="shipAddressEdit(this)" name="shipAddressEdit" class="a_edit" style="display:inline-block;">@Messages("checkout_step2.edit")</a>
+	                 	<a class="a_address_default">@Messages("checkout_step2.Default")</a>
+	                 	</div>
+	                 }
+                </li>
+           }
+           @if(isMember){
+              <li id="ship_to_new_address" class="add_item">
+                  <div>
+                      <p><span></span></p>
+                      <p>@Messages("checkout_step2.shipto")</p>
+                  </div>
+
+                </li>
+                }
+            </ul>
+        </div>
+       <form id="placeOrderForm" method="post" action="@controllers.order.routes.OrderController.placeOrder()">
+	       <input id="billAddressId" name="billAddressId" value="" style="display:none;">
+	       <input id="shipAddressId" name="addressId" value="" style="display:none;">
+	       <input type="hidden" name="storageid" value="@storageid" /> 
+	       
+	       <div id="shipMethod" class="newshopping_address orderD_con">
+	            
+	       </div>
+	       
+	       
+	       <div class="newshopping_address">
+	       @paymentRender.render(null,null)
+	       </div>
+	       
+	       @renderHelper.renderFragment(oc, "cart-product")
+        
+        
+        <div class="newshopping_message">
+            <p>@Messages("checkout_step2.leaveMessage")</p>
+            <textarea name="message" placeholder="@Messages("checkout_step2.writeAnything")"></textarea>
+        </div>
+        </form>
+    </div>
+    <div class="newshopping_box_right">
+        <dl>
+            <dt>@Messages("order.confirm.view.summary")</dt>
+            <dd>@Messages("order.confirm.view.subtotal"):<span id="subtotal">@Utils.money(order.getFordersubtotal,currency.getCcode)</span> <span> @currency.getCsymbol &nbsp;</span></dd>
+            <dd>@Messages("order.confirm.view.shippingCost"):<span id="shipCost">@Utils.money(0.0,currency.getCcode)</span><span> @currency.getCsymbol &nbsp;</span></dd>
+            
+           
+            <dd>@Messages("checkout_step2.Discount"):<span> @currency.getCsymbol @Utils.money(order.getFextra,currency.getCcode)</span></dd>
+           
+            <dd>@Messages("total")<span class="total"><span> @currency.getCsymbol &nbsp;</span><span id="grandTotal" total="@Utils.money(order.getFgrandtotal,currency.getCcode)">@Utils.money(order.getFgrandtotal,currency.getCcode)</span></span></dd>
+        </dl>
+        
+        	@checkout_loyalty()
+        
+        <!--购买失败页面为Payment_Failed.html-->
+        <div class="nw_place_box">
+        <input id="placeOrderBtn" type="button" value="@Messages("checkout_step2.placeOrder")" class="nw_btn_place" />
+        </div>
+        <div class="nw_guaranteed">
+            <p>@Messages("checkout_step2.tomtopSafe")</p>
+            <p>
+	           	<a href="javascript:vrsn_splash()" tabindex="-1">
+		       		<img name="seal" border="true" src="@controllers.base.routes.Assets.at("nortonseal/nortonseal3.gif")" oncontextmenu="return false;" alt="@Messages("checkout_step2.verify")">
+		       	</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div id="ns_loading_box" class="ns_loading_box" style="display: none;">
+    <div class="ns_loading">
+        <p><img src="@controllers.base.routes.Assets.at("images/newshopping_loading.gif")" alt=""/></p>
+        <p>Loading...</p>
+    </div>
+    <div class="blockPopup_black"></div>
+</div>
+
+<!--地址弹出层-->
+<form id="addShipAddressForm" action="@controllers.order.routes.ShippingAddress.addShipAddress()" method="post">
+<div class="blockPopup_box" id="pop_address" style="display: none;">
+    <div class="newshopping_address_pop">
+        <h2>@Messages("checkout_step.title")</h2>
+        @ship_address_form(countrys)
+        
+        <div class="newshopping_address_submit">
+           <a href="/base/cms/detail/59" target="_blank">@Messages("checkout_step.Policy")</a>
+            <div class="address_submit">
+            	<input type="hidden" id="isBill" value="0" />
+               <input id="cancel_btn" type="button" value="@Messages("checkout_step2.Cancel")" class="cancel"/>
+               <input id="step2_ok_btn" type="button" value="@Messages("checkout_step.save") >>" class="save"/>
+            </div>
+        </div>
+        
+    </div>
+    <div class="blockPopup_black"></div>
+</div>
+</form>
+
+	<script type="text/javascript">
+	$(function(){
+		countryPlugin = $('.country_list').country();
+	});
+	</script>
+	<script src="@controllers.base.routes.Assets.at("js/base/country/country_rel.js")"></script>
+	<script src="@controllers.base.routes.Assets.at("nortonseal/nortonseal.js")"></script>
+}

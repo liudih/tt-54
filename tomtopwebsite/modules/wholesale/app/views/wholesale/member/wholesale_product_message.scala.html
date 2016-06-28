@@ -1,0 +1,101 @@
+@(wholeSaleProductCart: facades.wholesale.WholeSaleProductCart, 
+chooseProducts: List[Integer],
+currency: dto.Currency,
+minQty : Integer,
+addresses: List[dto.member.MemberAddress],
+countryMap: Map[Integer,dto.Country], 
+billAddresses: List[dto.member.MemberAddress])
+@import views.html.helper._
+@import views.html.product.img
+@import services.base._
+@import services.base.utils._
+@if(null != wholeSaleProductCart.getWholeSaleProductItem){
+	<div id="wholeproduct-html">
+       <table cellspacing="0" cellpadding="0" border="1" width="100%" class="myRevi myReviPrice">
+             <tbody>
+             <tr>
+               <th class="choINP">&nbsp;</th>
+               <th>@Messages("item")</th>
+               <th class="capTh">@Messages("description")</th>
+               <th>@Messages("qty")</th>
+               <th class="capTh">@Messages("price")</th>
+               <th>@Messages("total")</th>
+               <th>@Messages("option")</th>
+             </tr>
+             @wholeSaleProductCart.getWholeSaleProductItem.map{ i=>
+             <tr @if(i.getProductBase.getIstatus != 1){class="outOfStock"}>
+               <td class="tdRela">
+              		@if(i.getProductBase.getIstatus == 1){	
+	               		<a class="chooseProduct rightThis" href="javascript:;" data-wproductid="@i.getWholeSaleProduct().getIid()">
+	               			<span class="@if(null != chooseProducts && chooseProducts.contains(i.getWholeSaleProduct().getIid())){afters choosed}" name="productID"></span>
+	               		</a>
+               		}
+               </td>
+               <td class="firImg descTd"><a class="pro_img" href="@controllers.product.routes.Product.view(i.getUrl)">@img(i.getImageUrl,null,265,265,null)</a></td>
+               <td>
+                   <a href="@controllers.product.routes.Product.view(i.getUrl)" class="wisTT">@i.getTitle()</a>
+                   <p class="wisSku lineBlock">@Messages("sku") @i.getProductBase.getCsku</p>
+                   <p class="wisSku lineBlock">
+					@if(null !=i.getAttributeMap){
+	            		@i.getAttributeMap.map{ j=>
+	            		    @if(null != j._1 && j._1.length>0){@j._1.substring(0,1).toUpperCase@j._1.substring(1)}
+	            		     : @j._2 &nbsp;
+	            		}
+	            	}
+				</p>
+               </td>
+               <td class="wisQty_wo">
+               	<ul class="qty_num inBlock">
+                       <li class="qty_num_Reduction @if(i.getProductBase.getIstatus == 1){qty_reduction}" data-qty="@i.getWholeSaleProduct().getIqty()" data-minqty="@minQty" data-iid="@i.getWholeSaleProduct().getIid()"></li>
+                       <li class="qty_nums">
+                       		@if(i.getProductBase.getIstatus == 1){
+                       			<input type="text" class="quantity-text number" data-minqty="@minQty" data-iid="@i.getWholeSaleProduct().getIid()" value="@i.getWholeSaleProduct().getIqty()" autocomplete="off" />
+                       		}else{
+                       			@i.getWholeSaleProduct().getIid()
+                       		}
+                       </li>
+                       <li class="qty_num_add @if(i.getProductBase.getIstatus == 1){qty_add}" data-qty="@i.getWholeSaleProduct().getIqty()" data-maxqty="@i.getProductBase().getIqty()" data-iid="@i.getWholeSaleProduct().getIid()"></li>
+                   </ul>
+                </td>
+               <td class="dz_price_td">
+	               	<div class="inBlock pro_price">
+                           @if(null != i.getWholesalePrice().getWsPrice() && 0 < i.getWholesalePrice().getWsDiscount()){
+                           		<p class="oldPrice">@i.getWholesalePrice().getPrice().getSymbol() @Utils.money(i.getWholesalePrice().getPrice().getUnitBasePrice())</p>
+                           		<p class="newPrice">@i.getWholesalePrice().getPrice().getSymbol() @Utils.money(i.getWholesalePrice().getWsPrice())</p>
+                           		<p class="priceTxt">@Messages("save") @i.getWholesalePrice().getPrice().getSymbol() @Utils.money(i.getWholesalePrice().getPrice().getUnitBasePrice()-i.getWholesalePrice().getWsPrice())</p>
+                           }else{
+                           		<p class="newPrice">@i.getWholesalePrice().getPrice().getSymbol() @Utils.money(i.getWholesalePrice().getPrice().getUnitBasePrice())</p>
+                           }
+                           
+                           @if(null != i.getWholesalePrice().getWsDiscount() && 0 < i.getWholesalePrice().getWsDiscount()){
+	                           <p class="priceOff"><em></em>
+	                           	<span>@Utils.percent(i.getWholesalePrice().getWsDiscount())</span>% @Messages("off")
+	                           </p>
+                           }
+	                 </div>
+               </td>
+               <td class="wisPri">	
+           			@if(null != i.getWholesalePrice().getWsDiscount()){
+           				@i.getWholesalePrice().getPrice().getSymbol() @Utils.money(i.getWholesalePrice().getWsTotalPrice())
+           			}else{
+           				@i.getWholesalePrice().getPrice().getSymbol() @Utils.money(i.getWholesalePrice().getPrice().getUnitBasePrice()*i.getWholeSaleProduct().getIqty())
+           			}
+               	</td>
+               <td class="wisAddCar">
+                   <a href="javascript:;" class="removeX delete">@Messages("remove")
+                       <p class="deletePop">
+                           <i></i>@Messages("remove.this.from.your.wholesale.list")<br>
+                           <input class="deleteYes" type="button" value="@Messages("yes")" data-iid="@i.getWholeSaleProduct().getIid()"><input type="button" value="@Messages("no")">
+                       </p>
+                   </a>
+               </td>
+             </tr>
+             }
+           </tbody>
+       </table>
+	   @views.html.wholesale.member.wholesale_grant.render(wholeSaleProductCart.getSubtotal(), wholeSaleProductCart.getGrandTotal(), currency, addresses, countryMap, billAddresses)
+	   </div>
+}else{
+	<div id="wholeproduct-html"></div>
+}
+

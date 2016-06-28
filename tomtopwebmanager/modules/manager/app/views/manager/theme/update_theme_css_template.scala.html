@@ -1,0 +1,56 @@
+@(iid:Int,
+  cvalue: String, 
+  cname: String
+  )
+@import views.html.helper._
+@user = @{services.manager.AdminUserService.getInstance().getCuerrentUser()}
+@helper.javascriptRouter("themeTemplateList")(
+	controllers.manager.routes.javascript.ThemeCssTemplate.getList
+)
+<div id="ThemeCssTemplate@iid" class="modal hide fade" style="padding-left: 150px" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	@form(controllers.manager.routes.ThemeCssTemplate.updateThemeCssTemplate(),'class->"update-ThemeCssTemplate-manage", 'method->"POST", 'onsubmit->"return false"){
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="myModalLabel">修改专题样式模板管理信息</h3>
+		<input type="hidden" name="cupdateuser" value="@user.getCusername()">
+	  </div>
+	  <div class="modal-body">
+			<div class="control-group">
+				<label class="control-label">专题编号:<span class="required" >*</span></label>
+				<div class="controls"> 
+					<input type="text" name="iid" value="@iid" readonly="readonly">
+					<span style="color: red;font-weight: bolder;"></span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" >样式名:
+					<span class="required">*</span>
+				</label>
+				<div class="controls">
+					<input type="hidden" name="tempcanme" value="@cname">
+					<input type="text" name="cname" value="@cname" placeholder="请输入样式名" class="m-wrap medium span6" required pattern=".{0,20}">
+					<span style="color: red;font-weight: bolder;"></span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" >样式值:
+					<span class="required">*</span>
+				</label>
+				<br/><br/>
+				<div class="controls">
+					<textarea name="cvalue" maxlength="1500" placeholder="请输入样式值"  style="margin-top: -26px;width: 330px;height: 150px"  required pattern=".{2,100}">@cvalue</textarea>
+					<span style="color: red;font-weight: bolder;"></span>
+				</div>
+			</div>
+	  </div>
+	  <div class="modal-footer" style="margin-bottom: -20px;">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+		<input id="updateThemeCssTemplateId" class="btn blue" type="submit" value="提交">
+	  </div>
+	 }
+</div>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+	<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/manager/themetemplate/themecsstemplate.js")'></script>
+} 
+

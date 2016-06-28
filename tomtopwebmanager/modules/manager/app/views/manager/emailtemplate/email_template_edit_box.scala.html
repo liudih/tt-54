@@ -1,0 +1,51 @@
+@(a: dto.EmailTemplate, emailTypes: List[dto.EmailType], websiteMap: Map[Integer,String], pageNo: Integer,languageMap: Map[Integer,String])
+<div id="edit-email-template@a.getIid"  class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:900px;" >
+	<form action="@controllers.manager.routes.EmailTemplate.editEmailTemplate()"  class="form-horizontal editEmailTemplateForm" method="post">
+	<input type="hidden" value="@a.getIid" name="iid">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+		    <h3>编辑邮件模板</h3>
+		</div>
+		<div class="modal-body">
+		  		<div class="control-group" >
+			  		语言：   
+			  		<select class="span1" name="ilanguage">
+			  		@languageMap.keySet().map{k=>
+			  			<option value="@k" @if(a.getIlanguage == k){selected="selected"}>@languageMap.get(k)</option>
+			  		}
+					</select> 
+					&nbsp &nbsp
+			  		站点：   
+			  		<select class="span2" name="iwebsiteid">
+			  			@websiteMap.keySet().map{i=>
+			  				<option value="@i" @if(a.getIwebsiteid == i){selected="selected"}>@websiteMap.get(i)</option>
+			  			}
+					</select>
+					&nbsp &nbsp
+			  		邮件模板类型：
+			  		<select class="span2" name=ctype>
+						<option selected="selected">@a.getCtype()</option>
+			  			@emailTypes.map{j=>
+							<option>@j.getCname</option>
+			  			}
+					</select>
+					<input class="btn btn-default btn-lg" type="button" value="查看模板变量" name="show_template_variable">
+					<br>
+					邮件模板名称<span style="color:red">*</span>:
+					    <input class="input-xxlarge" type="text" name="ctitle" value="@a.getCtitle()">
+						<label class="control-label">模板内容<span style="color:red">*</span>:</label>
+						<div class="controls">
+							<textarea name="ccontent" id ="email_template_content@a.getIid" class="m-wrap" style="width: 700px; height: 105px; font-size: 24px !important;">@a.getCcontent</textarea>
+							<script type="text/javascript"> 
+								CKEDITOR.replace("email_template_content@a.getIid", {height : 300,width : 850});
+							</script>
+						</div>
+				</div>
+		</div>
+	    <div class="modal-footer" style="margin-bottom: -20px;">
+		     <button type="button" id="edit-email-template-content-button" class="btn btn-default" data-dismiss="modal">关闭 </button>
+             <button type="submit" class="btn blue" id="update-email-template-content-btn@a.getIid" tag="@a.getIid">保存</button>
+	    </div>
+		<input type="hidden" value="@pageNo" name="pageNo">
+	</form>
+</div>

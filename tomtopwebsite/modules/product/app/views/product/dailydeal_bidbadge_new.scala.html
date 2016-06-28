@@ -1,0 +1,27 @@
+@(product: valueobjects.product.ProductBadgeConvert,index: Integer=0)
+@import services.base._
+@import services.base.utils._
+<div class="@if(index==0){dealsOne}else{dealsTwo}">
+			<span class="@if(index==0){discountBIG}else{discount}">@Utils.percent((product.getOrigprice() - product.getNowprice())/product.getOrigprice())</span>
+	<a class="publiceImg" href="@controllers.product.routes.Product.view(product.getUrl)">
+		@img(product.getImageUrl(),product.getTitle(),377,377,null)		
+	</a>
+    <div class="@if(index==0){dealsOneTxt}else{dealsTwoTxt}">
+		<h1><a href="@controllers.product.routes.Product.view(product.getUrl)">
+		@if(product.getTitle()!=null && product.getTitle().length>75){
+	    	@product.getTitle.substring(0,75)...
+	    }else{
+	    	@product.getTitle
+	    }
+		</a></h1>
+		<ul class="dealsInfs">
+			<li>@Messages("was.price")<br><span>@product.getCurrencySymbol @Utils.money(product.getOrigprice) </span></li>
+			<li @if(index>0){class="dealWli"}>@Messages("save")<br>@product.getCurrencySymbol  @Utils.money(product.getNowprice()-product.getOrigprice())</li>
+			<li class="orange">@product.getCurrencySymbol @Utils.money(product.getNowprice)</li>
+			<li>
+			<input class="yellowInput" type="button" value="View Deals >>" onclick="location.href='@controllers.product.routes.Product.view(product.getUrl)'">
+			</li>
+			@if(index>0){<div class="clear"></div>}
+		</ul>
+    </div>
+</div>

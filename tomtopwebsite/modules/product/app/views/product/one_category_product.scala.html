@@ -1,0 +1,72 @@
+@(products: valueobjects.base.Page[valueobjects.product.ProductBadge],
+	attribute: valueobjects.product.category.CategoryAttributeMap,
+	roots: List[valueobjects.product.category.CategoryComposite],
+	node:valueobjects.product.category.CategoryReverseComposite,
+	advertisingList : List[valueobjects.product.AdItem],
+	catMap: Map[Integer,Collection[dto.Category]]
+	)
+	
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/search.css")?@version.BuildVersion.build()" /> 
+}
+@services.base.HtmlUtils.misc().addTailOnce{
+  	<script src="@controllers.base.routes.Assets.at("js/lib/jquery.simplePagination.js")" ></script>
+}
+@services.base.HtmlUtils.misc().addTail{
+	<script src="@controllers.base.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.product.routes.Assets.at("js/product/mcategoryproduct")" ></script>
+}
+@views.html.base.master {
+<div class="container indexCon suarchCon" role="main">
+	<div class="Bread_crumbs_Box">
+		<ul class="Bread_crumbs">
+      		 <li class="Bread_home"><a href="/"></a></li>
+				@category.category_breadcrumb_inc(node)
+			<div class="clear"></div>
+		</ul>
+	</div>
+	
+	<div class="twoDir_Box">
+		@if(null !=advertisingList && advertisingList.size()>0){
+		<div class="direBanner_box" id="indexBanner_box">
+            <a class="browseLeft_click" href="javascript:;"></a>
+            <a class="browseRight_click" href="javascript:;"></a>
+        	<ul class="indexBanner_A">
+				@advertisingList.zipWithIndex.map{a=>
+					@if(a._2 == 0){
+					 <li style="z-index:1"> @Html(a._1.getDefaultShow())</li>
+					}else{
+					<li>@Html(a._1.getDefaultShow())</li>
+					}
+				}
+            </ul>
+            <ul class="indexBanner_list">
+            	@advertisingList.zipWithIndex.map{a=>
+					@if(a._2 == 0){
+					 <li class="listActive"></li>
+					}else{
+					<li></li>
+					}
+				}
+            </ul>
+        </div>
+        }
+        @*else{
+	    <h2 style="text-align:center;color:orange; margin-bottom: 50px;border:1px solid #e8e8e8;padding:150px 0 ;">Sorry, No Products Found!</h2>
+	    }*@
+        <div class="clear"></div>
+    </div>
+	@*<div id="flash-sale">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				@products.getList().map{p=>
+					@badge(p,true)
+				}
+			</div>
+		</div>
+	</div>*@
+	@views.html.product.category.one_category_platform(roots, catMap)
+   @tp.get("member-browse-history")	
+   </div>
+}

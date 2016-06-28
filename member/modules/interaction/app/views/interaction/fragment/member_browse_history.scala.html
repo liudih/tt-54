@@ -1,0 +1,12 @@
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+<div class="browse_box boxFramework">
+   	<div class="browse_title">@Messages("your.recently.history")</div>
+       <div class="xxkDiv autoH history_publice">
+   		 @tp.get("member-browse-history-in-member-center")
+  	   </div>
+</div>
+
+@services.base.HtmlUtils.misc().addHeadOnce{
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" /> 
+}

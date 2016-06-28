@@ -1,0 +1,55 @@
+@(contents: Map[String, Html])
+
+@views.html.base.master{
+
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+ 	@controllers.base.routes.Assets.at("css/index_page.css")
+}
+
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+ 	@controllers.base.routes.Assets.at("js/hhSwipe.js")
+}
+
+
+@contents("home-banner")
+@views.html.base.category()
+<div class="container">
+	<!-- daily deals -->	
+	<div class="indexDailyDeals_box lbBox">
+		@if(contents.containsKey("daily-deals")){
+			<div class="DailyDeals_left lineBlock">
+	    		@contents("daily-deals")
+	    	</div>
+	    }
+	    <div class="DailyDeals_right lineBlock">
+		    @if(contents.containsKey("hot-sales")){
+		    	<div class="DailyDeals_Rtop lbBox">
+		    		@contents("hot-sales")
+		    	</div>
+		    }
+		    @if(contents.containsKey("free-shipping")){
+		    	<div class="DailyDeals_Rbottom lbBox">
+		    		@contents("free-shipping")
+		    	</div>
+		    }
+	    </div>
+    </div>
+    
+    @contents("home-middle-advert")
+    
+    <div class="new">
+	    @if(contents.containsKey("new-arrivals")){
+		    @contents("new-arrivals")
+		}
+    </div>
+    
+    <div class="recommend">
+    	@if(contents.containsKey("recommend")){
+		    @contents("recommend")
+		}
+    </div>
+</div>
+
+<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/app_extension.js")'></script>
+ 
+}

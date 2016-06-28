@@ -1,0 +1,128 @@
+@(advertising: dto.advertising.Advertising,
+adContentList: List[dto.advertising.AdvertisingContent]
+)
+
+@languagelist = @{services.base.lang.LanguageService.getInstance().getAllSimpleLanguages()}
+@position = @{services.advertising.AdvertisingService.getInstance().getAllPositions()}
+
+@if(advertising!=null){
+
+<fieldset>
+	<legend>广告内容</legend>
+	<input type="hidden" value="@advertising.getIid()" name="iadvertisingid" />
+	
+	<div class="control-group">
+		<label class="control-label">语言</label>
+		<div class="controls">
+			<input type="hidden" value="" name="ilanguageid" />
+			@views.html.manager.category.languageChoose("ilanguageid_content",languagelist,null)
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">广告链接Title</label>
+		<div class="controls">
+			<input type="text" value="" name="ctitle" placeholder="广告链接Title" class="m-wrap medium span6">
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label">广告图片URL</label>
+		<div class="controls">
+			<input type="text" value="@advertising.getCimageurl()" disabled name="cimageurl" placeholder="图片URL" class="m-wrap medium span6">
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label">广告链接</label>
+		<div class="controls">
+			<input type="text" value="" name="chrefurl" placeholder="广告链接" class="m-wrap medium span6">
+		</div>
+	</div>
+
+	
+	<div class="control-group">
+		<label class="control-label">排序序号</label>
+		<div class="controls">
+			<input type="text" name="iindex" value="1" placeholder="排序序号" class="m-wrap medium span6">
+		</div>
+	</div>
+				
+	<div class="control-group">
+		<label class="control-label">状态</label>
+		<div class="controls">
+			<label class="radio"> <input type="radio" id = "bstatus_true" name="bstatus" 
+				value="true" checked="checked"> 启用
+			</label>
+			<label class="radio"> <input type="radio" id="bstatus_false" name="bstatus"
+				value="false"> 禁用
+			</label>
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label">背景图片</label>
+		<div class="controls">
+			<input type="file" name="cbgimages" id="cbgimages" class="isImage">
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label">背景图片</label>
+		<div class="controls">
+            <img width="70" height="70" name="cbgimages_proxy" id="cbgimages_proxy" src=""/>
+		</div>
+	</div>
+	
+	<img id="bgimgPre" src=""  style="display: none;padding-left: 150px" width="150px" height="400px"/> 
+	<div class="control-group">
+		<label class="control-label">背景图片URL</label>
+		<div class="controls">
+			<input type="text"  name="cbgimageurl" value="" placeholder="图片URL" class="m-wrap medium span6">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">背景颜色</label>
+		<div class="controls">
+			<input type="text" name="cbgcolor" value="" placeholder="背景颜色" class="m-wrap medium span6">
+		</div>
+	</div>
+	 
+	
+ 	<div class="clearfix">
+		<div class="btn-group">
+			<button id="add_advertcontent_btn" class="add_advertcontent_btn" data-toggle="modal">
+			保存<i class="icon-plus"></i>
+			</button>
+		</div>
+	</div>
+	
+ 	<table class="table table-striped table-hover table-bordered" id="advert_content_table">
+		<thead>
+			<tr>
+				<th>广告ID</th>
+				<th>广告标题</th>
+				<th>广告链接</th>
+				<th>广告语言</th>
+				<th>是否启用</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			@adContentList.map{u=>
+				<tr class="" id="@u.getIid()">
+					<td>@u.getIadvertisingid()</td>
+					<td>@u.getCtitle()</td>
+					<td>@u.getChrefurl()</td>
+					<td>@u.getLanguagename()</td>
+					<td>@u.isBstatus()</td>
+					<td><a class="deleteAdvertising_content" href="javascript:deleteAdvertising_content(@u.getIid());" data-id="@u.getIid()"><i class="icon-trash"></i></a></td>
+				</tr>
+			}
+		</tbody>
+	</table>
+	
+</fieldset>
+ 
+<div class="control-group">
+</div>
+}

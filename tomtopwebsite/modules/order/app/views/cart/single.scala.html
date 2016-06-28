@@ -1,0 +1,78 @@
+@(si : valueobjects.order_api.cart.SingleCartItem,
+	isCart: Boolean = true,
+	currency:dto.Currency,
+	isReview:Boolean = false)
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+<ul class="cartListUL oneS" id="cart_item_num@si.getCid()" flag="@si.getCid()_@si.getClistingid">
+	<input type="hidden" class="listingId" value="@si.getClistingid()"/>
+	<input type="hidden" class="csku" value="@si.getSku()"/>
+    <li class="cartListLI">
+        <a class="inBlock pro_img" href="@if(si.getCurl()!=null){@controllers.product.routes.Product.view(si.getCurl())}">
+        	@img(si.getCimageurl(), si.getCtitle(), 120, 120, null)
+        </a>
+        <div class="inBlock pro_info">
+            <a href="@if(si.getCurl()!=null){@controllers.product.routes.Product.view(si.getCurl())}">
+            	@si.getCtitle()
+            </a>
+            <p class="parameter"><span>@Messages("sku") @si.getSku()</span><!-- <span>Color:White</span><span>Power:3W</span> -->
+	            <span>
+	            	@if(null !=si.getAttributeMap){
+	            		@si.getAttributeMap.map{ j=>
+	            		    @if(null != j._1 && j._1.length>0){@j._1.substring(0,1).toUpperCase@j._1.substring(1)}
+	            		     : @j._2 &nbsp;
+	            		}
+	            	}
+	            </span>
+            </p>
+        </div>
+        <div class="inBlock pro_price">
+        	@if(si.getPrice()!=null){
+        		@if(si.getPrice().getDiscount()!=null&&si.getPrice().getDiscount()>0){
+	        		<p class="oldPrice">@currency.getCsymbol @Utils.money(si.getPrice().getUnitBasePrice())</p>
+	        	}
+				<p class="newPrice">@currency.getCsymbol <span>@Utils.money(si.getPrice().getUnitPrice())</span></p>
+				@if(si.getPrice().getDiscount()!=null&&si.getPrice().getDiscount()>0){
+				<p class="priceTxt">@Messages("save") @currency.getCsymbol<span class="mainsaveprice">@Utils.money(si.getPrice().getUnitBasePrice()-si.getPrice().getUnitPrice())</span></p>
+				<p class="priceOff">
+					<em></em><span>@Utils.percent(si.getPrice().getDiscount())</span>% OFF
+				</p>
+				}
+			}
+        </div>
+        @if(isCart){ 
+	        <ul class="qty_num inBlock">
+	        	<li class="qty_num_Reduction" clstag="@si.getCid()"></li>
+				<li class="qty_nums"><input type="text" value="@si.getIqty()" class="quantity-text" style="width:40px;height:30px;text-align:center;outline:medium;border:none;background:no-repeat 0 0 scroll #fff;" /></li>
+				<li class="qty_num_add" clstag="@si.getCid()"></li>
+	        </ul>
+        }else{
+        	<ul class="qty_num inBlock">
+				<li class="qty_nums">@si.getIqty()</li>
+	        </ul>
+        }
+        <span class="pro_total inBlock" data="@si.getClistingid">@currency.getCsymbol <span>@if(si.getPrice()!=null){@Utils.money(si.getPrice().getPrice())}</span></span>
+        @if(isCart){
+        <div class="pro_options inBlock">
+            <a href="javascript:;" class="delete">
+                <em class="sCloss"></em>
+                <p class="deletePop">
+                    <i></i>@Messages("remove.from.your.cart")<br>
+                    <input onclick="delCart('@si.getCid()')" type="button" value="@Messages("yes")">
+					<input onclick="hideTip(this)" type="button" value="@Messages("no")" >
+                </p>
+            </a>
+            <a href="javascript:;" onclick="collect('@si.getClistingid()',this)" class="heart">
+            	<em class="showcollect" data="@si.getClistingid()"></em>
+            </a>
+        </div>
+	        @if(si.getAddition!=null && si.getAddition!=""){
+	        	<div class="discountInformation">@si.getAddition</div>
+	        }
+        }
+        @if(isReview){
+        	<a class="orderReview" href="/review/product/@si.getClistingid()/write">@Messages("review")</a>
+        }
+    </li>
+</ul>

@@ -1,0 +1,23 @@
+@(memberRole:List[dto.member.role.MemberRoleBase],roleIds: List[Integer],iid: Integer,email: String)
+
+<div class="control-group">
+	<label class="control-label">邮箱</label>
+	<div class="controls">
+		<input type="text" value="@email" name="cemail" placeholder="邮箱" class="m-wrap medium span6" readonly="readonly">
+	</div>
+</div>
+
+<div class="control-group">
+	<div class="controls">
+		<input type="hidden" value="@iid" name="iid" >
+	</div>
+</div>		
+
+
+<div class="control-group">
+	<label class="control-label">用户角色</label>
+	<div class="controls">
+		@views.html.manager.user.role.role_checklist("imemberroleid",memberRole, roleIds)
+	</div>
+</div>
+

@@ -1,0 +1,9 @@
+@(vo: valueobjects.product.AdvertisingProductDetail)
+
+@if(vo.getAdDetail()!=null && vo.getAdDetail().size()>0){
+<div class="productBanner boxFramework">
+@vo.getAdDetail().map{ i =>
+	@Html(i.getDefaultShow())
+	}
+</div>
+}

@@ -1,0 +1,163 @@
+@(rlist : List[dto.ReviewsCountList])
+@if(rlist!=null && rlist.size()>0){
+@rlist.map{ reviews =>
+<ul class="reviewsNumber reviewsBackC"  itemprop="review" itemscope itemtype="http://schema.org/Review">
+	
+	<li class="reviewsName">
+			<ul class="blockStar">
+				<li class="hoveSTText">@Messages("usefulness")</li>
+				<li>
+					<div class="productReviews">
+					
+						<span style="display:none" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+					       @Messages("usefulness"):
+							<span itemprop="ratingValue">@reviews.getIusefulness</span>
+							<span itemprop="bestRating">100</span>
+					    </span>
+					
+						<div class="productStar_Us" style="width:@reviews.getIusefulness%"></div>
+					</div>
+				</li>
+			<li class="hoveSTText">@Messages("shipping")</li>
+				<li>
+					<div class="productReviews">
+						<span style="display:none" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+					       @Messages("shipping"):
+							<span itemprop="ratingValue">@reviews.getIshippingStarWidth</span>
+							<span itemprop="bestRating">100</span>
+					    </span>
+						<div class="productStar_Sh" style="width:@reviews.getIshippingStarWidth%"></div>
+					</div>
+				</li>
+				<li class="hoveSTText">@Messages("price"):</li>
+				<li>
+					<div class="productReviews">
+						<span style="display:none" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+					        @Messages("price"):
+							<span itemprop="ratingValue">@reviews.getIpriceStarWidth</span>
+							<span itemprop="bestRating">100</span>
+					    </span>
+						<div class="productStar_Pr" style="width:@reviews.getIpriceStarWidth%"></div>
+					</div>
+				</li>
+				<li class="hoveSTText">@Messages("quality")</li>
+				<li>
+					<div class="productReviews">
+						<span style="display:none" itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating">
+					        @Messages("quality"):
+							<span itemprop="ratingValue">@reviews.getIqualityStarWidth</span>
+							<span itemprop="bestRating">100</span>
+					    </span>
+						<div class="productStar_Qu" style="width:@reviews.getIqualityStarWidth%"></div>
+					</div>
+				</li>
+			</ul>	
+		<div class="clear"></div>
+		<span itemprop="name" style="display:none">@reviews.getTitle()</span>
+		
+		<p class="reviewsNameB">@Messages("by") 
+			<span class="black">
+				<span itemprop="author" itemscope itemtype="http://schema.org/Person">
+      			<span itemprop="name">@reviews.getbName()</span></span>
+			</span>
+		</p>
+		<p><meta itemprop="datePublished" content="@reviews.getDcreatedate()">@reviews.getDcreatedate()</p>
+	</li>
+	<li class="reviewsBackTxt">
+		<p itemprop="reviewBody">@reviews.getCcomment()</p>
+		 <ul class="writePic">
+		 @reviews.getCommentPhotosUrl.map{j=>
+			<li>
+				<img src="@j" style="width:50px;height:50px;" />
+			</li>
+		   }
+		   @if(null != reviews.getCommentVideoUrl){
+				<li class="writeVideo">
+				<img class="videoimg" src="@controllers.base.routes.Assets.at("img/videos.jpg")" style="width:50px;height:50px;" />
+				</li>
+			}
+		</ul>
+		<!--addPic-->	
+		<div class="blockPopup_box">
+			 <div class="customer_popBox scrollWZ">
+				<input value="0" type="hidden" name="nowIndex" class="nowIndex" />
+				<div class="customer_popClose"></div>
+				<div class="customer_leftClick cursor"></div>
+				<div class="customer_rightClick cursor"></div>
+				<ul class="customer_bigPic">
+				@reviews.getCommentPhotosUrl.map{p=>
+					<li>
+					<img src="@p" style="width:100%;"/>
+					</li>
+				}
+				@if(null != reviews.getCommentVideoUrl){
+					<li class="writeVideo">
+					<iframe class="videoWindow" width="585px" height="400px" frameborder="0" src="@reviews.getCommentVideoUrl" allowfullscreen="" data="@reviews.getCommentVideoUrl">
+					</iframe>
+					</li>
+				}
+				<div class="clear"></div>
+				</ul>
+			</div>
+			<div class="blockPopup_black"></div>
+		</div>
+		<!--addPicOver--> 
+	</li>
+	<li class="reviewsQue">
+				@vote(reviews)
+		@*<p class="reviewsQue_share" >
+			<span></span>
+			<a class="black"  onclick="affShareOnFacebook('')" href="javascript:;">@Messages("share.this.review")</a>
+		</p>*@
+	</li>
+	<div class="clear"></div>
+</ul>
+}
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript">
+$(function(){
+	$(".reviewsNumber").each(function(i,e){
+		var n = $(this);
+		var frame = n.find("iframe:eq(0)");
+		if(frame==null || frame.length==0){
+			return true;
+		}
+		var url = frame.attr("data");
+		var code = "";
+		if(url.indexOf("youtu.be/")!=-1){
+			code = url.substring(url.indexOf("youtu.be/")+9,url.length);
+			frame.attr("src","https://www.youtube.com/embed/"+code);
+		}
+		if(url.indexOf("www.youtube.com/watch?v=")!=-1){
+			code = url.substring(url.indexOf("?v=")+3,url.length);
+			frame.attr("src","https://www.youtube.com/embed/"+code);
+		}
+		if(code!=""){
+			var imgUrl_small  = getScreen(code, 'small');
+			var img = n.find(".videoimg:eq(0)");
+			img.attr("src",imgUrl_small);
+		}
+	});
+	
+});
+function getScreen( url, size )
+{
+  if(url === null){ return ""; }
+
+  size = (size === null) ? "big" : size;
+  var vid;
+  var results;
+
+  results = url.match("[\\?&]v=([^&#]*)");
+
+  vid = ( results === null ) ? url : results[1];
+
+  if(size == "small"){
+    return "http://img.youtube.com/vi/"+vid+"/2.jpg";
+  }else {
+    return "http://img.youtube.com/vi/"+vid+"/0.jpg";
+  }
+}
+</script>
+}
+}

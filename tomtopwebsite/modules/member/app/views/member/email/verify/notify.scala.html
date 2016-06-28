@@ -1,0 +1,25 @@
+@(status:Int,email:String,surplus:Int)
+<div class='bkBlack emai-bkBlack'></div>
+<div class="emailSub clickPop" style="display: block;">
+                	<em class="closePop email-closePop"></em>
+                	<span class="emIco"></span>
+                	@if(status==1){
+                	   <b class="blue">@Messages("congratulations")</b>
+                       <p>@Messages("verification.email.sent.successfully.mailbox") @Messages("follow.instructions.complete.verification") </p>
+                       <p>@Messages("also.send") @surplus  @Messages("times")</p>
+                      
+                	}
+                	@if(status==0){
+                	  <p>@Messages("today.only.send.3.email")</p>
+                	   
+                	}
+                	@if(status==(-1)){
+                	     <p>@Messages("send.mail") @email @Messages("failure")</p>
+                	}
+                    @if(status==(-2)){
+                	     <p>@Messages("E-mail has been activated")</p>
+                	     <script type="text/javascript">
+                	        location.hrer=location.reload();
+                	     </script>
+                	}
+</div>

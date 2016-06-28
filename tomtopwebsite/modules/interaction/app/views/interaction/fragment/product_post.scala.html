@@ -1,0 +1,27 @@
+
+@(
+f:valueobjects.interaction.ProductPostList,
+types:List[dto.ProductPostType],
+listingid:String,
+loginEmail:String
+)
+<div class="ProductQA boxFramework">
+  <div class="browse_title">
+      	@Messages("product.q.a") 
+      	@if(f.getCount>15){
+      	   <p class="postPhotos"><a href="@controllers.interaction.routes.Post.list(listingid)">@Messages("see.all.lowercase") @f.getCount() @Messages("questions.and.answers")</a></p>
+      	}
+         
+      </div>
+        @views.html.interaction.product.post.type_list(types,listingid)
+        @if(f.getList() != null && f.getList().size()>0){ 
+           @views.html.interaction.product.post.list_inc(f.getList())
+        }
+      <div class="ProductQA_input reviewsBackC">
+          @views.html.interaction.product.post.askbtn()
+      
+           <!--Askpop-->
+           @views.html.interaction.product.post.dialog(types,listingid,loginEmail)
+         <!--Askpopover-->
+   </div>
+</div>

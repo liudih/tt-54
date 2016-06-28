@@ -1,0 +1,46 @@
+@**
+@(fragment: valueobjects.product.ProductCustomAttributes)
+@helper.javascriptRouter("attributeRoutes")(
+	controllers.product.routes.javascript.Product.getMultiatributeProduct,
+	controllers.product.routes.javascript.Product.view
+)
+@if(fragment.getTags().size() > 0) {
+	<div type="hidden" id="attributeShow" value="@fragment.getCurrentListingID()"></div>
+}
+**@
+@import views.html.product.img
+@(fragment: valueobjects.product.ProductCustomAttributes)
+@helper.javascriptRouter("attributeRoutes")(
+	controllers.product.routes.javascript.Product.getMultiatributeProduct,
+	controllers.product.routes.javascript.Product.view
+)
+@if(fragment !=null && fragment.getTags().size() > 0) {
+	<div type="hidden" id="attributeShow" value="@fragment.getCurrentListingID()"></div>
+	@fragment.getTags().map{ e =>
+		@if(e._2.size() > 0){
+		<div class='@if(e._2(0).getShowImg()==true){productSpecialColor_box} else {productSpecialSize_box}'>
+			<div  class="@if(e._2(0).getShowImg()==true){productSpecialColor_txt} else{productSpecialSize_txt}">@if(e._1.length > 0){@(e._1.substring(0,1).toUpperCase+e._1.substring(1))}:</div>
+		 	<ul>
+				@e._2.map{ item =>
+					@if(null != item.getProductUrl()) {
+						<a title='@item.getValue()' @if(item.getClickEvent == true){href="@controllers.product.routes.Product.view(item.getProductUrl())"}>
+				      	  	 <li class='@if(item.getShowImg() == false){productSpecialSize} else {productSpecialColor_pic} @if(item.getListingID() == fragment.getCurrentListingID()){rightDown_SJ}
+				      	  	 	 @if(item.getClickEvent == false){invalids}'>
+				      	  	 	<span></span>
+				      	  		@if(item.getShowImg() != null && item.getShowImg()){
+					      	  		 @img(item.getImageUrl(), item.getValue(), 120, 120, "showAttributePic",  'height->"35", 'width->"35px", 'alt->item.getValue(), 
+					      	  		 	Symbol("data-bigimageurl")-> views.product.ImageUtils.getSrcPath(item.getImageUrl()))
+								}else{
+									@item.getValue()
+								}
+				      	    </li>
+				      	 </a>
+			      	 }
+		  		}
+		  		<div class="clear"></div>
+		    </ul>
+		    <div class="clear"></div>
+		</div>
+		}
+	}
+}

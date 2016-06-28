@@ -1,0 +1,85 @@
+@(productExplainForm: forms.product.ProductExplainForm)
+@import views.html.helper._
+
+@if(null != productExplainForm){
+<div id="update-product_explain@productExplainForm.getIid()" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:900px;">
+	@form(controllers.manager.routes.ProductExplain.productExplainUpdate,'class->"form-horizontal", 'enctype->"multipart/form-data", 'onsubmit->"return false") {
+		<input type="hidden" id="iid" name="iid" value="@productExplainForm.getIid()">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+		    <h3>商品整体说明信息</h3>
+		</div>
+		<div class="modal-body">
+			<div class="control-group">
+			    <label for="websiteid">站点选择</label>
+				@services.manager.ChooseService.getInstance().website("iwebsiteid", productExplainForm.getIwebsiteid(), true)
+			</div>
+			<div class="control-group">
+			    <label class="control-label">语言</label>
+				@services.manager.ChooseService.getInstance().language("ilanguageid", productExplainForm.getIlanguageid())
+			</div>
+			<div class="control-group">
+				<label class="control-label">类型</label>
+				@services.manager.ChooseService.getInstance().productExplain("ctype", if(productExplainForm.getCtype()!=null){productExplainForm.getCtype()}else{null})
+			</div>
+			<div class="control-group">
+				<label class="control-label">详细信息</label>
+				<div class="controls">
+                    <textarea name="ccontent" id="ccontent@productExplainForm.getIid()" class="required m-wrap" style="width: 837px; height: 105px; font-size: 24px !important;">@productExplainForm.getCcontent()</textarea>
+					<script type="text/javascript"> 
+						CKEDITOR.replace('ccontent@productExplainForm.getIid()', {
+							height : 300,
+							width : 700
+						});
+						CKEDITOR.config.bodyClass = 'required'; 
+					</script>
+				</div>
+			</div>
+		</div>
+	    <div class="modal-footer" style="margin-bottom: -20px;">
+		     <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
+             <button type="submit" class="btn blue" id="productExplainForm_update@productExplainForm.getIid()" data-id="@productExplainForm.getIid()">保存</button>
+	    </div>
+	}
+</div>
+}else{
+<div id="add-product_explain" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:900px;">
+	@form(controllers.manager.routes.ProductExplain.productExplainUpdate,'class->"form-horizontal", 'enctype->"multipart/form-data", 'id->"addProductExplain" , 'onsubmit->"return false") {
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+		    <h3>新增商品整体说明信息</h3>
+		</div>
+		<div class="modal-body">
+			<div class="control-group">
+			    <label for="websiteid">iwebsite</label>
+				@services.manager.ChooseService.getInstance().website("iwebsiteid", null, true)
+			</div>
+			<div class="control-group">
+			    <label class="control-label">language</label>
+				@services.manager.ChooseService.getInstance().language("ilanguageid", -1)
+			</div>
+			<div class="control-group">
+				<label class="control-label">type</label>
+				@services.manager.ChooseService.getInstance().productExplain("ctype", null)
+			</div>
+			<div class="control-group">
+				<label class="control-label">content</label>
+				<div class="controls">
+                    <textarea name="ccontent" id="ccontent-add" class="required m-wrap" style="width: 837px; height: 105px; font-size: 24px !important;"></textarea>
+					<script type="text/javascript"> 
+						CKEDITOR.replace('ccontent-add', {
+							height : 300,
+							width : 700
+						});
+						CKEDITOR.config.bodyClass = 'required'; 
+					</script>
+				</div>
+			</div>
+		</div>
+	    <div class="modal-footer" style="margin-bottom: -20px;">
+		     <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
+             <button type="submit" class="btn blue" id="productExplainForm_add">保存</button>
+	    </div>
+	}
+</div>
+}

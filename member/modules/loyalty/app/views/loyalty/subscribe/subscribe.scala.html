@@ -1,0 +1,131 @@
+@(cates:List[valueobjects.category.SubscribeCategory],
+	email:String="")
+@views.html.base.master{
+@services.base.HtmlUtils.misc().addHeadOnce{
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/index.css")?@version.BuildVersion.build()" /> 
+}
+<div class="container subEmail">
+    <div class="Bread_crumbs_Box">
+        <ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="/"></a></li>
+            <li>
+                <p>
+                    <a class="Bread_link" href="javascript:;">@Messages("subscription")</a>
+                </p>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <h2 class="SuperDeals category">@Messages("subscription")</h2>
+    <p class="subBanTT"><a href="javascript:;">@email</a>@Messages("ensure.only.receive.interested.customize.settings")</p>
+    <a class="subEmailBanner" href="javascript:;"><img src="@controllers.base.routes.Assets.at("/images/subEmailBanner.jpg")""></a>
+    <b class="subemB">@Messages("show.hot.deals.these.products")</b>
+    <ul class="email_Banner" id="categoryCon">
+    	@cates.map{c=>
+    		<!-- @c.getCname() -->
+    		<li><span data-name="@c.getCname()"></span>
+    		@if(c.getLabelNameId()!=null){
+    			<img src="@controllers.product.routes.CategoryAPI.getCategoryImage(c.getLabelNameId(),"categorylabelType")" alt="@c.getCname()" title="@c.getCname()" width="282" height="152" />
+    		}else{
+    			<img src="" title="@c.getCname()" width="282" height="152" />
+    		}
+    		</li>	
+    	}
+        <div class="clear"></div>
+    </ul>   
+    <ul class="email_Banner email_BannerColor">
+    	<li><span data-name="New Arrivals"></span><img src="@controllers.base.routes.Assets.at("/images/emailPic06.jpg")"></li>
+    	<li><span data-name="Daily Deal"></span><img src="@controllers.base.routes.Assets.at("/images/emailPic07.jpg")"></li>
+    	<li><span data-name="Clearance"></span><img src="@controllers.base.routes.Assets.at("/images/emailPic08.jpg")"></li>
+    	<!-- <li><span></span><img src="@controllers.base.routes.Assets.at("/images/emailPic09.jpg")"></li> -->
+        <div class="clear"></div>
+    </ul>
+    <form class="subBotInp" id="subBotInp">
+    	<input name="email" class="inputTxt" type="text" value="@email" placeholder="@Messages("enter.your.email.address")">
+    	<input name="captcha" class="inputTxt" type="text" value="" placeholder="" style="width:100px;">
+    	<img id="captcha" src="@controllers.base.routes.Captcha.generate()" onclick="this.src='@controllers.base.routes.Captcha.generate()?r='+Math.random();" style="cursor:pointer;" title="change" width="70" height="35" />
+    	<input class="blackInput" type="button" value="@Messages("submit")" onclick="submitEmail(this)">
+    	
+    	<div class="emailSub clickPop" style="display: none;">
+            <em class="closePop"></em>
+            <span class="emIco"></span>
+            <b class="blue">@Messages("congratulations.you.now.tomtop.com.insider")</b>
+            <p>$50 @Messages("gift.card.sent.mail.box.soon.check.email") 
+            <br>
+            @Messages("subscribing.newsletter.exclusive.periodically.upcoming.promotions.receive.discounts")
+            </p>
+        </div>
+    </form>
+</div>
+<div class="bkBlack" style="display:none;z-index: 999;"></div>
+<div id="loadimg" style="display:none;width:32px;height:32px;margin: -16px 0 0 -16px;position:fixed;top:50%;left:50%;"><img src="/base/assets/images/loading.gif" style="width:32px;height:32px" /></div>
+@services.base.HtmlUtils.misc().addTailOnce{
+<script>
+function checkEmail(str){
+   var re = /^(\w-*\.*)+@@(\w-?)+(\.\w{2,})+$/
+   if(re.test(str)){
+       return true;
+   }else{
+       return false;
+   }
+}
+function changeCaptcha2(){
+	var c = $("#captcha");
+	var url = c[0].src;
+	if(url.indexOf("?")>0){
+		url = url.substring(0,url.indexOf("?"));
+	}
+	c[0].src = url+'?r='+Math.random();
+}
+function submitEmail(node){
+	var text = $("input[name='email']:eq(0)").val();
+	var captcha = $("input[name='captcha']:eq(0)").val();
+	if(!checkEmail(text)){
+		alert("Please check your email!");
+		return;
+	}
+	if(captcha==""){
+		alert("Please enter the verification code!");
+		return;
+	}
+	var arr = [];
+	$(".selectedAC").each(function(i,e){
+		arr.push($(this).attr("data-name"));
+		$("#subBotInp").append('<input type="hidden" name="categoryArr" value="'+$(this).attr("data-name")+'" />' );
+	});
+	var arrtext = arr.join(",");
+	if(arrtext==""){
+		alert("Please select the categorys!");
+		return;
+	}
+	var url = "@controllers.loyalty.routes.SubscribeEmail.sendEmail()";
+	$(".bkBlack").show();
+	$("#loadimg").show();
+	$.ajax({
+		url: url,
+		type: "POST",
+		dataType: "json",
+		data: $("#subBotInp").serialize(),
+		error:function(){
+			$(".bkBlack").hide();
+			$("#loadimg").hide();
+		},
+		success:function(data){
+			$("#loadimg").hide();
+			$(".bkBlack").hide();
+			if(data.result=="wrongcaptcha"){
+				alert("Please enter the correct verification code!");
+				$(".inputTxt:eq(1)").focus().select();
+				return;
+			}
+			if(data.result=="success"){
+				$(node).siblings(".clickPop").fadeIn();
+				$(".bkBlack").show();
+				changeCaptcha2();
+			}
+		}
+	});
+}
+</script>
+}
+}

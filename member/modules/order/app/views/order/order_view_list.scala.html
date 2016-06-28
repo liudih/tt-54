@@ -1,0 +1,9 @@
+@(items: List[valueobjects.order_api.OrderItem],
+	currency: dto.Currency)
+@items.map{ i => 
+	@if(i.getChildList == null || i.getChildList.isEmpty){
+		@single(i,currency) 
+	} else {
+		@bundle(i,currency) 
+	}
+}

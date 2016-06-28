@@ -1,0 +1,22 @@
+@(imgUrl: String, imgTitle: String, width: Integer, height: Integer, clazz: String, args: (Symbol,Any)*)
+
+@baseUrl = @{play.Play.application().configuration().getString("image_request_base_url")}
+
+@if(imgUrl != null) {
+	@if(imgUrl.startsWith("http://") || imgUrl.startsWith("https://")) {
+	  @if(width != null && height != null) {
+		 <img @if(imgTitle != null){title="@imgTitle"} src="@imgUrl" @if(clazz != null){class="@clazz"} 
+		 	@toHtmlArgs(args.filter(arg => arg._1.name != "width" && arg._1.name != "height").toMap)>
+	  } else {
+		 <img @if(imgTitle != null){title="@imgTitle"} src="@imgUrl" @if(clazz != null){class="@clazz"} @toHtmlArgs(args.toMap)>
+	  }
+	}else{
+	  @if(width != null && height != null) {
+		 <img @if(imgTitle != null){title="@imgTitle"} src="@baseUrl/product/xy/@width/@height/@imgUrl" @if(clazz != null){class="@clazz"} @toHtmlArgs(args.toMap)>
+	  } else {
+	     <img @if(imgTitle != null){title="@imgTitle"} src="@baseUrl/product/original/@imgUrl" @if(clazz != null){class="@clazz"} @toHtmlArgs(args.toMap)>
+	  }
+	}
+} else {
+	<img src="@controllers.base.routes.Assets.at("images/default_show.jpg")" />
+}

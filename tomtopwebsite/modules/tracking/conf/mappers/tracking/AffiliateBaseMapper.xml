@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mappers.tracking.AffiliateBaseMapper">
+	<resultMap id="BaseResultMap" type="entity.tracking.AffiliateBase">
+		<result column="caid" property="caid" jdbcType="VARCHAR" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+		<result column="itype" property="itype" jdbcType="INTEGER" />
+		<result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<insert id="insert" parameterType="entity.tracking.AffiliateBase">
+		insert into t_affiliate_base (caid, iwebsiteid, itype,
+		ccreateuser, dcreatedate)
+		values (#{caid,jdbcType=VARCHAR}, #{iwebsiteid,jdbcType=INTEGER},
+		#{itype,jdbcType=INTEGER},
+		#{ccreateuser,jdbcType=VARCHAR}, #{dcreatedate,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="entity.tracking.AffiliateBase">
+		insert into t_affiliate_base
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="caid != null">
+				caid,
+			</if>
+			<if test="iwebsiteid != null">
+				iwebsiteid,
+			</if>
+			<if test="itype != null">
+				itype,
+			</if>
+			<if test="ccreateuser != null">
+				ccreateuser,
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="caid != null">
+				#{caid,jdbcType=VARCHAR},
+			</if>
+			<if test="iwebsiteid != null">
+				#{iwebsiteid,jdbcType=INTEGER},
+			</if>
+			<if test="itype != null">
+				#{itype,jdbcType=INTEGER},
+			</if>
+			<if test="ccreateuser != null">
+				#{ccreateuser,jdbcType=VARCHAR},
+			</if>
+			<if test="dcreatedate != null">
+				#{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<delete id="deleteByAid" parameterType="java.lang.String">
+		delete from
+		t_affiliate_base
+		where caid = #{aid,jdbcType=VARCHAR}
+	</delete>	
+</mapper>

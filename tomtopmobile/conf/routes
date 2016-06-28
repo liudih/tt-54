@@ -1,0 +1,26 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           @controllers.Application.index()
+-> /cart							cart.Routes
+
+-> /base							base.Routes
+
+-> /member							member.Routes
+
+-> /order							order.Routes
+
+-> /interaction						interaction.Routes
+
+-> /messaging						messaging.Routes
+
+-> /fb								facebook.Routes
+-> /google							google.Routes
+-> /paypal							paypal.Routes
+
+-> /tracking						tracking.Routes
+
+-> /								product.Routes
+

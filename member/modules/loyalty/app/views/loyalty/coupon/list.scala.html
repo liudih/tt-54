@@ -1,0 +1,120 @@
+@(
+unused : valueobjects.base.Page[entity.loyalty.Coupon],
+used : valueobjects.base.Page[entity.loyalty.Coupon],
+tab : String
+)
+@import views.html.helper._	
+@import services.base.utils.Utils;
+
+@services.base.HtmlUtils.misc().addHeadOnce{
+<script src="@controllers.base.routes.Assets.at("js/lib/jquery.json.min.js")"></script>
+}
+
+@views.html.member.base.master("my-coupon") {
+      <div class="accountRight accouReviewBox">
+    	
+    	<h6>My Coupon</h6>
+        <div class="xxkDiv">
+            <ul class="hsXXK postPhotos">
+                <li class="@if(tab == null || "unused" == tab ){xxkActi}" id="unused">Unused Coupons</li>
+                <li class="@if(tab != null && "used" == tab ){xxkActi}" id="used">Used Coupons</li>
+                
+                <div class="clear"></div>
+            </ul>
+            	
+            <div id="unusedDiv" style="display: @if(tab == null || "unused" == tab ){block}else{none};" class="xxkBOX boxRa block">
+                <table class="hsTable" border="1" cellpadding="0" cellspacing="0" width="100%">
+                  <tbody><tr>
+                    <th width="160">code</th>
+                    <th width="120">name</th>
+                    <th width="120">minimum amount</th>
+                    <th width="120">value</th>
+                    <th width="130">valid date</th>
+                  </tr>
+					@if(unused != null && unused.getList().size > 0){
+					@unused.getList().map{m=> @if(m != null){
+					<tr class="">
+						<td>@m.getCode</td>
+						<td>@m.getRuleName</td>
+						<td>@Utils.money(m.getMinAmount) @if(m.getCo != null){@m.getCo.getCsymbol}</td>
+						<td>@m.getValue @if(m.isCash() && m.getCo != null){@m.getCo.getCsymbol}</td>
+						<td>@m.getValidStartDateStr ~&nbsp; @m.getValidEndDateStr</td>
+					</tr>
+					} } }
+				</tbody></table>
+                @if(unused != null && unused.getList().size()>0){
+                 	@views.html.product.gadget.pagination((unused.pageNo-1),unused.totalPages)
+                }
+            </div>
+            <div id="usedDiv" style="display: @if(tab != null && "used" == tab ){block}else{none};" class="xxkBOX boxRa">
+                <table class="hsTable" border="1" cellpadding="0" cellspacing="0" width="100%">
+                  <tbody><tr>
+                    <th width="160">code</th>
+                    <th width="120">name</th>
+                    <th width="130">order number</th>
+                  </tr>
+					@if(used != null && used.getList().size()>0){
+					@used.getList().map{m=> @if(m != null){
+					<tr class="">
+						<td>@m.getCode</td>
+						<td>@m.getRuleName</td>
+						<td>@m.getOrderNumber</td>
+					</tr>
+					} } }
+				</tbody></table>
+                @views.html.product.gadget.pagination((used.pageNo-1),used.totalPages)
+            </div>
+           
+        </div>
+                
+       <div class="arrayNEX">
+       @form(controllers.loyalty.routes.MyCoupon.list(),'id->"searchbar",'role->"form",'enctype->"multipart/form-data"){
+         
+         
+       }
+         
+      
+      </div>
+      <div class="clear"></div>
+      <h6>Coupon Ruler:</h6>
+      <ol class="coupon_tk">
+        	<li>1. Coupons are non-refundable and can not be redeemed for cash. </li>
+        	<li>2. The discount in coupons can not be applied to the cost of shipping.</li>
+        	<li>3. Coupons can only be used within their valid dates.</li>
+        	<li>4. Coupons can't be applied together with each other for one order. One coupon can only be used at a time.</li>
+        	<li>5. Coupons can't be applied to special products and all dodocool branded items. For example, if a customer gets a coupon (get a 10% off) and orders an item A with a special discount and an item B, the coupon will only be available to item B. </li>
+        	<li>6. Coupons will be used after customers complete the payment successfully. If a customer requests to refund and the supplier agrees to refund, the coupon used will not be available again and the refund amount will not exceed the cash payment customer paid.</li>
+        	<li>7. In case of order cancellation before finishing the payment, the coupon will be available for next order before the coupon expires.</li>
+        	<li>8. To redeem coupons, choose the corresponding coupon you obtained in the coupon box when checkout. </li>
+        	<li>9. Quantitive restrictions on coupons may vary from different activities. Besides, some coupons may have their specific rules of usage in different situations. For example, coupons can only be used on a specified category. Please see the instructions of the relevant promotions for more details.</li>
+      </ol>
+    
+    @services.base.HtmlUtils.misc().addTailOnce{
+      <script type="text/javascript">
+      	$(function(){
+			var input = '<input type="hidden" id="p" name="page" value="1" />'
+					  + '<input type="hidden" id="currentTab" name="tab" value="@if(tab != null){@tab}else{unused}" />'; 
+			$('#searchbar').append(input);
+			
+			
+			$('#unused').unbind('click');
+			$('#unused').click(function(){
+				$('#currentTab').val('unused');
+				$(this).addClass('xxkActi');
+				$('#used').removeClass('xxkActi');
+				$('#usedDiv').hide();
+				$('#unusedDiv').show();
+			});
+			$('#used').unbind('click');
+			$('#used').click(function(){
+				$('#currentTab').val('used');
+				$(this).addClass('xxkActi');
+				$('#unused').removeClass('xxkActi');
+				$('#unusedDiv').hide();
+				$('#usedDiv').show();
+			});
+		});
+      </script>
+    }
+    
+ }

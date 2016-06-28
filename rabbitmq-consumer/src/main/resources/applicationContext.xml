@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/rabbit
+                http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd
+            http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+
+	<!-- 开启注解配置 -->  
+    <context:annotation-config />  
+	<!-- 导入其他资源文件 -->
+	<import resource="mybatis-config.xml"/>
+	
+	
+	<bean id="eventBus" class="com.google.common.eventbus.EventBus"/>
+	
+	  <!-- 设置使用注解的类所在的jar包 -->
+    <context:component-scan base-package="com.rabbit"></context:component-scan>
+    
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<!-- 标准配置 -->
+				<value>classpath*:/rabbit_params.properties</value> 
+			</list>
+		</property>
+	</bean>
+	<bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:/configInfo.properties</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="properties" ref="configProperties" />
+    </bean>
+	
+	<!-- 连接服务配置 -->
+	<rabbit:connection-factory id="connectionFactory"
+		host="${receive_rabbit_host}" username="${receive_rabbit_user}" password="${receive_rabbit_pwd}" port="${receive_rabbit_port}" />
+
+	<rabbit:admin connection-factory="connectionFactory" />
+
+	<!-- 消费者监听配置项 -->
+	<!-- 配置线程池 -->
+	<bean id="taskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<!-- 线程池维护线程的最少数量 -->
+		<property name="corePoolSize" value="5" />
+		<!-- 线程池维护线程所允许的空闲时间 -->
+		<property name="keepAliveSeconds" value="30000" />
+		<!-- 线程池维护线程的最大数量 -->
+		<property name="maxPoolSize" value="1000" />
+		<!-- 线程池所使用的缓冲队列 -->
+		<property name="queueCapacity" value="200" />
+	</bean>
+	<!-- <task:executor id="taskExecutor" pool-size="3" /> --> 
+	<!-- exchange queue binging key 绑定 -->
+	<rabbit:direct-exchange name="${receive-rabbit_exchange_product}"
+		durable="true" auto-delete="false" id="my-mq-exchange">
+		<rabbit:bindings>
+			<rabbit:binding queue="queue_one" key="${receive_rabbit_routingKey}" />
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+	<!-- queue 队列声明 -->
+	<rabbit:queue id="queue_one" durable="true" auto-delete="false"
+		exclusive="false" name="${receive_rabbit_queueName}" />
+	<!-- 消息监听器 -->
+	<bean id="queue_product_001" class="com.rabbit.services.serviceImp.rabbitproduct.QueueProductListen">
+	 	<constructor-arg index="0" value="3"/>
+	 	 <constructor-arg index="1" value="1000"/>
+	   <!--  <constructor-arg index="1" value="${send_rabbit_routingKey}"/> -->
+	</bean>
+	
+	<!-- queue litener 观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象 -->
+	<rabbit:listener-container
+		connection-factory="connectionFactory" acknowledge="auto" >
+		<rabbit:listener queues="queue_one" ref="queue_product_001" />
+	</rabbit:listener-container>
+	
+	<!-- exchange queue binging key 绑定 -->
+	<rabbit:direct-exchange name="${receive-rabbit_exchange_productExtends}"
+		durable="true" auto-delete="false" id="my-mq-exchange_two">
+		<rabbit:bindings>
+			<rabbit:binding queue="queue_two" key="${receive_rabbit_routingKey_two}" />
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+	<rabbit:queue id="queue_two" durable="true" auto-delete="false"
+		exclusive="false" name="${receive_rabbit_queueName_two}" />
+	<!-- 消息监听器 -->
+	<bean id="queue_product_Extends_001" class="com.rabbit.services.serviceImp.rabbitproduct.QueueProductExtendsListen" >
+		<constructor-arg index="0" value="1"/>
+	 	 <constructor-arg index="1" value="1000"/>
+	</bean>
+	<rabbit:listener-container
+		connection-factory="connectionFactory" acknowledge="auto" >
+		<rabbit:listener queues="queue_two" ref="queue_product_Extends_001" />
+	</rabbit:listener-container>
+	
+	<!-- ***************************************  order receive cofig ************************************************ -->
+	<!-- exchange queue binging key 绑定 -->
+	<rabbit:direct-exchange name="${order_receive-rabbit_exchange}"
+		durable="true" auto-delete="false" id="order-mq-exchange">
+		<rabbit:bindings>
+			<rabbit:binding queue="order_queue" key="${order_receive_rabbit_routingKey}" />
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+	<rabbit:queue id="order_queue" durable="true" auto-delete="false"
+		exclusive="false" name="${order_receive_rabbit_queueName}" />
+	<!-- 消息监听器 -->
+	<bean id="queue_order_listen" class="com.rabbit.services.serviceImp.rabbitproduct.OrderQueueLitener" />
+		
+	<rabbit:listener-container
+		connection-factory="connectionFactory" acknowledge="auto" >
+		<rabbit:listener queues="order_queue" ref="queue_order_listen" />
+	</rabbit:listener-container>
+	
+	<bean id="rabbitFactory" class="com.rabbitmq.client.ConnectionFactory">
+		 <property name="port">  
+            <value>${receive_rabbit_port}</value>  
+        </property>
+         <property name="username">  
+            <value>${receive_rabbit_user}</value>  
+        </property>
+         <property name="password">  
+            <value>${receive_rabbit_pwd}</value>  
+        </property>
+        <property name="host">  
+            <value>${receive_rabbit_host}</value>  
+        </property>
+        <property name="virtualHost">  
+            <value>${receive_rabbit_virtualHost}</value>  
+        </property>
+	</bean>
+</beans>

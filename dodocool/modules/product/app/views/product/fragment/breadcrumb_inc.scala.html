@@ -1,0 +1,27 @@
+@(node: valueobjects.product.category.CategoryReverseComposite)
+@if(node != null) {
+	@if(node.getParent() != null) {
+		@breadcrumb_inc(node.getParent())
+	}
+	@if(node.getChildren() != null && node.getChildren().size() > 0){
+        <li><a href="@controllers.product.routes.CategoryProduct.showCategoryProduct(node.getSelf().getCpath())"class="Bread_link" >@node.getSelf().getCname()</a><span>&gt;</span></li>
+        <!-- 
+		<li>
+		      <dl>
+		      	   <dt>
+		      	   		
+		      	   </dt>
+		          <dd>
+		              <ul>
+			               @node.getChildren().map{ c =>
+								<li><a href="@controllers.product.routes.CategoryProduct.showCategoryProduct(c.getSelf().getCpath())">@c.getSelf().getCname()</a></li>
+						   }
+		              </ul>
+		          </dd>
+		      </dl>
+		  </li>
+		   -->
+	 } else {
+	 	   <li class="active"> @node.getSelf().getCname() </li>
+	 }
+}

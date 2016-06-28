@@ -1,0 +1,74 @@
+@(reg: Form[_])
+@import views.html.helper._
+@country = @{services.base.FoundationService._getCountryObj()}
+
+@helper.javascriptRouter("js_emailRoutes")(
+	controllers.member.routes.javascript.Register.checkEmail,
+	controllers.base.routes.javascript.Captcha.checkCaptcha
+)
+
+<div  id="page1" class="register">
+
+  @form(controllers.member.routes.Register.register(),'id->"regForm",'autocomplete->"off") {
+		    @services.base.HtmlUtils.misc().addTailOnce{
+            <script>
+	     		$(function(){
+	     			$.AutoComplete('#eml');
+	     		});
+     		</script>
+            }
+		
+    <h4>@Messages("register")</h4>
+    <ul>
+        <li>
+      		<em class="loginEmail"></em>
+        	<input id="eml" class="search_txt inp" type="text" name="email"   placeholder="@Messages("enter.your.email.address")" value="@reg("email").value" />
+        </li>
+        <li>
+       		  <em class="loginLock"></em>
+              <input id="passwd"  class="password" type="password"  name="passwd" placeholder="@Messages("enter.your.password")" />
+                 <ul class="passwordHigh passwordHighBK">
+	                 <li class="" id="l">@Messages("low")</li>
+	                 <li class="" id="m">@Messages("medium")</li>
+	                 <li class="paLast" id="h">@Messages("high")</li>
+	             </ul>
+            <br/>
+            <p>@Messages("this.should.be.at.least.6.characters.long.and.will.be.case.sensitive")</p>
+        </li>
+        <li>
+          	<em class="loginLock"></em>
+            <input id="confirm_password" type="password"   name="confirm_password" placeholder="@Messages("enter.your.password")">
+        </li>
+ </ul>
+    <p>@Messages("your.shipping.destination")</p>
+    <br/>
+    @views.html.base.select_country(country)
+    
+    <div class="registerYzm">
+        	@Messages("code")<span class="red">*</span><input id="captcha" name="captcha"  type="text">
+            <div class="code_txt"><img src="@controllers.base.routes.Captcha.generate()" onclick="change(this);" width="70" height="30"></div>
+   </div>
+    
+    <div class="clear"></div>
+    <hr>
+    <label class="iGre">
+    	<p class="errLeft">
+    	<input id="agreee" name="agreee" type="checkbox">@Messages("i.agree.to.the.tomtop")<a href="http://www.tomtop.com/base/cms/detail/33" class="blue"> @Messages("terms.and.conditions")</a></p></label>
+    <label><input type="checkbox" @if(reg("signupNewsletter").value != "false"){checked="checked"} name="signupNewsletter">@Messages("yes.sign.up.our.newsletter.get.a.50.coupon.in.your.first.email")</label>
+    <p class="HQpoints"><em></em>@Messages("register.at.tomtop.com.and.receive.50.points")</p>
+    <div class="creatInp">
+        <input id="regsubmit" class="noAgree" type="submit" value="@Messages("create.my.account")" disabled="disabled">
+    </div>
+    
+    
+    }
+</div>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+			<script>
+					function change(imgObj){
+			        	imgObj.src="@controllers.base.routes.Captcha.generate()?date="+new Date().getTime();
+			        }
+			</script>
+}
+

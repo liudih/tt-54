@@ -1,0 +1,14 @@
+@(fragment: valueobjects.product.Recommendation)
+@if(null!=fragment.getRecommendations()){
+<div class="Titleh5">
+	<h5>Recommend</h5>
+</div>
+}
+<div id="badgeContent">
+	@if(null!=fragment.getRecommendations() && fragment.getRecommendations().size() > 0) {
+	 			@fragment.getRecommendations().take(12).map{ p =>
+					@views.html.product.badge_base(p)
+				}
+	}
+</div>
+	

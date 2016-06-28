@@ -1,0 +1,961 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet author="reason" id="t_language-create">
+		<createTable tableName="t_language" remarks="语言表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cname" type="VARCHAR(30)" remarks="语言名称" />
+			<column name="bfallback" type="BOOLEAN" remarks="在特殊情况下的默认语言，如用IP地址到网站"
+				defaultValueBoolean="false" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_storage-Create">
+		<createTable tableName="t_storage" remarks="仓库表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键表">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ioverseas" type="INT" remarks="是否海外" />
+			<column name="cstoragename" type="VARCHAR(400)" remarks="仓库名" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_platform-create">
+		<createTable tableName="t_platform" remarks="平台表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ccode" type="VARCHAR(100)" remarks="平台名称" />
+			<column name="cremarks" type="VARCHAR(300)" remarks="平台备注" />
+			<column name="iparentid" type="INTEGER" remarks="父类编号" />
+			<column name="ilevel" type="INTEGER" remarks="级别" />
+			<column name="ichildrencount" type="INTEGER" remarks="子类数量" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_website-create">
+		<createTable tableName="t_website" remarks="站点表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iplatformid" type="INTEGER" remarks="平台编号" />
+			<column name="ccode" type="VARCHAR(100)" remarks="站点名称" />
+			<column name="curl" type="VARCHAR(80)" remarks="URL" />
+			<column name="cremarks" type="VARCHAR(300)" remarks="站点备注" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号" />
+			<column name="icurrencyid" type="INTEGER" remarks="货币编号" />
+			<column name="idefaultshippingcountry" type="INTEGER" remarks="默认发货国家" />
+			<column name="idefaultshippingstorage" type="INTEGER" remarks="默认发货仓库" />
+			<column name="bfallback" type="BOOLEAN" remarks="在特殊情况下的默认站点，如用IP地址到网站"
+				defaultValueBoolean="false" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+
+	<changeSet author="reason" id="t_currency-create">
+		<createTable tableName="t_currency" remarks="货币表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ccode" type="VARCHAR(100)" remarks="货币名称: e.g. EUR" />
+			<column name="csymbol" type="VARCHAR(50)" remarks="Symbol: e.g. $" />
+			<column name="fexchangerate" type="FLOAT" remarks="默认汇率（在汇率表数据缺省的时候的后备数据）" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_currency-add-column-20150511" author="Reason">
+		<addColumn tableName="t_currency">
+			<column name="cversionsid" type="VARCHAR(90)" remarks="汇率版本" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_currency_rate-create">
+		<createTable tableName="t_currency_rate" remarks="汇率表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ccode" type="VARCHAR(100)" remarks="货币名称: e.g. EUR" />
+			<column name="fexchangerate" type="FLOAT" remarks="相对USD的汇率（即1美元等于多少该货币）" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="buse" type="BOOLEAN" remarks="是否启用"
+				defaultValueBoolean="false" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间＝汇率更新日期" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_country-create">
+		<createTable tableName="t_country" remarks="国家表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cname" type="VARCHAR(100)" remarks="国家名称" />
+			<column name="cshortname" type="VARCHAR(60)" remarks="2位ISO国家代号" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号" />
+			<column name="idefaultstorage" type="INTEGER" remarks="默认发货仓库" />
+			<column name="ccurrency" type="VARCHAR(60)" remarks="默认货币" />
+			<column name="cweightunit" type="VARCHAR(60)" remarks="重量单位" />
+			<column name="cmeasureunit" type="VARCHAR(60)" remarks="尺寸单位" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_province-create">
+		<createTable tableName="t_province" remarks="洲表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icountryid" type="INTEGER" remarks="国家编号" />
+			<column name="cname" type="VARCHAR(100)" remarks="洲名称" />
+			<column name="cshortname" type="VARCHAR(60)" remarks="洲简称" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_banner-create">
+		<createTable tableName="t_banner" remarks="站点banner表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号" />
+			<column name="ctitle" type="VARCHAR(200)" remarks="标题" />
+			<column name="bstatus" type="BOOL" remarks="是否有效 " />
+			<column name="itype" type="INTEGER" remarks="类型" />
+			<column name="bfile" type="BLOB" remarks="文件数据" />
+			<column name="dwidth" type="DOUBLE" remarks="宽度" />
+			<column name="dheight" type="DOUBLE" remarks="长度" />
+			<column name="curl" type="VARCHAR(200)" remarks="链接" />
+			<column name="ctarget" type="VARCHAR(200)" remarks="位置 " />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_country_website">
+		<createTable tableName="t_country_website" remarks="国家站点关系表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icountryid" type="INTEGER" remarks="国家编号" />
+			<column name="iplatformid" type="INTEGER" remarks="平台编号" />
+			<column name="iwebsiteid" type="INTEGER" remarks="默认跳转的站点编号" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_system_parameter-create" author="reason">
+		<createTable tableName="t_system_parameter" remarks="系统参数表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号(0代表所有)" />
+			<column name="cparameterkey" type="VARCHAR(100)" remarks="参数键" />
+			<column name="cparametervalue" type="VARCHAR(100)" remarks="参数值" />
+		</createTable>
+	</changeSet>
+
+
+	<changeSet id="t_cms_menu-create" author="xcf">
+		<createTable tableName="t_cms_menu" remarks="文章目录表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cname" type="VARCHAR(200)" remarks="目录名称" />
+			<column name="iparentid" type="INTEGER" remarks="父级菜单编号" />
+			<column name="ilevel" type="INTEGER" remarks="级别" />
+			<column name="ciconurl" type="VARCHAR(200)" remarks="目录图标路径" />
+			<column name="curl" type="VARCHAR(200)" remarks="访问路径" />
+			<column name="cclass" type="VARCHAR(100)" remarks="目录样式名称" />
+			<column name="iisnominate" type="INTEGER" defaultValue="0"
+				remarks="是否推荐" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="clastupdateduser" type="VARCHAR(20)" remarks="修改人" />
+			<column name="dlastupdateddate" type="DATETIME" remarks="修改时间" />
+		</createTable>
+	</changeSet>
+
+
+	<changeSet id="t_cms_content-create" author="xcf">
+		<createTable tableName="t_cms_content" remarks="文章目录表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="imenuid" type="INTEGER" remarks="目录Id" />
+			<column name="ckey" type="VARCHAR(200)" remarks="文章关键字" />
+			<column name="ctitle" type="VARCHAR(200)" remarks="文章标题" />
+			<column name="ccontent" type="Text" remarks="文章内容" />
+			<column name="iisnominate" type="INTEGER" remarks="是否推荐" />
+			<column name="ccreateuser" type="VARCHAR(20)" defaultValue="0"
+				remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="clastupdateduser" type="VARCHAR(20)" remarks="修改人" />
+			<column name="dlastupdateddate" type="DATETIME" remarks="修改时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_email_type-create" author="reason">
+		<createTable tableName="t_email_type" remarks="邮件类型表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cname" type="VARCHAR(200)" remarks="类型名称" />
+			<column name="ccreateuser" type="VARCHAR(20)" defaultValue="0"
+				remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_email_variable-create" author="reason">
+		<createTable tableName="t_email_variable" remarks="邮件变量表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ctype" type="VARCHAR(200)" remarks="类型" />
+			<column name="cname" type="VARCHAR(50)" remarks="可替换变量" />
+			<column name="cremark" type="VARCHAR(200)" remarks="变量备注" />
+			<column name="ccreateuser" type="VARCHAR(20)" defaultValue="0"
+				remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_email_template-create" author="reason">
+		<createTable tableName="t_email_template" remarks="邮件模版表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="ilanguage" type="INTEGER" remarks="站点编号" />
+			<column name="ctype" type="VARCHAR(200)" remarks="邮件类型" />
+			<column name="ctitle" type="VARCHAR(500)" remarks="邮件title" />
+			<column name="ccontent" type="VARCHAR(30000)" remarks="邮件content" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_email_account-create" author="reason">
+		<createTable tableName="t_email_account" remarks="邮件账号表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="ctype" type="VARCHAR(100)" remarks="邮件类型名称" />
+			<column name="csmtphostName" type="VARCHAR(150)" remarks="邮件服务器地址" />
+			<column name="iserverport" type="INTEGER" remarks="邮件服务器端口" />
+			<column name="cusername" type="VARCHAR(50)" remarks="帐号名称" />
+			<column name="cemail" type="VARCHAR(100)" remarks="邮箱帐号" />
+			<column name="cpassword" type="VARCHAR(100)" remarks="发送邮箱密码" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_email_type-create-test">
+		<loadData tableName="t_email_type" file="init/t_email_type.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+
+	<changeSet author="xcf" id="t_cms_menu-create-test" context="test">
+		<loadData tableName="t_cms_menu" file="samples/t_cms_menu.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_cms_content-create-test"
+		context="test">
+		<loadData tableName="t_cms_content" file="samples/t_cms_content.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_system_parameter-test"
+		context="test">
+		<loadData tableName="t_system_parameter" file="samples/t_system_parameter.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_language-data">
+		<loadData tableName="t_language" file="init/t_language.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_country-data">
+		<loadData tableName="t_country" file="init/t_country.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_platform-data">
+		<loadData tableName="t_platform" file="init/t_platform.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_website-data">
+		<loadData tableName="t_website" file="init/t_website.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_currency-data">
+		<loadData tableName="t_currency" file="init/t_currency.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="fcl" id="t_storage-data">
+		<loadData tableName="t_storage" file="init/t_storage.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_country_website-test-data"
+		context="test">
+		<loadData tableName="t_country_website" file="samples/t_country_website.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<!-- <changeSet author="kmtong" id="t_currency-test-data" context="test"> 
+		<loadData tableName="t_currency" file="samples/t_currency.csv" relativeToChangelogFile="true" 
+		/> </changeSet> -->
+
+	<changeSet author="reason" id="t_storage-test-data" context="test">
+		<loadData tableName="t_storage" file="samples/t_storage.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_province-data">
+		<loadData tableName="t_province" file="init/t_province.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="linhl" id="t_email_account-test-data"
+		context="test">
+		<loadData tableName="t_email_account" file="samples/t_email_account.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="linhl" id="t_email_template-test-data"
+		context="test">
+		<loadData tableName="t_email_template" file="samples/t_email_template.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_system_parameter-bsystem">
+		<addColumn tableName="t_system_parameter">
+			<column name="bsystem" type="BOOL" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="linhl" id="t_banner-column_changes-20150321">
+		<dropColumn tableName="t_banner">
+			<column name="dwidth" type="DOUBLE" remarks="宽度" />
+			<column name="dheight" type="DOUBLE" remarks="长度" />
+			<column name="itype" type="INTEGER" remarks="类型" />
+			<column name="ctarget" type="VARCHAR(200)" remarks="位置 " />
+		</dropColumn>
+	</changeSet>
+
+	<changeSet author="linhl" id="t_banner-column_changes-20150323">
+		<addColumn tableName="t_banner">
+			<column name="bbgimgtile" type="BOOLEAN" defaultValue="false"
+				remarks="背景图片是否x轴平铺" />
+			<column name="iindex" type="INTEGER" remarks="排序编号" />
+			<column name="bbgimagefile" type="BLOB" remarks="背景图片" />
+			<column name="cbgcolor" type="VARCHAR(7)" remarks="背景颜色" />
+			<column name="bhasbgimage" type="BOOLEAN" defaultValue="false"
+				remarks="是否有背景图片(默认false)" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="jiang" id="t_email_type-add_init_data-20150325">
+		<loadData tableName="t_email_type" file="init/t_email_type-20150325.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="liudi" id="t_currency-alter-data-2015220325">
+		<loadUpdateData tableName="t_currency"
+			file="init/t_currency_20150325.csv" primaryKey="iid"
+			relativeToChangelogFile="true">
+		</loadUpdateData>
+	</changeSet>
+
+	<changeSet author="jiang" id="t_email_template-modify-datatype-20150402">
+		<modifyDataType columnName="ccontent" newDataType="text"
+			tableName="t_email_template" />
+	</changeSet>
+
+
+	<changeSet id="t_cms_menu-add-column-20150402" author="xcf">
+		<addColumn tableName="t_cms_menu">
+			<column name="ctype" type="VARCHAR(40)" remarks="目录类型" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="xcf" id="t_cms_menu-alter-data-20150402">
+		<loadUpdateData tableName="t_cms_menu"
+			file="init/t_cms_menu-20150402.csv" primaryKey="iid"
+			relativeToChangelogFile="true">
+		</loadUpdateData>
+	</changeSet>
+
+	<changeSet author="xcf" id="t_cms_menu-add-data-20150403">
+		<loadData tableName="t_cms_menu" file="init/t_cms_menu-20150403.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_system_parameter-add-data-20150403">
+		<loadData tableName="t_system_parameter" file="init/t_system_parameter-2015-04-03.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_cms_menu-add-data-20150404">
+		<loadData tableName="t_cms_menu" file="init/t_cms_menu-20150404.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_system_parameter-add-data-20150404">
+		<loadData tableName="t_system_parameter" file="init/t_system_parameter-2015-04-04.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="liudi" id="t_system_parameter-add-data-2015040415">
+		<loadData tableName="t_system_parameter"
+			file="init/t_system_parameter-2015-04-04-15.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet id="t_cms_menu_language_map-create" author="xcf">
+		<createTable tableName="t_cms_menu_language_map" remarks="文章目录多语言表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="imenuid" type="INTEGER" remarks="目录ID" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言ID" />
+			<column name="cmenuname" type="VARCHAR(200)" remarks="目录名称" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_cms_menu_wetsite_map-create" author="xcf">
+		<createTable tableName="t_cms_menu_wetsite_map" remarks="文章目录多站点表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="imenuid" type="INTEGER" remarks="目录ID" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点ID" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_cms_content_language_map-create" author="xcf">
+		<createTable tableName="t_cms_content_language_map"
+			remarks="文章内容多语言表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icmscontentid" type="INTEGER" remarks="目录Id" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言ID" />
+			<column name="ckey" type="VARCHAR(200)" remarks="文章关键字" />
+			<column name="ctitle" type="VARCHAR(200)" remarks="文章标题" />
+			<column name="ccontent" type="Text" remarks="文章内容" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="xcf" id="t_cms_menu_wetsite_map-add-data-20150404">
+		<loadData tableName="t_cms_menu_wetsite_map"
+			file="init/t_cms_menu_wetsite_map-2015-04-04.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_cms_menu_language_map-add-data-20150404">
+		<loadData tableName="t_cms_menu_language_map"
+			file="init/t_cms_menu_language_map-2015-04-04.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="jiang" id="t_email_type-add-init_data-20150408">
+		<loadData tableName="t_email_type" file="init/t_email_type-20150408.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luoys" id="t_email_account-add-init-data">
+		<loadData tableName="t_email_account" file="init/t_email_account20150408.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luoys" id="t_system_parameter-add-init-data20150415">
+		<loadData tableName="t_system_parameter" file="init/t_system_parameter-2015-04-15.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet id="t_job_log-create" author="xcf">
+		<createTable tableName="t_job_log" remarks="job执行日志表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ctype" type="VARCHAR(600)" remarks="job类型" />
+			<column name="iresult" type="INTEGER" remarks="结果(失败0、成功1)" />
+			<column name="cremaeks" type="VARCHAR(500)" remarks="备注" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="xcf"
+		id="t_system_parameter_unique_constraint_cparameterkey">
+		<addUniqueConstraint catalogName="key"
+			columnNames="cparameterkey" constraintName="t_system_parameter_cparameterkey"
+			deferrable="true" disabled="true" initiallyDeferred="true"
+			schemaName="public" tableName="t_system_parameter" />
+	</changeSet>
+
+	<changeSet author="jiang"
+		id="t_erp_sended_history-create-table-20150424">
+		<createTable tableName="t_erp_sended_history" remarks="ERP推送数据记录表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ctype" type="VARCHAR(100)" remarks="操作类型" />
+			<column name="ccontent" type="text" remarks="推送数据内容" />
+			<column name="ccreateuser" type="VARCHAR(100)" remarks="操作人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="发送时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_website-split_vhost-20140427">
+		<createTable tableName="t_vhost" remarks="虚拟主机名字映射t_website关系">
+			<column name="cvhost" type="VARCHAR(100)" remarks="主键" />
+			<column name="iwebsiteid" type="INTEGER" remarks="Website ID">
+				<constraints nullable="false" referencedTableName="t_website"
+					referencedColumnNames="iid" foreignKeyName="fk_t_vhost_iwebsiteid_t_website_iid" />
+			</column>
+			<column name="ilanguageid" type="INTEGER"
+				remarks="Language ID, 如NULL则使用t_website的">
+				<constraints nullable="true" referencedTableName="t_language"
+					referencedColumnNames="iid" foreignKeyName="fk_t_vhost_ilanguageid_t_language_iid" />
+			</column>
+			<column name="icurrencyid" type="INTEGER"
+				remarks="Currency ID, 如NULL则使用t_website的">
+				<constraints nullable="true" referencedTableName="t_currency"
+					referencedColumnNames="iid" foreignKeyName="fk_t_vhost_icurrencyid_t_currency_iid" />
+			</column>
+			<column name="ccreateuser" type="VARCHAR(100)" remarks="操作人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="发送时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_vhost-migrate_from_t_website-20140427">
+		<sql>
+			INSERT INTO t_vhost (cvhost, iwebsiteid, ilanguageid,
+			icurrencyid, ccreateuser, dcreatedate)
+			SELECT curl, iid, ilanguageid,
+			icurrencyid, ccreateuser, dcreatedate FROM t_website
+		</sql>
+	</changeSet>
+
+	<changeSet author="jiang"
+		id="t_received_data_history-create-table-20150429">
+		<createTable tableName="t_received_data_history" remarks="接收数据记录表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ctype" type="VARCHAR(100)" remarks="操作类型" />
+			<column name="ccontent" type="text" remarks="推送数据内容" />
+			<column name="ccreateuser" type="VARCHAR(100)" remarks="操作人" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="接收时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="jiang"
+		id="t_storage_name_mapping-create-table-20150430">
+		<createTable tableName="t_storage_name_mapping" remarks="仓库对应表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cstoragename" type="VARCHAR(100)" remarks="网站仓库名称" />
+			<column name="cerpstoragename" type="VARCHAR(100)" remarks="ERP仓库名称" />
+			<column name="ccreateuser" type="VARCHAR(30)" remarks="操作人" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="jiang" id="t_storage_name_mapping_data-20150502">
+		<loadData tableName="t_storage_name_mapping" file="init/t_storage_name_mapping.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="jiang" id="t_system_parameter-add-init-data20150513">
+		<loadData tableName="t_system_parameter" file="init/t_system_parameter-2015-05-08.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="lij" id="t_system_parameter-add-init-data20150514">
+		<loadData tableName="t_system_parameter" file="init/t_system_parameter-2015-05-14.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="lij"
+		id="t_system_parameter-add-init-data20150514-02">
+		<loadData tableName="t_system_parameter"
+			file="init/t_system_parameter-2015-05-14-02.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="jiang" id="t_email_type-add_init_data-20150522">
+		<loadData tableName="t_email_type" file="init/t_email_type-20150522.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="lijun" id="t_system_parameter-add_init_data-20150529">
+		<loadData tableName="t_system_parameter" file="init/t_system_parameter-20150529.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="jiang" id="t_country-add-column-20150529">
+		<addColumn tableName="t_country">
+			<column name="bshow" type="BOOLEAN" defaultValue="true"
+				remarks="是否显示" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="xiaoch" id="t_login_terminal-create">
+		<createTable tableName="t_login_terminal" remarks="登陆终端类型">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cterminaltype" type="VARCHAR(20)" remarks="终端类型名称" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="xiaoch" id="t_login_terminal-20150601-add-data">
+		<loadData tableName="t_login_terminal" file="init/t_login_terminal-20150601.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet id="t_language-add-column-20150604" author="xcf">
+		<addColumn tableName="t_language">
+			<column name="cfullname" type="VARCHAR(50)" remarks="语言全称" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="xcf" id="t_language-alter-data-20150604">
+		<loadUpdateData tableName="t_language"
+			file="init/t_language-20150604.csv" primaryKey="iid"
+			relativeToChangelogFile="true">
+		</loadUpdateData>
+	</changeSet>
+
+	<changeSet author="xcf" id="t_system_parameter-add-data-20150610">
+		<loadData tableName="t_system_parameter" file="init/t_system_parameter-20150610.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="lij" id="t_system_parameter-add-init-data20150611">
+		<loadData tableName="t_system_parameter" file="init/t_system_parameter-20150611.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="lij" id="t_email_type-add-init-data-20150617">
+		<loadData tableName="t_email_type" file="init/t_email_type-20150617.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="jiang" id="t_banner-modify-url-length-20150618">
+		<modifyDataType columnName="curl" newDataType="VARCHAR(500)"
+			schemaName="public" tableName="t_banner" />
+	</changeSet>
+
+	<changeSet author="lij" id="t_system_parameter-add-init-data20150624">
+		<loadData tableName="t_system_parameter" file="init/t_system_parameter-20150624.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_system_parameter-add-init-data20150625">
+		<loadData tableName="t_system_parameter" file="init/t_system_parameter-20150625.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_vhost-add-column-20150626">
+		<addColumn tableName="t_vhost">
+			<column name="cdevice" type="VARCHAR(50)" defaultValue="web"
+				remarks="设备：如web/mobile/app" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="xcf"
+		id="t_cms_menu_wetsite_map-add-column-20150701">
+		<addColumn tableName="t_cms_menu_wetsite_map">
+			<column name="cdevice" type="VARCHAR(50)" defaultValue="web"
+				remarks="设备：如web/mobile/app" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="fcl" id="t_language-add-init-data20150718">
+		<loadData tableName="t_language" file="init/t_language-20150718.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="fcl" id="t_vhost-add-init-data20150718">
+		<loadData tableName="t_vhost" file="init/t_vhost-20150718.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="fcl"
+		id="t_system_parameter_delete_unique_constraint_cparameterkey-20150718">
+		<dropUniqueConstraint catalogName="key"
+			constraintName="t_system_parameter_cparameterkey" schemaName="public"
+			tableName="t_system_parameter" />
+	</changeSet>
+
+	<changeSet author="fcl"
+		id="t_system_parameter_new_unique_constraint_cparameterkey-20150718">
+		<addUniqueConstraint catalogName="key"
+			columnNames="cparameterkey,iwebsiteid" constraintName="t_system_parameter_cparameterkey"
+			deferrable="true" disabled="true" initiallyDeferred="true"
+			schemaName="public" tableName="t_system_parameter" />
+	</changeSet>
+
+	<changeSet author="fcl" id="t_language-alter-data-20150720">
+		<loadUpdateData tableName="t_language"
+			file="init/t_language-20150718_update.csv" primaryKey="iid"
+			relativeToChangelogFile="true">
+		</loadUpdateData>
+	</changeSet>
+
+	<changeSet id="t_currency-add-column-20150720" author="Reason">
+		<addColumn tableName="t_currency">
+			<column name="bshow" type="BOOL" remarks="是否显示" defaultValue="true" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="fcl" id="t_currency-alter-data-20150720">
+		<loadUpdateData tableName="t_currency"
+			file="init/t_currency_20150720.csv" primaryKey="ccode"
+			relativeToChangelogFile="true">
+		</loadUpdateData>
+	</changeSet>
+
+	<changeSet author="fcl" id="t_system_parameter-add-init-data20150720">
+		<loadData tableName="t_system_parameter" file="init/t_system_parameter-20150720.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xiaoch" id="t_email_type-add-init-data-20150728">
+		<loadData tableName="t_email_type" file="init/t_email_type-20150728.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="lij" id="t_email_type-add-init-data-20150819">
+		<loadData tableName="t_email_type" file="init/t_email_type-20150819.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+		
+	<changeSet author="guozy" id="t_seo-table-create-2015082810">
+		<createTable tableName="t_seo" remarks="首页的基本信息">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点Id" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言Id" />
+			<column name="ctitle" type="VARCHAR(200)" remarks="首页标题" />
+			<column name="ckeywords" type="VARCHAR(200)" remarks="关键字" />
+			<column name="ctype" type="VARCHAR(200)" remarks="类型" />
+			<column name="cdescription" type="VARCHAR(200)" remarks="状态" />
+			<column name="dcreatedate" type="DATETIME" remarks="创建时间" />
+			<column name="ccreatename" type="VARCHAR(200)" remarks="创惊人" />
+			<column name="dmodifieddate" type="DATETIME" remarks="修改时间" />
+			<column name="cmodifiedname" type="VARCHAR(200)" remarks="修改人" />
+		</createTable>
+	</changeSet>
+	
+	<!-- 增加国家显示顺序 -->
+	<changeSet id="t_country-add-column-20150909" author="yinf">
+		<addColumn tableName="t_country">
+			<column name="ishowindex" type="INTEGER" defaultValue="9999" remarks="显示顺序" />
+		</addColumn>
+	</changeSet>
+	
+	
+
+	<!-- 总仓库 -->
+	<changeSet author="wzx" id="t_storage_parent-Create-20150908">
+		<createTable tableName="t_storage_parent" remarks="总仓库 ">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键表">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cstoragename" type="VARCHAR(400)" remarks="仓库名" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+	<!-- 子仓库添加父仓库ID，建立一对多关系，默认值为0（没有任何父级对应） -->
+	<changeSet id="t_storage-add-column-20150908" author="wzx">
+		<addColumn tableName="t_storage">
+			<column name="iparentstorage" type="INTEGER" defaultValue="0"
+				remarks="父仓库ID" />
+		</addColumn>
+	</changeSet>
+	<!-- 仓库可送达国家地区 -->
+	<changeSet author="wzx" id="t_storage_arrival-Create-20150908">
+		<createTable tableName="t_storage_arrival" remarks="仓库可送达国家地区">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键表">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="istorageid" type="INT" remarks="仓库ID"
+				defaultValue="0" />
+			<column name="ccarrivalcountry" type="VARCHAR(100)" remarks="送达地区"
+				defaultValue="--" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+	<!-- 默认仓库 -->
+	<changeSet author="wzx" id="t_storage_default-Create-20150908">
+		<createTable tableName="t_storage_default" remarks="默认仓库">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键表">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="idefaultstorage" type="INT" remarks="仓库ID"
+				defaultValue="0" />
+			<column name="ccountryname" type="VARCHAR(100)" remarks="国家"
+				defaultValue="--" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+	
+	<!-- 设置国家显示顺序的值 -->
+	<changeSet id="t_country-ishowindex-setValue-20150923" author="yinf">
+		<sql>
+			UPDATE t_country SET ishowindex = 1 WHERE cshortname = 'US'
+		</sql>
+		<sql>
+			UPDATE t_country SET ishowindex = 2 WHERE cshortname = 'RU'
+		</sql>
+		<sql>
+			UPDATE t_country SET ishowindex = 3 WHERE cshortname = 'ES'
+		</sql>
+		<sql>
+			UPDATE t_country SET ishowindex = 4 WHERE cshortname = 'BR'
+		</sql>
+		<sql>
+			UPDATE t_country SET ishowindex = 5 WHERE cshortname = 'DE'
+		</sql>
+		<sql>
+			UPDATE t_country SET ishowindex = 6 WHERE cshortname = 'FR'
+		</sql>
+		<sql>
+			UPDATE t_country SET ishowindex = 7 WHERE cshortname = 'IT'
+		</sql>
+	</changeSet>
+	
+	<changeSet id="t_vhost-add-corderplaceholder" author="lijun">
+	<addColumn tableName="t_vhost">
+		<column name="corderplaceholder" type="VARCHAR(10)" remarks="订单号生成规则中的占位符"></column>
+	</addColumn>
+	</changeSet>
+	
+	<changeSet author="wuzx" id="t_system_parameter-date20151016"
+		context="test">
+		<loadData tableName="t_system_parameter" file="init/t_system_parameter-20151016.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="liudi" id="t_system_parameter-2015112415" >
+		<loadData tableName="t_system_parameter" file="init/t_system_parameter-2015112415.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	
+	<changeSet author="liudi" id="t_system_parameter-2015112609" >
+		<loadData tableName="t_system_parameter" file="init/t_system_parameter-2015112609.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	
+	<changeSet author="xin" id="t_email_type-add-init_data-20151106">
+		<loadData tableName="t_email_type" file="init/t_email_type-20151106.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	
+	<changeSet author="fcl"
+		id="t_province-icountryid-cname-createIndex-20151126">
+		<createIndex indexName="idx_t_province_icountryid_cname"
+			tableName="t_province">
+			<column name="icountryid" type="INTEGER" />
+			<column name="cname" type="VARCHAR(100)" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="fcl" id="t_province-icountryid-cname-createIndex-2015112601">
+		<addUniqueConstraint columnNames="icountryid,cname"
+			tableName="t_province"
+			constraintName="t_province_icountryid_cname_UniqueConstraint" />
+	</changeSet>
+
+	<changeSet author="wzx" id="t_system_parameter-add-data-20151205001">
+		<loadData tableName="t_system_parameter" file="init/t_system_parameter-20151205.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+</databaseChangeLog>

@@ -1,0 +1,33 @@
+@(e: entity.wholesale.WholeSaleDiscountLevel)
+
+@import services.manager.ChooseService
+
+<input type="hidden" name="iid" value="@e.getIid">
+<div class="control-group">
+	<label class="control-label">站点</label>
+	@ChooseService.getInstance().website("iwebsiteid",1,true)
+</div>
+<div class="control-group">
+	<label class="control-label">开始价格</label>
+	<div class="controls">
+		<input type="text" name="fstartprice" value="@e.getFstartprice">
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">结束价格</label>
+	<div class="controls">
+		<input type="text" name="fendprice" value="@e.getFendprice">
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">默认折扣(%)</label>
+	<div class="controls">
+		<input type="text" name="fmindiscount" value="@e.getFmindiscount">
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">最大折扣(%)</label>
+	<div class="controls">
+		<input type="text" name="fmaxdiscount" value="@e.getFmaxdiscount">
+	</div>
+</div>

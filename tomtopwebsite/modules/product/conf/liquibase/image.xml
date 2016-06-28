@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<!-- Image Store -->
+	<changeSet author="kmtong" id="t_img-20141209">
+		<createTable tableName="t_img" remarks="图片表">
+			<column name="iid" type="BIGINT" autoIncrement="true" remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="bcontent" type="BLOB" remarks="二进制数据" />
+			<column name="cpath" type="VARCHAR(100)" remarks="图片路径" />
+			<column name="ccontenttype" type="VARCHAR(100)" remarks="内容标识" />
+			<column name="cmd5" type="VARCHAR(50)" remarks="图片内容的MD5" />
+		</createTable>
+		<createIndex tableName="t_img" indexName="idx_t_img_cpath">
+			<column name="cpath" type="VARCHAR(100)" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="kmtong" id="t_img-test-data" context="test">
+		<loadData tableName="t_img" file="samples/t_img.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="lij" id="t_uploadfile_path-20150331">
+		<createTable tableName="t_uploadfile_path" remarks="文档路径表">
+			<column name="iid" type="BIGINT" autoIncrement="true" remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cpath" type="VARCHAR(50)" remarks="路径" />
+			<column name="ccreateuser" type="VARCHAR(50)" remarks="创建人" />
+		</createTable>
+	</changeSet>
+	<changeSet author="kmtong" id="t_img-cpath_expanded-20150414">
+		<modifyDataType tableName="t_img" columnName="cpath"
+			newDataType="VARCHAR(500)" />
+	</changeSet>
+	<changeSet author="kmtong" id="t_img_cache-20150414">
+		<createTable tableName="t_img_cache" remarks="图片缓存表(保存自动缩少图片)">
+			<column name="iid" type="BIGINT" autoIncrement="true" remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="bcontent" type="BLOB" remarks="二进制数据" />
+			<column name="cpath" type="VARCHAR(500)" remarks="图片路径" />
+			<column name="iwidth" type="INTEGER" />
+			<column name="iheight" type="INTEGER" />
+			<column name="ccontenttype" type="VARCHAR(100)" remarks="内容标识" />
+			<column name="cmd5" type="VARCHAR(50)" remarks="图片内容的MD5" />
+			<column name="ccreatedate" type="DATETIME" defaultValue="now()" />
+		</createTable>
+		<createIndex tableName="t_img_cache" indexName="idx_t_img_cache_cpath">
+			<column name="cpath" type="VARCHAR(500)" />
+			<column name="iwidth" type="INTEGER" />
+			<column name="iheight" type="INTEGER" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_img-20150416">
+		<addUniqueConstraint columnNames="cpath"
+			tableName="t_img" />
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_img_cache-20150505">
+		<addUniqueConstraint columnNames="cpath,iwidth,iheight"
+			tableName="t_img_cache" />
+	</changeSet>
+
+	<changeSet author="jiang" id="t_img_use_mapping-create-table-20150609">
+		<createTable tableName="t_img_use_mapping" remarks="文档用途对应表">
+			<column name="iid" type="BIGINT" autoIncrement="true" remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iimgid" type="BIGINT" remarks="文档编号" />
+			<column name="cpath" type="VARCHAR(500)" remarks="文件路径" />
+			<column name="clabel" type="VARCHAR(50)" remarks="文件用途标签" />
+			<column name="ccreateuser" type="VARCHAR(50)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+		<createIndex tableName="t_img_use_mapping" indexName="idx_t_img_use_mapping_imgid">
+			<column name="iimgid" type="BIGINT" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet id="t_img-add-column-20160401"
+		author="xin">
+		<addColumn tableName="t_img">
+			<column name="cdnpath" type="VARCHAR(500)" remarks="cdn路径"></column>
+		</addColumn>
+	</changeSet>
+	
+	<changeSet id="t_img-add-column-20160525" author="xin">
+		<addColumn tableName="t_img">
+			<column name="iwebsiteid" type="INTEGER" defaultValueNumeric="1"></column>
+		</addColumn>
+	</changeSet>
+
+</databaseChangeLog>

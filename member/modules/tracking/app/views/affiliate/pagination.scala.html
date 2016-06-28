@@ -1,0 +1,11 @@
+@(page: Integer,size: Integer)
+@services.base.HtmlUtils.misc().addHeadOnce{
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/simplePagination.css")">
+}
+<div class="pagination-holder clearfix" >
+	<div id="light-pagination" class="pagination"></div>
+</div>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+  	
+}

@@ -1,0 +1,14 @@
+@(vo: valueobjects.interaction.MemberBrowseHistory,
+ products: Map[String, valueobjects.product.ProductBadge])
+ @if(products != null && products.size() > 0) {
+<div id='browse-history' class="panel panel-default">
+	<div class="panel-heading">
+		<strong>@Messages("your.recent.history")</strong>
+	</div>
+    <div class="panel-body">
+	@vo.getHistory.map{ b =>
+	    @views.html.product.badge(products(b.getClistingid()),false)
+	}
+	</div>
+</div>
+}

@@ -1,0 +1,26 @@
+@(banners : List[valueobjects.product.MobileAdItem])
+
+@baseUrl = @{play.Play.application().configuration().getString("image_request_base_url")}
+
+<div class="scroll relative">
+	<div class="scroll_box" id="scroll_img">
+		<ul class="scroll_wrap">
+			@if(null != banners && banners.size()>0){
+				@banners.map{ b=>
+					<li>
+						<a href="@b.getUrl()">
+							@if(b.getImgUrl().startsWith("http://")) {
+								<img src="@b.getImgUrl()"  width="100%">
+							}else{
+								<img src="@baseUrl/product/original@b.getImgUrl()"  width="100%">
+							}
+						</a>
+					</li>
+				}
+			}
+			
+		</ul>
+	</div>
+  	<ul class="lbBox scroll_position" id='scroll_position'>
+  	</ul>
+</div>

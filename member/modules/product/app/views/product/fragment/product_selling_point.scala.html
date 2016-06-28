@@ -1,0 +1,8 @@
+@(fragment: valueobjects.product.ProductSellingPoints)
+@if(fragment.getProductSellingPoints().size() > 0){
+<ul class="productSpecialinformation_box">
+@fragment.getProductSellingPoints().map{ i =>
+	<li>@i.getCcontent</li>
+}
+</ul>
+}

@@ -1,0 +1,26 @@
+@(cartNum: Integer)
+@import services.base._
+@import services.base.utils._
+@helper.javascriptRouter("cartRoutes")(
+	controllers.cart.routes.javascript.Cart.saveCart,
+	controllers.cart.routes.javascript.Cart.showCartSize,
+	controllers.cart.routes.javascript.Cart.editNum,
+	controllers.cart.routes.javascript.Cart.cartView,
+	controllers.cart.routes.javascript.Cart.delCart,
+	controllers.cart.routes.javascript.Cart.refreshTotal,
+	controllers.cart.routes.javascript.Cart.refreshCartTable,
+	controllers.cart.routes.javascript.Cart.addToAmzonCart
+)
+
+<div class="cartItem" id="cartIt">
+	<a class="fl carted" href="@controllers.cart.routes.Cart.cartView()">
+      	<i class="icn-cart" id="end"></i>
+          <span>Cart: </span>
+          <span><i id="cartNum_head">@cartNum</i> items</span>
+     </a>
+</div>
+
+@services.dodocool.base.HtmlUtils.misc().addTailOnce{
+	<script  language="javascript" type="text/javascript" src='@controllers.cart.routes.Assets.at("js/cart.js")'></script>
+	<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/jquery.fly.min.js")'></script>
+}

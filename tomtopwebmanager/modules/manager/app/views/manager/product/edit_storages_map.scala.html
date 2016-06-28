@@ -1,0 +1,37 @@
+@(storages: List[dto.Storage], selectIds: List[Integer],
+productBase: dto.product.ProductBase) @helper.javascriptRouter("attributeRoutes")(
+controllers.manager.routes.javascript.Attribute.getAttributeList )
+
+<div class="container-fluid">
+	<div class="control-group">
+		<label class="control-label">sku:</label>
+		<div class="controls">
+			<input type="text" name="csku" value="@productBase.getCsku()" readOnly>
+		</div>
+		<label class="control-label">选择发货仓库:</label>
+		<div class="controls" id="storages">
+			@for( i<- storages){
+			<p>
+				<input type="checkbox" value="@i.getIid()"
+					name="@i.getCstoragename()"
+					@if(selectIds.contains(i.getIid())){checked="checked"
+					class="chooseDefault"}>@i.getCstoragename()
+			</p>
+			}
+		</div>
+		<input type="hidden" name="listingid" value="@productBase.getClistingid">
+	</div>
+</div>
+
+<style>
+.control-group .controls input {
+	vertical-align: text-bottom;
+	margin: 12px 5px 0 0
+}
+
+.control-group .controls p {
+	margin-right: 20px;
+	display: inline-block;
+	white-space: nowrap
+}
+</style>

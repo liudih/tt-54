@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.base.EmailTemplateMapper" >
+  <resultMap id="BaseResultMap" type="dto.EmailTemplate" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+    <result column="ilanguage" property="ilanguage" jdbcType="INTEGER" />
+    <result column="ctype" property="ctype" jdbcType="VARCHAR" />
+    <result column="ctitle" property="ctitle" jdbcType="VARCHAR" />
+    <result column="ccontent" property="ccontent" jdbcType="VARCHAR" />
+    <result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, iwebsiteid, ilanguage, ctype, ctitle, ccontent, ccreateuser, dcreatedate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_email_template
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_email_template
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="dto.EmailTemplate" >
+    insert into t_email_template ( iwebsiteid, ilanguage, 
+      ctype, ctitle, ccontent, 
+      ccreateuser)
+    values ( #{iwebsiteid,jdbcType=INTEGER}, #{ilanguage,jdbcType=INTEGER}, 
+      #{ctype,jdbcType=VARCHAR}, #{ctitle,jdbcType=VARCHAR}, #{ccontent,jdbcType=VARCHAR}, 
+      #{ccreateuser,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="dto.EmailTemplate" >
+    insert into t_email_template
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="iwebsiteid != null" >
+        iwebsiteid,
+      </if>
+      <if test="ilanguage != null" >
+        ilanguage,
+      </if>
+      <if test="ctype != null" >
+        ctype,
+      </if>
+      <if test="ctitle != null" >
+        ctitle,
+      </if>
+      <if test="ccontent != null" >
+        ccontent,
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="iwebsiteid != null" >
+        #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="ilanguage != null" >
+        #{ilanguage,jdbcType=INTEGER},
+      </if>
+      <if test="ctype != null" >
+        #{ctype,jdbcType=VARCHAR},
+      </if>
+      <if test="ctitle != null" >
+        #{ctitle,jdbcType=VARCHAR},
+      </if>
+      <if test="ccontent != null" >
+        #{ccontent,jdbcType=VARCHAR},
+      </if>
+      <if test="ccreateuser != null" >
+        #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dto.EmailTemplate" >
+    update t_email_template
+    <set >
+      <if test="iwebsiteid != null" >
+        iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="ilanguage != null" >
+        ilanguage = #{ilanguage,jdbcType=INTEGER},
+      </if>
+      <if test="ctype != null" >
+        ctype = #{ctype,jdbcType=VARCHAR},
+      </if>
+      <if test="ctitle != null" >
+        ctitle = #{ctitle,jdbcType=VARCHAR},
+      </if>
+      <if test="ccontent != null" >
+        ccontent = #{ccontent,jdbcType=VARCHAR},
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dto.EmailTemplate" >
+    update t_email_template
+    set iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      ilanguage = #{ilanguage,jdbcType=INTEGER},
+      ctype = #{ctype,jdbcType=VARCHAR},
+      ctitle = #{ctitle,jdbcType=VARCHAR},
+      ccontent = #{ccontent,jdbcType=VARCHAR},
+      ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,101 @@
+@(Iwebsiteid:Integer,
+  Languageid:Integer,
+  iid: Integer,
+  ctitle:String,
+  ckeywords:String,
+  ctype:String,
+  cmodifiedname:String,
+  cdescription:String,
+  seoTypes:List[java.lang.Object],
+  iwebsiteList:List[dto.Website],
+  languagesList:List[dto.Language],
+  websiteMap: Map[Integer,String],
+  languageMap:Map[Integer,String]
+)
+@user = @{services.manager.AdminUserService.getInstance().getCuerrentUser()}
+@import views.html.helper._
+@helper.javascriptRouter("seoList")(
+	controllers.manager.routes.javascript.Seo.getSeoList
+)
+<div id="homemanager@iid" class="modal hide fade" style="padding-left: 150px" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	@form(controllers.manager.routes.Seo.updateSeo(),'class->"update-seo", 'method->"POST", 'onsubmit->"return false"){
+	  <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3 id="myModalLabel">修改首页管理的数据信息</h3>
+	    <input type="hidden" name="iid" value="@iid">
+		<input type="hidden" name="cmodifiedname" value="@user.getCusername()">
+	  </div>
+	  <div class="modal-body">
+			<div class="control-group">
+				<label class="control-label">标题:<span class="required" >*</span></label>
+				<div class="controls"> 
+					<input type="text" name="ctitle" value="@ctitle" readonly="true">
+					<span style="color: red;font-weight: bolder;"></span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" >关键字:
+					<span class="required">*</span>
+				</label>
+				<div class="controls">
+					<input type="text" name="ckeywords" value="@ckeywords" placeholder="请输入关键字" class="m-wrap medium span6" required pattern=".{0,20}">
+					<span style="color: red;font-weight: bolder;"></span>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">类型:</label>
+				<div class="controls">
+					<select name="ctype" >
+						<option value="@ctype" selected="selected" style="display:none;">@ctype</option>
+						@if(null != seoTypes && seoTypes.size() >0){
+							 @seoTypes.map{ i =>
+								<option value="@i">@i</option>
+							}
+						}
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">站点:</label>
+				<div class="controls">
+					<select name="iwebsiteid" >
+						<option value="@Iwebsiteid" selected="selected" style="display:none;">@websiteMap.get(Iwebsiteid)</option>
+							@if(null != iwebsiteList && iwebsiteList.size() >0){
+								 @iwebsiteList.map{ i =>
+									<option value="@i.getIid()">@i.getCcode()</option>
+								}
+							}
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">语言:</label>
+				<div class="controls">
+					<select name="ilanguageid" >
+						<option value="@Languageid" selected="selected" style="display:none;">@languageMap.get(Languageid)</option>
+							@if(null != languagesList && languagesList.size() >0){
+								 @languagesList.map{ i =>
+									<option value="@i.getIid()">@i.getCname()</option>
+								}
+							}
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">备注：<span class="required">*</span></label><br/><br/>
+				<div class="controls">
+					<textarea name="cdescription" maxlength="1500" placeholder="请输入备注" class="m-wrap medium span6" style="margin-top: -26px;" required pattern=".{2,100}">@cdescription</textarea>
+					<span style="color: red;font-weight: bolder;"></span>
+				</div>
+			</div>
+	  </div>
+	  <div class="modal-footer" style="margin-bottom: -20px;">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+		<input id="updateSeoId" class="btn blue" type="submit" value="提交">
+	  </div>
+	 }
+</div>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+	<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/manager/home.meta/updatehomeMataInfoManage.js")'></script>
+} 

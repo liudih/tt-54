@@ -1,0 +1,39 @@
+cname,iparentid,ilevel,ciconurl,curl,cclass,iisnominate,ccreateuser,dcreatedate,clastupdateduser,dlastupdateddate
+Popular Questions,NULL,1,NULL,NULL,h_Que,0,xcf,2015-03-03,xcf,2015-03-03
+Shopping,NULL,1,NULL,NULL,h_Shop,1,xcf,2015-03-03,xcf,2015-03-03
+Ordering,NULL,1,NULL,NULL,h_Ord,1,xcf,2015-03-03,xcf,2015-03-03
+Partnership Programs,NULL,1,NULL,NULL,h_Prog,1,xcf,2015-03-03,xcf,2015-03-03
+Shipping,null,1,NULL,NULL,h_Ship,1,xcf,2015-03-03,xcf,2015-03-03
+Warranty & Support,null,1,NULL,NULL,h_Supp,1,xcf,2015-03-03,xcf,2015-03-03
+Customer Service,null,1,NULL,NULL,h_Serv,1,xcf,2015-03-03,xcf,2015-03-03
+Contact Us,null,1,NULL,NULL,h_Us,0,xcf,2015-03-03,xcf,2015-03-03
+Points And Coupons,2,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Shopping FAQ,2,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+New User Guide,2,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Ordering FAQ,3,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Warehouses,3,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+How To Pay,3,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Tax & Customs Duties,3,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Payment & price & Discount,3,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+TOMTOP Review,4,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Affiliate Program,4,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Wholesale Program,4,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Drop ship Program,4,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Dropship FAQ,4,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+VIP Benefits,4,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Shipping FAQ,5,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Shipping Methods,5,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Unshipped Orders,5,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Shipped Orders,5,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Shipping & Delivery,5,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Support FAQ,6,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Product Warranty Support,6,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+My Account,6,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+TOMTOP Guarantees,6,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+About TOMTOP,6,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Terms & Conditions,6,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Pre-Sale,7,2,NULL,/base/cms/customer?imenuid=34,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+After-Sale,7,2,NULL,/base/cms/customer?imenuid=35,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Live Chat,8,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+Phone Service,8,2,NULL,NULL,NULL,0,xcf,2015-03-03,xcf,2015-03-03
+

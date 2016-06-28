@@ -1,0 +1,6 @@
+@(badgeList:List[valueobjects.product.ProductBadge])
+<ul class="clearPic">
+	@badgeList.map{b =>
+		@views.html.product.gadget.badge_big(b)
+	}
+</ul>

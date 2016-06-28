@@ -1,0 +1,7 @@
+@(param : valueobjects.interaction.StarRatingParam)
+<a href="@if(null != param.getUrl){@param.getUrl}">
+	<div class="smallReviews">
+	    <div class="smallStar" style="width: @if(param.getStarsWidth == null || param.getStarsWidth == 0){0%} else {@param.getStarsWidth%}"></div>
+	</div>
+ 	 @if(param.getReviewCount != null){( <span class="orange">@param.getReviewCount</span> @Messages("reviews.upcase"))}
+</a>

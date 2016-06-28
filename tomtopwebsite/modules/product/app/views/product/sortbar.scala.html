@@ -1,0 +1,29 @@
+@(formExtras: Html = null)(req: Map[String,Array[String]]=null)(implicit sc: valueobjects.search.SearchContext = null)
+@_sc = @{if (sc != null) { sc } else {play.mvc.Http.Context.current().args.get("searchContext").asInstanceOf[valueobjects.search.SearchContext]}}
+@services.base.HtmlUtils.misc().addHeadOnce{
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/search.css")?@version.BuildVersion.build()" />
+}
+@services.base.HtmlUtils.misc().addTailOnce{
+ <script type="text/javascript" src='@controllers.product.routes.Assets.at("js/product/controller/search.js")' ></script>
+}
+
+<form id="searchbar">
+<div class="suarchCon">
+    <ul class="sortNA" id="ul">
+    	@_sc.getUIProviders().map{p =>
+   			@p.getHtml(_sc)
+    	}
+        <div class="clear"></div>
+    </ul>
+</div>
+@req.keySet.map{i=>
+	@if(i!="p" && i!="q" && i!="st" && i!="category" && i!="limit" &&
+		i!="statPublishDate" && i!="statPublishDateType"){
+		@req.get(i).map{ii=>
+		<input class="sortCls" type="hidden" name="@i" value="@ii" />
+		}
+	}
+}
+<input type="hidden" id="p" name="p" value="@(_sc.getResult().pageNo()+1)" />
+@formExtras
+</form>

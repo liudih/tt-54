@@ -1,0 +1,28 @@
+@(cart : facades.cart.Cart,currency:dto.Currency)
+@import services.base._
+@import services.base.utils._
+<table id="cart_grand_total" class="grandTotal" style="" 
+	border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<td>@Messages("order.subtotal")</td>
+		<td width="155"><b>@currency.getCsymbol<span class="subtotal">@Utils.money(cart.getTotal())</span></b></td>
+	</tr>
+	@cart.renderOrderSubtotal().map{b=>
+		@if(b != null){
+		<tr class="couponDivs">
+			@b
+		</tr>
+		<tr>
+             <td></td>
+             <td></td>
+        </tr>
+        }
+	}
+	<tr class="grandTotal_txt">
+		<td>@Messages("grand.total")</td>
+		<td><span class="orange">@currency.getCsymbol<span>@Utils.money(cart.getGrandTotal())</span></span></td>
+	</tr>
+	<!-- <tr class="earned">
+		<td colspan="2">@Messages("this.order.earned.0.tomtop.points")</td>
+	</tr> -->
+</table>

@@ -1,0 +1,84 @@
+@(vo: valueobjects.product.ProductComposite, renderer: services.product.ProductCompositeRenderer)
+
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@views.html.base.minimal(true,true,false){
+	
+@services.base.HtmlUtils.misc().addHeadOnce{
+	   <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/product.css")?@version.BuildVersion.build()" /> 
+	   <script src="@controllers.product.routes.Assets.at("js/product/product.min.js")"></script> 
+ }
+
+<section class="con">
+	@renderer.renderFragment(vo,"product-top-float")
+	<div class="container">
+	<div itemscope itemtype="http://schema.org/Product">
+	<div class="Bread_crumbs_Box">
+		<ul class="Bread_crumbs">
+      		 <li class="Bread_home"><a href="/"></a></li>
+			 @renderer.renderFragment(vo, "breadcrumb")
+			 <div class="clear"></div>
+      	</ul>
+	</div>
+	<div class="productDisplay_box">
+		@renderer.renderFragment(vo, "images")
+		<div class="productIntroduce_box">
+			@renderer.renderFragment(vo, "base")
+			@renderer.renderFragment(vo,"entity-map")
+			@** @renderer.renderFragment(vo, "selling-points") **@
+			@renderer.renderFragment(vo, "product-storage")
+			<p></p>
+			<ul class="reportError_ul">
+				@renderer.renderFragment(vo, "price_match")
+				@renderer.renderFragment(vo, "wholesale_inquiry")
+				@renderer.renderFragment(vo, "report_error")
+				<div class="clear"></div>
+			</ul>
+			@renderer.renderFragment(vo, "product-share")
+			@renderer.renderFragment(vo, "cart")
+		</div>
+		<div class="clear"></div>
+			@renderer.renderFragment(vo, "video")
+	</div>
+
+@renderer.renderFragment(vo, "bundle-sale")
+@renderer.renderFragment(vo, "rank")
+
+<div id="tops"></div>
+ <div class="productDescription_box">
+ 	<div class="productDescription_left">
+     	<ul class="productDescription_navigation" id="productDescription_navigation">
+         	<li class="productDescription_active"><a href="#tops">@Messages("description")</a></li>
+         	<li><a href="#tops">@Messages("shipping.payment")</a></li>
+         	@*<li><a href="#tops">@Messages("return.policy")</a></li>*@
+         	<li class="warranty_ico"><a href="#tops">@Messages("warranty.process")</a><em></em></li>
+             <div class="clear"></div>
+         </ul>
+          <div itemprop="description" class="Description block">
+          	@renderer.renderFragment(vo, "description")
+          </div>
+         	@renderer.renderFragment(vo, "product-policy")
+     </div>
+     <div class="productDescription_right">
+     	@renderer.renderFragment(vo, "recommendation")
+     </div>
+     <div class="clear"></div>
+ </div>
+
+@renderer.renderFragment(vo, "keyword")
+@renderer.renderFragment(vo,"product-detail-advertising")
+@renderer.renderFragment(vo, "comment")
+@** @renderer.renderFragment(vo, "post") **@
+@renderer.renderFragment(vo, "member-photos")
+@renderer.renderFragment(vo, "member-video")
+@tp.get("member-browse-history")
+</div>
+</div>
+</section>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+  	<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+	<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+	<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/product/detail_addcart.js")'></script>
+  	<script src="@controllers.base.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.product.routes.Assets.at("js/product/mdetail")" ></script>
+}                                         
+}

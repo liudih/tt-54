@@ -1,0 +1,73 @@
+@(product: valueobjects.product.ProductBadge)
+@import services.base._
+@import services.base.utils._
+@mainsite = @{play.Play.application().configuration().getString("main_website")}
+@if(product != null){
+<li>
+    @product.getPrice().getDiscountOption().asScala.map{ d =>
+		@if(product.getPrice().isDiscounted()){
+			<span class="discount">@Utils.percent(d)</span>
+		}
+	}
+    <a class="publiceImg" href="@controllers.base.routes.Product.view(product.getUrl())">
+		@img(product.getImageUrl(),product.getTitle(),277,277,null)				   
+	</a>
+    <div class="listIM">
+        <a class="publicTitle" title="@product.getTitle" href="@controllers.base.routes.Product.view(product.getUrl())">
+	    @if(product.getTitle()!=null && product.getTitle().length>100){
+	    	@product.getTitle.substring(0,100)...
+	    }else{
+	    	@product.getTitle
+	    }
+	    </a>
+        <!-- <p class="descriTT">Description:<span>USB Charger data Cable For iPhone iPod Nano Touch</span></p> -->
+        <!-- <p class="green">Free Shipping</p> -->
+        @if(product.getHtmlmap().get("freeship")!=null){
+        	<p class="green">FREE Shipping</p>
+        }
+        @product.getExtended().map{ i=>
+			@i
+		} 
+		@product.getHtmlmap().get("collect")
+   		@product.getHtmlmap().get("storage")
+    	<!-- <p class="product_hart lineBlock">(126)</p> -->
+    
+    <a class="proDet" href="@controllers.base.routes.Product.view(product.getUrl())">Product Detail»</a>
+    </div>
+    
+    <p class="publicPrice">
+    <span class="presentPrice">
+	    <span class="currency">@product.getPrice.getSymbol</span>
+	    @Utils.money(product.getPrice.getUnitPrice)
+    </span>
+    @if(product.getPrice().isDiscounted()){
+		/ <span class="originalPrice">
+			<span class="currency">@product.getPrice.getSymbol</span>
+			@Utils.money(product.getPrice.getUnitBasePrice)
+		</span>
+	}
+	</p>
+    
+    <div class="addto_cart">
+		<input type="button" value="@Messages("add.to.cart")" class="rightPaly_addToCart" data="@product.getListingId()" onclick="addCart(this)"/>
+	    <div class="addTo_cartHide">
+	        <span class="addTo_sj"></span><span class="addTo_close"></span>
+	        <div class="addcartpan">
+		        <p class="cart_title"><em></em>1 @Messages("item.added.to.cart")</p>
+		        <p class="cart_txt">1 @Messages("total.item.in.your.cart") <br><span>@Messages("cart.total")</span> <span class="orange">@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitPrice)</span></p>
+		        <input type="button" class="viewCart" value="@Messages("view.cart")">
+		        <input type="button" class="continueShopping" value="@Messages("continue.shopping")">
+	        </div>
+	    </div>
+	</div>
+</li>
+<input type="hidden" value="@mainsite" id="mainurl"/>
+}
+@services.base.HtmlUtils.misc().addTailOnce{
+	<script type="text/javascript">
+		var mainurl = $("#mainurl").val();
+		$(".viewCart").click(function(){location.href=mainurl+'/cart'});
+		$(".continueShopping").click(function(){$('.addTo_cartHide').hide()});
+	</script>
+}
+views.html.product.gadget.addcart_js()

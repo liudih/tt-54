@@ -1,0 +1,307 @@
+@(rootPath:String,
+	emailAndStatusMap: java.util.Map[String, Boolean],
+	items:List[valueobjects.order_api.OrderList],
+	pageCount: Int, pageNum: Int, pageTotal: Int,
+	packMap: Map[Integer, List[dto.order.OrderPack]], 
+	shippingMethodService: services.shipping.ShippingMethodService,
+	payments: Map[String, extensions.payment.IPaymentProvider],
+	idMap: Map[Integer, dto.order.OrderStatus],
+	weightMap: Map[Integer, Double],
+	orderMessage: Map[Integer, String]
+)
+@import services.base.utils._
+@import views.html.helper._
+@helper.javascriptRouter("orderRoutes")(
+	controllers.manager.routes.javascript.Order.updateOrderStatus,
+	controllers.manager.routes.javascript.Order.getPaypalMessage
+	
+)
+<div id="search_orders_html" style="padding-bottom: 100px;">
+		<div class="portlet-body">
+			<table class="order_ll_box" width="100%" border="0" cellspacing="1" cellpadding="0" id="oderlist">
+				<thead>
+					  <tr>
+					    <th class="order_ll_Id">
+					    	<p class="inlineBlock">订单来源</p>
+					    	<p class="inlineBlock">收货人姓名</p>
+					        <p class="inlineBlock">订单编号</p>
+					    </th>
+					    <th class="order_ll_dizhi">
+					    	<p class="inlineBlock">收货地址</p>
+					        <p class="inlineBlock">用户邮箱</p>
+					        <p class="inlineBlock">订单留言</p>
+					        <p class="inlineBlock">订单详情</p>
+					    </th>
+					    <th class="order_ll_zhifu">
+					    	<p class="inlineBlock">支付方式</p>
+					    	<p class="inlineBlock">支付日期</p>
+					    	<p class="inlineBlock">邮寄方式</p>
+					    	<p class="inlineBlock">重量</p>
+					    	<p class="inlineBlock">邮费</p>
+					        <p class="inlineBlock">订单日期</p>
+					    </th>
+					    <th class="order_ll_haoma">
+					    	<p class="inlineBlock">交易号</p>
+					        <p class="inlineBlock">追踪号</p>
+					    </th>
+					    <th class="order_ll_zhuangtai">
+					    	<p class="inlineBlock">订单状态</p>
+					    	<p class="inlineBlock">支付状态</p>
+					        <p class="inlineBlock">订单总价</p>
+					    </th>
+					    <th class="order_ll_caozuo">
+					  	    <p class="inlineBlock">操作</p>
+					    </th>
+					  </tr>
+				</thead>
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+				@if(items != null) {
+					@items.map{i=>
+						<tr class="order_ll_infTR">
+						    <td>
+							    @if(emailAndStatusMap.size > 0){
+							    	@if(emailAndStatusMap.get(i.getOrder().getCemail()) == true){
+								    	<p class="order_ll_marT">
+								    		<span class="order_ll_999" style="background:yellow;font-size: 20px;color: red;font-weight: bolder;">
+												黑名单客户
+											</span>
+										</p>
+						    		}
+							    }
+						    	<p class="order_ll_marT"><span class="order_ll_999">Host:</span>@i.getOrder().getCvhost()</p>
+						    	<p class="order_ll_marT"><span class="order_ll_999">Na:</span>@i.getOrder().getCfirstname() @i.getOrder().getClastname()</p>
+						    	<p class="order_ll_marT"><span class="order_ll_999">Nu:</span><span class="order_ll_red">@i.getOrder().getCordernumber()</span></p>
+						    </td>
+						    <td>
+						    	<div class="order_ll_marT">
+						        	<p class="order_ll_inline"><span class="order_ll_adds">Address:</span>  @i.getOrder().getCstreetaddress()</p>
+						            <p class="order_ll_inline"><span class="order_ll_adds">City : </span> @i.getOrder().getCcity()</p>
+						            <p class="order_ll_inline"><span class="order_ll_adds">State :</span> @i.getOrder().getCprovince()</p>
+						            <p class="order_ll_inline"><span class="order_ll_adds">Country :  </span>@i.getOrder().getCcountry()</p>
+						            <p class="order_ll_inline"><span class="order_ll_adds">P code :  </span>@i.getOrder().getCpostalcode()</p>
+						            <p class="order_ll_inline"><span class="order_ll_adds">Tel :  </span>@i.getOrder().getCtelephone()</p>
+						        </div>
+						        <p class="order_ll_marT">
+						       		 <span class="order_ll_adds">Email:</span>@i.getOrder().getCmemberemail()
+						        </p>
+						        @if(orderMessage!=null && orderMessage.get(i.getOrder.getIid)!=null){
+						            <p class="order_ll_marT"><span class="order_ll_adds">message :  </span>@orderMessage.get(i.getOrder.getIid)</p>
+						        }
+						        <div class="order_ll_marT order_ll_TTBox order_ll_TTBoxAll">
+						        	<a class="order_ll_TT" href="javascript:;">订单详情</a>
+						        	<div class="order_ll_TxT">
+										
+										@if(null!=i.getOrder().getFshippingprice()){
+											@order_details("http://"+i.getOrder().getCvhost(),i.getOrderItems(),i.getSymbol(),i.getOrderBillDetails(),i.getOrder().getFgrandtotal(),i.getOrder().getFshippingprice())
+										}else{
+											@order_details("http://"+i.getOrder().getCvhost(),i.getOrderItems(),i.getSymbol(),i.getOrderBillDetails(),i.getOrder().getFgrandtotal(),0.00)
+										}
+										
+									</div>
+						        </div>
+						        @if(i.getOrder().getCpaymentid()!=null && "paypal".equals(i.getOrder().getCpaymentid()) && i.getOrder().getCtransactionid()!=null){
+							    	<div class="order_ll_marT order_ll_TTBox">
+							        	<a class="order_ll_TT" tag="paypal" href="javascript:;" data-ordernumber="@i.getOrder().getCordernumber()">payer详情</a>
+							            <div class="order_ll_TxT paypalMsg">
+							          	</div>
+							        </div>
+						        }
+						        
+						    </td>
+						    <td>
+						    	<p class="order_ll_marT">
+						    		<span class="order_ll_999">Pay:</span>
+						    		@if(i.getOrder().getCpaymentid()!=null && payments.get(i.getOrder().getCpaymentid())!=null){
+										<img src="@rootPath@payments.get(i.getOrder().getCpaymentid()).iconUrl()" style="max-width:100px" />
+									} 
+								</p>
+								<p class="order_ll_marT">
+						    		<span class="order_ll_999">PDate:</span>
+						    		@if(null != i.getOrder().getCpaymentid() && null != i.getOrder().getDpaymentdate()){
+										<span class="order_ll_dates">
+											@services.base.utils.DateFormatUtils.getStrFromYYYYMMDDHHMMSS(i.getOrder().getDpaymentdate())
+										</span>
+									} 
+								</p>
+						        <p class="order_ll_marT">
+						        	<span class="order_ll_999">shipping code:</span>
+						        		@if(i.getOrder().getIshippingmethodid()!=null){
+						        			@if(null != shippingMethodService.getShippingMethodById(i.getOrder().getIshippingmethodid())){
+						        				@i.getOrder().getCshippingcode()
+						        			}else{
+												<span class="order_ll_red font12">物流方式已被删除,shippingmenthodid:@i.getOrder().getCshippingcode()</span>
+						        			}
+										}
+								</p>
+								@if(null != weightMap && null != weightMap.get(i.getOrder.getIid)){
+									<p class="order_ll_marT"><span class="order_ll_999">shipping weight:</span><span class="order_ll_dates">@weightMap.get(i.getOrder().getIid())</span></p>
+								}
+								<p class="order_ll_marT"><span class="order_ll_999">shipping price:</span><span class="order_ll_dates">@i.getSymbol(): <span class="order_ll_red">@i.getOrder().getFshippingprice()</span></span></p>
+						    	<p class="order_ll_marT">
+						    		<span class="order_ll_999">Date:</span>
+						    		<span class="order_ll_dates">@services.base.utils.DateFormatUtils.getStrFromYYYYMMDDHHMMSS(i.getOrder().getDcreatedate())</span>
+						    	</p>
+						    </td>
+						    <td class="order_ll_center">
+						    	<p class="order_ll_marT">
+						    		<span class="order_ll_999">交易号：</span>
+						    			@if(i.getOrder().getCtransactionid()!=null){
+											@i.getOrder().getCtransactionid()
+										}
+								</p>
+						        <p class="order_ll_marT">
+							        <span class="order_ll_999">追踪号：</span>
+							        @if(null != packMap && null != packMap.get(i.getOrder.getIid)){
+								        @packMap.get(i.getOrder.getIid).map{p=>
+								    		<a target="_blank" href="http://www.17track.net/en/result/post.shtml?nums=@p.getCtrackingnumber" class="orderMiddle">@p.getCtrackingnumber</a>
+								    	}
+								    }
+								</p>
+						    </td>
+						    <td>
+						    	<p class="order_ll_marT">
+						    		<span class="order_ll_999"></span>
+						    		@if(null != i.getOrder().getIstatus()){
+						    			@idMap.get(i.getOrder().getIstatus()).getCname()
+						    		}else{
+						    			<span class="order_ll_red font12">异常订单,无订单状态</span>
+						    		}
+						    	</p>
+						    	
+						    	<p class="order_ll_marT">
+					    		<span class="order_ll_999"></span>
+					    		
+					    		@if(null != i.getOrder().getIpaymentstatus()){
+					    			@if(0 == i.getOrder().getIpaymentstatus()){
+					    				payment pending
+					    			}
+				    				@if(1 == i.getOrder().getIpaymentstatus()){
+				    					payment confirmed
+				    				}
+				    				@if(2 == i.getOrder().getIpaymentstatus()){
+				    					payment processing
+				    				}
+				    				@if(3 == i.getOrder().getIpaymentstatus()){
+				    					payment failed
+				    				}
+				    				@if(4 == i.getOrder().getIpaymentstatus()){
+				    					Refunded
+				    				}
+					    			
+					    		}else{
+					    			payment pending
+					    		}
+					    	</p>
+					    	
+					    	
+						    	<p class="order_ll_marT"><span class="order_ll_999"></span>@i.getSymbol(): <span class="order_ll_red">@Utils.money(i.getOrder().getFgrandtotal())</span></p>
+						    	@i.getOrder().getIshow().toInt match {
+									case 2=> {
+										<p class="order_ll_marT"><span class="order_ll_999"></span><span class="order_ll_red font12">客户回收站可见</span></p>
+									}
+									case 3=> {
+										<p class="order_ll_marT"><span class="order_ll_999"></span><span class="order_ll_red font12">订单被彻底删除</span></p>
+									}
+										case x : Int=> {
+									}			
+								}
+						    </td>
+						    <td>
+						    	<div class="order_ll_stateBox">
+						            <a class="order_ll_state" href="javascript:">修改订单状态</a>
+						            <ul class="dropdown-menu">
+										@idMap.map{e =>
+											@if(e._2.getIid()==2){
+												<li value="@e._2.getIid()" id="@i.getOrder().getIid()" transid="@i.getOrder().getCtransactionid()" >
+													<a name="editpaymentConfirm" data-toggle="modal" data-target="#edit-index-modal"
+													   href="@controllers.manager.routes.Order.getPaymentConfirm(i.getOrder().getIid(),e._2.getIid(),i.getOrder().getCtransactionid())">
+											 	  	    @e._2.getCname()
+											 	  	</a>
+												</li>
+											}else{
+												<li value="@e._2.getIid()" id="@i.getOrder().getIid()" transid="@i.getOrder().getCtransactionid()" >
+													@e._2.getCname()
+												</li>
+											}
+										}
+						            </ul>
+						        </div>
+								@if(null != i.getOrder().getIstatus() && idMap.get(i.getOrder().getIstatus()).getCname().equals(services.order.IOrderStatusService.PAYMENT_PENDING)){
+									<a data-toggle="modal" data-target="#update-orderprice@i.getOrder().getIid()" name="update-orderprice@i.getOrder().getIid()"  class="order_ll_price">
+										修改订单价格
+									</a>
+									@views.html.manager.order.update_order_price.render(i.getOrder().getIid(),i.getOrder().getFgrandtotal(),i.getSymbol())
+									<a data-toggle="modal" data-target="#update-ordershippingprice@i.getOrder().getIid()" name="update-ordershippingprice@i.getOrder().getIid()"  class="order_ll_price">
+										修改订单物流价格
+									</a>
+									@views.html.manager.order.update_order_shippingprice.render(i.getOrder().getIid(),i.getOrder().getFgrandtotal(),i.getOrder().getFshippingprice(),i.getSymbol())
+								}
+						    </td>
+						  </tr>
+					}
+				} else {
+					 <tr class="order_ll_infTR">
+							<td colspan="6" style="text-align:center;"><h4>暂无订单信息</h4></td>
+					 </tr>
+				}
+				</tbody>
+			</table>
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="dataTables_info">当前第 <span>@pageNum</span> 页|共 <span>@pageTotal</span> 页| 共 <span>@pageCount</span> 条记录</div>
+				</div>
+				<div class="span6">
+					<div class="dataTables_paginate paging_bootstrap pagination">
+						<input id="pagenum" value="@pageNum" type="hidden"> 
+						<input id="pagetotal" value="@pageTotal" type="hidden"> 
+						
+						@if(pageTotal>1){
+						<ul>
+							@if(1 == pageNum){
+								<li class="disabled"><a href="javascript:;">«</a></li>
+							}else{
+								<li><a href="javascript:;" tag="pageNum" value="1">«</a></li>
+							}
+							@for(i <- pageNum - 6 to pageNum + 6 if i >= 1; if i<= pageTotal) {
+								@if(i == pageNum){
+									<li class="disabled"><a href="javascript:;" tag="pageNum" value="@i">@i</a></li>
+								}else{
+									<li><a href="javascript:;" tag="pageNum" value="@i">@i</a></li>
+								}
+							}
+							@if(pageNum >= pageTotal){
+								<li class="disabled"><a href="javascript:;">»</a></li>
+							}else{
+								<li><a href="javascript:;" tag="pageNum" value="@pageTotal">»</a></li>
+							}
+						</ul>
+						}
+					</div>
+				</div>
+			</div>
+			<div id="edit-index-modal" class="modal hide fade" style="width:640px" tabindex="-1"
+				role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-header">
+				</div>
+					<div class="modal-body"></div>
+					<div class="modal-footer" style="margin-bottom: -20px;">
+						<button id="payment_close_id"  class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+						<button id="payment_commit_id"  class="btn blue" name="submit">保存</button>
+					</div>
+			</div>
+		</div>
+	</div>
+	
+	<<script type="text/javascript">
+	$("a[name=editpaymentConfirm]").click(function () {
+			$("#edit-index-modal").on("hidden", function() {
+			    $(this).removeData("modal");
+			});
+		
+			$('#edit-index-modal .modal-body').html('');
+			$.get($(this).attr('href'),function(data){  
+		        $('#edit-index-modal .modal-body').html(data);
+		    })  
+	});
+</script>
+

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.manager.LivechatMsgInfoMapper" >
+ 
+  
+  <select id="searchHistoryMsgPage" resultType="entity.manager.LivechatMsgInfo" >
+   		 
+		 select a.* 
+			from t_livechat_msg_info a  
+			
+			inner join (select csessionid,max(dcreatedate) orderdate from t_livechat_msg_info group by csessionid ) b on b.csessionid=a.csessionid
+			where  1 = 1
+			
+			 <if test="customerName != null and customerName !=''" >
+		        and (a.cfromalias like '%${customerName}%' or a.ctoalias like '%${customerName}%')
+		     </if>
+			 <if test="customerServiceName != null and customerServiceName !=''" >
+			 	and (a.cfromalias like '%${customerServiceName}%' or a.ctoalias like '%${customerServiceName}%')
+		     </if>
+			 <if test="keyword != null and keyword !='' " >
+		        and a.ccontent like '%${keyword}%'
+		     </if>
+			 <if test="customerLtc != null and customerLtc !='' " >
+		        and (a.cfromltc = #{customerLtc} or a.ctoltc = #{customerLtc})
+		     </if>
+		     
+			 <if test="startDate != null and startDate !='' and endDate != null and endDate !=''" >
+		        and (a.dcreatedate between #{startDate} and #{endDate})  
+		     </if>
+		   order by b.orderdate desc,a.csessionid,a.dcreatedate asc limit #{pageSize} offset (#{page}-1)*#{pageSize}
+			
+  </select>
+  
+  <select id="searchHistoryMsgCount" resultType="java.lang.Integer" >
+		 
+		select count(iid) 
+		from t_livechat_msg_info a  
+		where  1 = 1
+		
+		 <if test="customerName != null and customerName !=''" >
+	        and (a.cfromalias like '%${customerName}%' or a.ctoalias like '%${customerName}%')
+	     </if>
+		 <if test="customerServiceName != null and customerServiceName !=''" >
+		 	and (a.cfromalias like '%${customerServiceName}%' or a.ctoalias like '%${customerServiceName}%')
+	     </if>
+		 <if test="keyword != null and keyword !='' " >
+	        and a.ccontent like '%${keyword}%'
+	     </if>
+	     
+		 <if test="startDate != null and startDate !='' and endDate != null and endDate !=''" >
+	        and (a.dcreatedate between #{startDate} and #{endDate})  
+	     </if>
+			
+  </select>
+  
+  
+</mapper>

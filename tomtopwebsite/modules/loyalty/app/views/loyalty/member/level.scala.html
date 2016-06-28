@@ -1,0 +1,104 @@
+@(memberlevel:dto.MemberLevel)
+@import services.base.utils._
+
+<p>@Messages("vip0")<span class="blue">@memberlevel.getGroupname()</span>
+@if(memberlevel.getNextgoupname!=null){
+&nbsp;&nbsp;&nbsp; @Messages("shop.us")$ @memberlevel.getWithnextamout() @Messages("more.to.reach.next") <span class="blue">@memberlevel.getNextgoupname()</span></p>
+}
+<input  type="hidden" name="amount" value="@Utils.money(memberlevel.getAmount())">
+<div class="myLevel">
+	<div class="progressBox">
+    	<ul class="progressPoint">
+        	<li data-from="0" data-to="499" class="point0"></li>
+        	<li data-from="500" data-to="4999" class="point3"><p>3% @Messages("discount")</p></li>
+        	<li data-from="5000" data-to="19999" class="point5"><p>5% @Messages("discount")</p></li>
+        	<li data-from="20000" data-to="49999" class="point7"><p>7% @Messages("discount")</p></li>
+        	<li data-from="50000" data-to="99999" class="point10"><p>10% @Messages("discount")</p></li>
+        	<li data-from="100000" id="maxpoint" class="point15"><p>15% @Messages("discount")</p></li>
+            <ol></ol>
+        </ul>
+
+        <ul class="progressTxt">
+        	<li>
+            	<p>$0-$499</p>
+                <p>@Messages("vip0")<span>(@Messages("bronze"))</span></p>
+                <em class="vip0"></em>
+            </li>
+        	<li>
+                <p>$500-$4999</p>
+                <p>@Messages("vip.1")<span>(@Messages("silver"))</span></p>
+                <em class="vip1"></em>
+            </li>
+        	<li>
+            	<p>$5000-$19999</p>
+                <p>@Messages("vip.2")<span>(@Messages("gold"))</span></p>
+                <em class="vip2"></em>
+            </li>
+        	<li>
+            	<p>$20000-$49999</p>
+                <p>@Messages("vip.3")<span>(@Messages("Platinum"))</span></p>
+                <em class="vip3"></em>
+            </li>
+        	<li>
+            	<p>$50000-$99999</p>
+                <p>@Messages("vip.4")<span>(@Messages("titanium"))</span></p>
+                <em class="vip4"></em>
+            </li>
+        	<li>
+            	<p>$100,000+</p>
+                <p>@Messages("vip.5")<span>(@Messages("diamond"))</span></p>
+                <em class="vip5"></em>
+            </li>
+        </ul>
+        <div class="currentWZ"><em></em></div>
+    	<div class="consumption">
+        	<div class="consMove"></div>
+        </div>
+    </div>
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+ <script>
+ $(function(){
+	function consMove(){
+		var w = $(".consumption").width();
+		var wz = w - $(".currentWZ").width()/2;
+		$(".consMove").animate({width:w},1000,function(){
+			$(".currentWZ").css({"display":"block","left":wz})
+			var i= 1;
+		    setInterval(function() {
+				if (i > 36) {
+					i = 1;
+				}
+				var postion = i + "px -560px";
+				$(".consMove").css('background-position',postion);
+				i++;}, 200);
+		})
+	}
+	var amount = parseFloat($('input[name=amount]').val().replace(",",""));
+	var maxpoints =parseFloat($('#maxpoint').attr('data-from'));
+	
+	$(".currentWZ").append("$"+amount)
+	$('.progressPoint li').each(function(){
+	   var from=$(this).data('from');
+	   var to=$(this).data('to');
+	   if(amount>=from&&amount<=to){
+		   if($(this).index()==0){
+				$(".consumption").animate({
+					width:amount/to*146
+			  	},function(){consMove()})
+			}else{
+			   $(".consumption").animate({
+					width:146*($(this).index())+(amount-from)/(to-from)*146
+			 	 },function(){consMove()})
+			}
+	   }else if(amount>=maxpoints)
+	   {
+			$(".consumption").animate({
+				width:730
+			},function(){consMove()})
+		}
+	});
+})
+ 
+   </script>
+  } 

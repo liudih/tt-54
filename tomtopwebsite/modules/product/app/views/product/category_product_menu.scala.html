@@ -1,0 +1,94 @@
+@(node: valueobjects.product.category.CategoryReverseComposite,
+catogeryCount : Map[Integer,Long])
+@if(node!=null && node.getSelf()!=null && node.getSelf().getIlevel()==1){
+@if(catogeryCount!=null && node.getChildren() == null){
+		@catogeryCount.keySet.map{i=>
+				@if(i==node.getSelf().getIcategoryid() && catogeryCount.get(i)>0){
+					<p class="dirTitle">@node.getSelf().getCname()</p>
+					(@catogeryCount.get(i));
+				}
+		}
+		
+}else{
+	<p class="dirTitle">@node.getSelf().getCname()</p>
+}
+<ul class="dirList">
+	@if(node.getChildren() != null && node.getChildren().size() > 0){
+		@node.getChildren().map{ c =>
+					@if(catogeryCount!=null){
+						@catogeryCount.keySet.map{i=>
+							@if(i==c.getSelf().getIcategoryid()&& catogeryCount.get(i)>0){
+							<li>
+								<a href="@controllers.product.routes.CategoryProduct.showCategoryProduct(c.getSelf().getCpath())">
+								@c.getSelf().getCname()
+								(@catogeryCount.get(i))
+								</a>
+							</li>
+							}
+						}
+					}
+		}
+	}
+</ul>
+}
+@if(node!=null && node.getSelf()!=null && node.getSelf().getIlevel()==2 && node.getParent()!=null){
+<a class="dirTitle" href="@controllers.product.routes.CategoryProduct.showCategoryProduct(node.getParent().getSelf().getCpath())" >
+	&lt; @node.getParent().getSelf().getCname()
+</a>
+@if(catogeryCount!=null && node.getChildren() == null){
+		@catogeryCount.keySet.map{i=>
+				@if(i==node.getSelf().getIcategoryid() && catogeryCount.get(i)>0){
+					<p class="dirTitles">@node.getSelf().getCname()</p>
+					(@catogeryCount.get(i))
+				}
+		}
+		
+}else{
+	<p class="dirTitles">@node.getSelf().getCname()</p>
+}
+<ul class="dirList dirLists">
+	@if(node.getChildren() != null && node.getChildren().size() > 0){
+		@node.getChildren().map{ c =>
+					@if(catogeryCount!=null){
+						@catogeryCount.keySet.map{i=>
+							@if(i==c.getSelf().getIcategoryid() && catogeryCount.get(i)>0){
+							<li>
+								<a href="@controllers.product.routes.CategoryProduct.showCategoryProduct(c.getSelf().getCpath())">
+								@c.getSelf().getCname()
+								(@catogeryCount.get(i))
+								</a>
+							</li>
+							}
+						}
+				}
+		}
+	}
+</ul>
+}
+@if(node!=null && node.getSelf()!=null && node.getSelf().getIlevel()==3 && node.getParent()!=null 
+ && node.getParent().getParent()!=null){
+<a class="dirTitle" href="@controllers.product.routes.CategoryProduct.showCategoryProduct(node.getParent().getParent().getSelf().getCpath())" >
+	&lt; @node.getParent().getParent().getSelf().getCname()
+</a>
+<a class="dirTitles" href="@controllers.product.routes.CategoryProduct.showCategoryProduct(node.getParent().getSelf().getCpath())" >
+	&lt; @node.getParent().getSelf().getCname()
+</a>
+<ul class="dirList dirLists">
+	@if(node.getParent().getChildren() != null && node.getParent().getChildren().size() > 0){
+		@node.getParent().getChildren().map{ c =>
+			@if(catogeryCount!=null){
+						@catogeryCount.keySet.map{i=>
+							@if(i==c.getSelf().getIcategoryid() && catogeryCount.get(i)>0){
+								<li>
+									<a href="@controllers.product.routes.CategoryProduct.showCategoryProduct(c.getSelf().getCpath())" @if(c.getSelf().getIcategoryid()==node.getSelf().getIcategoryid()){class="orange"} >
+									@c.getSelf().getCname()
+									(@catogeryCount.get(i))
+									</a>
+								</li>
+							}
+						}
+					}
+		}
+	}
+</ul>
+}

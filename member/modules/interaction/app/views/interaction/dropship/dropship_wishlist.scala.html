@@ -1,0 +1,104 @@
+@(dropshipProduct: Map[String,valueobjects.interaction.DropshipProduct],
+	leftCount: Integer
+)
+@urlprefix = @{play.Play.application().configuration().getString("member.urlprefix")}
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+@import views.html.helper._
+@views.html.member.base.master(extensions.interaction.member.DropshipProductWishlistMenuProvider.ID) {
+	@helper.javascriptRouter("dropship_wishlist")(
+		controllers.interaction.routes.javascript.Dropship.batchSetDropshipProduct,
+		controllers.interaction.routes.javascript.Dropship.deleteDropshipProduct,		
+		controllers.interaction.routes.javascript.Dropship.batchDeleteDropshipProduct		
+    )
+	@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" /> 
+	}
+	
+<div class="accountRight accouReviewBox">
+    	<h6>@Messages("dropship.wishlist")</h6>
+        <ul class="choWishlist">
+        	<li class="allFirstLi lineBlock">
+            	<a href="javascript:;" class="rightAll"><span></span></a>
+                <a href="javascript:;" class="rightAll delete"><p class="reMAll">@Messages("remove.all")</p>
+                    <p class="deletePop">
+                        <i></i>@Messages("remove.all.from.your.cart")<br>
+                        <input id="remove_all_dropship" class="deleteYes" type="button" value="@Messages("yes")"><input type="button" value="@Messages("no")">
+                    </p>
+                </a>
+              
+            </li>
+            <li class="lineBlock"><a name="set_dropship_true" href="javascript:;">@Messages("add.to.dropship.list")</a></li>
+        </ul>
+        <table cellspacing="0" cellpadding="0" border="1" width="100%" class="myRevi">
+              <tbody>
+              <tr>
+                <th class="choINP">&nbsp;</th>
+                <th>Item</th>
+                <th class="capTh">@Messages("title")</th>
+                <th>@Messages("price")</th>
+                <th>@Messages("dropship.list")</th>
+                <th>@Messages("options")</th>
+              </tr>
+             @if(null != dropshipProduct){
+             	@dropshipProduct.map{ i=> 
+             		@if(null != i._2.getProductBadge){
+	             	 <tr id="tr_@i._2.getProduct.getIid">
+		                <td class="tdRela"><a class="rightThis" href="javascript:;"><span name="dropship_checkbox" tag="@i._2.getProduct.getIid" class=""></span></a></td>
+		                <td class="firImg descTd">
+			                <a class="publiceImg" href="@urlprefix@controllers.product.routes.Product.view(i._2.getProductBadge.getUrl)">
+								@img(i._2.getProductBadge.getImageUrl,null,277,277,null)				   
+							</a>
+						</td>
+		                <td>
+			               <a class="wisTT" title="@i._2.getProductBadge.getTitle" href="@urlprefix@controllers.product.routes.Product.view(i._2.getProductBadge.getUrl)">
+							    @if(i._2.getProductBadge.getTitle()!=null && i._2.getProductBadge.getTitle().length>100){
+							    	@i._2.getProductBadge.getTitle().substring(0,50)...
+							    }else{
+							    	@i._2.getProductBadge.getTitle()
+							    }
+						   </a>
+		                   <p class="wisSku">SKU:@i._1</p>
+		                   @i._2.getProductBadge.getExtended().map{ k=>
+								@k
+						   }
+		                </div>
+	
+		                <p class="wisAdds">@i._2.getProduct.getDcreatedate</p>
+		                </td>
+		                <td class="wisPri">@i._2.getProductBadge.getPrice.getSymbol @Utils.money(i._2.getProductBadge.getPrice.getUnitPrice)</td>
+		                <td id="status_@i._2.getProduct.getIid" class="dropList_acc">
+		                	@if(i._2.getProduct.getBstate){
+		                		@Messages("yes")
+		                	} else {
+		                		@Messages("no")
+		                	}
+		                </td>
+		                <td class="wisAddCar">
+		                    <a href="javascript:;" class="removeX delete">@Messages("Remove")
+		                        <p class="deletePop">
+		                            <i></i>@Messages("remove.all.from.your.cart")<br>
+		                            <input name="single_remove" class="deleteYes" type="button" value="@Messages("yes")" tag="@i._2.getProduct.getIid"><input type="button" value="@Messages("no")">
+		                        </p>
+		                    </a>
+		                </td>
+		              </tr>
+             		}
+             	}
+             	<input type="hidden" id="dropship_left_count" value="@leftCount">
+             } 
+            </tbody>
+        </table>
+        <ul class="choWishlist">
+        	<li class="allFirstLi lineBlock">
+            	<a href="javascript:;" class="rightAll"><span></span>@Messages("select.all")</a>
+            </li>
+            <li class="lineBlock"><a name="set_dropship_true" class="hsInputs" href="javascript:;">@Messages("add.to.dropship.list")</a></li>
+        </ul>
+    </div>
+    
+    @services.base.HtmlUtils.misc().addTailOnce{
+		<script  language="javascript" type="text/javascript" src='@controllers.interaction.routes.Assets.at("js/interaction/dropship.js")'></script>
+	}
+}

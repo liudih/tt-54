@@ -1,0 +1,109 @@
+@(dropShipBaseForm: Form[form.dropship.DropShipBaseForm])
+@import views.html.helper._
+@views.html.member.base.master("dropshipjoin") {
+	@helper.javascriptRouter("js_ShippingAddressRoutes")(
+		controllers.member.routes.javascript.Address.setDefaultShippingaddress
+    )
+	@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" /> 
+	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/simplePagination.css")">
+	}
+	
+	<div class="accountRight dropshipBox addressBookBox">
+    	<h6>@Messages("join.dropshipping")</h6>
+        <div class="shipBlock">
+        	<p>@Messages("join.as.for.drop.shipping.client")  <span class="orange">*@Messages("required.fields") </span></p>
+            <div class="newAddressBox wholesaleAC_Box">
+                 @form(controllers.dropship.routes.DropShip.updateDropShip, 'id->"dropshipform"){
+                    <table width="85%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td><span class="red">*</span> @Messages("my.full.name") :</td>
+                        <td class="FullName">
+                        	<input type="hidden" name="iid" value="@dropShipBaseForm("iid").value">
+                        	<input type="hidden" name="cemail" value="@dropShipBaseForm("cemail").value">
+                            <input type="text" name="cfullname" value="@dropShipBaseForm("cfullname").value">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><span class="red">*</span> @Messages("my.phone.number") :</td>
+                        <td>
+                            <input type="text" name="ctelephone" value="@dropShipBaseForm("ctelephone").value">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><span class="red">*</span> @Messages("my.shop.url") :</td>
+                        <td>
+                            <input type="text" name="cshipurl" value="@dropShipBaseForm("cshipurl").value">
+                        </td>
+                      </tr>
+					  <tr>
+	                    <td><span class="red">*</span> @Messages("country")</td>
+	                    <td class="edit_country">
+	                    <div class="Countries_box">
+	                        <div class="select_country">
+	                        		<h3 class="flag_@dropShipBaseForm("ccountrysn").value">
+										<em></em><span>@dropShipBaseForm("ccountryname").value</span><em class="ship_xSJ"></em>
+										<input id="current_country" type="hidden"  name="ccountrysn" value="@dropShipBaseForm("ccountrysn").value"/>
+									</h3>
+									<div class="country_all">
+										<div class="search_country">
+											<input type="text" name="country_filter" />
+										</div>
+										<div class="country_list">
+											<ul>
+											</ul>
+										</div>
+									</div>
+	                        </div>
+	                        <div class="clear"></div>
+	                        </div>
+	                        <div class="clear"></div>
+	                    </td>
+	                  </tr>
+	                  <tr>
+                        <td> @Messages("paypal.address") :</td>
+                        <td>
+                            <input type="text" name="cpaypaladdress" value="@dropShipBaseForm("cpaypaladdress").value">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td> @Messages("my.skype") :</td>
+                        <td>
+                            <input type="text" name="cskype" value="@dropShipBaseForm("cskype").value">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="top"> @Messages("note") :</td>
+                        <td>
+                            <textarea class="wholeTextAR" name="cnote" >@dropShipBaseForm("cnote").value</textarea>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>
+                        	<p >
+                        		<input type="checkbox" name="bnewsletter" @if(dropShipBaseForm("bnewsletter").value){checked="checked"}>
+                        		@Messages("get.e.mail.updates.on.new.products.and.special.offers.for.drop.shipping.client")
+                        	</p>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>
+                             <input class="orangeInput shipSub" type="submit" value="@Messages("submit")" id="dropship_submit">
+                             <input class="hsInputs" type="reset" value="@Messages("cancel")">
+                        </td>
+                      </tr>
+                    </table>
+              }
+    		</div>
+		</div>
+    </div>
+	@services.base.HtmlUtils.misc().addTailOnce{
+	    <script type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.form.js")'></script>
+	    <script type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+	    <script type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+ 		<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/member/controller/dropship.js")' ></script>
+	}
+}
+

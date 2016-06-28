@@ -1,0 +1,49 @@
+
+@(result:Int)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@views.html.base.master{
+
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet/less" type="text/css" href="@controllers.base.routes.Assets.at("css/login.less")" /> 
+}
+<div class="container accountBox">
+
+
+    <div class="accountRight verificationBox">
+    	<h6 class="f18">@Messages("congratulations")</h6>
+        <div class="veriBox">
+            @if(result==1){
+              <p>@Messages("e-mail.has.been.successfully.verified")</p>
+            }
+            @if(result==(-1)){
+              <p><font color="#dd4b39">@Messages("E-mail.activation.fails")</font></p>
+            }
+             @if(result==(-2)){
+              <p><font color="#dd4b39">@Messages("E-mail has been activated")</font></p>
+            }
+            @if(result==(-3)){
+              <p><font color="#dd4b39">@Messages("activation.expired")</font></p>
+            }
+             @if(result==(-4)){
+              <p><font color="#dd4b39">@Messages("invalid.activate.it")</font></p>
+            }
+        	
+            <a class="blue" href="@controllers.member.routes.Home.index()">@Messages("my.account")</a> 
+            <a class="blue" href="/">@Messages("go.shopping")</a>
+        </div>
+        <div class="clear"></div>
+        <div class="xxkDiv autoH">
+            <ul class="blackXXK">
+                <li class="xxkActi">@Messages("super.deals")</li>
+                <li>@Messages("you.view.history")</li>
+                <div class="clear"></div>
+            </ul>
+			@tp.get("super-deals-in-member")
+            <div class="clear"></div>
+             @tp.get("member-browse-history-in-member-center")
+            <div class="clear"></div>
+        </div>
+    </div>
+    
+</div>
+}

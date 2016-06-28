@@ -1,0 +1,50 @@
+@(otherLogins: List[Html])
+@urlprefix = @{play.Play.application().configuration().getString("member.defaultdomain")}
+@import views.html.helper._
+ 
+<li class="lineBlock rightHover">
+				<div class="pu_navHover">
+					@Messages("common.signInOrJoinFree")
+					<i class="icon-arr"> </i>
+				</div>
+				<div class="signJoin pu_blockWarp lbBox">
+					<div class="lineBlock">
+						<p class="marB5">@Messages("common.signInWithTomTopAccount")</p>
+					      <div class="controls">
+						      	<i class="icon-email"> </i>
+						        <input id="sign_email" name="email" class="span10" type="text" placeholder="@Messages("enter.your.email.address")">
+						        <span class="help-block"> </span>
+					      </div>
+					      <div class="controls">
+						      	<i class="icon-lock"> </i>
+						        <input id="sign_password" class="span10" name="password" type="password" placeholder="@Messages("enter.your.password")">
+						        <span class="help-block"> </span>
+					      </div>
+					      <input id="signin" class="btn btn-primary" type="button" value="@Messages("login")">
+					      <a class="forgetPs" href="@urlprefix/member/findpass">@Messages("common.forgotPassword")</a>
+					      <p class="marT15">@Messages("common.signInWithAnExistingAccount")</p>
+					      <div class="iconSign marT15">
+					      	<!-- Other Logins -->
+				            	@otherLogins.map { lb =>
+				            		@lb
+				            	}
+					      </div>
+					</div>
+					<div class="lineBlock rJoinToday">
+						<p>@Messages("common.newToTomTop")</p>
+						<a class="btn btn-primary joinToday" href="/member/login">
+							@Messages("common.joinToday")
+							<i class="icon-free"> </i>
+						</a>
+						<p>@Messages("common.membersOnlyService")</p>
+						<ol class="onlyService">
+							<li>@Messages("common.membersOnlyService1")</li>
+							<li>@Messages("common.membersOnlyService2")</li>
+							<li>@Messages("common.membersOnlyService3")</li>
+							<li>@Messages("common.membersOnlyService4")</li>
+							<li>@Messages("common.membersOnlyService5")</li>
+						</ol>
+					</div>
+				</div>
+			</li>
+ 

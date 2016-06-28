@@ -1,0 +1,36 @@
+@(storageParentList :List[dto.StorageParent] , cstoragename :String,iid:Integer, subcstoragename: String)
+@import views.html.helper._
+<div id="update-arrrival@iid"  class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	 @form(controllers.manager.storage.routes.StorageManagerController.updateStorageSub()){
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+		    <h3>修改子库对应父级仓库</h3>
+		</div>
+		<div class="modal-body">
+			<input type="hidden" name="iid" value="@iid">
+			<div class="control-group">
+				<label class="control-label">子仓库</label>
+				<div class="controls">
+					<input type="text" name="cstoragename" value="@subcstoragename"  class="m-wrap medium span6" style="margin-left: 120px;margin-top: -26px;" required readonly="true">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">父仓库</label>
+				<div class="controls">
+				
+					<select name="iparentstorage" id="iparentstorage">
+					        	@if(null != storageParentList && storageParentList.size >0){
+									@storageParentList.map{ n =>
+										<option value="@n.getIid()">@n.getCstoragename()</option>
+									}
+								}
+					</select>
+				</div>
+			</div>
+		</div>
+	    <div class="modal-footer" style="margin-bottom: -20px;">
+		     <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
+             <button type="submit" class="btn blue">保存</button>
+	    </div>
+	}
+</div>

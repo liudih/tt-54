@@ -1,0 +1,13 @@
+@(url:String="")
+<span class="faceBook lineBlock"> </span>
+<span class="lineBlock shareText" onclick="affShareOnFacebook('@url')" title="Share on Facebook">Facebook</span>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript">
+	function affShareOnFacebook(url) {
+	    var shareUrl = 'https://www.facebook.com/sharer/sharer.php?u=';
+	    shareUrl += encodeURIComponent(url);
+	    popWin(shareUrl,'facebook',getPopupPosition(570,360)+',resizable=yes,scrollbars=yes');
+	}  
+</script>
+}

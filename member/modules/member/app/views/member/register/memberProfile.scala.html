@@ -1,0 +1,116 @@
+@(frm:Form[forms.member.register.RegisterUpdateForm])
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@import views.html.helper._	
+@import controllers._
+ <div class="xxkBOX boxRa block">
+ 
+ 	<table width="760" cellspacing="0" cellpadding="0" border="0" class="profTab">
+                  <tbody><tr>
+                    <td valign="top">@Messages("picture")</td>
+                    <td>
+                        @tp.get("member-photo")
+                    </td>
+                  </tr>
+                 </tbody>
+    </table>
+ 
+ 
+ 
+ @form(controllers.member.routes.Register.profileUpdate ,'id->"profile-form"){
+            	<table width="760" cellspacing="0" cellpadding="0" border="0" class="profTab mar0">
+                  <tbody>
+                  <tr>
+                    <td>@Messages("email.address")</td>
+                    <td>
+                    	@frm("cemail").value
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>@Messages("nickname")</td>
+                    <td><input type="text" id="caccount" name="caccount" value="@frm("caccount").value"></td>
+                  </tr>
+                  <tr>
+                    <td>@Messages("first.name")</td>
+                    <td class="nameED">
+                    	<input type="text" id="cfirstname" name="cfirstname" value="@frm("cfirstname").value">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>@Messages("last.name")</td>
+                    <td class="nameED"><input type="text" id="clastname" name="clastname" value="@frm("clastname").value">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>@Messages("gender")</td>
+                    <td>
+                     <label><input type="radio"  value="1" name="igender" id="igender"     @if(frm("igender").value=="1"){checked="checked"  }>@Messages("male")</label>
+                     <label class="femaleLab"><input type="radio" value="2"  name="igender" id="igender"  @if(frm("igender").value=="2"){ checked="checked"} >@Messages("females")</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>@Messages("birthday")</td>
+                    <td class="timeSe">
+                    <div id="calendar">
+                    	<select id="idMonth" name="month" @if(frm("month").value!=null){data="@frm("month").value}">
+                        	@Messages("month")
+                        </select>
+                    	<select id="idDay" name="day" @if(frm("day").value!=null){data="@frm("day").value}">
+                        	@Messages("day")
+                        </select>
+                    	<select id="idYear" name="year" @if(frm("year").value!=null){data="@frm("year").value}">
+                        	@Messages("year")
+                        </select>
+                     
+                        <div class="TS">
+                            <em></em>
+                            <p class="TsTxt">@Messages("display.date.birth.surprise.birthday.gift.then")</p>
+                        </div>
+                    </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>@Messages("country")</td>
+                    <td class="edit_country">
+                    <div class="Countries_box">
+                        <div class="select_country">
+                            <h3 class="flag_@frm("ccountry").value">
+									<em></em><span>@frm("countryName").value</span><em class="ship_xSJ"></em>
+									<input id="current_country" type="hidden"  name="ccountry" value="@frm("ccountry").value"/>
+								</h3>
+								<div class="country_all">
+									<div class="search_country">
+										<input type="text" name="country_filter" />
+									</div>
+									<div class="country_list">
+										<ul>
+										</ul>
+									</div>
+								</div>
+                        </div>
+                        <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td valign="top">@Messages("about.me")</td>
+                    <td class="aboutMe">
+                    	<textarea id="caboutme" name="caboutme" >@frm("caboutme").value</textarea>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td class="changeHs"><input type="submit" value="@Messages("save.changes")" id="profile_submit"></td>
+                  </tr>
+                </tbody>
+                </table>
+                }
+            </div>
+@services.base.HtmlUtils.misc().addTailOnce{
+@helper.javascriptRouter("jsCountry")(
+	controllers.base.routes.javascript.Country.getAllCountries,
+	controllers.base.routes.javascript.Assets.at
+)
+ <script type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.calendar.js")'></script>
+}
+          

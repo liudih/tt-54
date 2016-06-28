@@ -1,0 +1,1 @@
+@(selectid: String, cmsType: Collection[dto.CmsType], value: String)<div id="123">	<select id="@selectid" name="@selectid">	<option value ="-1"></option>	@for( i<- cmsType){		@if(i.getValue() == value){			<option value ="@i.getValue()" selected="selected">@i.getCname()</option>		}else{			<option value ="@i.getValue()">@i.getCname()</option>		}	}	</select>	</div>

@@ -1,0 +1,27 @@
+@(orderDetail: Html)
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>TOMTOP</title>
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/skin.css")" />
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")" />
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/login.css")" />
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/newshopping.css")" />
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/tomtop.css")" />
+<script src="@controllers.base.routes.Assets.at("lib/jquery/jquery.min.js")"></script>
+<script src="@controllers.base.routes.Assets.at("js/lib/main.js")"></script>
+<style>
+.accountBox .shoppingCart_con {
+    width: 100%;
+}
+.accountBox .shoppingCart_con .orderB_table {
+   width: 100%;
+}
+</style>
+</head>
+<body>
+<div class="container accountBox">
+   @orderDetail     
+</div>
+</body>
+</html>

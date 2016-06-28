@@ -1,0 +1,44 @@
+@(order : dto.order.Order ,currency : dto.Currency ,paypalForm : dto.payment.WebPaymentResult)
+
+@views.html.mobile.sub_master("Order Detial"){
+<div id="loading" style="display:none;position: fixed;width: 100%;height: 100%;z-index: 999; top: 0px;left:0px;">
+<img src="@controllers.mobile.routes.Assets.at("images/loading.gif")" style="position: absolute;left: 50%;top: 50%;margin-left: -23px;margin-top: -23px;"></div>
+<div class="container">
+	<div class="statusNo">
+		<p class="lineBlock">Order No: <span>@order.getCordernumber()</span></p>
+		<p class="lineBlock fz_orange">Total: <span>@currency.getCsymbol()@order.getFgrandtotal()</span></p>
+	</div>
+<p class="PaymentMethod_title">Payment Method:</p>
+@if(paypalForm != null && paypalForm.getRes != null){
+<div class="bg_color_gray PaymentMethod_Con">
+	<p class="paymentBT">Global</p>
+	<div class="chooseOneBox payment_choose">
+			<label class="chooseOneLabel input_control">
+				<input type="radio">
+				<div class="radio lineBlock aciCss"><span> </span></div>
+				<div class="paymentImg lineBlock"><img src="@controllers.mobile.routes.Assets.at("images/PayPal.jpg")"></div>
+				<p class="payment_txt lineBlock">PayPal</p>
+			</label>
+		</div>
+		@Html.apply(paypalForm.getRes)
+</div>
+	
+<a href="javascript:;" id="go-pay-now" class="button_orange span98 marT">Pay Now</a>
+
+
+}else{
+	<a href="javascript:;" id="go-pay-now" class="button_gray span98 marT">Pay Now</a>
+	<p class="red errorRed">sorry! the system is busy now, please try it later!</p>
+}
+
+</div>
+
+<script type="text/javascript">
+$(function(){
+	$('#go-pay-now').click(function(){
+		$('#loading').show();
+		$('#paypalForm').submit();
+	});
+});
+</script>
+}

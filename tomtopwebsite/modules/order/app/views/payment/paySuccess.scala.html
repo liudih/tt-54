@@ -1,0 +1,31 @@
+@(order: dto.order.Order, 
+plugIns: List[extensions.payment.IPaymentHTMLPlugIn],
+isLogin : Boolean
+)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@cy = @{services.base.CurrencyService.getInstance().getCurrencyByCode(order.getCcurrency())}
+
+@views.html.payment.pay_master{
+	<div class="payFSuc">
+		<div class="payF_SucC">
+	        <em><img src="@controllers.base.routes.Assets.at("images/smil.png")"></em>
+	        <b>Thank you for shopping with us online, you order has been placed.</b>
+	        <p class="TheNext">What's the Next?</p>
+	        <ul class="listNumber">
+	            <li>It's being processed and you will receive a confirmation email with all order details.</li>
+	            <li>We'll spare no effort to assure you receive the order ASAP.</li>
+	            <li>You will receive a shipping confirmation email including the track number of your package once it's been shipped.<br>
+	            Please Note: the track number only for order shipped via a traceable shipping method and it usually takes about 24-48 hours to update your track info.
+	            </li>
+	            <li>If you have any question, please feel free to 
+	            <a class="underline" href="/base/cms">Contact Us.</a></li>
+	        </ul>
+	        <a class="orderCheckout lineBlock" href="@controllers.base.routes.Home.home()">Continue Shopping</a>
+	        @if(isLogin){
+	        <p class="lineBlock">Or <a class="orange" href="@controllers.order.member.routes.MemberOrder.orderDetail(order.getCordernumber)">View Your Order Details</a></p>
+	    	}
+	    </div>
+	</div>
+	
+	@plugIns.map{p=>@p.getHtml(order)}
+}

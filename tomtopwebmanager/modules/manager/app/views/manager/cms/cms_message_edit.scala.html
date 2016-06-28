@@ -1,0 +1,106 @@
+@(cmsMenu:dto.CmsMenu
+)
+
+@cmstypes = @{services.base.cms.CmsMenuService.getInstance().getAllCmsType()}
+@if(cmsMenu!=null){
+<div class="row-fluid" id="cmsmenuedit_modle"
+	style="position: absolute; width: 800px; left: 50%; margin-left: -10%; top: 250px">
+	<input type="hidden" id="addChildren_Or_Menumessage_flag" value="0" />
+	<form action="@controllers.manager.routes.Cms.updateCmsMenu"
+		method="post">
+		<div class="modal-header">
+			<h3 id="myModalLabel">修改目录信息</h3>
+		</div>
+		<div class="modal-body">
+
+			<div class="control-group">
+				<label class="control-label">目录名称<span class="required">*</span></label>
+				<div class="controls">
+					<input type="text" name="cname" value="@cmsMenu.getCname()"
+						placeholder="目录名称" class="m-wrap medium span6"> <input
+						type="hidden" name="iid" value="@cmsMenu.getIid()"
+						placeholder="id" class="m-wrap medium span6"> <input
+						type="hidden" name="ilevel" value="@cmsMenu.getIlevel()"
+						placeholder="级别" class="m-wrap medium span6">
+				</div>
+			</div>
+
+			<div class="control-group">
+
+				<label class="control-label">目录图标</label>
+
+				<div class="controls">
+
+					<input type="text" name="ciconurl" value="@cmsMenu.getCiconurl()"
+						placeholder="目录图标" class="m-wrap medium span6">
+
+				</div>
+
+			</div>
+
+			<div class="control-group">
+
+				<label class="control-label">目录链接</label>
+
+				<div class="controls">
+					<input type="text" name="curl" value="@cmsMenu.getCurl()"
+						placeholder="目录链接" class="m-wrap medium span6">
+				</div>
+
+			</div>
+			<div class="control-group">
+
+				<label class="control-label">目录样式</label>
+
+				<div class="controls">
+					<input type="text" name="cclass" value="@cmsMenu.getCclass()"
+						placeholder="目录样式" class="m-wrap medium span6">
+				</div>
+
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">是否推荐</label>
+				<div class="controls" style="margin-left: 20px;">
+					<label class="radio"> <span class="checked">
+							@if(cmsMenu.getIisnominate()==1){ <input type="radio"
+							name="iisnominate" value="1" checked> }else{ <input
+							type="radio" name="iisnominate" value="1"> }
+
+
+					</span>是
+					</label> <label class="radio"> <span class="">
+							@if(cmsMenu.getIisnominate()==1){ <input type="radio"
+							name="iisnominate" value="0"> }else{ <input type="radio"
+							name="iisnominate" value="0" checked> }
+
+					</span>否
+					</label>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">目录样式</label>
+				<div class="controls">
+					<input type="text" name="cclass" placeholder="目录样式"
+						class="m-wrap medium span6">
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label">目录类型</label>
+				<div class="controls">
+					 @views.html.manager.cms.cms_type_choose("ctype",cmstypes,cmsMenu.getCtype())
+				</div>
+			</div>
+
+		</div>
+
+
+		<div class="modal-footer" style="margin-bottom: -20px;">
+			<button class="btn blue" id="add-advertising-btn">保存</button>
+		</div>
+	</form>
+</div>
+
+}

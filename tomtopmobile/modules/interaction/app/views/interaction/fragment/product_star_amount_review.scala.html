@@ -1,0 +1,21 @@
+@(review : valueobjects.interaction.StarRatingParam)
+@if(null != review.getUrl){<a href="@controllers.interaction.routes.ProductReview.showAll(review.getUrl,1)">
+<div class="productReview lineBlock">
+	<div class="productStar" style="width:@review.getStarsWidth%">
+		<div class="productStars_bk"></div>
+	</div>
+</div>
+<p class="lineBlock">
+	(<span class="orange">@review.getReviewCount</span> Reviews)
+</p>
+</a>
+}else{
+<div class="productReview lineBlock">
+	<div class="productStar" style="width:@review.getStarsWidth%">
+		<div class="productStars_bk"></div>
+	</div>
+</div>
+<p class="lineBlock">
+	(<span class="orange">@review.getReviewCount</span> Reviews)
+</p>
+}

@@ -1,0 +1,103 @@
+@(
+ versionList: List[dto.mobile.ContactDto]
+) 
+
+@import views.html.helper._
+
+@views.html.manager.main {
+
+	@helper.javascriptRouter("js_VersionManagerRoutes")(
+		controllers.manager.routes.javascript.AppVersion.addAppVersion,
+		controllers.manager.routes.javascript.AppVersion.updateAppVersion,
+		controllers.manager.routes.javascript.AppVersion.deleteAppVersion,
+		controllers.manager.routes.javascript.AppVersion.list
+	)
+
+	<!-- BEGIN PAGE CONTAINER-->
+	<div class="container-fluid">
+	
+		<!-- BEGIN PAGE HEADER-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+				<h3 class="page-title">
+					联系我管理
+				</h3>
+				<ul class="breadcrumb">
+					<li><i class="icon-home"></i> <a href="/sysadmin">Home</a>
+						<i class="icon-angle-right"></i></li>
+					<li><a href="#">APP后台</a> <i class="icon-angle-right"></i>
+					</li>
+					<li><a href="#">联系我管理 </a></li>
+				</ul>
+				<!-- END PAGE TITLE & BREADCRUMB-->
+			</div>
+		</div>
+		<!-- END PAGE HEADER-->
+		
+		
+		<!-- BEGIN PAGE CONTENT-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN EXAMPLE TABLE PORTLET-->
+				<div class="portlet box blue">
+					<div class="portlet-title">
+						<div class="caption">
+							<i class="icon-edit"></i>联系我管理
+						</div>
+						<div class="tools">
+							<a href="javascript:;" class="collapse"></a> <a
+								href="#portlet-config" data-toggle="modal" class="config"></a>
+							<a href="javascript:;" class="reload"></a> <a
+								href="javascript:;" class="remove"></a>
+						</div>
+					</div>
+
+					<div class="portlet-body">
+						<table class="table table-striped table-hover table-bordered"
+							id="version_manager_table">
+							<thead>
+								<tr>
+									<th>序号</th>
+									<th>客户邮箱</th>
+									<th>标题</th>
+									<th>内容</th>
+									<th>创建时间</th>
+									<th>处理状态</th>
+									<th>处理人</th>
+									<th>处理时间</th>
+									<th>备注</th>
+								</tr>
+							</thead>
+							<tbody>
+								 @versionList.map{a=>
+									<tr class="" id="@a.getIid" title="@a.getTitle">
+										<td >@a.getIid</td>
+										<td class="center">@a.getMemberemail</td>
+										<td class="center">@a.getTitle</td>
+										<td class="center">@a.getContent</td>
+										<td class="center">@a.getCreatedate2</td>
+										<td class="center">
+											@if(a.getStatus == 1){未处理} 
+											@if(a.getStatus == 2){已处理}
+										</td>
+										<td class="center">@a.getOperationuser</td>
+										<td class="center">@a.getOperationdate2</td>
+										<td class="center">@a.getRemark</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- END EXAMPLE TABLE PORTLET-->
+			</div>
+		</div>
+		<!-- END PAGE CONTENT -->
+	</div>
+			<!-- END PAGE CONTAINER-->
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/manager/appversion/versionmeter_edittable.js")'></script>
+	} 
+
+}

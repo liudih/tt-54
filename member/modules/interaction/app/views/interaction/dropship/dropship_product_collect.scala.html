@@ -1,0 +1,47 @@
+<div class="dropshipBox" id="dropshipBox">
+	<a id="dropship_a" class="dropship_l" href="javascript:;"  onclick="dropshipCollect();"><span class="wishN">@Messages("add.to.my.dropship")</span></a>
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+<script>
+	var listingid = $("input[name='clistingid']:eq(0)").val();
+	var addDropshipCollectUrl = "@controllers.interaction.routes.Dropship.addDropshipProduct()";
+	var getCollectedUrl =  "@controllers.interaction.routes.Dropship.isDropshipProduct()";
+	function dropshipCollect(lid,node){
+		var jdom = $(node);
+		if($("#dropship_a").hasClass("blueDrop")){
+			return;
+		}
+		var dataJson =JSON.stringify({"listingid":listingid});
+		$.ajax({
+			url : addDropshipCollectUrl,
+			type : "POST",
+			data : dataJson,
+			contentType : "application/json",
+			success : function(data) {
+				if(data == "success"){
+					$("#dropship_a").addClass("blueDrop");
+				} else {
+					alert("add failure");
+				}
+			}
+		});
+	}
+
+	$.ajax({
+		url : getCollectedUrl,
+		type : "POST",
+		data :  JSON.stringify({"listingid":listingid}),
+		contentType : "application/json",
+		success : function(data) {
+			if(data=="show"){
+				$("#dropshipBox").css("display","block");
+			} else if(data=="showAndYes"){
+				$("#dropshipBox").css("display","block");
+				$("#dropship_a").addClass("blueDrop");
+			}else{
+				$("#dropshipBox").css("display","none");
+			}
+		}
+	});
+</script>
+}

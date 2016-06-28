@@ -1,0 +1,23 @@
+@(vo: valueobjects.order_api.ShippingMethodInformations, 
+currency: dto.Currency)
+
+@import services.base.utils._
+
+
+<div id="shipping_method">
+	<h2>@Messages("select.shipping.method")</h2>
+	<div class="panel panel-default">
+		<table class="MethodAs" width="100%" border="0" cellspacing="0" cellpadding="0">
+			@vo.getList().zipWithIndex.map{e =>
+				<tr class="@if(e._2 == 0){chooseDefault}else{chooseOther}">
+					<td>
+						<p class="methodTT" id="img_name_@e._1.getId()"><span><img src="@controllers.base.routes.Assets.at(e._1.getImgUrl).url" alt="@e._1.getCode()" height="25"></span>@e._1.getTitle()</p>
+						<label><input type="radio" price="@e._1.getFreight()" value="@e._1.getId()" name="shippingMethodIdValue" @if(e._2 == 0){checked="checked"}><span>@e._1.getContext()</span></label>
+						<p class="Tracking" style="display:none;"><em class="checkBoxs afters"></em>@Messages("tracking.number") +$1.99</p>
+					</td>
+					<td class="postageUS">@currency.getCsymbol() <strong id="freight_@e._1.getId()">@Utils.money(e._1.getFreight,currency.getCcode())</strong></td>
+				</tr>
+			}
+		</table>
+	</div>
+</div>

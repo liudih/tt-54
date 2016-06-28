@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet author="linhl" id="t_mobile_visit_log-20150609">
+		<createTable tableName="t_mobile_visit_log" remarks="移动客户端访问日志表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iplatform" type="INT" remarks="平台1:android 2:ios 3:wp" />
+			<column name="csysversion" type="VARCHAR(32)" remarks="系统版本" />
+			<column name="cimei" type="VARCHAR(32)" remarks="手机串码" />
+			<column name="cphonename" type="VARCHAR(128)" remarks="手机型号" />
+			<column name="iappid" type="INT" remarks="AppId" />
+			<column name="ccid" type="VARCHAR(64)" remarks="渠道号" />
+			<column name="ilanguageid" type="INT" remarks="语言标识" />
+			<column name="ccnetwork" type="VARCHAR(32)" remarks="网络状态" />
+			<column name="icurrentversion" type="INT" remarks="当前版本" />
+			<column name="cclientid" type="VARCHAR(32)" remarks="客户端id" />
+			<column name="iconsumetime" type="INT" remarks="访问消耗时间(毫秒)" />
+			<column name="crequesturi" type="VARCHAR(500)" remarks="请求资源" />
+			<column name="cremoteaddress" type="VARCHAR(17)" remarks="客户端ip" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="linhl" id="t_mobile_client_error-20150610">
+		<createTable tableName="t_mobile_client_error" remarks="移动客户端出错异常日志表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cclientid" type="VARCHAR(32)" remarks="客户端id" />
+			<column name="icode" type="INT" remarks="错误代码" />
+			<column name="cerrormsg" type="VARCHAR(300)" remarks="错误消息" />
+			<column name="ilanguageid" type="INT" remarks="当前语言id" />
+			<column name="cremoteaddress" type="VARCHAR(17)" remarks="客户端ip地址" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_mobile_client_error-renametable-20150610"
+		author="linhl">
+		<renameTable newTableName="t_mobile_client_error_log"
+			oldTableName="t_mobile_client_error" />
+	</changeSet>
+
+	<changeSet id="t_mobile_client_error_log-dropcolumn-20150610"
+		author="linhl">
+		<dropColumn tableName="t_mobile_client_error_log">
+			<column name="cclientid" />
+			<column name="ilanguageid" />
+		</dropColumn>
+	</changeSet>
+
+
+
+	<changeSet id="t_mobile_client_error_log-addcolumn-20150610"
+		author="linhl">
+		<addColumn tableName="t_mobile_client_error_log">
+			<column name="csysversion" type="VARCHAR(32)" remarks="系统版本" />
+			<column name="cphonename" type="VARCHAR(128)" remarks="手机型号" />
+			<column name="iappid" type="INT" remarks="AppId" />
+			<column name="icurrentversion" type="INT" remarks="当前版本" />
+			<column name="cnetwork" type="VARCHAR(32)" remarks="网络状态" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_mobile_visit_log-renamelumn-20150610"
+		author="linhl">
+		<renameColumn tableName="t_mobile_visit_log"
+			oldColumnName="ccnetwork" newColumnName="cnetwork" />
+	</changeSet>
+	
+	 <changeSet author="lism" id="t_contact-create">
+		<createTable tableName="t_contact" remarks="联系我表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="memberemail" type="VARCHAR(30)" remarks="客户邮箱" />
+			<column name="uuid" type="VARCHAR(30)" remarks="UUID" />
+			<column name="title" type="VARCHAR(50)" remarks="标题"  />
+			<column name="content" type="VARCHAR(1000)" remarks="内容"  />
+			<column name="createdate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="device" type="VARCHAR(20)" remarks="平台1:android 2:ios 3:wp" />
+			<column name="sysversion" type="VARCHAR(32)" remarks="系统版本" />
+			<column name="imei" type="VARCHAR(32)" remarks="手机串码" />
+			<column name="phonename" type="VARCHAR(128)" remarks="手机型号" />
+			<column name="languageid" type="VARCHAR(32)" remarks="语言标识" />
+			<column name="currentversion" type="VARCHAR(32)" remarks="手机版本" />
+			<column name="status" type="INTEGER" remarks="状态：如 1:未处理、2:已处理" />
+			<column name="operationuser" type="VARCHAR(20)" remarks="处理人" />
+			<column name="operationdate" type="DATETIME" defaultValue="now()"
+				remarks="处理时间" />
+			<column name="remark" type="VARCHAR(20)" remarks="备注" />
+		</createTable>
+	</changeSet>
+	
+    <changeSet author="lism" id="t_setting-create">
+		<createTable tableName="t_setting" remarks="设置表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="memberemail" type="VARCHAR(30)" remarks="客户邮箱" />
+			<column name="uuid" type="VARCHAR(30)" remarks="UUID" />
+			<column name="modifydate" type="DATETIME" defaultValue="now()"
+				remarks="修改时间" />
+			<column name="device" type="VARCHAR(20)" remarks="平台1:android 2:ios 3:wp" />
+			<column name="currentversion" type="VARCHAR(32)" remarks="手机版本" />
+			<column name="imei" type="VARCHAR(32)" remarks="手机串码" />
+			<column name="country" type="VARCHAR(32)" remarks="国家名称" />
+			<column name="countryid" type="VARCHAR(32)" remarks="国家id" />
+			<column name="currency" type="VARCHAR(32)" remarks="货币名称" />
+			<column name="currencyid" type="VARCHAR(32)" remarks="货币id" />
+			<column name="language" type="VARCHAR(32)" remarks="语言名称" />
+			<column name="languageid" type="VARCHAR(32)" remarks="语言id" />
+		</createTable>
+	</changeSet>
+	
+    <changeSet author="lism" id="t_app_version-create">
+		<createTable tableName="t_app_version" remarks="APP版本表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="vs" type="VARCHAR(30)" remarks="版本编号" />
+			<column name="vid" type="INTEGER" remarks="版本ID,版本越高，id越大" />
+			<column name="descr" type="VARCHAR(100)" remarks="最新版本描述" />
+			<column name="durl" type="VARCHAR(100)" remarks="下载地址" />
+			<column name="createdate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="createuser" type="VARCHAR(20)" remarks="创建人" />
+		</createTable>
+	</changeSet>
+	
+	<changeSet author="lichong" id="alter_t_setting-20150815">
+		<modifyDataType tableName="t_setting" columnName="uuid" newDataType="VARCHAR(100)"/>
+		<modifyDataType tableName="t_setting" columnName="memberemail" newDataType="VARCHAR(100)"/>
+	</changeSet>
+	
+	<changeSet author="lichong" id="alter_t_contact-20150815">
+		<modifyDataType tableName="t_contact" columnName="uuid" newDataType="VARCHAR(100)"/>
+	</changeSet>
+	
+
+</databaseChangeLog>

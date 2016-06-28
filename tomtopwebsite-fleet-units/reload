@@ -1,0 +1,6 @@
+#!/bin/sh
+
+fleetctl stop $1
+fleetctl destroy $1
+fleetctl submit $1
+fleetctl start $1

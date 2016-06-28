@@ -1,0 +1,37 @@
+@(discountTable: List[entity.wholesale.WholeSaleDiscountLevel]) 
+@import views.html.helper._ 
+@import services.base.utils._
+@views.html.member.base.master("joinwholesale") {
+<div class="accountRight wholeUnver">
+	<h6>@Messages("join.wholesale")</h6>
+	<p class="h6TT marT20">@Messages("your.request.is.pending.approval.when.your.request.is.approved.we.will.send.you.an.email")</p>
+	<p class="marT30">
+		@Messages("you.may.click.here.to.contact") <a
+			href="@controllers.base.routes.Cms.getCmsContentByMenuId(37)"
+			class="blue" target="_blank"> @Messages("our.wholesale.support.team.directly")
+		</a>
+	</p>
+	<p class="marT">
+		@Messages("wholesale.buyers.requirement")<br> 
+		@Messages("the.amount.of.one.time.purchase.of.at.least.500")<br> 
+		@Messages("minimum.quantity.5.pcs.per.sku")
+	</p>
+	<p class="marT30">@Messages("the.size.of.your.discount.depends.on.the.individual.total.volume.of.purchases")</p>
+	<div class="policy_DIV">
+		<table class="policyTable" width="600" border="1" cellspacing="0" cellpadding="0">
+			<tr>
+				<td width="51%" class="bg1">@Messages("order.amount")</td>
+				<td width="13%" class="bg1 right_bordre">@Messages("discount")</td>
+			</tr>
+			@discountTable.map{ i=>
+				<tr>
+					<td>@i.getFstartprice()-@i.getFendprice()</td>
+					<td class="right_bordre">@Utils.money(i.getFmindiscount()*100) %</td>
+				</tr>
+			}
+		</table>
+	</div>
+	<p class="red marT">* @Messages("notice") @Messages("the.price.does.not.include.shipping.costs")</p>
+	<a class="hsInputs" href="@controllers.base.routes.Home.home()">@Messages("go.shopping")</a>
+</div>
+}

@@ -1,0 +1,214 @@
+@(emial:String)
+@import views.html.helper._	
+@helper.javascriptRouter("js_imageoutes")(
+	controllers.member.routes.javascript.Photo.getWithSession,
+	controllers.member.routes.javascript.Photo.get
+)
+            <input  type="hidden" value="@emial" name=email>
+            <div class="headLeft" id="photo">
+        	<img id="user-photo" height="120" width="120" src="@controllers.member.routes.Photo.get(emial)">
+            <input class="hsInput clicks" type="button" value="@Messages("edit.picture")">
+            
+         
+            <div class="upHead clickPop">
+              
+            	<h6>@Messages("create.custom.picture")</h6>
+                @Messages("upload.picture")
+                <div class="upFileHead" >
+                @form(controllers.member.routes.Photo.pushWithSession,'id->"preview-form",'role->"form",'enctype->"multipart/form-data"){
+                  <input type="file" name="file"><a href="javascript:;">@Messages("browse")</a>
+                }
+               
+                </div>
+               
+                <div id="loading" class="throbber" ></div>
+                <p>@Messages("select.picture.computer.50.kb.max.jpg.gif.png.bmp.only")<br>
+                @Messages("advised.pixel.image.best.upload")</p>
+                @form(controllers.member.routes.Photo.push,'role->"form",'id->"photo-form"){
+                   
+	                <input  type="submit" class="picSave" value="@Messages("save")" > 
+	                <input class="closePop" type="button" value="@Messages("cancel")">
+                }
+                <div class="rightHead">
+                	<p>@Messages("preview")</p>
+                	<div id="preview">
+                    	<img height="120" width="120" src="@controllers.member.routes.Assets.at("images/HeadPic.jpg")">
+                	</div>
+                    120x120
+                </div>
+               
+            </div>
+            
+        </div>
+        
+  @services.base.HtmlUtils.misc().addTailOnce{
+<script src='@controllers.base.routes.Assets.at("js/lib/jquery.form.js")'></script>
+
+
+ <script>
+ 
+
+ 
+		+(function($) {
+
+			function Upload(element, options) {
+				this.$element = $('#photo');
+				this.$input = this.$element.find(':file');
+				this.$previewEle = $('#preview');
+				this.$previewForm = $('#preview-form');
+				this.$uploadForm = $('#photo-form');
+				this.$loading = $('#loading');
+				this.$msg = $('<div class="msg" style="color:red;"></div>');
+				this.$loading.after(this.$msg);
+				this.listener();
+				this.acceptSize = 50;
+                this.$submit=this.$uploadForm.find('input[type=submit]');
+                this.$submit.attr("disabled", "disabled");
+			}
+			Upload.prototype = {
+				errorCode : {
+					not : 0,
+					service : 1,
+					type : 2,
+					size : 3
+
+				},
+				listener : function() {
+					if (this.$previewForm) {
+						this.$input.on('change', $.proxy(this.change, this));
+					}
+					this.$uploadForm.on('submit', $.proxy(this.upload, this));
+
+				},
+				clear : function() {
+					var inputClone = this.$input.clone(true);
+					this.$input.after(inputClone);
+					this.$input.remove();
+					this.$input = inputClone;
+				},
+				error : function(code) {
+					switch (code) {
+					case this.errorCode.size: {
+						this.$msg.html('max size ' + this.acceptSize + 'kb');
+						break;
+					}
+					case this.errorCode.type: {
+						this.$msg.html('Invalid image formats');
+						break;
+					}
+					case this.errorCode.service: {
+						this.$msg.html('service error');
+						break;
+					 }
+					}
+					 this.$submit.attr("disabled", "disabled");
+					this.clear();
+				},
+				change : function(e, invoked) {
+					falg = false;
+					var file = e.target.files !== undefined ? e.target.files[0]
+							: (e.target.value ? {
+								name : e.target.value.replace(/^.+\\/, '')
+							} : null)
+					if (invoked === 'clear') {
+						this.clear();
+						return;
+					}
+
+					if (!file) {
+						this.clear();
+						return;
+					}
+
+					if (!(typeof file.type !== "undefined" ? file.type
+							.match('image.*') : file.name
+							.match('\\.(bmp|gif|png|jpe?g)$'))) {
+						this.error(this.errorCode.type);
+
+						return;
+					}
+					var size = file.size / 1024;
+					if (size > this.acceptSize) {
+						this.error(this.errorCode.size);
+						return;
+					}
+					this.$msg.html('');
+					this.preview();
+
+				},
+				preview : function() {
+					var url = this.$previewForm.attr('action');
+					var self = this;
+					this.$previewForm
+							.ajaxSubmit({
+								type : 'post',
+								url : url,
+								beforeSubmit : function() {
+									self.$loading
+											.css('display', 'inline-block');
+								},
+								error : function() {
+
+								},
+								success : function(data) {
+									if (data) {
+										if (data.errorCode == 0) {
+											var imgurl = js_imageoutes.controllers.member.Photo
+													.getWithSession().url
+													+ "?_t=" + Math.random();
+											self.$previewEle.find('img').attr(
+													'src', imgurl);
+											self.clear();
+											self.$loading.hide();
+											self.$submit.attr("disabled", false);
+										} else {
+											self.error(data.errorCode);
+										}
+
+									}
+								},
+								resetForm : false,
+								clearForm : false
+							});
+				},
+				upload : function() {
+					var url = this.$uploadForm.attr('action');
+					var self=this;
+					var $sbumit= this.$uploadForm.find('input[type=sbumit]');
+			    	$sbumit.attr('disabled',true);
+					this.$uploadForm
+							.ajaxSubmit({
+								type : 'post',
+								url : url,
+								error : function() {
+
+								},
+								success : function(data) {
+									if (data) {
+										if (data.errorCode == 0) {
+											var email = $('input[name=email]')
+													.val()
+											var imgurl = js_imageoutes.controllers.member.Photo
+													.get(email).url
+													+ "&_t=" + Math.random();
+											$('#user-photo')
+													.attr('src', imgurl);
+											self.$element.find(".clickPop").slideUp();
+											$sbumit.attr('disabled',false);
+											self.clear();
+											$(".bkBlack").fadeOut(function(){$(".bkBlack").remove()});
+										}
+									}
+								}
+							});
+					return false;
+				}
+			}
+
+			new Upload();
+
+		})(jQuery);
+
+		
+	</script>
+  } 

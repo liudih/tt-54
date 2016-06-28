@@ -1,0 +1,101 @@
+@(storageParentList :List[dto.StorageParent],storageParent
+:dto.StorageParent, storageSubInfo: List[dto.Storage], pageTotal: Int,
+pageNum: Int, pageCount: Int)
+@import views.html.helper._
+@if(storageSubInfo != null) {
+<div id="search_members_html" style="padding-bottom: 100px;">
+	<div class="portlet box blue">
+		<div class="portlet-title">
+			<div class="caption">
+				<i class="icon-globe"></i>仓库层级
+			</div>
+		</div>
+		<div class="portlet-body">
+			<table class="cell-border" cellspacing="0" width="100%"
+				id="memberlist">
+				<thead>
+					<tr role="row">
+						<th>父仓库ID</th>
+						<th class="sorting_desc">父仓库名</th>
+						<th>子仓库名</th>
+						<th>overseas</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+					@storageSubInfo.map{m=>
+					<tr class="odd" id="delBtn@m.getIid()">
+						<td>@storageParent.getIid()</td>
+						<td>@storageParent.getCstoragename()</td>
+						<td>@m.getCstoragename()</td>
+						<td>@m.getIoverseas()</td>
+						<td>
+							<div class="btn-group">
+								<a data-toggle="modal" data-target="#update-arrrival@m.getIid()"
+									name="update-arrrival@m.getIid()">
+									<button class="btn blue"
+										onClick="showDialog('updateBtn@m.getIid()')"
+										id="updateBtn@m.getIid()">修改</button>
+								</a>
+							</div>
+							<div class="btn-group">
+								<a data-toggle="modal" data-target="#delete-arrrival@m.getIid()"
+									name="delete-arrrival@m.getIid()">
+									<button class="btn blue"
+										onClick="deleteRecord(@m.getIid(),'delBtn@m.getIid()')">删除</button>
+								</a>
+							</div>
+							@views.html.manager.storage.update_storage_parent.render(storageParentList,storageParent.getCstoragename(),m.getIid(),m.getCstoragename())
+						</td>
+					</tr>
+					}
+				</tbody>
+			</table>
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="dataTables_info">
+						当前第 <span>@pageNum</span> 页|共 <span>@pageCount</span> 页| 共 <span>@pageTotal</span>
+						条记录
+					</div>
+				</div>
+				<div class="span6">
+					<div class="dataTables_paginate paging_bootstrap pagination">
+						<input id="pagenum" value="@pageNum" type="hidden"> <input
+							id="pagetotal" value="@pageTotal" type="hidden">
+						@if(pageTotal>1){
+						<ul>
+							@if(1 == pageNum){
+							<li class="disabled"><a href="javascript:;">«</a></li> }else{
+							<li><a href="javascript:;" onClick="pageClick(1)"
+								tag="pageNum" value="1">«</a></li> } @for(i <- pageNum - 10 to
+							pageNum + 10 if i >= 1; if i<= pageCount) { @if(i == pageNum){
+							<li class="disabled"><a href="javascript:;" tag="pageNum"
+								value="@i">@i</a></li> }else{
+							<li><a href="javascript:;" onClick="pageClick(@i)"
+								tag="pageNum" value="@i">@i</a></li> } } @if(pageNum >= pageCount){
+							<li class="disabled"><a href="javascript:;">»</a></li> }else{
+							<li><a href="javascript:;" tag="pageNum"
+								onClick="pageClick(@pageCount)" value="@pageCount">»</a></li> }
+						</ul>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+}else {
+<div id="storage_arrival_html">
+	<div class="portlet box blue">
+		<div class="portlet-title">
+			<div class="caption">
+				<i class="icon-globe"></i>暂无父级仓库信息
+			</div>
+		</div>
+	</div>
+</div>
+} @services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript"
+	src='@controllers.manager.routes.Assets.at("js/manager/storage/storage_arrival_table_list.js")'></script>
+}

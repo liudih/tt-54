@@ -1,0 +1,32 @@
+@(list: List[entity.wholesale.WholeSaleDiscountLevel])
+
+<table class="table table-striped table-hover table-bordered"
+	id="discount_table">
+	<thead>
+		<tr>
+			<th>开始价格</th>
+			<th>结束价格</th>
+			<th>默认折扣</th>
+			<th>最大折扣</th>
+			<th>Edit</th>
+			<th>Delete</th>
+		</tr>
+	</thead>
+	<tbody>
+		@list.map{w=>
+		<tr class="" id="@w.getIid()_tr">
+			<td>@w.getFstartprice</td>
+			<td>@w.getFendprice</td>
+			<td>@w.getFmindiscount</td>
+			<td>@w.getFmaxdiscount</td>
+			<td><a class="edit" name="edit_skill_a" data-toggle="modal"
+				data-target="#edit-skill-modal"
+				href="@controllers.manager.routes.WholeSale.editDiscount(w.getIid())"><i
+					class="icon-pencil"></i></a></td>
+			<td><a class="delete"
+				href="javascript:;" value="@controllers.manager.routes.WholeSale.deleteDiscount(w.getIid())"><i
+					class="icon-trash"></i></a></td>
+		</tr>
+		}
+	</tbody>
+</table>

@@ -1,0 +1,34 @@
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+<div class="headerFixed">
+	<div class="downApp">
+		<div class="closeDownApp closeDownApp_Css">
+			<div class="cssX"> </div>
+		</div>
+		<div class="lineBlock ttApp">
+			<img src="@controllers.base.routes.Assets.at("images/icon/ttIcon.gif")">
+		</div>
+		<div class="lineBlock betterService">For better service</div>
+		<a class="lineBlock downloadApp" href="javascript:;" target="_blank"><p>Download Now</p><b>View This in App</b></a>
+	</div>
+	<div class="indexTopNav">
+		<div class="header_nav lineBlock">
+			@tp.get("userCenter")
+		</div>
+		
+		<div class="header_logo lineBlock">
+	    	<a href="/">
+	    	 <img src='@controllers.base.routes.Assets.at("images/icon/logo.png")' />
+	    	</a>
+	    </div>
+		
+		<ul class="header_login lineBlock">
+			<li class="header_loginL lineBlock">
+		     	@tp.get("search-navigation-bar")
+		    </li>
+	       	<li class="header_loginD lineBlock">@tp.get("currency-all")</li>
+	       	<li class="header_loginC lineBlock">@tp.get("cart-bar")</li>
+		</ul>
+	</div>
+</div>
+

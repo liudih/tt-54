@@ -1,0 +1,103 @@
+@(country: dto.Country,currency : dto.Currency,language: dto.Language, url: String)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+@views.html.base.nav_live_chat()
+<div class="top_inner" id="top_s">
+    <div class="container">
+            <ul class="nav topCountries_left">
+            		<li class="topCountries_fifth"><span><em></em></span>Mobile
+                    	<div style="display: none;" class="appCode lbBox">
+                        	<div class="lineBlock">
+                            	<img src="@controllers.base.routes.Assets.at("images/codeMobileSite.jpg")">
+                                <p>Mobile Site</p>
+                            </div>
+                        	<div class="lineBlock">
+                            	<img src="@controllers.base.routes.Assets.at("images/codeAndroidApp.jpg")">
+                                <p>Android APP</p>
+                            </div>
+                        	<div class="lineBlock">
+                            	<img src="@controllers.base.routes.Assets.at("images/codeIOSAPP.jpg")">
+                                <p>IOS APP</p>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="topCountries_first">
+                    	@if(country != null) {
+                    	<span id="current_country_flage" class="flag_@country.getCshortname"><em></em></span><a href="javascript:;" role="button" class="btn" data-toggle="modal" id="default_regional">@Messages("ship.to") @country.getCname, @currency.getCcode</a>
+                    	}
+                        <div class="blockPopup_box">
+                            <div class="blockPopup_framework">
+                                <div class="framework_close"></div>
+                                <p class="Countries_title">@Messages("select.regional.settings")</p>
+                                <div class="Countries_box">
+                                    <p>@Messages("ship.to")</p>
+								 	@select_country(country)
+                                    <div class="clear"></div>
+                                </div>
+                                <div class="Countries_box">
+                                    <p>@Messages("currency")</p>
+                                   	@select_currency(currency)
+                                    <div class="clear"></div>
+                                </div>
+                                <div class="Countries_box">
+                                    <p>@Messages("language")</p>
+                                   	@select_language(language)
+                                    <div class="clear"></div>
+                                </div>
+                                <input class="Countries_save" id="regional_settings_save" type="submit" value="@Messages("save")" />
+                            </div>
+                            
+                            <div class="blockPopup_black"></div>
+                        </div>
+                    </li>
+                    <li class="lineBlock countries_img" onclick='setLangCookie(this)'  id="http://www.tomtop.com@url" lang='en' tabIndex='1'><span class=""><em></em></span><a href='javascript:;'>English</a></li>
+                    <li class="lineBlock countries_img" onclick='setLangCookie(this)'  id="http://ru.tomtop.com@url" lang='ru' tabIndex='3'><span class=""><em></em></span><a href='javascript:;'>Русский</a></li>
+                    <li class="lineBlock countries_img" onclick='setLangCookie(this)'  id="http://es.tomtop.com@url" lang='es' tabIndex='2'><span class=""><em></em></span><a href='javascript:;'>Español</a></li>
+                    <li class="lineBlock countries_img" onclick='setLangCookie(this)'  id="http://de.tomtop.com@url" lang='de' tabIndex='4'><span class=""><em></em></span><a href='javascript:;'>Deutsch</a></li>
+                    <li class="lineBlock countries_img" onclick='setLangCookie(this)'  id="http://fr.tomtop.com@url" lang='fr' tabIndex='5'><span class=""><em></em></span><a href='javascript:;'>Français</a></li>
+                    <li class="lineBlock countries_img" onclick='setLangCookie(this)'  id="http://it.tomtop.com@url" lang='it' tabIndex='6'><span class=""><em></em></span><a href='javascript:;'>Italiano</a></li>
+                    <li class="lineBlock countries_img" onclick='setLangCookie(this)'  id="http://jp.tomtop.com@url" lang='jp' tabIndex='7'><span class=""><em></em></span><a href='javascript:;'>日本語</a></li>
+                    <li class="lineBlock countries_img" onclick='setLangCookie(this)'  id="http://pt.tomtop.com@url" lang='pt' tabIndex='8'><span class=""><em></em></span><a href='javascript:;'>português</a></li>
+                   <!--  <li class="topCountries_fifth"><span></span>APP</li> -->
+              </ul>
+              <div class="topCountries_rigt">
+        		@**
+                    <div class="orderTracking">
+                        <span></span>@Messages("order.tracking")
+                    </div>
+                **@
+                    <div class="help">
+                        <p><span></span><a href="@controllers.base.routes.Cms.getAllCms()">@Messages("help")</a></p>
+                        <!--  <ul class="nav">
+                        	<li><a href="javascript:;">@Messages("faq")</a></li>
+                        	<li><a href="javascript:;">@Messages("contact.us")</a></li>
+                        </ul>-->
+                    </div>
+                    <div class="liveChat">
+                        <p><span></span>@Messages("live.chat")</p>
+                        <div class="liveChat_hover">
+                        	<div class="liveChat_txt">
+                            	<div class="liveChat_phone"></div>
+                                <p class="liveChat_title">@Messages("if.you.are.considering.a.purchase")</p>
+                                <p>@Messages("chat.with.online.sales.for.more.information.before.you.purchase")</p>
+                                <a href="http://tb.53kf.com/webCompany.php?arg=10045862&style=1"  target="_blank" rel="nofollow">@Messages("start.online.chat")</a>
+                                
+                                <!-- <a classs="livechat_connent" href="javascript:void(0);" onclick="window.open('/livechat/enquiry','LiveChat','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=750,height=470,left=180,top=140');"> 
+                               		@Messages("start.online.chat")
+                                </a>-->
+                            </div>
+                        </div>
+                    </div>
+              </div>
+    </div>
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+	@helper.javascriptRouter("js_set_regional")(
+		controllers.base.routes.javascript.Regional.regionalSettings,
+		controllers.base.routes.javascript.Regional.switchCurrency,
+		controllers.base.routes.javascript.Regional.regionalDefaultSetting
+	) 
+	<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/base/topbar/topbar.js")'></script>
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/base/country.css")" />
+}
+

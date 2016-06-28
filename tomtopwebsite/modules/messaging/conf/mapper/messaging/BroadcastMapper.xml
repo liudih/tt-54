@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.messaging.BroadcastMapper">
+  <resultMap id="BaseResultMap" type="entity.messaging.Broadcast" >
+    <id column="iid" property="id" jdbcType="INTEGER" />
+    <result column="iwebsiteid" property="websiteId" jdbcType="INTEGER" />
+    <result column="isendid" property="sendId" jdbcType="INTEGER" />
+    <result column="cfrom" property="from" jdbcType="VARCHAR" />
+    <result column="csubject" property="subject" jdbcType="VARCHAR" />
+    <result column="ccontent" property="content" jdbcType="VARCHAR" />
+    <result column="itype" property="type" jdbcType="INTEGER" />
+    <result column="isendmethod" property="sendMethod" jdbcType="INTEGER" />
+    <result column="dcreatedate" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="imodifierid" property="modifierId" jdbcType="INTEGER" />
+    <result column="modifier" property="modifier" jdbcType="VARCHAR" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="istatus" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    a.iid, a.iwebsiteid, a.isendid, a.cfrom, a.csubject, a.ccontent, a.itype, a.isendmethod, a.dcreatedate,a.istatus
+  </sql>
+  <select id="selectBroadcasts" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_message_broadcast a
+  </select>
+  
+  <select id="selectBroadcastsForPage" parameterType="map" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from t_message_broadcast a
+
+    <if test="page != null and page != '' and pageSize != null and pageSize != '' ">
+    	order by a.dcreatedate desc limit #{pageSize} offset
+		(#{page}-1)*#{pageSize}
+    </if>
+  </select>
+  
+  <select id="getTotal" parameterType="map" resultType="int">
+  	select count(*) from t_message_broadcast
+  	where 1=1
+  	
+  </select>
+  
+  <select id="getDetail" resultMap="BaseResultMap" parameterType="map">
+  	select 
+    <include refid="Base_Column_List" />
+  	from t_message_broadcast a
+	where iid = ${id}
+  </select>
+  
+  <insert id="markMyBroadcastMessage" parameterType="map">
+  	<!--  
+  	insert into t_message_info(ibroadcastid,cemail,istatus)
+  	values(${broadcastId},#{userId},#{status})
+  	-->
+  	INSERT INTO t_message_info(iwebsiteid,isendid,cfrom,csubject,ccontent,itype,isendmethod,dcreatedate,cemail,istatus,ibroadcastid)
+	select iwebsiteid,isendid,cfrom,csubject,ccontent,itype,isendmethod,dcreatedate,#{userId},${status},iid
+	from t_message_broadcast
+	where iid = ${broadcastId}
+
+  </insert>
+  
+  <insert id="add" parameterType="entity.messaging.Broadcast">
+  	insert into t_message_broadcast(csubject, ccontent,isendid,iwebsiteid,isendmethod,cfrom,itype,dcreatedate)
+  	values(#{subject},#{content},${sendId},${websiteId},${sendMethod},#{from},${type},now())
+  </insert>
+  
+  <update id="update" parameterType="entity.messaging.Broadcast">
+  	update t_message_broadcast
+  	set csubject = #{subject}, ccontent = #{content},itype=${type},
+  	imodifierid = #{modifierId},dmodifydate = now()
+  	where iid=${id}
+  </update>
+  
+  <update id="publish" parameterType="entity.messaging.Broadcast">
+  	update t_message_broadcast
+  	set imodifierid = #{modifierId},dmodifydate = now(),istatus=${status}
+  	where iid=${id}
+  </update>
+  
+  <delete id="delete" parameterType="map">
+  	delete from t_message_broadcast
+  	where iid = ${id}
+  </delete>
+</mapper>

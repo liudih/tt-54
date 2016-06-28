@@ -1,0 +1,42 @@
+@(email: String
+    )
+
+@import views.html.helper._
+@views.html.base.master{
+<div class="container sendEmail">
+	<div class="sendBox">
+        <p class="sendTT">
+            <em></em>
+<b>@Messages("welcome.to") TOMTOP</b>
+   </p>
+<p>@Messages("an.activation.email.has.been.sent.to.your.email")<span class="blue"> @email</span><br>
+	  @Messages("please.follow.the.steps.to.activate.your.account")
+</p>
+	  <a href="@controllers.member.routes.Login.redirectAfterLogin()" class="CheckNow">@Messages("continue.shopping") (<span class="showbox"></span>)</a>
+ </div>
+<p class="sendBott">@Messages("did.not.receive.our.confirmation.email")  
+<a href="@controllers.member.routes.Register.regValide(email)">@Messages("resend.an.email")</a>
+</p>
+</div>
+	@services.base.HtmlUtils.misc().addHeadOnce{
+	 	<link rel="stylesheet" href="@controllers.member.routes.Assets.at("css/styles.css")?@version.BuildVersion.build()" /> 
+	 	}
+	@services.base.HtmlUtils.misc().addTailOnce{
+	<script>
+	    var timeout =10;
+	    var showbox = $(".showbox");
+	    function show() {
+	        showbox.html(timeout);
+	        timeout--;
+	        if (timeout == 0) {
+	            window.opener = null;
+	            window.location.href = "@controllers.member.routes.Login.redirectAfterLogin()";
+	        }
+	        else {
+	            setTimeout("show()", 1000);
+	        }
+	    }
+	    show()
+	</script>
+	}
+}

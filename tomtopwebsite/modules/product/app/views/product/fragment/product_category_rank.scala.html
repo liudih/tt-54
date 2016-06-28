@@ -1,0 +1,14 @@
+@(fragment: valueobjects.product.CategoryRankProductList)
+@if(fragment.getList().size() > 0) {
+<div class="browse_box boxFramework tuijian">
+	<div class="browse_title">@Messages("customers.who.bought.this.item.also.bought")</div>
+	<div class="browseDIV_box">
+		<div id="browseDIVpic_box" class="browseDIVpic_box">
+			<div class="browseLeft_click" style="opacity: 0;"></div>
+			<div class="productmove_box" style="width: 1351px;">
+				@fragment.getList().map{ p =>
+				@views.html.product.badge(p,true) }</div>
+		</div>
+	</div>
+</div>
+}

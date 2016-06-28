@@ -1,0 +1,81 @@
+@(
+countrys : List[dto.Country]
+)
+
+<ul class="newshopping_address_input">
+<input name="iid" type="text" style="display:none;">
+<li>
+    <div class="address_input_item left">
+        <h5>@Messages("checkout_step.name")<i>*</i></h5>
+        <input name="cfirstname" type="text">
+        <label style="color:red; display:none;">Please input your first name.</label>
+    </div>
+    <div class="address_input_item right">
+        <h5>@Messages("checkout_step.LastName")<i>*</i></h5>
+        <input name="clastname" type="text">
+        <label style="color:red; display:none;">Please input your last name.</label>
+    </div>
+</li>
+<li>
+<div class="address_input_item">
+<h5>@Messages("checkout_step.country")<i>*</i></h5>
+
+<div class="country_list">
+<ul>
+    @countrys.map{c =>
+       <!-- <li cid="@c.getIid" code="@c.getCshortname">@c.getCname</li> -->
+       <li cid="@c.getIid" code="@c.getCshortname" role="item" data-target='select' name="country_li" class="flag_@c.getCshortname"  countryCode="@c.getCshortname" data-code="@c.getCshortname"><em></em><span name='country' value="@c.getIid">@c.getCname</span></li>
+    }
+</ul>
+</div>
+<label style="color:red; display:none;">Please select your country.</label>
+</div>
+</li>
+
+<li>
+    <div class="address_input_item">
+        <h5>@Messages("checkout_step.address")<i>*</i></h5>
+        <input name="address1" type="text">
+        <label style="color:red; display:none;">Please input your address.</label>
+    </div>
+</li>
+<!-- <li>
+    <div class="address_input_item">
+        <h5>Address Line 2<i>*</i></h5>
+        <input name="address2" type="text">
+    </div>
+</li> -->
+<li>
+    <div class="address_input_item left">
+        <h5>@Messages("checkout_step.city")<i>*</i></h5>
+        <input name="ccity" type="text">
+        <label style="color:red; display:none;">Please input your city.</label>
+    </div>
+    <div class="address_input_item right">
+        <h5>@Messages("checkout_step.state")<i>*</i></h5>
+        <!-- <input name="cprovince" type="text">
+        <label style="color:red; display:none;">Please input your state.</label> -->
+        <span id="div_province_id" style="display: none;" onclick="toggleState();"></span>
+        <input class="current_province" type="text"	id="input_current_province" name="cprovince" value=""  maxlength="600">
+		<ul id="province_list_id" name="province_list" class="province_list" style="display: none;width:auto;">
+		</ul> 
+        <label style="color:red; display:none;">Please input your state.</label>
+        
+    </div>
+</li>
+<li>
+    <div class="address_input_item left">
+        <h5>@Messages("checkout_step.postal")<i>*</i></h5>
+        <input name="cpostalcode" type="text">
+        <label style="color:red; display:none;">Please input your post code.</label>
+    </div>
+    <div class="address_input_item right">
+        <h5>@Messages("checkout_step.phone")<i>*</i><div class="hint_phone_num"><p>For shipping and delivery purposes only.</p></div></h5>
+        <input name="ctelephone" type="text">
+        <label style="color:red; display:none;">Please input your phone number.</label>
+    </div>
+</li>
+</ul>
+
+
+

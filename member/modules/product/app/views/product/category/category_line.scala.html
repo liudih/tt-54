@@ -1,0 +1,5 @@
+@(c: valueobjects.product.category.CategoryComposite)
+@urlprefix = @{play.Play.application().configuration().getString("member.urlprefix")}
+@if(null != c){
+	<a href="@urlprefix/@{c.getSelf().getCpath()}">@c.getSelf().getCname()</a>	
+}

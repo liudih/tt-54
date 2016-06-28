@@ -1,0 +1,7 @@
+@(vo: valueobjects.order_api.OrderCount)
+<li class="accInf accInfs">
+    <ol class="parents"><p><em class="ord"></em>@Messages("my.order")</p><span>@vo.getAll()</span></ol>
+    <ol><p>@Messages("unpaid")</p><span>@vo.getPending()</span></ol>
+    <ol><p>@Messages("processing")</p><span>@vo.getProcessing()</span></ol>
+    <ol><p>@Messages("dispatched")</p><span>@vo.getDispatched()</span></ol>
+</li>

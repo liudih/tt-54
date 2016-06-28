@@ -1,0 +1,23 @@
+@(catName: dto.product.CategoryName,
+catMap: Map[Integer,Collection[dto.Category]]
+)
+	<div class="twoDir_Box">
+		<h5 id="box_1">@catName.getCname()</h5>
+		@if(catName.getCcontent()!=null && !(catName.getCcontent().isEmpty)){
+			
+			<div class="directoryBox">
+				<ul class="directoryDH">
+					   @if(catMap.containsKey(catName.getIcategoryid())) {
+				            @catMap(catName.getIcategoryid()).map{ h =>
+				            	@if(null == h.getCpath() || h.getCpath().isEmpty){
+				            		<li><a href="#">@h.getCname()</a></li>
+				            	}else{
+				            		<li><a href="@controllers.product.routes.CategoryProduct.showCategoryProduct(h.getCpath())">@h.getCname()</a></li>
+				            	}
+				            }
+				    	}
+		         </ul>
+		        @Html(catName.getCcontent())
+			</div>
+		}
+	</div>

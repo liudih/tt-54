@@ -1,0 +1,33 @@
+@(allCountrys: List[dto.Country],url: String)
+@helper.javascriptRouter("jsCountry")(
+	controllers.base.routes.javascript.Country.getAllCountries
+) 
+<form  id="add_new_address_form" name="add_new_address_form" class="address-form" action="@url"   method="post">
+	<a class="closeAddress" name="closeAddress_new" href="javascript:;"></a>
+	<input type="hidden"  name="addressType" value="billing">
+<table width="100%" border="0" cellspacing="0" cellpadding="0"
+	id="add_new_table" name="add_new_address">
+	@new_address_table_information.render(allCountrys)
+	<tr>
+		<td>&nbsp;</td>
+		<td>
+			<label><input type="checkbox" name="bdefault">@Messages("set.as.default")</label>
+		</td>
+	</tr>
+	<tr>
+		<td class="radiusL">&nbsp;</td>
+		<td class="radiusR">
+			<input class="hsInputs" type="submit" name="address_save_submit"	value="@Messages("save")">
+			<input class="hsInputsb"  type="button"  name="add_cancel_button" value="@Messages("cancel")">
+		</td>
+	</tr>
+</table>
+</form>
+@services.base.HtmlUtils.misc().addTailOnce{
+    <script  type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.form.js")'></script>
+	<!--  <script  type="text/javascript" src='@controllers.base.routes.Assets.at("js/base/country/selectCountryPlus.js")'></script>  -->
+	<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+	<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+	<script  language="javascript" type="text/javascript" src='@controllers.member.routes.Assets.at("js/member/addressValidation.js")'></script>
+	<script  language="javascript" type="text/javascript" src='@controllers.member.routes.Assets.at("js/member/address.js")'></script>
+}

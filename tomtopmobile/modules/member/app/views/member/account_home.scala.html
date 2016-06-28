@@ -1,0 +1,47 @@
+@import extensions.member.account.Position
+@import services.base._
+@import services.base.utils._
+
+@(
+	htmls :  List[extensions.member.account.IMemberAccountHomeFragmentProvider],
+	email: String
+)
+
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+ 	  	@controllers.base.routes.Assets.at("css/accountHome_page.css")
+}
+@views.html.base.sub_master(){
+
+<div class="container accountHomeBox">
+	<div class="topLeft_headImg">
+		<p class="topLeft_myName">@email</p>
+		<div class="topLeft_myHead"><img src="" /></div>
+	</div>
+	<ul class="topLeft_Messages lbBox">
+		
+		@htmls.map{ h =>
+        	@if(h.getPosition().contains(Position.PROFILE)) {
+        		@h.getFragment(email,Position.PROFILE)
+        	}
+        }
+	</ul>
+	
+	<ul class="lbBox topLeft_messagesOrder topLeft_messagesOrder25">
+		@htmls.map{ h =>
+        	@if(h.getPosition().contains(Position.STATISTICS)) {
+        		@h.getFragment(email,Position.STATISTICS)
+        	}
+        }
+	</ul>
+	
+     @htmls.map{ h =>
+     	@if(h.getPosition().contains(Position.BODY)) {
+     		@h.getFragment(email, Position.BODY)
+     	}
+     }
+	
+	 
+</div>
+
+
+}

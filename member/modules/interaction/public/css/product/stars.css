@@ -1,0 +1,27 @@
+.rating-box {
+	float: left;
+	position: relative;
+	width:80px;
+	margin-right: 3px;
+	margin-left: 16px;
+	line-height: 13px;
+	margin-top: 2px;
+	height: 13px; /*margin-right:5px;*/
+	background: url("../../images/product/tags.png");
+	background-position: left -1516px;
+	background-repeat: no-repeat;
+	background-position: left -1516px;
+}
+
+.ratings .rating-count {
+	width: 100px;
+}
+
+.rating-box .rating {
+	top: 0;
+	left: 0;
+	height: 13px;
+	background: url("../../images/product/tags.png");
+	background-position: left -1500px;
+	background-repeat: no-repeat;
+}

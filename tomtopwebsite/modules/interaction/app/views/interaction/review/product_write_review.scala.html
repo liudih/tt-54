@@ -1,0 +1,170 @@
+@(counts : Integer,
+	 scores : Double,
+     product: valueobjects.product.ProductBadge,
+     starsWidth:Integer,
+     fList : List[dto.interaction.Foverallrating],
+     email : String,
+     orderDetailId: String,
+     isVip: String
+     )
+@import views.html.helper._
+@views.html.base.master{
+	@helper.javascriptRouter("js_reviewRoutes")(
+		controllers.base.routes.javascript.Captcha.checkCaptcha,
+	    controllers.interaction.review.routes.javascript.ProductReview.checkSign,
+	    controllers.interaction.review.routes.javascript.ProductReview.doAddPicture
+	)
+<div class="container">
+    @write_review_select("","",controllers.interaction.review.routes.ProductReview.showAll(product.getListingId).toString())
+         <div class="writeReview">
+            @review_product_info(product,counts, scores, starsWidth,fList)
+                <div class="writeReview_right"  id="postPhotos_popBoxs">
+                	<h5>@Messages("write.a.review")<span>(* @Messages("indicates.required.fields"))</span></h5>
+                    <hr>
+	          @form(controllers.interaction.review.routes.ProductReview.doAddReview(product.getListingId),'id->"writeReviewForm",'enctype->"multipart/form-data") {
+	          	<input type="hidden" name="orderDetailId" value="@orderDetailId" class="orderDetailId" />
+                    <table class="writeInp" width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr class="writeInpone">
+                        <td>@Messages("nickname")<span class="read">*</span></td>
+                        <td><input id="nickName" type="text" name="nickName"></td>
+                      </tr>
+                      <tr class="writeInpTxt">
+                        <td>&nbsp;</td>
+                        <td>@Messages("nickname.shown.future.reviews.not.real.name") </td>
+                      </tr>
+                      <tr>
+                        <td>@Messages("emails")<span class="read">*</span></td>
+                        <td>@email</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                        <ul class="startUL">
+                        	<li class="startTxt">@Messages("price"):</li>
+                            <li>
+	                        	<input id="iprice" name="iprice" type="hidden" value="5" />
+                                <div id="price" name="price" class="product_Reviews start5">
+                                    <em class="starOne"></em>
+                                    <em class="starTwo"></em>
+                                    <em class="starThree"></em>
+                                    <em class="starFour"></em>
+                                    <em class="starFive"></em>
+                                </div> 
+                            </li>
+                        	<li class="startTxt">@Messages("quality")</li>
+                            <li>
+                        		<input id="iquality" name="iquality" type="hidden" value="5"/>
+                                <div id="quality" name="quality" class="product_Reviews start5">
+                                    <em class="starOne"></em>
+                                    <em class="starTwo"></em>
+                                    <em class="starThree"></em>
+                                    <em class="starFour"></em>
+                                    <em class="starFive"></em>
+                                </div> 
+                            </li>
+                        	<li class="startTxt">@Messages("usefulness")</li>
+                            <li>
+	                        	<input id="iusefulness" name="iusefulness" type="hidden" value="5" />
+                                <div id="usefulness" name="usefulness" class="product_Reviews start5">
+                                    <em class="starOne"></em>
+                                    <em class="starTwo"></em>
+                                    <em class="starThree"></em>
+                                    <em class="starFour"></em>
+                                    <em class="starFive"></em>
+                                </div> 
+                            </li>
+                        	<li class="startTxt">@Messages("shipping")</li>
+                            <li>
+	                        	<input id="ishipping" name="ishipping" type="hidden" value="5"/>
+                                <div id="shipping" name="shipping" class="product_Reviews start5">
+                                    <em class="starOne"></em>
+                                    <em class="starTwo"></em>
+                                    <em class="starThree"></em>
+                                    <em class="starFour"></em>
+                                    <em class="starFive"></em>
+                                </div> 
+                            </li>
+                        	<li class="startTxt startAll">@Messages("overall.rating")</li>
+                            <li  class="startAll">
+	                        	<input id="foverallrating" name="foverallrating" type="hidden" value="5"/>
+                                <div class="product_Reviews">
+                                    <div id="scores" name="scores" class="product_Start"></div>
+                                </div> 
+                            </li>
+                        </ul>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td valign="top">@Messages("reviews")<span class="read">*</span></td>
+                        <td class="writeArea"><textarea maxlength="1999" id="ccomment" name="ccomment"></textarea></td>
+                      </tr>
+                    </table>
+                    <h5>@Messages("upload.pictures.or.video")</h5>
+                    <hr>
+                    <ul class="addPic_Box" id="postPhotos_popBox">
+                        <li class="addPic cursor" >
+                        <input type='file' name="picture" class='addPicInput'/>
+                          <input type="hidden" name="index"/>
+                        </li>
+                   		 <div class="clear"></div>
+                   		 <p class="msg" style="margin-left:100px; color:red; margin-top:10px"></p>
+                    </ul>
+                    <table class="upFilePV" width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>@Messages("5.mb.image.jpeg.jpg.gif.png.bmp.clear.photos.much.appreciated")</td>
+                      </tr>
+                      <tr class="upF_pdT">
+                        <td>@Messages("video")</td>
+                        <td><input id="videoUrl" name="videoUrl" type="text" placeholder="@Messages("paste.youtube.video.url")"></td>
+                      </tr>
+                      <tr>
+                        <td>&nbsp;</td>
+                        <td>@Messages("share.video.review.make.sure.video.related.product") </td>
+                      </tr>
+                      <tr class="upF_pdT">
+                        <td>@Messages("video.title")</td>
+                        <td><input id="videoTitle" name="videoTitle" type="text"></td>
+                      </tr>
+                      <tr class="upF_pdT">
+                        <td>@Messages("code")<span class="read">*</span></td>
+                        <td>
+	                        <input id="captcha" name="captcha" type="text" class="code">
+	                        <div class="code_txt">
+		                        <img id="imgCode" name="imgCode" src="@controllers.base.routes.Captcha.generate()" alt="code" 
+		                         title="@Messages("click.on.the.change")" onclick="change(this);" width="70" height="30">
+	                         </div>
+                        </td>
+                        <td><span class="required"></span></td>
+                      </tr>
+                      <tr class="upF_last">
+                        <td>&nbsp;<input type="hidden" name="isVip" value="@isVip" class="isVip" /></td>
+                        <td>
+                        <input id="backurl" class="hsInput" type="button" value="@Messages("cancel")" onclick="location.href='@controllers.product.routes.Product.view(product.getUrl)'" data="@controllers.product.routes.Product.view(product.getUrl).absoluteURL(play.mvc.Http.Context.current().request())"/>
+                        	<!-- 上传图片的序号 -->
+                        		<input type="hidden" name="indexs" value="" />
+	               				<input type="hidden" name="clistingid" value="@product.getListingId" />
+                        		<input id="writeReviewSubmit" type="submit" value="@Messages("submit")" class="yellowInput" >
+                       </td>
+                      </tr>
+                    </table>
+	          } @** form ends **@
+        </div>
+     </div>
+</div>        
+  
+@services.base.HtmlUtils.misc().addTailOnce{
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/product.css")?@version.BuildVersion.build()" /> 
+<script src='@controllers.base.routes.Assets.at("js/lib/jquery.form.js")'></script>
+<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+<script  language="javascript" type="text/javascript" src='@controllers.interaction.routes.Assets.at("js/interaction/writeReviewValidate.js")'></script>
+
+<script  language="javascript" type="text/javascript" src='@controllers.interaction.routes.Assets.at("js/interaction/reviewUploadPhoto.js")'></script>
+<script type="text/javascript">
+       function change(imgObj){
+       	imgObj.src="@controllers.base.routes.Captcha.generate()?date="+new Date().getTime();
+	}
+</script>
+}
+}
+

@@ -1,0 +1,36 @@
+@(cartlist :List[valueobjects.order_api.cart.CartItem])
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+@cartlist.map{c=>
+<div class="topSearch_information" id="drop@c.getCid()">
+	<div class="topSearch_informationPIC">
+		<a href="@if(c.getCurl()!=null){@controllers.product.routes.Product.view(c.getCurl())}">
+		@img(c.getCimageurl(),c.getCtitle(),120,120,null, 'width->80, 'height->80, 'alt->c.getCtitle())
+		</a>
+	</div>
+	<div class="topSearch_informationTXT">
+		<p>
+		@if(c.getCtitle()!=null && c.getCtitle().length>50){
+	    	@c.getCtitle().substring(0,50)...
+	    }else{
+	    	@c.getCtitle()
+	    }
+		</p>
+		@if(c.getPrice()!=null){
+       		@if(c.getPrice().getDiscount()!=null&&c.getPrice().getDiscount()>0){
+        		<p class="informationTXT_sale">
+					<span class="informationOff">@Utils.percent(c.getPrice().getDiscount())% OFF</span>
+					<span class="informationOriginal">@c.getPrice.getSymbol @Utils.money(c.getPrice().getUnitBasePrice())</span>
+				</p>
+        	}
+        	<p>
+				<span class="informationPrice">@c.getPrice.getSymbol @Utils.money(c.getPrice().getUnitPrice())</span>
+				x@c.getIqty()
+			</p>
+		}
+	</div>
+	<div class="informationClose" onclick="deldrop('@c.getCid()')"></div>
+	<div class="clear"></div>
+</div>	
+}

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.advertising.AdvertisingDistributionMapper" >
+  <resultMap id="BaseResultMap" type="dto.advertising.AdvertisingDistribution" >
+    <id column="iid" property="iid" jdbcType="BIGINT" />
+    <result column="iadvertisingid" property="iadvertisingid" jdbcType="BIGINT" />
+    <result column="itype" property="itype" jdbcType="INTEGER" />
+    <result column="cbusinessid" property="cbusinessid" jdbcType="VARCHAR" />
+    <result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+    <result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+    <result column="clastupdateduser" property="clastupdateduser" jdbcType="VARCHAR" />
+    <result column="dlastupdateddate" property="dlastupdateddate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="productadResultMap" type="dto.advertising.AdvertisingProductDetailLite" >
+    <result column="cbusinessid" property="cbusinessid" jdbcType="VARCHAR" />
+    <result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+    <result column="cimageurl" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="curl" property="url" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, iadvertisingid,itype, cbusinessid,iwebsiteid, ccreateuser, dcreatedate, clastupdateduser, dlastupdateddate
+  </sql>
+	<select id="searchAdvertisingPage" resultType="dto.advertising.Advertising" parameterType="java.util.Map">
+	  	select * from ( 
+		    select a.*, (select p.cpositonname from t_advertising_positon p where a.iposition=p.ipositonid) as positionname   from t_advertising_base a 
+			where 1=1
+			<if test="iposition != null and iposition != '' and iposition != -1" >
+		        and a.iposition=#{iposition}
+		    </if>
+			<if test="itype != null and itype != '' and itype != -1 " >
+		        and a.iid in(select iadvertisingid from t_advertising_distribution b where a.iid = b.iadvertisingid and b.itype=#{itype})
+		    </if>
+			<if test="iwebsiteid != null and iwebsiteid != '' and iwebsiteid != -1" >
+				and a.iid in(select iadvertisingid from t_advertising_distribution b where a.iid = b.iadvertisingid and b.iwebsiteid=#{iwebsiteid})
+		    </if>
+			<if test="ilanguageid != null and ilanguageid != ''  and ilanguageid != -1" >
+				and a.iid in(select iadvertisingid from t_advertising_content c where a.iid = c.iadvertisingid and c.ilanguageid=#{ilanguageid})
+		    </if>
+	    ) a order by iid desc limit #{pageSize} offset (#{page}-1)*#{pageSize}
+	</select>
+  
+	<select id="searchAdvertisingCount" resultType="java.lang.Integer" parameterType="java.util.Map">
+	  	select count(iid) from ( 
+		    select a.*, (select p.cpositonname from t_advertising_positon p where a.iposition=p.ipositonid) as positionname   from t_advertising_base a 
+			where 1=1
+			<if test="iposition != null and iposition != '' and iposition != -1" >
+		        and a.iposition=#{iposition}
+		    </if>
+			<if test="itype != null and itype != '' and itype != -1 " >
+		        and a.iid in(select iadvertisingid from t_advertising_distribution b where a.iid = b.iadvertisingid and b.itype=#{itype})
+		    </if>
+			<if test="iwebsiteid != null and iwebsiteid != '' and iwebsiteid != -1" >
+				and a.iid in(select iadvertisingid from t_advertising_distribution b where a.iid = b.iadvertisingid and b.iwebsiteid=#{iwebsiteid})
+		    </if>
+			<if test="ilanguageid != null and ilanguageid != ''  and ilanguageid != -1" >
+				and a.iid in(select iadvertisingid from t_advertising_content c where a.iid = c.iadvertisingid and c.ilanguageid=#{ilanguageid})
+		    </if>
+	    ) a 
+	</select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_advertising_distribution
+    where iid = #{iid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_advertising_distribution
+    where iid = #{iid,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteRelationById" parameterType="java.lang.Long" >
+    delete from t_advertising_distribution
+    where iadvertisingid = #{iadvertisingid,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="dto.advertising.AdvertisingDistribution" >
+    insert into t_advertising_distribution (iid, iadvertisingid, itype,cbusinessid,iwebsiteid, 
+      ccreateuser, dcreatedate, clastupdateduser, 
+      dlastupdateddate)
+    values (#{iid,jdbcType=BIGINT}, #{iadvertisingid,jdbcType=BIGINT},, #{itype,jdbcType=INTEGER} #{cbusinessid,jdbcType=VARCHAR}, #{iwebsiteid,jdbcType=INTEGER}, 
+      #{ccreateuser,jdbcType=VARCHAR}, #{dcreatedate,jdbcType=TIMESTAMP}, #{clastupdateduser,jdbcType=VARCHAR}, 
+      #{dlastupdateddate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="dto.advertising.AdvertisingDistribution" useGeneratedKeys="true" keyProperty="iid" >
+  
+    insert into t_advertising_distribution
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="iadvertisingid != null" >
+        iadvertisingid,
+      </if>
+       <if test="itype != null" >
+        itype,
+      </if>
+      <if test="cbusinessid != null" >
+        cbusinessid,
+      </if>
+      <if test="iwebsiteid != null" >
+        iwebsiteid,
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+      <if test="clastupdateduser != null" >
+        clastupdateduser,
+      </if>
+      <if test="dlastupdateddate != null" >
+        dlastupdateddate,
+      </if>
+      <if test="cdevice != null" >
+        cdevice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=BIGINT},
+      </if>
+      <if test="iadvertisingid != null" >
+        #{iadvertisingid,jdbcType=BIGINT},
+      </if>
+      <if test="itype != null" >
+        #{itype,jdbcType=INTEGER},
+      </if>
+      <if test="cbusinessid != null" >
+        #{cbusinessid,jdbcType=VARCHAR},
+      </if>
+      <if test="iwebsiteid != null" >
+        #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="ccreateuser != null" >
+        #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clastupdateduser != null" >
+        #{clastupdateduser,jdbcType=VARCHAR},
+      </if>
+      <if test="dlastupdateddate != null" >
+        #{dlastupdateddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cdevice != null" >
+        #{cdevice,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dto.advertising.AdvertisingDistribution" >
+    update t_advertising_distribution
+    <set >
+      <if test="iadvertisingid != null" >
+        iadvertisingid = #{iadvertisingid,jdbcType=BIGINT},
+      </if>
+      <if test="itype != null" >
+        itype = #{itype,jdbcType=INTEGER},
+      </if>
+      <if test="cbusinessid != null" >
+        cbusinessid = #{cbusinessid,jdbcType=VARCHAR},
+      </if>
+      <if test="iwebsiteid != null" >
+        iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clastupdateduser != null" >
+        clastupdateduser = #{clastupdateduser,jdbcType=VARCHAR},
+      </if>
+      <if test="dlastupdateddate != null" >
+        dlastupdateddate = #{dlastupdateddate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dto.advertising.AdvertisingDistribution" >
+    update t_advertising_distribution
+    set 
+      iadvertisingid = #{iadvertisingid,jdbcType=BIGINT},
+      itype = #{itype,jdbcType=INTEGER},
+      cbusinessid = #{cbusinessid,jdbcType=VARCHAR},
+      iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      clastupdateduser = #{clastupdateduser,jdbcType=VARCHAR},
+      dlastupdateddate = #{dlastupdateddate,jdbcType=TIMESTAMP}
+    where iid = #{iid,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,34 @@
+@(usedPoints: valueobjects.base.Page[entity.loyalty.MemberIntegralHistory], 
+tab:Integer,
+totalUsedPoints:Integer,
+availableIntegralHistoriesIsNull:Boolean)
+
+<div id="usedDiv" class="xxkBOX boxRa @if(tab == 1){ block}">
+
+	<table class="hsTable" width="100%" border="1" cellspacing="0"
+		cellpadding="0">
+		<tr>
+			<th width="110">Date</th>
+			<th width="140">Points</th>
+			<th width="220">From</th>
+		</tr>
+
+		@if(usedPoints.getList != null && usedPoints.getList.size() > 0) {
+			@usedPoints.getList.map{t=>
+			<tr>
+				<td>@services.base.utils.DateFormatUtils.getStrFromYYYYMMDDHHMMSS(t.getDcreatedate())</td>
+				<td>@t.getIintegral()</td>
+				<td class="blue">@t.getCsource()</td>
+			</tr>
+			} 
+		}
+		<tr>
+			<td colspan="5" class="pointTB">Sub Total: <span class="blue">@totalUsedPoints</span>
+			</td>
+		</tr>
+	</table>
+	@if(usedPoints != null && usedPoints.getList().size() > 0){
+		@views.html.product.gadget.pagination((usedPoints.pageNo-1), usedPoints.totalPages)
+	}
+	
+</div>

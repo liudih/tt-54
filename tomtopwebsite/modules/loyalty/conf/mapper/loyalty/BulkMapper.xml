@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.loyalty.BulkMapper" >
+  <resultMap id="BaseResultMap" type="entity.loyalty.Bulk" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="igroupid" property="igroupid" jdbcType="INTEGER" />
+    <result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+    <result column="cremark" property="cremark" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+    <result column="denddate" property="denddate" jdbcType="TIMESTAMP" />
+    <result column="istatus" property="istatus" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, igroupid, iwebsiteid, cremark, dcreatedate, denddate, istatus
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_bulk
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_bulk
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.loyalty.Bulk" >
+    insert into t_bulk (iid, igroupid, iwebsiteid, 
+      cremark, dcreatedate, denddate, 
+      istatus)
+    values (#{iid,jdbcType=INTEGER}, #{igroupid,jdbcType=INTEGER}, #{iwebsiteid,jdbcType=INTEGER}, 
+      #{cremark,jdbcType=VARCHAR}, #{dcreatedate,jdbcType=TIMESTAMP}, #{denddate,jdbcType=TIMESTAMP}, 
+      #{istatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.loyalty.Bulk"  useGeneratedKeys="true" keyProperty="iid" >
+    insert into t_bulk
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="igroupid != null" >
+        igroupid,
+      </if>
+      <if test="iwebsiteid != null" >
+        iwebsiteid,
+      </if>
+      <if test="cremark != null" >
+        cremark,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+      <if test="denddate != null" >
+        denddate,
+      </if>
+      <if test="istatus != null" >
+        istatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="igroupid != null" >
+        #{igroupid,jdbcType=INTEGER},
+      </if>
+      <if test="iwebsiteid != null" >
+        #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="cremark != null" >
+        #{cremark,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="denddate != null" >
+        #{denddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="istatus != null" >
+        #{istatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.loyalty.Bulk" >
+    update t_bulk
+    <set >
+      <if test="igroupid != null" >
+        igroupid = #{igroupid,jdbcType=INTEGER},
+      </if>
+      <if test="iwebsiteid != null" >
+        iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="cremark != null" >
+        cremark = #{cremark,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="denddate != null" >
+        denddate = #{denddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="istatus != null" >
+        istatus = #{istatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.loyalty.Bulk" >
+    update t_bulk
+    set igroupid = #{igroupid,jdbcType=INTEGER},
+      iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      cremark = #{cremark,jdbcType=VARCHAR},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      denddate = #{denddate,jdbcType=TIMESTAMP},
+      istatus = #{istatus,jdbcType=INTEGER}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

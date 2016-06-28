@@ -1,0 +1,36 @@
+@(addresses: List[dto.member.MemberAddress],countryMap:Map[Integer,dto.Country])
+<div class="self_pickupNone" id="shipping_address_div">
+	<div class="blackBK"></div>
+	<h6 class="accOrd_add">@Messages("shipping.address")</h6>
+	<table class="shippingAs shippingAs_marB" width="100%" cellspacing="0" cellpadding="0" border="0">
+		<tbody>
+			@addresses.zipWithIndex.map{i=>
+			<tr class="chooseDefault C_default">
+				<td class="chooseAS">
+					
+					<input type="radio" name="addressID" value="@i._1.getIid" @if(i._2 == 0){checked}>
+				</td>
+				<td class="chooseName">@i._1.getCfirstname() &nbsp @i._1.getClastname()</td>
+				<td class="chooseAdds">
+					@i._1.getCstreetaddress()      &nbsp
+					@i._1.getCcity()               &nbsp
+					@i._1.getCprovince()           &nbsp
+					@if(countryMap != null && countryMap.get(i._1.getIcountry()) != null){
+						@countryMap.get(i._1.getIcountry()).getCname            &nbsp
+					}
+					@i._1.getCpostalcode()         &nbsp
+					@i._1.getCtelephone()          &nbsp
+				</td>
+				<td class="chooseEdit">
+				<td class="chooseDelete">
+				<td class="chooseDef">
+			</tr>
+			}
+			<tr>
+				<td class="newAdds" colspan="6">
+					<a class="addsClick" href="@controllers.member.routes.Address.shippingAddress()">+ @Messages("enter.new.shipping.address")</a>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

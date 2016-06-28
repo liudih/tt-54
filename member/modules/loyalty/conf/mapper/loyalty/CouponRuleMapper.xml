@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.loyalty.CouponRuleMapper">
+
+	<resultMap type="entity.loyalty.CouponRule" id="couponRule"></resultMap>
+
+	<select id="getAll" resultMap="couponRule">
+		select * from t_coupon_rule 
+		<where>
+		<![CDATA[ istatus !='-1' ]]>
+			<if test="condition.cname != null and condition.cname!=''" >
+				and cname like '%'||#{condition.cname,jdbcType=VARCHAR}||'%'
+			</if>
+			<if test="condition.itype != null">
+				and itype = #{condition.itype,jdbcType=INTEGER}
+			</if>
+			<if test="condition.istatus != null">
+				and istatus = #{condition.istatus,jdbcType=INTEGER}
+			</if>
+			<if test="condition.ctimetype != null and condition.ctimetype!=''">
+				and ctimetype = #{condition.ctimetype,jdbcType=VARCHAR}
+			</if>
+			<if test="condition.startdate != null ">
+				and startdate &gt;= #{condition.startdate} 
+			</if>
+			<if test="condition.enddate != null ">
+				and enddate &lt;= #{condition.enddate}
+			</if>
+			<if test="condition.validityMini != null ">
+				and ivalidity &gt;= #{condition.validityMini}
+			</if>
+			<if test="condition.validityMax != null ">
+				and ivalidity &lt;= #{condition.validityMax}
+			</if> 
+			
+		</where>
+		order by dcreatedate desc limit #{pageSize} offset (#{pageSize} * (#{page} - 1))
+	</select>
+	<select id="getTotal" resultType="java.lang.Integer">
+		select count(iid) from t_coupon_rule 
+		<where>
+			<![CDATA[ istatus !='-1' ]]>
+			<if test="condition.cname != null and condition.cname!=''" >
+				and cname like '%'||#{condition.cname,jdbcType=VARCHAR}||'%'
+			</if>
+			<if test="condition.itype != null">
+				and itype = #{condition.itype,jdbcType=INTEGER}
+			</if>
+			<if test="condition.istatus != null">
+				and istatus = #{condition.istatus,jdbcType=INTEGER}
+			</if>
+			<if test="condition.ctimetype != null and condition.ctimetype!=''">
+				and ctimetype = #{condition.ctimetype,jdbcType=VARCHAR}
+			</if>
+			<if test="condition.startdate != null ">
+				and startdate &gt;= #{condition.startdate} 
+			</if>
+			<if test="condition.enddate != null ">
+				and enddate &lt;= #{condition.enddate}
+			</if>
+			<if test="condition.validityMini != null ">
+				and ivalidity &gt;= #{condition.validityMini}
+			</if>
+			<if test="condition.validityMax != null ">
+				and ivalidity &lt;= #{condition.validityMax}
+			</if> 
+		</where>
+	</select>
+
+	<insert id="add" parameterType="entity.loyalty.CouponRule"
+		useGeneratedKeys="true" keyProperty="iid">
+		insert into t_coupon_rule
+		(
+			itype,
+			cname,
+			cwebsiteid,
+			ccurrency,
+			fcouponamount,
+			forderamountlimit,
+			cdescription,
+			startdate,
+			enddate,
+			icreator,
+			fdiscount,
+			ctimetype,
+			ivalidity,
+			cproducttype,
+			cuseterminal,
+			csku
+		)
+		values
+		(
+			#{itype,jdbcType=VARCHAR},
+			#{cname,jdbcType=VARCHAR},
+			#{cwebsiteid,jdbcType=VARCHAR},
+			#{ccurrency,jdbcType=INTEGER},
+			#{fcouponamount,jdbcType=FLOAT},
+			#{forderamountlimit,jdbcType=FLOAT},
+			#{cdescription,jdbcType=VARCHAR},
+			#{startdate,jdbcType=TIMESTAMP},
+			#{enddate,jdbcType=TIMESTAMP},
+			#{icreator,jdbcType=INTEGER},
+			#{fdiscount,jdbcType=FLOAT},
+			#{ctimetype,jdbcType=VARCHAR},
+			#{ivalidity,jdbcType=INTEGER},
+			#{cproducttype,jdbcType=VARCHAR},
+			#{cuseterminal,jdbcType=VARCHAR},
+			#{csku,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update  id="del" parameterType="java.util.List">
+		update t_coupon_rule set istatus=-1 where iid in
+		<foreach collection="list" index="index" item="item" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</update >
+
+	<update id="edit" parameterType="entity.loyalty.CouponRule">
+		update t_coupon_rule
+		<set>
+			<if test="itype != null">
+				itype = #{itype,jdbcType=VARCHAR},
+			</if>
+			<if test="cname != null">
+				cname = #{cname,jdbcType=VARCHAR},
+			</if>
+			<if test="cwebsiteid != null">
+				cwebsiteid = #{cwebsiteid,jdbcType=VARCHAR},
+			</if>
+			<if test="istatus != null">
+				istatus = #{istatus,jdbcType=INTEGER},
+			</if>
+			<if test="ccurrency != null">
+				ccurrency = #{ccurrency,jdbcType=INTEGER},
+			</if>
+			<if test="fcouponamount != null">
+				fcouponamount = #{fcouponamount,jdbcType=FLOAT},
+			</if>
+			<if test="forderamountlimit != null">
+				forderamountlimit = #{forderamountlimit,jdbcType=FLOAT},
+			</if>
+			<if test="cdescription != null">
+				cdescription = #{cdescription,jdbcType=VARCHAR},
+			</if>
+			<if test="startdate != null">
+				startdate = #{startdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="enddate != null">
+				enddate = #{enddate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="fdiscount != null">
+				fdiscount = #{fdiscount,jdbcType=INTEGER},
+			</if>
+			<if test="ctimetype != null">
+				ctimetype = #{ctimetype,jdbcType=VARCHAR},
+			</if>
+			<if test="ivalidity != null">
+				ivalidity = #{ivalidity,jdbcType=INTEGER},
+			</if>
+			<if test="cproducttype != null">
+				cproducttype = #{cproducttype,jdbcType=VARCHAR},
+			</if>
+			<if test="cuseterminal != null and cuseterminal != ''">
+				cuseterminal = #{cuseterminal,jdbcType=VARCHAR},
+			</if>
+			<if test="csku != null and csku != ''">
+				csku = #{csku,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where iid=#{iid,jdbcType=INTEGER}
+	</update>
+	
+	<insert id="addTreeCheck" parameterType="java.util.List">
+		 
+                <foreach collection="list"  item="itm" separator=";">
+                insert into t_coupon_rule_categoryfilter 
+                (icategoryid,iruleid)
+                 values
+                (#{itm.icategoryid},#{itm.iruleid})
+                </foreach>
+	</insert>
+	
+	<delete id="delTreeCheckByRuleId" parameterType="java.lang.Integer">
+		delete  from t_coupon_rule_categoryfilter where iruleid=#{0}
+	</delete>
+	
+	<update id="ChangeStatusOn" parameterType="java.lang.Integer">
+		update t_coupon_rule set istatus=1 where iid =#{0}
+	</update>
+	
+	<update id="ChangeStatusOff" parameterType="java.lang.Integer">
+		update t_coupon_rule set istatus=2 where iid = #{0}
+	</update>
+	
+	
+	<update id="ChangeStatusDelete" parameterType="java.lang.Integer">
+		update t_coupon_rule set istatus=-1 where iid = #{0}
+	</update>
+	
+	<!-- add by lijun -->
+	<select id="isExisted" parameterType="string" resultType="int">
+		select count(iid) from t_coupon_rule a
+		where a.cname=#{0} and a.istatus != -1
+	</select>
+	
+	<select id="getLoginRule" resultMap="couponRule">
+		select * from t_coupon_rule a
+		where a.cname='login' and a.istatus != -1
+	</select>
+	
+	<select id="getSubscribeRule" resultMap="couponRule">
+		select * from t_coupon_rule a
+		where a.cname='subscribe' and a.istatus != -1
+	</select>
+</mapper>

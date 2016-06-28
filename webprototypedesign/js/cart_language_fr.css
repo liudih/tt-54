@@ -1,0 +1,26 @@
+.newshopping_box_right .nw_btn_place {
+    background-position: 14px -410px;
+    padding-left: 45px;
+
+}
+.newshopping_box_right .nw_btn_cartplace{
+    background-position: 25px -410px;
+    padding-left: 56px;
+    font-size: 14px;
+}
+.have_code .have_code_input input[type="text"]{
+    width: 156px;
+}
+.have_code .have_code_select .current_num{
+    width: 154px;
+}
+.have_code .have_code_select{
+    width: 156px;
+}
+.have_code .current_list{
+    width: 156px;
+}
+.have_code .have_code_input input[type="submit"]{
+    width: 65px;
+}
+

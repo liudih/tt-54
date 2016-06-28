@@ -1,0 +1,208 @@
+@(products: valueobjects.base.Page[valueobjects.product.ProductBadge],
+	catelist: List[dto.product.CategoryWebsiteWithName],
+	st: Integer,
+	req: Map[String, Array[String]],
+	advertisingList : List[valueobjects.product.AdItem],
+	storageList : List[dto.Storage],
+	hotlist: List[valueobjects.product.ProductBadge],
+	sc: valueobjects.search.SearchContext,
+	sdate:String,
+  	sdatetype:String,
+  	newarrivals: List[valueobjects.product.ProductNewarrivalsCalculateItem],
+  	pci: List[valueobjects.product.ProductNewarrivalsCalculateItem],
+  	catogeryCount : Map[Integer,Long]
+	)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+@import services.search.criteria._
+@import services.base._
+@import services.base.utils._
+
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/directories.css")?@version.BuildVersion.build()" /> 
+}
+@services.base.HtmlUtils.misc().addTail{
+	<script src="@controllers.product.routes.Assets.at("js/product/page_filter.js")" ></script>
+}
+@views.html.base.master {
+
+<div class="container LevelOne">
+	
+	<div class="Bread_crumbs_Box">
+        <ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="/"></a></li>
+            <li>
+                <p>
+                	<a class="Bread_link" href="@controllers.product.routes.Product.newarrivals()">@Messages("new.arrivals")</a>
+                </p>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <div class="dirLeft lineBlock">
+        
+        @views.html.home.cartegory_single_select_bar_new(catelist,catogeryCount)
+       
+        
+        <div class="firBoxP">
+        	<p class="dirTitle">@Messages("relese.date"):</p>
+            <ul class="radioList">
+            	
+            @if(null ==newarrivals || newarrivals.size()==0){
+            	0 Item(s)
+        	}else{
+	        	@newarrivals.zipWithIndex.map{ n=>
+	        	
+	        		@if(sdatetype=="1"&&sdate==DateFormatUtils.getDateTimeYYYYMMDD(n._1.getDateStr())){
+				 		<li class="radioAci" onclick="getproductnewarrivals(this,1)">
+					} else {
+						<li onclick="getproductnewarrivals(this,1)">
+					}
+	               <em></em>  @DateFormatUtils.getDateTimeYYYYMMDD(n._1.getDateStr())
+	               (@n._1.getNumber()) 
+	               
+	               <input type="hidden" name="statPublishDate" value="@DateFormatUtils.getDateTimeYYYYMMDD(n._1.getDateStr())" />
+	                 </li>
+			                
+	           }
+	            @if(null ==pci || pci.size()==0){
+	            
+	            } else {
+           		@pci.zipWithIndex.map{ p =>
+           			 
+           			 @if(sdatetype=="2"&&sdate==DateFormatUtils.getDateTimeYYYYMMDD(p._1.getDateStr())){
+					   <li class="radioAci" onclick="getproductnewarrivals(this,2)">
+					} else {
+					   <li onclick="getproductnewarrivals(this,2)">
+					}
+					 <em></em>
+						@if(p._2 == 0){
+						 	@Messages("last.week") 
+		            	}
+		            	@if(p._2 == 1){
+							@Messages("last.2.weeks")
+		            	}
+		            	@if(p._2 == 2){
+						 	@Messages("last.3.weeks")
+		            	}
+		            	@if(p._2 == 3){
+						   @Messages("last.month")
+		            	}
+	            	(@p._1.getNumber())
+	            	<input type="hidden" name="statPublishDate" value="@DateFormatUtils.getDateTimeYYYYMMDD(p._1.getDateStr())" />
+	            	 </li>
+	            	
+					}
+				}
+	            <div class="clear"></div>
+           }
+        	</ul>
+        </div>
+        <div class="firBoxP">
+        	@freeship_or_newarrivals_filter(1)
+        </div>
+        @*<div class="firBoxP">
+        	<p class="dirTitle">WareHouse Options</p>
+            <ul class="firThisBox">
+            	@storageList.map{s=>
+            		<li>
+            		<a class="rightThis thisAci" data-name="storageid" data-value="@s.getIid()" href="javascript:;"><span></span></a>
+            		@s.getCstoragename()
+            		</li>
+            	}
+            </ul>
+        </div>*@
+        <div class="firBoxP border0">
+        	<p class="dirTitle">@Messages("hot.products")</p>
+            <ul class="pirListProduct">
+            	@hotlist.map{h=>
+            		@category_badge_hot(h)
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="dirRight lineBlock">
+        <div class="twoDir_Box">
+            @if(null !=advertisingList && advertisingList.size()>0){
+				<div class="direBanner_box" id="indexBanner_box">
+		            <a class="browseLeft_click" href="javascript:;"></a>
+		            <a class="browseRight_click" href="javascript:;"></a>
+		        	<ul class="indexBanner_A">
+						@advertisingList.zipWithIndex.map{a=>
+							@if(a._2 == 0){
+							 <li style="z-index:1"> @Html(a._1.getDefaultShow())</li>
+							}else{
+							<li>@Html(a._1.getDefaultShow())</li>
+							}
+						}
+		            </ul>
+		            <ul class="indexBanner_list">
+		            	@advertisingList.zipWithIndex.map{a=>
+							@if(a._2 == 0){
+							 <li class="listActive"></li>
+							}else{
+							<li></li>
+							}
+						}
+		            </ul>
+		        </div>
+		    }
+        </div>
+        <div id="pagelist">
+			@sortbar_category{
+				<input type="hidden" name="st" value="@st"/>
+		  		<input type="hidden" name="statPublishDate" value="@sdate" />
+				<input type="hidden" name="statPublishDateType" value="@sdatetype" />
+				@req.keySet.map{i=>
+					@if(i=="category"){
+						@req.get(i).take(1).map{ aa=>
+							<input type="hidden" id="category" name="category" value="@aa" />
+						}
+					}
+				}
+			}(req)(sc)
+		</div>
+        @if(products.getList().size()!=0){
+        <ul class="arrangeClick arrangeLess block">
+            @products.getList().map{p=>
+				@views.html.product.category_badge(p)
+			}
+            <div class="clear"></div>
+        </ul>
+        <ul class="arrangeList">
+       		@products.getList().map{p=>
+            	@views.html.product.category_badge_list(p)
+            }
+            <div class="clear"></div>
+        </ul>
+        <div class="arrayNEX">
+			@views.html.product.gadget.pagination(products.pageNo(),products.totalPages())
+		</div>
+		}else{
+			<h2 style="text-align:center;color:orange; margin-bottom: 50px;border:1px solid #e8e8e8;padding:150px 0 ;">Sorry, No Products Found!</h2>
+		}
+    </div>
+</div>
+
+		@tp.get("member-browse-history")
+    	@services.base.HtmlUtils.misc().addTailOnce{
+		<script>
+		   function getproductnewarrivals(t,type){
+			    var node = $(t);
+			    if(!node.hasClass("radioAci")){
+			    	node.addClass("radioAci");
+			    }else{
+			    	node.removeClass("radioAci"); 
+			    }
+			    $("#p").val(1); //默认跳转到第一页
+			    //获取日期的值
+			  	var datestr = $(t).find("input").val();
+			  	$("#searchbar").find("input[name='statPublishDate']").remove();
+			    $("#searchbar").find("input[name='statPublishDateType']").remove();
+			  	$("#searchbar").append('<input type="hidden" name="statPublishDate" value="'+datestr+'" />');
+			  	$("#searchbar").append('<input type="hidden" name="statPublishDateType" value="'+type+'" />');
+				$('#searchbar').submit();
+		   	}
+		</script>
+	}	
+}

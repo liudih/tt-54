@@ -1,0 +1,6 @@
+@(highliht:Boolean,total : Integer)
+<li @if(highliht){ class="leftAct" } ><a href="@controllers.messaging.member.routes.MyMessage.listMyMessage()">
+@Messages("messaging.myMessage")
+(@if(total > 0){<span style="color:red;">@total</span>}else{0})
+</a>
+</li>

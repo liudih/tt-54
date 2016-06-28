@@ -1,0 +1,2 @@
+cpaymentid,iwebsiteid,fbeginprice,fendprice,cbusiness
+oceanpayment_webmoney,1,0,10000,"{""account"":""140105"",""terminal"":""14010508"",""secureCode"":""12345678""}"

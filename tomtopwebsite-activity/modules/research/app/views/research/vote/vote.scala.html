@@ -1,0 +1,24 @@
+@(
+	vo : valueobjects.research.vote.VoteComposite,
+	renderer : services.research.vote.VoteCompositeRenderer,
+	pageTitle : entity.activity.page.PageTitle,
+	page : entity.activity.page.Page
+)
+
+@views.html.research.vote.vote_minimal(pageTitle,page){
+	<div class="likesAbs">
+		<div class="likesFix">
+			<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-532965a902fc0807" async="async"></script> 
+		</div>
+	</div>
+		<section class="contentOut">
+			<div class="contentWarp">
+					@renderer.renderFragment(vo,"vote-item")
+					<input type="hidden" id="votePageType" value="@page.getItype()">
+					<input type="hidden" id="votePageID" value="@page.getIid()">
+					<input type="hidden" id="voteEndDate" value="@page.getDenableenddate()">
+					 @**renderer.renderFragment(vo,"product-item")**@
+			</div>
+		</section>
+
+} 

@@ -1,0 +1,99 @@
+@()
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+@onemenus = @{services.base.cms.CmsMenuService.getInstance().getOneFootCmsMenu(context.ContextUtils.getWebContext(play.mvc.Http.Context.current()))}
+@twomenus = @{services.base.cms.CmsMenuService.getInstance().getTwoFootCmsMenuMap(context.ContextUtils.getWebContext(play.mvc.Http.Context.current()))}
+@livechaturl = @{services.base.ConfigService.getLivechatUrl()}
+
+ <div class="bottom_box">
+            	<div class="bottom_width">
+                            <ul class="join_sns">
+                            <li class="spanFacebook">
+                                <a target="_blank" href="http://www.facebook.com/pages/TOMTOP/104613349590201">
+                                <span class="spans"></span> 
+                                <span class="join_snsTXT">@Messages("like.us")<br>@Messages("on.facebook")</span>
+                                </a>
+                                <div class="clear"> </div>
+                            </li>
+                            <li class="spanTwitter">
+                                <a target="_blank" href="http://twitter.com/tomtopfans">
+                                <span class="spans"></span> 
+                                <span class="join_snsTXT">@Messages("follow.us")<br>@Messages("on.twitter")</span>
+                                </a>
+                                <div class="clear"> </div>
+                            </li>
+                            <li class="spanPinterest">
+                                <a target="_blank" href="http://pinterest.com/tomtop">
+                                <span class="spans"></span> 
+                                <span class="join_snsTXT">@Messages("pin.us")<br>@Messages("on.pinterest")</span>
+                                </a>
+                                <div class="clear"> </div>
+                            </li>
+                            <li class="spanBlog">
+                                <a target="_blank" href="http://blog.tomtop.com">
+                                <span class="spans"></span> 
+                                <span class="join_snsTXT">@Messages("read.us")<br>@Messages("on.our.blog")</span>
+                                </a>
+                                <div class="clear"> </div>
+                            </li>
+                            <li class="spanYoutube">
+                                <a target="_blank" href="http://www.youtube.com/linksempire">
+                                <span class="spans"></span> 
+                                <span class="join_snsTXT">@Messages("watch.us")<br>@Messages("on.youtube")</span>
+                                </a>
+                                <div class="clear"> </div>
+                            </li>
+                            <li class="spanGoogle">
+                                <a target="_blank" href="https://plus.google.com/u/1/b/116838174145341535107/116838174145341535107">
+                                <span class="spans"></span> 
+                                <span class="join_snsTXT">@Messages("like.us")<br>@Messages("on.google")</span>
+                                </a>
+                                <div class="clear"> </div>
+                            </li>
+                            <li style="margin-right: 0px;" class="spanVK">
+                                <a target="_blank" href="https://vk.com/official_rutomtop">
+                                <span class="spans"></span> 
+                                <span class="join_snsTXT">@Messages("follow.us")<br>@Messages("on.VK")</span>
+                                </a>
+                                <div class="clear"> </div>
+                            </li>
+                            <div class="clear"></div>
+                            </ul>
+                            <div class="bottom_link_BOX">
+                            
+                            	@onemenus.map{r=>
+                            		<div class="bottom_linkB">
+	                                    <div class="bottom_link_title">@r.getCname()</div>
+	                                    <ul class="bottom_link">
+	                                    	 @if(twomenus.containsKey(r.getIid())) {
+	                                    	 	@twomenus(r.getIid()).map{m=>
+	                                    	 		@if(r.getIid() ==57){
+			                                    	 <li><a href="@m.getCurl()" target="_top">@m.getCname()</a></li>
+	                                    	 		}else{
+			                                    	 <li><a href="@m.getCurl()" rel="nofollow" target="_top">@m.getCname()</a></li>
+	                                    	 		}
+	                                    	 	}
+	                                    	 }
+	                                    </ul>
+                               		</div>
+                            	}
+                                 
+                                <div class="clear"></div>
+                         	</div>
+                            <div class="bottomPayple_icon">
+                            	<ul>
+                                	<li><img src="@controllers.base.routes.Assets.at("/img/bottom_icon_pay.jpg")" /></li>
+                                	<li><img src="@controllers.base.routes.Assets.at("/img/bottom_icon_payple.jpg")" /></li>
+                                	<li><img src="@controllers.base.routes.Assets.at("/img/bottom_icon_45day.jpg")" /></li>
+                               		<div class="clear"></div>
+                                </ul>
+                               	<div class="clear"></div>
+                                <p>@Messages("copyright.2004.2014.tomtop.wholesale.center.all.rights.reserved") (Build: @version.BuildVersion.build())</p>
+                            </div>
+                 </div>
+            </div>
+@if(livechaturl!=null && livechaturl.indexOf("53kf")>0){
+<script type='text/javascript' src='http://tb.53kf.com/kf.php?arg=10045862&style=1'></script>
+}
+            
+            

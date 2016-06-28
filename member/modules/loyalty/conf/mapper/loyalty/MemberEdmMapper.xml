@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.loyalty.MemberEdmMapper" >
+  <resultMap id="BaseResultMap" type="entity.loyalty.MemberEdm" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+    <result column="cemail" property="cemail" jdbcType="VARCHAR" />
+    <result column="ccategory" property="ccategory" jdbcType="VARCHAR" />
+    <result column="benabled" property="benabled" jdbcType="BIT" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, iwebsiteid, cemail, ccategory, benabled, dcreatedate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_member_edm
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_member_edm
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.loyalty.MemberEdm" >
+    insert into t_member_edm (iid, iwebsiteid, cemail, 
+      ccategory, benabled, dcreatedate
+      )
+    values (#{iid,jdbcType=INTEGER}, #{iwebsiteid,jdbcType=INTEGER}, #{cemail,jdbcType=VARCHAR}, 
+      #{ccategory,jdbcType=VARCHAR}, #{benabled,jdbcType=BIT}, #{dcreatedate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.loyalty.MemberEdm" >
+    insert into t_member_edm
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="iwebsiteid != null" >
+        iwebsiteid,
+      </if>
+      <if test="cemail != null" >
+        cemail,
+      </if>
+      <if test="ccategory != null" >
+        ccategory,
+      </if>
+      <if test="benabled != null" >
+        benabled,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="iwebsiteid != null" >
+        #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="cemail != null" >
+        #{cemail,jdbcType=VARCHAR},
+      </if>
+      <if test="ccategory != null" >
+        #{ccategory,jdbcType=VARCHAR},
+      </if>
+      <if test="benabled != null" >
+        #{benabled,jdbcType=BIT},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.loyalty.MemberEdm" >
+    update t_member_edm
+    <set >
+      <if test="iwebsiteid != null" >
+        iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="cemail != null" >
+        cemail = #{cemail,jdbcType=VARCHAR},
+      </if>
+      <if test="ccategory != null" >
+        ccategory = #{ccategory,jdbcType=VARCHAR},
+      </if>
+      <if test="benabled != null" >
+        benabled = #{benabled,jdbcType=BIT},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.loyalty.MemberEdm" >
+    update t_member_edm
+    set iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      cemail = #{cemail,jdbcType=VARCHAR},
+      ccategory = #{ccategory,jdbcType=VARCHAR},
+      benabled = #{benabled,jdbcType=BIT},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

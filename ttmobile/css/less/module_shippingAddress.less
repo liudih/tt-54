@@ -1,0 +1,99 @@
+@import "public.less";
+
+.address_con_W{width:98%;margin-left:1%;
+  h5{margin-top:20px;}
+}
+.leaveMessage_input{margin-top:15px;font-weight:normal;display:none;
+  p{margin-top:5px;}
+}
+.address_infCon{width:80%;font-size:14px;padding-left:15px;}
+.textareaBox{min-height:130px;}
+.address_name{font-size:14px;}
+.address_txt{margin:3px 0px;}
+.address_choose{width:18%;
+  >span{margin:0 auto;margin-bottom:5px;}
+}
+.address_chooseIcon{display:block;width:50px;height:50px;.login(0,-200px);background-size:100% auto;margin-left:10px;}
+.address_PaypalIcon{display:block;width:50px;height:50px;.login(0,-302px);background-size:100% auto;margin-left:10px;}
+.add_address{position:relative;background-color:#fff;
+  .border();height:50px;padding:0px 15px 0px 40px;.radius();margin:15px 0px;
+  .add_addressTxt{line-height:50px;}
+  .placeholder_country{height:48px;
+    &~.select_country{top:57px;}
+  }
+}
+.add_addressIco{position:absolute;left:5px;top:5px;width:35px;height:35px;.zIndex(0px,-245px);display:inline-block;background-size:100% auto;}
+.addPop_input{height:50px;
+  &~.sClean{top:15px;right:5px;}
+}
+.popAddress_box{border-bottom:1px solid #dddddd;padding:10px 0px;
+  li{width:90%;padding-left:10px;vertical-align:middle;
+    &:first-child{width:10%;max-width:45px;padding-left:0px;}
+  }
+}
+.paypalIcon{display:inline-block;margin:0 auto;position:relative;padding-left:40px;
+  &:after{content:"";position:absolute;left:0px;top:-5px;width:30px;height:30px;background:url("../../images/icon/paypal.png") no-repeat 0px 0px; background-size:30px auto;}
+}
+
+.qtyAddres{font-size:14px;margin-top:10px;
+  >span{margin-left:10px;}
+}
+.selectShippingMethod{
+  padding:10px 18px;
+  li{vertical-align:middle;font-size:14px;}
+  .selectShippingMethod_R{font-weight:bold;font-size:16px;text-align:right;}
+  b{font-size:14px;}
+}
+.leaveMessage_Box{font-weight:bold;}
+.addressConCss{background-color:#fff;margin-top:10px;
+  .address_infCon,.address_choose{padding:10px;}
+  .address_choose{display:none;}
+  .defaultAddressCss{
+    text-align:center;font-size:14px;border-top:1px solid #efefef;padding:10px 5px;display:none;color:#999;
+  }
+  .address_defaule{vertical-align:middle;font-size:14px;margin-left:15px;font-weight:bold;display:none;}
+}
+.defaultAddress_css{
+  .address_defaule{display:inline-block;}
+}
+.paymentNone{
+  position:relative;
+  z-index:9;
+  border-top:1px solid #ccc;
+  margin-top:10px;
+  padding-top:15px;
+  padding-bottom:15px;
+  img{max-width:100%;}
+  .publicePop_con{
+    position:relative;
+  }
+  .payTxt{
+    font-size:14px;
+  }
+  .address_infCon{
+    padding-left:0px;
+    font-size:12px;
+    .address_name{
+      font-size:14px;
+    }
+  }
+  strong{
+    font-size:14px;
+    color:#333;
+  }
+  .checkbox_div{
+    margin-bottom:5px;
+    margin-top:5px;
+  }
+  .aditFilter{
+    position:absolute;
+    right:10px;
+    bottom:15px;
+  }
+}
+
+@media (min-width:768px){
+  .qtyAddres{font-size:16px;}
+  .address_name{font-size:16px;}
+  .address_txt{margin:5px 0px;}
+}

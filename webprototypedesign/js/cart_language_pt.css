@@ -1,0 +1,9 @@
+.newshopping_box_right .nw_btn_place{
+    background-position: 23px -410px;
+}
+
+.newshopping_box_right .nw_btn_cartplace{
+    background-position: 12px -410px;
+    padding-left: 41px;
+    font-size: 14px;
+}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tomtop.product.mappers.order.ShippingMethodMapper">
+	<select id="getShippingMethods"  resultType="com.tomtop.product.models.dto.shipping.ShippingMethodDetail">
+		select m.*,d.cname, d.ctitle, d.ccontent, d.cfreecontent, d.ilanguageid, d.cimageurl, d.igroupid 
+		from t_shipping_method m 
+		inner join t_shipping_method_detail d on d.ccode = m.ccode 
+		where m.istorageid = ${storageId} 
+		and (m.ccountrys like '%${country}%' or m.ccountrys is null) 
+		and (${weight} &lt; m.iendweight and ${weight} &gt;= m.istartweight) and 
+		d.ilanguageid = #{lang} and m.benabled = true 
+		and (#{price} &lt; m.fendprice and #{price} &gt;= m.fbeginprice) 
+		<if test="isSpecial != false">
+			and m.bisspecial = #{isSpecial} 
+		</if>
+		order by iid 
+	</select>
+	
+	<select id="getShippingMethodsByStorageIds"  resultType="com.tomtop.product.models.dto.shipping.ShippingMethodDetail">
+		select m.*,d.cname, d.ctitle, d.ccontent, d.cfreecontent, d.ilanguageid, d.cimageurl, d.igroupid 
+		from t_shipping_method m 
+		inner join t_shipping_method_detail d on d.ccode = m.ccode 
+		where m.istorageid in 
+		<foreach item="item" index="index" collection="storageIds" open="("
+			separator="," close=")">#{item}</foreach>
+		and (m.ccountrys like '%${country}%' or m.ccountrys is null) 
+		and (${weight} &lt; m.iendweight and ${weight} &gt;= m.istartweight) and 
+		d.ilanguageid = #{lang} and m.benabled = true 
+		and (#{price} &lt; m.fendprice and #{price} &gt;= m.fbeginprice) 
+		<if test="isSpecial != false">
+			and m.bisspecial = #{isSpecial} 
+		</if>
+		order by iid 
+	</select>
+	
+	<select id="getAllShippingMethodsByStorageIds"  resultType="java.lang.Integer">
+		select DISTINCT istorageid from t_shipping_method where benabled=true ORDER BY istorageid
+	</select>
+</mapper>

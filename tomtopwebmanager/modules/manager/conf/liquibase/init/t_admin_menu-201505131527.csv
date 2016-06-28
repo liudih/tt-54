@@ -1,0 +1,5 @@
+﻿"iid","cname","iparentid","ilevel","cclass","curl","ccreateuser","dcreatedate","cenname"
+﻿"84","Marketing","0","1","84","","xiaoch","2015-05-13","Marketing"
+﻿"85","Coupon Rule","84","2","85","/sysadmin/marketing/couponrule","xiaoch","2015-05-13","Coupon Rule"
+"86","Coupon Code","84","2","86","/sysadmin/marketing/couponcode","xiaoch","2015-05-13","Coupon Code"
+

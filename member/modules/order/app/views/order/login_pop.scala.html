@@ -1,0 +1,118 @@
+@()
+@import services.member._
+@country = @{services.base.FoundationService._getCountryObj()}
+@services.base.HtmlUtils.misc().addTailOnce{
+<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+<script>
+$(document).ready(function() {
+	$("#loginForm").validate({
+		submitHandler: function(form) {
+			$.ajax({
+		        type:"post",
+		        cache:false,
+		        url:"/member/loginajax",
+		        data:$(form).serialize(),
+		        dataType:"json",
+		        success: function(data) {
+		        	if(data.result=="success"){
+		        		location.reload();
+		        	}
+		        	if(data.result=="accountwrong"){
+		        		pophtml("Error","Email or password is wrong!");
+		        	}
+	        	}
+		      });
+			return false;
+		},
+		errorClass: "edit_error",
+		errorElement:"label",
+		rules: {
+			email: {
+				required:true,
+				email:true
+			},
+			password: {
+				required: true,
+				minlength: 6
+			}
+		},
+		messages: {
+			email: {
+				required:"Please enter a valid email address.",
+				email: "he email you've entered is invalid. Please check your email and try again."
+			},
+			password: {
+				required:"Provide a password.",
+				minlength: jQuery.validator.format("Enter at least {0} characters.")
+			}
+		},
+		success: function (e,element) {
+			//$('#submit').addClass("log_sinIn");
+			//e.removeClass('edit_error').addClass('suceess');
+		}
+	});
+});	 
+</script>
+}
+<div class="cartLogin">
+	@if(!MemberHelper.getCurrentEmail().isDefined()){
+		<em></em>@Messages("hello").<a href="javascript:;" data="@controllers.member.routes.Login.loginForm()" class="blue">
+			@Messages("sign.in.join")
+		</a>
+		<br>
+		<!--pop-->
+		<div class="blockPopup_box noPhoto">
+			<div class="postPhotos_popBox">
+				<form action="/member/login" method="POST" class="form-signin" role="form" id="loginForm" >
+				<div class="customer_popClose"></div>
+				<ul class="ControlNa">
+					<li class="controAc">@Messages("sign.in")</li>
+					<li>@Messages("register")</li>
+					<div class="clear"></div>
+				</ul>
+				<div class="signIn Control block">
+					<ul>
+						<li><input name="email" type="text" placeholder="@Messages("enter.your.email.address")" /></li>
+						<li><input name="password" type="password" placeholder="@Messages("enter.your.password")" /></li>
+					</ul>
+					<div class="singInBotone">
+						<input class="log_sinIn" type="submit" value="@Messages("login")">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="/member/findpass">@Messages("forgot.your.password")</a>
+					</div>
+					<div class="singInBottwo">
+						<input class="log_Face" type="button" value="@Messages("facebook")"><br>
+						<input class="log_Paypal" type="button" value="@Messages("log.in.with.paypal")">
+					</div>
+				</div>
+				</form>
+				<div class="register Control">
+					<ul>
+						<li><input type="text" placeholder="@Messages("enter.your.email.address")"></li>
+						<li><input type="password" placeholder="@Messages("enter.your.password")"/></li>
+						<li><input type="password" placeholder="@Messages("confirm.your.password")" /></li>
+					</ul>
+					<p>@Messages("your.shipping.destination")</p>
+	  				@views.html.base.select_country(country)
+					<div class="clear"></div>
+					<label><input type="checkbox">@Messages("i.agree.to.the.tomtop")
+						<span class="blue">@Messages("terms.and.conditions")</span></label> <label><input
+						type="checkbox">@Messages("yes.sign.up.our.newsletter.get.a.50.coupon.in.your.first.email")</label>
+					<div class="creatInp">  
+						<hr>
+						<input type="submit" value="@Messages("create.my.account")">
+					</div>
+				</div>
+				
+			</div>
+			<div class="blockPopup_black"></div>
+		</div>
+		<!--pop-->
+	} else { 
+		@MemberHelper.getCurrentEmail().asScala.map{ email =>
+			<em class="vartLogOut"></em>@Messages("hi") 
+			<a href="@controllers.member.routes.Home.index()" class="blue">@email</a>
+			<a href="@controllers.member.routes.Login.logout()">@Messages("logout")</a>
+		}
+	}
+</div>

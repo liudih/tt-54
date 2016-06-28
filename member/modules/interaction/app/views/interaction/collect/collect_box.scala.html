@@ -1,0 +1,56 @@
+@()
+<li>
+<a class="heart" href="javascript:;"><em></em>
+@Messages("add.all.wish.list")
+<p class="deletePop">
+	<i></i>@Messages("add.all.to.wish.list")<br />
+	<input onclick="collect('',this)" type="button" value="@Messages("yes")" class="deleteYes" />
+	<input type="button" value="@Messages("no")" />
+</p></a>
+</li>
+@services.base.HtmlUtils.misc().addTailOnce{
+<script>
+var collecturl = "@controllers.interaction.routes.Collect.collect()";
+var membercollecturl = "@controllers.interaction.routes.Collect.getcollect()";
+var loginurl = "@controllers.member.routes.Login.loginForm()" + "?backUrl=/cart";
+function collect(lid,node) {
+	if(lid==""){
+		action = "addall";
+		var arr = [];
+		$(".listingId").each(function(i,e){
+			arr.push(this.value);
+		});
+		lid = arr.join(",");
+	}else{
+		// 是否添加或移除
+		if ($(node).children("em").hasClass("redHeart")) {
+			action = "del";
+		} else {
+			action = "add";
+		}
+	}
+	$.get(collecturl, {
+		"lid" : lid,
+		"action" : action
+	}, function(data) {
+		if (data.result == "nologin") {
+			alert("You are not logged in");
+			location.href = loginurl;
+			return;
+		}
+		if (data.result == "success") {
+			if (action == "add") {
+				$(node).children("em").addClass("redHeart");
+			} else if (action == "del") {
+				$(node).children("em").removeClass("redHeart");
+			}
+			if (action == "addall") {
+				location.reload();
+			}
+		} else {
+			alert(data.result);
+		}
+	}, "json");
+}
+</script>
+}

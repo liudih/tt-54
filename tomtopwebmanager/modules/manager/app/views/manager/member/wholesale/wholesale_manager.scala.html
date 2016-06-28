@@ -1,0 +1,92 @@
+@(wholesaleList: Html, statusMap: HashMap[Integer, String])
+
+@import views.html.helper._
+
+@views.html.manager.main {
+			<!-- BEGIN PAGE CONTAINER-->
+			<div class="container-fluid">
+			
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+						<h3 class="page-title">
+							WholeSale信息管理
+						</h3>
+						<ul class="breadcrumb">
+							<li><i class="icon-home"></i> <a href="/sysadmin">Home</a>
+								<i class="icon-angle-right"></i></li>
+							<li><a href="#">客户管理</a> <i class="icon-angle-right"></i>
+							</li>
+							<li><a href="#">WholeSale信息管理 </a></li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				
+				
+				<!-- BEGIN PAGE CONTENT-->
+			    @form(controllers.manager.wholesale.routes.WholeSale.search(), 'id->"searchWholeSale", 'onsubmit->"return false"){
+			    <div class="order_ll_select">
+					<div class="order_ll_col">
+						<div class="order_ll_inline">
+				        	<p>站点选择</p>
+				            	@services.manager.ChooseService.getInstance().website("websiteId", null, true)
+				        </div>
+					
+						<div class="order_ll_inline">
+				        	<p>客户邮箱</p>
+				            <input name="email" class="order_ll_txt" type="text"/>
+				        </div>
+						
+						<div class="order_ll_inline">
+				        	<p>status</p>
+				            <select name="status">
+				            <option value=""></option>
+								@statusMap.map{e =>
+									<option value="@e._1" @if(e._1==0){selected="selected"}>@e._2</option>
+								}
+							</select>
+				        </div>
+				        
+						<input type="hidden" name="pageSize">
+						<input type="hidden" name="pageNum">
+						
+						<div class="order_ll_inline">
+				        	<p>&nbsp;</p>
+				            <input class="order_ll_Search" id="search_wholesale_submit" type="button" value="Search" />
+				        </div>
+						
+						<div class="order_ll_inline">
+				        	<ul class="order_ll_show">
+				            	<li>Show</li>
+				            	<li><a class="order_ll_aActi" href="javascript:;" tag="pageSize" value="30">30</a></li>
+				            	<li><a href="javascript:;" tag="pageSize" value="50">50</a></li>
+				            	<li><a href="javascript:;" tag="pageSize" value="100">100</a></li>
+				            </ul>
+				        </div>
+						<div class="clear"></div>
+					</div>
+				</div>
+				} 
+				<div class="accountBox">
+					<div class="orderBox">
+						<div class="xxkDiv">
+							<div id="search_wholesale_html">
+								@wholesaleList
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- END PAGE CONTENT -->
+
+			</div>
+
+			<!-- END PAGE CONTAINER-->
+			@services.base.HtmlUtils.misc().addTailOnce{
+				<link rel="stylesheet" type="text/css"  href="@controllers.manager.routes.Assets.at("css/manager/ordermanager.css")" />
+				<script src="@controllers.manager.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.manager.routes.Assets.at("js/manager/wholesaledetail")" ></script>
+			} 
+}

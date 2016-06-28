@@ -1,0 +1,184 @@
+@(backurl:String="")
+@views.html.member.base.master("affiliate-home"){
+	@helper.javascriptRouter("theRoutes")(
+		controllers.base.routes.javascript.Captcha.checkCaptcha,
+		controllers.affiliate.routes.javascript.AffiliateHome.addData
+	)
+	@services.base.HtmlUtils.misc().addHeadOnce{
+	 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/styles.css")?@version.BuildVersion.build()" />
+	}
+<div class="accountRight affilliate_Boxs affiliateBox">
+    <h5>Active Your Affiliate Account</h5>
+    <form action="" id="theform" method="POST" autocomplete="off">
+    <input type="hidden" name="backurl" value="@backurl" />
+    <table class="activateTable" width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+      </tr>
+      <tr>
+        <td><span class="red">*</span> Affiliate ID:</td>
+        <td><input name="caid" class="affilliate_inputTxt" type="text" placeholder="">
+        <!-- <p class="error_s lineBlock">Someone already has that ID. Try another?</p> -->
+        <br>
+        <span class="color999">Create it by yourself</span>
+        </td>
+      </tr>
+      <tr>
+        <td><span class="red">*</span> Paypal Email:</td>
+        <td><input name="cemail" class="affilliate_inputTxt" type="text" placeholder="">
+        <!-- <span class="rightUse"></span> -->
+        </td>
+      </tr>
+      <tr>
+        <td>Receive notification emails:</td>
+        <td>
+        	<select name="breceivenotification" class="select_affYes">
+            	<option value="1">Yes</option>
+            	<option value="0">No</option>
+            </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Word Verification:</td>
+        <td class="captchatd">
+         <input name="captcha" id="captcha" type="text" class="code affilliate_inputYzm" />
+         <div class="lineBlock">
+         	<img class="captcha" src="@controllers.base.routes.Captcha.generate()" onclick="this.src='@controllers.base.routes.Captcha.generate()?r='+Math.random();" style="cursor:pointer;" title="change" width="70" height="30" />
+         </div> 
+        </td>
+      </tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td>
+        <a class="lineBlock hsInputs" href="javascript:;" onclick="submitform();">Active</a></td>
+      </tr>
+    </table>
+    </form>
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+<script type="text/javascript">
+function submitform(){
+	if($("#theform").valid()){
+		tijiao();
+	}
+}
+//字符验证，只能包含中文、英文、数字、下划线等字符。      
+jQuery.validator.addMethod("stringCheck", function(value, element) {         
+     return this.optional(element) || /^[a-zA-Z0-9\u4e00-\u9fa5-_]+$/.test(value);         
+}, "Can only contain characters like English letters, numbers, underline, etc."); 
+$(document).ready(function() {
+	$("#theform").validate({
+		submitHandler : function(form) {
+		},
+		rules : {
+			caid : {
+				required : true,
+				maxlength:50,
+				stringCheck:true
+			},
+			cemail : {
+				required : true,
+				email : true
+			},
+			captcha:{
+				required : true,
+				maxlength:5,
+				remote:{
+		               type:"post",
+		               dataType:'json',
+		               url:theRoutes.controllers.base.Captcha.checkCaptcha().url,
+		               data:{
+		            	   captcha:function(){
+		            		   return $("#captcha").val();
+		            		   }
+		            	   }
+		               } 
+			}
+		},
+		messages: {
+			cemail: {
+				required: "This field is required!",
+				maxlength:"Please enter a valid email address!"
+			} ,
+			captcha:{
+				required : "captcha is require!",
+				maxlength:jQuery.validator.format("Please enter no more than {0} characters!"),
+				remote:"please check your captcha!"
+			}
+		},
+		//错误提示
+		errorClass: "error_s lineBlock", 
+		errorElement: "p",
+		//validClass:"rightUse",
+		highlight: function (element) { 
+			$(element).removeClass("error_s");
+	     },
+	     /*unhighlight: function (element) { 
+	    	//成功方法调用
+	    	$(element).siblings('label').remove() ;
+	    	$(element).after($('<label class="rightUse"></label>'));
+	    	$(element).removeClass('errorInp');
+	    	//$(element).next('.edit_error').removeClass('edit_error').addClass('');
+	     },*/
+		errorPlacement: function(error, element) {
+			var el = $(element);
+			el.parent().find(".rightUse").remove();
+			if(el.attr("name")=="captcha"){
+				el.next().after(error);
+			}else{
+				el.after(error);
+			}
+			$(".elsetip").remove();
+		 },
+		 success: function (e,element) {
+			 var el = $(element);
+			 if(el.parent().find(".rightUse").length==0){
+				if(el.attr("name")=="captcha"){
+					el.next().after('<span class="rightUse"></span>'); 
+				}else{
+					el.after('<span class="rightUse"></span>'); 
+				}
+			 }
+			 $(e).removeClass("error_s");
+			 $(".elsetip").remove();
+	     }
+	 });
+});
+
+function tijiao(){
+	var form = $("#theform");
+	$.ajax({
+		url : theRoutes.controllers.affiliate.AffiliateHome.addData().url,
+		type : "POST",
+		data: form.serialize(),
+		dataType : "json",
+		async : true,
+		success : function(data) {
+			if (data.result == "success") {
+				alert("success!");
+				form[0].reset();
+				form.find(".rightUse").remove();
+				if(typeof(data.backurl)!='undefined' && data.backurl!=null && data.backurl!=""){
+					location.href = data.backurl;
+				}
+				location.href = "@controllers.affiliate.routes.AffiliateHome.affiliateAd()";
+			}else if(data.result == "wrongcaptcha"){
+				form.find(".captchatd .rightUse").remove();
+				form.find(".captchatd:eq(0)").append('<p class="error_s lineBlock elsetip">please check your captcha!</p>');
+			}else if(data.result=="exist"){
+				$("input[name='caid']:eq(0)").siblings(".rightUse").remove();
+				$("input[name='caid']:eq(0)").after('<p class="error_s lineBlock elsetip">Someone already has that ID. Try another?</p>');
+			}else{
+				alert(data.result);
+			}
+		},
+		complete : function() {
+		}
+	});
+}
+</script>
+}
+}

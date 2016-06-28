@@ -1,0 +1,248 @@
+@(cartItemlist : TreeMap[Integer, Collection[valueobjects.cart.CartItem]],
+	 cart: facade.cart.Cart,
+	 currency: dto.Currency,
+	 storageMap: Map[Integer, dto.StorageParent],
+	 laterItemlist: List[valueobjects.cart.CartItem],
+	 proceedToCheckoutUrl : String,
+	 expressCheckoutUrl : String,
+	 isLogin : Boolean,
+	 storageid: String,
+	 cartStorageids: List[Integer]
+	 )	
+	 
+@tp = @{services.cart.base.template.TemplateService.getInstance().getContents()}
+@import services.base._
+@import services.base.utils._
+@import services.cart.member._
+@baseUrl = @{play.Play.application().configuration().getString("image_request_base_url")}
+@mainurl = @{play.Play.application().configuration().getString("main_website")}
+
+@meta = @{services.base.utils.MetaUtils.currentMetaBuilder().build()}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Pragma" content="no-cache"/>
+<meta http-equiv="Cache-Control" content="no-cache"/>
+<meta http-equiv="Expires" content="0"/>
+<title>@meta.getTitle() - TOMTOP</title>
+<meta name="description" content="@meta.getDescription()">
+<link rel="icon" href="@controllers.base.routes.Assets.at("favicon.ico")" type="image/x-icon"><meta name="keywords" content="@meta.getKeywords()">
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/model.css")" />
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/tomtop.css")">
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/country.css")">
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")">
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/newshopping.css")">
+<script src="@controllers.base.routes.Assets.at("lib/jquery/jquery.min.js")"></script>
+<script src="@controllers.base.routes.Assets.at("js/lib/public.js")?@version.BuildVersion.build()"></script>
+<script src="@controllers.base.routes.Assets.at("js/lib/main.js")?@version.BuildVersion.build()"></script>
+
+</head>
+<body>
+@helper.javascriptRouter("cartRoutes")(
+	controllers.cart.routes.javascript.CartController.delCartItem,
+	controllers.cart.routes.javascript.CartController.updateCartItem,
+	controllers.cart.routes.javascript.CartController.saveLaterCartItem,
+	controllers.cart.routes.javascript.CartController.delCartLaterItem,
+	controllers.cart.routes.javascript.CartController.updateCartLaterItem,
+	controllers.cart.routes.javascript.LoyaltyController.applyPromo,
+	controllers.cart.routes.javascript.LoyaltyController.applyCoupon,
+	controllers.cart.routes.javascript.LoyaltyController.getUsableCoupon,
+	controllers.cart.routes.javascript.LoyaltyController.getAllCurrentPrefer,
+	controllers.cart.routes.javascript.LoyaltyController.undoCurrentPrefer,
+	controllers.cart.routes.javascript.LoyaltyController.applyPoints,
+	controllers.cart.routes.javascript.LoyaltyController.undoCurrentPoint,
+	controllers.cart.routes.javascript.CartController.setStorageid
+
+)
+
+@views.html.cart.home.login_pop()
+<div class="nav_ljh">
+   <div class="nav_ljhFix">
+      <div id="top"><a href="#top_s"></a></div>
+      <!-- <div class="livechat_ljh">
+      	<a href="javascript:void(0);" onclick="window.open('http://www.tomtop.com/livechat/enquiry/topic','LiveChat','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=750,height=470,left=180,top=140');"></a>
+        <div class="livechat01">Live Chat</div>
+        <div class="livechat02"></div>
+      </div> -->
+  </div>
+</div>
+<div class="shoppingCart_top" style="width: 1200px; margin: 0 auto 20px" id="top_s">
+    <div class="topNavigation_logo lineBlock">
+        <div class="topNav_logoT"><a href="@mainurl"><img src="@controllers.base.routes.Assets.at("img/Tomtop_logo0603_01.png")"></a></div>
+        <div class="topNav_logoB"><img src="@controllers.base.routes.Assets.at("img/Tomtop_logo0603_02.png")"></div>
+    </div>
+    <ul class="shop_process">
+        <li class="current_state"><span>1</span>@Messages("newshopping.banner.1")</li>
+        <!--当到第二步的页面时，第二个li标签添加多个样式名为“current_state1”-->
+        <li class="nocurrent_state"><span>2</span>@Messages("newshopping.banner.2")</li>
+        <li class="normal_state"><span>3</span>@Messages("newshopping.banner.3")</li>
+    </ul>
+</div>
+<!--头部结.p束-->
+
+<div class="newshopping_box">
+    <div class="newshopping_box_left">
+    	<input type="hidden" id="cartsize" @if(cartItemlist!=null){value="@cartItemlist.size()"} autocomplete="off" />
+    	<input type="hidden" id="latesize" @if(laterItemlist!=null){value="@laterItemlist.size()"} autocomplete="off" />
+		<!--新购物车流程内容-->
+        <h2 class="shopcart_h2">@Messages("shoppingcart") @*<em>(@cartItemlist.size() Item@if(cartItemlist.size()>1){s})</em>*@</h2>
+        @if(cartItemlist!=null && cartItemlist.size()>0){
+        <ul class="warehouse_list" id="cartlist_ul">
+        	@cartStorageids.map{ k=>
+            <li class="storage_products">
+                <div class="warehouse_sel" storageid="@k" >
+	                <span><i></i></span>@Messages("shipfrom") [@if(storageMap.get(k)!=null){@storageMap.get(k).getCstoragename()}] @Messages("warehouse") 
+	                <em>(@cartItemlist.get(k).size() Item@if(cartItemlist.get(k).size()>1){s})</em>
+                </div>
+                <dl class="myshop_wares clearfix">
+                    <dt>
+                        <span class="wares_item">@Messages("cart.item")</span>
+                        <span class="wares_price">@Messages("cart.price")</span>
+                        <span class="wares_qty">@Messages("cart.qty")</span>
+                        <span class="wares_total">@Messages("cart.total")</span>
+                    </dt>
+                    @cartItemlist.get(k).map{ kk=>
+                    	@kk match {
+                    	case si : valueobjects.cart.SingleCartItem => { 
+							@single(si, false) 
+						}
+						case bi : valueobjects.cart.BundleCartItem => {
+							@bundle(bi, false)  
+						}
+						}
+                    }
+                </dl>
+            </li>
+            }
+            <div id="shop_position"></div>
+        </ul>
+        <div class="code_box clearfix">
+	       <div class="coupon_input_box">
+	       	<a href="@mainurl"><input type="button" value="@Messages("continue_shopping")" class="coupon_input" /></a>
+	       </div>
+	    </div>
+        }else{
+        	<div class="shoppingCart_con" style="display: block">
+	            <div class="shopping_none">
+	                <em></em>
+	                <b>@Messages("cartisempty")</b>
+	                <p><a href="@mainurl">@Messages("gohome")</a>@Messages("selectitem")</p>
+	            </div>
+	        </div>
+        }
+        @if(laterItemlist != null && laterItemlist.size()>0) {
+        <ul class="warehouse_list warehouse_later_list">
+            <li>
+                <div class="warehouse_sel">@Messages("saved_later")
+	                <div class="warehouse_sel_btn"></div>
+	                <em>(@laterItemlist.size() Item@if(laterItemlist.size()>1){s})</em>
+                </div>
+                <dl class="myshop_wares clearfix">
+                    <dt>
+                        <span class="wares_item">@Messages("cart.item")</span>
+                        <span class="wares_total">@Messages("cart.total")</span>
+                    </dt>
+                    <div class="warehouse_later_box" >
+						@laterItemlist.map{kk=>
+							@kk match {
+	                    	case si : valueobjects.cart.SingleCartItem => { 
+								@single(si, true) 
+							}
+							case bi : valueobjects.cart.BundleCartItem => {
+								@bundle(bi, true)
+							}
+							}
+						}
+					</div>
+                </dl>
+            </li>
+        </ul>
+        }
+    </div>
+    @if(cartItemlist!=null && cartItemlist.size()>0){
+    <div class="newshopping_box_right">
+        <dl>
+        	<input type="hidden" id="currencycode" value="@currency.getCcode()" />
+        	<input type="hidden" id="thestorageid" value="@storageid" />
+            <dt>@Messages("order_summary")</dt>
+            <dd>@Messages("subtotal"):<span><span id="cart_subtotal_symbol">@currency.getCsymbol()</span> <span id="cart_subtotal">@Utils.money(cart.getTotal(), currency.getCcode())</span></span></dd>
+            <!-- <dd class="ship_to">
+                <p>Ship to: <span>United States<i></i></span></p>
+                <p class="ship_to_day">Standard Shipping (7-15 days)</p>
+                <div class="ship_to_cost">Est. Shipping Cost:<span>US$ 199.99</span></div>
+            </dd>
+            <dd>Shipping Cost:<span>US$ 199.99</span></dd>
+            <dd>Discount:<span>- US$ 25.22</span></dd> -->
+            <dd>@Messages("checkout_step2.Discount") :<span>  <span> @currency.getCsymbol</span>&nbsp;<span id="discount_total">@Utils.money(0.00,currency.getCcode)</span></span></dd>
+            <dd>@Messages("cart.total"):<span class="total">@currency.getCsymbol() <span id="cart_total">@Utils.money(cart.getTotal(), currency.getCcode())</span></span></dd>
+        </dl>
+        
+        @views.html.cart.loyalty.checkout_loyalty()
+        
+        <div class="nw_drop_order" onclick="addDropshipping(this)"><span></span>@Messages("drop.shipping.order")
+        	<div class="drop_order_hint">@Messages("remove.tomtop.logo.from.package").</div>
+        </div>
+        
+        <div class="nw_paypal_box"><input type="button" value="" class="nw_btn_paypal" url="@expressCheckoutUrl" /></div>
+        <div class="or_text">@Messages("or")</div>
+        <div class="nw_place_box"><input type="button" value="@Messages("checkout")" class="nw_btn_place" url="@proceedToCheckoutUrl" /></div>
+
+        <div class="nw_guaranteed">
+            <p>@Messages("safe_tip")</p>
+            <p>
+            <div class="rightPalyNorton_icon">
+		   		<ul>
+			       	<li class="">
+			       		<a href="javascript:vrsn_splash()" tabindex="-1">
+			       		<img name="seal" border="true" src="@controllers.base.routes.Assets.at("nortonseal/nortonseal3.gif")" oncontextmenu="return false;" alt="@Messages("seal_tip")">
+			       		</a>
+			       	</li>
+		       </ul>
+		   	</div>
+			</p>
+        </div>
+    </div>
+    }
+</div>
+<input type="hidden" id="mainurl" value="@mainurl" />
+<input type="hidden" id="islogin" value="@if(MemberHelper.getCurrentEmail().isDefined()){true}else{false}" />
+@tp.get("member-browse-history")
+<div id="ns_loading_box" class="ns_loading_box" style="display: none;">
+    <div class="ns_loading" style="width:200px;min-height:80px;height:auto;">
+        <p><img src="@controllers.base.routes.Assets.at("images/newshopping_loading.gif")" alt=""/></p>
+        <p>@Messages("tomtop.paymentProcess")</p>
+    </div>
+    <div class="blockPopup_black"></div>
+</div>
+<div class="shopping_bottom">
+    <div>
+        <a class="icon_paypal"></a>
+        <a class="icon_visa"></a>
+        <a class="icon_qiwi"></a>
+        <a class="icon_ehb"></a>
+        <a class="icon_boleto"></a>
+        <a class="icon_wiae"></a>
+        <a class="icon_norton" href="javascript:vrsn_splash()"></a>
+        <a class="icon_money"></a>
+    </div>
+    <div>
+        <a class="icon_china"></a>
+        <a class="icon_ems"></a>
+        <a class="icon_dhl"></a>
+        <a class="icon_ups"></a>
+    </div>
+    <p>Copyright © 2004- 2015 TOMTOP Inc. All Rights Reserved. (Build: @version.BuildVersion.build())</p>
+</div>
+<script type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+<script src="@controllers.base.routes.Assets.at("js/lib/jquery.json.min.js")" ></script>
+<script src="@controllers.cart.routes.Assets.at("js/newshopping_cart.js")" ></script>
+<script src="@controllers.cart.routes.Assets.at("js/cartview.js")" ></script>
+<script src="@controllers.base.routes.Assets.at("nortonseal/nortonseal.js")" ></script>
+@services.base.HtmlUtils.misc().getTail().map { h =>
+	@h
+}
+</body>
+
+</html>

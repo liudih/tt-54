@@ -1,0 +1,21 @@
+@(email : String, result: Boolean)
+@import views.html.helper._ 
+@views.html.base.master{
+	<!--  主体内容开始  -->
+	<article class="common_wrapper">
+    	<section class="container">
+        	<h2>Forgot password back</h2>
+            <div class="account_box">
+            	@if(result){
+    			<p class="passBackText"><em></em>An e-mail has been sent to<br />
+               	 	Please check your E-mail box.<span class="gmail"> @email</span><br>
+                	Please follow the instructions in the e-mail to set your new password.
+            	</p>
+            	}else{
+            		<p class="passBackText"><em></em>Send the email fail<br /></p>
+            	}
+    		</div>
+        </section>
+    </article>
+	<!--  主体内容结束  -->
+}

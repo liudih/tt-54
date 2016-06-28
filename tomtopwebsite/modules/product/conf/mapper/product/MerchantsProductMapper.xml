@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.MerchantsProductMapper" >
+	<select id="existMerchantsProductByListingIdList" resultType="dto.product.google.category.MerchantsProductDto">
+		select clistingid,
+		csku, 
+		ctitle,
+		cdescription,
+		iwebsiteid,
+		ilanguage,
+		 icount,
+		cchannel,
+		productprice,
+		ctargetcountry,
+		ccountrycurrency,
+		clanguage,
+		googlecategory,
+		cpath,
+		cname,
+		cstate,
+		cresult,
+		cfaultreason,
+		createuser,
+		cnodedata,
+		cnodeid,
+		dpulldate,
+		dpushdate
+		from t_merchants_product 
+		where
+		clistingid in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach> 
+	</select>
+	<select id="queryExistMerchantProduct" resultType="dto.product.google.category.SearchMerchantsProductDto">
+		select 
+		cnodeid
+		from t_merchants_product 
+		where
+		cnodeid in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach> 
+	</select>
+	
+	<select id="existMerchantsProductListing" resultType="dto.product.google.category.MerchantsProductDto">
+		select clistingid,
+		csku, 
+		ctitle,
+		cdescription,
+		iwebsiteid,
+		ilanguage,
+		 icount,
+		cchannel,
+		productprice,
+		ctargetcountry,
+		ccountrycurrency,
+		clanguage,
+		googlecategory,
+		cpath,
+		cname,
+		cstate,
+		cresult,
+		cfaultreason,
+		createuser,
+		cnodedata,
+		cnodeid,
+		dpulldate,
+		dpushdate
+		from t_merchants_product 
+		where
+		cnodeid in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach> 
+	</select>
+	
+	<select id="getMerchantsProductByIds" resultType="dto.product.google.category.MerchantsProductDto">
+		SELECT M.iid,M.csku,M.iwebsiteid,M.ilanguage,M.ccountrycurrency,M.icount,M.googlecategory,M.cname,M.ctitle,
+		M.cdescription,M.ctargetcountry,M.clanguage,M.cchannel,M.productprice,M.cnodeid,M.cnodedata
+		FROM
+		t_merchants_product M
+		where m.iid in 
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach> 
+	</select>
+	<select id="getMerchantsProductListing" resultType="dto.product.google.category.MerchantsProductDto">
+		select clistingid,
+		csku, 
+		ctitle,
+		cdescription,
+		iwebsiteid,
+		ilanguage,
+		 icount,
+		cchannel,
+		productprice,
+		ctargetcountry,
+		ccountrycurrency,
+		clanguage,
+		googlecategory,
+		cpath,
+		cname,
+		cstate,
+		cresult,
+		cfaultreason,
+		createuser,
+		cnodedata,
+		cnodeid,
+		dpulldate,
+		dpushdate
+		from t_merchants_product 
+		where 1=1
+		ORDER BY cnodeid  
+		limit #{pageSize} offset (#{page}-1)*#{pageSize}
+	</select>
+	<insert id="addMerchantsProductListing" parameterType="java.util.List">
+		insert into
+		t_merchants_product (
+		clistingid,
+		csku, 
+		ctitle,
+		cdescription,
+		iwebsiteid,
+		ilanguage,
+		 icount,
+		cchannel,
+		productprice,
+		ctargetcountry,
+		ccountrycurrency,
+		clanguage,
+		googlecategory,
+		cpath,
+		cname,
+		cstate,
+		cresult,
+		cfaultreason,
+		createuser,
+		cnodedata,
+		cnodeid,
+		dpulldate)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.clistingid,jdbcType=VARCHAR},
+			#{item.csku,jdbcType=VARCHAR},
+			#{item.ctitle,jdbcType=VARCHAR},
+			#{item.cdescription,jdbcType=VARCHAR},
+			#{item.iwebsiteid,jdbcType=INTEGER},
+			#{item.ilanguage,jdbcType=INTEGER},
+			#{item.icount,jdbcType=INTEGER},
+			#{item.cchannel,jdbcType=VARCHAR},
+			#{item.productprice,jdbcType=VARCHAR},
+			#{item.ctargetcountry,jdbcType=VARCHAR},
+			#{item.ccountrycurrency,jdbcType=VARCHAR},
+			#{item.clanguage,jdbcType=VARCHAR},
+			#{item.googlecategory,jdbcType=VARCHAR},
+			#{item.cpath,jdbcType=VARCHAR},
+			#{item.cname,jdbcType=VARCHAR},
+			#{item.cstate,jdbcType=VARCHAR},
+			#{item.cresult,jdbcType=VARCHAR},
+			#{item.cfaultreason,jdbcType=VARCHAR},
+			#{item.createuser,jdbcType=VARCHAR},
+			#{item.cnodedata,jdbcType=VARCHAR},
+			#{item.cnodeid,jdbcType=VARCHAR},
+			#{item.dpulldate,jdbcType=DATE}
+			)
+		</foreach>
+	</insert>
+	
+	<update id="updateMerchantsProductListing" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			update t_merchants_product
+			<set>
+			
+				<if test="item.ctitle != null  and item.ctitle!=''">
+					ctitle= #{item.ctitle,jdbcType=VARCHAR},
+				</if>
+				<if test="item.cdescription != null  and item.cdescription!=''">
+					cdescription=#{item.cdescription,jdbcType=VARCHAR},
+				</if>
+				<if test="item.cnodedata != null and item.cnodedata!=''">
+					cnodedata=#{item.cnodedata,jdbcType=VARCHAR},
+				</if>
+				<if test="item.cstate != null  and item.cstate!=''">
+					cstate=#{item.cstate,jdbcType=VARCHAR},
+				</if>
+				<if test="item.cresult != null  and item.cresult!=''">
+					cresult=#{item.cresult,jdbcType=VARCHAR},
+				</if>
+				<if test="item.cfaultreason != null and item.cfaultreason!=''">
+					cfaultreason=#{item.cfaultreason,jdbcType=VARCHAR},
+				</if>
+				<if test="item.icount != 0">
+					icount=#{item.icount,jdbcType=INTEGER},
+				</if>
+				<if test="item.cchannel != null and item.cchannel!=''">
+					cchannel=#{item.cchannel,jdbcType=VARCHAR},
+				</if>
+				<if test="item.productprice!= null  and item.productprice!=''">
+					productprice=#{item.productprice,jdbcType=VARCHAR},
+				</if>
+				<if test="item.ccountrycurrency!= null  and item.ccountrycurrency!=''">
+					ccountrycurrency=#{item.ccountrycurrency,jdbcType=VARCHAR},
+				</if>
+				<if test="item.dpulldate != null">
+					dpulldate=#{item.dpulldate},
+				</if>
+				<if test="item.dpushdate != null">
+					dpushdate=#{item.dpushdate},
+				</if>
+				dupdatedate=now()
+			</set>
+			where cnodeid = #{item.cnodeid,jdbcType=VARCHAR}
+		</foreach>
+	</update>
+	
+	<select id="searchMerchantProductConfigData" resultType="dto.product.google.category.SearchMerchantsProductDto">
+		SELECT feed.* , tm.cstate,tm.cresult from (SELECT 'online:'||f.clanguage||':'||f.country||':'||m.csku||'-'||f.ccurrency||'-'||f.clanguage cnodeid, m.csku csku,d.ctitle ctitle,d.cdescription cdescription,d.ilanguageid ilanguage,  
+			m.iwebsiteid iwebsiteid,f.country ctargetcountry,f.ccurrency ccountrycurrency,  
+			f.clanguage clanguage,b.cpath googlecategory,b.cname cname 
+			 from t_google_category_base b ,t_google_product_category_mapper m , 
+			t_google_product_detail d ,t_google_feeds_base f 
+		where b.iid=m.icategory  
+			and m.csku=d.csku  
+			and d.ilanguageid=f.ilanguageid
+			<if test="searchDto.csku != null and searchDto.csku != ''">
+				and	m.csku=#{searchDto.csku}
+			</if>
+			<if test="searchDto.googlecategory != null and searchDto.googlecategory  != ''">
+				and	b.cname ilike '%'||#{searchDto.googlecategory}||'%'
+			</if>
+			) feed 
+			
+		<if test="searchDto.cstate != null  and searchDto.cstate  != ''">
+				,t_merchants_product tm 
+			where feed.cnodeid=tm.cnodeid
+				and	tm.cstate=#{searchDto.cstate}
+		</if> 
+		<if test="searchDto.cstate == null  or searchDto.cstate  == ''">
+			LEFT JOIN  t_merchants_product tm 
+			on feed.cnodeid=tm.cnodeid
+		</if>
+		ORDER BY feed.cnodeid desc
+		limit #{searchDto.pageSize} offset (#{searchDto.page}-1)*#{searchDto.pageSize}
+	</select>
+	<select id="countMerchantProductConfigData" resultType="java.lang.Integer">
+		SELECT count(1) from (SELECT 'online:'||f.clanguage||':'||f.country||':'||m.csku||'-'||f.ccurrency||'-'||f.clanguage cnodeid, 
+		m.csku csku,d.ctitle ctitle,d.cdescription cdescription,d.ilanguageid ilanguage,  
+			m.iwebsiteid iwebsiteid,f.country ctargetcountry,f.ccurrency ccountrycurrency,  
+			f.clanguage clanguage,b.cpath googlecategory,b.cname cname 
+			 from t_google_category_base b ,t_google_product_category_mapper m , 
+			t_google_product_detail d ,t_google_feeds_base f 
+		where b.iid=m.icategory  
+			and m.csku=d.csku  
+			and d.ilanguageid=f.ilanguageid
+			<if test="searchDto.csku != null and searchDto.csku  != ''">
+				and	m.csku=#{searchDto.csku}
+			</if>
+			<if test="searchDto.googlecategory != null and searchDto.googlecategory  != ''">
+				and	b.cname ilike  '%'||#{searchDto.googlecategory}||'%'
+			</if>
+			) feed 
+		<if test="searchDto.cstate != null  and searchDto.cstate  != ''">
+				,t_merchants_product tm 
+			where feed.cnodeid=tm.cnodeid
+				and	tm.cstate=#{searchDto.cstate}
+		</if> 
+		<if test="searchDto.cstate == null  or searchDto.cstate  == ''">
+			LEFT JOIN  t_merchants_product tm 
+			on feed.cnodeid=tm.cnodeid
+		</if>
+	</select>
+	<select id="pushMerchantProductConfigData" resultType="dto.product.google.category.MerchantsProductDto">
+		SELECT feed.* from (SELECT 'online:'||f.clanguage||':'||f.country||':'||m.csku||'-'||f.ccurrency||'-'||f.clanguage cnodeid,'online' cchannel,
+		 m.csku csku,b.icategory igooglecategoryid,d.ctitle ctitle,d.cdescription cdescription,d.ilanguageid ilanguage,  
+			m.iwebsiteid iwebsiteid,f.country ctargetcountry,f.ccurrency ccountrycurrency,  
+			f.clanguage clanguage,b.cpath googlecategory,b.cname cname 
+			 from t_google_category_base b ,t_google_product_category_mapper m , 
+			t_google_product_detail d ,t_google_feeds_base f 
+		where b.iid=m.icategory  
+			and m.csku=d.csku  
+			and d.ilanguageid=f.ilanguageid
+			
+			) feed 
+		where feed.cnodeid in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach> 
+	</select>
+	
+	<select id="queryMerchantProductConfigData" resultType="dto.product.google.category.MerchantsProductDto">
+		select cresult,cnodeid
+		from t_merchants_product 
+		where
+		cnodeid in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach> 
+	</select>
+	<select id="queryNoMerchantProductLimit" resultType="dto.product.google.category.SearchMerchantsProductDto">
+		SELECT tf.cnodeid ,tf.csku,tf.country ctargetcountry,tf.clanguage from 
+			(select 'online:'||f.clanguage||':'||f.country||':'||#{csku}||'-'||f.ccurrency||'-'||f.clanguage  cnodeid,f.clanguage,f.country,#{csku} csku from  t_google_feeds_base f
+			where 1=1
+			<if test="clanguage != null and clanguage  != ''">
+				and	f.clanguage = #{clanguage}
+			</if>
+			<if test="ccountrycurrency != null and ccountrycurrency  != ''">
+				and	f.country = #{ccountrycurrency}
+			</if>
+		) tf 
+		where 1=1
+		and not EXISTS(SELECT p.cnodeid from  t_merchants_product	p
+						where  p.cnodeid=tf.cnodeid) 
+	</select>
+	 <select id="queryNoSkuData" resultType="dto.product.google.category.SearchMerchantsProductDto" >
+	 
+	SELECT r.cnodeid,r.csku,r.clanguage,r.country ctargetcountry from (
+		select 'online:'||f.clanguage||':'||f.country||':'||b.csku||'-'||f.ccurrency||'-'||f.clanguage cnodeid ,f.clanguage,f.country,b.csku from 
+					(select DISTINCT ib.csku from (
+								SELECT pb.clistingid ,  pb.csku from t_product_base pb
+									where  pb.istatus=1 and pb.iwebsiteid=1 
+									ORDER BY pb.clistingid
+								limit #{pageSize} offset 
+										#{pageSize} * (#{page} - 1)
+			     ) ib
+		) b,
+		(SELECT tf.country,tf.clanguage,tf.ccurrency from t_google_feeds_base tf
+			where 1=1
+			<if test="clanguage != null and clanguage!=''" >
+				and tf.clanguage=#{clanguage}
+			</if>
+			<if test="ctargetcountry != null and ctargetcountry!=''" >
+				and tf.country=#{ctargetcountry}
+			</if>
+		) f
+	) r
+	where 1=1
+	and not EXISTS(SELECT m.cnodeid from t_merchants_product m 
+							where  m.cnodeid=r.cnodeid )
+  </select>
+  
+  
+  
+  <select id="getMerchantsByLangeAndCountry" resultType="dto.product.google.category.MerchantsProductDto">
+		select
+		csku, 
+		ctargetcountry,
+		ccountrycurrency,
+		clanguage,
+		cnodeid
+		from t_merchants_product t
+		where 1=1
+			<if test="ctargetcountry != null and ctargetcountry!=''" >
+				and t.ctargetcountry=#{ctargetcountry}
+			</if>
+			<if test="clanguage != null and clanguage != ''" >
+				and t.clanguage=#{clanguage}
+			</if>
+		ORDER BY cnodeid  
+		limit #{pageSize} offset (#{page}-1)*#{pageSize}
+	</select>
+	
+	
+	
+	<select id="getMerchantsCountByLangeAndCountry" resultType="java.lang.Integer">
+		select count(1)
+		from t_merchants_product t
+		where 1=1
+			<if test="ctargetcountry != null and ctargetcountry!=''" >
+				and t.ctargetcountry=#{ctargetcountry}
+			</if>
+			<if test="clanguage != null and clanguage!= ''" >
+				and t.clanguage=#{clanguage}
+			</if>
+	</select>
+	<select id="pushMerchantsByLangeAndCountry"  resultType="dto.product.google.category.MerchantsProductDto">
+		SELECT
+			b.clistingid,
+			T .csku,
+			T .ctitle,
+			T .cdescription,
+			T .iwebsiteid,
+			T .ilanguage,
+			b.iqty icount,
+			b.istatus iid,
+			T .cchannel,
+			b.fprice productprice,
+			T .ctargetcountry,
+			T .ccountrycurrency,
+			T .clanguage,
+			T .googlecategory,
+			T .cpath,
+			T .cname,
+			T .cstate,
+			T . CREATEUSER,
+			T .cnodedata,
+			T .cnodeid
+		FROM
+			t_merchants_product T
+		LEFT JOIN t_product_base b ON T .csku = b.csku
+		where b.iwebsiteid = 1
+		<if test="ctargetcountry != null and ctargetcountry!=''" >
+						and T.ctargetcountry=#{ctargetcountry}
+		</if>
+		<if test="clanguage != null and clanguage != ''" >
+						and T.clanguage=#{clanguage}
+		</if>
+		ORDER BY T .cnodeid
+		limit #{pageSize} offset (#{page}-1)*#{pageSize}
+	</select>
+	<select id="pushMerchantsCountByLangeAndCountry" resultType="java.lang.Integer">
+		SELECT count(1)
+		FROM
+			t_merchants_product T
+		LEFT JOIN t_product_base b ON T .csku = b.csku
+		where b.iwebsiteid = 1
+		<if test="ctargetcountry != null and ctargetcountry!=''" >
+						and T.ctargetcountry=#{ctargetcountry}
+		</if>
+		<if test="clanguage != null and clanguage != ''" >
+						and T.clanguage=#{clanguage}
+		</if>
+	</select>
+	
+	
+	<select id="deleteCountBackAndGoogleProduct" resultType="java.lang.Integer">
+		SELECT count(1)
+		FROM
+			t_merchants_product T
+		LEFT JOIN t_product_base b ON T .csku = b.csku
+		where 1=1
+		<if test="iwebsiteid != null" >
+			and b.iwebsiteid = #{iwebsiteid}
+		</if>
+		<if test="istatus != null" >
+			and b.istatus = #{istatus}
+		</if>
+		and b.bactivity = #{bactivity}
+	</select>
+	<select id="deleteBackAndGoogleProduct" resultType="dto.product.google.category.MerchantsProductDto">
+		SELECT T.iid,
+		b.clistingid,
+		b.csku, 
+		b.iqty icount,
+		b.istatus customLabel1,
+		T.ctargetcountry,
+		T.ccountrycurrency,
+		T.clanguage,
+		T.cnodeid
+		FROM
+			t_merchants_product T
+		LEFT JOIN t_product_base b ON T .csku = b.csku
+		where 1=1
+		<if test="iwebsiteid != null" >
+			and b.iwebsiteid = #{iwebsiteid}
+		</if>
+		<if test="istatus != null" >
+			and b.istatus = #{istatus}
+		</if>
+		and b.bactivity = #{bactivity}
+		ORDER BY T .cnodeid
+		limit #{pageSize} offset (#{page}-1)*#{pageSize}
+	</select>
+</mapper>

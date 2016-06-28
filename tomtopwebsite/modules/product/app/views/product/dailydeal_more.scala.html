@@ -1,0 +1,5 @@
+@(clist: List[valueobjects.product.ProductBadge])
+@clist.zipWithIndex.map{ c =>
+	<!-- @c._2 @c._1.getListingId() -->
+	@views.html.product.gadget.badge_big(c._1)            	
+}

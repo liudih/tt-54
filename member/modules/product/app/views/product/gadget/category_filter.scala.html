@@ -1,0 +1,40 @@
+@(catelist: List[valueobjects.product.category.CategoryItem])
+<li class="attributeTitle">@Messages("category")</li>
+<li>
+	@catelist.map{c =>
+		<span data="@c.getId()"><a href="javascript:;">@c.getName()<em></em></a></span>
+	}
+    <div class="clear"></div>
+</li>
+@services.base.HtmlUtils.misc().addTailOnce{
+ 	<script>
+ 	$(function(){
+ 		//设置类目选中
+ 		$("#categoryCon span").each(function(i,e){
+ 			$("input[name='category']").each(function(ii,ee){
+ 				var n = $(e);
+ 				var nn = $(ee);
+	 			if(n.attr("data")==nn.val()){
+	 				n.addClass("spanActive");
+	 			}
+	 		})
+ 		})
+ 	})
+	//类目筛选 	
+ 	$("#categoryCon span").click(function(){
+ 		var n = $(this);
+ 		$("input[name='category']").remove();
+ 		if(!n.hasClass("spanActive")){
+ 			n.addClass("spanActive");
+ 		}else{
+ 			n.removeClass("spanActive");
+ 		}
+ 		var html = "";
+ 		$("#categoryCon .spanActive").each(function(i,e){
+ 			html += "<input type='hidden' name='category' value='"+$(this).attr("data")+"' />"
+ 		});
+ 		$("#searchbar").append(html);
+ 		$("#searchbar").submit();
+ 	});
+ 	</script>
+}

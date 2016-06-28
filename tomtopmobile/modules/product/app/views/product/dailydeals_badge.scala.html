@@ -1,0 +1,105 @@
+@(product :valueobjects.product.ProductBadge, index :Integer=0)
+@import services.base.utils._
+@import views.html.home.img
+@if(null!= product){
+		@if(index==0){
+		<ul class="lbBox superDaily">
+				<li class="span5 lineBlock">
+				@if(null!=product.getPrice()){
+					@product.getPrice().getDiscountOption().asScala.map{ d =>
+						@if(product.getPrice().isDiscounted()){
+						<div class="discount_icon">
+							@Utils.percent(d)
+							</div>
+						}
+					 }
+					}
+					<a class="product_img" href="@controllers.product.routes.Product.view(product.getUrl)">
+					@img(product.getImageUrl,product.getTitle,560,560,null)	
+					</a>
+				</li>
+				<li class="span5 lineBlock product_con">
+					<a class="product_title" href="@controllers.product.routes.Product.view(product.getUrl)">
+					<h5>
+					@if(product.getTitle()!=null && product.getTitle().length>105){
+				    	@product.getTitle.substring(0,105)...
+				    }else{
+				    	@product.getTitle
+				    }
+				    </h5>
+				    </a>
+					<ul class="describeTxtL">
+						<li>You can also see your missed calls, dialed calls and received calls.</li>
+						<li>It delivers clear voice transmission and high quality sound.</li>
+						<li>Play the music in your phone.</li>
+					</ul>
+					@if(product.getPrice!=null){
+					<div class="product_price lineBlock">
+						@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitPrice)
+					</div>
+					@if(product.getPrice().isDiscounted()){
+					<div class="product_priceGR lineBlock">
+						@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitBasePrice)
+					</div>
+					}
+					}
+					<div class="product_bottom">
+					@if(null!=product.getExtended()){
+						@product.getExtended().map{ i=>
+							@i
+						}
+					}
+						<div class="product_buy popBoxFilter"><i>&nbsp;</i>Buy</div>
+						@product_options(product)
+					</div>
+				</li>
+			</ul>
+		}else{
+		<div class="product_box lineBlock">
+			<div class="product_con">
+				@if(null!=product.getPrice()){
+					@product.getPrice().getDiscountOption().asScala.map{ d =>
+						@if(product.getPrice().isDiscounted()){
+						<div class="discount_icon">
+							@Utils.percent(d)
+						</div>
+						}
+					}
+				}
+				<a class="product_img" href="@controllers.product.routes.Product.view(product.getUrl)">
+				@img(product.getImageUrl,product.getTitle,560,560,null)	
+				</a> 
+					<a class="product_title" href="@controllers.product.routes.Product.view(product.getUrl)">
+						@if(product.getTitle()!=null && product.getTitle().length>95){
+					    	@product.getTitle.substring(0,95)...
+					    }else{
+					    	@product.getTitle
+					    }
+				    </a>
+				
+				@if(product.getPrice!=null){
+					<div class="product_price lineBlock">
+						@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitPrice)
+					</div>
+					@if(product.getPrice().isDiscounted()){
+					<div class="product_priceGR lineBlock">
+						@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitBasePrice)
+					</div>
+					}
+					}
+				<div class="product_bottom">
+					@product.getExtended().map{ i=>
+							@i
+						}
+					<div class="product_buy popBoxFilter">
+						<i>&nbsp;</i>Buy
+					</div>
+					@product_options(product)
+				</div>
+			</div>
+		</div>
+		}
+}			
+	
+
+	

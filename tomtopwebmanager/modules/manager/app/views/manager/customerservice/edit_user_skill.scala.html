@@ -1,0 +1,25 @@
+@(langList:List[dto.SimpleLanguage], 
+	langSkillIDs:List[Integer], 
+	skillList:List[entity.manager.ProfessionSkill], 
+	proSkillIDs:List[Integer], 
+	userID: Int)
+
+<table id="user_skill_table" class="table table-striped table-hover table-bordered">
+	<input type="hidden" name="userID" value="@userID">
+	<tr>
+		<td>Language</td>
+		<td>
+			@langList.zipWithIndex.map{sl=>
+				<input type="checkbox" name="languageID[@sl._2]" @if(langSkillIDs.contains(sl._1.getIid())){checked="checked"} value="@sl._1.getIid">@sl._1.getCname 
+			}
+		</td>
+	</tr>
+	<tr>
+		<td>Professional Skill</td>
+		<td>
+			@skillList.zipWithIndex.map{pl=>
+				<input type="checkbox" name="professionID[@pl._2]" @if(proSkillIDs.contains(pl._1.getIid())){checked="checked"} value="@pl._1.getIid">@pl._1.getCskillname 
+			}
+		</td>
+	</tr>
+</table>

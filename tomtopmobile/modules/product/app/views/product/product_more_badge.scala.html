@@ -1,0 +1,9 @@
+@(productList :List[valueobjects.product.ProductBadge])
+
+@import services.base._
+@import services.base.utils._
+@import views.html.home.img
+	
+	@productList.map{ p=>
+		@badge_base(p)
+	}

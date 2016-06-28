@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.category.FilterAttributeKeyMapper" >
+  <resultMap id="BaseResultMap" type="dto.category.FilterAttributeKey" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+    <result column="ckey" property="ckey" jdbcType="VARCHAR" />
+    <result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, iwebsiteid, ckey, ccreateuser, dcreatedate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_filter_attribute_key
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_filter_attribute_key
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="dto.category.FilterAttributeKey" >
+    insert into t_filter_attribute_key (iid, iwebsiteid, ckey, 
+      ccreateuser, dcreatedate)
+    values (#{iid,jdbcType=INTEGER}, #{iwebsiteid,jdbcType=INTEGER}, #{ckey,jdbcType=VARCHAR}, 
+      #{ccreateuser,jdbcType=VARCHAR}, #{dcreatedate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="dto.category.FilterAttributeKey" >
+    insert into t_filter_attribute_key
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="iwebsiteid != null" >
+        iwebsiteid,
+      </if>
+      <if test="ckey != null" >
+        ckey,
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="iwebsiteid != null" >
+        #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="ckey != null" >
+        #{ckey,jdbcType=VARCHAR},
+      </if>
+      <if test="ccreateuser != null" >
+        #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dto.category.FilterAttributeKey" >
+    update t_filter_attribute_key
+    <set >
+      <if test="iwebsiteid != null" >
+        iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="ckey != null" >
+        ckey = #{ckey,jdbcType=VARCHAR},
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dto.category.FilterAttributeKey" >
+    update t_filter_attribute_key
+    set iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      ckey = #{ckey,jdbcType=VARCHAR},
+      ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

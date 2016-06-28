@@ -1,0 +1,87 @@
+@(fragment: valueobjects.product.ProductBundleSale)
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+@helper.javascriptRouter("bundleJavaScriptRoutes")(
+	controllers.product.routes.javascript.Product.getMultiatributeProduct
+)
+@displayTotal(className: String , mainlist: dto.ProductBundleSaleLite) = {
+	@if(mainlist != null){
+	<div class="browseDIVbutton_box">
+		<div class="addto_cart">
+			@Messages("price.for.all.selected") (<lable id="bundel-sale-selected">1</lable>)<span class="orange">@mainlist.getSymbol() <lable id="bundel-sale-totalprice">@Utils.money(mainlist.getSalePrice,mainlist.getCurrency)</lable></span>
+	        <input class="buttCart" type="submit" id="bundel-sale-addtocart" value="@Messages("add.to.cart")"/>
+	        <div class="addTo_cartHide" style="display: none;" id="hiddenCartResult_2">
+				
+			</div>
+	        <input class="buttNow" type="submit" value="@Messages("buy.it.now")" id="bundel-sale-buyitnow" />
+		</div>
+    </div>
+	}
+}
+@displayMain(className: String, mainlist : dto.ProductBundleSaleLite,checkboxval: String) = {
+	@if(mainlist != null){
+	<div class="browsepic">
+		@if(checkboxval == "") {
+			
+		} else {
+			<input value="@mainlist.getListingId()" id="main_clistingid_bundle" type="hidden">
+		}
+		
+		<a id="img_href_@mainlist.getListingId()" href="@controllers.product.routes.Product.view(mainlist.getUrl())" title="@mainlist.getTitle()">
+    		<div class="browsepic_img">
+    		@img(mainlist.getImgUrl(),mainlist.getTitle(),168,168,null,'width->160,'height->165)
+    		</div>
+        </a>
+        <span class="title" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block;" id="title_@mainlist.getListingId()">
+			<a href="@controllers.product.routes.Product.view(mainlist.getUrl())" title="@mainlist.getTitle()">
+				@mainlist.getTitle()
+			</a>
+		</span>
+		<span class="price" id="oriprice@mainlist.getListingId()" oriprice="@mainlist.getSalePrice()">
+        <div class="chooseBox @checkboxval @if(checkboxval == "chooseSelected"){chooseDefault} @if(checkboxval == "isActivity"){chooseSelected}"  tag="@mainlist.getIsMain()" name="checkboxbyproduct" value="@mainlist.getListingId()" id="@mainlist.getListingId()"></div>
+        </span>
+        <div class="blackPrice" id="blackPrice_@mainlist.getListingId()">@mainlist.getSymbol()@Utils.money(mainlist.getSalePrice,mainlist.getCurrency)</div>
+        <input class="final_price" value="@mainlist.getDiscount()" oriprice="@mainlist.getPrice()" type="hidden">
+		<input class="the_warehouse" value="CN" type="hidden">
+    </div>
+	}
+}
+@if(fragment.getProductBundleSales().size()>1){
+	<div id="bundle-sale" class="browse_box boxFramework peijian">
+            	<div class="browse_title">@Messages("frequently.buy.together")</div>
+                <div class="browseDIV_box">
+                		<div class="browseDIVpic_box">
+                        	@displayMain("current", fragment.getProductListing(),"chooseSelected")
+                        	<div class="browseOldADD"></div>
+                        	<div class="chooseProduct_color chooseProduct_colorLeft" id="multiatri_">
+								 <div class="chooseColor_box">
+				                   	   <div class="chooseColor_con"  id="multiatribute_">
+				                       </div>
+				                 </div>
+						         <div class="clear"></div>
+						         <div class="chooseProduct_input">
+						             <input type="submit" id="cancel_multiatribute_" class="Cancel" value="@Messages("cancle")" />
+						             <input type="submit" class="chooseOk" value="@Messages("ok")" id="submit_multiatribute_">
+						         </div>
+						         <div class="chooseProduct_close"></div>
+						         <div class="chooseProduct_sj"></div>
+						    </div>
+                        	<div class="browseLI_box" id="moveLR">
+                                        <div class="browseLeft_click"></div>
+                                        <div class="browsemove_box">
+                                        		@fragment.getProductBundleSales().map{ i =>
+													  @if(i.getIsMain() == false && i.isActivity() != true){
+													  	@displayMain("suggest", i,"")
+													   }
+													}
+                                        </div>
+                                        <div class="browseRight_click"></div>
+                                 
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        @displayTotal("", fragment.getProductListing())
+                </div>
+   </div>
+}

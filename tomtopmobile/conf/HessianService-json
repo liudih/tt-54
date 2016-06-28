@@ -1,0 +1,363 @@
+
+[
+{
+"url" : "tomtopwebsite_remote_service_url",
+"service" : [
+				{
+				"endPoint" : "banner",
+				"class" : "services.IBannerService"
+				},
+				{
+				"endPoint" : "country",
+				"class" : "services.ICountryService"
+				},
+				{
+				"endPoint" : "currency",
+				"class" : "services.ICurrencyService"
+				},
+				{
+				"endPoint" : "email",
+				"class" : "services.IEmailAccountService"
+				},
+				{
+				"endPoint" : "platform",
+				"class" : "services.IPlatformService"
+				},
+				{
+				"endPoint" : "vhost",
+				"class" : "services.IVhostService"
+				},
+				{
+				"endPoint" : "website",
+				"class" : "services.IWebsiteService"
+				},
+				{
+				"endPoint" : "language",
+				"class" : "services.ILanguageService"
+				},
+				{
+				"endPoint" : "cms",
+				"class" : "services.ICmsMenuService"
+				},
+				{
+				"endPoint" : "product_dailydeal_enquiry",
+				"class" : "services.search.IDailyDealEnquiryService"
+				},
+				{
+				"endPoint" : "product_dailydeal_badge",
+				"class" : "services.product.IProductBadgeService"
+				},
+				{
+				"endPoint" : "product_searchcontext_factory",
+				"class" : "services.search.ISearchContextFactory"
+				},
+				{
+				"endPoint" : "product_search",
+				"class" : "services.search.ISearchService"
+				},
+				{
+				"endPoint" : "explain",
+				"class" : "services.product.IProductExplainService"
+				},
+				{
+				"endPoint" : "product_images_enquiry",
+				"class" : "services.image.IImageEnquiryService"
+				},
+				{
+				"endPoint" : "product_images_update",
+				"class" : "services.image.IImageUpdateService"
+				},
+				{
+				"endPoint" : "login",
+				"class" : "services.member.login.ILoginService"
+				},
+				{
+				"endPoint" : "member",
+				"class" : "services.member.IMemberEnquiryService"
+				},
+				{
+				"endPoint" : "category",
+				"class" : "services.product.ICategoryEnquiryService"
+				},
+				{
+				"endPoint" : "advertisingService",
+				"class" : "services.IAdvertisingService"
+				},
+				{
+				"endPoint" : "registrate",
+				"class" : "services.member.registration.IMemberRegistrationService"
+				},
+				{
+				"endPoint" : "captcha",
+				"class" : "services.ICaptchaService"
+				},
+				{
+				"endPoint" : "product_data_homepage",
+				"class" : "services.product.IHomePageDataEnquiry"
+				},
+				{
+				"endPoint" : "search_suggest_keyword",
+				"class" : "services.search.IKeyWordSuggestService"
+				},
+				{
+				"endPoint" : "product",
+				"class" : "services.product.IProductEnquiryService"
+				},
+				{
+				"endPoint" : "orderStatusService",
+				"class" : "services.order.IOrderStatusService"
+				},
+				{
+				"endPoint" : "search_serviceIasy",
+				"class" : "services.search.IAsyncSearchService"
+				},
+				{
+				"endPoint" : "defaultSettings",
+				"class" : "services.IDefaultSettings"
+				},
+				{
+				"endPoint" : "collect",
+				"class" : "services.interaction.ICollectService"
+				},
+				{
+				"endPoint" : "cartLife",
+				"class" : "services.cart.ICartLifecycleService"
+				},
+				{
+				"endPoint" : "product_url",
+				"class" : "services.product.IProductUrlService"
+				},
+				{
+				"endPoint" : "product_Intercept_url",
+				"class" : "services.product.IProductInterceptUrlService"
+				},
+				{
+				"endPoint" : "productMessage",
+				"class" : "services.product.IProductMessageService"
+				},
+				{
+				"endPoint" : "productbase",
+				"class" : "services.product.IProductBaseEnquiryService"
+				},
+				{
+				"endPoint" : "entitymap",
+				"class" : "services.product.IEntityMapService"
+				},
+				{
+				"endPoint" : "product_price",
+				"class" : "services.price.IPriceService"
+				},
+				{
+				"endPoint" : "extraLineService",
+				"class" : "services.cart.IExtraLineService"
+				},
+				{
+				"endPoint" : "cartService",
+				"class" : "services.cart.ICartService"
+				},
+				{
+				"endPoint" : "shippingServices",
+				"class" : "services.shipping.IShippingServices"
+				},
+				{
+				"endPoint" : "addressService",
+				"class" : "services.member.address.IAddressService"
+				},
+				{
+				"endPoint" : "freightService",
+				"class" : "services.order.IFreightService"
+				},
+				{
+				"endPoint" : "product_multiattribute",
+				"class" : "services.product.IProductMultiatributeService"
+				},
+				{
+				"endPoint" : "shippingMethod",
+				"class" : "services.shipping.IShippingMethodService"
+				},
+				{
+				"endPoint" : "cmscontent",
+				"class" : "services.ICmsContentService"
+				},
+				{
+				"endPoint" : "base_EventBus",
+				"class" : "services.IEventBusService"
+				},
+				{
+				"endPoint" : "orderService",
+				"class" : "services.order.IOrderService"
+				},
+				{
+				"endPoint" : "paymentService",
+				"class" : "services.payment.IWebPaymentService"
+				},
+				{
+				"endPoint" : "browseHistory_service",
+				"class" : "services.interaction.IMemberBrowseHistoryService"
+				},
+				{
+				"endPoint" : "product_update_service",
+				"class" : "services.product.IProductUpdateService"
+				},
+				{
+				"endPoint" : "memeber_updateservice",
+				"class" : "services.member.IMemberUpdateService"
+				},
+				{
+				"endPoint" : "order_OrderCountService",
+				"class" : "services.order.IOrderCountService"
+				},
+				
+				{
+				"endPoint" : "find_password",
+				"class" : "services.member.findpassword.IFindPasswordService"
+				},
+				{
+				"endPoint" : "forget_password",
+				"class" : "services.member.forgetpassword.IForgetPasswdBaseService"
+				},
+				{
+				"endPoint" : "systemParameter",
+				"class" : "services.ISystemParameterService"
+				},
+				{
+				"endPoint" : "memeber_updateservice",
+				"class" : "services.member.IMemberUpdateService"
+				},
+				{
+				"endPoint" : "point",
+				"class" : "services.loyalty.IPointsService"
+				},
+				
+				{
+				"endPoint" : "orderEnquiryService",
+				"class" : "services.order.IOrderEnquiryService"
+				},
+				{
+				"endPoint" : "orderPackService",
+				"class" : "services.order.IOrderPackService"
+				},
+				{
+				"endPoint" : "billDetailService",
+				"class" : "services.order.IBillDetailService"
+				},
+				{
+				"endPoint" : "orderAlterHistoryService",
+				"class" : "services.order.IOrderAlterHistoryService"
+				},
+				{
+				"endPoint" : "orderDetailService",
+				"class" : "services.order.IOrderDetailService"
+				},
+				
+				{
+				"endPoint" : "validateCartCampaignService",
+				"class" : "services.cart.IValidateCartCampaignService"
+				},
+				{
+				"endPoint" : "member_email_service",
+				"class" : "services.member.IMemberEmailService"
+				},
+				
+				{
+				"endPoint" : "member_email_service",
+				"class" : "services.member.IMemberEmailService"
+				},
+				
+				{
+				"endPoint" : "prodcut_reviews",
+				"class" : "services.interaction.review.IProductReviewsService"
+				},
+				{
+				"endPoint" : "productPhotosService",
+				"class" : "services.interaction.IProductPhotosService"
+				},
+				
+				{
+				"endPoint" : "messageService",
+				"class" : "services.messaging.IMessageService"
+				},
+				{
+				"endPoint" : "broadcastService",
+				"class" : "services.messaging.IBroadcastService"
+				},
+				
+				
+				{
+				"endPoint" : "product_recommend",
+				"class" : "services.product.IProductRecommendService"
+				},
+				{
+				"endPoint" : "product_label",
+				"class" : "services.product.IProductLabelServices"
+				},
+				{
+				"endPoint" : "base_configService",
+				"class" : "services.IConfigService"
+				},
+				{
+				"endPoint" : "base_moneyService",
+				"class" : "services.IMoneyService"
+				},
+				
+				{
+				"endPoint" : "tracking_visitlog",
+				"class" : "service.tracking.IVisitLogService"
+				},
+				{
+				"endPoint" : "tracking_affiliateid",
+				"class" : "extensions.tracking.IAffiliateIDTracking"
+				},
+				{
+				"endPoint" : "tracking_affiliateid_service",
+				"class" : "service.tracking.IAffiliateIDService"
+				},
+				{
+				"endPoint" : "paypal_ecService",
+				"class" : "services.paypal.IExpressCheckoutNvpService"
+				},
+				{
+				"endPoint" : "loyalty_provider",
+				"class" : "extensions.order.IOrderLoyaltyProvider"
+				},
+				{
+				"endPoint" : "cart_check",
+				"class" : "services.order.ICheckoutService"
+				},
+				{
+				"endPoint" : "loyalty-ordercall",
+				"class" : "services.loyalty.IPreferService"
+				},
+				{
+				"endPoint" : "tracking_affiliate",
+				"class" : "service.tracking.IAffiliateService"
+				},
+				{
+				"endPoint" : "inventoryEnquiryService",
+				"class" : "services.product.inventory.IInventoryEnquiryService"
+				},
+				{
+				"endPoint" : "storageParentService",
+				"class" : "services.IStorageParentService"
+				},
+				{
+				"endPoint" : "storageService",
+				"class" : "services.IStorageService"
+				}
+		]
+},{
+	"url" : "tomtopcart_remote_service_url",
+	"service" : [
+					{
+					"endPoint" : "cartEnquiryService",
+					"class" : "services.cart.ICartEnquiryService"
+					},
+					{
+					"endPoint" : "loyaltyServiceCart",
+					"class" : "extensions.loyalty.IOrderLoyaltyProvider"
+					}
+				]
+	}	
+				
+]
+		

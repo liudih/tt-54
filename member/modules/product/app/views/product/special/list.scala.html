@@ -1,0 +1,102 @@
+@(
+badgeList:List[valueobjects.product.ProductBadge],
+currentCategoryId:String,
+advertisingList:List[valueobjects.product.AdItem],
+catelist:List[dto.product.CategoryWebsiteWithName],
+ctx: valueobjects.search.SearchContext,
+requestParam: Map[String, Array[String]],
+pageNo:Int,
+totalPages:Int
+)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@import services.base._
+@views.html.base.master{
+	@HtmlUtils.misc().addHeadOnce{
+		 	  <link rel="stylesheet" href='@controllers.base.routes.Assets.at("css/search.css")' />   
+	}
+	@helper.javascriptRouter("js_routes")(
+	    controllers.product.routes.javascript.Special.asyncLoad
+	)
+<div class="container LevelOne">
+    <div class="Bread_crumbs_Box">
+        <ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="/"></a></li>
+            <li>
+                <p>
+                    <a class="Bread_link" href="javascript:;">Specials</a>
+                </p>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+    @if(advertisingList !=null && advertisingList.size()>0){
+    <div class="twoDir_Box">
+    	<div class="direBanner_box" id="indexBanner_box">
+            <a class="browseLeft_click" href="javascript:;"></a>
+            <a class="browseRight_click" href="javascript:;"></a>
+             <ul class="indexBanner_A">
+	            @advertisingList.map{a=>
+	               <li><a href="@a.getUrl"><img src="@a.getImgUrl()" height="300"></a></li>
+	            }
+            </ul>
+            <ul class="indexBanner_list">
+                @advertisingList.map{a=>
+	                <li></li>
+	            }
+            </ul>
+        </div>
+    </div>
+    }
+    @views.html.home.cartegory_single_select_bar(catelist)
+     @views.html.product.sortbar{
+     <input type="hidden" id="category" name="category" value="@currentCategoryId" />
+     }(requestParam)(ctx)
+     
+     <ul id="p_content" class="arrangeClick superDealsFour arrangeFour block clearfix">
+                 @if(badgeList!=null && badgeList.size()>0){
+                       @badgeList.map{p=>
+                         @views.html.product.gadget.badge_big(p,true)
+                       }
+                 }
+      </ul>
+      @if((pageNo+1) < totalPages  ){
+       <div class="bottomMore" id="more-button">More<img src='@controllers.base.routes.Assets.at("images/more.png")'></div>
+	  }
+       
+</div>
+@tp.get("member-browse-history")
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript">
+    $(function(){
+    	var pageNo=@pageNo+1;
+    	var pageTotail=@totalPages;
+    	var category="@currentCategoryId";
+    	var $containter=$('#p_content');
+    	var $morebtn=$('#more-button');
+    	function load(page){
+    		var url=js_routes.controllers.product.Special.asyncLoad(category,page).url;
+    		$.get(url,{},function(data){
+        		if(data && data.items){
+        			for(var i in data.items){
+        				$containter.append(data.items[i])
+        			}
+        			p=data.page;
+        			pageTotail=data.pageTotail;
+        		}
+        		if(pageNo+1<pageTotail){
+        			$morebtn.show();
+        		}else{
+        			$morebtn.hide();
+        		}
+        	},"json");
+    	}
+    	$morebtn.on('click',function(e){
+    		if(pageNo<pageTotail){
+    		 load(pageNo+1);
+    		}
+    	})
+    });
+</script>
+}
+
+}

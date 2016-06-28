@@ -1,0 +1,7 @@
+@(highliht:Boolean,totail:Int)
+<li @if(highliht){ class="leftAct" } ><a href="@controllers.interaction.routes.MemberProductPost.list()">@Messages("My Product Posts")
+
+@if(totail>0){
+  ( @totail )
+}
+</a></li>

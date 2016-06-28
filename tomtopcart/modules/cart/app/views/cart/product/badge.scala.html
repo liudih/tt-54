@@ -1,0 +1,60 @@
+@(product: valueobjects.product.ProductBadge, isTime: Boolean = true)
+@import services.base._
+@import services.base.utils._
+@if(product != null){
+  <div class="productmovepic">
+     	<a href="/">
+     	@if(product.getImageUrl() != null) {
+         <div class="browsepic_img">
+        	@img(product.getImageUrl(),product.getTitle(),190,190,null)
+				@product.getPrice().getDiscountOption().asScala.map{ d =>
+					@if(product.getPrice().isDiscounted()){
+						<div class="discount">
+							@Utils.percent(d)
+						</div>
+					}
+				}
+        </div>
+        }
+        </a>
+        <p class="publicTitle b3">
+	        <a title="@product.getTitle" href="/">
+	        	@if(product.getTitle()!=null && product.getTitle.length()>40){
+	        		@product.getTitle().substring(0,40)...
+	        	}else{
+	        		@product.getTitle()
+	        	}
+	        </a>
+        </p>
+         <p class="publicPrice">
+	         <span class="presentPrice">@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitPrice)</span>
+		    @if(product.getPrice().isDiscounted()){
+					/ <span class="originalPrice">
+						@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitBasePrice)
+					</span>
+			}
+         </p>
+         @product.getExtended().map{ i=>
+				@i<br/>
+			}
+			@if(isTime){
+	           	@product.getPrice().getValidToOption().asScala.map { validTo =><br/>
+	         		<!-- ValidTo: @validTo -->
+					<font size="1px" tag="@DateFormatUtils.untilNowInSeconds(validTo)" class="timeFont">
+			  			<span class="priceDiscountTimer-day" ></span>
+						<span>@Messages("day")</span>
+						<span class='btn btn-default btn-xs disabled priceDiscountTimer-hour'></span>
+			  			<span  class="">:</span>
+			  			<span  class='btn btn-default btn-xs disabled priceDiscountTimer-minute'></span>
+			  			<span  class="">:</span>
+			  			<span class='btn btn-default btn-xs disabled priceDiscountTimer-second'></span>
+					 </font>
+				 }
+			}
+  </div>
+}
+
+
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+	 @controllers.base.routes.Assets.at("css/category_flash_sale.css")
+}

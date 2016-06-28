@@ -1,0 +1,30 @@
+@(product : valueobjects.product.ProductBadge) 
+@import services.base._ 
+@import services.base.utils._ 
+
+@if(null!=product){ 
+
+<div class="product_box lineBlock">  
+	<div class="product_con">	 
+	 @if(product.getImageUrl!=null){
+		<a class="product_img" href="@product.getUrl">@img(product.getImageUrl(),product.getTitle(),560,560,null) </a> 			
+			<a class="product_title" href="@product.getUrl">@product.getTitle...</a>
+		<div class="product_price">
+			@product.getPrice.getSymbol@product.getPrice.getUnitPrice 
+		</div>
+		<div class="product_bottom">
+			@product.getExtended().map{ i=>
+				@i
+			}
+			<div class="product_buy">
+				<i>&nbsp;</i>Buy
+			</div>
+		</div>
+  }else {
+   <a class="product_img">@img(null,"",560,560,null)</a>
+   <div class="product_bottom"></div>
+      }
+	</div>
+</div> 
+   
+}

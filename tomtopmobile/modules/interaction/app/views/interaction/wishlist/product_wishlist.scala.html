@@ -1,0 +1,38 @@
+@(productPage:valueobjects.base.Page[valueobjects.product.ProductBadge]) 
+
+@tp =@{services.base.template.TemplateService.getInstance().getContents()}
+
+@import services.base._ 
+@import services.base.utils._ 
+@import views.html.home.img
+@views.html.base.sub_master("Wishlist"){
+
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+@controllers.base.routes.Assets.at("css/list_product.css")
+ }
+
+
+<div class="container" id="badgeContent">
+
+     @productPage.getList().map{c=>
+		@views.html.product.badge_base(c)
+	}
+   
+	<div class="productButtonBottom">
+		<a class="span95 button_orange" href="@controllers.interaction.routes.Collect.editWishlist()">Editor</a>
+	</div>
+</div>
+
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+ 	@controllers.base.routes.Assets.at("js/jquery.esn.autobrowse.min.js")
+ 	@controllers.base.routes.Assets.at("js/jstorage.min.js")
+ 	@controllers.product.routes.Assets.at("js/scroll_load.js")
+}
+
+@services.base.HtmlUtils.misc().addTailOnce{
+	<script type="text/javascript">
+	var moreurl = "@controllers.interaction.routes.Collect.wishAsynlist()";
+	</script>
+  }
+
+}

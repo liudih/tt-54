@@ -1,0 +1,19 @@
+@(typeName: String,list: List[dto.topic.TopicPage])
+<ul class="collPicBox" id="pageList_@typeName.replace(" ","")">
+	@if(list != null){
+		@list.map{t=>
+			<li>
+				<a href="@if(t.getChtmlurl!=null){
+						@if(t.getChtmlurl.startsWith("http://") || t.getChtmlurl.startsWith("https://")) {
+							@t.getChtmlurl
+						} else {
+							@controllers.topic.routes.Topic.showHtml(t.getChtmlurl)
+						}
+					}else{#}">
+					<img src="@controllers.topic.routes.Topic.showImage(t.getIid())">
+					<span>@t.getCtitle()</span>
+				</a>
+			</li>
+		}
+	}
+</ul>

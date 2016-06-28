@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.cart.CartBaseMapper" >
+  <resultMap id="BaseResultMap" type="dto.cart.CartBase" >
+    <id column="cid" property="cid" jdbcType="VARCHAR" />
+    <result column="cuuid" property="cuuid" jdbcType="VARCHAR" />
+    <result column="cmemberemail" property="cmemberemail" jdbcType="VARCHAR" />
+    <result column="bgenerateorders" property="bgenerateorders" jdbcType="BIT" />
+    <result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+    <result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cid, cuuid, cmemberemail, bgenerateorders, ccreateuser, dcreatedate, iwebsiteid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_cart_base
+    where cid = #{cid,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="insertSelective" parameterType="dto.cart.CartBase" useGeneratedKeys="true" keyProperty="cid">
+    insert into t_cart_base
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="cuuid != null" >
+        cuuid,
+      </if>
+      <if test="cmemberemail != null" >
+        cmemberemail,
+      </if>
+      <if test="bgenerateorders != null" >
+        bgenerateorders,
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+      <if test="iwebsiteid != null" >
+        iwebsiteid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="cuuid != null" >
+        #{cuuid,jdbcType=VARCHAR},
+      </if>
+      <if test="cmemberemail != null" >
+        #{cmemberemail,jdbcType=VARCHAR},
+      </if>
+      <if test="bgenerateorders != null" >
+        #{bgenerateorders,jdbcType=BIT},
+      </if>
+      <if test="ccreateuser != null" >
+        #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iwebsiteid != null" >
+        #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,0 +1,15 @@
+@(categorys: List[dto.product.CategoryWebsiteWithName],isShow: Boolean)
+<ul class="sub_menu_ul">
+	@if(null != categorys){
+		@categorys.map{ i=>
+			<li>
+				<a href="@controllers.product.routes.CategoryProduct.showCategoryProduct(i.getCpath)">
+					@if(isShow){
+						<img src="@if(i.getIbgimageid != null) {@controllers.image.routes.Image.CategoryView(i.getIbgimageid)}">
+					}
+					@i.getCname
+				</a>
+			</li>
+		}
+	}
+</ul>

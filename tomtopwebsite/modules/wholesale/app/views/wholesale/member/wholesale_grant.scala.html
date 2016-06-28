@@ -1,0 +1,118 @@
+@(subtotal: Double, 
+grandTotal: Double, 
+currency: dto.Currency,
+addresses: List[dto.member.MemberAddress],
+countryMap:Map[Integer,dto.Country], 
+billAddresses: List[dto.member.MemberAddress])
+@import views.html.helper._
+@import views.html.product.img
+@import services.base._
+@import services.base.utils._
+
+@form(controllers.wholesale.routes.WholeSale.placeOrder,'id->"place_order_form"){
+<div class="shoppingCart_con orderD_con accOrderD_conP">
+	<a class="rightThis self_pickup" href="javascript:;"><span></span>
+	<p>@Messages("self.pickup")</p></a>
+	@address_select_table.render(addresses, countryMap)
+	@bill_select_table.render(billAddresses, countryMap)
+	<table class="detailesTab" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<td colspan="2" class="cart_bottom"></td>
+			<td colspan="4" align="right">
+				<table class="grandTotal" width="470" border="0" cellspacing="0"
+					cellpadding="0">
+					<tr>
+						<td>@Messages("order.subtotal")</td>
+						<td width="155"><b>@currency.getCsymbol
+								@Utils.money(subtotal)</b></td>
+					</tr>
+					<tr>
+						<td>@Messages("discount") @if(subtotal>0){(@Utils.money(((subtotal-grandTotal)/subtotal)*100)%)}:</td>
+						<td><span class="green">- @currency.getCsymbol
+								@Utils.money(subtotal-grandTotal)</span></td>
+					</tr>
+					<tr class="grandTotal_txt">
+						<td>@Messages("grand.total")</td>
+						<td><span class="orange">@currency.getCsymbol
+								@Utils.money(grandTotal)</span></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr class="Continue">
+			<td colspan="2" valign="top"></td>
+			<td colspan="4">
+				<p class="ContinueSpay">
+					<input type="submit" class="spayOut" value="@Messages("proceed.to.checkout")">
+				</p>
+			</td>
+		</tr>
+	</table>
+</div>
+<input name="productIDs" type="hidden">
+<input name="isShipping" type="hidden">
+}
+<script>
+	$("#place_order_form").submit(function() {
+		//判断库存和停售状态
+		var b = false;
+		$.ajax({
+			url: "/wholesale/checkproductstatus",
+			type: "get",
+			dataType: "json",
+			async: false,
+			success:function(data){
+				if(data.result=="success"){
+					b = true;
+				}else{
+					pophtml("Error",data.result);
+					b = false;
+				}
+			}
+		});
+		if(!b){
+			return false;
+		}
+		var ids = $("span[name=productID].afters");
+		if (ids.length == 0) {
+			pophtml("Error","Please select a product!");
+			return false;
+		}
+		var productIDs = "";
+		for (var i = 0; i < ids.length; i++) {
+			var span = ids[i];
+			if (i < ids.length - 1) {
+				productIDs += $(span).parent("a").attr(
+						"data-wproductid")
+						+ ",";
+			} else {
+				productIDs += $(span).parent("a").attr(
+						"data-wproductid");
+			}
+		}
+		$("input[name=productIDs]").val(productIDs);
+		if ($("a.self_pickup").children("span").hasClass("afters")) {
+			$("input[name=isShipping]").val("false");
+		} else {
+			$("input[name=isShipping]").val("true");
+			var addressID = $("input[name=addressID]").val();
+			var billingID = $("input[name=billingID]").val();
+			if (addressID == null || addressID == "" || addressID == undefined) {
+				pophtml("Error","Please input your shipping address!");
+				return false;
+			}
+			if (billingID == null || billingID == "" || billingID == undefined) {
+				pophtml("Error","Please input your billing address!");
+				return false;
+			}
+		}
+		return true;
+	});
+	$(".self_pickup").click(function() {
+		if ($(this).children("span").hasClass("afters")) {
+			$("#shipping_address_div").slideDown();
+		} else {
+			$("#shipping_address_div").slideUp();
+		}
+	});
+</script>

@@ -1,0 +1,86 @@
+@(products: valueobjects.base.Page[valueobjects.product.ProductBadge],
+	catelist: List[dto.product.CategoryWebsiteWithName],
+	req: Map[String, Array[String]],
+	hotlist: List[valueobjects.product.ProductBadge],
+	sc: valueobjects.search.SearchContext,
+	catogeryCount : Map[Integer,Long]
+	)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+@import services.base._
+@import services.base.utils._
+
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/directories.css")?@version.BuildVersion.build()" /> 
+}
+@services.base.HtmlUtils.misc().addTail{
+	<script src="@controllers.product.routes.Assets.at("js/product/page_filter.js")" ></script>
+}
+@views.html.base.master {
+
+<div class="container LevelOne">
+	
+	<div class="Bread_crumbs_Box">
+        <ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="/"></a></li>
+            <li>
+                <p>
+                	<a class="Bread_link" href="/product/clearance">@Messages("clearance")</a>
+                </p>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <div class="dirLeft lineBlock">
+        @views.html.home.cartegory_single_select_bar_new(catelist,catogeryCount)
+        @*
+        <div class="firBoxP">
+        	@freeship_or_newarrivals_filter(1)
+        </div>
+        *@
+        <div class="firBoxP border0">
+        	<p class="dirTitle">@Messages("hot.products")</p>
+            <ul class="pirListProduct">
+            	@hotlist.map{h=>
+            		@category_badge_hot(h)
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="dirRight lineBlock">
+        <div class="twoDir_Box">
+        </div>
+        <div id="pagelist">
+			@sortbar_category{
+				@req.keySet.map{i=>
+					@if(i=="category"){
+						@req.get(i).take(1).map{ aa=>
+							<input type="hidden" id="category" name="category" value="@aa" />
+						}
+					}
+				}
+			}(req)(sc)
+		</div>
+        @if(products.getList().size()!=0){
+        <ul class="arrangeClick arrangeLess block">
+            @products.getList().map{p=>
+				@views.html.product.category_badge(p)
+			}
+            <div class="clear"></div>
+        </ul>
+        <ul class="arrangeList">
+       		@products.getList().map{p=>
+            	@views.html.product.category_badge_list(p)
+            }
+            <div class="clear"></div>
+        </ul>
+        <div class="arrayNEX">
+			@views.html.product.gadget.pagination(products.pageNo(),products.totalPages())
+		</div>
+		}else{
+			<h2 style="text-align:center;color:orange; margin-bottom: 50px;border:1px solid #e8e8e8;padding:150px 0 ;">Sorry, No Products Found!</h2>
+		}
+    </div>
+</div>
+@tp.get("member-browse-history")
+}

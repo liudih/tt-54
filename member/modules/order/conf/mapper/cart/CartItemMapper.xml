@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.cart.CartItemMapper" >
+  <resultMap id="BaseResultMap" type="dto.cart.CartItem" >
+    <id column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="ccartbaseid" property="ccartbaseid" jdbcType="VARCHAR" />
+    <result column="iitemtype" property="iitemtype" jdbcType="INTEGER" />
+    <result column="iqty" property="iqty" jdbcType="INTEGER" />
+    <result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+    <result column="clastupdateduser" property="clastupdateduser" jdbcType="VARCHAR" />
+    <result column="dlastupdateddate" property="dlastupdateddate" jdbcType="TIMESTAMP" />
+    <result column="cdevice" property="cdevice" jdbcType="VARCHAR" />
+  </resultMap>
+   <resultMap id="BaseResultMapLite" type="dto.CartItemLite" >
+    <result column="cid" property="id" jdbcType="INTEGER" />
+    <result column="cuuid" property="cuuid" jdbcType="VARCHAR" />
+    <result column="cmemberemail" property="cmemberemail" jdbcType="VARCHAR" />
+    <result column="iitemtype" property="iitemtype" jdbcType="INTEGER" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+    <result column="icartitemid" property="icartitemid" jdbcType="INTEGER" />
+    <result column="ccartbaseid" property="ccartbaseid" jdbcType="VARCHAR" />
+    <result column="bismain" property="bismain" jdbcType="BIT" />
+    <result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+    <result column="iqty" property="iqty" jdbcType="INTEGER" />
+    <result column="cdevice" property="cdevice" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cid, ccartbaseid, iitemtype, iqty, ccreateuser, dcreatedate, clastupdateduser, dlastupdateddate, cdevice
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_cart_item
+    where cid = #{cid,jdbcType=VARCHAR}
+  </select>
+  <insert id="insertSelective" parameterType="dto.cart.CartItem" useGeneratedKeys="true" keyProperty="cid" >
+    insert into t_cart_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="ccartbaseid != null" >
+        ccartbaseid,
+      </if>
+      <if test="iitemtype != null" >
+        iitemtype,
+      </if>
+      <if test="iqty != null" >
+        iqty,
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+      <if test="clastupdateduser != null" >
+        clastupdateduser,
+      </if>
+      <if test="dlastupdateddate != null" >
+        dlastupdateddate,
+      </if>
+      <if test="cdevice != null" >
+        cdevice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="ccartbaseid != null" >
+        #{ccartbaseid,jdbcType=VARCHAR},
+      </if>
+      <if test="iitemtype != null" >
+        #{iitemtype,jdbcType=INTEGER},
+      </if>
+      <if test="iqty != null" >
+        #{iqty,jdbcType=INTEGER},
+      </if>
+      <if test="ccreateuser != null" >
+        #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clastupdateduser != null" >
+        #{clastupdateduser,jdbcType=VARCHAR},
+      </if>
+      <if test="dlastupdateddate != null" >
+        #{dlastupdateddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cdevice != null" >
+        #{cdevice,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dto.cart.CartItem" >
+    update t_cart_item
+    <set >
+      <if test="ccartbaseid != null" >
+        ccartbaseid = #{ccartbaseid,jdbcType=VARCHAR},
+      </if>
+      <if test="iitemtype != null" >
+        iitemtype = #{iitemtype,jdbcType=INTEGER},
+      </if>
+      <if test="iqty != null" >
+        iqty = #{iqty,jdbcType=INTEGER},
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="clastupdateduser != null" >
+        clastupdateduser = #{clastupdateduser,jdbcType=VARCHAR},
+      </if>
+      <if test="dlastupdateddate != null" >
+        dlastupdateddate = #{dlastupdateddate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dto.cart.CartItem" >
+    update t_cart_item
+    set ccartbaseid = #{ccartbaseid,jdbcType=VARCHAR},
+      iitemtype = #{iitemtype,jdbcType=INTEGER},
+      iqty = #{iqty,jdbcType=INTEGER},
+      ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      clastupdateduser = #{clastupdateduser,jdbcType=VARCHAR},
+      dlastupdateddate = #{dlastupdateddate,jdbcType=TIMESTAMP}
+    where cid = #{cid,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="getById" resultMap="BaseResultMap" >
+    select t.* from t_cart_item t 
+    inner join t_cart_base b on t.ccartbaseid = b.cid
+    where t.cid = #{cid}
+    <choose>
+        <when test="email != null and email != ''">
+           and b.cmemberemail = #{email}
+        </when>
+        <otherwise>
+            and b.cuuid = #{uuid}
+        </otherwise>
+    </choose>
+  </select>
+</mapper>

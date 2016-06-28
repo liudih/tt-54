@@ -1,0 +1,47 @@
+GET    /assets/*file               controllers.tracking.Assets.at(path="/public",file: String)
+
+GET   /tracker                     @controllers.tracking.VisitTracker.visit()
+
+GET   /report/order                @controllers.affiliate.Report.order()
+
+GET   /affiliate   @controllers.affiliate.AffiliateHome.homeNotLogin()
+
+GET   /affiliate/home   	@controllers.affiliate.AffiliateHome.home()
+
+GET   /affiliate/ad   		@controllers.affiliate.AffiliateHome.affiliateAd(p:Int?=1,limit:Int?=10)
+
+GET   /affiliate/ad/ajax   	@controllers.affiliate.AffiliateHome.affiliateAdAjax(p:Int?=1,limit:Int?=10,t:Int?=1)
+
+GET   /affiliate/activate   @controllers.affiliate.AffiliateHome.Activate(backurl:String?="")
+
+POST   /affiliate/add   	@controllers.affiliate.AffiliateHome.addData()
+
+GET   /affiliate/gethtml   	@controllers.affiliate.AffiliateHome.getHtml(bid:Integer?=null,aid:String?="")
+
+GET   /affiliate/setting    @controllers.affiliate.AffiliateHome.Setting()
+
+POST   /affiliate/updateinfo    @controllers.affiliate.AffiliateHome.updateInfo()
+
+GET   /affiliate/payment    @controllers.affiliate.Commission.payment(p:Int?=1,limit:Int?=10,startdate:String?="",enddate:String?="",searchname:String?="",hstatus:Int?=-1)
+
+GET   /affiliate/payment/detail    @controllers.affiliate.Commission.paymentDetail(hid:Int,p:Int?=1,limit:Int?=10,hstatus:Int?=-1,searchname:String?="")
+
+GET   /affiliate/payment/commission    @controllers.affiliate.Commission.getCommission()
+
+GET    /affiliate/banner-img/:iid         @controllers.affiliate.AffiliateHome.getBannerImage(iid:Int)
+
+GET   /report/order                       @controllers.affiliate.Report.order()
+
+GET   /report/traffic                     @controllers.affiliate.Report.traffic()
+
+GET  /report/chart-data/salesamount       @controllers.affiliate.Report.getSalesAmount()
+
+GET  /report/chart-data/transaction       @controllers.affiliate.Report.getTransaction()
+
+GET  /report/chart-data/commissions       @controllers.affiliate.Report.getCommissions()
+
+GET  /report/chart-data/traffic           @controllers.affiliate.Report.getTraffic()
+
+POST  /report/detail                      @controllers.affiliate.Report.detail()
+
+POST  /report/traffic/detail              @controllers.affiliate.Report.TrafficDetail()

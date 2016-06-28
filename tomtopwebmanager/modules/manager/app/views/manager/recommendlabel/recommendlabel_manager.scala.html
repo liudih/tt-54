@@ -1,0 +1,140 @@
+@(categorylabels: Html)
+@import views.html.helper._
+
+@views.html.manager.main {
+<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN STYLE CUSTOMIZER -->
+						<div class="color-panel hidden-phone">
+							<div class="color-mode-icons icon-color"></div>
+							<div class="color-mode-icons icon-color-close"></div>
+							<div class="color-mode">
+								<p>@Messages("THEME COLOR")</p>
+								<ul class="inline">
+									<li class="color-black current color-default" data-style="default"></li>
+									<li class="color-blue" data-style="blue"></li>
+									<li class="color-brown" data-style="brown"></li>
+									<li class="color-purple" data-style="purple"></li>
+									<li class="color-grey" data-style="grey"></li>
+									<li class="color-white color-light" data-style="light"></li>
+								</ul>
+								<label>
+									<span>@Messages("Layout")</span>
+									<select class="layout-option m-wrap small">
+										<option value="fluid" selected="">@Messages("fluid")</option>
+										<option value="boxed">@Messages("boxed")</option>
+									</select>
+								</label>
+								<label>
+									<span>@Messages("header")</span>
+									<select class="header-option m-wrap small">
+										<option value="fixed" selected="">@Messages("fixed")</option>
+										<option value="default">@Messages("default")</option>
+									</select>
+								</label>
+								<label>
+									<span>@Messages("sidebar")</span>
+									<select class="sidebar-option m-wrap small">
+										<option value="fixed">@Messages("fixed")</option>
+										<option value="default" selected="">@Messages("default")</option>
+									</select>
+								</label>
+								<label>
+									<span>@Messages("footer")</span>
+									<select class="footer-option m-wrap small">
+										<option value="fixed">@Messages("fixed")</option>
+										<option value="default" selected="">@Messages("default")</option>
+									</select>
+								</label>
+							</div>
+						</div>
+						<!-- END BEGIN STYLE CUSTOMIZER -->  
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+
+						<h3 class="page-title">
+							推荐客户喜爱标签管理 <small></small>
+						</h3>
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="/sysadmin">@Messages("home")</a> 
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href="#">推荐客户喜爱标签管理</a>
+							</li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				
+				<!-- BEGIN PAGE CONTENT-->
+				@form(controllers.manager.routes.RecommendLabel.search(), 'id->"searchRecommendBase", 'onsubmit->"return false"){
+					<div class="span12">
+						<div class="span4">
+						    <label for="websiteid">站点选择</label>
+							@services.manager.ChooseService.getInstance().website("siteId", 1, true)
+						</div>
+						
+						<div class="span4">
+						    <label for="websiteid">设备选择</label>
+							@services.manager.ChooseService.getInstance().device("cdevice", 2,true)
+						</div>
+					
+						<input type="hidden" name="pageSize">
+						<input type="hidden" name="pageNum">
+						
+						<div class="m-wrap" style="display:inline-block;vertical-align:bottom;margin-top:27px;">
+							<input id="search_recommendlabelbase_submit" type="button" value="Search">
+						</div>
+						
+						<div class="m-wrap" style="display:inline-block;vertical-align:bottom;margin-top:27px;margin-left:15px;">
+							<li class="showNub">Show
+								<a href="javascript:;" class="showAc" tag="pageSize" value="10">10</a>
+								<a href="javascript:;" tag="pageSize" value="20">20</a>
+								<a href="javascript:;" tag="pageSize" value="40">40</a>
+								<a href="javascript:;" tag="pageSize" value="50">50</a>
+							</li>
+						</div>
+					</div>
+				}
+				<!-- END PAGE CONTENT -->
+				<div class="accountBox">
+					<div class="xxkDiv">
+						<div id="search_recommendlabelbase_html">
+							@categorylabels
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			@services.base.HtmlUtils.misc().addTailOnce{
+				<link rel="stylesheet" type="text/css"  href="@controllers.manager.routes.Assets.at("css/manager/ordermanager.css")" />
+				<script src="@controllers.manager.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.manager.routes.Assets.at("js/manager/recommendlabeldetail")" ></script>
+				<script>
+				function delteRecommendLabel(labelid){
+				  if (confirm("是否删除该标签?") == false) {
+			            return;
+			        } 
+			        var url = "@controllers.manager.routes.RecommendLabel.deleteRecommendLabel()";
+			        url += '?labelId=' + labelid;
+			        $.ajax({
+						url : url,
+						type : "get",
+						success : function(data) {
+							if (data['result'] == true) {
+								alert("删除成功!");
+								$("#search_recommendlabelbase_submit").click();
+							} else {
+								alert("删除失败，请重新操作!");
+							}
+						}
+					});
+				}
+				</script>
+			}
+}

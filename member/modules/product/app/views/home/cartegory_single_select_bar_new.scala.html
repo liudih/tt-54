@@ -1,0 +1,60 @@
+@(catelist: List[dto.product.CategoryWebsiteWithName],
+catogeryCount : Map[Integer,Long]
+)
+    
+@if(catelist!=null && catelist.size()>0){  
+<div class="dirFirstBox">
+	<ul class="dirList" id="categoryCon">
+		<li data=""><a href="javascript:;">All Categories</a></li>
+		@catelist.map{c =>
+			
+					@if(catogeryCount!=null){
+						@catogeryCount.keySet.map{i=>
+							@if(i==c.getIcategoryid() && catogeryCount.get(i)>0){
+								<li data="@c.getIcategoryid()">
+									<a href="javascript:;">
+									@c.getCname()
+									(@catogeryCount.get(i))
+									</a>
+								</li>
+							}
+					}
+				}
+		}
+	</ul>
+</div>
+}
+
+
+@services.base.HtmlUtils.misc().addTailOnce{
+<script>
+	//类目筛选 	
+	$("#categoryCon li").click(function(){
+		var n = $(this);
+		n.addClass("listAci");
+		n.siblings().removeClass("listAci");
+		$("#category").val($("#categoryCon .listAci:eq(0)").attr("data"));
+		$("#p").val(1)
+		$("#searchbar").submit();
+	});
+	$(function(){
+		//设置类目选中
+		var existCategory = $("input[name='category']:eq(0)").val();
+		var isexist = false;
+		$("#categoryCon li").each(function(i,e){
+			var n = $(e);
+			if(n.attr("data")==existCategory){
+				n.addClass("listAci");
+				isexist = true;
+			}
+		})
+		if(!isexist){
+			$("#categoryCon li:eq(0)").addClass("listAci");
+		}
+		//如果不存在category的input就生成
+		if(!document.getElementById("category")){
+			$("#searchbar").append('<input type="hidden" id="category" name="category" value="" />');
+		}		
+	})
+</script>
+}

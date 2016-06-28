@@ -1,0 +1,278 @@
+@(reviewInMemberCenters: valueobjects.base.Page[valueobjects.interaction.ReviewsInMemberCenter], 
+	userName: String, 
+	totalReviewsCount: Integer,
+	PendingReviewsCount: Integer,
+	ApprovedReviewsCount: Integer,
+	FailedReviewsCount: Integer,
+	status: Integer,
+	dateType:Integer,
+	email: String,
+	tab:Integer
+	)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@currentPageCount = @{if(null == reviewInMemberCenters || reviewInMemberCenters.totalCount == 0 ){0} else {reviewInMemberCenters.pageNo*reviewInMemberCenters.pageSize-reviewInMemberCenters.totalCount}}
+@reviewInMemberCentersIsNull = @{if(null != reviewInMemberCenters && reviewInMemberCenters.getList.size>0){false}else{true}}
+@views.html.member.base.master(extensions.interaction.member.MemberReviewsMenuProvider.ID) {
+	@services.base.HtmlUtils.misc().addHeadOnce {
+		<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/simplePagination.css")">
+		<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" /> 
+	}
+	<div class="accountRight accouReviewBox">
+    	<h6>@Messages("reviews.list")</h6>
+        <ul class="myReviewsList">
+        	<li class="headPortrait">
+            	<div><img src="@controllers.member.routes.Photo.get(email)"></div>
+                <p>@userName</p>
+            </li>
+            <li>
+            	<ol>@Messages("total.reviews") <b>@totalReviewsCount</b></ol>
+            	<ol>@Messages("approved.reviews") <b>@ApprovedReviewsCount</b></ol>
+            	<ol>@Messages("pending.reviews") <b>@PendingReviewsCount</b></ol>
+            	<ol>@Messages("failed.reviews") <b>@FailedReviewsCount</b></ol>
+            </li>
+            <div class="clear"></div>
+        </ul>
+        <div class="clear"></div>
+        <p class="marT">@Messages("submit.review.usually.takes.24.hours.accordance.posting.guidelines.patient.review.waiting.status") </p>
+        <p class="marT">@Messages("you.can.gained.from.each.purchased.product")</p>
+        <img class="marT" src="@controllers.interaction.routes.Assets.at("/images/review/accReviewsList.jpg")">
+        <div class="xxkDiv">
+            <ul class="blackXXK">
+                <li name="Tab-review" @if(tab == 0){class="xxkActi"} value="0">@Messages("write.a.review")</li>
+                <li name="Tab-review" @if(tab == 1){class="xxkActi"} value="1">@Messages("post.images")</li>
+                <li name="Tab-review" @if(tab == 2){class="xxkActi"} value="2">@Messages("post.a.video")</li>
+                <div class="clear"></div>
+            </ul>
+            <ul class="reviewTT_ul">
+                <li>
+                    <select name="review_date">
+                        <option value="0" @if(dateType == 0){selected="selected"}>@Messages("all.date")</option>
+                        <option value="1" @if(dateType == 1){selected="selected"}>@Messages("last.3.months")</option>
+                        <option value="2" @if(dateType == 2){selected="selected"}>@Messages("last.6.months")</option>
+                        <option value="3" @if(dateType == 3){selected="selected"}>@Messages("last.year")</option>
+                    </select>
+                </li>
+                <li>
+                    <select name="review_status_type">
+                        <option value="3" @if(status==3){selected="selected"}>@Messages("all")</option>
+                        <option value="0" @if(status==0){selected="selected"}>@Messages("pending")</option>
+                        <option value="1" @if(status==1){selected="selected"}>@Messages("approved")</option>
+                        <option value="2" @if(status==2){selected="selected"}>@Messages("failed")</option>
+                    </select>
+                </li>
+                <li>@Messages("showing") 
+                	<span>1</span> - 
+                	<span>@reviewInMemberCenters.pageNo</span> @Messages("of")
+                	<span>@if(currentPageCount>=0){@currentPageCount}else{@reviewInMemberCenters.pageSize}</span> @Messages("items")
+                </li>
+                <li class="showNub">@Messages("show")
+	                 <a class="showNumber@if(reviewInMemberCenters.pageSize == 10){ showAc}" href="javascript:;">10</a> 
+	                 <a class="showNumber@if(reviewInMemberCenters.pageSize == 20){ showAc}" href="javascript:;">20</a> 
+	                 <a class="showNumber@if(reviewInMemberCenters.pageSize == 40){ showAc}" href="javascript:;">40</a></li>
+                <div class="clear"></div>
+            </ul>
+
+            <div class="xxkBOX boxRa @if(tab == 0){ block}">
+           		<form id="tform">
+			        <input type="hidden" name="p" id="p" value="@reviewInMemberCenters.pageNo"/> 
+			        <input type="hidden" name="limit" id="limit" value="@reviewInMemberCenters.pageSize"/> 
+			        <input type="hidden" name="status" value="3"/> 
+			        <input type="hidden" name="dateType"  value="0"/> 
+			        <input type="hidden" name="tab"  value="0"/> 
+			        
+         			@if(reviewInMemberCentersIsNull == false){
+	                <table class="myRevi" width="100%" border="1" cellspacing="0" cellpadding="0">
+	                  <tr class="werThTT">
+	                    <th class="capItems">@Messages("items")</th>
+	                    <th class="capTh">@Messages("review.caption")</th>
+	                    <th class="myDate">@Messages("post.date")</th>
+	                    <th class="pointTh">@Messages("points")</th>
+	                    <th class="myUnapproved">@Messages("status")</th>
+	                    <th class="myView">@Messages("options")</th>
+	                  </tr>
+	                  @reviewInMemberCenters.getList.map{i=>
+	                  	@if(i!=null){
+		                  <tr>
+		                    <td class="firImg"><a href="@if(null != i.getProductUrl()){@controllers.product.routes.Product.view(i.getProductUrl())}">
+								@if(null != i.getProductSmallImageUrl && (i.getProductSmallImageUrl.startsWith("http://") ||
+								i.getProductSmallImageUrl.startsWith("https://"))) { 
+									<img src="@i.getProductSmallImageUrl"> 
+								} else { 
+									<img src="@controllers.image.routes.Image.view(i.getProductSmallImageUrl)" />
+								}</a>
+							</td>
+		                    <td class="capTd">
+				            	<div class="productReviews reviHover">
+									<div class="productReviews">
+										<div class="productStar" style="width: @if(i.getFoverallratingStarWidth == 0){0%} else {@i.getFoverallratingStarWidth%}"></div> 
+									</div>
+									<ul class="hoverStar">
+										<li class="hoveSTText hoverAll">@Messages("overall.rating")</li>
+										<li class="hoverAll">
+											<div class="productReviews">
+												<div class="productStar" style="width: @if(i.getFoverallratingStarWidth == 0){0%} else {@i.getFoverallratingStarWidth%}"></div> 
+											</div>
+										</li>
+										<li class="hoveSTText">@Messages("usefulness")</li>
+										<li>
+											<div class="productReviews">
+												<div class="productStar" style="width: @if(i.getIusefulness == 0){0%} else {@i.getIusefulness%}"></div> 
+											</div>
+										</li>
+										<li class="hoveSTText">@Messages("shipping")</li>
+										<li>
+											<div class="productReviews">
+												<div class="productStar" style="width: @if(i.getIshippingStarWidth == 0){0%} else {@i.getIshippingStarWidth%}"></div> 	
+											</div>
+										</li>
+										<li class="hoveSTText">@Messages("price")</li>
+										<li>
+											<div class="productReviews">
+												<div class="productStar" style="width: @if(i.getIpriceStarWidth == 0){0%} else {@i.getIpriceStarWidth%}"></div> 
+											</div>
+										</li>
+										<li class="hoveSTText">@Messages("quality")</li>
+										<li>
+											<div class="productReviews">
+												<div class="productStar" style="width: @if(i.getIqualityStarWidth == 0){0%} else {@i.getIqualityStarWidth%}"></div> 
+											</div>
+										</li>
+									</ul>
+								</div>
+								<p>@i.getCcomment</p>
+			                        <ul class="writePic">
+			                            @i.getCommentPhotosUrl.map{j=>
+											<li>
+												@if(null != i.getProductSmallImageUrl && (i.getProductSmallImageUrl.startsWith("http://") || i.getProductSmallImageUrl.startsWith("https://"))) { 
+													<img height="50" width="50" src="@j">
+												} else { 
+													<img height="50" width="50" src="@controllers.image.routes.Image.view(j)" /> 
+												}
+											</li> 
+										}
+										@if(null != i.getCommentVideoUrl){
+											<li class="writeVideo"><img src="@i.getCommentVideoUrl"></li>
+										}
+			                        </ul>
+			                        <!--addPic-->
+			                        <div class="blockPopup_box">
+			                             <div class="customer_popBox scrollWZ">
+			                             	<input value="0" type="hidden" name="nowIndex" class="nowIndex" />
+			                                <div class="customer_popClose"></div>
+		                                    <div class="customer_leftClick cursor"></div>
+		                                    <div class="customer_rightClick cursor"></div>
+	                                        <ul class="customer_bigPic">
+	                                           @i.getCommentPhotosUrl.map{j=>
+												  <li>
+													@if(i.getProductSmallImageUrl!=null && (i.getProductSmallImageUrl.startsWith("http://") || i.getProductSmallImageUrl.startsWith("https://"))) { 
+															<img src="@j" style="width:100%;" />
+													} else { 
+															<img src="@controllers.image.routes.Image.view(j)" style="width:100%;" /> 
+													}
+												  </li> 
+												  <div class="clear"></div>
+												}
+	                                        </ul>
+			                            </div>
+			                            <div class="blockPopup_black"></div>
+			                        </div>
+			                         <!--addPicOver-->
+			                        <div class="clear"></div>
+			                </td>
+		                    <td class="myDate">@i.getDcreatedate</td>
+							<td class="myPoints">0</td>
+							<td class="myUnapproved">@i.getIstate</td>
+		                    <td class="myView">
+		                    	<span class="editor"></span>
+		                    	<a class="removeX" href="javascript:;">@Messages("remove")</a>
+		                    </td>
+		                  </tr>
+		                  }
+	                  }
+	                </table>
+	                } else{
+			      	    <div style="margin:0 auto;height:34px;width:270px;">
+							<p style="font: bold 18px georgia;">@Messages("You have no reviews")</p>
+						</div>
+					    <div class="clear"></div>
+			        }
+	             </form>
+	             @write_review.render()
+            </div>
+           	 @show_review_images.render(reviewInMemberCenters,tab,reviewInMemberCentersIsNull)
+           	 @show_review_videos.render(reviewInMemberCenters,tab,reviewInMemberCentersIsNull)
+    	</div>
+    	@if(reviewInMemberCentersIsNull == false){
+    		 <div class="pagination-holder clearfix" style="margin-left:350px;">
+					<div id="light-pagination" class="pagination"></div>
+			 </div>
+    	}
+    	<div class="clear"></div>
+	  	<div class="xxkDiv autoH">
+	          <ul class="blackXXK">
+	              <li class="xxkActi">@Messages("super.deals")</li>
+	              <li>@Messages("you.view.history")</li>
+	              <div class="clear"></div>
+	          </ul>
+			  @tp.get("super-deals-in-member")
+	          <div class="clear"></div>
+	          @tp.get("member-browse-history-in-member-center")
+	          <div class="clear"></div>
+	    </div>
+    </div>
+    
+    @services.base.HtmlUtils.misc().addTailOnce{
+	  	<script src="@controllers.base.routes.Assets.at("js/lib/jquery.simplePagination.js")" ></script>
+	  	<script>
+		$('#light-pagination').pagination({
+			pages: @reviewInMemberCenters.totalPages,
+			currentPage: @(reviewInMemberCenters.pageNo),
+			hrefTextPrefix: 'javascript:void(',
+			hrefTextSuffix: ')',
+			cssStyle: 'light-theme',
+			selectOnClick: true,
+			onPageClick: function(pageNumber, event) {
+				$("#p").val(pageNumber);
+				$("#tform").submit();
+			}
+		});
+		
+		function changePerPageSubmit(){
+			$("#p").val(1);
+			$("#tform").submit();
+		}
+		
+		$(document).on("click",".showNumber",function(){
+		var limit = parseInt($(this).text());
+			$("#limit").val(limit);
+			$("#tab")
+			changePerPageSubmit();
+		});
+		
+		$(document).on("change","select[name=review_status_type]",function(){
+			var status = parseInt($(this).val());
+			$("input[name=status]").val(status);
+			$("#p").val(1);
+			$("#tform").submit();
+		});
+		
+		$(document).on("change","select[name=review_date]",function(){
+			var dateType = parseInt($(this).val());
+			$("input[name=dateType]").val(dateType);
+			$("#p").val(1);
+			$("#tform").submit();
+		});
+		
+		$(document).on("click",".blackXXK li[name=Tab-review]",function(){
+			var tab = parseInt($(this).attr("value"));
+			$("input[name=tab]").val(tab);
+		})
+		</script>
+	}
+    
+}
+
+
+
+
+

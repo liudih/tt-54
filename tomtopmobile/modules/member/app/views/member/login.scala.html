@@ -1,0 +1,383 @@
+@(country : dto.Country,allCountrys : List[dto.Country],t :Int,loginPr : List[extensions.member.login.ILoginProvider])
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+ 	@controllers.base.routes.Assets.at("css/login_page.css")
+}
+
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+	@controllers.base.routes.Assets.at("js/jquery.cookie.js")
+}
+@import views.html.helper._
+@views.html.base.master{
+
+<div class="container">
+	<div class="TAB_Box">
+		<ul class="TAB_Nav login_nav lbBox">
+			<li id="ttm-login" class="lineBlock @if(t == 0){aciCss}">Login</li>
+			<li id="ttm-register" class="lineBlock @if(t == 1){aciCss}">Register</li>
+		</ul>
+	
+	
+		<div id="ttm-login-div" class="TAB_Con block conW98" style="display:@if(t == 1){none}">
+			<form id="signin-form" action="">
+				<div class="loginInput_box input_control">
+					<span class="emailIcon"> </span>
+					<input name="email" class="txtInput emailPromptInp" type="text" placeholder="Email Address">
+				</div>
+				
+				
+				<hr class="hrB0">
+				<div class="loginInput_box input_control">
+					<span class="lockIcon"> </span>
+					<input name="password" class="txtInput" type="password" placeholder="Password">
+				</div>
+				
+				
+				
+				<a id="forgot-password" href="@controllers.member.routes.Login.forgetPasswordView()" class="Login_forgotTxt">Forgot your password?</a>
+				<input id="signin-btn" class="login_pageButton" type="button" value="Login">
+				
+			</form>
+			<p class="shareLogin_Txt">Sign In With an Existing Account</p>
+				
+			@if(loginPr != null){
+				<div class="shareIcon">
+					
+					@for(p <- loginPr){
+						@p.getLoginButton
+					}
+				</div>
+			}
+			
+		</div>
+	
+	@form(controllers.member.routes.Login.register, 'method->"POST", 'id->"registerForm"){
+		<div id="ttm-register-div" class="TAB_Con TAB_Register" style="display:@if(t == 1){block}">
+			<div class="RegisterInput_box input_control">
+				<input id="ttm-register-email" name="email" class="txtInput emailPromptInp" type="text" placeholder="Email Address">
+				<label><p id="ttm-register-email-tip" class="red errorRed"></p></label>
+				<ul class="emailPrompt emailPromptNone">
+					
+				</ul>
+			</div>
+			
+			<div class="RegisterInput_box input_control">
+				<input id="ttm-register-password" name="passwd" class="txtInput" type="password" placeholder="Password">
+				<label><p id="ttm-register-password-tip" class="red errorRed"></p></label>
+			</div>
+			
+			<div class="RegisterInput_box input_control">
+				<input id="ttm-register-spassword" class="txtInput" type="password" placeholder="Confirm Password">
+				<label><p id="ttm-register-spassword-tip" class="red errorRed"></p></label>
+			</div>
+
+			<div id="ttm-register-country">
+				
+			</div>
+			<label><p id="ttm-register-country-tip" class="red errorRed"></p></label>
+			
+			<div class="RegisterInput_box input_control">
+				<ul class="codeBox">
+					<li class="lineBlock">Code:</li>
+					<li class="lineBlock width_30">
+					<input id="ttm-register-code" name="code" class="txtInput" type="text">
+					</li>
+					<li class="lineBlock"><div class="codeCon"><img id="register-captcha" src="@controllers.member.routes.Login.createCaptcha()"/></li>
+				</ul>
+				<label><p id="ttm-register-code-tip" class="red errorRed"></p></label>
+			</div>
+			<input id="ttm-register-btn" class="Reg_pageButton" type="button" value="Create my account">
+		</div>
+	}
+	</div>
+</div>
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+	@controllers.base.routes.Assets.at("js/jquery.country.js")
+	@controllers.base.routes.Assets.at("js/app_extension.js")
+}
+
+@services.base.HtmlUtils.misc().addTail{
+<script type="text/javascript">
+ 	$(function(){
+ 		var registerCountry=  $('#ttm-register-country').country({countryInputName : 'country'});
+ 		$('#signin-btn').click(function(){
+ 			var valid = true;
+ 			$('#signin-form').find('input[name]').each(function(){
+ 				var value = $(this).val();
+ 				var name = $(this).attr('name');
+ 				if(!value){
+ 					ttmErrorAlert('please input ' + name,3000);
+ 					valid = false;
+ 					return false;
+ 				}
+ 			});
+ 			if(!valid){
+ 				return;
+ 			}
+ 			$.ajax({
+					type : "POST",
+					url : '@controllers.member.routes.Login.signin()',
+					data:$('#signin-form').serialize(),
+				    error: function(request) {
+				    	ttmErrorAlert('wrong password',3000);
+				    },
+				    success: function(data) {
+				    	var callback = $.cookie('callback'); 
+				    	if(callback != null){
+				    		$.removeCookie('callback',{'path' : '/' })
+				    		window.location.href = callback;
+				    	}else{
+				    		window.location.href = "/";
+				    	}
+				    }
+			});
+ 		});
+ 		$('#ttm-login').click(function(){
+ 			$('#ttm-login-div').show();
+ 			$('#ttm-register-div').hide();
+ 		});
+ 		$('#ttm-register').click(function(){
+ 			$('#ttm-login-div').hide();
+ 			$('#ttm-register-div').show();
+ 		});
+ 		$('#register-captcha').click(function(){
+ 			var random = Math.random();
+ 			var src = $(this).attr('src');
+ 			src = src + '?random=' + random;
+ 			$(this).attr('src',src);
+ 		});
+ 		
+ 		$('#ttm-register-email').blur(function(){
+ 			var email = $(this).val();
+ 			if(!email){
+ 				$(this).addClass('input_error');
+ 				$('#ttm-register-email-tip').text('please input your email');
+ 				return;
+ 			}
+ 			//验证邮箱是否正确
+ 			$.ajax({url: '@controllers.member.routes.Login.validateEmail()', 
+ 				type: 'get', 
+ 				data:{'email' : email}, 
+ 				dataType: 'json', 
+ 				timeout: 1000, 
+ 				error: function(){
+ 					$('#ttm-register-email').addClass('input_error');
+ 					$('#ttm-register-email-tip').text('email is invalid or existed');
+ 				}, 
+ 				success: function(result){
+ 					$('#ttm-register-email-tip').text('');
+ 					$('#ttm-register-email').removeClass('input_error');
+ 					$('#ttm-register-email').addClass('input_success');
+ 				} 
+ 			});   
+ 		});
+ 		
+ 		$('#ttm-register-password').blur(function(){
+ 			var password = $(this).val();
+ 			if(!password){
+ 				$(this).addClass('input_error');
+ 				$('#ttm-register-password-tip').text('please input your password');
+ 				return;
+ 			}
+ 			if(password.length < 6){
+ 				$(this).addClass('input_error');
+ 				$('#ttm-register-password-tip').text('Please inuput at least 6 characters');
+ 				return;
+ 			}
+ 			$(this).removeClass('input_error');
+ 			$(this).addClass('input_success');
+			$('#ttm-register-password-tip').text('');
+ 		});
+ 		
+ 		$('#ttm-register-spassword').blur(function(){
+ 			var spassword = $(this).val();
+ 			if(!spassword){
+ 				$(this).addClass('input_error');
+ 				$('#ttm-register-spassword-tip').text('the password are different');
+ 				return;
+ 			}
+ 			var password = $('#ttm-register-password').val();
+ 			if(password != spassword){
+ 				$(this).addClass('input_error');
+ 				$('#ttm-register-spassword-tip').text('the passwords are different');
+ 				return;
+ 			}
+ 			$(this).removeClass('input_error');
+ 			$(this).addClass('input_success');
+			$('#ttm-register-spassword-tip').text('');
+ 		});
+ 		
+ /* 		$('#' + registerCountry.options.id).find('input[tag=text]').blur(function(){
+ 			var country = registerCountry.getValue();
+ 			var countryText = $('#' + registerCountry.options.id).find('input[tag=text]').val();
+ 			if($.trim(countryText) == ''){
+ 				countryText.addClass('input_error');
+ 				$('#ttm-register-country-tip').text('please input your country');
+ 				return;
+ 			}
+ 		}); */
+ 		
+ 		$('#ttm-register-code').blur(function(){
+ 			var val = $(this).val();
+ 			if(!val){
+ 	 			$(this).addClass('input_error');
+ 	 			$('#ttm-register-code-tip').text('the code is empty');
+ 	 			return;
+ 			}
+ 			$(this).removeClass('input_error');
+ 			$(this).addClass('input_success');
+ 			$('#ttm-register-code-tip').text('');
+ 		});
+ 		//当点击注册时
+ 		$('#ttm-register-btn').click(function(){
+ 			var email = $('#ttm-register-email').val();
+ 			if(!email){
+ 				$('#ttm-register-email').removeClass('input_success');
+ 				$('#ttm-register-email').addClass('input_error');
+ 				$('#ttm-register-email-tip').text('please input your email');
+ 				return;
+ 			}else{
+ 				$('#ttm-register-email').removeClass('input_error');
+ 				$('#ttm-register-email').addClass('input_success');
+ 				$('#ttm-register-email-tip').text('');
+ 			}
+ 			
+ 			var password = $('#ttm-register-password').val();
+ 			if(!password){
+ 				$('#ttm-register-password').addClass('input_error');
+ 				$('#ttm-register-password-tip').text('password can not be empty');
+ 				return;
+ 			}else{
+ 				$('#ttm-register-password').removeClass('input_error');
+ 				$('#ttm-register-password').addClass('input_success');
+ 				$('#ttm-register-password-tip').text('');
+ 			}
+ 			if(password.length < 6){
+ 				$('#ttm-register-password').addClass('input_error');
+ 				$('#ttm-register-password-tip').text('password at least 6 characters');
+ 				return;
+ 			}else{
+ 				$('#ttm-register-password').removeClass('input_error');
+ 				$('#ttm-register-password').addClass('input_success');
+ 				$('#ttm-register-password-tip').text('');
+ 			}
+ 			var spassword = $('#ttm-register-spassword').val();
+ 			if(password != spassword){
+ 				$('#ttm-register-spassword').addClass('input_error');
+ 				$('#ttm-register-spassword-tip').text('the passwords are different');
+ 				return;
+ 			}else{
+ 				$('#ttm-register-spassword').removeClass('input_error');
+ 				$('#ttm-register-spassword').addClass('input_success');
+ 				$('#ttm-register-spassword-tip').text('');
+ 			}
+ 			
+ 			var country = registerCountry.getValue();
+ 			var countryText = $('#' + registerCountry.options.id).find('input[tag=text]').val();
+ 			var countryInput = $('#' + registerCountry.options.id).find('input[tag=text]');
+ 			if(!country){
+ 				countryInput.addClass('input_error');
+ 				$('#ttm-register-country-tip').text('please input your country');
+ 				
+ 				return;
+ 			}else{
+ 				var boo = false;
+ 				//验证国家是否正确
+ 	 			$.ajax({url: '@controllers.member.routes.Login.validateCountry()', 
+ 	 				type: 'get', 
+ 	 				data:{'countryId' : country,
+ 	 					  'country' : countryText}, 
+ 	 				dataType: 'json', 
+ 	 				async:false,
+ 	 				error: function(){
+ 	 					countryInput.addClass('input_error');
+ 	 	 				$('#ttm-register-country-tip').text('country is invalid');
+ 	 				}, 
+ 	 				success: function(result){
+ 	 					$.each(result,function(key,value) {
+ 	 						if(key == 'succeed'){
+ 		 	 					$('#ttm-register-country-tip').text('');
+ 		 	 					countryInput.removeClass('input_error');
+ 		 	 					countryInput.addClass('input_success');	
+ 		 	 					boo = true;
+ 	 	 					}else{
+ 	 	 						$('#ttm-register-country-tip').text('country is invalid');
+ 	 	 						countryInput.addClass('input_error');
+ 	 	 					}
+ 	 					});
+ 	 				} 
+ 	 			});  
+ 				if(boo == false){
+ 					return;
+ 				}
+ 			}
+ 			
+ 			var code = $('#ttm-register-code').val();
+ 			if(!code){
+ 				$('#ttm-register-code').addClass('input_error');
+ 				$('#ttm-register-code-tip').text('code is invalid');
+ 				return;
+ 			}else{
+ 				$('#ttm-register-code').removeClass('input_error');
+ 				$('#ttm-register-code').addClass('input_success');
+ 				$('#ttm-register-code-tip').text('');
+ 			}
+ 			//验证验证码是否正确
+ 			$.ajax({url: '@controllers.member.routes.Login.validateCategory()', 
+ 				type: 'get', 
+ 				data:{'category' : code}, 
+ 				dataType: 'json', 
+ 				timeout: 5000, 
+ 				error: function(){
+ 					$('#ttm-register-code').addClass('input_error');
+ 					$('#ttm-register-code-tip').text('code is invalid');
+ 				}, 
+ 				success: function(result){
+ 					if(!result.succeed){
+ 						$('#ttm-register-code').addClass('input_error');
+ 						$('#ttm-register-code-tip').text('category is invalid');
+ 					}else{
+ 						$('#ttm-register-btn').attr('code',true);
+ 						$('#ttm-register-code').removeClass('input_error');
+ 		 				$('#ttm-register-code').addClass('input_success');
+ 						$('#ttm-register-code-tip').text('');
+ 						
+ 						//防止用户多次点击
+ 			 			$('#ttm-register-btn').hide();
+ 						
+ 						$.ajax({url: '@controllers.member.routes.Login.register()', 
+ 		 	 				type: 'POST', 
+ 		 	 				data:$('#registerForm').serialize(), 
+ 		 	 				dataType: 'json', 
+ 		 	 				timeout: 5000, 
+ 		 	 				error: function(){
+ 		 	 					$('#ttm-register-email').addClass('input_error');
+ 		 	 					$('#ttm-register-email-tip').text('register failed');
+ 		 	 					$('#ttm-register-btn').show();
+ 		 	 				}, 
+ 		 	 				success: function(result){
+ 		 	 					if(!result.succeed){
+ 		 	 						if(result.email){
+ 		 	 							$('#ttm-register-email').addClass('input_error');
+ 		 	 	 	 					$('#ttm-register-email-tip').text(result.email);
+ 		 	 						}
+ 		 	 						if(result.code){
+ 		 	 							$('#ttm-register-code').addClass('input_error');
+ 		 	 	 						$('#ttm-register-code-tip').text(result.code);
+ 		 	 						}
+ 		 	 						$('#ttm-register-btn').show();
+ 		 	 					}else{
+ 		 	 						
+ 		 	 						window.location.href= "@controllers.member.routes.Login.registerSuccess()"+"?email="+email;
+ 		 	 					}
+ 		 	 				} 
+ 		 	 			});
+ 					}
+ 				} 
+ 			});
+ 		});
+ 		
+ 		
+ 	});
+</script>
+}
+}

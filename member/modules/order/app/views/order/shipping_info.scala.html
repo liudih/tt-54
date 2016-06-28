@@ -1,0 +1,29 @@
+@(shipping: valueobjects.order_api.ShippingMethodInformations,
+	currency: dto.Currency)
+	
+@import services.base.utils._
+<ul class="lbBox selectShippingMethod_ul">
+	<li class="lineBlock selectShippingMethod_title">Select Shipping Method:</li>
+	<li class="lineBlock selectShippingMethod_box">
+		@if(!shipping.getList.isEmpty){
+			<div class="selectShippingMethod_con selectShippingMethod_click" div-data="@shipping.getList.get(0).getId">
+				<img class="lineBlock" src="@controllers.base.routes.Assets.at(shipping.getList.get(0).getImgUrl).url">
+				<span class="color333">@shipping.getList.get(0).getTitle</span>
+				<span class="color333">@currency.getCsymbol() <strong strong-type="shipping-price">@Utils.money(shipping.getList.get(0).getFreight)</strong></span>
+				<span class="color999">(@shipping.getList.get(0).getContext())</span>
+			</div>
+			<div class="selectShippingMethod_none">
+				@shipping.getList.zipWithIndex.map{s =>
+					@if(s._2 > 1){
+						<div class="selectShippingMethod_con selectShippingMethod_click" div-data="@s._1.getId">
+							<img class="lineBlock" src="@controllers.base.routes.Assets.at(s._1.getImgUrl).url">
+							<span class="color333">@s._1.getTitle</span>
+							<span class="color333">@currency.getCsymbol() <strong strong-type="shipping-price">@s._1.getFreight()</strong></span>
+							<span class="color999">(@s._1.getContext())</span>
+						</div>
+					}
+				}
+			</div>
+		}
+	</li>
+</ul>

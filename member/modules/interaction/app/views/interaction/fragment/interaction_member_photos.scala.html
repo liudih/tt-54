@@ -1,0 +1,83 @@
+@(photos:valueobjects.interaction.InteractionProductMemberPhotos,listingid:String) 
+@import services.base.utils._
+<div id="memberphotolist" class="customer_box boxFramework">
+	<div class="browse_title">
+		@Messages("customer.photos")
+		<p class="postPhotos">
+			@*<a href="javascript:;">@Messages("see.all.photos")</a> @Messages("or")*@ 
+			<a id="upload-photo" href="javascript:;">@Messages("post.photos")</a>
+		</p>
+		@upload_product_photos(listingid)
+	</div>
+	@if(photos!=null && photos.getPhotos().size()>0){
+	<div id="customerDIVpic_box" class="customerDIVpic_box">
+		<div class="browseLeft_click"></div>
+		<div class="customermove_box" style="width: 1476px;">
+		<input type="hidden" value="@listingid" id="clistingid"/>
+				@photos.getPhotos().map{ i =>
+				  @if(i.getList().size()>0){
+				  
+				   <div class="customermovepic">
+                                        	 <!--popPic-->
+                                            <div class="blockPopup_box">
+                                                    <div class="customer_popBox scrollWZ">
+                                                    	<div class="customer_popClose"></div>
+                                                        <div class="customer_popTitle">Airbrush Kit Spray Gun Sprayer Gravity Air Brush Set Aluminum Alloy Painting Paint Tool</div>
+                                                        <div class="customer_popPicBox">
+                                                        	<input value="0" type="hidden" name="nowIndex" class="nowIndex" />
+                                                        	<div class="customer_leftClick cursor"></div>
+                                                        	<div class="customer_rightClick cursor"></div>
+                                                            <ul class="customer_bigPic">
+                                                              @i.getList().map{ p=>
+                                                                 <li><img src="@controllers.interaction.routes.ProductPhotos.at(p.getIid)" width="348" height="348"></li>
+                                                              }
+                                                            </ul>
+                                                        </div>
+                                                        <ul class="customerSmallmove">
+                                                           @i.getList().map{ p=>
+                                                                 <li><img src=" @controllers.interaction.routes.ProductPhotos.at(p.getIid)" width="50" height="50"></li>
+                                                              }
+                                                        </ul>
+                                                        <div class="customer_popTxt">
+                                                        	<p>@Messages("by") @Utils.getIncompleteEmail(i.getList().get(0).getCmemberemail()) <span class="color9">@i.getList().get(0).getDcreatedate()</span></p>
+                                                            <p>@i.getList().get(0).getClabel()</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="blockPopup_black"></div>
+                                            </div>
+                                        	 <!--popPicOver-->
+                                            <div class="browsepic_img brows-img">
+                                            	<div style="display: none;" class="browsepic_hoverP"></div>
+                                            	<div style="bottom: -36px;" class="browsepic_hoverBOX">
+                                                	@i.getList().get(0).getClabel()
+                                                </div>
+                                            	<img src=" @controllers.interaction.routes.ProductPhotos.at(i.getList().get(0).getIid)">
+                                            	<input type="hidden" value="@i.getList().get(0).getIid" id="tag-id"/>
+                                            	<input type="hidden" value="@i.getList().get(0).getCmemberemail" id="tag-email"/>
+                                            </div>
+                                            <p>@Messages("by") @Utils.getIncompleteEmail(i.getList().get(0).getCmemberemail())</p>
+                                        </div>
+				} 
+				}
+			<div class="clear"></div>
+		</div>
+		<div class="browseRight_click"></div>
+	</div>
+	}else{
+		<div class="customerDIVpic_box customerNoPhoto">
+                            	<p class="noPhoto">@Messages("be.the.first.to.post.photo.of.this.product.and.get.a.massive") <span class="orange">20 @Messages("tomtop.points")!</span></p>
+        </div>
+	}
+	
+	<div class="blockPopup_box noPermissions">
+                                   <div class="postPhotos_popBox">
+                                       <div class="customer_popClose"></div>
+                                       <div class="ReviewsN">
+                                       	<em></em>
+                                       	<p class="ReviewsTitle">UploadPhotos are only accepted from actual purchases!</p>
+                                           <p>Please ensure the review you are submitting is for the described product and is purchased from us. Click the back button on your browser and search again.</p>
+                                       </div>
+                                   </div>
+                                   <div class="blockPopup_black"></div>
+    </div>
+</div>

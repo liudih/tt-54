@@ -1,0 +1,11 @@
+
+@views.html.base.sub_master("Search"){
+	@services.base.HtmlUtils.misc().addHeadCssOnce{
+	 	@controllers.base.routes.Assets.at("css/search_page.css")
+	}
+
+	<div class="container">
+	    @views.html.search.search_bar()
+	    <!-- @views.html.search.search_hot_list() -->
+	</div>
+}

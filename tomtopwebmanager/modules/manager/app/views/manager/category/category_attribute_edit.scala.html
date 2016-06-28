@@ -1,0 +1,21 @@
+@(attributeKey:dto.AttributeKeyItem, attributeValueId: java.util.List[Integer])
+
+@if(attributeKey!=null){
+<div class="row-fluid" id="addAttribute">
+	<div class="control-group">
+		<label class="control-label">@attributeKey.getCkeyname()</label>
+		<input type="hidden" id="attributeKeyId" value="@attributeKey.getIkeyid()">
+		<div class="controls">
+			<div class="row-fluid">
+			@attributeKey.getAttributeValue().map{ attributevalue =>
+				<div class="span3">
+					<input type="checkbox" name="attributeValueId" @attributeValueId.map{ i =>
+						@if(i == attributevalue.getIid()) {checked="checked"}
+					} value="@attributevalue.getIvalueid()"> @attributevalue.getCvaluename()
+				</div>
+			}
+			</div>
+		</div>
+	</div>
+</div>
+}

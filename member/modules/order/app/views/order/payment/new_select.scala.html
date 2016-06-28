@@ -1,0 +1,28 @@
+@(providers: List[extensions.payment.IPaymentProvider], 
+	payment: String, 
+	context: valueobjects.order_api.payment.PaymentContext)
+@cy=@{context.getCurrency}
+@import services.base.utils._
+<div class="lineBlock orderDetail_right">
+	<h6>@Messages("payment.method")</h6>
+	<h6 class="marT">
+		@Messages("payment.total"):
+		<span class="orange">@cy.getCsymbol 28.56</span>
+	</h6>
+	<ul class="paymentMethod lbBox">
+		@providers.zipWithIndex.map{p =>
+			<li class="lineBlock@if(p._2==0){ payment_Active}" value="@p._1.id">
+				<em>
+					<img src="@p._1.iconUrl">
+				</em>
+			</li>
+		}
+	</ul>
+	<div class="panmentsList">
+		@providers.zipWithIndex.map{p =>
+			<div class="paymentTxtBox@if(p._2==0){ block}">
+				@p._1.getDescription(context)
+			</div>
+		}
+	</div>
+</div>

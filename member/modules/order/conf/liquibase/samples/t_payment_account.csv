@@ -1,0 +1,6 @@
+cpaymentid,iwebsiteid,fbeginprice,fendprice,cbusiness
+westunion,1,0,100,"{""Beneficiary"":""westunion(0-100)"",""Country"":""China""}"
+westunion,1,100,500,"{""Beneficiary"":""westunion(100-500)"",""Country"":""China""}"
+wiretransfer,1,0,100,"{""Beneficiary"":""wiretransfer(0-100)"",""Country"":""China""}"
+wiretransfer,1,100,500,"{""Beneficiary"":""wiretransfer(100-500)"",""Country"":""China""}"
+oceanpayment,1,0,500,"{""account"":""140105"",""terminal"":""14010501"",""secureCode"":""12345678""}"

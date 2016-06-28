@@ -1,0 +1,63 @@
+@(product: valueobjects.product.ProductBadge)
+@import services.base._
+@import services.base.utils._
+
+<i class="sClean iconClose"> </i>
+<div class="buyProductTop lbBox">
+	<div class="buyPop_pic lineBlock">
+		<div class="discountcontent" >
+		@product.getPrice().getDiscountOption().asScala.map{ d =>
+			@if(product.getPrice().isDiscounted()){
+				<div class="discount_icon">@Utils.percent(d)</div>
+			}
+		}
+		</div>
+		<a class="tempimg" href="@controllers.product.routes.Product.view(product.getUrl)">
+			@views.html.home.img(product.getImageUrl(),product.getTitle(),377,377,null)
+		</a>
+	</div>
+	<div class="buyPop_rightTxt lineBlock">
+		<a class="buyPop_Title" href="@controllers.product.routes.Product.view(product.getUrl)">
+			@product.getTitle
+		</a>
+		<div class="product_price lineBlock">
+			@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitPrice)
+		</div>
+		<div class="product_priceGR lineBlock">
+	    @if(product.getPrice().isDiscounted()){
+			@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitBasePrice)
+		}
+		</div>
+		
+		<ul class="product_page_Expires" style="display:none;" timeid="" 
+			data="@product.getPrice().getValidToOption().asScala.map{validTo=>@DateFormatUtils.untilNowInMilliseconds(validTo)}">
+			<li class="lineBlock">Deal Expires:</li>
+			<li class="lineBlock orange"></li> 
+		</ul>
+	</div>
+</div>
+<div class="product_page_w lbBox">
+	<h5>Product Options</h5>
+	<p class="product_page_csTxt lineBlock">Shipping From:</p>
+	<ul class="product_page_sziePic lineBlock storage_content">
+		<li class="lineBlock aciClick aciCss" data="1" >China</li>
+	</ul>
+	<div class="attr_content">
+		
+	</div>
+</div>
+
+<hr class="grayHR" />
+
+<ul class="qtyBox">
+	<li class="lineBlock qtyTxt_title">QTY:</li>
+	<li class="lineBlock">
+		<ol class="lbBox">
+			<li class="lineBlock qtyAdd" onclick="qtyAdd(this)" > </li>
+			<li class="lineBlock qtyInput"><input type="text" value="1" class="productnum" /></li>
+			<li class="lineBlock qtyReduction" onclick="qtyReduction(this)" > </li>
+		</ol>
+	</li>
+</ul>
+<input type="hidden" class="listingid" value="@product.getListingId" />
+

@@ -1,0 +1,13 @@
+@(keylist: List[dto.search.KeywordSuggest])
+@urlprefix = @{play.Play.application().configuration().getString("member.urlprefix")}
+<ul class="key_tags">
+                    <li class="abcde_title">@Messages("hot.products")</li>
+                    @if(keylist!=null){
+                    <li>
+                    	@keylist.map{k=>
+                        <span class="color4"> <a href="@urlprefix@controllers.search.routes.ProductSearch.search()?q=@k.getCkeyword" target="_blank">@k.getCkeyword</a> </span> 
+                        }
+                    </li>
+                    }
+                    <div class="clear"></div>
+                </ul>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rabbit.conf.mapper.product.ProductVideoMapper">
+	<resultMap id="BaseResultMap" type="com.rabbit.dto.product.ProductVideo">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+		<result column="csku" property="csku" jdbcType="VARCHAR" />
+		<result column="cvideourl" property="cvideourl" jdbcType="VARCHAR" />
+		<result column="clabel" property="clabel" jdbcType="VARCHAR" />
+		<result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, clistingid, csku, cvideourl, clabel, ccreateuser,
+		dcreatedate
+	</sql>
+	<insert id="addProductVideoList" parameterType="java.util.List">
+		insert into t_product_video (clistingid, csku,
+		cvideourl, clabel,
+		ccreateuser,
+		dcreatedate)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.clistingid,jdbcType=VARCHAR},
+			#{item.csku,jdbcType=VARCHAR},
+			#{item.cvideourl,jdbcType=VARCHAR},
+			#{item.clabel,jdbcType=VARCHAR},
+			#{item.ccreateuser,jdbcType=VARCHAR},
+			#{item.dcreatedate,jdbcType=TIMESTAMP})
+		</foreach>
+	</insert>
+</mapper>

@@ -1,0 +1,12 @@
+@(memberId: String)
+
+@if(""==memberId || null == memberId){
+	<div class="loginbar tr">
+		<a href="@controllers.member.routes.Login.login()">@Messages("sign.in")</a>/<a href="@controllers.member.routes.Register.registerFrom()">@Messages("register")</a>
+	</div>
+}else{
+	<div class="loginbar tr">
+		<a style="vertical-align:top;width:180px; overflow:hidden;text-overflow:ellipsis;white-space:nowrap" href="@controllers.member.routes.Home.index()">@memberId</a>/<a href="@controllers.member.routes.Login.logout()">@Messages("sign.out")</a>
+	</div>
+}
+

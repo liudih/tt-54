@@ -1,0 +1,58 @@
+@(oid : String, status : String, info : String)
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no,maximum-scale=1.0">
+<link rel="icon" href="@controllers.mobile.routes.Assets.at("favicon.ico")" type="image/x-icon">
+
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/jquery-1.9.1.js")"></script>
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/main.js")"></script>
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/public.js")"></script>
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/scroll.js")"></script>
+
+<link href="@controllers.mobile.routes.Assets.at("css/style.css")" rel="stylesheet" media="screen">
+<link href="@controllers.mobile.routes.Assets.at("css/bottom.css")" rel="stylesheet" media="screen">
+<link href="@controllers.mobile.routes.Assets.at("css/mobile.css")" rel="stylesheet" media="screen">
+<link href="@controllers.mobile.routes.Assets.at("css/top.css")" rel="stylesheet" media="screen">
+<link href="@controllers.mobile.routes.Assets.at("css/paymentMethod.css")" rel="stylesheet" type="text/css">
+<link href="@controllers.mobile.routes.Assets.at("css/paySuccess.css")" rel="stylesheet" media="screen">
+<body>
+<!--  
+@if(status == "success"){
+	<p class="PaymentMethod_title"> Order Number: @oid </p>
+	<p class="PaymentMethod_title">  @info </p>
+	<a href="tomtop://action=payfinish" id="go-pay-now" class="button_orange span98 marT">Finish</a>
+}else{
+	<p class="PaymentMethod_title"> Order Number: @oid </p>
+	<p class="PaymentMethod_title">  @info </p>
+}
+-->
+@if(status == "success"){
+<div class="container bg_color_gray marT_6">
+		<div class="paySuccessBox">
+			<span class="success lineBlock"> </span><h5 class="lineBlock">Pay Success</h5>
+			<p>Thank you for shopping with us online, you order has been placed.</p>
+		</div>
+		<div class="statusNo">
+			<p class="lineBlock">Order No: <span>@oid</span></p>
+		<a class="span98 button_blue marT" href="tomtop://action=payfinish"> Finish Payment</a>
+		</div>
+	</div>
+}else{
+<div class="container bg_color_gray marT_6">
+		<div class="paySuccessBox">
+			<span class="failure lineBlock"> </span><h5 class="lineBlock">Pay Failed</h5>
+				<p>We're sorry. An error occurred and we're on the case. Please try again later.</p>
+		</div>
+		<div class="statusNo">
+			<p class="lineBlock">Error Msg: <span>@info</span></p>
+			<a class="span98 button_orange marT" href="http://app.tomtop.com/mobile/api/paypal/newpay?oid=@oid">Pay Again</a>
+		</div>
+	</div>
+
+}
+</body>
+
+</head>
+</html>

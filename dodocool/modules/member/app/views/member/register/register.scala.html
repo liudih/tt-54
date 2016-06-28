@@ -1,0 +1,82 @@
+@(userForm: Form[forms.member.register.RegisterForm])
+@import views.html.helper._
+@helper.javascriptRouter("js_emailRoutes")(
+	controllers.member.routes.javascript.Register.checkEmail,
+	controllers.base.routes.javascript.Captcha.checkCaptcha
+)
+@views.html.base.master{
+	<!--  �������ݿ�ʼ  -->
+	<article class="common_wrapper">
+    	<section class="container">
+        	<h2>Create an Account</h2>
+            <div class="account_box">
+            	@form(controllers.member.routes.Register.register(),'class->"form-signin",'role->"form",'id->"regForm",'autocomplete->"off") {
+            		<h3 class="legend">Personal Information</h3>
+            		<div class="frm_cont">
+            			<input type="hidden" name="country" value="@userForm("country").value"/>
+                    	<label for="firstName">First Name</label>
+                    	<p class="frm_write">
+                          <input type="text" id="firstName" name="firstname"/>
+                        </p>
+                        <em>*</em>
+                    </div>
+                    <div class="frm_cont">
+                    	<label for="lastName">Last Name</label>
+                    	<p class="frm_write">
+                          <input type="text" id="lastName" name="lastname"/>
+                        </p>
+                        <em>*</em>
+                    </div>
+                    <div class="frm_cont">
+                    	<label for="emailAddress">Email Address</label>
+                    	<p class="frm_write">
+                          <input type="text" id="emailAddress" name="email"/>
+                        </p>
+                        <em>*</em>
+                    </div>
+                    <div class="frm_cont pt10">
+                    	<label for="newsLetter" style="float:left">Sign Up for Newsletter</label>
+                        <input type="checkbox" id="newsLetter" name="signupNewsletter"/>
+                    </div>
+                    <h3 class="legend mt16">Login Information</h3>
+                    <div class="frm_cont">
+                    	<label for="password">Password</label>
+                    	<p class="frm_write">
+                          <input type="password" id="passwd" name="passwd"/>
+                        </p>  
+                        <em>*</em>
+                    </div>
+                    <div class="frm_cont">
+                    	<label for="conpassword">Confirm Password</label>
+                    	<p class="frm_write">
+                          <input type="password" id="conpassword" name="confirm_password"/>
+                        </p>
+                        <em>*</em>
+                    </div>
+                    <div class="frm_cont">
+                    	<label for="identifying">Identifying Code</label>
+                    	<p class="frm_write" style="width:25%;margin-right:20px">
+                          <input type="text" id="captcha" name="captcha"/>
+                    	</p>
+                    	<img src="@controllers.base.routes.Captcha.generate()" id="identImg" onclick="change(this);" width="70" height="30">
+                    </div>
+                    <div class="buttons-set">
+                    	<p>* Required Fields</p>
+                    	<button type="submit" id="submit" title="Submit" class="btn">Submit</button>
+                    </div>
+        		}
+            </div>
+        </section>
+    </article>
+	<!--  �������ݽ���  -->
+	 @services.dodocool.base.HtmlUtils.misc().addTailOnce{
+	        <script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.validate.min.js")'></script>
+			<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+     		<script  language="javascript" type="text/javascript" src='@controllers.member.routes.Assets.at("js/member/regValidation.js")'></script>
+     		<script>
+					function change(imgObj){
+			        	imgObj.src="@controllers.base.routes.Captcha.generate()?date="+new Date().getTime();
+			        }
+			</script>
+     }
+}

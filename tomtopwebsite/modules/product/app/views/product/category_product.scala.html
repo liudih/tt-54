@@ -1,0 +1,70 @@
+@(products: valueobjects.base.Page[valueobjects.product.ProductBadge],
+	cpath: String,
+	attribute: valueobjects.product.category.CategoryAttributeMap,
+	catName: dto.product.CategoryName,
+	node:valueobjects.product.category.CategoryReverseComposite,
+	st: Integer,
+	catMap: Map[Integer,Collection[dto.Category]],
+	req: Map[String, Array[String]]
+	)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/search.css")?@version.BuildVersion.build()" /> 
+ 	  	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" /> 
+}
+@services.base.HtmlUtils.misc().addTail{
+	<script src="@controllers.base.routes.Assets.at("js/lib/jquery.form.js")" ></script>
+	<script src="@controllers.base.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.product.routes.Assets.at("js/product/mcategoryproduct")" ></script>
+}
+@views.html.base.master {
+<div class="container indexCon suarchCon" role="main">
+	<div class="Bread_crumbs_Box">
+		<ul class="Bread_crumbs">
+      		 <li class="Bread_home"><a href="/"></a></li>
+				@category.category_breadcrumb_inc(node)
+			<div class="clear"></div>
+		</ul>
+	</div>
+		 
+	@category.category_platform(catName, catMap)
+	
+	@if(products.getList().size()!=0){
+	<div id="pagelist">
+		@category.category_attribute(attribute)
+		@sortbar()(req)()
+	</div>
+	<div class="LevelOne">
+		<ul class="arrangeClick arrangeLess block" >
+	    	@products.getList().map{p=>
+				@views.html.product.gadget.badge_big(p)
+			}
+	        <div class="clear"></div>
+	    </ul>
+	    <ul class="arrangeList">
+	       	@products.getList().map{p=>
+				@views.html.product.gadget.badge_list(p)
+			}
+	        <div class="clear"></div>
+	    </ul>
+	    <div class="arrayNEX">
+			@views.html.product.gadget.pagination(products.pageNo(),products.totalPages())
+		</div>
+    </div>
+    }else{
+    	<h2 style="text-align:center;color:orange; margin-bottom: 50px;border:1px solid #e8e8e8;padding:150px 0 ;">Sorry, No Products Found!</h2>
+    	<div class="xxkDiv autoH">
+	          <ul class="blackXXK">
+	              <li class="xxkActi">@Messages("super.deals")</li>
+	              <li>@Messages("you.view.history")</li>
+	              <div class="clear"></div>
+	          </ul>
+			  @tp.get("super-deals-in-member")
+	          <div class="clear"></div>
+	          @tp.get("member-browse-history-in-member-center")
+	          <div class="clear"></div>
+	    </div>
+    	<div class="clear"></div>
+    }
+</div>
+}

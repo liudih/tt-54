@@ -1,0 +1,46 @@
+@(product: valueobjects.product.ProductBadge,index: Integer=0)
+@import services.base._
+@import services.base.utils._
+<div class="@if(index==0){dealsOne}else{dealsTwo}">
+	@product.getPrice().getDiscountOption().asScala.map{ d =>
+		@if(product.getPrice().isDiscounted()){
+			<span class="@if(index==0){discountBIG}else{discount}">@Utils.percent(d)</span>
+		}
+	}
+	<a class="publiceImg" href="@controllers.product.routes.Product.view(product.getUrl)">
+		@img(product.getImageUrl(),product.getTitle(),377,377,null)		
+	</a>
+    <div class="@if(index==0){dealsOneTxt}else{dealsTwoTxt}">
+		<h1><a href="@controllers.product.routes.Product.view(product.getUrl)">
+		@if(product.getTitle()!=null && product.getTitle().length>75){
+	    	@product.getTitle.substring(0,75)...
+	    }else{
+	    	@product.getTitle
+	    }
+		</a></h1>
+		<ul class="dealsInfs">
+			@if(product.getPrice!=null){
+			<li>@Messages("was.price")<br><span> @product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitBasePrice) </span></li>
+			<li @if(index>0){class="dealWli"}>@Messages("save")<br> @product.getPrice.getSymbol @Utils.money(product.getPrice().getUnitBasePrice()-product.getPrice().getUnitPrice())</li>
+			<li class="orange">@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitPrice)</li>
+			<li>
+			<input class="yellowInput" type="button" value="View Deals >>" onclick="location.href='@controllers.product.routes.Product.view(product.getUrl)'">
+			</li>
+			@if(index>0){<div class="clear"></div>}
+			}
+		</ul>
+		@if(index>0){
+		<ul class="dealsInfsLi">
+			@product.getSellingPoints.take(3).map{ psp =>
+        		<li>
+        		@if(psp.getCcontent()!=null && psp.getCcontent().length>50){
+			    	@psp.getCcontent.substring(0,50)...
+			    }else{
+			    	@psp.getCcontent
+			    }
+        		</li>
+			}
+        </ul>
+        }
+    </div>
+</div>

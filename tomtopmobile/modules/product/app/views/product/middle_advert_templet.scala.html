@@ -1,0 +1,16 @@
+
+@(advertList : List[valueobjects.product.MobileAdItem])
+
+@baseUrl = @{play.Play.application().configuration().getString("image_request_base_url")}
+
+@if(null !=advertList){
+	@advertList.map{ b=>
+		<a class="addBanner" href="@b.getUrl()">
+			@if(b.getImgUrl().startsWith("http://")) {
+				<img src="@b.getImgUrl()"  width="100%">
+			}else{
+				<img src="@baseUrl/product/original@b.getImgUrl()"  width="100%">
+			}
+		</a>
+	}
+}

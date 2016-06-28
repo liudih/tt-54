@@ -1,0 +1,30 @@
+@import views.html.helper._
+@helper.javascriptRouter("js_emailRoutes")(
+	controllers.member.routes.javascript.Register.checkEmail
+)
+@views.html.base.master{
+    <!--  主体内容开始  -->
+	<article class="common_wrapper">
+    	<section class="container">
+        	<h2>I forgot my password.</h2>
+            <div class="account_box forget_box">
+            	@form(controllers.member.routes.ForgetPassword.sendEmail,'class->"e_form",'id->"pform",'autocomplete->"off") {
+            		<h3 class="legend">@Messages("to.reset.your.password.enter.the.email.ddress.you.used.to.create.your.dodocool.account")</h3>
+                    <div class="frm_cont">
+                    	<label>@Messages("email.address")</label>
+                        <input type="text" name="email" id="email" />
+                    </div>
+                    <div class="pt30">
+                    	<button type="submit" title="Continue" class="btn btn_continue">@Messages("send")</button>
+                    </div>
+        		}
+            </div>
+        </section>
+    </article>
+	<!--  主体内容结束  -->
+	@services.dodocool.base.HtmlUtils.misc().addTailOnce{
+ 		<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.validate.min.js")'></script>
+		<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+  		<script  language="javascript" type="text/javascript" src='@controllers.member.routes.Assets.at("js/member/findPasswordValidation.js")'></script>
+  }
+}

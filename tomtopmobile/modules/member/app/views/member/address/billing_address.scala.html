@@ -1,0 +1,29 @@
+@(
+memberAddresses :List[ dto.member.MemberAddress],
+ct : Map[Integer, dto.Country]
+)
+@import services.base._
+@import services.base.utils._
+
+@import views.html.helper._
+@views.html.base.sub_master("Billing Address"){
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+ 	@controllers.base.routes.Assets.at("css/shippingAddress_page.css")
+}
+
+<div class="container bg_color_gray marT_6">
+	<div class="address_con_W lineBlock">
+		<h5>Billing Address</h5>
+		@if(null!=memberAddresses && memberAddresses.size>0){
+				@memberAddresses.map{a=>
+				@address_varchar(a,ct)
+			}
+		}
+		<div class="add_address">
+			<label class="popBoxFilter block"><span class="add_addressIco"> </span><p class="add_addressTxt">Add a Billing address</p></label>
+			@address_form(2)
+		</div>
+		
+	</div>
+</div>
+}

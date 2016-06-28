@@ -1,0 +1,31 @@
+@(banners : List[valueobjects.product.AdItem])
+ 
+
+@if(banners!=null && banners.size()>0){
+
+<div class="indexBanner_box" id="indexBanner_box">
+    <a class="browseLeft_click" href="javascript:;"></a>
+    <a class="browseRight_click" href="javascript:;"></a>
+    
+    <ul class="indexBanner_A">
+    	@banners.map{ b=>
+   	        @if(b.isBhasbgimage()){
+   	        	<li style="background-image:url(@b.getCbgimageurl()) ; @if(b.isBbgimgtile()){ background-repeat: repeat-x;}else{background-repeat: no-repeat;} background-color:#@b.getCbgcolor;">
+   	        	<a href="@b.getUrl()"><img src="@b.getImgUrl()" title="@b.getTitle()"></a></li>
+   	        }else{
+   	        	<li style="background-color:#@b.getCbgcolor();"><a href="@b.getUrl()"><img src="@b.getImgUrl()" title="@b.getTitle()"></a></li>
+   	        }
+    	     
+        }
+    </ul>
+    <ul class="indexBanner_list">
+    @for(i <- 1 to banners.size()){
+       @if(i==1){
+    	<li class="listActive"></li>
+    	}else{
+    	<li></li>
+    	}
+    }
+    </ul>
+    </div>
+}

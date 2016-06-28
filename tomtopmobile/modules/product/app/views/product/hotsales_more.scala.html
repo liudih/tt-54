@@ -1,0 +1,36 @@
+@(productList :List[valueobjects.product.ProductBadge],
+	rootList :List[dto.product.CategoryWebsiteWithName],
+	req: Map[String, Array[String]]
+	)
+@import services.base._
+@import services.base.utils._
+@import views.html.home.img
+
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+ 	  	@controllers.base.routes.Assets.at("css/list_product.css")
+  }
+@views.html.base.sub_master("Hot Products"){
+
+<div class="container">
+	@views.html.product.sort_common(rootList, "all", req)
+	
+	<div id="badgeContent">
+	@productList.map{p=>
+	@badge_base(p)
+	}
+	</div>
+</div>
+
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+ 	@controllers.base.routes.Assets.at("js/jquery.esn.autobrowse.min.js")
+ 	@controllers.base.routes.Assets.at("js/jstorage.min.js")
+ 	@controllers.product.routes.Assets.at("js/scroll_load.js")
+}
+
+@services.base.HtmlUtils.misc().addTailOnce{
+	<script type="text/javascript">
+	var moreurl = "@controllers.product.routes.Product.hotSalesMore()";
+	moreurl = moreurl + "?" + $("#searchbar").serialize();
+	</script>
+ }
+}

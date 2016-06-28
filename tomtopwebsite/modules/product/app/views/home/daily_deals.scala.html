@@ -1,0 +1,48 @@
+@(ctx: play.mvc.Http.Context,
+	product:valueobjects.product.ProductBadge,
+	intdiff: Long)
+@import services.base._
+@import services.base.utils._
+@if(product!=null){
+<div class="banner_dDeals">
+	<h5>
+		<em></em>@Messages("daily.deals")<i></i>
+	</h5>
+	<div class="dd_hours">
+		<em></em>
+		<div id="retroclockbox_xs" data="@intdiff"></div>
+	</div>
+	<div class="dailyDeals_Box">
+		@product.getPrice().getDiscountOption().asScala.map{ d =>
+			@if(product.getPrice().isDiscounted()){
+				<span class="discount">@Utils.percent(d)</span>
+			}
+		}
+		<a href="@controllers.product.routes.Product.view(product.getUrl)">
+			@views.html.product.img(product.getImageUrl(),product.getTitle,168,168,null)
+		</a>
+		<a class="ddText" href="@controllers.product.routes.Product.view(product.getUrl)">
+		@if(product.getTitle()!=null && product.getTitle().length>35){
+	    	@product.getTitle.substring(0,35)...
+	    }else{
+	    	@product.getTitle
+	    }
+	    </a>
+		<p class="Prices">
+			<span class="presentPrice">@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitPrice)</span> 
+			@if(product.getPrice().isDiscounted()){
+				/ <span class="originalPrice">
+					@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitBasePrice)
+				</span>
+			}
+		</p>
+	</div>
+</div>
+@services.base.HtmlUtils.misc(ctx).addTailOnce{
+  <script>
+	 $(function(){
+		 timedownFun("retroclockbox_xs", true,"xs",false);
+     })
+   </script>
+} 
+}

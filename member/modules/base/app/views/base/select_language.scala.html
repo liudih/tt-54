@@ -1,0 +1,23 @@
+@(language: dto.Language)
+<div class="select_language">
+    <h3>
+    	<span>@language.getCname</span><em class="ship_xSJ"></em>
+    	<input id="current_language" type="hidden" name="language" value="@language.getIid" shortName="@language.getCname"/>
+    </h3>
+    <ul name="language_ul">
+    </ul>
+</div>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+@helper.javascriptRouter("jsLanguage")(
+	controllers.base.routes.javascript.Language.getAllLanguage
+)
+<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/base/topbar/Language.js")'></script>
+}
+
+@services.base.HtmlUtils.misc().addTailOnce{
+	<script>
+		var language = new Language();
+		language.init(jsLanguage.controllers.base.Language.getAllLanguage().url);
+	</script>
+}

@@ -1,0 +1,138 @@
+GET      /:title.html                                                         @controllers.product.Product.view(title: String)
+
+GET      /product                                                             @controllers.search.ProductSearch.search(q: String ?= null, st: Int ?=0, path: String ?=null)
+
+GET      /search/:q.html                                                      @controllers.search.ProductSearch.searchOld(q: String, st: Int ?=0)
+
+GET      /product/_indexing                                                   @controllers.search.ProductSearch.indexing(drop: Boolean ?= false, create: Boolean ?= false)
+
+GET      /product/_deleteIndex                                                @controllers.search.ProductSearch.deleteIndex()
+
+GET      /product/_deleteIndex/:listingid                                     @controllers.search.ProductSearch.deleteIndexbyListing(listingid: String)
+
+GET      /product/_createIndexByListing/:type/:value                          @controllers.search.ProductSearch.createIndexbyListing(type: String,value: String)
+
+GET      /product/_internalize-images                                         @controllers.product.ProductImage.convertBatch(limit: Int ?= 100)
+
+GET      /search-suggest                                                      @controllers.search.ProductSearch.suggest(q: String ?= null)
+
+POST     /search/price-conversion                                             @controllers.search.ProductSearch.currencyConversion()
+
+GET      /product/recommend/_indexing/reset								 	  @controllers.search.ProductRecommend.resetindexing()
+
+#POST   /api/v1/publishproduct  					 @controllers.erp.ERPProduct.publishProduct()
+
+#POST   /product/modify         					 @controllers.product.Product.modifyDescription()
+
+GET      /product/category                                                    @controllers.product.CategoryAPI.getAllCategory()
+
+GET      /product/category-img/:imageType/:iid                                @controllers.product.CategoryAPI.getCategoryImage(iid:Int, imageType:String)
+
+GET      /product/gadget/:t                                                   @controllers.product.Product.gadget(t: Int, p: Int ?= 1, limit: Int ?=15, st: Int ?=0)
+
+GET      /product/clearance                                                   @controllers.product.Product.clearance()
+
+GET      /product/dailydeal                                                   @controllers.product.Product.dailyDeal(p: Int ?= 1, t: Int ?= 0)
+
+GET      /product/dailydeal/more                                              @controllers.product.Product.dailyDealMore(p: Int ?= 1, t: Int ?= 0)
+
+GET      /product/hot                                                         @controllers.product.Product.hot(p:Int ?=1,limit: Int ?=15 )
+
+GET      /product/setproductstatus/:sku                                       @controllers.product.Product.setProductStatusBySku(sku:String)
+
+GET      /product/freeshipping                                                @controllers.product.Product.freeShipping()
+
+GET      /product/newarrivals                                                 @controllers.product.Product.newarrivals(t: Int ?= 0, p: Int ?= 1, limit: Int ?=30, st: Int ?=0,iscate:Int?=0)
+
+GET      /product/category/newarrivals                                        @controllers.product.CategoryAPI.updateNewArrivalCategory()
+
+GET      /img/*imgfile                                                        @controllers.image.Image.view(imgfile: String)
+
+GET      /edm/*imgfile                                                        @controllers.image.Image.edmView(imgfile: String)
+
+GET      /activity/*imgfile                                                   @controllers.image.Image.activityView(imgfile: String)
+
+GET      /imgxy/:width/:height/*imgfile                                       @controllers.image.Image.viewScaled(imgfile: String, width: Int, height: Int)
+
+GET      /product/multiatribute                                               @controllers.product.Product.getMultiatributeProduct(clistingid: String, mainclistingid: String, type: String)
+
+GET      /product/special                                                     @controllers.product.Special.list(category:String?="")
+
+GET      /product/special/async-load                                          @controllers.product.Special.asyncLoad(category:String ?="",p:Int ?=1)
+
+GET      /collections                                                         @controllers.topic.Topic.show()
+
+POST     /collections                                                         @controllers.topic.Topic.refresh()
+
+GET      /collections/image/:id                                               @controllers.topic.Topic.showImage(id: Int)
+
+GET      /collections/:name                                                   @controllers.topic.Topic.showHtml(name: String)
+#========= API below ===========
+
+POST     /api/v1/img/*path                                                    @controllers.image.ImageAPI.create(path: String)
+POST     /api/v1/img-copy/*path                                               @controllers.image.ImageAPI.copyFrom(path: String)
+GET      /api/v1/img/*path                                                    @controllers.image.ImageAPI.meta(path: String)
+GET      /assets/*file                                                        controllers.product.Assets.at(path="/public",file: String)
+
+#======== publish API ==================
+POST     /api/category/push                                                   @controllers.api.Category.push()
+POST     /api/websitecategory/push                                            @controllers.api.Category.platformPush()
+GET      /api/websitecategory/:websiteid/:languageid                          @controllers.api.Category.get(websiteid: Int,languageid: Int)
+POST     /api/product/push                                                    @controllers.api.Product.push()
+GET      /api/attribute                                                       @controllers.api.Attribute.getAll(languageid: Int ?= 1)
+POST     /api/mutilproduct/push                                               @controllers.api.Product.pushMutil()
+GET      /api/category/attribute                                              @controllers.api.Category.getAllCategoryAttributes()
+POST     /api/attribute/push                                                  @controllers.api.Attribute.push()
+POST     /api/category/attribute                                              @controllers.api.Category.saveCategoryAttributes()
+#POST   /api/product/promotionprice/push              @controllers.api.Product.pushPromotionPrice()
+
+POST     /api/product/cost/push                                               @controllers.api.Product.updateCostPrice()
+POST     /api/product/category/push                                           @controllers.api.Product.pushProductCategory()
+POST     /api/product/price                                                   @controllers.api.Product.updateProductPrice()
+POST     /api/product/status                                                  @controllers.api.Product.updateProductStatus()
+POST     /api/product/url                                                     @controllers.api.Product.addProductUrl()
+POST     /api/mutilproduct/attribute                                          @controllers.api.Attribute.addProductMultiAttribute()
+POST     /api/product/sellingpoints                                           @controllers.api.Product.addProductSellingPoints()
+POST     /api/product/images                                                  @controllers.api.Product.saveProductImage()
+POST     /api/product/keyword/push                                            @controllers.api.Keyword.push()
+POST     /api/product/label/push                                              @controllers.api.Product.addProductLabelType()
+POST     /api/product/label/delete                                            @controllers.api.Product.deleteProductLabel()
+POST     /api/product/translate                                               @controllers.api.Product.AddTranslation()
+POST     /api/product/translate/update                                        @controllers.api.Product.updateTranslation()
+POST     /api/product/storage                                                 @controllers.api.Product.updateProductStorage()
+POST     /api/product/changelabel                                             @controllers.api.Product.changeProductLabel()
+
+POST     /api/product/qty                                                     @controllers.api.Product.updatePorductQty()
+POST     /api/product/freight                                                 @controllers.api.Product.updateProductFreight()
+POST     /api/product/saleprice                                               @controllers.api.Product.addProductSalePrice()
+
+GET      /allcategories                                                       @controllers.product.CategoryProduct.getAllCategories()
+POST     /api/product                                                         @controllers.api.Product.getProducts()
+POST     /api/product/listingid                                               @controllers.api.Product.getProductsByListingid()
+DELETE   /api/mutilproduct/attribute/:parentSku/:key/:languageId/:websiteId   @controllers.api.Attribute.deleteMultiProductAttribute(parentSku: String,key: String,languageId: Int ,websiteId: Int )
+DELETE   /api/product/attribute/:listingid/:key/:languageId                   @controllers.api.Attribute.deleteProductAttribute(listingid: String ,key: String ,languageId: Int)
+POST     /api/product/attribute                                               @controllers.api.Attribute.addProductAttribute()
+DELETE   /api/product/saleprice/:listingid                                    @controllers.api.Product.deleteProductCurrentSalePrice(listingid: String)
+DELETE   /api/product/sellingpoints/:lang/:listingid                          @controllers.api.Product.deleteProductSellingPoints(listingid: String,lang: Int) 
+POST     /api/product/saleprice/delete                                        @controllers.api.Product.deleteProductSalePrice()
+
+POST     /api/product/thirdplatformdata/push                                  @controllers.api.ThirdPlatformData.push()
+POST     /api/product/copy                                                    @controllers.api.Product.copy()
+
+GET      /product/storage/:storageId                                          @controllers.product.Product.storage(storageId: Int)
+
+DELETE   /api/product/deleteimage/:websiteid/:listingid                       @controllers.api.Product.deleteProductImage(listingid: String, websiteid: Int)
+
+POST     /api/product/productCategory/push    								  @controllers.api.Product.addProductCategory()
+#=======================================
+GET      /product/_indexing/:siteid/:begindate/:enddate						@controllers.search.ProductSearch.indexingBeginDate(siteid: Int,begindate: String,enddate: String)
+
+
+#
+# Category should be the last route as it need to support url like:
+# /computers-networking/keyboards-mice-input/barcode-scanners
+#
+GET      /*cpath                                                              @controllers.product.CategoryProduct.showCategoryProduct(cpath: String, p: Int ?= 1, limit: Int ?=5, filter: String ?= null, st: Int ?=0)
+
+
+

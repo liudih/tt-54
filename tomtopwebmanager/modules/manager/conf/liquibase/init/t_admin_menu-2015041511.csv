@@ -1,0 +1,3 @@
+﻿"iid","cname","iparentid","ilevel","cclass","curl","ccreateuser","cenname"
+47,"批发优惠",5,2,47,/sysadmin/member/bulk,liudi,bulk
+48,"批发优惠详情",5,2,48,/sysadmin/member/bulkrate,liudi,bulkrate

@@ -1,0 +1,21 @@
+#GET    /                            @controllers.base.Home.home()
+
+POST    /signin                      @controllers.base.login.Login.signin()
+
+GET    /logout              		@controllers.base.login.Login.logout()
+
+GET    /isLogin             		@controllers.base.login.Login.isLogin()
+
+POST   /register              		@controllers.base.login.Login.register()
+
+POST   /validateCategory            @controllers.base.login.Login.validateCategory()
+
+GET    /validEmail              	@controllers.base.login.Login.validEmail(email: String?="")
+
+GET	   /getallcountry				@controllers.base.Country.getAllCountries()
+
+GET    /captcha              		@controllers.base.login.Login.createCaptcha()
+
+GET	   /view/:title						@controllers.base.Product.view(title: String)
+
+GET    /assets/*file          		controllers.base.Assets.at(path="/public", file)

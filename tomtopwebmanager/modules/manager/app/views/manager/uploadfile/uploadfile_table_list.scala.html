@@ -1,0 +1,102 @@
+@(files: List[dto.image.Img], count: Integer, pageNum: Integer, pageTotal: Integer, fileIdAndLabelMap: Map[Long,List[String]])
+@import views.html.helper._
+<div id="search_file_html" style="padding-bottom: 100px;">
+	<div class="portlet box light-grey">
+		<div class="portlet-title">
+			<div class="caption"><i class="icon-globe"></i>文档信息</div>
+		</div>
+		<div class="portlet-body">
+			<div class="clearfix">
+				<div class="btn-group">
+				</div>
+				<div class="btn-group pull-right">
+				</div>
+			</div>
+			
+			@if(files.size() > 0){
+				<table class="table table-striped table-bordered table-hover table-full-width dataTable" id="fileMsg" aria-describedby="sample_2_info">
+					<thead>
+						<tr role="row">
+							<th rowspan="1" colspan="1" style="width: 10%;">文档类型</th>
+							<th rowspan="1" colspan="1" style="width: 20%;">路径</th>
+							<th rowspan="1" colspan="1" style="width: 40%;">详情</th>
+							<th rowspan="1" colspan="1" style="width: 40%;">cdn路径</th>
+							<th rowspan="1" colspan="1" style="width: 5%;">删除</th>
+						</tr>
+					</thead>
+	
+					<tbody role="alert" aria-live="polite" aria-relevant="all">
+					   @files.asScala.map{i=>
+							<tr class="odd">
+								<td>
+									@i.getCcontenttype()
+								</td>
+								<td>
+									@i.getCpath()
+								</td>
+								<td>
+								@if(null != fileIdAndLabelMap &&fileIdAndLabelMap.size>0 && null !=fileIdAndLabelMap.get(i.getIid) && fileIdAndLabelMap.get(i.getIid).size>0){
+									@fileIdAndLabelMap.get(i.getIid).map{ p=>
+										@if("edm".equals(p)){
+											<a href="@controllers.image.routes.Image.edmView(i.getCpath())" target="_blank">@i.getCpath()</a>
+										} else {
+											@if("activity".equals(p)){
+												<a href="@controllers.image.routes.Image.activityView(i.getCpath())" target="_blank">@i.getCpath()</a>
+											} else {
+												<a href="@controllers.image.routes.Image.view(i.getCpath())" target="_blank">@i.getCpath()</a>
+											}
+										}
+										<br>
+									}
+								}
+								</td>
+								<td>
+								@if(null!=i.getCdnpath()){
+									<a href="@i.getCdnpath()">@i.getCdnpath()</a>
+								}
+								</td>
+								<td>
+									<a class="delete uploadfile" href="javascript:;" data-id="@i.getIid()"><i class="icon-trash"></i></a>
+								</td>
+							</tr>
+						}
+					</tbody>
+				</table>
+				<div class="row-fluid">
+					<div class="span6">
+						<div class="dataTables_info">当前第 <span>@pageNum</span> 页|共 <span>@pageTotal</span> 页| 共 <span>@count</span> 条记录</div>
+					</div>
+					<div class="span6">
+						<div class="dataTables_paginate paging_bootstrap pagination">
+							<input id="pagenum" value="@pageNum" type="hidden"> 
+							<input id="pagetotal" value="@pageTotal" type="hidden"> 
+							
+							@if(pageTotal>1){
+							<ul>
+								@if(1 == pageNum){
+								<li class="disabled"><a href="javascript:;">«</a></li>
+								}else{
+								<li><a href="javascript:;" tag="pageNum" value="1">«</a></li>
+								}
+								@for(i <- pageNum - 6 to pageNum + 6 if i >= 1; if i<= pageTotal) {
+									@if(i == pageNum){
+									<li class="disabled"><a href="javascript:;" tag="pageNum" value="@i">@i</a></li>
+									}else{
+									<li><a href="javascript:;" tag="pageNum" value="@i">@i</a></li>
+									}
+								}
+								@if(pageNum >= pageTotal){
+								<li class="disabled"><a href="javascript:;">»</a></li>
+								}else{
+								<li><a href="javascript:;" tag="pageNum" value="@pageTotal">»</a></li>
+								}
+							</ul>
+							}
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+</div>
+

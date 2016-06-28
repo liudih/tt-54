@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>反馈结果</title>
+    <script type="text/javascript" src="jquery.js"></script>
+</head>
+<body  onload="show()">
+    <dl class="skdc">
+        <dt class="skdc_top"></dt>
+        <dd>
+            <div class="dc_con_top">
+                <div class="dc_logo">
+                    <a href="#" class="logoI">
+                        <img alt="" src="images/logo.gif" /></a><a href="#" class="logoS"></a>
+                </div>
+            </div>
+            <p class="cline"></p>
+            <div class="dc_con fix">
+                <div class="tjcg">
+                    提交成功！</div>
+                <p class="tjcg_p">我们将认真查看您的反馈并对不足之处进行改进感谢您的支持！</p>
+                <p class="tjcg_p"><span class="showbox"></span>秒之后将自动跳转到首页。</p>
+                <p class="tjcg_p"><a href="#" onclick="window.close();">关闭此页</a></p>
+            </div>
+        </dd>
+        <dt class="skdc_bottom"></dt>
+    </dl>
+</body>
+</html>
+<script type="text/javascript">
+    //设置超时时间为10秒钟
+    var timeout = 10;
+    function show() {
+        var showbox = $(".showbox");
+        showbox.html(timeout);
+        timeout--;
+        if (timeout == 0) {
+            window.opener = null;
+            window.location.href = "index.aspx";
+        }
+        else {
+            setTimeout("show()", 1000);
+        }
+    }
+</script>

@@ -1,0 +1,62 @@
+@(si : valueobjects.cart.SingleCartItem,
+	currency:dto.Currency,
+	isCart: Boolean = true
+	)
+@import services.base._
+@import services.base.utils._
+<div class="shoppingCart_listBox" id="cart_item_num@si.getId()" >
+	<input type="hidden" class="clistingid" value="@si.getClistingid()"/>
+	<input type="hidden" class="csku" value="@si.getSku()"/>
+	<input type="hidden" class="storageid" value="@si.getStorageID()" autocomplete="off" />
+	<input type="hidden" class="iqty" value="@si.getIqty()" autocomplete="off" />
+	
+	<input type="hidden" class="theprice" value="@Utils.money(si.getPrice().getPrice(), si.getPrice().getCurrency())" />
+	<!-- <label class="input_control">
+		<input type="checkbox" disabled="disabled" />
+		<div class="checkbox chooseClick lineBlock"><span> </span></div>
+	</label> -->
+	<div class="shoppingCart_imgBox lineBlock">
+		@if(si.getPrice().getDiscount()!=null&&si.getPrice().getDiscount()>0){
+			<div class="discount_icon">@Utils.percent(si.getPrice().getDiscount())</div>
+		}
+		<a href="@if(si.getCurl()!=null){@controllers.product.routes.Product.view(si.getCurl())}" >
+			@views.html.home.img(si.getCimageurl(), si.getCtitle(), 377, 377, null)
+		</a>
+	</div>
+	<div class="shoppingCart_TxtBox lineBlock">
+		<a href="@if(si.getCurl()!=null){@controllers.product.routes.Product.view(si.getCurl())}">
+			<h5>@si.getCtitle()</h5>
+		</a>
+		<div class="product_price lineBlock">
+			@currency.getCsymbol <span>@Utils.money(si.getPrice().getUnitPrice())</span>
+		</div>
+		@if(si.getPrice().getDiscount()!=null&&si.getPrice().getDiscount()>0){
+			<div class="product_priceGR lineBlock">
+				@currency.getCsymbol <span>@Utils.money(si.getPrice().getUnitBasePrice())</span>
+			</div>
+		}
+		<ul class="product_attribute">
+			<li class="lineBlock">SKU:@si.getSku()</li>
+			@if(null !=si.getAttributeMap){
+           		@si.getAttributeMap.map{ j=>
+           		    <li class="lineBlock">@if(null != j._1 && j._1.length>0){@j._1.substring(0,1).toUpperCase@j._1.substring(1)}:@j._2 </li>
+           		}
+           	}
+		</ul>
+		@if(isCart){
+		<ol class="lbBox qtyADD_redu lineBlock" >
+			<li class="lineBlock qtyAdd" onclick="updateItem('sub',this)"></li>
+			<li class="lineBlock qtyInput"><input type="text" class="itemnum" value="@si.getIqty()"></li>
+			<li class="lineBlock qtyReduction" onclick="updateItem('add',this)"></li>
+		</ol>
+		}else{
+			<p class="qtyAddres">QTY:<span>@si.getIqty()</span></p>
+		}
+		@if(isCart){
+			<ul class="listWisL lineBlock">
+				<li class="product_BigWishlist heartClick lineBlock" onclick="product_collect('@si.getClistingid()',this)" data="@si.getClistingid()" ><i> </i></li>
+				<li class="deletePro lineBlock" onclick="popCart(this)"></li>
+			</ul>
+		}
+	</div>
+</div>

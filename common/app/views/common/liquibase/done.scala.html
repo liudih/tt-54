@@ -1,0 +1,12 @@
+@(pv: Map[String, String])
+
+<h1>@Messages("liquibase.results")</h1>
+
+@pv.map{ e =>
+
+<h2>@e._1</h2>
+<pre>
+@e._2
+</pre>
+
+}

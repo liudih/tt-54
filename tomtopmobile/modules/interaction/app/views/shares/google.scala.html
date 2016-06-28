@@ -1,0 +1,13 @@
+@(url:String="")
+<span class="google lineBlock"> </span>
+<span class="lineBlock shareText" onclick="affShareGooglePlus('@url')" title="@Messages("share.on.google.plus")">Google+</span>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript">
+	function affShareGooglePlus(url) {
+	    var shareUrl = 'https://plus.google.com/share?url=';
+	    shareUrl += encodeURIComponent(url);
+	    popWin(shareUrl,'google',getPopupPosition(500,360)+',resizable=yes,scrollbars=yes');
+	}
+</script>
+}

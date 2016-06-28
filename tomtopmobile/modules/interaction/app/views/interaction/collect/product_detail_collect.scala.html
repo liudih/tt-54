@@ -1,0 +1,16 @@
+@(listingId:String,
+	collectCount:Integer,
+	isCollect:Boolean)
+	
+@helper.javascriptRouter("ProductCollectRoutes")(
+	controllers.interaction.routes.javascript.Collect.collect,
+	controllers.interaction.routes.javascript.Collect.getcollect,
+	controllers.member.routes.javascript.Login.login
+)
+
+<a class="product_page_wishlist product_page_wishlistP heartClick @if(isCollect){redHeart}"
+  href="javascript:;" onclick="product_collect('@listingId',this)"><span>wishlist</span></a>
+
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+ 	@controllers.base.routes.Assets.at("js/product_collect.js")
+}

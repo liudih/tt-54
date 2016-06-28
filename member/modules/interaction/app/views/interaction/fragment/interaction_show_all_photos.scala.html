@@ -1,0 +1,11 @@
+@(listphotos: List[dto.interaction.InteractionProductMemberPhotos])
+@if(listphotos!=null){
+	@listphotos.map{i=>
+		@if(i.getCimageurl().startsWith("http://") || i.getCimageurl().startsWith("https://")){
+			<img src="@i.getCimageurl()" width="70" height="70" title="@i.getClabel()" />
+			
+		} else {
+			<img width="70" height="70" src="@controllers.image.routes.Image.view(i.getCimageurl())" title="@i.getClabel()" />
+		}
+	}
+}

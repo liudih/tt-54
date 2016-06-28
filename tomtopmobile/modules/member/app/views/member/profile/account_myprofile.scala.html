@@ -1,0 +1,204 @@
+@(frm:Form[forms.member.register.RegisterUpdateForm],allCountries: List[dto.Country])
+@import views.html.helper._
+
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+	@controllers.base.routes.Assets.at("js/mobiscroll_002.js")
+ }
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+	@controllers.base.routes.Assets.at("js/mobiscroll.js")
+ }
+@views.html.base.sub_master(){
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+	 	@controllers.base.routes.Assets.at("css/accountPublice.css")
+	 		 	@controllers.base.routes.Assets.at("css/mobiscroll.css")
+	}
+
+<div class="container padding1 bg_color_gray p15m_6">
+    <form action="@controllers.member.routes.MemberController.updateProfileChange()" method="get" id="profileform" name="profileAction">
+		<div class="input_control">
+		<!-- 	<input class="txtInput" type="text" placeholder="Nickname" /> -->
+	    	<i class="sClean"> </i>
+		</div>
+		<div class="input_control">
+			<input class="txtInput" type="text" placeholder="First Name" name="cfirstname" id="firstname" value="@frm("cfirstname").value"/>
+	    	<i class="sClean"> </i>
+	    		<label><p id="firstname-tip" class="red errorRed"></p></label>
+		</div>
+		<div class="input_control">
+			<input class="txtInput" type="text" placeholder="Last Name" name="clastname" id="lastname" value="@frm("clastname").value"/>
+	    	<i class="sClean"> </i>
+	    	<label><p id="lastname-tip" class="red errorRed"></p></label>
+		</div>
+		<div class="profileMale noChange">
+			<div class="publicePop_conMP chooseOneBox lineBlock">
+				<label class="chooseOneLabel input_control">
+					<input type="radio" name="igender" value="1"  @if(frm("igender").value=="1"){checked="checked" } id="radiomale">
+					<div class="radio lineBlock" id="divradiomale"><span> </span></div>Male
+				</label>
+			</div>
+			<div class="publicePop_conMP chooseOneBox floatR lineBlock">
+				<label class="chooseOneLabel input_control">
+					<input type="radio" name="igender" value="2"  @if(frm("igender").value=="2"){checked="checked" } id="radiofemales">
+					<div class="radio lineBlock" id="divradiofemale"><span> </span></div>Females
+				</label>
+			</div>
+		</div>
+		<div class="input_control">
+			<input class="txtInput" type="text" id="appDate" placeholder="Birthday" name="year" value="@frm("dbirth").value"/>
+			<label><p id="birthday-tip" class="red errorRed"></p></label>
+		</div>
+		<div class="countriesSelect input_control" id="ttm-sd-country">
+		
+		</div>
+		<a href="javascript:;" class="button_blue marT span10" id="savechange">Save Change</a>
+</form>
+@services.base.HtmlUtils.misc().addTailOnce{
+ <script type="text/javascript">
+$(function(){
+	
+    $('#ttm-sd-country').country({selected : function(){
+	   var mycid=$(this).attr("cid");
+       $("input[name='countryId']").val(mycid);
+       var text = $(this).text();
+       $(".placeholder_countryClick").val(text);
+       var parentId = $(this).parent().attr('parentId');
+	   $('#' + parentId).find('div[tag=select]').hide();
+      
+  }});
+	
+	$(".placeholder_countryClick").val("@frm("countryName").value");
+	
+	//
+	$("#firstname").blur(function(){
+		var firname=$("#firstname").val();
+		if(!firname){
+			$("#firstname").addClass('input_error');
+			$("#firstname-tip").text("firstname is required.");
+		}else{
+			$('#firstname').removeClass('input_error');
+				$('#firstname').addClass('input_success');
+				$('#firstname-tip').text('');
+		}
+		
+	});
+	
+	$("#appDate").change(function(){
+		var birthday=$("#appDate").val();
+		if(!birthday){
+			$("#appDate").addClass('input_error');
+			$("#birthday-tip").text("birthday is required.");
+		}else{
+			$('#appDate').removeClass('input_error');
+			$('#appDate').addClass('input_success');
+			$('#birthday-tip').text('');
+		}
+		
+	});
+	$("#lastname").blur(function(){
+		var lasname=$("#lastname").val();
+		if(!lasname){
+			$("#lastname").addClass('input_error');
+			$("#lastname-tip").text("lastname is required.");
+		}else{
+			$('#lastname').removeClass('input_error');
+			$('#lastname').addClass('input_success');
+			$('#lastname-tip').text('');
+		}
+		
+	});
+	
+	//country
+		$(".placeholder_countryClick").blur(function(){
+		var countryinput=$(".placeholder_countryClick").val();
+		if(!countryinput){
+			$("#labcount").remove();
+			$("#ttm-sd-country").append('<label id="labcount"><p id="country-tip" class="red errorRed">country is required.</p></label>');
+		}else{
+			$("#labcount").remove();
+		}
+		
+	});
+	
+     $("#savechange").click(function(){
+    		var firname=$("#firstname").val();
+    		if(!firname){
+    			$("#firstname").addClass('input_error');
+    			$("#firstname-tip").text("firstname is required.");
+    		}else{
+    			$('#firstname').removeClass('input_error');
+    				$('#firstname').addClass('input_success');
+    				$('#firstname-tip').text('');
+    		}
+    		//
+    		var lasname=$("#lastname").val();
+    		if(!lasname){
+    			$("#lastname").addClass('input_error');
+    			$("#lastname-tip").text("lastname is required.");
+    		}else{
+    			$('#lastname').removeClass('input_error');
+    			$('#lastname').addClass('input_success');
+    			$('#lastname-tip').text('');
+    		}
+    		//
+    		var birthday=$("#appDate").val();
+    		if(!birthday){
+    			$("#appDate").addClass('input_error');
+    			$("#birthday-tip").text("birthday is required.");
+    		}else{
+    			$('#appDate').removeClass('input_error');
+    			$('#appDate').addClass('input_success');
+    			$('#birthday-tip').text('');
+    		}
+    		
+    		//国家验证
+    		var countryselect=$(".placeholder_countryClick").val();
+    	
+    		if(!countryselect){
+    			$("#labcount").remove();
+    			$("#ttm-sd-country").append('<label id="labcount"><p id="country-tip" class="red errorRed">country is required.</p></label>');
+    		
+    		}else{
+    			$("#labcount").remove();
+    		}
+    		
+    		//
+    
+    		if(firname&&lasname&&birthday&&countryselect){
+    			profileAction.submit();
+    			
+    		}
+     })
+     
+        var male=  $("#radiomale");
+        var female=  $("#radiofemales");
+        var divmale=$("#divradiomale");
+        var divfemale=$("#divradiofemale");
+     
+        if(male.prop("checked")){
+        	divmale.addClass("aciCss");
+        	divfemale.removeClass("aciCss");
+        }else{
+        	divmale.removeClass("aciCss");
+        	divfemale.addClass("aciCss");
+        }
+        //
+       var cbirthday;
+       var birfomat= $("#appDate").val();
+       var birsz= birfomat.split("-");
+       if(birsz.length>1){
+       cbirthday= birsz[1]+"/"+birsz[2]+"/"+birsz[0];
+      $("#appDate").val(cbirthday);
+      } 
+      
+  });
+    
+</script>
+
+}
+
+  @services.base.HtmlUtils.misc().addTailOnce{
+         <script   type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+	     <script   type="text/javascript" src='@controllers.base.routes.Assets.at("js/jquery.country.js")'></script>
+  }
+
+}

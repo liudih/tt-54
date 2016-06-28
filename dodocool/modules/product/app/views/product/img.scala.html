@@ -1,0 +1,10 @@
+@(imgUrl: String)
+@xy = @{play.Play.application().configuration().getString("image.url")}
+@original = @{play.Play.application().configuration().getString("image.domain.original")}
+@if(imgUrl != null) {
+	@if(imgUrl.startsWith("http://") || imgUrl.startsWith("https://")) {
+		  <a href="@imgUrl" rel="zoom1" rev="@imgUrl"><img src="@imgUrl" /></a>
+	}else{
+		 <a href="@original@controllers.image.routes.Image.view(imgUrl)" rel="zoom1" rev="@original@controllers.image.routes.Image.view(imgUrl)"><img src="@original@controllers.image.routes.Image.view(imgUrl)" /></a>
+	}  
+}

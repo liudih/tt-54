@@ -1,0 +1,6 @@
+@(body: String,product: valueobjects.product.ProductBadge)
+@views.html.base.minimal(true,true){
+		@body
+		
+		@views.html.base.product.badge(product,true)
+}

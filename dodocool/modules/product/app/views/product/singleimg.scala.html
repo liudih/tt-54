@@ -1,0 +1,10 @@
+@(imgUrl: String)
+@xy = @{play.Play.application().configuration().getString("image.url")}
+@original = @{play.Play.application().configuration().getString("image.domain.original")}
+@if(imgUrl != null) {
+	@if(imgUrl.startsWith("http://") || imgUrl.startsWith("https://")) {
+		 <img src="@imgUrl" />
+	}else{
+		<img src="@original@controllers.image.routes.Image.view(imgUrl)" />
+	}  
+}

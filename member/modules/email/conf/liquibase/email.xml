@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	<changeSet author="xiaoch" id="t_email_emaillog-create">
+		<createTable tableName="t_email_emaillog" remarks="邮件发送日志">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cfromemail" type="VARCHAR(100)" remarks="发件人邮箱" />
+			<column name="ctoemail" type="VARCHAR(100)" remarks="接收人邮箱" />
+			<column name="ctitle" type="VARCHAR(500)" remarks="邮件标题" />
+			<column name="ccontent" type="VARCHAR(30000)" remarks="邮件正文" />
+			<column name="dsenddate" type="DATETIME" defaultValue="now()" remarks="发送时间" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()" remarks="创建时间" />
+			<column name="bsendstatus" type="BOOLEAN" remarks="发送结果" />
+			<column name="cthirdresult" type="VARCHAR(1000)" remarks="第三方返回结果" />
+			<column name="cfailreason" type="VARCHAR(1000)" remarks="失败原因" />
+		</createTable>
+	</changeSet>
+</databaseChangeLog>

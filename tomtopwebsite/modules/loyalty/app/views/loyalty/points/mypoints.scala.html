@@ -1,0 +1,196 @@
+@(userfulPoints: Integer,
+availableIntegralHistories: valueobjects.base.Page[entity.loyalty.MemberIntegralHistory],
+usedPoints: valueobjects.base.Page[entity.loyalty.MemberIntegralHistory],
+totalUsedPoints: Integer,
+tab:Integer,
+memberEmail:String)
+@import services.base._
+@import services.base.utils._
+@import views.html.helper._	
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@availableIntegralHistoriesIsNull = @{if(null != availableIntegralHistories && availableIntegralHistories.getList.size>0){false}else{true}}
+@usedPointsIsNull = @{if(null != usedPoints && usedPoints.getList.size>0){false}else{true}}
+@currentPageCount = @{if(null == availableIntegralHistories || availableIntegralHistories.totalCount == 0 ){0} else {availableIntegralHistories.pageNo*availableIntegralHistories.pageSize-availableIntegralHistories.totalCount}}
+
+@views.html.member.base.master(extensions.loyalty.menu.PointMenuProvider.ID) {
+@services.base.HtmlUtils.misc().addHeadOnce{
+	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/simplePagination.css")">
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/styles.css")" /> 
+	}
+	
+    <div class="accountRight pointBox">
+    	<h6>My TOMTOP Point</h6>
+        <p class="marT">TOMTOP Point is awarded for purchasing, reviewing, registering, subscribing, sharing, compensating and other promotional campaigns. In the following status bar, "Pending" 
+            means that points can't be used temporarily while "Active" means that points can be exchanged now. As certain points will be deducted when customers require return or 
+            refund, so that "Pending" points will become Available after 60 days from order time. Some types of points (such as review points) are immediately available for use. </p>
+            
+         <p class="marT">TOMTOP Point has at least half-year validity. Tmart Point you got in that year is available before June 30 of the calendar year ensuing, and is subject to the calendar year 
+            and GTM. It will become invalid after the specified date. (If the user requires refund outside the Tmart Point effective date, the Tmart Point in use will not be returned.) </p>
+            
+         <p class="marT">Here shows the latest 100 points record at most. <a href="javascript:;">Learn more >></a> </p>
+        <ul class="myReviewsList lbBox">
+            <li class="lineBlock">
+            	<ol>Account Name: @memberEmail</ol>
+            </li>
+            <li class="lineBlock">
+            	<ol class="fontB14">My Current Points Balance : <b class="bHs">@userfulPoints</b></ol>
+            	<ol class="hsTxt">View My TOMTOP Points Details </ol>
+            </li>
+            <li class="listBut lineBlock">
+            	100 TOMTOP Points = US $1.00
+            </li>
+            <div class="clear"></div>
+        </ul>
+        <div class="clear"></div>
+              
+        <div class="xxkDiv">
+            <ul class="hsXXK hsXXK_C">
+                <li name="Tab-review" @if(tab == 0){class="xxkActi"} value="0" id="unused">@Messages("Available Points")</li>
+                <li name="Tab-review" @if(tab == 1){class="xxkActi"} value="1" id="used">@Messages("Used Points")</li>
+                <div class="clear"></div>
+            </ul>
+            <ul class="reviewTT_ul">
+                <li class="showNub">@Messages("show")
+	                 <a class="showNumber@if((tab == 0 && availableIntegralHistories.pageSize == 10) || (tab ==1 && usedPoints.pageSize == 10)){ showAc}" href="javascript:;">10</a> 
+	                 <a class="showNumber@if((tab == 0 && availableIntegralHistories.pageSize == 20) || (tab ==1 && usedPoints.pageSize == 20)){ showAc}" href="javascript:;">20</a> 
+	                 <a class="showNumber@if((tab == 0 && availableIntegralHistories.pageSize == 40) || (tab ==1 && usedPoints.pageSize == 40)){ showAc}" href="javascript:;">40</a>
+	            </li>
+                <div class="clear"></div>
+            </ul>
+            <div id="unusedDiv" class="xxkBOX boxRa @if(tab == 0){ block}">
+            	<form id="searchbar" action="@controllers.loyalty.routes.Points.myPoints()" >
+            	    <input type="hidden" name="p" id="p" value="@availableIntegralHistories.pageNo"/> 
+			        <input type="hidden" name="limit" id="limit" value="@availableIntegralHistories.pageSize"/> 
+			        <input type="hidden" name="dateType"  value="0"/> 
+			        <input type="hidden" name="tab" id="tab"  value="@tab"/> 
+			        
+                    <table class="hsTable" width="100%" border="1" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <th width="110">Date</th>
+                        <th width="140">Points</th>
+                        <th width="220">From</th>                       
+                      </tr>
+                      @availableIntegralHistories.getList.map{ c=>
+                      <tr>
+                        <td>@services.base.utils.DateFormatUtils.getStrFromYYYYMMDDHHMMSS(c.getDcreatedate())</td>
+                        <td>@c.getIintegral()</td>
+                        <td class="blue">@c.getCsource()</td>                      
+                      </tr>
+					 }	
+                      <tr>
+                        <td colspan="5" class="pointTB">Sub Total: <span class="blue">@userfulPoints</span> </td>
+                      </tr>
+                    </table>
+                     @if(availableIntegralHistories != null && availableIntegralHistories.getList().size()>0){
+                 		@views.html.product.gadget.pagination((availableIntegralHistories.pageNo-1),availableIntegralHistories.totalPages)
+               		 }
+               		 
+                    </form>
+                </div>           
+            </div>
+			@show_used_integral.render(usedPoints, tab, totalUsedPoints, availableIntegralHistoriesIsNull)
+            <h6 class="marT">Gaining Points</h6>
+            <ul class="gainingPoints">
+            	<li class="signsUp">
+                	<em></em>
+                    <p>Signs up</p>
+                    <p>(50 points for Signs up)</p>
+                </li>
+            	<li class="upVideo">
+                	<em></em>
+                    <p>Uploading Video</p>
+                    <p>(40 points for uploading video)</p>
+                </li>
+            	<li class="newsletter">
+                	<em></em>
+                    <p>Joining Newsletter</p>
+                    <p>(20 points for Joining Newsletter)</p>
+                </li>
+            	<li class="Picture">
+                	<em></em>
+                    <p>Modify Your Account Picture</p>
+                    <p>(20 points on birthday)</p>
+                </li>
+            	<li class="Review">
+                	<em></em>
+                    <p>Write Product Review</p>
+                    <p>(10 points for Write Product Review)</p>
+                </li>
+            	<li class="Share">
+                	<em></em>
+                    <p>Share Photo/Video</p>
+                    <p>(20 points for share photo/video)</p>
+                </li>
+            	<li class="Report">
+                	<em></em>
+                    <p>Product Price Report</p>
+                    <p>(10 points for Product Price Report)</p>
+                </li>
+            	<li class="Product">
+                	<em></em>
+                    <p>Uploading Product Photo</p>
+                    <p>(20 points for uploading a product photo)</p>
+                </li>
+            	<li class="everyday">
+                	<em></em>
+                    <p>Check-in in succession</p>
+                    <p>for ≧5 points every day</p>
+                </li>
+            	<li class="fromUs">
+                	<em></em>
+                    <p>Order from us</p>
+                    <p>(Order from us (USD$1=1 point))</p>
+                </li>
+            	<li class="fromBir">
+                	<em></em>
+                    <p>On birthday</p>
+                    <p>(20 points on birthday)</p>
+                </li>
+            </ul>
+            <div class="clear"></div>
+    </div>
+</div>
+
+    @services.base.HtmlUtils.misc().addTailOnce{
+	  	<script src="@controllers.base.routes.Assets.at("js/lib/jquery.simplePagination.js")" ></script>
+	  	<script>
+   
+		
+      	$(function(){
+
+			
+			$('#unused').unbind('click');
+			$('#unused').click(function(){
+
+				$('#tab').val('0');
+				$(this).addClass('xxkActi');
+				$('#used').removeClass('xxkActi');
+				$('#usedDiv').hide();
+				$('#unusedDiv').show();
+			});
+			$('#used').unbind('click');
+			$('#used').click(function(){
+				$('#tab').val('1');
+				$(this).addClass('xxkActi');
+				$('#unused').removeClass('xxkActi');
+				$('#unusedDiv').hide();
+				$('#usedDiv').show();
+			});
+		});
+      	
+		function changePerPageSubmit(){
+			$("#p").val(1);
+			$("#searchbar").submit();
+		}
+		
+		$(document).on("click",".showNumber",function(){
+		var limit = parseInt($(this).text());
+			$("#limit").val(limit);
+			$("#tab")
+			changePerPageSubmit();
+		});
+		
+		</script>
+	}
+
+}

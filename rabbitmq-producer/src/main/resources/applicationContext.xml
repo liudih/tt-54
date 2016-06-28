@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+  
+<beans xmlns="http://www.springframework.org/schema/beans"  
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+         xmlns:aop="http://www.springframework.org/schema/aop"  
+         xmlns:tx="http://www.springframework.org/schema/tx"  
+         xmlns:context="http://www.springframework.org/schema/context"
+         xmlns:rabbit="http://www.springframework.org/schema/rabbit" 
+         xsi:schemaLocation="http://www.springframework.org/schema/beans   
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd  
+           http://www.springframework.org/schema/aop   
+           http://www.springframework.org/schema/aop/spring-aop-2.5.xsd  
+           http://www.springframework.org/schema/tx   
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd  
+           http://www.springframework.org/schema/context   
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/rabbit
+                http://www.springframework.org/schema/rabbit/spring-rabbit-1.0.xsd    
+            ">  
+  
+  
+  	<import resource="mybatis-config.xml"/>
+     <!-- 设置使用注解的类所在的jar包 -->
+    <context:component-scan base-package="com.rabbit"></context:component-scan>
+	 <context:annotation-config />
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+		<property name="ignoreResourceNotFound" value="true" />
+		<property name="locations">
+			<list>
+				<!-- 标准配置 -->
+				<value>classpath*:/rabbit_params.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 连接服务配置 -->
+	<rabbit:connection-factory id="connectionFactory"
+		host="${send_rabbit_host}" username="${send_rabbit_user}" password="${send_rabbit_pwd}" port="${send_rabbit_port}" />
+	<rabbit:admin connection-factory="connectionFactory" />
+	<bean id="jsonMessageConverter" class="com.rabbit.services.FastJsonMessageConverter"></bean>
+	<rabbit:template exchange="${send_rabbit_exchange_product}" id="amqpTemplate"
+		connection-factory="connectionFactory" message-converter="jsonMessageConverter" />
+	<!-- 发送端 -->
+	<bean id="sendService" class="com.rabbit.services.SendService"/>
+
+	<!-- queue 队列声明 -->
+	<rabbit:queue id="queue_one" durable="true" auto-delete="false"
+		exclusive="false" name="${send_rabbit_queueName}" />
+	<bean id="productMqConfig"
+      class="com.rabbit.entry.rabbit.config.ProductMqConfig">
+	    <constructor-arg index="0" ref="amqpTemplate"/>
+	    <constructor-arg index="1" value="${send_rabbit_routingKey}"/>
+	</bean>
+	<!-- exchange queue binging key 绑定   my-mq-exchange -->
+	<rabbit:direct-exchange name="${send_rabbit_exchange_product}"
+		durable="true" auto-delete="false" id="my-mq-exchange">
+		<rabbit:bindings>
+			<rabbit:binding queue="queue_one" key="${send_rabbit_routingKey}" />
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+	
+	
+	
+	<!-- queue 队列声明 -->
+	<rabbit:queue id="queue_two" durable="true" auto-delete="false"
+		exclusive="false" name="${send_rabbit_queueName_two}" />
+	<bean id="productMqExtendsConfig"
+      class="com.rabbit.entry.rabbit.config.ProductMqExtendsConfig">
+	    <constructor-arg index="0" ref="amqpTemplateProductExtends"/>
+	    <constructor-arg index="1" value="${send_rabbit_routingKey2}"/>
+	</bean>
+
+	<!-- exchange queue binging key 绑定 -->
+	<rabbit:direct-exchange name="${send_rabbit_exchange2}"
+		durable="true" auto-delete="false" id="my-mq-exchange-two">
+		<rabbit:bindings>
+			<rabbit:binding queue="queue_two" key="${send_rabbit_routingKey2}" />
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+	<rabbit:template exchange="${send_rabbit_exchange2}" id="amqpTemplateProductExtends"
+		connection-factory="connectionFactory" message-converter="jsonMessageConverter" />
+		
+		
+		
+	<!-- queue 队列声明 -->
+	<rabbit:queue id="queue_order" durable="true" auto-delete="false"
+		exclusive="false" name="${send_rabbit_queueName_order}" />
+	<bean id="orderMqExtendsConfig"
+      class="com.rabbit.entry.rabbit.config.OrderMqConfig">
+	    <constructor-arg index="0" ref="amqpTemplateOrder"/>
+	    <constructor-arg index="1" value="${send_rabbit_routingKey_order}"/>
+	</bean>
+
+	<!-- exchange queue binging key 绑定 -->
+	<rabbit:direct-exchange name="${send_rabbit_exchange_order}"
+		durable="true" auto-delete="false" id="my-mq-exchange-order">
+		<rabbit:bindings>
+			<rabbit:binding queue="queue_order" key="${send_rabbit_routingKey_order}" />
+		</rabbit:bindings>
+	</rabbit:direct-exchange>
+	<rabbit:template exchange="${send_rabbit_exchange_order}" id="amqpTemplateOrder"
+		connection-factory="connectionFactory" message-converter="jsonMessageConverter" />
+		
+	
+	
+	<bean id="rabbitFactory" class="com.rabbitmq.client.ConnectionFactory">
+		 <property name="port">  
+            <value>${send_rabbit_port}</value>  
+        </property>
+         <property name="username">  
+            <value>${send_rabbit_user}</value>  
+        </property>
+         <property name="password">  
+            <value>${send_rabbit_pwd}</value>  
+        </property>
+        <property name="host">  
+            <value>${send_rabbit_host}</value>  
+        </property>
+	</bean>
+</beans>  

@@ -1,0 +1,4 @@
+iid,cname,iparentid,ilevel,ciconurl,curl,cclass,iisnominate,ccreateuser,dcreatedate,clastupdateduser,dlastupdateddate,ctype
+"55","Report Site Bugs","38","2",NULL,NULL,NULL,"0","xcf","2015-3-3 00:00:00","xcf","2015-3-3 00:00:00","Foot"
+"56","TOMTOP Points","38","2",NULL,"/base/cms/detail/9",NULL,"0","xcf","2015-3-3 00:00:00","xcf","2015-3-3 00:00:00","Foot"
+"57","Site Map","38","2",NULL,"/allcategories",NULL,"0","xcf","2015-3-3 00:00:00","xcf","2015-3-3 00:00:00","Foot"

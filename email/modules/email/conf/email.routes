@@ -1,0 +1,2 @@
+GET   /index   @controllers.EmailController.index()
+POST  /send   @controllers.EmailController.send()

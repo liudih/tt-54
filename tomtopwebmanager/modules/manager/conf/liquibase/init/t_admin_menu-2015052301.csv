@@ -1,0 +1,3 @@
+﻿"iid","cname","iparentid","ilevel","cclass","curl","ccreateuser","cenname"
+"80","tool","0","1","80","","Reason","tool"
+"81","pwiki","80","2","81","/sysadmin/tool/pwiki","Reason","pwiki"

@@ -1,0 +1,35 @@
+@(otherLogins: List[Html])
+@import views.html.helper._
+@helper.javascriptRouter("loginRoutes")(
+	controllers.member.routes.javascript.Login.loginForm
+)
+<div class="topSearch_signIn">
+		<div class="topSearch_signInOver">
+            <div class="topSearch_icon"></div>
+            <div class="showloginName">@Messages("hello").<a  href="@controllers.member.routes.Login.loginForm()">@Messages("sign.in")</a><br /><b>@Messages("your.account")</b></div>
+            <div class="clear"></div>
+        </div>
+        <ul class="sinIn">
+        	<li>
+            	<p class="color999">@Messages("sign.into.your.account")</p>
+            	<a href="@controllers.member.routes.Login.loginForm()"><input class="log_sinIn" type="button" value='@Messages("sign.in")'/></a>
+            </li>
+            <li>
+            	<hr class="login_hr" />
+                <p class="color999 existingAcc">@Messages("sign.in.with.an.existing.account")</p>
+            	<div class="formTxt_left">
+	            	<!-- Other Logins -->
+	            	@otherLogins.map { lb =>
+	            		@lb
+	            	}
+            	</div>
+            </li>
+        	<li>
+                <hr class="login_hr" />
+            	<p>@Messages("do.not.have.an.account.yet")</p>
+                <a  href="@controllers.member.routes.Login.loginForm()">
+               		 <input class="log_Free" type="submit" value='@Messages("join.free")' />
+                </a>
+            </li>
+        </ul>
+</div>

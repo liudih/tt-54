@@ -1,0 +1,33 @@
+@(products: List[dto.product.ProductMessage])
+
+@if(null != products && 0 < products.size()) {
+	<div class="like_box" id="carousel">
+        <div class="picbox">
+			<ul class="piclist mainlist">
+				@products.map{ product=>
+					<li>
+						<a href="@controllers.product.routes.Product.view(product.getUrl())" target="_blank">
+							@views.html.product.singleimg(product.getImageurl())
+							<span> @product.getTitle()</span>
+						</a>
+					</li>
+				}
+			</ul>
+			<div id="prev" class="og_prev"></div>
+			<div id="next" class="og_next"></div>
+		</div>
+	</div>
+}
+
+@services.dodocool.base.HtmlUtils.misc().addTailOnce{
+     <script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/kaiwo.js")'></script>
+}
+<script>
+   	$(function() {
+		$('#carousel ul').carouFredSel({
+			prev: '#prev',
+			next: '#next',
+			scroll: 1000
+		});
+	});
+</script> 

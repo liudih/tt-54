@@ -1,0 +1,210 @@
+@(chatroomlist: Collection[dto.Chatroom], 
+selfAlias: String, roleId: Integer,
+scorequestions: List[valueobjects.livechat.score.LiveChatScoreQuestion],
+dutycs: List[valueobjects.livechat.DutyCustomerService]
+)
+
+@views.html.livechat.main {
+ 
+	<div class="row-fluid">
+	 
+		<input type="hidden" value="@selfAlias" name="myself_otherAlias" id="myself_otherAlias" />
+		<input type="hidden" value="@roleId" name="livechat_roleId" id="livechat_roleId" />
+	</div>
+ 
+	
+	 <div class="liveChat_serviceBox lbBox">
+	 	@if(chatroomlist.size() ==1){
+	 		<div class="liveChat_serviceLeft lineBlock" id="sessionidlist" style="display:none">
+	 	}else{
+	    	<div class="liveChat_serviceLeft lineBlock" id="sessionidlist">
+	 	}
+	 	
+        	<ul  id="sessionidlistUL">
+            	@chatroomlist.zipWithIndex.map{ cr =>
+            		@if(cr._2 == 0){
+            			<li class="liveLeft_aci" id="@cr._1.getSessionid()">@cr._1.getOtherAlias()<em class="close_liveChat" onClick="closeChatRoom(this);"></em></li>
+            		}else{
+	            		<li id="@cr._1.getSessionid()">@cr._1.getOtherAlias()<em class="close_liveChat" onClick="closeChatRoom(this);"></em></li>
+            		}
+				}
+            </ul>
+        </div>
+        @if(chatroomlist.size() ==1){
+        	<div class="liveChat_serviceRight lineBlock" style="width:100%">
+        }else{
+	    	<div class="liveChat_serviceRight lineBlock" style="width:85%">
+	 	}
+            <div class="liveChat_customer" id="liveChat_customer_main">
+                <ul class="liveChat_setUp">
+        			
+        			@if(roleId == 1){
+        			<li class="lineBlock liveChat_record" id="livechat_message_history"></li>
+                    <li class="lineBlock liveChat_transfer" id="liveChat_transfer" >
+                    	<span class="liveChat_transferKF"></span>
+                        <ul class="liveChat_service lbBox" id="liveChat_transfer_users">
+                        @dutycs.map{ cs =>
+                          @if(cs.getSelf()==true){
+                        	  <li class="lineBlock liveChat_sRed" name="@cs.getAlias()">
+                            	<div class="">
+                            		 <img src="@controllers.base.routes.Assets.at("images/headIcon.png")" />
+                                    <p class="liveName">@cs.getAlias()</p>
+                                </div>
+                                <div class="liveChatPop">
+                                  	<p class="chatP_title">Change another customer service?</p>
+                                    <input class="liveYes" type="button" tag="@cs.getAlias()" value="Yes"><input class="liveNo" type="button" value="No">
+                                </div>
+                            </li>
+                        	}else{
+                               @if(cs.getActive()==true){
+	                           	<li class="lineBlock" name="@cs.getAlias()">
+	                            	<div class="liveCh_B">
+	                                    <img src="@controllers.base.routes.Assets.at("images/headIcon.png")" />
+	                                    <p class="liveName">@cs.getAlias()</p>
+	                                </div>
+	                                <div class="liveChatPop">
+	                                  	<p class="chatP_title">Change another customer service?</p>
+	                                    <input class="liveYes" type="button" tag="@cs.getAlias()"  value="Yes"><input class="liveNo" type="button" value="No">
+	                                </div>
+	                            </li>
+                        		}else{
+		                        	<li class="lineBlock liveChat_sGreey" name="@cs.getAlias()">
+		                            	<div class="">
+		                            		 <img src="@controllers.base.routes.Assets.at("images/headIcon.png")" />
+		                                    <p class="liveName">@cs.getAlias()</p>
+		                                </div>
+		                                <div class="liveChatPop">
+		                                  	<p class="chatP_title">Change another customer service?</p>
+		                                    <input class="liveYes" type="button"  tag="@cs.getAlias()" value="Yes"><input class="liveNo" type="button" value="No">
+		                                </div>
+		                            </li>
+                        		}
+                        	}
+                        }
+                            
+                        </ul>
+                    </li>
+                    }
+                    <li class="lineBlock liveChat_set">
+                        <div class="liveChat_setTxt">
+                            <p class="liveChat_enter" id="Enter">@Messages("livechat.enter.send")</p>
+                            <p id="CtrlEnter">@Messages("livechat.ctrl.enter.send")</p>
+                        </div>
+                    </li>
+                    <li class="lineBlock liveChat_close" id="liveChat_close_common"> </li>
+                </ul>
+                
+                @chatroomlist.zipWithIndex.map{ cr =>
+            		@if(cr._2 == 0){
+            			<div class="liveChat_customer_con block" id="@cr._1.getSessionid()_dialogue_window">
+            		}else{
+	            		<div class="liveChat_customer_con" id="@cr._1.getSessionid()_dialogue_window">
+            		}
+                    <div class="liveChat_dialogTitle">
+                        <p class="lineBlock">@Messages("livechat.conversation") @cr._1.getOtherAlias()...</p>
+                    </div>
+                    <div class="liveChat_dialogBox lbBox">
+                        <div class="lineBlock liveChat_dialogBox_P">
+                            <div class="liveChat_dialogShow" id="@cr._1.getSessionid()_message">
+                                 
+                            </div>
+                            <div class="liveChat_dialogSend lbBox">
+                                <a href="javascript:void(0)" class="lineBlock chooseQ_Sent" onClick="b_send();return false;">@Messages("livechat.send")</a>
+                                <div class="liveChat_dialogSend_b">
+                                    <div class="lineBlock chooseQ_writeTxt" contenteditable="true" onkeypress="keyPress(event)" name="edit_livechat_div" tabindex="0" id="@cr._1.getSessionid()_edit_div"></div>
+                                    <div class="lineBlock chooseQ_addPic" style="display:none"></div>
+                                    <div class="lineBlock chooseQ_expression" style="display:none"></div>
+                                </div>
+                            </div>
+                        </div>
+	                        <div class="lineBlock liveChat_information">
+	                        	<div class="liveChat_informationHB">
+	                            	<img class="liveChat_informationH" src="@controllers.base.routes.Assets.at("images/head01Icon.png")" />
+	                                <p>@cr._1.getOtherAlias()</p>
+	                            </div>
+	                            @if(roleId == 1){
+		                            <div class="liveChat_informationText" id="@cr._1.getSessionid()_cip">IP:<span class="blue">@cr._1.getIp()</span></div>
+		                            <div class="liveChat_informationText" id="@cr._1.getSessionid()_cfrom">From:<span class="blue">@cr._1.getCountry()</span></div>
+	                            }
+	                        </div>
+                        
+                    </div>
+                 </div>
+              }
+ 
+                 
+            </div>
+            
+        </div>
+    </div>
+    <div class="lineBlock liveChat_close">
+            	<div id='score_window' class="liveChat_questionnaire">
+                	<div class="liveChat_question">
+                	@if(scorequestions.size()>0){
+	                	@scorequestions.map{ t =>
+	                    	<p class="liveQ_title">@t.getQuetions()</p>
+	                        <ul class="startUL">
+	                            <li>
+	                                <div id="divquestion_@t.getId()" alt="@t.getId()" class="product_Reviews start4">
+	                                    <em class="starOne"></em>
+	                                    <em class="starTwo"></em>
+	                                    <em class="starThree"></em>
+	                                    <em class="starFour"></em>
+	                                    <em class="starFive"></em>
+	                                </div> 
+	                            </li>
+	                         </ul>
+	                        <br/>
+						}
+					}else{
+					   <p class="liveQ_title">@Messages("livechat.feel.customer")</p>
+                        <ul class="startUL">
+                            <li>
+                                <div id="divquestion_0" alt="0" class="product_Reviews start4">
+                                    <em class="starOne"></em>
+                                    <em class="starTwo"></em>
+                                    <em class="starThree"></em>
+                                    <em class="starFour"></em>
+                                    <em class="starFive"></em>
+                                </div> 
+                            </li>
+                         </ul>					
+					}
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td>@Messages("livechat.email")</td>
+                            <td><input class="inputTxt_s" id="score_email" type="text" /></td>
+                          </tr>
+                          <tr>
+                            <td>@Messages("note")</td>
+                            <td><textarea id='score_descriptions' maxlength="255"></textarea></td>
+                          </tr>
+                          <tr>
+                            <td>&nbsp;</td>
+                            <td><a class="liveSubmit" id="score_submit" >@Messages("submit")</a><p class="lineBlock liveCharacter">@Messages("livechat.you.have") <span>254</span> @Messages("livechat.characters")</p></td>
+                          </tr>
+                        </table>
+                    </div>
+                </div>
+    </div>
+    
+    <div id="livechat_room_more_language">
+ 		<input type="hidden" name="livechat_validate_content" value="@Messages("livechat.validate.content")"/>
+ 		<input type="hidden" name="livechat_close_confirm" value="@Messages("livechat.close.confirm")"/>
+ 		<input type="hidden" name="livechat_close_all_confirm" value="@Messages("livechat.close.all.confirm")"/>
+ 	</div>
+ 	<div id="livechat_tranfer_users_li" style="display:none">
+	 	<li class="lineBlock">
+	     	<div class="liveCh_B">
+	             <img src="@controllers.base.routes.Assets.at("images/headIcon.png")" />
+	             <p class="liveName">{name}</p>
+	         </div>
+	         <div class="liveChatPop">
+	           	<p class="chatP_title">Change another customer service?</p>
+	             <input class="liveYes" type="button" value="Yes"><input class="liveNo" type="button" value="No">
+	         </div>
+	     </li>
+ 	</div>
+	<script type="text/javascript" src='@controllers.livechat.routes.Assets.at("js/livechat/main.js")'></script>
+ 
+}

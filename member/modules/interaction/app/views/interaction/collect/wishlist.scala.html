@@ -1,0 +1,118 @@
+@(product:valueobjects.base.Page[valueobjects.product.ProductBadge],
+	categorys:List[valueobjects.product.category.CategoryComposite],
+	categoryId:Integer,
+	sort:String,
+	searchname:String,
+	sharebtn:List[extensions.interaction.share.IShareProvider])
+@urlprefix = @{play.Play.application().configuration().getString("member.urlprefix")}
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@views.html.member.base.master(extensions.interaction.member.MemberWishlistMenuProvider.ID) {
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" /> 
+}
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/simplePagination.css")">
+<div class="accountRight accouReviewBox">
+    	<h6>@Messages("my.wishlist")</h6>
+    	@if(product.getList().size()>0 || categoryId!=null)  {
+        <p class="marT">@Messages("create.wish.list.fill.page.items.wishing.brands.like.e-mailed.add.products.list")</p>
+        <p class="marT">@Messages("yourself.preview.e.mail.address.sign.in.forward.friends.family") </p>
+        <form id="tform">
+        <input type="hidden" name="p" id="p" value="@product.pageNo"/> 
+        <input type="hidden" name="limit" id="limit" value="@product.pageSize"/> 
+        <ul class="reviewTT_ul wisSelect">
+            <li>
+               @Messages("categories") <select id="categoryid" name="categoryid" onchange="changeCategory(this);">
+               <option value="-1">@Messages("select")</option>
+               @categorys.map{ c=>
+               <option value="@c.getSelf().getIcategoryid" @if(c.getSelf().getIcategoryid()==categoryId){selected="selected"}>@c.getSelf().getCname()</option>
+               }
+                </select>
+            </li>
+            <li>
+                @Messages("sort.by")<select onchange="changeSort(this);" name="sort" id="sort">
+                    <option value="date">@Messages("date.added")</option>
+                    <option value="low2high" @if(sort=="low2high"){selected="selected"}>@Messages("price.low.to.high")</option>
+                    <option value="high2low" @if(sort=="high2low"){selected="selected"}>@Messages("price.high.to.low")</option>
+                </select>
+            </li>
+            <li class="searchInp">
+	            <input type="text" name="searchname" id="searchname" value="@searchname" placeholder="@Messages("product.name")" />
+	            <input type="button" value="@Messages("search")" onclick="searchSubmit()" class="orderSearch"/>
+            </li>
+            <div class="clear"></div>
+        </ul>
+        </form>
+        @wishlist_table(product,0,sharebtn)
+        <div class="pagination-holder clearfix" >
+			<div id="light-pagination" class="pagination"></div>
+		</div>
+		}
+
+		@if(categoryId==null && product.getList().size()==0){
+		<ul class="choWishlist" style="margin:100px 0px;">
+			<div style="margin:0 auto;height:34px;width:270px;">
+				<p style="font: bold 18px georgia;">@Messages("you.have.no.favorite.on.file")</p>
+				<a class="blue u" href="@urlprefix">@Messages("its.time.to.do.some.shopping")</a>
+			</div>
+		    <div class="clear"></div>
+		</ul>
+		}
+        <div class="clear"></div>
+	  	<div class="xxkDiv autoH">
+	          <ul class="blackXXK">
+	              <li class="xxkActi">@Messages("super.deals")</li>
+	              <li>@Messages("you.view.history")</li>
+	              <div class="clear"></div>
+	          </ul>
+			  @tp.get("super-deals-in-member")
+	          <div class="clear"></div>
+	          @tp.get("member-browse-history-in-member-center")
+	          <div class="clear"></div>
+	    </div>
+    </div>
+	@services.base.HtmlUtils.misc().addTailOnce{
+	  	<script src="@controllers.base.routes.Assets.at("js/lib/jquery.simplePagination.js")" ></script>
+	  	<script>
+		$('#light-pagination').pagination({
+			pages: @product.totalPages,
+			currentPage: @(product.pageNo),
+			hrefTextPrefix: 'javascript:void(',
+			hrefTextSuffix: ')',
+			cssStyle: 'light-theme',
+			selectOnClick: true,
+			onPageClick: function(pageNumber, event) {
+				$("#p").val(pageNumber);
+				$("#tform").submit();
+			}
+		});
+		
+		function changeSort(node){
+			$("#p").val(1);
+			$("#tform").submit();
+		}
+		
+		function searchSubmit(){
+			$("#p").val(1);
+			$("#tform").submit();
+		}
+		$("#searchname").keydown(function(e){
+			if(e.keyCode==13){
+				searchSubmit();
+			}
+		});
+		function changeCategory(node){
+			$("#searchname").val("");
+			$('#sort')[0].selectedIndex = 0;
+			searchSubmit();
+		}
+		$(".showNub a").each(function(i,e){
+			$(this).click(function(){
+				var num = $(this).text();
+				$("#limit").val(num);
+				searchSubmit();
+			});
+			
+		});
+		</script>
+	}
+}

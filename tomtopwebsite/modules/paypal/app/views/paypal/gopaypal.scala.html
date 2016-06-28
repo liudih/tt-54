@@ -1,0 +1,8 @@
+@(paymentdetail :valueobjects.paypal.PaypalPayment)
+
+<form name="paypalForm" id="paypalForm" action="@paymentdetail.getPostaddress" method="post">
+	<input type="hidden" name="charset" value="utf-8"/>
+ 	@paymentdetail.getMap.map{ p =>
+		<input type="hidden" name="@p._1" value="@p._2" /> 
+	}
+</form>

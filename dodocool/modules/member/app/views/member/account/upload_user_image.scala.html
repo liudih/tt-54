@@ -1,0 +1,41 @@
+@(member:dto.member.MemberBase,frm:Form[forms.dodocool.member.MemberBaseForm])
+
+@import views.html.helper._	;var random=Math.random()
+
+@helper.javascriptRouter("upload_picture")(
+	controllers.member.routes.javascript.Edits.editsMember
+)
+<img id="user-photo" style="cursor:pointer" class="file_btn" height="120" width="120" src="@controllers.member.routes.MemberProfile.getPhoto(member.getCemail())&random=@random" />
+<div id="aaa">
+<div class="modal-backdrop"></div>
+	<div class="upHead clickPop" style="z-index:2"  id="photo">
+	      <button type="button" class="close"> × </button>   
+	   	  <h6>@Messages("create.custom.picture")</h6>
+	      	 @Messages("upload.picture")
+	      	 @form(controllers.member.routes.Photo.uploads,'class->"form-signin",'role->"form",'id->"preview-form",'autocomplete->"off", 'enctype->"multipart/form-data") {
+			      <div class="upFileHead"> 
+			      <input type="hidden" name="iid" value="@frm("iid").value">
+			    	  <input type="hidden" name="cemail" value="@member.getCemail()">
+					  <input name="file_name" id="filepath" type="file"><a href=" javascript:;">@Messages("browse")</a>        
+			       </div>     
+			        <p id="show_error"></p>  
+			        <div id="loading" class="throbber" ></div>
+			       <p>
+			       	@Messages("select.picture.computer.50.kb.max.jpg.gif.png.bmp.only")<br/>
+			       	@Messages("advised.pixel.image.best.upload")
+			       </p>   
+				   <input id="submit_id" class="picSave" value="@Messages("save")" type="submit" > 
+				   <input class="closePop" value="@Messages("cancel")" type="button"> 
+			}      
+	       <div class="rightHead">
+		       <p>@Messages("preview")</p>
+		       <div id="preview">
+		           	<img src="@controllers.member.routes.MemberProfile.getPhoto(member.getCemail())&random=@random"  id="prvfilepath" height="120" width="120" />
+		       </div>
+		        120x120
+	      </div>  
+	</div>
+</div>
+@services.dodocool.base.HtmlUtils.misc().addTailOnce{
+	<script  language="javascript" type="text/javascript" src='@controllers.member.routes.Assets.at("js/member/update_photo.js")'></script>
+};

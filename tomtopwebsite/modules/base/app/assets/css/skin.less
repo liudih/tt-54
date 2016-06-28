@@ -1,0 +1,83 @@
+//body{background-color:#f3f3f3 !important;}
+@ff:#ffffff;
+@f3:#f3f3f3;
+.topNavCon{
+	background-color:@ff;
+	.topNavigation_txt{
+		.topBrd{
+			>li{
+				dl dt{
+					border-color:@ff;
+				}
+			}
+		}
+	}
+}
+
+//面包屑
+
+.Bread_crumbs{
+	.Bread_home{
+			a{
+				&:after{background-image: url("../images/breadcrumb_f2cf864133423ac9.png");background-position:-21px 4px !important;content:"";position:absolute;right:-8px;top:2px;width:15px;height:27px;}
+			}
+	}
+	>li dl dt{
+			a{
+				&:after{background-image: url("../images/breadcrumb_f2cf864133423ac9.png");background-position:-21px 4px !important;content:"";position:absolute;right:-8px;top:2px;width:15px;height:27px;}
+			}
+	}
+	.curr-category{
+		a{
+			&:after{background-image: url("../images/breadcrumb_f2cf864133423ac9.png");background-position:-18px -37px !important;content:"";position:absolute;right:-8px;top:2px;width:15px;height:27px;}
+			&:before{background-image: url("../images/breadcrumb_f2cf864133423ac9.png");background-position:-29px 3px !important;content:"";position:absolute;left:0px;top:2px;width:9px;height:27px;}
+		}
+	}
+}
+
+
+
+//个人中心
+
+.accountBox{
+	.accountRight{
+		background-color:@ff;padding-left:10px;padding-right:10px;
+		.autoH{background-color:@f3;
+			.accH_box{background-color:@f3;
+				.accMovebox{background-color:@f3;
+					li{background-color:@ff;}
+				}
+			}
+		}
+		&.accountRequests{padding-bottom:10px;}
+	}
+}
+
+//帮助中心
+
+.helpRight{
+	background-color:@ff;padding:10px;
+}
+
+//video
+
+.videoXXK_box{
+	background-color:@ff;padding:10px;
+}
+
+.xxkDiv{
+	.accH_box{
+		background-color:@f3 !important;
+		.accMovebox{
+			background-color:@f3 !important;
+			li{
+				background-color:@ff;
+			}
+		}
+	}
+}
+.videos_Box{
+	.videoList{
+		>li{background-color:@ff;}
+	}
+}

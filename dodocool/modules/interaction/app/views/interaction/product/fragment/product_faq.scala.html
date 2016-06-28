@@ -1,0 +1,36 @@
+@(faqs: valueobjects.dodocool.interaction.product.InteractionProductPost)
+@import views.html.helper._
+@helper.javascriptRouter("faqs")(
+	controllers.interaction.routes.javascript.ProductFaq.getFaqs,
+	controllers.interaction.routes.javascript.ProductFaq.reply
+)
+
+<div id="user_comments">       
+	<div id="page_to_comment">
+  		<div id="customer_comment">
+			@if(null != faqs && null != faqs.getFaqMap && faqs.getFaqMap.size > 0){
+				<div id="page_to_comment">
+				  <div id="customer_comment">
+				    <h4 class="titles">@Messages("latest.post")</h4>
+				       <table id="prReview" class="table_review mt16" width="100%">
+				           <tbody id="product_faqs_tbody">
+								@product_faq_tr(faqs)
+				           </tbody>
+				       </table>
+					   <input type="hidden" id="faqs_listingId" value="@faqs.getListingId">
+					   <input type="hidden" id="faqs_total_page" value="@faqs.getFaqPage.totalPages">
+					   <input type="hidden" id="faqs_current_page" value="1">
+					   <input type="hidden" id="faqs_page_size" value="10">
+					   <ul id="pagination" class="pagination fr pt20">
+					     <li><a id="faqs_pre_page" class="prev">&lt;&lt;</a></li>
+					     @for( i <- 1 to faqs.getFaqPage.totalPages){
+							<li id="faqs_page_@i"><a href="javascript:void(0)">@i</a></li>
+						 }
+					     <li><a id="faqs_next_page" class="next">&gt;&gt;</a></li>
+					   </ul>           
+				  </div>
+				</div>      
+			}
+		</div>
+	</div>
+</div>

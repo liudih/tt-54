@@ -1,0 +1,64 @@
+ @(products: valueobjects.base.Page[valueobjects.product.ProductBadge],
+	req: Map[String, Array[String]],
+	advertisingList : List[valueobjects.product.AdItem],
+	sc: valueobjects.search.SearchContext
+	)
+ 
+    <div class="dirRight lineBlock">
+        <div class="twoDir_Box">
+            @if(null !=advertisingList && advertisingList.size()>0){
+				<div class="direBanner_box" id="indexBanner_box">
+		            <a class="browseLeft_click" href="javascript:;"></a>
+		            <a class="browseRight_click" href="javascript:;"></a>
+		        	<ul class="indexBanner_A">
+						@advertisingList.zipWithIndex.map{a=>
+							@if(a._2 == 0){
+							 <li style="z-index:1"> @Html(a._1.getDefaultShow())</li>
+							}else{
+							<li>@Html(a._1.getDefaultShow())</li>
+							}
+						}
+		            </ul>
+		            <ul class="indexBanner_list">
+		            	@advertisingList.zipWithIndex.map{a=>
+							@if(a._2 == 0){
+							 <li class="listActive"></li>
+							}else{
+							<li></li>
+							}
+						}
+		            </ul>
+		        </div>
+		    }
+        </div>
+        <div id="pagelist">
+			@sortbar_category{
+				@req.keySet.map{i=>
+					@if(i=="category"){
+						@req.get(i).take(1).map{ aa=>
+							<input type="hidden" id="category" name="category" value="@aa" />
+						}
+					}
+				}
+			}(req)(sc)
+		</div>
+        @if(products.getList().size()!=0){
+        <ul class="arrangeClick arrangeLess block">
+            @products.getList().map{p=>
+				@views.html.product.category_badge(p)
+			}
+            <div class="clear"></div>
+        </ul>
+        <ul class="arrangeList">
+       		@products.getList().map{p=>
+            	@views.html.product.category_badge_list(p)
+            }
+            <div class="clear"></div>
+        </ul>
+        <div class="arrayNEX">
+			@views.html.product.gadget.pagination(products.pageNo(),products.totalPages())
+		</div>
+		}else{
+			<h2 style="text-align:center;color:orange; margin-bottom: 50px;border:1px solid #e8e8e8;padding:150px 0 ;">Sorry, No Products Found!</h2>
+		}
+    </div>

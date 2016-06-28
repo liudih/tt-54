@@ -1,0 +1,23 @@
+@(i: dto.member.MemberAddress,countryMap:Map[Integer,dto.Country],allCountrys: List[dto.Country],url: String)
+<div class="newAddressBox">
+             <form id="address-form-@i.getIid" class="address-form" action="@url" method="post">
+             <a class="closeAddress" href="javascript:;"></a>
+            	<input type="hidden"  name="addressType" value="@if(i.getIaddressid() == 1){shipping} else {billing}">
+	            <table id="address_table@i.getIid"  border="0" cellspacing="0" cellpadding="0">
+	              @old_address_table_information.render(i,countryMap,allCountrys)
+	              <tr>
+	                <td>&nbsp;</td>
+	                <td>
+	                	<label><input id="checkbox_default@i.getIid" type="checkbox" name="bdefault" @if(i.getBdefault()==true){checked="checked"}> @Messages("set.as.default")</label>
+	                </td>
+	              </tr>
+	              <tr>
+	                <td class="radiusL">&nbsp;</td>
+	                <td class="radiusR">
+		                <input class="hsInputs" type="submit" value="@Messages("save")" id="btnSaveShippingAddress@i.getIid" tag="@i.getIid" name="address_save_submit">
+		                <input class="hsInputsb" name="address_cancel_button" type="button" value="@Messages("cancel")">
+	                </td>
+	              </tr>
+	         </table>
+	  </form>
+</div>

@@ -1,0 +1,183 @@
+@(ad :dto.member.MemberAddress,
+ct : Map[Integer, dto.Country])
+@import views.html.helper._ 
+@if(null!=ad){
+<ul class="lbBox addressConCss addressClick @if(true==ad.getBdefault){defaultAddress_css}">
+			<li class="lineBlock address_infCon">
+				<b class="address_name">@ad.getClastname @ad.getCfirstname</b>
+				<p class="address_defaule blue lineBlock">Default</p>
+				<p class="address_txt">
+@ad.getCstreetaddress @ad.getCcity @ad.getCprovince 
+@if(ct.get(ad.getIcountry) != null){
+@ct.get(ad.getIcountry).getCname
+} 
+(@ad.getCpostalcode)
+</p>
+				<p class="address_phone">Phone: @ad.getCtelephone</p>
+			</li>
+			<li class="lineBlock address_choose">
+				<span class="edit_Icon popBoxFilter"> </span>
+				<span id="address_del_@ad.getIid" class="delete_Icon dialogClick"> </span>
+				<div class="publicePop_Box popBoxNone">
+					<div class="publicePop_con">
+				
+					<form action="/member/address/addorupdate" method="post" id="address_update_@ad.getIid">
+					<input type="hidden" name="id" value="@ad.getIid"/>
+					<input type="hidden" name="type" value="@ad.getIaddressid"/>
+					<input type="hidden" name="isDefault" value="@ad.getBdefault"/>
+						<div class="input_control">
+							<input class="txtInput addPop_input" name="firstName" value="@ad.getCfirstname" type="text" placeholder="Enter your first name" />
+						</div>
+						<div class="input_control">
+							<input class="txtInput addPop_input" name="lastName" value="@ad.getClastname" type="text" placeholder="Enter your last name" />
+						</div>
+						<div class="input_control">
+							<input class="txtInput addPop_input" name="street" value="@ad.getCstreetaddress" type="text" placeholder="Street" />
+						</div>
+						<div id="member_country"  data="@ad.getIcountry"></div>
+						<div class="input_control">
+							<input class="txtInput addPop_input" name="state" type="text" value="@ad.getCprovince" placeholder="State / Province / Region" />
+						</div>
+						<div class="span45 input_control lineBlock">
+							<input class="txtInput addPop_input" name="city" value="@ad.getCcity" type="text" placeholder="City" />
+						</div>
+						<div class="span45 input_control lineBlock floatR">
+							<input class="txtInput addPop_input" name="postalCode" value="@ad.getCpostalcode" type="text" placeholder="Zip / Postal Code" />
+						</div>
+						<div class="input_control">
+							<input class="txtInput addPop_input" name="phoneNumber" value="@ad.getCtelephone" type="text" placeholder="Phone Number" />
+						</div>
+						
+						<label class="input_control defaultAddressChoose"> 
+							<div id="address_update_isdefault" class="checkbox chooseClick  lineBlock @if(ad.getBdefault==true){aciCss}"><span></span></div>Default Address
+						</label>
+						
+						<div class="filter_popBottom">
+							<a href="javascript:;" class="wihteInput lineBlock closePop">Cancel</a>
+							<a id="address_save_@ad.getIid" href="javascript:;" class="orangeInput lineBlock">Save</a>
+						</div>
+						</form>
+					</div>
+						<div class="blackPop"> </div>
+					</div>
+			</li>
+			<li id="address_set_default_@ad.getIid" class="lineBlock defaultAddressCss defaultAddress_click span10">Default Address</li>
+		</ul>
+@services.base.HtmlUtils.misc().addTail{
+<script type="text/javascript">
+$(function(){
+	var formid="address_update_@ad.getIid";
+	var del_id="address_del_@ad.getIid";
+	var set_default_id="address_set_default_@ad.getIid";
+	var address_save_id="address_save_@ad.getIid";
+	 $('#'+formid).find('#member_country').country({
+			@if(null!=ad.getIcountry){defaultCountryId:@ad.getIcountry}
+			});
+	 
+	$('#'+del_id).click(function(){
+		$.ajax({
+				url: '@controllers.member.routes.AddressController.delete(ad.getIid)', 
+				type: 'post', 
+				timeout: 5000, 
+				error: function(){
+					var show="delete failed";
+					ttmErrorAlert(show);
+				}, 
+				success: function(result){
+					if(result.result=="success"){
+						var show="delete successfully";
+						ttmSucceedAlert(show);
+						location.reload();
+					}
+					else{
+						var show="delete failed";
+						ttmErrorAlert(show);
+					}
+						
+				}
+		});
+	});
+	// 设置默认收货地址
+	$('#'+set_default_id).click(function(){
+		$.ajax({
+				url: '@controllers.member.routes.AddressController.setDefaultAddress(ad.getIid)', 
+				type: 'post', 
+				timeout: 5000, 
+				error: function(){
+					var show="failed to set";
+					ttmErrorAlert(show);
+				}, 
+				success: function(result){
+					if(result.result=="success"){
+						var show="Set successfully";
+						ttmSucceedAlert(show);
+						location.reload();
+					}
+					else{
+						var show="failed to set";
+						ttmErrorAlert(show);
+					}
+						
+				}
+		});
+	});
+	
+	//表单验证
+	$("input").blur(function(){
+		 var v =  $(this).val();
+		 if(!v){
+			$(this).addClass('input_error');
+		 }else{
+			$(this).removeClass('input_error'); 
+		 }
+	});
+	//提交验证
+	$('#'+address_save_id).click(function(){
+		var isSubmit=true;
+		 $('#'+formid).find('input[name]').each(function(){
+			var form_input =  $(this).val().trim();
+			 if(!form_input){
+				$(this).addClass('input_error');
+				isSubmit=false;
+			 }else{
+				 $(this).removeClass('input_error'); 
+			 }
+		});
+		if(isSubmit){
+			// 表单默认地址选择
+			var isCheck = $('#'+formid).find('#address_update_isdefault').hasClass('aciCss');
+			if(isCheck){
+				$('#'+formid).find('input[name="isDefault"]').val(true);
+			}else{
+				$('#'+formid).find('input[name="isDefault"]').val(false);
+			}
+			
+			$.ajax({
+				url: '@controllers.member.routes.AddressController.addOrUpdateAddress()', 
+				type: 'post', 
+				timeout: 5000, 
+				data: $('#'+formid).serialize(),
+				error: function(){
+					var show="save failed";
+					ttmErrorAlert(show);
+				}, 
+				success: function(result){
+					if(result.result=="success"){
+						var show="save successfully";
+						ttmSucceedAlert(show);
+						location.reload();
+					}
+					else{
+						var show="save failed";
+						ttmErrorAlert(show);
+					}
+						
+				}
+		});
+		}
+
+});
+});
+</script>
+}
+}

@@ -1,0 +1,10 @@
+GET    /assets/*file          		controllers.order.Assets.at(path="/public", file)
+POST   /add-shipping-address   		@controllers.order.AddressController.AddshippingAddress()
+POST   /place-order   				@controllers.order.OrderController.placeOrder()
+GET   /view-order   				@controllers.order.OrderController.viewOrder(corderId : String)
+GET   /getShippingMethod   			@controllers.order.OrderController.getShippingMethod(addressId : Int ?= 0)
+GET   /order-list/:st             @controllers.order.member.MemberOrderController.orderList(st: Int, p: Int?=1, isajax: Int?=0)
+GET   /orderdetail/:id             @controllers.order.member.MemberOrderController.orderDetail(id: String)
+GET  /refresh-ship-method         @controllers.order.AddressController.refreshShipMethodForGuest(orderNum : String?="", shipToCountryCode : String?="")
+
+GET		/ship-method			@controllers.order.AddressController.getNewShipMethod(totalPrice: Double, storageid: Int?=1, orderNumber:String?="", addressId:Integer?=null, countryCode:String?="")

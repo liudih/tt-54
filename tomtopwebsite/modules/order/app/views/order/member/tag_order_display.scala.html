@@ -1,0 +1,69 @@
+@(result: Html, vo: valueobjects.order_api.OrderCount,
+ nameMap: Map[String, dto.order.OrderStatus],
+ tag: String)
+@import views.html.helper._
+@helper.javascriptRouter("memberOrderRoutes")(
+	controllers.order.member.routes.javascript.MemberOrder.remove,
+	controllers.order.member.routes.javascript.MemberOrder.delete,
+	controllers.order.member.routes.javascript.MemberOrder.restore
+)
+<div class="xxkDiv" >
+	<ul class="blackXXK">
+		<li tag="status_tab" class="xxkActi">@Messages("my.orders")  (@vo.getAll())</li>
+		<li tag="status_tab" value="@nameMap.get(services.order.IOrderStatusService.PAYMENT_PENDING).getIid()">@Messages("payment.pending") (@vo.getPending())</li>
+		<li tag="status_tab" value="@nameMap.get(services.order.IOrderStatusService.PAYMENT_CONFIRMED).getIid()">@Messages("payment.confirmed") (@vo.getConfirmed())</li>
+		<li tag="status_tab" value="@nameMap.get(services.order.IOrderStatusService.PROCESSING).getIid()">@Messages("processing") (@vo.getProcessing())</li>
+		<li tag="is_show" class="Recycle"><em></em>@Messages("recycle.bin") (@vo.getRecycle())</li>
+		<div class="clear"></div>
+		@*<a href="javascript:;" class="Export"><em></em><span class="blue">@Messages("export")</span>(@Messages("csv"))</a>*@
+	</ul>
+	
+	@form(controllers.order.member.routes.MemberOrder.searchByTag(), 'id->"searchOrders", 'onsubmit->"return false"){
+		<ul class="reviewTT_ul">
+			<li><select name="interval">
+					<option value="3">@Messages("last.3.months")</option>
+					<option value="6">@Messages("last.6.months")</option>
+					<option value="12">@Messages("last.year")</option>
+					<option value>@Messages("all.date")</option>
+			</select></li>
+			<li>
+				<select name="status_value">
+						<option value>@Messages("order.status")</option>
+						@nameMap.map{e =>
+							<option value="@e._2.getIid()">@e._2.getCname()</option>
+						}
+				</select>
+			</li>
+			<li>
+				<select id="search_type">
+					<option value="orderNumber" selected="selected">@Messages("order.id")</option>
+					<option value="productName">@Messages("product.name")</option>
+					<option value="firstName">@Messages("first.name")</option>
+					<option value="transactionId">@Messages("transaction.id")</option>
+				</select>
+			</li>
+			<li class="searchInp">
+				<input id="search_order_text" name="orderNumber" type="text">
+				<input id="search_orders_submit" class="orderSearch" type="button" value="@Messages("search")">
+			</li>
+			<input type="hidden" name="pageSize">
+			<input type="hidden" name="pageNum">
+			<input type="hidden" name="isShow" value="1">
+			<input type="hidden" name="status">
+			@if(tag!=null){
+				<input type="hidden" name="tag" value="@tag">
+			}
+			<li class="showNub">@Messages("show")
+				<a href="javascript:;" class="showAc" tag="pageSize" value="10">10</a>
+				<a href="javascript:;" tag="pageSize" value="20">20</a>
+				<a href="javascript:;" tag="pageSize" value="40">40</a>
+			</li>
+			<div class="clear"></div>
+		</ul>
+	}
+	<div class="loading_gif" id="search_loading_gif" style="display:none;">
+		<img src="@controllers.product.routes.Assets.at("images/loading.gif")">
+	</div>
+	@result
+
+</div>

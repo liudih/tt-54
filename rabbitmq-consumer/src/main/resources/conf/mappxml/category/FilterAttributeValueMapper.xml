@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rabbit.conf.mapper.category.FilterAttributeValueMapper" >
+  <resultMap id="BaseResultMap" type="com.rabbit.dto.category.FilterAttributeValue" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="iattributekeyid" property="iattributekeyid" jdbcType="INTEGER" />
+    <result column="cvalue" property="cvalue" jdbcType="VARCHAR" />
+    <result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, iattributekeyid, cvalue, ccreateuser, dcreatedate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_filter_attribute_value
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_filter_attribute_value
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.rabbit.dto.category.FilterAttributeValue" >
+    insert into t_filter_attribute_value (iid, iattributekeyid, cvalue, 
+      ccreateuser, dcreatedate)
+    values (#{iid,jdbcType=INTEGER}, #{iattributekeyid,jdbcType=INTEGER}, #{cvalue,jdbcType=VARCHAR}, 
+      #{ccreateuser,jdbcType=VARCHAR}, #{dcreatedate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rabbit.dto.category.FilterAttributeValue" >
+    insert into t_filter_attribute_value
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="iattributekeyid != null" >
+        iattributekeyid,
+      </if>
+      <if test="cvalue != null" >
+        cvalue,
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="iattributekeyid != null" >
+        #{iattributekeyid,jdbcType=INTEGER},
+      </if>
+      <if test="cvalue != null" >
+        #{cvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="ccreateuser != null" >
+        #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rabbit.dto.category.FilterAttributeValue" >
+    update t_filter_attribute_value
+    <set >
+      <if test="iattributekeyid != null" >
+        iattributekeyid = #{iattributekeyid,jdbcType=INTEGER},
+      </if>
+      <if test="cvalue != null" >
+        cvalue = #{cvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rabbit.dto.category.FilterAttributeValue" >
+    update t_filter_attribute_value
+    set iattributekeyid = #{iattributekeyid,jdbcType=INTEGER},
+      cvalue = #{cvalue,jdbcType=VARCHAR},
+      ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

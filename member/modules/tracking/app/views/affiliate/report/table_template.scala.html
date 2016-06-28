@@ -1,0 +1,63 @@
+@(id:String,status:List[dto.order.OrderStatus],begin:String,end:String)
+<form action="@controllers.affiliate.routes.Report.detail()" id='@(id+"_table_form")' class="table-form" method="POST">
+<ul class="chartSearch">
+<ul class="selectDate">
+<li class="lineBlock">From <input value="@begin" name="begindate" style="color: rgb(204, 204, 204);" placeholder="" class="chartRili datepicker" type="text"></li>
+<li class="lineBlock">To <input value="@end" name="enddate" style="color: rgb(204, 204, 204);" placeholder="" class="chartRili datepicker" type="text"></li>
+ 
+</ul>
+    <li class="lineBlock">
+	    <input class="chartRili" name="skuornum" type="text" placeholder="Order ID or SKU" >
+	    <input  type="hidden"  name="orderStatus"   value="0" />
+	    <input  type="hidden"  name="target"        value='#@(id+"_table")' />
+	    <input  type="hidden"  name="id"            value='@id' />
+	    <input type="hidden"   name="page"          value="1"/>
+	    <input type="hidden"   name="pageSize"      value="10"/>
+	    <input type="hidden"   name="comminsonStatus" value="0" />
+	    <input class="hsInputs" type="submit" value="Search">	   
+    </li>
+      @page_num_tag(id)
+</ul>
+</form>
+<table  id='@(id+"_table")' class="chartTables" width="100%" border="1" cellspacing="0" cellpadding="0">
+<thead>
+  <tr>
+    <th class="chartTables_ID">Order ID</th>
+    <th class="chartTables_Date">Date</th>
+    <th class="chartTables_SKU">SKU</th>
+    <th class="chartTables_Sale">Sale</th>
+    <th class="chartTables_Commission">Commission</th>
+     <th class="chartTables_Pending">
+    	
+        <select class="select-status" name="status"  data-form='#@(id+"_table_form")'>
+         <option value="0">all</option>
+        	@if(status!=null && status.size()>0){
+        	   @status.map{s=>
+        	      <option value="@s.getIid">@s.getCname</option>
+        	   }
+        	}
+            
+        </select>
+    </th>
+    <th class="chartTables_Traffic">Traffic</th>
+  
+     <th class="chartTables_status">
+    	<select class="comminsonStatus" name="comminsonStatus" data-form='#@(id+"_table_form")'>
+    	    <option value="0">all</option>
+        	<option value="10">unpaid</option>
+            <option value="20">procesing</option>
+            <option value="30">paid</option>
+            <option value="40">delete</option>
+        </select>
+    </th>
+  </tr>
+  </thead>
+  <tbody></tbody>
+
+</table>
+<ul class="chartTotal">
+	<li class="lineBlock">Total</li>
+	<li class="lineBlock">US$<p class="lineBlock" id='@(id+"_saleTotal")'> </p><span>(sales)</span></li>
+	<li class="lineBlock">US$<p class="lineBlock" id='@(id+"_commission")'></p> <span>(Commission)</span></li>
+</ul>
+

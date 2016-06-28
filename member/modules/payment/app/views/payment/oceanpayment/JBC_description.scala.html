@@ -1,0 +1,52 @@
+@(orderAddress: dto.member.MemberAddress,
+countryList: List[dto.Country],
+countryMap: Map[Integer, dto.Country])
+
+@**	controllers.order.routes.orderAddress.modifyOrderAddress().url(); **@
+@url = @{"controllers.order.routes.orderAddress.modifyOrderAddress()"}
+<span class="payFors">@Messages("pay.for")</span>
+<img src="@controllers.base.routes.Assets.at("images/newshopping_icon_jcb.png")" alt=""/>
+<p class="bil_adds">
+	<span>@Messages("billing.address"):</span>
+</p>
+<p class="gray_g">
+	@Messages("make.billing.address.matches")
+	&amp; @Messages("address.credit.card")<br> 
+	@Messages("please.note.shipping.address.must.country.billing.address")
+</p>
+@if(orderAddress!=null){
+	<input type="hidden" name="billAddressId" value="@orderAddress.getIid">
+	<ul class="Credit_LI">
+		<li class="Credit_after">@Messages("consignee.name"):</li>
+		<li>
+			@orderAddress.getCfirstname  &nbsp&nbsp 
+			@orderAddress.getClastname
+		</li>
+		<li class="Credit_after">@Messages("address"):</li>
+		<li>
+			@orderAddress.getCstreetaddress 				  		&nbsp 
+			@orderAddress.getCcity 									&nbsp 
+			@orderAddress.getCprovince 								&nbsp
+			@if(countryMap!=null&&orderAddress!=null&&countryMap.get(orderAddress.getIcountry)!=null){
+				@countryMap.get(orderAddress.getIcountry).getCname		&nbsp
+			}
+		</li>
+		<li class="Credit_after">@Messages("recipient.country.region"):</li>
+		<li>
+			@if(countryMap!=null&&orderAddress!=null&&countryMap.get(orderAddress.getIcountry)!=null){
+				@countryMap.get(orderAddress.getIcountry).getCname
+			}
+		</li>
+		<li class="Credit_after">@Messages("state.province.region"):</li>
+		<li>@orderAddress.getCprovince</li>
+		<li class="Credit_after">@Messages("city")</li>
+		<li>@orderAddress.getCcity </li>
+		<li class="Credit_after">@Messages("zip.postal.code"):</li>
+		<li>@orderAddress.getCpostalcode </li>
+		<li class="Credit_after">@Messages("phone.number")</li>
+		<li>@orderAddress.getCtelephone</li>
+	</ul>
+}
+<p>
+</p>
+<input class="spayOut" type="button" value="Continue" tag="submit_button">

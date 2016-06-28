@@ -1,0 +1,183 @@
+@(dropship: valueobjects.base.Page[valueobjects.interaction.Dropship],
+	dropshipLevel: valueobjects.member.DropshipBase,
+	limit:Integer,
+	status: String,
+	sku: String
+)
+@pNo=@{dropship.pageNo}
+@pSize=@{dropship.pageSize}
+@tCount =@{dropship.totalCount}
+@pCount =@{dropship.totalPages}
+@startNo =@{(pNo-1)*pSize + 1}
+@endNo =@{(pNo)*pSize}
+@currentPageTotal = @{
+	if(pCount == 0){
+		0
+	} else	if(pNo == pCount){
+		tCount - (pNo-1)*pSize
+	} else {
+		pSize
+	}
+}
+@import views.html.product.img
+@import views.html.helper._
+@views.html.base.minimal(true,true,true){
+	@helper.javascriptRouter("dropship_list")(
+		controllers.interaction.routes.javascript.Dropship.batchAddDropshipProduct,
+		controllers.interaction.routes.javascript.Dropship.dropshipWishlist,
+		controllers.interaction.routes.javascript.Dropship.dropshipPutOff,
+		controllers.interaction.routes.javascript.Dropship.batchPutOffDropshipProduct
+    )
+	@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/login.css")?@version.BuildVersion.build()" /> 
+	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/simplePagination.css")">
+	}
+     
+	<div class="container accountBox">
+	   <div class="Bread_crumbs_Box">
+	        <ul class="Bread_crumbs">
+	            <li class="Bread_home"><a href="#"></a></li>
+	            <li>
+	                <dl>
+	                    <dt><a class="Bread_link" href="@controllers.member.routes.Home.index()">@Messages("member.center")</a></dt>
+	                </dl>
+	            </li>
+	            <li>
+	                <dl>
+	                    <dt><a class="Bread_link" href="#">@Messages("dropship")</a></dt>
+	                </dl>
+	            </li>
+	            <li class="curr-category">
+	                <a href="#">@Messages("dropshipping.product.list")</a>
+	            </li>
+	            <div class="clear"></div>
+	        </ul>
+	    </div>
+	    <div class="accountRight accDownStatus">
+	    	<ul class="down_titleLevel">
+	        	<li class="lineBlock">@Messages("my.dropship.level"):<span class="blue">@dropshipLevel.getLevelName</span></li>
+	        	<li class="lineBlock">@Messages("product.items") @dropshipLevel.getMaxDropshipNumberLimit</li>
+	        	<li class="lineBlock">@Messages("discount") (% off): @dropshipLevel.getDiscount%</li>
+	        </ul>
+	        <ul class="choWishlist">
+	           <li class="allFirstLi">
+	                <a href="javascript:;" class="rightAll"><span></span></a>
+	                <a class="hsInputs delete" href="javascript:;">@Messages("put.off")
+	                	<p class="deletePop">
+	                        <i></i>@Messages("are.you.sure") ?<br>
+	                        <input id="batch_put_off" type="button" value="Yes" class="deleteYes"><input type="button" value="No">
+	                    </p>
+	                </a>
+	            </li>
+	            <li class="DownloadExecl_wish lineBlock"><a href="@controllers.interaction.routes.Dropship.downloadDropshipProducts()">@Messages("download.format") : @Messages("execl")</a></li>
+	        	<li>
+	            	<select id="select_status">
+	            		<option @if(status == "all"){selected="selected"} value="all">@Messages("all.status")</option>
+	                    <option @if(status == "normal"){selected="selected"} value="normal">@Messages("normal")</option>
+	                    <option @if(status == "clear"){selected="selected"} value="clear">@Messages("clearance")</option>
+	                    <option @if(status == "stop"){selected="selected"} value="stop">@Messages("stop.selling")</option>
+	                </select>
+	            </li>
+	        	<li class="down_searchT">
+	                   <input id="input_sku" class="search_txt" type="text" placeholder="Product sku"  value="@sku"><input id="search_dropship" class="orderSearch" type="button" value="Search">
+	            </li>
+	            <li class="wisItems">@Messages("showing") <span>@startNo</span> - <span>@endNo</span> of <span>@currentPageTotal</span> @Messages("items")</li>
+	            <li class="showNub">@Messages("show") 
+		            <a name="showNumber" @if(limit == 10){class="showAc"} href="javascript:;">10</a>  
+		            <a name="showNumber" @if(limit == 20){class="showAc"}href="javascript:;">20</a>  
+		            <a name="showNumber" @if(limit == 40){class="showAc"}href="javascript:;">40</a>
+		        </li>
+	            <div class="clear"></div>
+	        </ul>
+	        <table class="download_table myRevi" width="100%" border="1" cellspacing="0" cellpadding="0">
+	          <tr>
+	            <th><span></span></a></th>
+	            <th>@Messages("img")</th>
+	            <th class="txtL">@Messages("title")</th>
+	            <th>SKU</th>
+	            <th>@Messages("price") (US$ )</th>
+	            <th>@Messages("Status")</th>
+	            <th>@Messages("option")</th>
+	          </tr>
+	          @if(null != dropship && dropship.getList.size>0 ){
+	          	@dropship.getList.map{ i=>
+		          <tr id="tr_@i.getDropshipid">
+		            <td class="tdRela"><a class="rightThis" href="javascript:;"><span name="dropship_checkbox"  tag="@i.getDropshipid" class=""></span></a></td>
+		            <td class="downTa_img">
+		            	 <a class="publiceImg" href="@controllers.product.routes.Product.view(i.getUrl)">
+							@img(i.getImageUrl,null,265,265,null)				   
+						</a>
+		            </td>
+		            <td class="downTa_title">@i.getTitle</td>
+		            <td>@i.getProductBase.getCsku</td>
+		            <td>@i.getProductBase.getFprice</td>
+		            <td @if(i.getStatus=="Stop Selling"){class="red"}>
+		           		@i.getStatus
+		            </td>
+		            <td><a name="put_off" tag="@i.getDropshipid" class="hsInputs" href="javascript:;">Put-off</a></td>
+		          </tr>
+		         }
+	          }
+	        </table>
+	        
+		 <form id="tform">
+	        <input type="hidden" name="p" id="p" value="@dropship.pageNo"/>
+	        <input type="hidden" name="pageSize" id="limit" value="@limit"/>
+	        <input type="hidden" name="status" id="hidden_status" value="@status"/>
+	        <input type="hidden" name="sku" id="hidden_sku" value="@sku"/>
+	     </form>
+	
+		  @if(null != dropship && null != dropship.getList && dropship.totalPages > 1){
+			  <div class="pagination-holder clearfix" style="margin-left:350px;">
+				 <div id="light-pagination" class="pagination"></div>
+			  </div>
+		  }
+	        <div class="clear"></div>
+	    </div>
+	    </div>
+    
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<script  language="javascript" type="text/javascript" src='@controllers.interaction.routes.Assets.at("js/interaction/dropship.js")'></script>
+	  	<script src="@controllers.base.routes.Assets.at("js/lib/jquery.simplePagination.js")" ></script>
+	  	<script>
+		$('#light-pagination').pagination({
+			pages: @dropship.totalPages,
+			currentPage: @(dropship.pageNo),
+			hrefTextPrefix: 'javascript:void(',
+			hrefTextSuffix: ')',
+			cssStyle: 'light-theme',
+			selectOnClick: true,
+			onPageClick: function(pageNumber, event) {
+				$("#p").val(pageNumber);
+				$("#tform").submit();
+			}
+		});
+		
+		function changePerPageSubmit(){
+			$("#p").val(1);
+			$("#tform").submit();
+		}
+		
+		$(document).on("click","a[name=showNumber]",function(){
+			var limit = $(this).text();
+			$("#limit").val(limit);
+			changePerPageSubmit();
+		});
+		
+		$(document).on("click","#search_dropship",function(){
+			var sku = $("#input_sku").val();
+			sku = sku.replace(/(^\s*)|(\s*$)/g, "");
+			$("#hidden_sku").val(sku);
+			changePerPageSubmit();
+		});
+		
+		$(document).on("change","#select_status",function(){
+			var status = $(this).val();
+			$("#hidden_status").val(status);
+			$("#p").val(1);
+		});
+		</script>
+	}
+	
+	
+}

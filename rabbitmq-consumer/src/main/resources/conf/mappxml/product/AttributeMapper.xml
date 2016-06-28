@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rabbit.conf.mapper.product.AttributeMapper">
+
+	<insert parameterType="com.rabbit.dto.category.AttributeKey" id="insertKey"
+		useGeneratedKeys="true" keyProperty="ikeyid">
+		insert into
+		t_attribute_key(ccreateuser,dcreatedate)
+		values(#{ccreateuser},#{dcreatedate})
+	</insert>
+
+	<insert parameterType="com.rabbit.dto.category.AttributeKeyName" id="insertKeyName"
+		useGeneratedKeys="true" keyProperty="iid">
+		insert into
+		t_attribute_key_name(ikeyid,ilanguageid,ckeyname)
+		values(#{ikeyid},#{ilanguageid},#{ckeyname})
+	</insert>
+
+	<insert id="insertValue" parameterType="com.rabbit.dto.category.AttributeValue"
+		useGeneratedKeys="true" keyProperty="ivalueid">
+		insert into
+		t_attribute_value(ikeyid,ccreateuser,dcreatedate)
+		values(#{ikeyid},#{ccreateuser},#{dcreatedate})
+	</insert>
+
+	<insert id="insertValueName" parameterType="com.rabbit.dto.category.AttributeValueName"
+		useGeneratedKeys="true" keyProperty="ikeyid">
+		insert into
+		t_attribute_value_name(ivalueid,ilanguageid,cvaluename)
+		values(#{ivalueid},#{ilanguageid},#{cvaluename})
+	</insert>
+
+</mapper>

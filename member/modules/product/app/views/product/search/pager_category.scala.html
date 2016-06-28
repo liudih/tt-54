@@ -1,0 +1,66 @@
+@(sc: valueobjects.search.SearchContext)
+<li id="page" class="arPage">
+	<ol class="arrayLI">
+		<a class="arrayLess arrayAc" href="javascript:;"></a>
+		<!-- <a class="arrayMore" href="javascript:;"></a> -->
+		<a class="arrayLine" href="javascript:;"></a>
+	</ol>
+	<ol id="pagelimit" class="prePage">
+		@Messages("show")
+		<select name="limit">
+		<option value="20" @if(sc.getPageSize() == 20){selected="selected"}>20</option>
+		<option value="40" @if(sc.getPageSize() == 40){selected="selected"}>40</option>
+		<option value="60" @if(sc.getPageSize() == 60){selected="selected"}>60</option>
+		</select>
+		@Messages("per.page")
+	</ol>
+	<ol>  
+		@Messages("page") <span>@(sc.getResult().pageNo()+1)</span>/
+		@if(sc.getResult().totalPages()>0){
+			<span>@sc.getResult().totalPages()</span>
+		}else{<span>1</span>}
+		<em class="arPageP" @if(sc.getResult().pageNo() > 0){data-page="@sc.getResult().pageNo()"}else{data-page="1"}></em>
+		<em class="arPageN" @if(sc.getResult().pageNo()+2> sc.getResult().totalPages()){data-page="@sc.getResult().totalPages()"}else{data-page="@(sc.getResult().pageNo()+2)"}></em>
+	</ol>
+</li>
+@services.base.HtmlUtils.misc().addTailOnce{
+<script>
+$("#pagelimit").find("select").on('change', function(e){
+	$("#p").val(1);
+	$(this).closest("form").submit();
+});
+$("#page").on("click", ".arPageP", function(e){
+	gotoPage(this);
+});
+$("#page").on("click", ".arPageN", function(e){
+	gotoPage(this);
+});
+function gotoPage(elm) {
+	var p = $(elm).attr("data-page");
+	if (p) {
+		$("#p").val(p);
+		$(elm).closest("form").submit();
+	}
+}
+$(function(){
+	//设置显示类型
+	var st = parseInt($("input[name='st']:eq(0)").val());
+	switch(st){
+	case 1:
+		$(".arrayLI a:eq(1)").addClass("arrayAc").siblings().removeClass("arrayAc");
+		$(".arrangeList").hide();
+		$(".arrangeClick").addClass("arrangeMore").removeClass("arrangeLess");
+		break;
+	case 2:
+		$(".arrayLI a:eq(2)").addClass("arrayAc").siblings().removeClass("arrayAc");
+		$(".arrangeClick").hide();
+		$(".arrangeList").show();
+		break;
+	default:
+		$(".arrayLI a:eq(0)").addClass("arrayAc").siblings().removeClass("arrayAc");
+		$(".arrangeClick").show();
+	$(".arrangeList").hide();
+	}
+})
+</script>
+}

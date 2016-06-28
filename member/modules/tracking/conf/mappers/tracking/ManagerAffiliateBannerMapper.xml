@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mappers.tracking.ManagerAffiliateBannerMapper">
+	<resultMap id="result" type="entity.tracking.AffiliateBanner">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+		<result column="ctitle" property="ctitle" jdbcType="VARCHAR" />
+		<result column="clink" property="clink" jdbcType="VARCHAR" />
+		<result column="icategoryid" property="icategoryid" jdbcType="INTEGER" />
+		<result column="cbannertype" property="cbannertype" jdbcType="VARCHAR" />
+		<result column="cdescription" property="cdescription" jdbcType="VARCHAR" />
+		<result column="iwidth" property="iwidth" jdbcType="INTEGER" />
+		<result column="iheight" property="iheight" jdbcType="INTEGER" />
+		<result column="ctarget" property="ctarget" jdbcType="VARCHAR" />
+		<result column="bstatus" property="bstatus" jdbcType="BIT" />
+		<result column="brelnofollow" property="brelnofollow" jdbcType="BIT" />
+		<result column="brelnofollow" property="brelnofollow" jdbcType="BIT" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<select id="getAffiliateBanners" resultMap="result">
+		select * from t_affiliate_banner
+		<where>
+			<if test="ab.ctitle != null">
+				and ctitle = #{ab.ctitle}
+			</if>
+			<if test="ab.cbannertype != null">
+				and cbannertype = #{ab.cbannertype}
+			</if>
+		</where>
+		order by dcreatedate desc limit #{pageSize} offset (#{pageSize} *
+		(#{page} - 1))
+	</select>
+
+	<select id="count" resultType="java.lang.Integer" parameterType="entity.tracking.AffiliateBanner">
+		select count(iid) from t_affiliate_banner
+		<where>
+			<if test="ctitle != null">
+				and ctitle = #{ctitle}
+			</if>
+			<if test="cbannertype != null">
+				and cbannertype = #{cbannertype}
+			</if>
+		</where>
+	</select>
+
+	<update id="edit" parameterType="entity.tracking.AffiliateBanner">
+		update t_affiliate_banner
+		<set>
+			<if test="iwebsiteid != null">
+				iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+			</if>
+			<if test="ctitle != null">
+				ctitle = #{ctitle,jdbcType=VARCHAR},
+			</if>
+			<if test="clink != null">
+				clink = #{clink,jdbcType=VARCHAR},
+			</if>
+			<if test="cbannertype != null">
+				cbannertype = #{cbannertype,jdbcType=VARCHAR},
+			</if>
+			<if test="bbannerfile != null">
+				bbannerfile = #{bbannerfile,jdbcType=VARCHAR},
+			</if>
+			<if test="cdescription != null">
+				cdescription = #{cdescription,jdbcType=VARCHAR},
+			</if>
+			<if test="icategoryid != null">
+				icategoryid = #{icategoryid,jdbcType=INTEGER},
+			</if>
+			<if test="iwidth != null">
+				iwidth = #{iwidth,jdbcType=INTEGER},
+			</if>
+			<if test="iheight != null">
+				iheight = #{iheight,jdbcType=INTEGER},
+			</if>
+			<if test="ctarget != null">
+				ctarget = #{ctarget,jdbcType=VARCHAR},
+			</if>
+			<if test="bstatus != null">
+				bstatus = #{bstatus,jdbcType=BIT},
+			</if>
+			<if test="brelnofollow != null">
+				brelnofollow = #{brelnofollow,jdbcType=BIT}
+			</if>
+		</set>
+		where iid=#{iid,jdbcType=INTEGER}
+	</update>
+
+	<delete id="delete" parameterType="java.util.List">
+		delete from t_affiliate_banner where iid in
+		<foreach collection="list" index="index" item="item" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	<insert id="add" parameterType="entity.tracking.AffiliateBanner"
+		useGeneratedKeys="true" keyProperty="iid">
+		insert into t_affiliate_banner
+		(
+			iwebsiteid,
+			ctitle,
+			clink,
+			icategoryid,
+			cbannertype,
+			cdescription,
+			iwidth,
+			bbannerfile,
+			iheight,
+			ctarget,
+			bstatus ,
+			brelnofollow 
+		)
+		values
+		(
+			#{iwebsiteid,jdbcType=INTEGER},
+			#{ctitle,jdbcType=VARCHAR},
+			#{clink,jdbcType=VARCHAR},
+			#{icategoryid,jdbcType=INTEGER},
+			#{cbannertype,jdbcType=VARCHAR},
+			#{cdescription,jdbcType=VARCHAR},
+			#{iwidth,jdbcType=INTEGER},
+			#{bbannerfile,jdbcType=BINARY},
+			#{iheight,jdbcType=INTEGER},
+			#{ctarget,jdbcType=VARCHAR},
+			#{bstatus,jdbcType=BIT},
+			#{brelnofollow,jdbcType=BIT}
+		)
+	</insert>
+</mapper>

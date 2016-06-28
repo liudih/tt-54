@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.interaction.ProductPostEvaluateMapper">
+	<resultMap id="BaseResultMap" type="dto.interaction.ProductPostEvaluate">
+		<result column="ipostid" property="ipostid" jdbcType="INTEGER" />
+		<result column="ihelpfulcode" property="ihelpfulcode" jdbcType="INTEGER" />
+		<result column="cmemberemail" property="cmemberemail" jdbcType="INTEGER" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ipostid, ihelpfulcode, cmemberemail, dcreatedate
+	</sql>
+
+	<insert id="insertSelective" parameterType="dto.interaction.ProductPostEvaluate">
+		insert into t_interaction_prodcut_post_evaluate
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="ipostid != null">
+				ipostid,
+			</if>
+			<if test="ihelpfulcode != null">
+				ihelpfulcode,
+			</if>
+			<if test="cmemberemail != null">
+				cmemberemail,
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="ipostid != null">
+				#{ipostid,jdbcType=INTEGER},
+			</if>
+			<if test="ihelpfulcode != null">
+				#{ihelpfulcode,jdbcType=INTEGER},
+			</if>
+			<if test="cmemberemail != null">
+				#{cmemberemail,jdbcType=INTEGER},
+			</if>
+			<if test="dcreatedate != null">
+				#{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+</mapper>

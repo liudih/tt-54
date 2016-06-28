@@ -1,0 +1,9 @@
+GET 	/list						    @controllers.messaging.MessageController.getMessage()
+
+GET 	/detail						    @controllers.messaging.MessageController.getMessageDetail()
+
+GET 	/more						    @controllers.messaging.MessageController.messageMore(p: Int ?=0)
+
+GET 	/asread						    @controllers.messaging.MessageController.messagedAsRead()
+
+GET 	/delete						    @controllers.messaging.MessageController.messageDelete()

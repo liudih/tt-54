@@ -1,0 +1,14 @@
+
+POST 	/hothit   					 @controllers.research.ActivityController.recordAction()
+
+GET    /assets/*file          		 controllers.research.Assets.at(path="/public", file)
+
+GET    /:title.html    				@controllers.research.Vote.view(title : String)
+
+#--------- activity manage---------------	
+#GET    /activity/:url.html          @controllers.research.LotteryActivityAction.getInitLotteryActivitys(url:String)
+
+#------lottery------
+GET   /lottery/:title.html         @controllers.research.LotteryController.viewLottery(title:String)
+
+POST    /prizeResult               @controllers.research.LotteryController.getPrizeResult()

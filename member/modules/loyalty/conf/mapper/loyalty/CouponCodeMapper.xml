@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.loyalty.CouponCodeMapper">
+
+	<resultMap type="entity.loyalty.CouponCode" id="couponCode"></resultMap>
+
+	<select id="list" resultMap="couponCode" parameterType="map">
+		select * from t_coupon_code
+		<where>
+			<if test="ruleId != null">
+				and icouponruleid = #{ruleId,jdbcType=INTEGER}
+			</if>
+			<if test="code != null and code!=''">
+				and ccode = #{code,jdbcType=VARCHAR}
+			</if>
+			<if test="startDate != null ">
+				and dcreatedate &gt;= #{startDate} 
+			</if>
+			<if test="endDate != null ">
+				and dcreatedate &lt;= #{endDate}
+			</if>
+			<if test="status != null ">
+				and iusestatus = #{status}
+			</if>
+			<if test="exceptStatus != null ">
+				and iusestatus != #{exceptStatus}
+			</if>
+		</where>
+		order by
+		dcreatedate desc  
+		<if test="page != null">
+		limit #{pageSize} offset (#{pageSize} * (#{page} - 1))
+		</if>
+		
+	</select>
+	<select id="getTotal" resultType="java.lang.Integer">
+		select count(iid) from t_coupon_code 
+		<where>
+			<if test="ruleId != null">
+				and icouponruleid = #{ruleId,jdbcType=INTEGER}
+			</if>
+			<if test="code != null and code!=''">
+				and ccode = #{code,jdbcType=VARCHAR}
+			</if>
+			<if test="startDate != null ">
+				and dcreatedate &gt;= #{startDate} 
+			</if>
+			<if test="endDate != null ">
+				and dcreatedate &lt;= #{endDate}
+			</if>
+			<if test="status != null ">
+				and iusestatus = #{status}
+			</if>
+			<if test="exceptStatus != null ">
+				and iusestatus != #{exceptStatus}
+			</if>
+		</where>
+	</select>
+
+	<insert id="add" parameterType="entity.loyalty.CouponCode"
+		useGeneratedKeys="true" keyProperty="iid">
+		insert into t_coupon_code
+		(
+		icouponruleid,
+		ccode,
+		icreator,
+		iusestatus
+		)
+		values
+		(
+		#{icouponruleid,jdbcType=INTEGER},
+		#{ccode,jdbcType=VARCHAR},
+		#{icreator,jdbcType=INTEGER},
+		#{iusestatus,jdbcType=INTEGER}
+		)
+	</insert>
+
+	<delete id="del" parameterType="java.util.List">
+		delete from t_coupon_code where iid in
+		<foreach collection="list" index="index" item="item" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+		and iusestatus =0
+	</delete>
+
+</mapper>

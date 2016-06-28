@@ -1,0 +1,6 @@
+@(liClass: String, badges: List[valueobjects.product.ProductBadge] )
+@badges.map{ b =>
+	<li class="@liClass">
+		@views.html.product.badge_home(b,null,null,true)
+	</li>
+}

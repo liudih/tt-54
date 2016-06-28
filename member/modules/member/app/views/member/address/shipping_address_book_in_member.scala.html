@@ -1,0 +1,77 @@
+@(perPage: Integer,
+	shippingAddressPage: valueobjects.base.Page[dto.member.MemberAddress],
+	allCountries: List[dto.Country],
+	countryMap: Map[Integer,dto.Country],
+	modifyUrl: String,
+	addUrl: String
+)
+@import views.html.helper._
+@views.html.member.base.master(extensions.member.account.impl.MemberShippingAddressMenuProvider.ID) {
+	@helper.javascriptRouter("js_ShippingAddressRoutes")(
+		controllers.member.routes.javascript.Address.getAllCountry,
+		controllers.member.routes.javascript.Address.getAllProvinceByCountryId,
+		controllers.member.routes.javascript.Address.addNewMemberAddress,
+		controllers.member.routes.javascript.Address.modifyMemberAddress,
+		controllers.member.routes.javascript.Address.deleteMemberAddressById,
+		controllers.member.routes.javascript.Address.deleteMemberAddressBatchByIds,
+		controllers.member.routes.javascript.Address.setDefaultShippingaddress
+    )
+	@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" /> 
+	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/simplePagination.css")">
+	}
+ <div class="accountRight addressBookBox">
+     <h6>@Messages("shipping.address")</h6>
+     <form id="tform">
+        <input type="hidden" name="p" id="p" value="@shippingAddressPage.pageNo"/>
+     </form> 
+        <ul class="addressUL" id="addressUL_id">
+	    	@if(null != shippingAddressPage && null != shippingAddressPage.getList() && shippingAddressPage.getList.size >0){
+		        @shippingAddressPage.getList().map{i=>
+					@show_address_information_in_member(i,countryMap,allCountries,modifyUrl)
+		        }
+	        }
+        </ul>
+      
+		<div class="addChAll">
+			<div class="blackBK"></div>
+			@if(null != shippingAddressPage && null != shippingAddressPage.getList() && shippingAddressPage.getList.size >0){
+	        	<a class="rightAll" href="javascript:;"><span></span></a>
+	        	<a class="rightAll delete" href="javascript:;"><p class="allRs">@Messages("remove.all")</p>
+	            <p class="deletePop">
+	            	<i></i>@Messages("remove.all.from.your.cart")<br>
+	            	<input type="button" value="@Messages("yes")" id="remove_select_addresses">
+	            	<input type="button" value="@Messages("no")">
+	            </p>
+	            </a>
+			}
+            <a class="newAddress" href="javascript:;">@Messages("add.a.new.shipping.address")</a>
+        </div>
+    	<div class="newAddressBox">
+        	 @add_new_shipping_address_form(allCountries,addUrl) 
+       	</div>
+  </div>
+  @if(null != shippingAddressPage && null != shippingAddressPage.getList() && shippingAddressPage.totalPages > 1){
+	  <div class="pagination-holder clearfix" style="margin-left:350px;">
+		 <div id="light-pagination" class="pagination"></div>
+	  </div>
+  }
+  
+  @services.base.HtmlUtils.misc().addTailOnce{
+	  	<script src="@controllers.base.routes.Assets.at("js/lib/jquery.simplePagination.js")" ></script>
+	  	<script>
+			$('#light-pagination').pagination({
+				pages: @shippingAddressPage.totalPages,
+				currentPage: @(shippingAddressPage.pageNo),
+				hrefTextPrefix: 'javascript:void(',
+				hrefTextSuffix: ')',
+				cssStyle: 'light-theme',
+				selectOnClick: true,
+				onPageClick: function(pageNumber, event) {
+					$("#p").val(pageNumber);
+					$("#tform").submit();
+				}
+			});
+		</script>
+	}
+}

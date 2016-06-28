@@ -1,0 +1,81 @@
+@(otherLogins: List[Html])
+@import services.member._
+@country = @{services.base.FoundationService._getCountryObj()}
+@helper.javascriptRouter("collectRoutes")(
+	controllers.interaction.routes.javascript.Collect.collect,
+	controllers.interaction.routes.javascript.Collect.getcollect,
+	controllers.member.routes.javascript.Login.loginForm
+)
+
+<div class="wishListBox">
+	<a class="wishList" href="javascript:;" onclick="collect();" data="@controllers.member.routes.Login.loginForm()">
+		<span class="wishN">@Messages("add.to.wish.list")</span> 
+		<span class="wishR">@Messages("successfully")</span> 
+		<span>(<span id="collectcount">0</span>)</span>
+	</a>
+</div>
+
+
+@views.html.member.login.login_common(otherLogins)
+@views.html.member.login.loginredirect()
+
+@services.base.HtmlUtils.misc().addTailOnce{
+<script>
+
+var listingid = $("input[name='clistingid']:eq(0)").val();
+var collecturl = collectRoutes.controllers.interaction.Collect.collect().url;
+var membercollecturl = collectRoutes.controllers.interaction.Collect.getcollect().url;
+if(collecturl.indexOf("?")>0){
+	collecturl = collecturl.substr(0,collecturl.indexOf("?"));
+}
+function collect(){
+	var iscollect = $(".wishN:eq(0)").is(":hidden");
+	if(!iscollect){
+		$.ajax({
+			url: collecturl,
+			type: "get",
+			dataType: "json",
+			data:{
+				"lid": listingid,
+				"action": "add",
+				"itemid": ""
+			},
+			success:function(data){
+				if(data.result=="nologin"){
+					$("#blogin").show();
+				}
+				if(data.result=="success"){
+					$(".wishList").addClass("redWish");
+					$(".wishList .wishR").show();
+					$(".wishList .wishN").hide();
+					$("#wishListPOP").css({"display":"block"});
+					setTimeout("$('#wishListPOP').hide();",3000);//延时3秒 
+					$("#collectcount").html(parseInt($("#collectcount").text())+1);
+				}
+			}
+		});
+	}
+}
+$("#collectok").click(function(){
+	$("#wishListPOP").hide();
+});
+$(function(){
+	// 设置收藏状态
+	$.get(membercollecturl, {"listingid":listingid},
+	function(data) {
+		var list = data[0];
+		if(list=="nologin"){
+			return;
+		}
+		for(var i=0;i<list.length;i++){
+			if(listingid==list[i]){
+				$(".wishList").addClass("redWish");
+				$(".wishList .wishR").show();
+				$(".wishList .wishN").hide();
+			}
+		}
+		$("#collectcount").html(data[1]);
+	}, "json");
+});
+</script>
+}

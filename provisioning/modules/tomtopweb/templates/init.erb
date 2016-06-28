@@ -1,0 +1,85 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:          <%=@instance_name%>
+# Required-Start:    $local_fs $remote_fs $network $syslog
+# Required-Stop:     $local_fs $remote_fs $network $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts TOMTOP web application
+# Description:       starts TOMTOP web application using start-stop-daemon
+### END INIT INFO
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+EXEC_FILE=bin/tomtopweb
+DAEMON="/usr/share/tomtopweb/<%=@instance_name%>/$EXEC_FILE"
+
+DAEMON_OPTS="-mem <%=@mem%>"
+#DAEMON_OPTS="$DAEMON_OPTS -Dcom.sun.management.jmxremote.port=60010"
+#DAEMON_OPTS="$DAEMON_OPTS -Dcom.sun.management.jmxremote.port=60010"
+#DAEMON_OPTS="$DAEMON_OPTS -Dcom.sun.management.jmxremote.authenticate=true"
+#DAEMON_OPTS="$DAEMON_OPTS -Dcom.sun.management.jmxremote.ssl=false"
+#DAEMON_OPTS="$DAEMON_OPTS -Dcom.sun.management.jmxremote.pwd.file=/opt/jdk1.8.0_31/jre/lib/management/jmxremote.password"
+DAEMON_OPTS="$DAEMON_OPTS -Dfile.encoding=UTF-8"
+DAEMON_OPTS="$DAEMON_OPTS -Dhttp.port=<%=@port%>"
+DAEMON_OPTS="$DAEMON_OPTS -Dconfig.file=/usr/share/tomtopweb/<%=@instance_name%>/conf/application.conf"
+DAEMON_OPTS="$DAEMON_OPTS -Dlogger.file=/usr/share/tomtopweb/<%=@instance_name%>/conf/application-logger.xml"
+
+PIDFILE="/usr/share/tomtopweb/<%=@instance_name%>/RUNNING_PID"
+
+NAME=tomtopweb
+DESC=tomtopweb
+
+test -x $DAEMON || ( test -f $DAEMON && chmod a+x $DAEMON) || exit 2
+
+. /etc/init.d/functions
+
+start() {
+        if [ -f $PIDFILE ]; then
+                PID=`cat $PIDFILE`
+                echo $NAME already running: $PID
+                exit 1;
+        else
+                echo -n "Starting $NAME: "
+                daemon $DAEMON $DAEMON_OPTS &
+                touch /var/lock/subsys/$NAME
+                return 0
+        fi
+}
+
+stop() {
+        echo -n "Shutting down $NAME: "
+        if [ -f $PIDFILE ]; then
+                PID=`cat $PIDFILE`
+                kill $PID
+        else
+                killproc $DAEMON
+                rm -f /var/lock/subsys/$NAME
+                return 0
+        fi
+}
+
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    status)
+	status $DAEMON
+        ;;
+    restart)
+        stop
+        start
+        ;;
+    condrestart)
+        [ -f /var/lock/subsys/$NAME ] && restart || :
+        ;;
+    *)
+        echo "Usage: $NAME {start|stop|status|restart}"
+        exit 1
+        ;;
+esac
+exit $?
+

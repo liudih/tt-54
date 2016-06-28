@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mappers.tracking.AffiliateBannerMapper" >
+  <resultMap id="BaseResultMap" type="entity.tracking.AffiliateBanner" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+    <result column="ctitle" property="ctitle" jdbcType="VARCHAR" />
+    <result column="clink" property="clink" jdbcType="VARCHAR" />
+    <result column="cbannertype" property="cbannertype" jdbcType="VARCHAR" />
+    <result column="iwidth" property="iwidth" jdbcType="INTEGER" />
+    <result column="iheight" property="iheight" jdbcType="INTEGER" />
+    <result column="ctarget" property="ctarget" jdbcType="VARCHAR" />
+    <result column="bstatus" property="bstatus" jdbcType="BIT" />
+    <result column="brelnofollow" property="brelnofollow" jdbcType="BIT" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+    <result column="cdescription" property="cdescription" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="entity.tracking.AffiliateBanner" extends="BaseResultMap" >
+    <result column="bbannerfile" property="bbannerfile" jdbcType="BINARY" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, iwebsiteid, ctitle, clink, cbannertype, iwidth, iheight, ctarget, bstatus, brelnofollow, 
+    dcreatedate,cdescription
+  </sql>
+  <sql id="Blob_Column_List" >
+    bbannerfile
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_affiliate_banner
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_affiliate_banner
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.tracking.AffiliateBanner" >
+    insert into t_affiliate_banner (iid, iwebsiteid, ctitle, 
+      clink, cbannertype, iwidth, 
+      iheight, ctarget, bstatus, 
+      brelnofollow, dcreatedate, bbannerfile
+      )
+    values (#{iid,jdbcType=INTEGER}, #{iwebsiteid,jdbcType=INTEGER}, #{ctitle,jdbcType=VARCHAR}, 
+      #{clink,jdbcType=VARCHAR}, #{cbannertype,jdbcType=VARCHAR}, #{iwidth,jdbcType=INTEGER}, 
+      #{iheight,jdbcType=INTEGER}, #{ctarget,jdbcType=VARCHAR}, #{bstatus,jdbcType=BIT}, 
+      #{brelnofollow,jdbcType=BIT}, #{dcreatedate,jdbcType=TIMESTAMP}, #{bbannerfile,jdbcType=BINARY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.tracking.AffiliateBanner" >
+    insert into t_affiliate_banner
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="iwebsiteid != null" >
+        iwebsiteid,
+      </if>
+      <if test="ctitle != null" >
+        ctitle,
+      </if>
+      <if test="clink != null" >
+        clink,
+      </if>
+      <if test="cbannertype != null" >
+        cbannertype,
+      </if>
+      <if test="iwidth != null" >
+        iwidth,
+      </if>
+      <if test="iheight != null" >
+        iheight,
+      </if>
+      <if test="ctarget != null" >
+        ctarget,
+      </if>
+      <if test="bstatus != null" >
+        bstatus,
+      </if>
+      <if test="brelnofollow != null" >
+        brelnofollow,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+      <if test="bbannerfile != null" >
+        bbannerfile,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="iwebsiteid != null" >
+        #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="ctitle != null" >
+        #{ctitle,jdbcType=VARCHAR},
+      </if>
+      <if test="clink != null" >
+        #{clink,jdbcType=VARCHAR},
+      </if>
+      <if test="cbannertype != null" >
+        #{cbannertype,jdbcType=VARCHAR},
+      </if>
+      <if test="iwidth != null" >
+        #{iwidth,jdbcType=INTEGER},
+      </if>
+      <if test="iheight != null" >
+        #{iheight,jdbcType=INTEGER},
+      </if>
+      <if test="ctarget != null" >
+        #{ctarget,jdbcType=VARCHAR},
+      </if>
+      <if test="bstatus != null" >
+        #{bstatus,jdbcType=BIT},
+      </if>
+      <if test="brelnofollow != null" >
+        #{brelnofollow,jdbcType=BIT},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bbannerfile != null" >
+        #{bbannerfile,jdbcType=BINARY},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.tracking.AffiliateBanner" >
+    update t_affiliate_banner
+    <set >
+      <if test="iwebsiteid != null" >
+        iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="ctitle != null" >
+        ctitle = #{ctitle,jdbcType=VARCHAR},
+      </if>
+      <if test="clink != null" >
+        clink = #{clink,jdbcType=VARCHAR},
+      </if>
+      <if test="cbannertype != null" >
+        cbannertype = #{cbannertype,jdbcType=VARCHAR},
+      </if>
+      <if test="iwidth != null" >
+        iwidth = #{iwidth,jdbcType=INTEGER},
+      </if>
+      <if test="iheight != null" >
+        iheight = #{iheight,jdbcType=INTEGER},
+      </if>
+      <if test="ctarget != null" >
+        ctarget = #{ctarget,jdbcType=VARCHAR},
+      </if>
+      <if test="bstatus != null" >
+        bstatus = #{bstatus,jdbcType=BIT},
+      </if>
+      <if test="brelnofollow != null" >
+        brelnofollow = #{brelnofollow,jdbcType=BIT},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bbannerfile != null" >
+        bbannerfile = #{bbannerfile,jdbcType=BINARY},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="entity.tracking.AffiliateBanner" >
+    update t_affiliate_banner
+    set iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      ctitle = #{ctitle,jdbcType=VARCHAR},
+      clink = #{clink,jdbcType=VARCHAR},
+      cbannertype = #{cbannertype,jdbcType=VARCHAR},
+      iwidth = #{iwidth,jdbcType=INTEGER},
+      iheight = #{iheight,jdbcType=INTEGER},
+      ctarget = #{ctarget,jdbcType=VARCHAR},
+      bstatus = #{bstatus,jdbcType=BIT},
+      brelnofollow = #{brelnofollow,jdbcType=BIT},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      bbannerfile = #{bbannerfile,jdbcType=BINARY}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.tracking.AffiliateBanner" >
+    update t_affiliate_banner
+    set iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      ctitle = #{ctitle,jdbcType=VARCHAR},
+      clink = #{clink,jdbcType=VARCHAR},
+      cbannertype = #{cbannertype,jdbcType=VARCHAR},
+      iwidth = #{iwidth,jdbcType=INTEGER},
+      iheight = #{iheight,jdbcType=INTEGER},
+      ctarget = #{ctarget,jdbcType=VARCHAR},
+      bstatus = #{bstatus,jdbcType=BIT},
+      brelnofollow = #{brelnofollow,jdbcType=BIT},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

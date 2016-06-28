@@ -1,0 +1,88 @@
+@(clist:List[dto.product.CategoryWebsiteWithName],
+	mainCategory: String="",
+	req: Map[String, Array[String]]
+	)
+
+@p_currency = @{services.base.FoundationService._getCurrencyObj.getCsymbol}
+<div class="subCate_navBox">
+	<div class="subCate_navLine">
+		<ul class="subCate_nav lbBox">
+			<li class="lineBlock aciClick aciCss" data="@mainCategory" >All</li>
+			@clist.map{c=>
+				<li class="lineBlock aciClick" data="@c.getIcategoryid" >@c.getCname</li>
+			}
+		</ul>
+	</div>
+</div>
+
+<div class="subCateBox">
+	<div class="subSort_by">
+		<p class="subCate_title popBoxClick">Sort by</p>
+		<div class="popBox popBoxNone">
+			<ul class="stortNav_ul li_clickPop">
+				<li class="aciClick" data-name='discount' data-value='desc'>Discount</li>
+				<li class="aciClick" data-name='sale' data-value='desc'>Sale</li>
+				<li class="aciClick" data-name='review' data-value='desc'>Review</li>
+				<li class="aciClick" data-name='price' data-value='desc'>Price</li>
+			</ul>
+			<div class="blackPop fixed"> </div>
+		</div>
+	</div>
+	<div class="subFilter">
+		<p class="subCate_title popBoxFilter">Filter</p>
+		<div class="popBox popBoxNone">
+			<div class="rightTop_popBox">
+				<i class="sClean closePop"> </i>
+				<p class="filter_titleP">Filter</p>
+				<div class="overAuto_box">
+						<ul class="filterUl_Box">
+							<li><p class="lineBlock">Price</p>
+								<ul class="lbBox lineBlock priceSearch_Box">
+									<li class="lineBlock"><input id="minPrice" class="priceSearch" type="number" placeholder="@{p_currency}10" /></li>
+									<li class="lineBlock"> - </li>
+									<li class="lineBlock"><input id="maxPrice" class="priceSearch" type="number" placeholder="@{p_currency}80" /></li>
+								</ul>
+							</li>
+							<li class="filterTab" data-name='productType' data-value='freeShipping'>
+								Free shipping
+								<div class="slider_buttonBox slider_buttonClick">
+									<label class="slider_buttonLabel">
+										<span class="slider_button"> </span>
+									</label>
+								</div>
+							</li>
+							<li class="filterTab" data-name='productType' data-value='new'>
+								New Arrivlas
+								<div class="slider_buttonBox slider_buttonClick">
+									<label class="slider_buttonLabel">
+										<span class="slider_button"> </span>
+									</label>
+								</div>
+							</li>
+						</ul>
+				</div>
+				<div class="filter_popBottom">
+					<a class="wihteInput lineBlock " href="javascript:void(0);" onclick="resetFilter();" >Reset</a>
+					<a class="orangeInput lineBlock closePop" href="javascript:void(0);" onclick="applyFilter();" >Apply</a>
+				</div>
+			</div>
+			<div class="blackPop fixed"> </div>
+		</div>
+	</div>
+</div>
+<hr class="grayHR marT10" />
+
+
+<form id="searchbar">
+	@req.keySet.map{i=>
+		@if(i!="p"){
+			@req.get(i).map{ii=>
+			<input class="sortCls @i" type="hidden" name="@i" value="@ii" />
+			}
+		}
+	}
+</form>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript" src='@controllers.product.routes.Assets.at("js/category_badge.js")'></script>
+}

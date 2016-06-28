@@ -1,0 +1,38 @@
+@(vo: valueobjects.order_api.PreparatoryOrderListVO,
+	cy: dto.Currency,
+	storageMap: Map[Integer, dto.Storage],
+	itemMap: Map[String, valueobjects.order_api.cart.CartItem])
+@orders = @{vo.getOrders}
+@shippingInfoMap = @{vo.getShippingInfoMap}
+@subTotalMap = @{vo.getSubTotalMap}
+
+@orders.map{order =>
+	<div class="ShippingMethod_titles">
+		Warehouse/Direct mail: @storageMap.get(order.getOrder.getIstorageid).getCstoragename (@order.getDetails.size Items)
+	</div>
+	<table class="detailesTab" width="100%" cellspacing="0" cellpadding="0" border="0" currency="@cy.getCcode" table-type="order-product" table-data="@order.getOrder.getIid">
+		<tbody>
+			<tr>
+				<th class="itemTH">Item</th>
+				<th class="descriptionTH">Description</th>
+				<th class="priceTH">Price</th>
+				<th class="quanTH">Quantity</th>
+				<th class="totalTH">Total</th>
+			</tr>
+			<tr>
+				<td colspan="5" td-type="order-data">
+					@order.getDetails.map{d => 
+						@if(d.getBismain == true){
+							@views.html.cart.bundle(itemMap.get(d.getCid).asInstanceOf[valueobjects.order_api.cart.BundleCartItem], false, cy, false)
+						}
+						@if(d.getBismain == null){
+							@views.html.cart.single(itemMap.get(d.getCid).asInstanceOf[valueobjects.order_api.cart.SingleCartItem], false, cy, false)
+						} 
+					}
+					@shipping_info(shippingInfoMap.get(order.getOrder.getIid), cy)
+					@preparatory_total(subTotalMap.get(order.getOrder.getIid), cy)
+				</td>
+			</tr>
+		</tbody>
+	</table>
+}

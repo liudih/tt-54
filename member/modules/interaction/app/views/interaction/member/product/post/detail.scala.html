@@ -1,0 +1,116 @@
+@(
+product:valueobjects.product.ProductBadge,
+post:dto.ProductPost,
+types:List[dto.ProductPostType],
+listingid:String,
+fovers:List[dto.interaction.Foverallrating],
+reveiwTotail:Int,
+scores:Double,
+starsWidth:Int,
+loginEmail:String,
+otherLogins: List[Html]
+)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@import services.base._
+@import services.base.utils._
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href='@controllers.base.routes.Assets.at("css/product.css")'/> 
+}
+@views.html.member.base.master("product-faq") {
+<div class="accountRight accouMatchBox">
+    	<h6>@Messages("umy.q")&amp;@Messages("ua") </h6>
+        <div class="QA_productBox product_item">
+        	<input type="hidden" class="plistingid" value="@product.getListingId()"/>
+			<input type="hidden" class="pricehtml" @if(product.getPrice()!=null){value="@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitPrice)"} />
+	
+        	<div class="QA_product_img">
+        	 <a href="@controllers.product.routes.Product.view(product.getUrl)">
+        	 
+        	   @views.html.product.img(product.getImageUrl(),product.getTitle(),250,250,null)	
+        	  
+        	 </a>
+        	  @product.getPrice().getDiscountOption().asScala.map{ d =>
+					@if(product.getPrice().isDiscounted()){
+						<span class="discount">@Utils.percent(d)</span>
+					}
+			  }
+        	 
+        	 </div>
+            <div class="QA_proC">
+                <div>
+                <a href="@controllers.product.routes.Product.view(product.getUrl)" title=' @product.getTitle()'  class="QAproTT" >
+            	    @if(product.getTitle()!=null && product.getTitle().length>35){
+				    	@product.getTitle.substring(0,35)...
+				    }else{
+				    	@product.getTitle
+				    }
+            	</a>
+            	</div>
+                <div class="QA_proCL">
+                     @views.html.interaction.review.show_review_star.render(starsWidth) 
+                    <span class="score">@scores</span> 
+                    (<span class="orange">@reveiwTotail</span> @Messages("reviews"))
+                    <div class="clear"></div>
+                    <ul class="startPercentage">
+                     @fovers.map{f => 
+						<li><span class="blue">@f.getType() @Messages("stars")</span>
+						<div class="percentageBox">
+							<div class="percentageFive" style="width:@(f.getPercentage)%"></div>
+						</div> <span >@f.getNum() (@f.getPercentage()%)</span></li>
+					}
+                    </ul>
+                    <a class="blue" href="@controllers.interaction.review.routes.ProductReview.showAll(listingid)">@Messages("see.all") 10 @Messages("reviews")</a>
+                </div>
+                <div class="QA_proR">
+                
+                     @if(product.getPrice().isDiscounted()){
+                     	<p class="regularPrice">@Messages("regular.price") <span> @product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitPrice)</span></p>
+                        <p class="salePrice">@Messages("sale.price") <span>@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitBasePrice)</span></p>
+                    }else{
+                         <p class="salePrice">@Messages("regular.price") <span>@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitPrice)</span></p>
+                    }
+                   	@views.html.product.cart_add_button()
+				   <input type="hidden" name="clistingid" value='@listingid' />
+                   @views.html.interaction.fragment.interaction_product_collect(otherLogins)
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <ul class="QA_Box QA_boxDet">
+        	  <li>
+                <span class="QA_Content">
+                	<b>Q:@post.getSelf().getCtitle </b>
+					<p>@post.getSelf().getCquestion </p>
+                    <p><span class="QA_by">@Messages("by")</span> @post.getSelf().getCanswer <span class="kfDate">@services.base.utils.DateFormatUtils.getDateMDY(post.getSelf().getDcreatedate)</span> </p>
+                </span>
+                @if(post.getSelf().getBreply()){
+					<ol>
+					     	 <b>@Messages("a")</b><p>@post.getSelf().getCanswer</p>
+					         <p><span class="QA_by">@Messages("by")</span> @post.getSelf().getCrecoveryuser <span class="tomtopDate">@services.base.utils.DateFormatUtils.getDateMDY(post.getSelf().getDrecoverydate)</span> </p> 
+					         @views.html.interaction.product.post.vote(post)
+					</ol>
+				}
+            	<div class="clear"></div>
+            </li>
+        </ul>
+        <div class="ProductQA_input">
+            	<input class="popClick blackInput" value="@Messages("ask.a.new.question")" type="button">
+            	<a class="GoBack" style="display: inline-block;width: 150px;" href="@controllers.interaction.routes.MemberProductPost.list()">@Messages("go.back")</a></li>
+                 <!--Askpop-->
+                 @views.html.interaction.product.post.dialog(types,listingid,loginEmail)
+                  <!--Askpopover-->
+             </div>
+    	<div class="xxkDiv autoH">
+            <ul class="blackXXK">
+                <li class="xxkActi">@Messages("super.deals")</li>
+                <li>@Messages("you.view.history")</li>
+                <div class="clear"></div>
+            </ul>
+			@tp.get("super-deals-in-member")
+            <div class="clear"></div>
+             @tp.get("member-browse-history-in-member-center")
+            <div class="clear"></div>
+        </div>
+    </div>
+    @views.html.product.gadget.addcart_js()
+ }

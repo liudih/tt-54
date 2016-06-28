@@ -1,0 +1,49 @@
+.pitem {
+	height: 300px;
+}
+
+.pitem .ptitle {
+	height: 30px;
+	overflow: hidden;
+	line-height: 14px;
+	display: block;
+}
+
+.div {
+	width: 100px;
+	height: 100px;
+	position: relative;
+	z-index: 0
+}
+
+.div img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100px;
+	height: 100px;
+}
+
+.div p {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 1;
+}
+
+.special {
+	background:
+		url("http://skin.tomtop.com/skin/frontend/default-mongo/a033/images/breadcrub20140512.png");
+	background-position: right top;
+	background-repeat: no-repeat;
+	color: #FFFFFF;
+	font-size: 12px;
+	height: 46px;
+	padding-left: 3px;
+	padding-top: 5px;
+	position: absolute;
+	right: -6px;
+	text-decoration: none;
+	top: -20px;
+	width: 48px;
+}

@@ -1,0 +1,3 @@
+"iid","cname","iparentid","ilevel","cclass","curl","ccreateuser","cenname"
+"115","附件管理","37","2","115","/sysadmin/attachment","lij","Attachment"
+"116","附件映射关系管理","37","2","116","/sysadmin/attachment/mapper","lij","AttachmentMapper"

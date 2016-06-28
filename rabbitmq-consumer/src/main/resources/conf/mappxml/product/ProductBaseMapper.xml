@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rabbit.conf.mapper.product.ProductBaseMapper">
+	<resultMap id="BaseResultMap" type="com.rabbit.dto.product.ProductBase">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+		<result column="csku" property="csku" jdbcType="VARCHAR" />
+		<result column="istatus" property="istatus" jdbcType="INTEGER" />
+		<result column="dnewformdate" property="dnewformdate" jdbcType="TIMESTAMP" />
+		<result column="dnewtodate" property="dnewtodate" jdbcType="TIMESTAMP" />
+		<result column="bspecial" property="bspecial" jdbcType="BIT" />
+		<result column="cvideoaddress" property="cvideoaddress"
+			jdbcType="VARCHAR" />
+		<result column="iqty" property="iqty" jdbcType="INTEGER" />
+		<result column="fprice" property="fprice" jdbcType="DOUBLE" />
+		<result column="fcostprice" property="fcostprice" jdbcType="DOUBLE" />
+		<result column="ffreight" property="ffreight" jdbcType="DOUBLE" />
+		<result column="fweight" property="fweight" jdbcType="DOUBLE" />
+		<result column="bmultiattribute" property="bmultiattribute"
+			jdbcType="BIT" />
+		<result column="cparentsku" property="cparentsku" jdbcType="VARCHAR" />
+		<result column="bvisible" property="bvisible" jdbcType="BIT" />
+		<result column="bpulish" property="bpulish" jdbcType="BIT" />
+		<result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+		<result column="bmain" property="bmain" jdbcType="BIT" />
+		<result column="bactivity" property="bactivity" jdbcType="BIT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, clistingid, iwebsiteid, csku, istatus, dnewformdate,
+		dnewtodate, bspecial, cvideoaddress,
+		iqty, fprice, fcostprice, fweight,
+		bmultiattribute, cparentsku,ffreight,
+		bvisible, bpulish, ccreateuser,
+		dcreatedate,bmain,bactivity
+	</sql>
+	<insert id="insert" parameterType="com.rabbit.dto.product.ProductBase">
+		insert into t_product_base
+		(clistingid, iwebsiteid,
+		csku, istatus, dnewformdate,
+		dnewtodate,
+		bspecial, cvideoaddress,
+		iqty, fprice, fcostprice, fweight,
+		bmultiattribute, cparentsku,
+		bvisible,
+		bpulish, ccreateuser,
+		dcreatedate,ffreight,bmain,bactivity
+		)
+		values
+		(#{clistingid,jdbcType=VARCHAR}, #{iwebsiteid,jdbcType=INTEGER},
+		#{csku,jdbcType=VARCHAR}, #{istatus,jdbcType=INTEGER},
+		#{dnewformdate,jdbcType=TIMESTAMP},
+		#{dnewtodate,jdbcType=TIMESTAMP},
+		#{bspecial,jdbcType=BIT}, #{cvideoaddress,jdbcType=VARCHAR},
+		#{iqty,jdbcType=INTEGER}, #{fprice,jdbcType=DOUBLE},
+		#{fcostprice,jdbcType=DOUBLE}, #{fweight,jdbcType=DOUBLE},
+		#{bmultiattribute,jdbcType=BIT}, #{cparentsku,jdbcType=VARCHAR},
+		#{bvisible,jdbcType=BIT},
+		#{bpulish,jdbcType=BIT},
+		#{ccreateuser,jdbcType=VARCHAR},
+		#{dcreatedate,jdbcType=TIMESTAMP},#{ffreight,jdbcType=DOUBLE},
+		#{bmain,jdbcType=BIT},#{bactivity,jdbcType=BIT}
+		)
+	</insert>
+	<update id="updateByListingIdSelective" parameterType="com.rabbit.dto.product.ProductBase">
+		update t_product_base
+		<set>
+			<if test="iwebsiteid != null">
+				iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+			</if>
+			<if test="csku != null">
+				csku = #{csku,jdbcType=VARCHAR},
+			</if>
+			<if test="istatus != null">
+				istatus = #{istatus,jdbcType=INTEGER},
+			</if>
+			<if test="dnewformdate != null">
+				dnewformdate = #{dnewformdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="dnewtodate != null">
+				dnewtodate = #{dnewtodate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="bspecial != null">
+				bspecial = #{bspecial,jdbcType=BIT},
+			</if>
+			<if test="cvideoaddress != null">
+				cvideoaddress = #{cvideoaddress,jdbcType=VARCHAR},
+			</if>
+			<if test="iqty != null">
+				iqty = #{iqty,jdbcType=INTEGER},
+			</if>
+			<if test="fprice != null">
+				fprice = #{fprice,jdbcType=DOUBLE},
+			</if>
+			<if test="fcostprice != null">
+				fcostprice = #{fcostprice,jdbcType=DOUBLE},
+			</if>
+			<if test="fweight != null">
+				fweight = #{fweight,jdbcType=DOUBLE},
+			</if>
+			<if test="bmultiattribute != null">
+				bmultiattribute = #{bmultiattribute,jdbcType=BIT},
+			</if>
+			<if test="cparentsku != null">
+				cparentsku = #{cparentsku,jdbcType=VARCHAR},
+			</if>
+			<if test="bvisible != null">
+				bvisible = #{bvisible,jdbcType=BIT},
+			</if>
+			<if test="bpulish != null">
+				bpulish = #{bpulish,jdbcType=BIT},
+			</if>
+			<if test="ccreateuser != null">
+				ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="ffreight != null">
+				ffreight = #{ffreight,jdbcType=DOUBLE},
+			</if>
+			<if test="bmain != null">
+				bmain=#{bmain,jdbcType=BIT},
+			</if>
+			<if test="bactivity != null">
+				#{bactivity,jdbcType=BIT},
+			</if>
+		</set>
+		where clistingid = #{clistingid,jdbcType=VARCHAR}
+	</update>
+
+	<select id="getProductByListingIDs" resultType="com.rabbit.dto.valueobjects.product.ProductLite">
+		SELECT p.clistingid listingId,p.fweight weight,max(case when translate.ctitle is null
+		then translate_de.ctitle else translate.ctitle end) title,
+		p.fprice
+		originalPrice,max(i.cimageurl) imageUrl, min(u.curl) url, p.csku sku, p.istatus 
+		FROM t_product_base p
+		INNER JOIN (select
+		curl,clistingid from t_product_url where  (ilanguageid = #{2} or ilanguageid=1) and clistingid in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach>
+		union all select curl,clistingid from t_product_intercept_url where (ilanguageid = #{2} or ilanguageid=1) and
+		clistingid in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach>
+		) u on u.clistingid = p.clistingid
+		LEFT JOIN t_product_image i on
+		i.clistingid = p.clistingid AND
+		i.bbaseimage= true
+		left join
+		t_product_translate translate on
+		p.clistingid=translate.clistingid and
+		translate.ilanguageid = #{2}
+		left join t_product_translate translate_de
+		on
+		p.clistingid=translate_de.clistingid and translate_de.ilanguageid=1
+		WHERE p.clistingid IN
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach>
+		AND p.iwebsiteid = #{1}
+		group by p.clistingid , p.fprice , p.csku, p.fweight, p.istatus;
+	</select>
+
+	<select id="getWeightByListingIDs" resultType="com.rabbit.dto.valueobjects.product.Weight">
+		SELECT clistingid listingId, fweight weight
+		FROM t_product_base WHERE
+		clistingid IN
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">'${item}'</foreach>
+	</select>
+
+	<select id="findAllNewarrivalsGroupByCreateDate"
+		resultType="com.rabbit.dto.valueobjects.product.ProductNewarrivalsCalculateItem"
+		parameterType="java.util.Map">
+		<![CDATA[
+			select date_trunc('day', dcreatedate) as dateStr, count(iid) as number from t_product_base 
+				where istatus=1 and bvisible=true and '${statDate}' <= dcreatedate and now() between dcreatedate and 
+				(dcreatedate + interval '${newValidDays} day') 
+				
+				 GROUP BY datestr ORDER BY dateStr desc
+		]]>
+	</select>
+
+	<select id="findSumNewarrivalsByBeforeDays"
+		resultType="com.rabbit.dto.valueobjects.product.ProductNewarrivalsCalculateItem"
+		parameterType="java.util.Map">
+		<![CDATA[
+			select  count(iid) as number from t_product_base 
+			  where istatus=1 and bvisible=true and #{statDate} <= dcreatedate and now() between dcreatedate and 
+				(dcreatedate + interval '${newValidDays} day')  
+		]]>
+	</select>
+</mapper>

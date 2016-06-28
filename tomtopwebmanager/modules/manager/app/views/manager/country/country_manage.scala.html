@@ -1,0 +1,99 @@
+@(cPage: valueobjects.base.Page[dto.Country])
+@import views.html.helper._
+
+@views.html.manager.main {
+	<h3 class="page-title">
+		Country management <small></small>
+	</h3>
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-home"></i>
+			<a href="javascript:;">国家管理</a> 
+			<i class="icon-angle-right"></i>
+		</li>
+		<li>
+			<a href="javascript:;">Country management</a>
+		</li>
+	</ul>
+	<div class="clearfix">
+		<form id="selectform">
+			<input type="hidden" name="cp" id="p" value="@cPage.pageNo()" />
+			<input type="hidden" id="totalPages" value="@cPage.totalPages()"/>
+		</form>
+	</div>
+	<table class="table table-striped table-hover table-bordered">
+		<thead>
+			<tr>
+				<th>国家名称</th>
+				<th>国家代号</th>
+				<th>语言编号</th>
+				<th>默认发货仓库</th>
+				<th>默认货币</th>
+				<th>显示顺序</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+		@if(cPage.getList.size>0){
+			@cPage.getList.map{ c=>
+				<tr>
+					<td>@c.getCname()</td>
+					<td>@c.getCshortname()</td>
+					<td>@c.getLanguageName()</td>
+					<td>@c.getIdefaultstorage()</td>
+					<td>@c.getCcurrency()</td>
+					<td>@c.getIshowindex()</td>
+					<td>
+						<a data-toggle="modal" data-target="#edit-index-modal"
+						   href="@controllers.manager.routes.Country.toEditCountryInfo(c.getIid())">
+				 	  	    <button type="button" class="btn green">修改国家信息</button>
+				 	  	</a>
+			 	  	</td>
+				</tr>
+			}
+		}
+		</tbody>
+	</table>
+	
+	<div class="row-fluid">
+		<div class="span">
+			<div class="dataTables_info">当前第@cPage.pageNo()页|共@cPage.totalPages()页|共@cPage.totalCount()条记录</div>
+		</div>
+		<div class="span">
+			<div id="advertising-paginator"></div>
+		</div>
+	</div>
+	
+	<div id="edit-index-modal" class="modal hide fade" style="width:640px" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-header">
+			<h3 id="myModalLabel">修改国家信息</h3>
+		</div>
+		@form(controllers.manager.routes.Country.updateCountryInfo(), 'class->"form-horizontal"){
+			<input type="hidden" name="cp" value="@cPage.pageNo()">
+			<div class="modal-body"></div>
+			<div class="modal-footer" style="margin-bottom: -20px;">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+				<button id="edit_index_save" class="btn blue" name="submit">保存</button>
+			</div>
+		}
+	</div>
+	
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/bootstrap-paginator.js")'></script>
+		<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/manager_common.js")'></script>
+		<script type="text/javascript">
+			//弹出框隐藏时移除modal
+			$("#edit-index-modal").on("hidden", function() {
+			    $(this).removeData("modal");
+			});
+			//分页
+			$(function(){
+				var pageNo = $("#p").val();
+				var totalPages = $("#totalPages").val();
+				paginationCommon(pageNo,totalPages,"selectform","advertising-paginator");
+			});
+		</script>
+	}
+
+}

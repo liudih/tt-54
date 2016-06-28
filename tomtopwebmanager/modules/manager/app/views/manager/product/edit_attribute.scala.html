@@ -1,0 +1,25 @@
+@(	attributes:List[String],
+	mapList:List[dto.product.ProductEntityMap]
+)
+<table class="table table-striped table-hover table-bordered">
+		<tr>
+			<th>属性</th>
+			<th>属性值</th>
+		</tr>
+		@if(attributes!=null && attributes.size()>0){
+			@attributes.map{e=>
+				<tr>
+					<td style="font-size: 18px"><strong>@e</strong></td>
+					<td style="width: 800px;font-size: 13px">
+						@if(mapList!=null && mapList.size()>0){
+							@mapList.map{i=>
+								@if(i.getCkeyname()==e){
+									@i.getCvaluename()&nbsp;
+								}
+							}
+						}
+					</td>
+				</tr>
+			}
+		}
+</table>

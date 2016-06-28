@@ -1,0 +1,17 @@
+@(mis: valueobjects.member.MemberInSession,total : Integer)
+@urlprefix = @{play.Play.application().configuration().getString("member.defaultdomain")}
+@import services.member._
+@menuRender = @{extensions.InjectorInstance.getInstance(classOf[services.member.MemberQuickMenuRenderer])}
+	@if(null!=mis){
+		<li class="lineBlock">
+			@Messages("hi")@if(null!=mis.getUsername && mis.getUsername().length > 0){
+			@mis.getUsername
+			}else{
+			@mis.getEmail
+			}
+			<a class="fz_blue" href="@urlprefix@controllers.member.routes.Login.logout()">@Messages("logout")</a>
+		</li>
+	}
+	
+	
+	

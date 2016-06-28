@@ -1,0 +1,159 @@
+@(members: Html)
+
+@import views.html.helper._
+
+@views.html.manager.main {
+			<!-- BEGIN PAGE CONTAINER-->
+			<div class="container-fluid">
+			
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+						<h3 class="page-title">
+							客户信息管理
+						</h3>
+						<ul class="breadcrumb">
+							<li><i class="icon-home"></i> <a href="/sysadmin">Home</a>
+								<i class="icon-angle-right"></i></li>
+							<li><a href="#">客户管理</a> <i class="icon-angle-right"></i>
+							</li>
+							<li><a href="#">客户信息管理 </a></li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				
+				
+				<!-- BEGIN PAGE CONTENT-->
+			    @form(controllers.manager.routes.Member.search(), 'id->"searchMember", 'onsubmit->"return false"){
+			    <div class="order_ll_select">
+					<div class="order_ll_col">
+						<div class="order_ll_inline">
+				        	<p>客户邮箱</p>
+				            <input name="email" class="order_ll_txt" type="text" id="email"/>
+				        </div>
+						
+						<div class="order_ll_inline">
+				        	<p>用户状态</p>
+				            <select name="blackUserStatus" id="blackUserStatus">
+				            	<option value=""></option>
+				            	<option value="1">白名单用户</option>
+				            	<option value="0">黑名单用户</option>
+				            </select>
+				        </div>
+				        <div class="order_ll_inline">
+						  <p>国家</p>
+						  @services.manager.ChooseService.getInstance().contry("contry", -1)
+						 </div>
+						</div>
+						<div class="order_ll_col">
+				        <div class="order_ll_inline">
+						  <p>站点选择</p>
+						  @services.manager.ChooseService.getInstance().website("siteId", null, true)
+						 </div>
+						 <div class="order_ll_inline">
+						   <p>来源</p>
+						   @services.manager.ChooseService.getInstance().vhost("vhost", "-1")
+						 </div>
+						  <div class="order_ll_inline">
+						   <p>是否激活</p>
+						   @services.manager.ChooseService.getInstance().yesOrNoSerach("bactivated", "")
+						 </div>
+						 </div>
+						 <div class="order_ll_col">
+				 		 <div class="order_ll_inline">
+						   <p>是否可发推广邮件</p>
+						   @services.manager.ChooseService.getInstance().yesOrNoSerach("bnewsletter", "")
+						 </div>
+						<div class="order_ll_inline">
+						   <p>注册日期</p>
+						 <input id="memberdatestart" name="start" type="text" data-date-format="dd-mm-yyyy" class="order_ll_date" placeholder="start:"/> -
+						 <input id="memberdateend" name="end" type="text" data-date-format="dd-mm-yyyy" class="order_ll_date" placeholder="end:" />
+						</div>
+						<div class="order_ll_inline" >
+				        	<ul class="order_ll_show">
+				            	<li>Show</li>
+				            	<li><a class="order_ll_aActi" href="javascript:;" tag="pageSize" value="30">30</a></li>
+				            	<li><a href="javascript:;" tag="pageSize" value="50">50</a></li>
+				            	<li><a href="javascript:;" tag="pageSize" value="100">100</a></li>
+				            </ul>
+				        </div>
+				        
+						<input type="hidden" name="pageSize" id="pageSize">
+						<input type="hidden" name="pageNum" id="pageNum">
+				   	  </div>
+				          <div class="order_ll_col">
+						    <div class="order_ll_inline">
+				        		<p>&nbsp;</p>
+				            	<input class="order_ll_Search" id="search_members_submit" type="button" value="Search" />
+				        	</div>
+							 <div class="order_ll_inline" style="display: none;">
+							      <p>&nbsp;</p>
+							   <input class="order_ll_Search" id="download_member" type="button" value="download" onclick="downloadMember()" />
+							 </div>
+							    <div class="order_ll_inline">
+							    </div>
+						    </div>
+						<div class="clear"></div>
+				
+				</div>
+				} 
+				<div class="accountBox">
+					<div class="orderBox">
+						<div class="xxkDiv">
+							<div id="search_members_html">
+								@members
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- END PAGE CONTENT -->
+
+			</div>
+			<iframe id="ifile" style="display:none"></iframe>
+			<!-- END PAGE CONTAINER-->
+			@services.base.HtmlUtils.misc().addTailOnce{
+				<link rel="stylesheet" type="text/css"  href="@controllers.manager.routes.Assets.at("css/manager/ordermanager.css")" />
+							<link href="@controllers.manager.routes.Assets.at("css/manager/bootstrap-datetimepicker.css")" rel="stylesheet" type="text/css" media="screen"/>
+				<script src="@controllers.manager.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.manager.routes.Assets.at("js/manager/memberdetail")" ></script>
+			<script type="text/javascript">
+			function downloadMember(){
+				var email = $("#email").val();
+				var blackUserStatus = $("#blackUserStatus").val();
+				var contry = $("#contry").val();
+				var siteid = $("#siteId").val();
+				var vhost = $("#vhost").val();
+				var bactivated = $("#bactivated").val();
+				var bnewsletter = $("#bnewsletter").val();
+				var start = $("#memberdatestart").val();
+				var end = $("#memberdateend").val();
+				var pageSize = $("#pageSize").val();
+				var pageNum = $("#pageNum").val();
+				var url = "@controllers.manager.routes.Member.downloadMemberList()";
+				var parten = "";
+				if(email!=""){parten+="&email="+email;}
+				if(blackUserStatus!=""){parten+="&blackUserStatus="+blackUserStatus;}
+				if(contry!=""){parten+="&contry="+contry;}
+				if(siteid!=""){parten+="&siteid="+siteid;}
+				if(vhost!=""){parten+="&vhost="+vhost;}
+				if(bactivated!=""){parten+="&bactivated="+bactivated;}
+				if(bnewsletter!=""){parten+="&bnewsletter="+bnewsletter;}
+				if(start!=""){parten+="&start="+start;}
+				if(end!=""){parten+="&end="+end;}
+				if(pageSize!=""){parten+="&pageSize="+pageSize;}
+				if(pageNum!=""){parten+="&pageNum="+pageNum;}
+				if(parten != ""){
+					if(parten.substr(0, 1) == "&") {
+					    // 删除第一个字符
+					    parten = parten.slice(1);
+					}
+					url += "?" + parten;
+				}
+				window.location.href=url;
+}
+			</script>
+			} 
+}

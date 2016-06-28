@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.base.SystemParameterMapper" >
+  
+  <insert id="addSysParameter" parameterType="dto.SystemParameter" useGeneratedKeys="true" keyProperty="iid">
+    insert into t_system_parameter(iwebsiteid,ilanguageid, cparameterkey,cparametervalue) 
+			values(#{iwebsiteid},0,#{cparameterkey},#{cparametervalue})
+  </insert>
+	 
+</mapper>

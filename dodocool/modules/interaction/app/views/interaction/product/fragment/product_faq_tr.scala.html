@@ -1,0 +1,74 @@
+@(faqs: valueobjects.dodocool.interaction.product.InteractionProductPost)
+@if(null != faqs && null != faqs.getFaqMap && faqs.getFaqMap.size > 0){
+  @faqs.getFaqMap.map{ i=>
+	<tr>
+       <td class="rew-act">
+         <img src="@controllers.member.routes.MemberProfile.getPhoto(i._2.get(0).getCmemberemail)" />
+         <p class="pt10">@services.dodocool.member.MemberNameService.getMemberName().getMemberAccountNameByEmail(i._2.get(0).getCmemberemail)</p>
+       </td>
+       <td>
+       	 <p class="rew-title" id="faq_title_@i._2.get(0).getIid">@i._1</p>
+         <p class="rew-info" id="faq_question_@i._2.get(0).getIid">
+				@Html(i._2.get(0).getCquestion)                      		
+		 </p>
+		 <div class="rew-date" id="faq_date">
+				@i._2.get(0).getCreateDate        
+			@**                		
+           		<a class="report" href="">Report as spam</a>
+           	**@
+           	<a class="reply" id="collect_faq_@i._2.get(0).getIid" tag="@i._2.get(0).getIid" count="@(i._2.size()-1)" style="cursor:pointer;">
+           		@Messages("replies.count", (i._2.size()-1))
+           	</a>
+         </div>
+         <div class="reply_box" id="faq_reply_@i._2.get(0).getIid" style="display:none">
+            <div class="ajax_insert" >
+                 @for(j <- 1 to (i._2.size()-1)){
+	               <dl class="customer_comment_answer" id="answer_@i._2.get(j).getIid">
+	                 	<dt class="cca_profile">
+							<span><img src="@controllers.member.routes.MemberProfile.getPhoto(i._2.get(j).getCmemberemail)"></span>
+		         			<a class="reply_name">@services.dodocool.member.MemberNameService.getMemberName().getMemberAccountNameByEmail(i._2.get(j).getCrecoveryuser)</a>
+		         		</dt>
+						<dd>
+						<div class="customer_comment_content"><p>@Html(i._2.get(j).getCanswer)</p></div>
+						</dd>           
+						<dd class="customer_comment_tool">
+		                    @i._2.get(j).getDrecoverydate
+		                    @**
+		                    <a class="comment_reply" href="javascript:void(0)">Report as spam</a>        
+		                    **@
+							<a href="javascript:void(0);" class="comment_reply" id="comment_reply_@i._2.get(j).getIid" tag="@faqs.getIsLogined">
+								@Messages("reply")
+							</a>
+						</dd>
+			 	   </dl>
+                 }
+             </div>
+             <div class="no_sign_textarea">
+	             @if(faqs.getIsLogined == false){
+	       		    <span class="no_sign_notice">
+	   					<em>
+	   						<a href="@controllers.member.routes.Login.login()">@Messages("sign.in")</a>  |
+	   						<a href="@controllers.member.routes.Register.registerFrom()">@Messages("create.your.account")</a>
+		   				</em>
+	   				</span>
+	             } else {
+	             	<textarea class="s_txtarea" id="textarea_content_@i._2.get(0).getIid" name="textarea_content"></textarea>
+	             }
+		     </div>
+		     @** 
+	 			 <span id="submit_error">error</span>     			
+		     **@
+			 <input type="hidden" id="hidden_listingid" value="@faqs.getListingId"> 			 
+			 <input type="hidden" id="hidden_sku" value="@faqs.getSku">
+			 <input type="hidden" id="hidden_email" value="@i._2.get(0).getCmemberemail">
+			 <input type="hidden" id="create_date" value="@i._2.get(0).getCreateTime">
+			<span class="review_form_btn"><input type="button" class="btn sb_btn" value="Submit" id="reply_sumbmit_@i._2.get(0).getIid"></span>
+         </div>
+       </td>
+  </tr>      
+  @services.dodocool.base.HtmlUtils.misc().addHeadOnce{
+		<script src="@controllers.interaction.routes.Assets.at("js/product_faq.js")"></script>   
+  }
+ }
+}
+

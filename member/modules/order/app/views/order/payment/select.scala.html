@@ -1,0 +1,106 @@
+@(providers: List[extensions.payment.IPaymentProvider], 
+	payment: String, 
+	context: valueobjects.order_api.payment.PaymentContext)
+<h6>@Messages("payment.methods")</h6>
+<ul class="paymentMethod">
+   @* <ol><i>@Messages("global")</i></ol>*@
+	@if(payment == null) {
+		@providers.zipWithIndex.map{ p =>
+			@*@if(p._1.getDisplayOrder<100){*@
+				<li class="@if(p._2 == 0){payment_Active}" name="@p._1.name()">
+					<label>
+						<input type="radio" name="paymentId" @if(p._2 == 0){checked="checked"} value="@p._1.id()">
+						<em><img src="@p._1.iconUrl()"/></em>
+						@p._1.name()
+					</label>
+					<ol @if(p._2 == 0){style="display:block"}>
+						@p._1.getDescription(context)	
+					</ol>
+				</li>
+			@*}*@
+		}
+	}else{
+		@providers.zipWithIndex.map{ p =>
+			@*@if(p._1.getDisplayOrder<100){*@
+				<li class="@if(p._1.id().equals(payment)){payment_Active}" name="@p._1.name()">
+					<label>
+						<input type="radio" name="paymentId" @if(p._1.id().equals(payment)){checked="checked"} value="@p._1.id()">
+						<em><img src="@p._1.iconUrl()"/></em>
+						@p._1.name()
+					</label>
+					<ol @if(p._1.id().equals(payment)){style="display:block"}>
+						@p._1.getDescription(context)	
+					</ol>
+				</li>
+			@*}*@
+		}
+	}
+	@*
+	<ol><i>@Messages("russia")</i></ol>
+	@if(payment == null) {
+		@providers.zipWithIndex.map{ p =>
+			@if(p._1.getDisplayOrder>=100&&p._1.getDisplayOrder<200){
+				<li class="@if(p._2 == 0){payment_Active}" name="@p._1.name()" >
+					<label>
+						<input type="radio" name="paymentId" @if(p._2 == 0){checked="checked"} value="@p._1.id()">
+						<em><img src="@p._1.iconUrl()"/></em>
+						@p._1.name()
+					</label>
+					<ol @if(p._2 == 0){style="display:block"}>
+						@p._1.getDescription(context)	
+					</ol>
+				</li>
+			}
+		}
+	}else{
+		@providers.zipWithIndex.map{ p =>
+			@if(p._1.getDisplayOrder>=100&&p._1.getDisplayOrder<200){
+				<li class="@if(p._1.id().equals(payment)){payment_Active}" name="@p._1.name()">
+					<label>
+						<input type="radio" name="paymentId" @if(p._1.id().equals(payment)){checked="checked"} value="@p._1.id()">
+						<em><img src="@p._1.iconUrl()"/></em>
+						@p._1.name()
+					</label>
+					<ol @if(p._1.id().equals(payment)){style="display:block"}>
+						@p._1.getDescription(context)	
+					</ol>
+				</li>
+			}
+		}
+	}
+	<ol><i>@Messages("brazil")</i></ol>
+	@if(payment == null) {
+		@providers.zipWithIndex.map{ p =>
+			@if(p._1.getDisplayOrder>=200&&p._1.getDisplayOrder<300){
+				<li class="@if(p._2 == 0){payment_Active}" name="@p._1.name()">
+					<label>
+						<input type="radio" name="paymentId" @if(p._2 == 0){checked="checked"} value="@p._1.id()">
+						<em><img src="@p._1.iconUrl()"/></em>
+						@p._1.name()
+					</label>
+					<ol @if(p._2 == 0){style="display:block"}>
+						@p._1.getDescription(context)	
+					</ol>
+				</li>
+			}
+		}
+	}else{
+		@providers.zipWithIndex.map{ p =>
+			@if(p._1.getDisplayOrder>=200&&p._1.getDisplayOrder<300){
+				<li class="@if(p._1.id().equals(payment)){payment_Active}" name="@p._1.name()">
+					<label>
+						<input type="radio" name="paymentId" @if(p._1.id().equals(payment)){checked="checked"} value="@p._1.id()">
+						<em><img src="@p._1.iconUrl()"/></em>
+						@p._1.name()
+					</label>
+					<ol @if(p._1.id().equals(payment)){style="display:block"}>
+						@p._1.getDescription(context)	
+					</ol>
+				</li>
+			}
+		}
+	}
+	*@
+</ul>
+<div class="clear"></div>
+

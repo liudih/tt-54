@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.google.category.GoogleFeedsMapper" >
+  <select id="searchProductMerchants" resultType="dto.product.google.category.MerchantsProductDto" >
+    SELECT p.iid,p.csku,p.cnodeid,p.ctargetcountry,p.clanguage,p.cstate,p.cresult,p.cchannel,p.productprice,p.ctitle,p.cdescription,p.cfaultreason,
+	p.dcreatedate,p.dupdatedate from t_merchants_product p 
+	where 1=1
+	<if test="merchantsProductDto.csku != null and merchantsProductDto.csku!=''" >
+				and p.csku =#{merchantsProductDto.csku,jdbcType=VARCHAR}
+	</if>
+	<if test="merchantsProductDto.cchannel != null and merchantsProductDto.cchannel!=''" >
+				and p.cchannel =#{merchantsProductDto.cchannel,jdbcType=VARCHAR}
+	</if>
+	<if test="merchantsProductDto.cresult != null and merchantsProductDto.cresult!=''" >
+				and p.cresult =#{merchantsProductDto.cresult,jdbcType=VARCHAR}
+	</if>
+	<if test="merchantsProductDto.cstate != null and merchantsProductDto.cstate!=''" >
+				and p.cstate =#{merchantsProductDto.cstate,jdbcType=VARCHAR}
+	</if>
+	<if test="merchantsProductDto.ctargetcountry != null and merchantsProductDto.ctargetcountry!=''" >
+				and p.ctargetcountry =#{merchantsProductDto.ctargetcountry,jdbcType=VARCHAR}
+	</if>
+	<if test="merchantsProductDto.clanguage != null and merchantsProductDto.clanguage!=''" >
+				and p.clanguage =#{merchantsProductDto.clanguage,jdbcType=VARCHAR}
+	</if>
+	
+	<if test="merchantsProductDto.productprice != null and merchantsProductDto.productprice!=''" >
+				and p.productprice =#{merchantsProductDto.productprice,jdbcType=VARCHAR}
+	</if>
+	
+	<if test="merchantsProductDto.ctitle != null and merchantsProductDto.ctitle!=''" >
+				and p.ctitle ilike '%'||#{merchantsProductDto.ctitle,jdbcType=VARCHAR} ||'%'
+	</if>
+	<if test="merchantsProductDto.cdescription != null and merchantsProductDto.cdescription!=''" >
+				and p.cdescription ilike '%'||#{merchantsProductDto.cdescription,jdbcType=VARCHAR} ||'%'
+	</if>
+	<if test="merchantsProductDto.googlecategory != null and merchantsProductDto.googlecategory!=''" >
+				and p.googlecategory ilike '%'||#{merchantsProductDto.googlecategory,jdbcType=VARCHAR} ||'%'
+	</if>
+	<if test="merchantsProductDto.cpath != null and merchantsProductDto.cpath!=''" >
+				and p.cpath ilike '%'||#{merchantsProductDto.cpath,jdbcType=VARCHAR} ||'%'
+	</if>
+	<if test="merchantsProductDto.dsupdatedate != null" >
+				and p.dpushdate BETWEEN #{merchantsProductDto.dsupdatedate,jdbcType=TIMESTAMP} and #{merchantsProductDto.deupdatedate,jdbcType=TIMESTAMP}
+	</if>
+	 order by dcreatedate desc limit #{pageSize} offset (#{pageSize} * (#{page} - 1))
+  </select>
+  <select id="searchCountProductMerchants" resultType="java.lang.Integer" >
+    SELECT count(1) from t_merchants_product p 
+	where 1=1
+	<if test="merchantsProductDto.csku != null and merchantsProductDto.csku!=''" >
+				and p.csku =#{merchantsProductDto.csku,jdbcType=VARCHAR}
+	</if>
+	<if test="merchantsProductDto.cchannel != null and merchantsProductDto.cchannel!=''" >
+				and p.cchannel =#{merchantsProductDto.cchannel,jdbcType=VARCHAR}
+	</if>
+	<if test="merchantsProductDto.cresult != null and merchantsProductDto.cresult!=''" >
+				and p.cresult =#{merchantsProductDto.cresult,jdbcType=VARCHAR}
+	</if>
+	<if test="merchantsProductDto.cstate != null and merchantsProductDto.cstate!=''" >
+				and p.cstate =#{merchantsProductDto.cstate,jdbcType=VARCHAR}
+	</if>
+	<if test="merchantsProductDto.ctargetcountry != null and merchantsProductDto.ctargetcountry!=''" >
+				and p.ctargetcountry =#{merchantsProductDto.ctargetcountry,jdbcType=VARCHAR}
+	</if>
+	<if test="merchantsProductDto.clanguage != null and merchantsProductDto.clanguage!=''" >
+				and p.clanguage =#{merchantsProductDto.clanguage,jdbcType=VARCHAR}
+	</if>
+	<if test="merchantsProductDto.productprice != null and merchantsProductDto.productprice!=''" >
+				and p.productprice =#{merchantsProductDto.productprice,jdbcType=VARCHAR}
+	</if>
+	<if test="merchantsProductDto.ctitle != null and merchantsProductDto.ctitle!=''" >
+				and p.ctitle ilike '%'||#{merchantsProductDto.ctitle,jdbcType=VARCHAR} ||'%'
+	</if>
+	<if test="merchantsProductDto.cdescription != null and merchantsProductDto.cdescription!=''" >
+				and p.cdescription ilike '%'||#{merchantsProductDto.cdescription,jdbcType=VARCHAR} ||'%'
+	</if>
+	<if test="merchantsProductDto.googlecategory != null and merchantsProductDto.googlecategory!=''" >
+				and p.googlecategory ilike '%'||#{merchantsProductDto.googlecategory,jdbcType=VARCHAR} ||'%'
+	</if>
+	<if test="merchantsProductDto.cpath != null and merchantsProductDto.cpath!=''" >
+				and p.cpath ilike '%'||#{merchantsProductDto.cpath,jdbcType=VARCHAR} ||'%'
+	</if>
+	<if test="merchantsProductDto.dsupdatedate != null" >
+				and p.dpushdate BETWEEN #{merchantsProductDto.dsupdatedate,jdbcType=TIMESTAMP} and #{merchantsProductDto.deupdatedate,jdbcType=TIMESTAMP}
+	</if>
+  </select>
+   <select id="queryFeedData" resultType="dto.product.google.category.GoogleFeedsBase" >
+	   SELECT b.iid,b.country,b.clanguage,b.ccurrency,b.ilanguageid from t_google_feeds_base b
+		where 1=1
+		<if test="ctargetcountry != null and ctargetcountry !=''" >
+					and b.country=#{ctargetcountry,jdbcType=VARCHAR}
+		</if>
+			<if test="clanguage != null and clanguage!=''" >
+					and b.clanguage=#{clanguage,jdbcType=VARCHAR}
+		</if>
+  </select>
+</mapper>

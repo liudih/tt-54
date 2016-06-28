@@ -1,0 +1,26 @@
+GET    /:title.html                     @controllers.product.Product.view(title: String)
+
+GET    /product                         @controllers.search.ProductSearch.search(kw: String ?= null, p: Int ?=0)
+
+GET    /product/more                    @controllers.search.ProductSearch.searchMore(kw: String ?= null, p: Int ?=0)
+
+POST   /product/category/next-page      @controllers.product.CategoryProduct.getNextPageCategoryProductData()
+
+GET    /assets/*file                    controllers.product.Assets.at(path="/public", file)
+
+GET    /product/_indexing               @controllers.search.ProductSearch.indexing(drop: Boolean ?= false, create: Boolean ?= false)
+
+GET    /product/_deleteIndex            @controllers.search.ProductSearch.deleteIndex()
+
+
+GET    /product/newarrivals             @controllers.product.Product.newArrial()
+
+GET    /product/deals                   @controllers.product.Product.deals()
+
+GET    /category/img/:id                @controllers.image.Image.CategoryView(id: Int)
+
+GET    /imgxy/:width/:height/*imgfile   @controllers.image.Image.viewScaled(imgfile: String, width: Int, height: Int)
+
+GET    /:cpath                          @controllers.product.CategoryProduct.showCategoryProduct(cpath: String)
+
+GET    /*imgfile                    	@controllers.image.Image.view(imgfile: String)

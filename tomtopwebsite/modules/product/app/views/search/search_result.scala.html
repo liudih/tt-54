@@ -1,0 +1,70 @@
+@(q: String,
+  result: valueobjects.base.Page[valueobjects.product.ProductBadge],
+  sc: valueobjects.search.SearchContext,
+  st: Integer,
+  req: Map[String, Array[String]],
+  curreryCatogeryCount:Map[Integer,Long],
+  nodes:List[valueobjects.product.category.CategoryReverseComposite])
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/directories.css")?@version.BuildVersion.build()" /> 
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" /> 
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/index.css")?@version.BuildVersion.build()" /> 
+}
+@services.base.HtmlUtils.misc().addTail{
+	<script src="@controllers.product.routes.Assets.at("js/product/page_filter.js")" ></script>
+}
+@**
+@services.base.HtmlUtils.misc().addTailOnce{
+		<script src='@controllers.base.routes.Assets.at("js/lib/jquery.form.js")'/>
+    	@services.base.HtmlUtils.misc().addTailOnce{
+    	<script>
+    	$(function(){
+    		$("#searchbar").append('<input type="hidden" name="st" value="@st"/>');
+    		//设置显示类型
+     		var st = parseInt($("input[name='st']:eq(0)").val());
+     		switch(st){
+     		case 1:
+     			$(".arrayLI a:eq(1)").addClass("arrayAc").siblings().removeClass("arrayAc");
+     			$(".arrangeList").hide();
+     			$(".arrangeClick").addClass("arrangeMore").removeClass("arrangeLess");
+     			break;
+     		case 2:
+     			$(".arrayLI a:eq(2)").addClass("arrayAc").siblings().removeClass("arrayAc");
+     			$(".arrangeClick").hide();
+     			$(".arrangeList").show();
+     			break;
+     		default:
+     			$(".arrayLI a:eq(0)").addClass("arrayAc").siblings().removeClass("arrayAc");
+     			$(".arrangeClick").show();
+    			$(".arrangeList").hide();
+     		}
+    	})
+    	</script>
+    }
+} **@
+@views.html.base.master {
+
+<div class="container LevelOne">
+    <div class="dirLeft lineBlock">
+    	@if(nodes!=null && curreryCatogeryCount!=null && nodes.size()>0){
+	    	<div class="dirFirstBox">
+	    		<ul class="dirList">
+					<li>
+						<a href="@controllers.search.routes.ProductSearch.search(q,st,null)">
+						All Categories
+						</a>
+					</li>
+				</ul>
+	    		@views.html.product.category_product_menu_list.render(q,st,nodes,curreryCatogeryCount)
+		    </div>
+    	}
+       <div class="firBoxP">
+        	@views.html.product.freeship_or_newarrivals_filter(0)
+        </div>
+    </div>
+    @product_right_temp2(result,req,null,sc,q)
+</div>
+}

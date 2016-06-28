@@ -1,0 +1,55 @@
+@(vo: valueobjects.
+order_api.payment.PaymentContext,
+htmlMap: Map[String, Html])
+@order = @{vo.getOrder().getOrder()}
+@cy = @{vo.getCurrency()}
+@import views.html.helper._
+@import services.base.utils._
+@import services.base.CurrencyService
+@views.html.order.top(3,false) {
+	@form(controllers.order.routes.OrderProcessing.changePayment(),'id->"payment_form"){
+		<input type="hidden" name="orderId" value="@order.getIid">
+		<input type="hidden" id="corderId" name="corderId" value="@order.getCordernumber">
+		<input type="hidden" id="paymentId" name="paymentId" value="" />
+		<div class="shoppingCart_con orderD_con">
+			<div class="blackBK"></div>
+			<h6>Order Number: @order.getCordernumber</h6>
+			<h6 class="marT">
+				Order Total:<span class="orange"> @cy.getCsymbol @Utils.money(order.getFgrandtotal,cy.getCcode)</span>
+				<a class="refresh TS" href="javascript:location.reload();">
+					<p class="TsTxt">Refresh Price</p>
+				</a>
+			</h6>
+			@htmlMap.get("detail")
+			@htmlMap.get("payment")
+		</div>
+		<div class="clear"></div>
+		<!-- <div class="shoppingCart_con methodPay">
+			<table class="orderB_table">
+				<tbody>
+					<tr class="Continue">
+						<td width="800"></td>
+						<td class="continusRe">
+							<p class="ContinueSpay"><input type="submit" value="Pay Now" class="spayOut"></p>
+							<p class="security">
+								<em></em>
+								<b class="blue">Buyer Protection by TOMTOP</b>
+								<span><i></i>Full Refund if you don't receive your order</span>
+								<span><i></i>Refund or Keep items not as described</span>
+							</p>
+							<div class="clear"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="cart_bot">
+	 			<em></em><span>Secure Checkout</span> <br>Shopping is always safe and Secure<i></i>
+			</div>
+		</div> -->
+	}
+	@services.base.HtmlUtils.misc().addTailOnce {
+ 		<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/base/country.css")" />
+	  	<script src="@controllers.base.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.product.routes.Assets.at("js/order/mpayorder")" ></script>
+	  	<script src="@controllers.base.routes.Assets.at("js/order/newPayment.js")"></script>
+	}
+}

@@ -1,0 +1,25 @@
+@(i: dto.member.MemberAddress,countryMap:Map[Integer,dto.Country],allCountrys: List[dto.Country],url: String)
+<li id="member_address_li@i.getIid">
+	<a class="rightThis" href="javascript:;"><span value="@i.getIid"></span></a>
+	<b>@i.getCfirstname() &nbsp @i.getClastname()</b>
+    <p>
+  		@i.getCstreetaddress()      &nbsp
+		@i.getCcity()               &nbsp
+		@i.getCprovince()           &nbsp
+		@if(countryMap != null && null != i.getIcountry() && null != countryMap.get(i.getIcountry())){
+			@countryMap.get(i.getIcountry()).getCname            &nbsp
+		}
+		@i.getCpostalcode()         &nbsp
+		@i.getCtelephone()          &nbsp
+    </p>
+    <a id="default_@i.getIid" class="defADD @if(i.getBdefault == true){defActi}" href="javascript:;" tag="@i.getIid">@Messages("default.address")</a>
+    <a class="deitADD" href="javascript:;">@Messages("edit")</a>
+    <a class="removeADD delete @if(i.getBdefault == true){bannedClick}" href="javascript:;">@Messages("remove")
+       <p class="deletePop">
+           <i></i>@Messages("remove.all.from.your.cart")<br>
+           <input type="button" value="@Messages("yes")" name="delete_m_address" tag="@i.getIid">
+           <input type="button" value="@Messages("no")">
+       </p>
+    </a>
+    @modify_shipping_address_form(i,countryMap,allCountrys,url)
+</li>

@@ -1,0 +1,16 @@
+iid,cname,ccreateuser
+1,Activate,reason
+2,WelcomeRegist,reason
+3,WelcomeSubscibe,reason
+4,UpdatePass,reason
+5,CheckoutOrder,reason
+6,PaymentOrder,reason
+7,Non-payment,reason
+8,WesternUnion,reason
+9,Shipments,reason
+10,CancelOrder,reason
+11,ShippingCardMarkDown,reason
+12,ShoppingCartDidNotBuy,reason
+13,CommentsInvite,reason
+14,CommentsSucceed,reason
+15,PointsExpiration,reason

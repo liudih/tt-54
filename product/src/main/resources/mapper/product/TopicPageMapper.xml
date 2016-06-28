@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tomtop.product.mappers.product.topic.TopicPageMapper">
+	<select id="getTopicPageDto" resultType="com.tomtop.product.models.dto.TopicPageDto">
+		select iid, iwebsiteid, ilanguageid, ctype, ctitle, chtmlurl, bshow, icreateuserid, dcreatedate 
+		from t_product_topic_page where 
+		<if test="startDate != null">
+			(dcreatedate &gt;= #{startDate} and dcreatedate &lt; #{endDate}) and 
+		</if>
+		<if test="type != null">
+			ctype = #{type} and 
+		</if>
+		<if test="languageId != null">
+			ilanguageid = #{languageId} and 
+		</if>
+		iwebsiteid = #{siteId} and bshow = true order by dcreatedate desc 
+		<if test="size != null">
+			limit #{size}
+		</if>
+	</select>
+</mapper>

@@ -1,0 +1,49 @@
+@(
+a: dto.member.MemberAddress
+)
+
+@url = @{"controllers.order.routes.orderAddress.modifyOrderAddress()"}
+
+<div class="method_con_visa" >
+    <h5>@Messages("pay.for") 
+    <img src="@controllers.payment.impl.routes.Assets.at("/images/payment_Credit.jpg")" alt=""/>
+    </h5>
+    <p class="con_wire_title">@Messages("billing.address"):</p>
+    <p class="billing_address" onclick="billSameShip(this)">
+    <span>
+    </span>@Messages("payment.credit_1")</p>
+    <p class="make_sure">@Messages("payment.credit_2")</p>
+    <p class="ship_address"><a>@Messages("checkout_step2.shipto")</a></p>
+    <ul class="ns_address_list" name="bill_address_oceanpayment" >
+    @if(a != null){
+        <li iid="@a.getIid" class="sel" default=true isship="@a.getIaddressid()" >
+             <span name="iid" style="display:none;">@a.getIid</span>
+                 <h5>
+                  <span name="cfirstname">@a.getCfirstname</span>
+                  <span name="clastname">@a.getClastname</span>
+                  </h5>
+                 <p>
+                  <span name="address1">@a.getCstreetaddress</span>
+                 </p>
+                 <p>
+                  <span name="ccity">@a.getCcity</span>
+                  <span name="cprovince">@a.getCprovince</span>
+                  <span name="cpostalcode">@a.getCpostalcode</span>  
+                 </p>
+                 <p><span name="countryName">@a.getCountryFullName</span></p>
+                 <p><span name="ctelephone">@a.getCtelephone</span></p>
+                 @if(a.getBdefault()==true){
+                 	<div class="address_default_edit">
+                     	<a onclick="shipAddressEdit(this)" name="shipAddressEdit" class="a_edit" style="display:inline-block;">Edit</a>
+                     </div>
+                 }else{
+                 	<div class="address_default_edit" style="display:none;">
+	                 	<a onclick="shipAddressEdit(this)" name="shipAddressEdit" class="a_edit" style="display:inline-block;">Edit</a>
+	                 	<a class="a_address_default" onclick="addressDefault(this)">Default</a>
+	                </div>
+                 }
+                 
+      </li>
+      }
+    </ul>
+</div>

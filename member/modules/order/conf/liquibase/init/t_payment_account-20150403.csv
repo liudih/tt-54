@@ -1,0 +1,2 @@
+cpaymentid,iwebsiteid,fbeginprice,fendprice,cbusiness
+wiretransfer,1,0,10000,"{""bank"":""HSBC HongKong"",""account"":""808 402 127 838"",""beneficiary"":""HONGKONG TOMTOP LIMITED"",""swift.code"":""HSBCHKHH"",""address"":""6F, HSBC Main Building 1# queen's Road Central, Hong Kong""}"

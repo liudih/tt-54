@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.attribute.AttributeValueMapper" >
+  <resultMap id="BaseResultMap" type="entity.attribute.AttributeValue" >
+    <id column="ivalueid" property="ivalueid" jdbcType="INTEGER" />
+    <result column="ikeyid" property="ikeyid" jdbcType="INTEGER" />
+    <result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ivalueid, ikeyid, ccreateuser, dcreatedate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_attribute_value
+    where ivalueid = #{ivalueid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_attribute_value
+    where ivalueid = #{ivalueid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.attribute.AttributeValue" useGeneratedKeys="true" keyProperty="ivalueid">
+    insert into t_attribute_value (ikeyid, ccreateuser, 
+      dcreatedate)
+    values (#{ikeyid,jdbcType=INTEGER}, #{ccreateuser,jdbcType=VARCHAR}, 
+      #{dcreatedate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.attribute.AttributeValue" >
+    insert into t_attribute_value
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ikeyid != null" >
+        ikeyid,
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ikeyid != null" >
+        #{ikeyid,jdbcType=INTEGER},
+      </if>
+      <if test="ccreateuser != null" >
+        #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.attribute.AttributeValue" >
+    update t_attribute_value
+    <set >
+      <if test="ikeyid != null" >
+        ikeyid = #{ikeyid,jdbcType=INTEGER},
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ivalueid = #{ivalueid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.attribute.AttributeValue" >
+    update t_attribute_value
+    set ikeyid = #{ikeyid,jdbcType=INTEGER},
+      ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP}
+    where ivalueid = #{ivalueid,jdbcType=INTEGER}
+  </update>
+</mapper>

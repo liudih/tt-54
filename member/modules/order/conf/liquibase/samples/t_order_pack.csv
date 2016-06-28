@@ -1,0 +1,3 @@
+iorderid,csku,iqty,cshippingtype,fshippingprice,ctrackingnumber,dshippingdate,dcreatedate,iisregister,clocaltracknumber
+123456,"DV7",10,"test",10.0,"CN123456TT","2015-04-02","2015-04-02",1,null
+

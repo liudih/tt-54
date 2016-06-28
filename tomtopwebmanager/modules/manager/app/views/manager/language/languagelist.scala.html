@@ -1,0 +1,73 @@
+ @views.html.manager.main {
+ 	<table id="list_data" cellspacing="0" cellpadding="0"> 
+    <thead> 
+        <tr> 
+            <th field="iplatformid" width="100">iplatformid门</th> 
+            <th field="ccode" width="100">ccode</th> 
+            <th field="crul" width="100">crul</th> 
+            <th field="cremarks" width="100">cremarks</th> 
+            <th field="ilanguageid" width="100">ilanguageid</th> 
+            <th field="icurrencyid" width="100">icurrencyid</th> 
+            <th field="idefaultshippingcountry" width="100">idefaultshippingcountry</th> 
+            <th field="idefaultshippingstorage" width="100">idefaultshippingstorage</th> 
+            <th field="fldAppMonitor" width="100">启用监测</th> 
+            <th field="fldAppLevel" width="100">要重级别</th> 
+        </tr> 
+    </thead> 
+</table>  
+ 	
+	
+ 	<script type="text/javascript">
+ 	//datagrid初始化 
+    $('#list_data').datagrid({ 
+        title:'应用系统列表', 
+        iconCls:'icon-edit',//图标 
+        width: 700, 
+        height: 'auto', 
+        nowrap: false, 
+        striped: true, 
+        border: true, 
+        collapsible:false,//是否可折叠的 
+        fit: true,//自动大小 
+        url:managerRoutes.controllers.manager.Language.list(), 
+        //sortName: 'code', 
+        //sortOrder: 'desc', 
+        remoteSort:false,  
+        idField:'fldId', 
+        singleSelect:false,//是否单选 
+        pagination:true,//分页控件 
+        rownumbers:true,//行号 
+        frozenColumns:[[ 
+            {field:'ck',checkbox:true} 
+        ]], 
+        toolbar: [{ 
+            text: '添加', 
+            iconCls: 'icon-add', 
+            handler: function() { 
+                openDialog("add_dialog","add"); 
+            } 
+        }, '-', { 
+            text: '修改', 
+            iconCls: 'icon-edit', 
+            handler: function() { 
+                openDialog("add_dialog","edit"); 
+            } 
+        }, '-',{ 
+            text: '删除', 
+            iconCls: 'icon-remove', 
+            handler: function(){ 
+                delAppInfo(); 
+            } 
+        }], 
+    }); 
+    //设置分页控件 
+    var p = $('#list_data').datagrid('getPager'); 
+    $(p).pagination({ 
+        pageSize: 10,//每页显示的记录条数，默认为10 
+        pageList: [5,10,15],//可以设置每页记录条数的列表 
+        beforePageText: '第',//页数文本框前显示的汉字 
+        afterPageText: '页    共 {pages} 页', 
+        displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录', 
+    });  
+</script>
+ }

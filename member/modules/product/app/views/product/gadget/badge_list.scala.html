@@ -1,0 +1,41 @@
+@(product: valueobjects.product.ProductBadge)
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+@if(product != null){
+<li class="product_item">
+	@product.getPrice().getDiscountOption().asScala.map{ d =>
+		@if(product.getPrice().isDiscounted()){
+			<span class="discount">@Utils.percent(d)</span>
+		}
+	}
+	<input type="hidden" class="plistingid" value="@product.getListingId()"/>
+	<input type="hidden" class="pricehtml" @if(product.getPrice()!=null){value="@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitPrice)"} />
+	<a class="publiceImg" href="@controllers.product.routes.Product.view(product.getUrl)">
+		@img(product.getImageUrl(),product.getTitle(),168,168,null)				   
+	</a>
+    <div class="listIM">
+    	<a class="publicTitle" title="@product.getTitle" href="@controllers.product.routes.Product.view(product.getUrl)">@product.getTitle</a>
+    	
+        @if(product.getSellingPoints!=null){
+			@product.getSellingPoints.take(3).map{ psp =>
+				<p class="descriTT" style="height:15px;line-height:15px;">@psp.getCcontent()</p>
+			}
+		}
+            @product.getExtended().map{ i=>
+				@i
+			}
+        <a class="proDet" href="@controllers.product.routes.Product.view(product.getUrl)">@Messages("product.detail")»</a>
+    </div>
+    <p class="publicPrice">
+    <span class="presentPrice">@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitPrice)</span>
+    @if(product.getPrice().isDiscounted()){
+			/ <span class="originalPrice">
+				@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitBasePrice)
+			</span>
+	}
+	</p>
+	@views.html.product.cart_add_button()
+</li>
+}
+@addcart_js()

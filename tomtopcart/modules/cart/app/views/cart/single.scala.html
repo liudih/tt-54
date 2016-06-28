@@ -1,0 +1,62 @@
+@(kk: valueobjects.cart.SingleCartItem,
+	isLate: Boolean=false)
+@import services.base._
+@import services.base.utils._
+@baseUrl = @{play.Play.application().configuration().getString("main_website")}
+<dd class="productNode itemline">
+	<input type="hidden" class="clistingid" value="@kk.getClistingid()" autocomplete="off" />
+	<input type="hidden" class="storageid" value="@kk.getStorageID()" autocomplete="off" />
+	<input type="hidden" class="iqty" value="@kk.getIqty()" autocomplete="off" />
+	<a href="@if(kk.getCurl()!=null){@baseUrl/@kk.getCurl()@Html(".html")}" >
+		@img(kk.getCimageurl(), kk.getCtitle(), 100, 100, null)
+	</a>
+	<div class="wares_item_box">
+		<h5><a href="@if(kk.getCurl()!=null){@baseUrl/@kk.getCurl()@Html(".html")}" >@kk.getCtitle()</a></h5>
+		<p> <span>SKU:<i class="csku">@kk.getSku()</i></span> 
+		<span>
+			@if(null !=kk.getAttributeMap){
+				@kk.getAttributeMap.map{ j=>
+					@if(null != j._1 && j._1.length>0){@j._1.substring(0,1).toUpperCase@j._1.substring(1)}
+					: @j._2 &nbsp;
+				}
+			}
+		</span></p>
+		
+		<div class="a_operation">
+			@if(!isLate){
+				<a href="javascript:void(0);" onclick="addLaterCart(this)">@Messages("save_later")</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+				<a href="javascript:void(0);" onclick="delitem(this)" class="delCls" >@Messages("cart.remove")</a>
+			}else{
+				<a href="javascript:void(0);" onclick="moveToCart(this)">@Messages("move_cart")</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+	            <a href="javascript:void(0);" onclick="addcollect('@kk.getClistingid()','add')" >@Messages("add_wishlist")</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+	            <a href="javascript:void(0);" onclick="delLateritem(this)">@Messages("cart.remove")</a>
+			}
+		</div>
+	</div>
+	@if(!isLate){
+	<div class="wares_price_box">
+		@if(kk.getPrice()!=null){
+		@if(kk.getPrice().getDiscount()!=null && kk.getPrice().getDiscount()>0){
+			<p class="wares_price_through">@kk.getPrice().getSymbol() @Utils.money(kk.getPrice().getUnitBasePrice(),kk.getPrice().getCurrency())</p>
+		}
+		<p>@kk.getPrice().getSymbol() @Utils.money(kk.getPrice().getUnitPrice(),kk.getPrice().getCurrency())</p>
+		
+		}
+	</div>
+	<div class="wares_qty_box">
+		<span class="wares_qty_minus" onclick="updateItem('sub',this)"></span>
+		<span class="wares_qty_num"><input type="text" class="input_num" value="@kk.getIqty()" autocomplete="off"/></span>
+		<span class="wares_qty_add" onclick="updateItem('add',this)"></span>
+	</div>
+	}
+	<div class="wares_total_box">
+		@if(kk.getPrice()!=null){
+		<input type="hidden" class="theprice" value="@Utils.money(kk.getPrice().getPrice(), kk.getPrice().getCurrency())" />
+		<p>@kk.getPrice().getSymbol() @Utils.money(kk.getPrice().getPrice(), kk.getPrice().getCurrency())</p>
+		@if(kk.getPrice().getDiscount()!=null && kk.getPrice().getDiscount()>0){
+			<div>@Messages("you_save")</br>@kk.getPrice().getSymbol() @Utils.money((kk.getPrice().getUnitBasePrice()-kk.getPrice().getUnitPrice())*kk.getIqty(), kk.getPrice().getCurrency())
+			(@Utils.percent(kk.getPrice().getDiscount())%)</div>
+		}
+		}
+	</div>
+</dd>

@@ -1,0 +1,32 @@
+@(productSalePriceForm : forms.ProductSalePriceForm)
+@helper.javascriptRouter("attributeRoutes")(
+	controllers.manager.routes.javascript.Attribute.getAttributeList
+)
+ <link href="@controllers.manager.routes.Assets.at("css/manager/bootstrap-datetimepicker.css")" rel="stylesheet" type="text/css" media="screen"/>
+ 
+<div class="container-fluid">
+		<div class="control-group">
+			<label class="control-label">促销价格:</label>
+			<div class="controls">
+				<input type="text" name="fsaleprice" class="m-wrap medium span6 required" value="@productSalePriceForm.getFsaleprice()">
+			</div>
+		</div>
+		
+		<div class="control-group">
+			<label class="control-label">促销开始时间:</label>
+			<div class="controls">
+				<input id="saledatestart" name="dbegindate" class="m-wrap medium span6 required" type="text" style="width: 206px;height: 30px;" value="@productSalePriceForm.getDbegindate()">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">促销结束时间:</label>
+			<div class="controls">
+				<input id="saledateend" name="denddate" type="text" class="m-wrap medium span6 required" style="width: 206px;height: 30px;" value="@productSalePriceForm.getDenddate()">
+			</div>
+		</div>
+		
+		<input type="hidden" name="iid" value="@productSalePriceForm.getIid()">
+		<input type="hidden" name="clistingid" value="@productSalePriceForm.getClistingid()">
+		<input type="hidden" name="csku" value="@productSalePriceForm.getCsku()">
+</div>
+

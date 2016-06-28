@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet author="reason" id="t_member_base-create">
+		<createTable tableName="t_member_base" remarks="用户基础表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cemail" type="VARCHAR(100)" remarks="邮箱" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="caccount" type="VARCHAR(100)" remarks="账号" />
+			<column name="cpasswd" type="VARCHAR(80)" remarks="密码" />
+			<column name="igroupid" type="INTEGER" remarks="分组编号" />
+			<column name="cprefix" type="VARCHAR(30)" remarks="前缀" />
+			<column name="csuffix" type="VARCHAR(30)" remarks="后缀" />
+			<column name="cfirstname" type="VARCHAR(100)" remarks="姓名首" />
+			<column name="cmiddlename" type="VARCHAR(100)" remarks="姓名中间" />
+			<column name="clastname" type="VARCHAR(100)" remarks="姓名尾" />
+			<column name="dbirth" type="DATETIME" remarks="生日" />
+			<column name="ctaxnumber" type="VARCHAR(60)" remarks="税号" />
+			<column name="igender" type="INTEGER" remarks="性别" />
+			<column name="caboutme" type="VARCHAR(8000)" remarks="介绍" />
+			<column name="cforumsnickname" type="VARCHAR(80)" remarks="论坛账号" />
+			<column name="bactivated" type="BOOL" remarks="是否已激活" />
+			<column name="bnewsletter" type="BOOL" remarks="是否可以发送推广邮件" />
+			<column name="ccountry" type="VARCHAR(3)" remarks="会员国家" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_member_other_id-create">
+		<createTable tableName="t_member_other_id" remarks="用户的其他登入账号">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cemail" type="VARCHAR(100)" remarks="邮箱" />
+			<column name="csource" type="VARCHAR(100)" remarks="账号来源，由插件界定" />
+			<column name="csourceid" type="VARCHAR(200)" remarks="登入网站的账号ID" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+			<column name="bvalidated" type="BOOL" remarks="是否验证过" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_member_buy_statistics-create">
+		<createTable tableName="t_member_buy_statistics" remarks="用户购物统计">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cemail" type="VARCHAR(100)" remarks="邮箱" />
+			<column name="famount" type="FLOAT" remarks="购物总金额" />
+			<column name="icount" type="INTEGER" defaultValue="1" remarks="购物总次数" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_member_Group-create">
+		<createTable tableName="t_member_group" remarks="用户级别表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="cgroupname" type="VARCHAR(60)" remarks="级别名称" />
+			<column name="itaxclassid" type="INTEGER" remarks="税号" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_member_Group_criterion-create">
+		<createTable tableName="t_member_group_criterion" remarks="用户级别标准表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="igroupid" type="INTEGER" remarks="分组名称" />
+			<column name="dconsumptionprice" type="FLOAT" remarks="最少消费标准" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_member_Group_change_history-create">
+		<createTable tableName="t_member_Group_change_history"
+			remarks="用户级别改变历史表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="cemail" type="VARCHAR(100)" remarks="用户" />
+			<column name="ioidgroupid" type="INTEGER" remarks="旧分组" />
+			<column name="inewgroupid" type="INTEGER" remarks="新分组" />
+			<column name="creason" type="VARCHAR(50)" remarks="调整原因" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="调整时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_member_address-create">
+		<createTable tableName="t_member_address" remarks="用户地址表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cmemberemail" type="VARCHAR(80)" remarks="邮箱" />
+			<column name="iaddressid" type="INTEGER" remarks="地址类型" />
+			<column name="bdefault" type="BOOL" remarks="是否默认" />
+			<column name="cfirstname" type="VARCHAR(100)" remarks="姓名首" />
+			<column name="cmiddlename" type="VARCHAR(100)" remarks="姓名中间" />
+			<column name="clastname" type="VARCHAR(100)" remarks="姓名尾" />
+			<column name="ccompany" type="VARCHAR(200)" remarks="公司" />
+			<column name="cstreetaddress" type="VARCHAR(180)" remarks="街道地址" />
+			<column name="ccity" type="VARCHAR(80)" remarks="城市" />
+			<column name="icountry" type="INTEGER" remarks="国家" />
+			<column name="cprovince" type="VARCHAR(600)" remarks="洲(省)" />
+			<column name="cpostalcode" type="VARCHAR(80)" remarks="邮政编码" />
+			<column name="ctelephone" type="VARCHAR(40)" remarks="联系电话" />
+			<column name="cfax" type="VARCHAR(40)" remarks="传真" />
+			<column name="cvatnumber" type="VARCHAR(60)" remarks="税号" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_forget_passwd_base-create">
+		<createTable tableName="t_forget_passwd_base" remarks="用户找回密码表">
+			<column name="cid" type="VARCHAR(50)" remarks="uuid" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="cmemberemail" type="VARCHAR(80)" remarks="邮箱" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="加入时间" />
+			<column name="buse" type="BOOL" defaultValue="TRUE" remarks="是否使用" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_member_favorite-create">
+		<createTable tableName="t_member_favorite" remarks="用户收藏夹表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingId" type="VARCHAR(50)" remarks="广告编号" />
+			<column name="csku" type="VARCHAR(40)" remarks="SKU" />
+			<column name="imemberId" type="INTEGER" remarks="客户编号" />
+			<column name="ienabled" type="INTEGER" remarks="是否使用" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="加入时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="linhl" id="t_member_photo-create">
+		<createTable tableName="t_member_photo" remarks="会员头像表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cemail" type="VARCHAR(100)" remarks="会员邮箱" />
+			<column name="ccontenttype" type="VARCHAR(40)" remarks="图片文件类型" />
+			<column name="bfile" type="BLOB" remarks="头像文件" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+	<changeSet author="linhl" id="t_member_email_verify-create">
+		<createTable tableName="t_member_email_verify" remarks="会员邮箱认证表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cemail" type="VARCHAR(100)" remarks="会员邮箱" />
+			<column name="bisending" type="BOOLEAN" remarks="是否以发送" />
+			<column name="cmark" type="VARCHAR(32)" remarks="今天是否发送邮箱认证标记" />
+			<column name="cactivationcode" type="VARCHAR(32)" remarks="邮箱激活码" />
+			<column name="idaynumber" type="INTEGER" remarks="每天发送邮箱次数(最多为3次)" />
+			<column name="dvaliddate" type="DATETIME" remarks="邮件激活有效时间(3天)" />
+			<column name="dsenddate" type="DATETIME" remarks="邮件发送日期" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+	<changeSet author="reason" id="t_member_base-createIndex">
+		<createIndex indexName="idx_t_memberbase_cemail"
+			tableName="t_member_base" unique="true">
+			<column name="cemail" type="varchar(100)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="jiang" id="t_member_group-data-for-test-20141217"
+		context="test">
+		<loadData tableName="t_member_group" file="samples/t_member_group.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_member_base-data-for-test-20141224"
+		context="test">
+		<loadData tableName="t_member_base" file="samples/t_member_base.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_member_address-data-for-test-20141224"
+		context="test">
+		<loadData tableName="t_member_address" file="samples/t_member_address.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="linhl"
+		id="t_member_group_criterion-data-for-test-2015-03-02" context="test">
+		<loadData tableName="t_member_group_criterion" file="samples/t_member_group_criterion.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="linhl"
+		id="t_member_buy_statistics-data-for-test-2015-03-02" context="test">
+		<loadData tableName="t_member_buy_statistics" file="samples/t_member_buy_statistics.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="kmtong" id="t_member_login_history-create-20150330">
+		<createTable tableName="t_member_login_history">
+			<column name="dtimestamp" type="DATETIME" remarks="登入时间" />
+			<column name="cemail" type="VARCHAR(100)" remarks="登入用户" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="cltc" type="VARCHAR(40)" remarks="长期跟踪Cookie: TT_LTC" />
+			<column name="cstc" type="VARCHAR(40)" remarks="短期跟踪Cookie: TT_STC" />
+			<column name="cclientip" type="VARCHAR(40)" />
+		</createTable>
+		<createIndex tableName="t_member_login_history" indexName="idx_member_login_history">
+			<column name="cemail" />
+			<column name="iwebsiteid" />
+			<column name="dtimestamp" />
+		</createIndex>
+		<createIndex tableName="t_member_login_history"
+			indexName="idx_member_login_history_timestamp">
+			<column name="dtimestamp" />
+		</createIndex>
+	</changeSet>
+	<changeSet id="t_member_base-column-20150413" author="lij">
+		<addColumn tableName="t_member_base">
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</addColumn>
+	</changeSet>
+	<changeSet id="t_member_other_id-add_uniq_constraint-20150501"
+		author="kmtong">
+		<addUniqueConstraint columnNames="csource,csourceid"
+			tableName="t_member_other_id" />
+	</changeSet>
+
+	<changeSet id="t_member_base-addcolumn-20150501" author="Reason">
+		<addColumn tableName="t_member_base">
+			<column name="cvhost" type="VARCHAR(80)" remarks="vhost" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="liquibase-docs" id="dropDefaultValue-example">
+		<dropDefaultValue columnDataType="DATETIME"
+			columnName="dcreatedate" tableName="t_member_base" />
+		<addDefaultValue columnDataType="DATETIME" columnName="dcreatedate"
+			defaultValueComputed="now()" tableName="t_member_base" />
+	</changeSet>
+
+	<changeSet author="lij" id="t_dropship_base-create-20150520">
+		<createTable tableName="t_dropship_base" remarks="dropship基础表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cemail" type="VARCHAR(100)" remarks="邮箱" />
+			<column name="cfullname" type="VARCHAR(100)" remarks="全名" />
+			<column name="ctelephone" type="VARCHAR(40)" remarks="联系电话" />
+			<column name="ccountrysn" type="VARCHAR(30)" remarks="国家简写" />
+			<column name="cshipurl" type="VARCHAR(100)" remarks="商铺链接" />
+			<column name="cskype" type="VARCHAR(100)" remarks="skype帐号" />
+			<column name="cnote" type="VARCHAR(5000)" remarks="note" />
+			<column name="cpaypaladdress" type="VARCHAR(100)" remarks="paypal地址" />
+			<column name="istatus" type="INTEGER" remarks="审核状态" />
+			<column name="idropshiplevel" type="INTEGER" remarks="dropshiplevel" />
+			<column name="bnewsletter" type="BOOL" remarks="是否接收推送信息" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="lij" id="t_dropship_level-create-20150520">
+		<createTable tableName="t_dropship_level" remarks="dropship级别表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clevelname" type="VARCHAR(60)" remarks="级别名称" />
+			<column name="ftotal" type="DOUBLE" remarks="消费累积总额" />
+			<column name="discount" type="DOUBLE" remarks="会员折扣" />
+			<column name="iproductcount" type="INTEGER" remarks="可上架商品数" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_dropship_level-init_data-20150521" author="lij">
+		<loadData tableName="t_dropship_level" file="init/t_dropship_level.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet id="t_dropship_base-addcolumn-20150602" author="lij">
+		<addColumn tableName="t_dropship_base">
+			<column name="iwebsiteid" type="INTEGER" remarks="站点 ID" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="liudi" id="t_email_suffix-create-2015052716">
+		<createTable tableName="t_email_suffix" remarks="邮箱后缀表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cname" type="VARCHAR(100)" remarks="邮箱后缀名称" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="liudi" id="t_email_suffix-add-data-2015052716">
+		<loadData tableName="t_email_suffix" file="init/t_email_suffix-2015052716.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet id="t_dropship_level-addcolumn-20150603" author="lij">
+		<addColumn tableName="t_dropship_level">
+			<column name="fstartprice" type="DOUBLE" remarks="开始价格" />
+			<column name="fendprice" type="DOUBLE" remarks="结束价格" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_dropship_level-init_data-20150603" author="luojh">
+		<delete tableName="t_dropship_level"></delete>
+		<loadData tableName="t_dropship_level" file="init/t_dropship_level-20150603.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet id="t_forget_passwd_base-addcolumn-20150605"
+		author="linhl">
+		<addColumn tableName="t_forget_passwd_base">
+			<column name="crandomcode" type="VARCHAR(6)" remarks="查找邮箱随机码" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_member_photo-addcolumn-20150612" author="linhl">
+		<addColumn tableName="t_member_photo">
+			<column name="cmd5" type="VARCHAR(32)" remarks="图片md5" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="lij" id="t_dropship_base-add-column-20150617">
+		<addColumn tableName="t_dropship_base">
+			<column name="ilanguageid" type="INTEGER" remarks="语言ID" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="lij" id="t_member_base-createIndex">
+		<dropIndex catalogName="cat" indexName="idx_t_memberbase_cemail"
+			schemaName="public" tableName="t_member_base" />
+		<createIndex indexName="idx_t_memberbase_cemail"
+			tableName="t_member_base" unique="true">
+			<column name="cemail" type="varchar(100)" />
+			<column name="iwebsiteid" type="INTEGER" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet id="t_member_photo-addcolumn-20150722" author="linhl">
+		<addColumn tableName="t_member_photo">
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="guozy" id="t_blacklist_user-table-create-20050819">
+		<createTable tableName="t_blacklist_user" remarks="黑名单用户">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点" />
+			<column name="creason" type="VARCHAR(200)" remarks="理由" />
+			<column name="cemail" type="VARCHAR(200)" remarks="用户邮箱" />
+			<column name="dcreatedate" type="DATETIME" remarks="创建时间" />
+			<column name="istatus" type="INTEGER" remarks="状态" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="tonyren" id="t_member_role-create-20150922">
+		<createTable tableName="t_member_role" remarks="前台用户角色表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="crolename" type="VARCHAR(20)" remarks="角色名称" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="cremark" type="VARCHAR(50)" remarks="备注说明" />
+		</createTable>
+	</changeSet>
+	<changeSet author="tonyren" id="t_member_map-create-20150922">
+		<createTable tableName="t_member_map" remarks="前台用户角色对应表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iuserid" type="INTEGER" remarks="用户编号" />
+			<column name="iroleid" type="INTEGER" remarks="角色编号" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="tonyren" id="t_member_role-add-data-2015092220">
+		<loadData tableName="t_member_role" file="init/t_member_role.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="tonyren" id="t_member_role-add-data-201510071941">
+		<loadData tableName="t_member_role" file="init/t_member_role-201510071940.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet id="t_member_address-column-20151010" author="xcf">
+		<addColumn tableName="t_member_address">
+			<column name="ishipaddressid" type="INTEGER"
+				defaultValueComputed="0" remarks="ship地址id" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_member_email_verify-addcolumn-20151124"
+		author="xiaoch">
+		<addColumn tableName="t_member_email_verify">
+			<column name="iresendcount" type="INTEGER"
+				defaultValueComputed="0" remarks="重新发送邮件次数" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_member_base-addcolumn-cuuid" author="lijun">
+		<addColumn tableName="t_member_base">
+			<column name="cuuid" type="VARCHAR(100)"></column>
+		</addColumn>
+
+		<createIndex indexName="idx_t_member_base_cuuid"
+			tableName="t_member_base" unique="true">
+			<column name="cuuid" type="VARCHAR(100)" />
+		</createIndex>
+
+	</changeSet>
+</databaseChangeLog>

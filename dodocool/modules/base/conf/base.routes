@@ -1,0 +1,11 @@
+GET    /index                  @controllers.base.Home.home()
+
+GET    /captcha.png            @controllers.base.Captcha.generate()
+
+POST   /checkcaptcha           @controllers.base.Captcha.checkCaptcha()
+
+GET    /assets/*file           controllers.base.Assets.at(path="/public", file)
+
+GET    /cms/detail/:imenuid    @controllers.base.Cms.getCmsContentByMenuId(imenuid:Integer)
+
+GET    /support                @controllers.base.Support.home()

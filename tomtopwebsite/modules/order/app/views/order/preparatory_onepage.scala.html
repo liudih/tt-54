@@ -1,0 +1,42 @@
+@(vo: valueobjects.order_api.OrderComposite, 
+renderer: services.order.OrderCompositeRenderer)
+@import views.html.helper._
+@helper.javascriptRouter("orderRoutes")(
+	controllers.order.routes.javascript.ShippingAddress.refreshPreparaoryShipping,
+	controllers.order.routes.javascript.OrderProcessing.checkAddress
+)
+@views.html.order.top(2,false) {
+	<div class="pu_pop popNone_s" style="display:none;top:0px;left:0px;">
+		<div class="pu_popBox">
+	    	<div class="empty"></div>
+	    	<div class="pu_popCon">
+	                <p class="pu_popTxt message"></p>
+	                <a href="javascript:;" class="hsInputd lineBlock cancel">@Messages("ok")</a>
+	        </div>
+	    </div>
+		<div class="blockPopup_black"></div>
+	</div>
+	<div class="shoppingCart_con orderD_con" div-type="cart-info" div-data="@vo.getOrderContext.getCart.getId">
+		<h5>@Messages("orders.details")</h5>
+		<div class="blackBK"></div>
+		@if(flash.get("error") != null){
+			<div class="error">@flash.get("error")</div>
+		}
+		@renderer.renderFragment(vo, "shipping-address")
+		@renderer.renderFragment(vo, "billing-address")
+		@form(controllers.order.routes.NewOrderProcessing.submitOrderInfo(), 'id -> "place_order") {
+			@renderer.renderFragment(vo, "preparatory-order")
+			@renderer.renderFragment(vo, "payment")
+			@renderer.renderFragment(vo, "summary")
+			<input id="form-data" name="data" type="hidden">
+		}
+	    <div class="cart_bot">
+           	<em></em><span>@Messages("secure.checkout")</span> <br>@Messages("shopping.always.safe.secure")<i></i>
+		</div>
+	</div>
+	@services.base.HtmlUtils.misc().addTailOnce {
+		<script src="@controllers.order.routes.Assets.at("js/order/controller/preparatory_order.js")" ></script>
+	 	<script type="text/javascript" src="@controllers.order.routes.Assets.at("js/member/shippingAddress.js")"></script>
+	  	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/base/country.css")" />
+	}
+}

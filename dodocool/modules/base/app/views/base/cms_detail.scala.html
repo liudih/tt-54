@@ -1,0 +1,38 @@
+@(oneCmsMenuList: List[dto.CmsMenu],
+cmsMenuMap: Map[Integer,List[dto.CmsMenu]],
+cmsContentList: List[dto.CmsContent])
+ 
+@import services.base._
+
+@views.html.base.master{
+	<!--  主体内容开始  -->
+	<article class="common_wrapper">
+    	<section class="container">
+        	<div class="coverage_box">
+                  <div class="about_sidebar">
+                      <ul class="about_side_nav">
+                      	 @oneCmsMenuList.map{u=>
+					    	@if(cmsMenuMap.containsKey(u.getIid())) {
+					            @cmsMenuMap(u.getIid()).map{ h =>
+					            	@if(null == h.getCurl() || h.getCurl().isEmpty){
+					            		<li><span><a href="@controllers.base.routes.Cms.getCmsContentByMenuId(h.getIid())">@h.getCname()</a></span></li> 
+					            	}else{
+					            		<li><span><a href="@h.getCurl()">@h.getCname()</a></span></li> 
+					            	}
+					            }
+					    	}
+						}
+                      </ul>
+                  </div>
+                  <div class="mainbar coverage clearfix">
+                  	@cmsContentList.map{u=>
+					  	<h6>@u.getCtitle()</h6>
+					  	@Html(u.getCcontent())
+					}
+                  </div>
+              </div>
+        </section>
+    </article>
+	<!--  主体内容结束  -->
+}                                          
+                                               

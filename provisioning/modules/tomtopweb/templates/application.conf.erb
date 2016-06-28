@@ -1,0 +1,205 @@
+
+application.secret="uJ57FiM5mNyF_U11F@e:AA0S3V6l8@vFAQ`lNaoF6IZY1P5RK2sCJJC[wh=L0l42"
+application.langs="en,es,ru,de,it,fr"
+
+mybatis.base.driver="org.postgresql.Driver"
+mybatis.base.url="jdbc:postgresql://<%=@dbhost%>/base"
+mybatis.base.user="<%=@dbuser%>"
+mybatis.base.password="<%=@dbpass%>"
+mybatis.base.poolsize="<%=@dbpoolsize%>"
+
+mybatis.product.driver="org.postgresql.Driver"
+mybatis.product.url="jdbc:postgresql://<%=@dbhost%>/product"
+mybatis.product.user="<%=@dbuser%>"
+mybatis.product.password="<%=@dbpass%>"
+mybatis.product.poolsize="<%=@dbpoolsize%>"
+
+mybatis.search.driver="org.postgresql.Driver"
+mybatis.search.url="jdbc:postgresql://<%=@dbhost%>/search"
+mybatis.search.user="<%=@dbuser%>"
+mybatis.search.password="<%=@dbpass%>"
+mybatis.search.poolsize="<%=@dbpoolsize%>"
+
+mybatis.member.driver="org.postgresql.Driver"
+mybatis.member.url="jdbc:postgresql://<%=@dbhost%>/member"
+mybatis.member.user="<%=@dbuser%>"
+mybatis.member.password="<%=@dbpass%>"
+mybatis.member.poolsize="<%=@dbpoolsize%>"
+
+mybatis.image.driver="org.postgresql.Driver"
+mybatis.image.url="jdbc:postgresql://<%=@dbhost%>/image"
+mybatis.image.user="<%=@dbuser%>"
+mybatis.image.password="<%=@dbpass%>"
+mybatis.image.poolsize="<%=@dbpoolsize%>"
+
+mybatis.interaction.driver="org.postgresql.Driver"
+mybatis.interaction.url="jdbc:postgresql://<%=@dbhost%>/interaction"
+mybatis.interaction.user="<%=@dbuser%>"
+mybatis.interaction.password="<%=@dbpass%>"
+mybatis.interaction.poolsize="<%=@dbpoolsize%>"
+
+mybatis.loyalty.driver="org.postgresql.Driver"
+mybatis.loyalty.url="jdbc:postgresql://<%=@dbhost%>/loyalty"
+mybatis.loyalty.user="<%=@dbuser%>"
+mybatis.loyalty.password="<%=@dbpass%>"
+mybatis.loyalty.poolsize="<%=@dbpoolsize%>"
+
+mybatis.advertising.driver="org.postgresql.Driver"
+mybatis.advertising.url="jdbc:postgresql://<%=@dbhost%>/advertising"
+mybatis.advertising.user="<%=@dbuser%>"
+mybatis.advertising.password="<%=@dbpass%>"
+mybatis.advertising.poolsize="<%=@dbpoolsize%>"
+
+mybatis.order.driver="org.postgresql.Driver"
+mybatis.order.url="jdbc:postgresql://<%=@dbhost%>/order"
+mybatis.order.user="<%=@dbuser%>"
+mybatis.order.password="<%=@dbpass%>"
+mybatis.order.poolsize="<%=@dbpoolsize%>"
+
+mybatis.cart.driver="org.postgresql.Driver"
+mybatis.cart.url="jdbc:postgresql://<%=@dbhost%>/cart"
+mybatis.cart.user="<%=@dbuser%>"
+mybatis.cart.password="<%=@dbpass%>"
+mybatis.cart.poolsize="<%=@dbpoolsize%>"
+
+mybatis.manager.driver="org.postgresql.Driver"
+mybatis.manager.url="jdbc:postgresql://<%=@dbhost%>/manager"
+mybatis.manager.user="<%=@dbuser%>"
+mybatis.manager.password="<%=@dbpass%>"
+mybatis.manager.poolsize="<%=@dbpoolsize%>"
+
+mybatis.paypal.driver="org.postgresql.Driver"
+mybatis.paypal.url="jdbc:postgresql://<%=@dbhost%>/paypal"
+mybatis.paypal.user="<%=@dbuser%>"
+mybatis.paypal.password="<%=@dbpass%>"
+mybatis.paypal.poolsize="<%=@dbpoolsize%>"
+
+mybatis.tracking.driver="org.postgresql.Driver"
+mybatis.tracking.url="jdbc:postgresql://<%=@dbhost%>/tracking"
+mybatis.tracking.user="<%=@dbuser%>"
+mybatis.tracking.password="<%=@dbpass%>"
+mybatis.tracking.poolsize="<%=@dbpoolsize%>"
+
+mybatis.messaging.driver="org.postgresql.Driver"
+mybatis.messaging.url="jdbc:postgresql://<%=@dbhost%>/messaging"
+mybatis.messaging.user="<%=@dbuser%>"
+mybatis.messaging.password="<%=@dbpass%>"
+mybatis.messaging.poolsize="<%=@dbpoolsize%>"
+
+mybatis.wholesale.driver="org.postgresql.Driver"
+mybatis.wholesale.url="jdbc:postgresql://<%=@dbhost%>/wholesale"
+mybatis.wholesale.user="<%=@dbuser%>"
+mybatis.wholesale.password="<%=@dbpass%>"
+mybatis.wholesale.poolsize="<%=@dbpoolsize%>"
+
+mybatis.mobile.driver="org.postgresql.Driver"
+mybatis.mobile.url="jdbc:postgresql://<%=@dbhost%>/mobile"
+mybatis.mobile.user="<%=@dbuser%>"
+mybatis.mobile.password="<%=@dbpass%>"
+mybatis.mobile.poolsize="<%=@dbpoolsize%>"
+
+# Session (Redis) Server
+# ~~~~~
+session.server_type=single
+session.database=<%=@session_db%>
+session.server_address="<%=@session_host%>"
+session.timeout=7200
+
+#session.server_type=master_slave
+#session.server_type=sentinel
+
+# LiveChat Redis
+# ~~~~~
+livechat.server_type=single
+livechat.database=<%=@livechat_db%>
+livechat.server_address="<%=@livechat_host%>"
+
+# Mobile (Redis) Server
+mobile.server_type=single
+mobile.database=<%=@mobile_redis_db%>
+mobile.server_address="<%=@mobile_redis_host%>"
+mobile.timeout=7200
+
+
+# ElasticSearch Server Information
+# ~~~~~
+# Choose any one of these: connect by address, or connect by cluster name
+# SUPPORT both syntax ["host1:port", "host2:port"] or "host1:port,host2:port"
+elasticsearch.server_address="<%=@es_host%>"
+#elasticsearch.cluster_name="elasticsearch"
+
+
+# Specific Cache configuration for different cache items
+cache.system.parameter=3600
+cache.currency=3600
+cache.price=30
+cache.category=300
+cache.product.rating=30
+cache.product.customed_search_result=30
+cache.product.badges=30
+cache.order.status=3600
+cache.payment=3600
+cache.comment=600
+
+
+# facebook appId
+facebook.appId="<%=@facebook_appid%>"
+facebook.appSecret="<%=@facebook_appsecret%>"
+
+# PayPal API
+paypal.sandbox=<%=@paypal_sandbox%>
+paypal.clientid="<%=@paypal_clientid%>"
+paypal.secret="<%=@paypal_secret%>"
+paypal.return="<%=@paypal_return%>"
+paypal.notifyurl="<%=@paypal_notifyurl%>"
+
+# OceanPayment API
+oceanpayment.sandbox=<%=@oceanpayment_sandbox%>
+productApi.token=<%=@productApi_token%>
+
+# google clientId
+google.clientId="<%=@google_clientid%>"
+google.clientSecret="<%=@google_clientsecret%>"
+
+# Twitter consumerKey and consumerSecret
+twitter.consumerKey="<%=@twitter_key%>"
+twitter.consumerSecret="<%=@twitter_secret%>"
+
+# Yahoo Currency Api
+yahoo.appkey="<%=@yahoo_appkey%>"
+yahoo.sign="<%=@yahoo_sign%>"
+
+# Reasonable Spread Account
+rspread.url="<%=@rspread_url%>"
+rspread.account="<%=@rspread_account%>"
+rspread.password="<%=@rspread_password%>"
+
+# addthis id
+addthis.pubid="<%=@addthis_pubid%>"
+
+# ignore SSL error
+ws.ssl.loose.disableHostnameVerification=true
+
+# post body size
+parsers.text.maxLength=10M
+
+# db reset allowed?
+liquibase.reset.allowed="<%=@db_reset_allowed%>"
+
+# Use order processing
+order.processing="<%=@order_step%>"
+
+play {
+  akka {
+    akka.loggers = ["akka.event.slf4j.Slf4jLogger"]
+    loglevel = WARNING
+    actor {
+      default-dispatcher = {
+        fork-join-executor {
+          parallelism-min = 300
+          parallelism-max = 300
+        }
+      }
+    }
+  }
+}

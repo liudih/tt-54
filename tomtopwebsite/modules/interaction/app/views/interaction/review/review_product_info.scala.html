@@ -1,0 +1,60 @@
+@(product: valueobjects.product.ProductBadge,
+	 counts : Integer, 
+	 scores : Double, 
+	 starsWidth : Integer,
+	 fList : List[dto.interaction.Foverallrating]
+)
+@import services.base._
+@import services.base.utils._
+@if(product!=null){
+<div class="writeReview_left">
+	<div class="writeReview_leftT">
+		<a class="publiceImg" href="@controllers.product.routes.Product.view(product.getUrl)">
+			@views.html.product.img(product.getImageUrl(),product.getTitle(),265,265,null)				   
+		</a>
+		<p class="ReviewP_title" style="height:70px;overflow:hidden;word-break:break-all;">
+		@product.getTitle</p>
+	    
+	    <p class="publicPrice">
+	    <span class="presentPrice">@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitPrice)</span>
+	    @if(product.getPrice().isDiscounted()){
+				/ <span class="originalPrice">
+					@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitBasePrice)
+				</span>
+		}
+		</p>
+	
+		<h5>@Messages("average.customer.review")</h5>
+		<div class="leftSTxt">
+			@views.html.interaction.review.show_review_star.render(starsWidth)
+			<span class="score">@scores</span> (<span class="orange">@counts</span>@Messages("reiews"))
+		</div>
+		<div class="clear"></div>
+		<ul class="startPercentage">
+			@fList.map{f => 
+				<li><span class="blue">@f.getType() @Messages("stars")</span>
+				<div class="percentageBox">
+					<div class="percentageFive" style="width:@services.base.utils.Utils.percent(f.getPercentage)%"></div>
+				</div> <span >@f.getNum() (@services.base.utils.Utils.percent(f.getPercentage())%)</span></li>
+			}
+		</ul>
+		<a href="@controllers.interaction.review.routes.ProductReview.showAll(product.getListingId)" class="blue">@Messages("see.all.lowercase")
+			@counts @Messages("reviews.upcase")</a>
+	</div>
+	<div class="writeReview_leftB">
+		<h5>@Messages("tips.for.writing.reviews")</h5>
+		<p>@Messages("specific.features.product.experience.video.reviews.recommend.write.brief.introduction")
+		</p>
+		<p>@Messages("information.helpful.customers.make.buying.decisions")
+		</p>
+		<h5>@Messages("contents.for.whats.not.allowed")</h5>
+		<ul>
+			<li>@Messages("obscene.or.distasteful.content")</li>
+			<li>@Messages("profanity.or.spiteful.remarks")</li>
+			<li>@Messages("comments.racial.religious.discrimination")</li>
+			<li>@Messages("promotion.illegal.immoral.conduct")</li>
+			<li>@Messages("phone.numbers.postal.mailing.addresses")</li>
+		</ul>
+	</div>
+</div>
+}

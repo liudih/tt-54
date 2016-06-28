@@ -1,0 +1,69 @@
+[Unit]
+Description=TomTop Website on port %i
+
+# Requirements
+Requires=etcd.service
+Requires=docker.service
+Requires=tomtopwebsite-discovery@%i.service
+Requires=tomtopwebsite-postgresql.service
+Requires=tomtopwebsite-redis.service
+Requires=tomtopwebsite-elasticsearch.service
+
+# Dependency ordering
+After=etcd.service
+After=docker.service
+After=tomtopwebsite-postgresql.service
+After=tomtopwebsite-redis.service
+After=tomtopwebsite-elasticsearch.service
+Before=tomtopwebsite-discovery@%i.service
+
+[Service]
+
+# Source in the BUILD_NUMBER
+EnvironmentFile=/etc/env.d/tomtopwebsite@%i.env
+
+TimeoutStartSec=0
+
+# Change killmode from "control-group" to "none" to let Docker remove
+# work correctly.
+KillMode=none
+
+# Pre-start and Start
+## Directives with "=-" are allowed to fail without consequence
+ExecStartPre=-/usr/bin/docker kill tomtopwebsite.%i
+ExecStartPre=-/usr/bin/docker rm tomtopwebsite.%i
+ExecStartPre=-/bin/bash -c "/usr/bin/docker pull 192.168.7.15:5000/tomtop/website:${BUILD_NUMBER}"
+ExecStart=/bin/bash -c "docker run --name tomtopwebsite.%i \
+	-p %i:9000 \
+	-e BASE_DBNAME=base \
+	-e IMAGE_DBNAME=image \
+	-e PRODUCT_DBNAME=product \
+	-e SEARCH_DBNAME=search \
+	-e MEMBER_DBNAME=member \
+	-e ADVERTISING_DBNAME=advertising \
+	-e CART_DBNAME=cart \
+	-e ORDER_DBNAME=order \
+	-e MANAGER_DBNAME=manager \
+	-e LOYALTY_DBNAME=loyalty \
+	-e INTERACTION_DBNAME=interaction \
+	-e PAYPAL_DBNAME=paypal \
+	--link tomtopwebsite-postgresql:basedb \
+	--link tomtopwebsite-postgresql:imagedb \
+	--link tomtopwebsite-postgresql:productdb \
+	--link tomtopwebsite-postgresql:searchdb \
+	--link tomtopwebsite-postgresql:memberdb \
+	--link tomtopwebsite-postgresql:advertisingdb \
+	--link tomtopwebsite-postgresql:cartdb \
+	--link tomtopwebsite-postgresql:orderdb \
+	--link tomtopwebsite-postgresql:managerdb \
+	--link tomtopwebsite-postgresql:loyaltydb \
+	--link tomtopwebsite-postgresql:interactiondb \
+	--link tomtopwebsite-postgresql:paypaldb \
+	--link tomtopwebsite-redis:redis \
+	--link tomtopwebsite-elasticsearch:elasticsearch \
+	192.168.7.15:5000/tomtop/website:${BUILD_NUMBER}"
+
+# Stop
+ExecStop=/usr/bin/docker stop tomtopwebsite.%i
+
+Restart=always

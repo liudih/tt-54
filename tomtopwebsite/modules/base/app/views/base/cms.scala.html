@@ -1,0 +1,87 @@
+@(oneCmsMenuList: List[dto.CmsMenu],
+cmsMenuMap: Map[Integer,List[dto.CmsMenu]],
+nominatetMenuList: List[dto.CmsMenu],
+nominatetContentList: List[dto.CmsContent],
+cmsContentMap: Map[Integer,List[dto.CmsContent]]
+)
+ 
+@import services.base._
+
+@views.html.base.master{
+@HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/help.css")?@version.BuildVersion.build()" /> 
+}
+	
+     
+<div class="container accountBox">
+    <div class="Bread_crumbs_Box">
+        <ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="#"></a></li>
+            <li>
+                <p><a class="Bread_link" href="#">@Messages("help.center")</a></p>
+            </li>
+         
+            <div class="clear"></div>
+        </ul>
+    </div>
+    
+  @views.html.base.cms_left_catalog(oneCmsMenuList, cmsMenuMap)
+     
+    <div class="helpRight">
+    	<ul class="h_sixBlock">
+    		 @nominatetMenuList.map{u=>
+           	 	
+           	 	<li class="H_@u.getCclass()"><a href="#TT_@u.getCclass()"><em></em>@u.getCname()</a></li>
+           	 }
+    	
+        </ul>
+    	<h6><i>@Messages("popular.questions")</i></h6>
+        <ul class="h_Popular txtHide">
+        
+        	 @nominatetContentList.map{u=>
+           	 	<li><a href="@controllers.base.routes.Cms.getCmsContentByMenuId(u.getImenuid())#@u.getIid()">@u.getCtitle() </a></li>
+           	 }
+            <div class="clear"></div>
+        </ul>
+        
+        
+           @nominatetMenuList.map{u=>
+		   	 <a name="TT_@u.getCclass()"></a>
+		   	 <div class="clear"></div>
+		   	 <h5 class="TT_@u.getCclass()" id=""><em></em>@u.getCname()<span></span></h5>
+		    	@if(cmsMenuMap.containsKey(u.getIid())) {
+		            @cmsMenuMap(u.getIid()).zipWithIndex.map{ h =>
+		            	
+		            	@if(h._2 == 0){
+						 	<div class="threeLi firstLi">
+			           	 }else{
+					   	 	<div class="threeLi">
+			           	 }
+			            	<h6><i>@h._1.getCname()</i></h6>
+				            <ul class="h_Popular">
+				            	@if(cmsContentMap.containsKey(h._1.getIid())) {
+				            		@cmsContentMap(h._1.getIid()).map{ a =>
+				            		 <li><a href="@controllers.base.routes.Cms.getCmsContentByMenuId(a.getImenuid())#@a.getIid()">@a.getCtitle()</a></li>
+				            		 }
+				            	}
+				                <div class="clear"></div>
+				            </ul>
+			             </div>
+			          
+		            }
+		    	}
+		   
+		}
+        
+        <div class="clear"></div>
+	</div>
+</div>
+	 
+	 
+	@services.base.HtmlUtils.misc().addTailOnce{
+	
+   
+		 
+	}
+}                                          
+                                               

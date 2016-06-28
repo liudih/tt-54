@@ -1,0 +1,37 @@
+@(dropShipLevels: List[dto.member.DropShipLevel])
+@import views.html.helper._
+@views.html.member.base.master("dropshipjoin") {
+	<div class="accountRight dropshipBox addressBookBox">
+    	<h6>@Messages("join.dropshipping")</h6>
+        <div class="shipNone">
+            <h6 class="hsB">@Messages("successfully.submitted") </h6>
+            <p>@Messages("thank.you.for.your.application.pending.approval.your.request.will.be.verified.within.2.working.days.once.your.request.is.approved.we.will.notify.you.by.email") </p>
+            <p class="marT">@Messages("also.we.always.provide.different.discount.rate.for.different.drop.shipping.member.level.we.calculate.the.total.amounts.of.your.drop.shipping.account.and.classify.levels.according.to.the.table.below")</p>
+            <div class="policy_DIV lbBox">
+	        	<ul class="lineBlock">
+	            	<li>@Messages("grades")</li>
+	            	<li>@Messages("total.order.amount")</li>
+	            	<li>@Messages("discount.off")</li>
+	            	<li>@Messages("service.fee.transaction.fee.monthly")</li>
+	            	<li>@Messages("you.can.add.update.products.in.catalog")</li>
+	            	<li>@Messages("download.product.images")</li>
+	            	<li>@Messages("enjoy.dropship.price")</li>
+	            </ul>
+	            @dropShipLevels.map{ i=>
+		        	<ul class="lineBlock">
+		            	<li>@i.getClevelname()</li>
+		            	<li> >$ @i.getFtotal()</li>
+		            	<li>@String.format("%3.1f", double2Double({i.getDiscount()*100}))%</li>
+		            	<li>@Messages("free")</li>
+		            	<li>@i.getIproductcount()</li>
+		            	<li>@Messages("yes")</li>
+		            	<li>@Messages("yes")</li>
+		            </ul>
+	            }
+		    </div>
+            <p class="marT marB">@Messages("although.you.are.not.a.for.drop.shipping.client.yet.you.can.also.place.a.general.order.on.tomtop.com") </p>
+            <a class="hs_A" href="@controllers.base.routes.Home.home()">@Messages("go.shopping.as.a.tomtop.client")</a>
+        </div>
+    </div>
+}
+

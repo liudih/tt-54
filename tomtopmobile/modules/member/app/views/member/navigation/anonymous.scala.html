@@ -1,0 +1,41 @@
+@import extensions.member.account.Position
+@import services.base._
+@import services.base.utils._
+
+@(
+	htmls :  List[extensions.member.account.IMemberAccountHomeFragmentProvider],
+	email: String
+)
+
+@import views.html.helper._
+
+	<a id="userCenter-btn" class="cneterClick" href="javascript:;">&nbsp;</a>
+	<div id="logon-popbox" class="publicePop_Box popBoxNone" style="display: none;">
+    		<div class="leftHead_PopBox publicePop_con">
+    			<div class="topLeft_headImg">
+    				<div class="topLeft_myHead"><img src="@controllers.base.routes.Assets.at("images/myHeadDF.jpg")"></div>
+    			</div>
+    			<ul class="topLeft_Sigin lbBox">
+    				<li class="lineBlock">
+    					<a href="@controllers.member.routes.Login.login(0)">
+     					Sign in
+    					</a>
+    				</li>
+    				<li class="lineBlock">
+    					<a href="@controllers.member.routes.Login.login(1)">
+     					Join Free
+     				</a>
+     			</li>
+    			</ul>
+    			
+    			@htmls.map{ h =>
+		        	@if(h.getPosition().contains(Position.BODY_NOTLOGIN)) {
+		        		@h.getFragment(email,Position.BODY_NOTLOGIN)
+		        	}
+		        }
+   
+      			 
+    		</div>
+			<div class="cneterNonoClick"> </div>
+    	</div>
+	

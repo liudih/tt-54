@@ -1,0 +1,209 @@
+@(vo:forms.loyalty.CouponRuleForm,
+currencyList:List[dto.Currency],
+couponTypeList:List[entity.loyalty.CouponType],
+loginCheckList:List[Integer],
+timeTypeList:List[enums.loyalty.coupon.manager.CouponRuleSelect.TimeType],
+productTypesList:List[dto.product.ProductLabelType],
+productTypeCheckList:List[String],
+terminalCheck :List[String])
+@websiteList = @{services.manager.ChooseService.getInstance().website()}
+@terminalList = @{enums.loyalty.coupon.manager.CouponRuleBack.UseTerminal.getAllTerminal()}
+@import views.html.helper._ 
+@if(vo!=null){
+<input type="hidden" name="iid" value="@vo.getIid()"/>
+<div class="row-fluid">
+		<div class="span6">
+		<div class="control-group">
+			<label class="control-label">WebSite</label> 
+			@for( i<- websiteList){
+			@if(null !=loginCheckList && loginCheckList.size()>0 &&loginCheckList.contains(i.getIid())){
+			@if(loginCheckList.size()==1){
+			@i.getCcode <input id="edit_website" type="checkbox" checked value="@i.getIid()"
+				name="cwebsiteid" disabled="disabled" /> 
+				}else{ 
+				@i.getCcode <input type="checkbox" checked value="@i.getIid()" name="cwebsiteid" />
+				 }
+			}else{ @i.getCcode<input type="checkbox" value="@i.getIid()"
+				name="cwebsiteid" /> } }
+		</div>
+
+		<div class="control-group">
+					<label class="control-label">Coupon Type</label>
+					<div class="controls">
+						<select name="itype" id="edit_coupontype">
+						@couponTypeList.map{c=>
+							<option value="@c.getIid()"
+							 @if(vo.getItype()==c.getIid()){selected="selected"}>@c.getCtype()</option>}
+						</select>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label">Name<span class="required">*</span></label>
+					<div class="controls">
+						<input type="text" name="cname" id="edit_name" value="@vo.getCname()"/>
+					</div>
+				</div>
+				<div class="control-group" id="div_edit_currency">
+					<label class="control-label">Currency</label>
+					<div class="controls">
+						<select name="ccurrency">
+						@currencyList.map{b=>
+							<option value="@b.getIid()"
+							 @if(vo.getCcurrency()==b.getIid()){selected="selected"}>@b.getCcode()</option>}
+						</select>
+					</div>
+				</div>
+				
+				<div class="control-group" id="div_edit_par">
+					<label class="control-label">Value<span class="required">*</span></label>
+					<div class="controls">
+						<input type="text" name="fcouponamount" id="edit_fcouponamount" value="@vo.getFcouponamount()"/>
+					</div>
+				</div>
+				
+				<div class="control-group" id="div_edit_discount" style="display:none;">
+					<label class="control-label">Discount<span class="required">*</span></label>
+					<div class="controls">
+						<input type="text" name="fdiscount" id="edit_fdiscount" value="@vo.getFdiscount"/>%
+					</div>
+				</div>
+				
+				<div class="control-group" id ="div-desa">
+					<label class="control-label">Lowest Consumption Amount<span class="required">*</span></label>
+					<div class="controls">
+						<input type="text" name="forderamountlimit" id="edit_forderamountlimit" value="@vo.getForderamountlimit"/>
+					</div>
+				</div>
+				
+			</div>
+			<div class="span6">
+				
+				<div class="control-group">
+					<input id="cproducttype_edit" type="text" style="display:none;" name="cproducttype">
+					<label class="control-label">label of product you want to eliminate</label>
+					<div class="controls" style="width:100%;">
+						<select id="cproducttype_select_edit" style="" class="chosen-select" multiple="multiple">
+					    @productTypesList.map{c => 
+					    	@if(productTypeCheckList != null && productTypeCheckList.contains(c.getType)){
+					    		 <option selected value="@c.getType">@c.getType</option>
+					    	}else{
+					    		 <option value="@c.getType">@c.getType</option>
+					    	}
+					    }
+						</select>
+					</div>
+				</div>
+				
+				
+				<div class="control-group">
+				<label class="control-label">Use Terminal</label>
+				@for( i<- terminalList){ 
+					@if(null !=terminalCheck && terminalCheck.size()>0 && terminalCheck.contains(i.getTerminalId)){
+						@i.getTerminalEN<input type="checkbox" checked value="@i.getTerminalId()" name="cuseterminal"/> 
+					}else{
+						@i.getTerminalEN<input type="checkbox" value="@i.getTerminalId()" name="cuseterminal"/> 
+						}
+					}
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label">Time Type</label>
+					<div class="controls">
+						<select name="ctimetype" id="edit_timetype">
+						@timeTypeList.map{c=>
+							<option value="@c.getTypeid" 
+							@if(vo.getCtimetype==c.getTypeid){selected="selected"}>@c.getTypeid</option>}
+						</select>
+					</div>
+				</div>
+				 
+				<div class="control-group" id="div_edit_validity">
+					<label class="control-label">Validity<span class="required">*</span></label>
+					<div class="controls">
+						<input type="text" name="ivalidity" value="@vo.getIvalidity" id="edit_ivalidity"/>Day
+					</div>
+				</div>
+
+			<div id="div_edit_date" style="display:none;">
+				<!-- add by lijun -->
+				 <div class="form-group">
+				 	<label for="dtp_input1" class="col-md-2 control-label">Start Date<span class="required">*</span></label>
+	                <div class="input-group date form_datetime col-md-5" data-date="@vo.getStartdateStr" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input_startDate_edit">
+	                    <input name="startdateStr" id="edit_startdate" class="form-control" size="16" type="text" value="@vo.getStartdateStr" readonly>
+	                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+						<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+	                </div>
+					<input type="hidden" id="dtp_input_startDate_edit" value="" /><br/>
+				 </div>
+				 
+				 <div class="form-group">
+				 	<label for="dtp_input1" class="col-md-2 control-label">End Date<span class="required">*</span></label>
+	                <div class="input-group date form_datetime col-md-5" data-date="@vo.getEnddateStr" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input_endDate_edit">
+	                    <input name="enddateStr" id="edit_enddate" class="form-control" size="16" type="text" value="@vo.getEnddateStr" readonly>
+	                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+						<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+	                </div>
+					<input type="hidden" id="dtp_input_endDate_edit" value="" /><br/>
+				 </div>
+			 </div>
+			 
+			  <div class="control-group">
+					<label class="control-label">Sku</label>
+					<div class="controls">
+						<textarea id="edit_sku" name="csku" style="height:60px" placeholder="Please use a comma to separate each sku">@vo.getCsku</textarea>
+					</div>
+				</div>
+			 
+				 <div class="control-group">
+					<label class="control-label">Description</label>
+					<div class="controls">
+						<textarea name="cdescription" style="height:60px">@vo.getCdescription</textarea>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+</div>
+<script type="text/javascript">
+function changetimetype() {
+	var type = $("#edit_coupontype").val();
+	if (type == 1) {
+		$("#div_edit_discount").hide();
+		$("#div_edit_par").css("display", "block");
+		$("#div_edit_currency").css("display", "block");
+	} else {
+		$("#div_edit_par").hide();
+		$("#div_edit_discount").css("display", "block");
+		$("#div_edit_currency").hide();
+	}
+}
+function changecoupontype() {
+	var type = $("#edit_timetype").val();
+	if (type == "Validity") {
+		$("#div_edit_date").hide();
+		$("#div_edit_validity").css("display", "block");
+	} else {
+		$("#div_edit_validity").hide();
+		$("#div_edit_date").css("display", "block");
+	}
+}
+
+$(function(){
+	changetimetype();
+	changecoupontype();
+	$("#edit_coupontype").change(function () {
+		changetimetype();
+	});
+	$("#edit_timetype").change(function () {
+		changecoupontype();
+	});
+	
+	 $('#cproducttype_select_edit').chosen({
+     	'width' : '95%',
+     	'disable_search' : false
+     });
+	 
+})
+</script>
+}

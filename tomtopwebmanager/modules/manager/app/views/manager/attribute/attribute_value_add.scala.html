@@ -1,0 +1,36 @@
+@(attributeKey: dto.AttributeKeyItem)
+
+@helper.javascriptRouter("attributeRoutes")(
+	controllers.manager.routes.javascript.Attribute.getAttributeList
+)
+
+<div class="container-fluid">
+
+				<div class="control-group">
+					<label class="control-label">属性名：</label>
+					<div class="controls">
+						<input type="text" value="@attributeKey.getCkeyname()" name="attributekeyid" class="m-wrap medium span6"  readonly="true">
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label">属性值：</label>
+					<div class="controls">
+						<input type="text" value="" name="cvaluename" placeholder="属性值" class="m-wrap medium span6">
+					</div>
+				</div>
+				
+				<!-- <div class="controls" style="margin-bottom:10px;">
+					<div class="controls" style="position:absolute;left:249px;margin-top:-54px;">
+							<button id="add_attribute_value" class="btn green">
+								<i class="icon-plus"></i>
+							</button>
+					</div>
+				</div> -->
+				
+				<input type="hidden" name="ilanguageid" value="@attributeKey.getIlanguageid()">
+				<input type="hidden" id="attributeKeyId" name="ikeyid" value="@attributeKey.getIkeyid()">
+			</div>
+			@services.base.HtmlUtils.misc().addTailOnce{
+				<script src="@controllers.manager.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.manager.routes.Assets.at("js/manager/attributedetail")" ></script>
+			}        

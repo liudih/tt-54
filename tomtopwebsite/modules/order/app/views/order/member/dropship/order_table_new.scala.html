@@ -1,0 +1,119 @@
+@(items:List[valueobjects.order_api.OrderList], 
+	isShow: Int, 
+	pageCount: Int, 
+	pageNum: Int, 
+	notEmpty: Boolean,
+	collectList:List[extensions.order.collect.ICollectProvider],
+	packMap: Map[Integer, List[dto.order.OrderPack]],
+	payments: Map[String, extensions.payment.IPaymentProvider],
+	idMap: Map[Integer, dto.order.OrderStatus],
+	orderType: String,
+	orderDetailMaps: Map[Integer, java.util.Collection[valueobjects.order_api.OrderItem]],
+	currencyIndex: Map[String, dto.Currency])
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+<div style="display: block;" class="xxkBOX boxRa block" id="search_orders_html">
+    <ul class="accOrdeTT">
+		<li class="details1">@Messages("orders.details")</li>
+		<li class="price2">@Messages("nprice")</li>
+		<li class="qty3">@Messages("nqty")</li>
+		<li class="status5">@Messages("tracking.info")</li>
+		<li class="options6">@Messages("options")</li>
+	</ul>
+	@items.asScala.map{i=>
+    <table class="orderTab orderTableNew" width="100%" border="1" cellpadding="0" cellspacing="0">
+    	<tbody><tr>
+    		<td colspan="2" class="orderTabTT orderNewTT">
+             <p>@Messages("order.no")<b class="blue">@i.getDropshippingId()</b></p>
+             <p>@Messages("order.date") @services.base.utils.DateFormatUtils.getDateTimeDDMMYYYY(i.getOrder().getDcreatedate())</p>
+             <p>@Messages("total") <b class="orange">@i.getSymbol() @services.base.utils.Utils.money(i.getGrandprice(),i.getCurrency.getCcode)</b></p> 
+         </td>
+    	</tr>
+    	<tr>
+    		<td>
+    		@i.getOrders().map{ ii=>
+    			<table class="orderTab" width="100%" border="1" cellpadding="0" cellspacing="0">
+          <tbody><tr>
+            <td colspan="4" class="orderTabTT">
+                <p>@Messages("order.no") <b class="blue">@ii.getCordernumber()</b></p>
+                <p>@Messages("order.date") @services.base.utils.DateFormatUtils.getDateTimeDDMMYYYY(ii.getDcreatedate())</p>
+                <p>@Messages("total") <b class="orange">@currencyIndex.get(ii.getCcurrency()).getCsymbol() @services.base.utils.Utils.money(ii.getFgrandtotal(),ii.getCcurrency())</b></p> 
+            </td>
+          </tr>
+          <tr>
+            <td class="orderInfTD">
+            	@if(orderDetailMaps.containsKey(ii.getIid())){
+            	@orderDetailMaps.get(ii.getIid()).map{ bi=>
+            	<input type="hidden" class="listingId" value="@bi.getClistingid()"/>
+            	<ul class="orderInfUl">
+                	<li class="orderImg">
+						<a href="@if(bi.getCurl()!=null){@controllers.product.routes.Product.view(bi.getCurl())}">
+					    	@img(bi.getCimageurl(), bi.getCtitle(), 120, 120, null, 'alt->bi.getCtitle())
+					    </a>
+					</li>
+                	<li class="orderInf">
+                    	<a class="blue" href="@if(bi.getCurl()!=null){@controllers.product.routes.Product.view(bi.getCurl())}">
+					    @bi.getCtitle()
+					    </a>
+                        <p class="marT"><span>@Messages("sku") @bi.getSku()</span>
+                        <span>
+				@if(null !=bi.getAttributeMap){
+            		@bi.getAttributeMap.map{ j=>
+            		    @if(null != j._1 && j._1.length>0){@j._1.substring(0,1).toUpperCase@j._1.substring(1)}
+            		    : @j._2 &nbsp;
+            		}
+            	}</span>
+							</p>
+                    </li>
+                	<li class="pro_price">
+                		<p class="newPrice">@i.getSymbol() <span>@Utils.money(bi.getTotalPrice(),ii.getCcurrency())</span></p>
+                    </li>
+                	<li class="pro_Nb">@bi.getIqty()</li>
+                    <div class="clear"></div>
+                </ul>
+                }
+                }
+            </td>
+            <td class="orderPro" valign="middle">
+		    	@packMap.get(ii.getIid).map{p=>
+		    		<a target="_blank" href="http://www.17track.net/en/result/post.shtml?nums=@p.getCtrackingnumber" class="orderMiddle">@Messages("untracked")<br>@p.getCtrackingnumber</a>
+		    	}
+            </td>
+            <td class="orderView">
+                <a class="blue" href="@controllers.order.member.routes.MemberOrder.orderDetail(ii.getCordernumber)">@Messages("view")</a>
+            </td>
+          </tr>
+        </tbody></table>
+        }
+    		</td>
+    		<td class="orderView">
+             @if(isShow == 2){
+				<a class="blue" href="javascript:;" value="@i.getOrder().getIid()" name="restore_order">@Messages("restore")</a>
+				<a class="blue" href="javascript:;" value="@i.getOrder().getIid()" name="delete_order">@Messages("delete")</a>
+	    	} else {
+				@if(idMap.get(i.getOrder().getIstatus()).getCname().equals(services.order.IOrderStatusService.PAYMENT_PENDING)){
+					<a href="/checkout/dropshipping/@i.getDropshippingId()/payment" class="orderCheckout"><em></em>@Messages("pay.now")</a>
+				}
+				@if(idMap.get(i.getOrder().getIstatus()).getCname().equals(services.order.IOrderStatusService.DISPATCHED)){
+					<a class="hsA" href="@controllers.order.member.routes.MemberOrder.completed(i.getOrder().getIid())">@Messages("completed")</a><br>
+				}
+				@if(i.getOrder().getCpaymentid()!=null && payments.get(i.getOrder().getCpaymentid())!=null){
+					<img src="@payments.get(i.getOrder().getCpaymentid()).iconUrl()" style="height:20px;width:70px;">
+				}
+				@if("dropshipping" != orderType){
+	    			<a href="javascript:;" class="rubbish" value="@i.getOrder().getIid()" name="remove_order"></a>
+	    		}
+	    		<p>@idMap.get(i.getOrder().getIstatus()).getCname()</p>
+	    	}
+         </td>
+    	</tr>
+    </tbody></table>
+    }
+    <div class="pagination-holder clearfix" >
+		<div id="light-pagination" class="pagination"></div>
+	</div>
+	
+	<input type="hidden" name="page_count_value" value="@pageCount">
+		<input type="hidden" name="page_number_value" value="@pageNum">
+</div>

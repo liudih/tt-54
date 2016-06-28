@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.order.DetailMapper">
+	<resultMap type="valueobjects.order_api.cart.CartItem" id="transformToCartItem">
+	    <result column="csku" property="sku" jdbcType="VARCHAR" />
+	    <result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+	    <result column="iqty" property="iqty" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<insert id="batchInsert" parameterType="List">
+		INSERT INTO t_order_detail (cid, csku, ctitle, iorderid, clistingid, iqty, fprice, ftotalprices, cparentid, foriginalprice, fweight) VALUES 
+		<foreach collection ="list" item ="item" index ="index" separator =",">
+			(#{item.cid}, #{item.csku}, #{item.ctitle}, #{item.iorderid}, #{item.clistingid}, #{item.iqty}, #{item.fprice}, #{item.ftotalprices}, #{item.cparentid}, #{item.foriginalprice}, #{item.fweight})
+		</foreach>
+	</insert>	
+	
+	<!-- lijun -->
+	<select id="selectCartItemsByOrderNum" parameterType="map" resultMap="transformToCartItem">
+		select a.csku,a.clistingid,a.iqty from t_order_detail a
+		inner join t_order b
+		on a.iorderid = b.iid and b.cordernumber=#{orderNum};
+	</select>
+</mapper>

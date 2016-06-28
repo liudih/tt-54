@@ -1,0 +1,39 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                           @controllers.Application.index()
+GET     /robots.txt                 @controllers.Application.robots()
+GET     /sitemap.xml                @controllers.Application.sitemap()
+-> /cart							cart.Routes
+-> /common							common.Routes
+-> /base							base.Routes
+-> /member							member.Routes
+GET /member                         @controllers.Application.member()
+GET /member/:suffix                 @controllers.Application.memberSuffix(suffix)
+-> /review							review.Routes
+-> /share							share.Routes
+-> /checkout						order.Routes
+#-> /advertising					advertising.Routes
+#-> /sysadmin						manager.Routes
+-> /interaction						interaction.Routes
+-> /livechat						livechat.Routes
+-> /payment							payment.Routes
+-> /loyalty							loyalty.Routes
+-> /help							help.Routes
+-> /tracking						tracking.Routes
+#-> /mobile/api					    mobile.Routes
+-> /wholesale					    wholesale.Routes
+
+# 3rd party integration modules
+-> /fb								facebook.Routes
+-> /paypal							paypal.Routes
+-> /google							google.Routes
+-> /twitter							twitter.Routes
+-> /messaging						messaging.Routes
+
+# must be at the end, because category path will catch all URL anyways
+-> /								product.Routes
+
+

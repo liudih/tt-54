@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.cart.CartItemHistoryMapper" >
+  <resultMap id="BaseResultMap" type="dto.cart.CartItemHistory" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="cuuid" property="cuuid" jdbcType="VARCHAR" />
+    <result column="cmemberemail" property="cmemberemail" jdbcType="VARCHAR" />
+    <result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+    <result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+    <result column="dadddate" property="dadddate" jdbcType="TIMESTAMP" />
+    <result column="dupdatedate" property="dupdatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, cuuid, cmemberemail, clistingid, ccreateuser, dcreatedate, dadddate, dupdatedate
+  </sql>
+  <insert id="insert" parameterType="dto.cart.CartItemHistory" >
+    insert into t_cart_item_history (cuuid, cmemberemail, 
+      clistingid, ccreateuser, dcreatedate, 
+      dadddate, dupdatedate)
+    values (#{cuuid,jdbcType=VARCHAR}, #{cmemberemail,jdbcType=VARCHAR}, 
+      #{clistingid,jdbcType=VARCHAR}, #{ccreateuser,jdbcType=VARCHAR}, #{dcreatedate,jdbcType=TIMESTAMP}, 
+      #{dadddate,jdbcType=TIMESTAMP}, #{dupdatedate,jdbcType=TIMESTAMP})
+  </insert>
+</mapper>

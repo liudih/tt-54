@@ -1,0 +1,126 @@
+@(advertising: dto.advertising.Advertising,
+adRelationList: List[dto.advertising.AdvertisingDistribution]
+)
+
+@languagelist = @{services.base.lang.LanguageService.getInstance().getAllSimpleLanguages()}
+@website = @{services.manager.CategoryManagerService.getInstance().getWebsiteChoose()}
+@advertisingType = @{services.advertising.AdvertisingService.getInstance().getAllAdvertisingTypes()}
+
+@if(advertising!=null){
+
+ 
+<fieldset>
+	<legend>广告关联关系</legend>
+	<input type="hidden" value="@advertising.getIid()" name="iadvertisingid" />
+	
+	<div class="control-group">
+							
+		<label class="control-label">广告类型<span class="required">*</span></label>
+	
+		<div class="controls">
+			@views.html.manager.advertising.advertising_type_choose("itype",advertisingType)
+		</div>
+	
+	</div>	
+	
+	<div class="control-group" id="advert_ilanguageid_relation" style="display: none;">
+	
+		<label class="control-label">语言</label>
+	
+		<div class="controls">
+			@views.html.manager.category.languageChoose("ilanguageid_relation",languagelist, 0)
+		</div>
+	
+	</div>	
+	
+	<div class="control-group">
+	
+		<label class="control-label">站点</label>
+	
+		<div class="controls">
+			@views.html.manager.category.websiteChoose("iwebsiteid",website, 0)
+		</div>
+	
+	</div>	
+
+	<div class="control-group">
+	
+		<label class="control-label">设备</label>
+		@services.manager.ChooseService.getInstance().device("cdevice", null, true)
+	
+	</div>	
+ 
+	<div class="control-group" id="advert_category_relation" name="advert_category_relation" style="display: none;">
+							
+		<label class="control-label">品类</label>
+	
+		<div class="controls">
+			@views.html.manager.advertising.category_type_choose()	
+		 
+		</div>
+	</div>
+ 
+ 
+	<div class="control-group" id="advert_cbusinessid_relation">
+						
+	<label class="control-label">产品KEY</label>
+
+	<div class="controls">
+	 
+	<input type="text" id="cbusinessid"  name="cbusinessid"  placeholder="填写 SKU" class="m-wrap medium span6">
+	</div>
+
+	</div>	
+ 
+
+	<div class="clearfix">
+
+		<div class="btn-group">
+
+			<button id="add_advertrelation_btn" class="add_advertrelation_btn" data-toggle="modal">
+
+			保存<i class="icon-plus"></i>
+
+			</button>
+
+		</div>
+
+	</div>
+
+<table class="table table-striped table-hover table-bordered" id="advertising_relation_table">
+
+		<thead>
+
+			<tr>
+				<th>广告ID</th>
+				<th>广告类型</th>
+				<th>站点ID</th>
+				<th>KEY</th>
+				<th>设备</th>
+			</tr>
+
+		</thead>
+
+		<tbody>
+         @adRelationList.map{u=>
+               <tr class="" id="@u.getIid()">
+				<td>@u.getIadvertisingid()</td>
+				<td>@u.getAdvertisingtypename()</td>
+				<td>@u.getWebsitename()</td>
+				<td>@u.getCbusinessid()</td>
+				<td>@u.getCdevice()</td>
+			 
+				<td><a class="deleteAdvertising" href="javascript:deleteAdvertising_relation(@u.getIid());" data-id="@u.getIid()"><i class="icon-trash"></i></a></td>
+			</tr>
+               }
+		</tbody>
+	</table>
+</fieldset>
+
+
+<div class="control-group">
+	 
+</div>
+
+
+}

@@ -1,0 +1,209 @@
+@(token: String,
+PayerID: String,
+orderNum : String,
+address : dto.member.MemberAddress,
+shipToCountry : String,
+shipToCountryCode : String,
+countrys : List[dto.Country],
+order : dto.order.Order,
+currency : dto.Currency,
+items : List[valueobjects.order_api.OrderItem] )
+
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+@import services.base.utils._
+@import views.html.product.img
+
+@views.html.base.sub_master("Shipping & Orderlist"){
+
+	@services.base.HtmlUtils.misc().addHeadCssOnce{
+		@controllers.base.routes.Assets.at("css/shippingAddress_page.css")
+	}
+
+<div class="container">
+	<div class="stepBox">
+		<ul class="lbBox stepWarp">
+			<li class="lineBlock active">
+				<span>1</span>
+				<p>shopping Cart</p>
+			</li>
+			<li class="lineBlock active">
+				<span>2</span>
+				<p>SHIPPING & PLACE ORDER</p>
+				<em> </em>
+			</li>
+			<li class="lineBlock">
+				<span>3</span>
+				<p>PAYMENT</p>
+				<em> </em>
+			</li>
+		</ul>
+	</div>
+	<div class="address_con_W">
+		<h5>Shipping Address</h5>
+		<ul class="lbBox marT" id="ship_address_ul">
+			<li class="lineBlock address_infCon">
+                <span id="shipToCountryCode" name="countryCode" style="display:none;">@shipToCountryCode</span>
+				<b class="address_name"> 
+					<span id="shipToFirstName" name="firstName">@address.getCfirstname</span>&nbsp;
+	                <span id="shipToLastName" name="lastName">@address.getClastname</span>
+	             </b>
+				<p class="address_txt">  
+					<span id="shipToStreet1" name="address1">@address.getCstreetaddress</span>
+				</p>
+				<p class="address_txt">
+	                <span id="shipToCity" name="city">@address.getCcity</span>
+	                <span id="shipToState" name="province">@address.getCprovince</span>
+	                <span id="shipToZipCode" name="zipCode">@address.getCpostalcode</span>  
+                 </p>
+                <p><span id="shipToCountry">@shipToCountry</span></p>
+				<p><span name="telephone" id="shipToTel">@address.getCtelephone</span></p>
+			</li>
+			<li class="lineBlock address_choose">
+				<a id="shipAddressEdit" class="address_PaypalIcon popBoxFilter" style="display: inline-block;"></a> <span ></span>
+				<div class="publicePop_Box popBoxNone" id="pop_address">
+					<div class="publicePop_con">
+						<div class="input_control span45 lineBlock">
+							<input class="txtInput addPop_input" type="text" name="firstName" placeholder="Enter your first name" maxlength="50" />
+	    					<i class="sClean"> </i>
+						</div>
+						<div class="input_control span45 lineBlock floatR">
+							<input class="txtInput addPop_input" type="text" name="lastName" placeholder="Enter your last name" maxlength="50" />
+	    					<i class="sClean"> </i>
+						</div>
+						<div class="input_control">
+							<input class="txtInput addPop_input" type="text" name="address1" placeholder="Street" maxlength="150" />
+	    					<i class="sClean"> </i>
+						</div>
+						<div class="countriesSelect input_control" id="country_select">
+						 <input id="search_country" class="txtInput placeholder_country placeholder_countryClick" type="text" name="countryCode" placeholder="Country" />
+	    						<i class="sClean"> </i>
+	                            <div class="select_country select_countryNone" id="country_label">
+	                                  <ul class="country_list">
+	                                   @countrys.map{c => 
+                                			<li cid="@c.getIid" code="@c.getCshortname">@c.getCname</li>
+                              		 	 }
+	                                  </ul>
+	                             </div>
+						</div>
+						<div class="input_control">
+							<input class="txtInput addPop_input" type="text" name="province" placeholder="State / Province / Region" maxlength="500" />
+	    					<i class="sClean"> </i>
+						</div>
+						<div class="span45 input_control lineBlock">
+							<input class="txtInput addPop_input" type="text" name="city" placeholder="City" maxlength="60" />
+						</div>
+						<div class="span45 input_control lineBlock floatR">
+							<input class="txtInput addPop_input" type="text" name="zipCode" placeholder="Zip / Postal Code" maxlength="60" />
+						</div>
+						<div class="input_control">
+							<input class="txtInput addPop_input" type="number"  name="telephone" placeholder="Phone Number" maxlength="30" />
+						</div>
+						<div class="filter_popBottom">
+							<a href="javascript:;" class="wihteInput lineBlock closePop" id="cancel_btn">Cancel</a>
+							<a href="javascript:;" class="orangeInput lineBlock" id="ok_btn">Save</a>
+						</div>
+					</div>
+					<div class="blackPop"> </div>
+				</div>
+			</li>
+		</ul>
+		<!-- <div id="shipMethod" class="newshopping_address orderD_con" >
+	
+		<hr class="grayHR">
+		</div> -->
+		<div id="shipping-method-div">
+			<div id="shipping-method">
+				<hr class="grayHR100">
+				<h5>Select Shipping Method:</h5>
+				<div id="shipmethodContent">
+				
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<h5 class="marT marL">Product List</h5>
+	@items.map{ i => 
+	<div class="shoppingCart_listBox">
+		<div class="shoppingCart_imgBox lineBlock">
+			<div class="discount_icon">14</div>
+			@img(i.getCimageurl(), i.getCtitle(), 120, 120, null)
+		</div>
+		<div class="shoppingAdd_TxtBox lineBlock">
+			<h5>@i.getCtitle()</h5>
+			<div class="product_price lineBlock">@currency.getCsymbol @Utils.money(i.getUnitPrice)</div>
+			<ul class="product_attribute">
+				<li class="lineBlock">SKU:@i.getSku()</li>
+				<li class="lineBlock">
+				@if(null !=i.getAttributeMap){
+					@i.getAttributeMap.map{ j=> 
+						 @if(null != j._1 && j._1.length>0){@j._1.substring(0,1).toUpperCase@j._1.substring(1)}
+						: @j._2 &nbsp; } 
+				}
+				</li>
+			</ul>
+			<p class="qtyAddres">QTY:<span>@i.getIqty</span></p>
+		</div>
+	</div>
+	}
+	<div class="conW98">
+		<table class="cart_orderPriceTable marT" width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td>Order subtotal:</td>
+				<td><span id="subtotal">@currency.getCsymbol &nbsp; <span id="cart_subtotal">@Utils.money(order.getFordersubtotal,currency.getCcode)</span></span></td>
+			</tr>
+			<tr>
+				<td>Coupon(Discount):</td>
+				<td>@currency.getCsymbol <span id="discount_coupon">@Utils.money(order.getFextra,currency.getCcode)</span></td>
+			</tr>
+			<tr>
+				<td>Shipping Cost:</td>
+				<td>@currency.getCsymbol &nbsp;<span id="shipCost">@Utils.money(0.00,currency.getCcode)</span></td>
+			</tr>
+			<tr>
+				<td class="GrandTotal">Grand Total:</td>
+				<td class="GrandTotalNumber">
+					@currency.getCsymbol &nbsp;
+					<span id="grandTotal" total="@Utils.money(order.getFgrandtotal,currency.getCcode)">@Utils.money(order.getFgrandtotal,currency.getCcode)</span>
+				</td>
+			</tr>
+		</table>
+		<div class="leaveMessage_Box">
+			<div class="slideToggle_click checkbox_div"><span class="checkbox1"> </span> Leave a Message</div>
+			<div class="leaveMessage_input slideToggle_box">
+			     <textarea class="textareaBox" id="msg" maxlength="500"></textarea>
+			     <p>*Write anything you like to require more on your placed order, such as the shipping and other order related requirements.</p>
+			</div>
+		</div>
+		<div id="proPayBut" class="productButtonBottom" style="display: block;">
+			<a class="orangeInput width100 marT" href="javascript:void(0);" onclick="vaildSubmit();">Place Your Order</a>
+		</div>
+	</div>
+<input type="hidden" id="theCsymbol" value="@currency.getCsymbol()" />
+<input type="hidden" id="cart_currency" value="@currency.getCcode()" />
+
+<form id="confirmOrderForm" action="/paypal/ec-confirm" method="post" style="display:none;">
+<input name="token" type="hidden" value="@token"/>
+<input name="PayerID" type="hidden" value="@PayerID"/>
+<input id="orderNum" name="orderNum" type="hidden" value="@orderNum"/>
+<input name="firstName" type="hidden" value=""/>
+<input name="lastName" type="hidden" value="" />
+<input name="countryCode" type="hidden" value="1"/>
+<input name="address1" type="hidden" value="" />
+<input name="city" type="hidden" value="" />
+<input name="province" type="hidden" value="" />
+<input name="zipCode" type="hidden" value="" />
+<input name="telephone" type="hidden" value="" />
+<input name="shippingMethodIdValue" type="hidden"/>
+<textarea name="leaveMessage" id="leaveMessage" ></textarea>
+<input type="hidden" name="country" value="@shipToCountry" />
+<input type="hidden" name="countrysn" id="theCountryCode" value="@shipToCountryCode" />
+
+<input type="hidden" name="shipMethodCode" id="shipMethodCode" />
+<input type="hidden" name="shipMethodId" id="shipMethodId" />
+</form>
+</div>
+
+<script type="text/javascript" src="/cart/assets/js/order_confirm.js" ></script>
+}

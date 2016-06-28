@@ -1,0 +1,893 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd"
+	objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+	<changeSet author="reason" id="t_shipping_method-create">
+		<createTable tableName="t_shipping_method" remarks="物流方式主表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cname" type="varchar(50)" remarks="物流方式名称" />
+			<column name="cimageurl" type="varchar(200)" remarks="图标路径" />
+			<column name="istorageid" type="INTEGER" remarks="仓库id" />
+			<column name="ctitle" type="VARCHAR(500)" remarks="标题" />
+			<column name="ccontent" type="VARCHAR(5000)" remarks="内容" />
+			<column name="benabled" type="BOOL" remarks="是否启用" />
+			<column name="imaxweight" type="INTEGER" remarks="单个包裹支持最大重量" />
+			<column name="bexistfree" type="BOOL" remarks="是否存在免费" />
+			<column name="ffreebeginprice" type="FLOAT" remarks="从何价格开始免费" />
+			<column name="ffreeendprice" type="FLOAT" remarks="从何价格结束免费" />
+			<column name="cfreecontent" type="VARCHAR(5000)" remarks="免费时显示内容" />
+			<column name="ccountrys" type="VARCHAR(3000)" remarks="国家(可为复数,逗号隔开)" />
+			<column name="crule" type="VARCHAR(60000)" remarks="公式" />
+			<column name="csuperrule" type="VARCHAR(500)" remarks="全局公式" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_order-create">
+		<createTable tableName="t_order" remarks="订单表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cemail" type="VARCHAR(300)" remarks="邮箱 " />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点id" />
+			<column name="ccountrysn" type="VARCHAR(30)" remarks="国家简写" />
+			<column name="ccountry" type="VARCHAR(100)" remarks="国家" />
+			<column name="cstreetaddress" type="VARCHAR(180)" remarks="街道地址" />
+			<column name="ccity" type="VARCHAR(80)" remarks="城市" />
+			<column name="cprovince" type="VARCHAR(100)" remarks="洲(省)" />
+			<column name="cpostalcode" type="VARCHAR(80)" remarks="邮政编码" />
+			<column name="ctelephone" type="VARCHAR(40)" remarks="联系电话" />
+			<column name="cfirstname" type="VARCHAR(40)" remarks="收件人First Name" />
+			<column name="cmiddlename" type="VARCHAR(40)" remarks="收件人Middle Name" />
+			<column name="clastname" type="VARCHAR(40)" remarks="收件人Last Name" />
+			<column name="istorageid" type="INTEGER" remarks="发货仓库 (结算物流)" />
+			<column name="ishippingmethodid" type="INTEGER" remarks="发货方式 (结算物流)" />
+			<column name="fshippingprice" type="FLOAT" remarks="物流费用" />
+			<column name="fordersubtotal" type="FLOAT" remarks="基本费用" />
+			<column name="fextra" type="FLOAT" remarks="额外支付费用" />
+			<column name="fgrandtotal" type="FLOAT" remarks="结算费用" />
+			<column name="ccartid" type="VARCHAR(80)" remarks="购物车编号" />
+			<column name="istatus" type="INTEGER" defaultValue="1"
+				remarks="订单状态" />
+			<column name="cpaymentid" type="VARCHAR(80)" remarks="付款方式" />
+			<column name="ccurrency" type="VARCHAR(30)" remarks="结算货币" />
+			<column name="corigin" type="VARCHAR(30)" remarks="来源标识" />
+			<column name="cmemberemail" type="VARCHAR(100)" remarks="会员Email" />
+			<column name="cip" type="VARCHAR(30)" remarks="下单人ip" />
+			<column name="cmessage" type="VARCHAR(1500)" remarks="用户留言" />
+			<column name="ctransactionid" type="varchar(80)" remarks="交易号" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="下单时间" />
+			<column name="dpaymentdate" type="DATETIME" remarks="付款时间" />
+			<column name="ishow" type="INTEGER" defaultValue="1"
+				remarks="可见性:1.可见(默认),2.回收站可见,3.不可见" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="ljh" id="t_oredr_bill_detail-create">
+		<createTable tableName="t_order_bill_detail" remarks="订单账单明细">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iorderid" type="INTEGER" remarks="订单ID" />
+			<column name="ctype" type="VARCHAR(30)" remarks="明细类型" />
+			<column name="iqty" type="INTEGER" remarks="数量" />
+			<column name="cmsg" type="VARCHAR(150)" remarks="信息" />
+			<column name="foriginalprice" type="DOUBLE" remarks="原价" />
+			<column name="fpresentprice" type="DOUBLE" remarks="现价" />
+			<column name="ftotalprice" type="DOUBLE" remarks="总价（现价*数量）" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_oredr_pack-create">
+		<createTable tableName="t_order_pack" remarks="订单包裹明细">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iorderid" type="INTEGER" remarks="订单ID" />
+			<column name="csku" type="VARCHAR(30)" remarks="SKU" />
+			<column name="iqty" type="INTEGER" remarks="数量" />
+			<column name="cshippingtype" type="VARCHAR(300)" remarks="物流方式" />
+			<column name="fshippingprice" type="FLOAT" remarks="物流费用" />
+			<column name="ctrackingnumber" type="VARCHAR(80)" remarks="跟踪号" />
+			<column name="dshippingprice" type="DATETIME" defaultValue="now()"
+				remarks="发货时间" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_order_status-create">
+		<createTable tableName="t_order_status" remarks="订单状态表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cname" type="VARCHAR(30)" remarks="状态名称" />
+			<column name="cremark" type="VARCHAR(300)" remarks="备注" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_order_detail-create">
+		<createTable tableName="t_order_detail" remarks="订单明细表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iorderid" type="INTEGER" remarks="订单号 " />
+			<column name="ctitle" type="VARCHAR(240)" remarks="标题" />
+			<column name="csku" type="VARCHAR(30)" remarks="SKU" />
+			<column name="clistingid" type="VARCHAR(40)" remarks="Listingid" />
+			<column name="iqty" type="INTEGER" remarks="数量" />
+			<column name="fprice" type="FLOAT" remarks="单价" />
+			<column name="ftotalprices" type="FLOAT" remarks="总价" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="fweight" type="FLOAT" remarks="单个sku的重量" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_order_alter_history-create">
+		<createTable tableName="t_order_alter_history" remarks="订单修改历史表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="corderid" type="VARCHAR(100)" remarks="订单号 " />
+			<column name="coldvalue" type="VARCHAR(2000)" remarks="修改前值" />
+			<column name="cnewvalue" type="VARCHAR(2000)" remarks="修改后值" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="ljh" id="t_payment_account-create">
+		<createTable tableName="t_payment_account" remarks="付款账号表">
+			<column name="cpaymentid" type="VARCHAR(30)" remarks="支付方式" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点号 " />
+			<column name="fbeginprice" type="FLOAT" remarks="开始价格" />
+			<column name="fendprice" type="FLOAT" remarks="结束价格" />
+			<column name="cbusiness" type="VARCHAR(500)" remarks="账号信息" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="ljh" id="t_order_status_history-create">
+		<createTable tableName="t_order_status_history" remarks="订单状态记录">
+			<column name="iorderid" type="INTEGER" remarks="订单ID" />
+			<column name="istatus" type="INTEGER" remarks="订单状态" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_method-data-for-test-20140110"
+		context="test">
+		<loadData tableName="t_shipping_method" file="samples/t_shipping_method.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_payment_account-data"
+		context="test">
+		<loadData tableName="t_payment_account" file="samples/t_payment_account.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_order_status-data" context="test">
+		<loadData tableName="t_order_status" file="samples/t_order_status.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="lij" id="renameColumn-20150319">
+		<renameColumn columnDataType="DATETIME" newColumnName="dshippingdate"
+			oldColumnName="dshippingprice" remarks="发货时间" schemaName="public"
+			tableName="t_order_pack" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_method-drop_table-20150323">
+		<dropTable tableName="t_shipping_method" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_method-recreate-20150323">
+		<createTable tableName="t_shipping_method" remarks="物流方式主表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cimageurl" type="varchar(200)" remarks="图标路径" />
+			<column name="istorageid" type="INTEGER" remarks="仓库id" />
+			<column name="benabled" type="BOOL" remarks="是否启用" />
+			<column name="imaxweight" type="INTEGER" remarks="单个包裹支持最大重量" />
+			<column name="bexistfree" type="BOOL" remarks="是否存在免费" />
+			<column name="ffreebeginprice" type="FLOAT" remarks="从何价格开始免费" />
+			<column name="ffreeendprice" type="FLOAT" remarks="从何价格结束免费" />
+			<column name="ccountrys" type="VARCHAR(3000)" remarks="国家(可为复数,逗号隔开)" />
+			<column name="crule" type="VARCHAR(60000)" remarks="公式" />
+			<column name="csuperrule" type="VARCHAR(500)" remarks="全局公式" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_method_detail-create-20150323">
+		<createTable tableName="t_shipping_method_detail" remarks="物流方式明细表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ilanguageid" type="INTEGER" remarks="语言ID" />
+			<column name="ishippingid" type="INTEGER" remarks="物流方式ID" />
+			<column name="cname" type="varchar(50)" remarks="物流方式名称" />
+			<column name="ctitle" type="VARCHAR(500)" remarks="标题" />
+			<column name="ccontent" type="VARCHAR(5000)" remarks="内容" />
+			<column name="cfreecontent" type="VARCHAR(5000)" remarks="免费时显示内容" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_method_data-20150325">
+		<loadData tableName="t_shipping_method" file="init/t_shipping_method-20150323.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_method_detail_data-20150325">
+		<loadData tableName="t_shipping_method_detail" file="init/t_shipping_method_detail.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_payment_account-data-20150325"
+		context="test">
+		<loadData tableName="t_payment_account" file="samples/t_payment_account-20150325.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_order_detail-alter_column-20150326">
+		<dropDefaultValue columnName="iid" tableName="t_order_detail" />
+		<modifyDataType columnName="iid" newDataType="VARCHAR(64)"
+			tableName="t_order_detail" />
+		<renameColumn newColumnName="cid" oldColumnName="iid"
+			remarks="主键" tableName="t_order_detail" />
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_order_detail-drop_sequence-20150328">
+		<preConditions onFail="CONTINUE">
+			<sequenceExists sequenceName="t_order_detail_iid_seq" />
+		</preConditions>
+		<dropSequence sequenceName="t_order_detail_iid_seq" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_order_detail-addColumn-20150325">
+		<addColumn tableName="t_order_detail">
+			<column name="cparentid" type="VARCHAR(64)" remarks="父条目id" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="fcl" id="t_order-addColumn-20150429">
+		<addColumn tableName="t_order">
+			<column name="cordernumber" type="VARCHAR(50)" remarks="订单编号" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_order_payment-create-20150327">
+		<createTable tableName="t_order_payment" remarks="订单支付信息">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="corderid" type="VARCHAR(64)" remarks="订单ID" />
+			<column name="cpaymentid" type="VARCHAR(80)" remarks="付款方式" />
+			<column name="cjson" type="VARCHAR(6000)" remarks="付款信息（JOSN）" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_payment_account-init_data-20150402">
+		<loadData tableName="t_payment_account" file="init/t_payment_account-20150402.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_payment_account-init_data-20150403">
+		<loadData tableName="t_payment_account" file="init/t_payment_account-20150403.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_order_status-init_data-20150404">
+		<loadData tableName="t_order_status" file="init/t_order_status-20150404.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_order_status-delete_data-20150404-17">
+		<delete tableName="t_order_status" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_order_status-init_data-20150404-17">
+		<loadData tableName="t_order_status" file="init/t_order_status-20150404-17.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="liudi" id="t_order_detail-addColumn-2015040418">
+		<addColumn tableName="t_order_detail">
+			<column name="commentid" type="INTEGER" remarks="评论id" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_order_status-init_data-20150407">
+		<loadData tableName="t_order_status" file="init/t_order_status-20150407.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh"
+		id="t_order_status-addUniqueConstraint-20150407">
+		<addUniqueConstraint columnNames="cname"
+			tableName="t_order_status" />
+	</changeSet>
+
+	<changeSet id="t_order_pack-add-column-20150402" author="chris">
+		<addColumn tableName="t_order_pack">
+			<column name="iisregister" type="Integer" remarks="是否挂号" />
+			<column name="clocaltracknumber" type="varchar(50)" remarks="平邮号" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="chris" id="t_order_pack-test_data-20150402"
+		context="test">
+		<loadData tableName="t_order_pack" file="samples/t_order_pack.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_method-update_data-20150408">
+		<update tableName="t_shipping_method">
+			<column name="benabled" type="BOOL" value="false" />
+			<where>iid in (1, 2, 3, 4)</where>
+		</update>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_method-addColumn-20150408">
+		<addColumn tableName="t_shipping_method">
+			<column name="fbeginprice" type="FLOAT" />
+			<column name="fendprice" type="FLOAT" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_method-init_data-20150408">
+		<loadData tableName="t_shipping_method" file="init/t_shipping_method-20150407.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh"
+		id="t_shipping_method_detail-init_data-20150408">
+		<loadData tableName="t_shipping_method_detail"
+			file="init/t_shipping_method_detail-20150407.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_method-update_data-20150409">
+		<update tableName="t_shipping_method_detail">
+			<column name="cname" type="varchar(50)" value="Arimail--with tracking number" />
+			<where>ishippingid = 5 and ilanguageid = 1</where>
+		</update>
+		<update tableName="t_shipping_method_detail">
+			<column name="cname" type="varchar(50)" value="Airmail--without tracking number" />
+			<where>ishippingid = 12 and ilanguageid = 1</where>
+		</update>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_method-init_data-20150409">
+		<loadData tableName="t_shipping_method" file="init/t_shipping_method-20150409.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh"
+		id="t_shipping_method_detail-init_data-20150409">
+		<loadData tableName="t_shipping_method_detail"
+			file="init/t_shipping_method_detail-20150409.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_method-init_data-20150410">
+		<delete tableName="t_shipping_method">
+			<where>iid in (5,6,7,8,9,10,11,12,13)</where>
+		</delete>
+		<loadData tableName="t_shipping_method" file="init/t_shipping_method-20150410.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_order_tag-create-20150410">
+		<createTable tableName="t_order_tag" remarks="订单标签">
+			<column name="iorderid" type="INTEGER" remarks="主键">
+				<constraints nullable="false" />
+			</column>
+			<column name="ctag" type="VARCHAR(200)" remarks="订单标签">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addUniqueConstraint columnNames="iorderid, ctag"
+			tableName="t_order_tag" />
+		<createIndex tableName="t_order_tag" indexName="idx_order_tag_iorderid">
+			<column name="iorderid" />
+		</createIndex>
+		<createIndex tableName="t_order_tag" indexName="idx_order_tag_ctag">
+			<column name="ctag" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="Reason" id="t_order_label-create">
+		<createTable tableName="t_order_label_type" remarks="订单标签类型">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ctype" type="varchar(100)" remarks="订单标签名称" />
+		</createTable>
+
+		<createTable tableName="t_order_label" remarks="订单标签">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iorderid" type="INTEGER" remarks="订单编号" />
+			<column name="ctype" type="varchar(100)" remarks="订单标签名称" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_order-add-column-20150411" author="lij">
+		<addColumn tableName="t_order">
+			<column name="cremark" type="VARCHAR(500)" remarks="订单备注" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_order_detail-addColumn-20150415">
+		<addColumn tableName="t_order_detail">
+			<column name="foriginalprice" type="FLOAT" remarks="原价" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="Reason" id="t_order-addColumn-20150415">
+		<addColumn tableName="t_order">
+			<column name="creceiveraccount" type="VARCHAR(80)" remarks="收款账号" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_post_email_order-create-20160416">
+		<createTable tableName="t_post_email_order" remarks="发送未付款邮件">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iorderid" type="INTEGER" remarks="订单ID" />
+			<column name="istatus" type="INTEGER" remarks="站点ID" />
+			<column name="cemail" type="VARCHAR(150)" remarks="邮箱地址" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点ID" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="Reason"
+		id="modifyDataType-orderbilldetailctypeid-20150416">
+		<modifyDataType columnName="cmsg" newDataType="VARCHAR(1200)"
+			schemaName="public" tableName="t_order_bill_detail" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_method-addColumn-20150420">
+		<addColumn tableName="t_shipping_method">
+			<column name="bistracking" type="BOOL" remarks="有无追踪号" />
+			<column name="bisspecial" type="BOOL" defaultValue="false"
+				remarks="是否容许运送特殊商品" />
+			<column name="ccode" type="VARCHAR(25)" remarks="发货代码" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="luojh"
+		id="t_shipping_method-addUniqueConstraint-20150420">
+		<addUniqueConstraint constraintName="t_shipping_method_ccode_key"
+			columnNames="ccode" tableName="t_shipping_method" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_method-alter-Column-20150422">
+		<addColumn tableName="t_shipping_method">
+			<column name="istartweight" type="INTEGER" remarks="开始重量段" />
+			<column name="iendweight" type="INTEGER" remarks="结束重量段" />
+		</addColumn>
+		<dropColumn columnName="imaxweight" tableName="t_shipping_method" />
+		<dropColumn columnName="cimageurl" tableName="t_shipping_method" />
+	</changeSet>
+
+	<changeSet author="luojh"
+		id="t_shipping_method_detail-alter-Column-20150422">
+		<addColumn tableName="t_shipping_method_detail">
+			<column name="ccode" type="VARCHAR(25)" remarks="物流代码" />
+			<column name="cimageurl" type="VARCHAR(150)" remarks="图片路径" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="luojh"
+		id="t_shipping_method-dropUniqueConstraint-20150422">
+		<dropUniqueConstraint tableName="t_shipping_method"
+			uniqueColumns="ccode" constraintName="t_shipping_method_ccode_key" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_method-data-20150422">
+		<loadData tableName="t_shipping_method" file="init/t_shipping_method-20150422.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_method-update_data-20150422">
+		<update tableName="t_shipping_method">
+			<column name="benabled" type="BOOL" value="false" />
+			<where>iid in (5, 6, 7, 8, 9, 10, 11, 12, 13)</where>
+		</update>
+	</changeSet>
+
+	<changeSet author="luojh"
+		id="t_shipping_method_detail-test_data-20150422">
+		<delete tableName="t_shipping_method_detail">
+			<where>ishippingid in (5,6,7,8,9,10,11,12,13)</where>
+		</delete>
+		<loadData tableName="t_shipping_method_detail"
+			file="init/t_shipping_method_detail-20150422.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh"
+		id="t_shipping_method_detail-delete-Column-20150422">
+		<dropColumn columnName="ishippingid" tableName="t_shipping_method_detail" />
+	</changeSet>
+
+	<changeSet author="luojh"
+		id="t_shipping_method_detail-test_data-20150423">
+		<delete tableName="t_shipping_method_detail">
+		</delete>
+		<loadData tableName="t_shipping_method_detail"
+			file="init/t_shipping_method_detail-20150423.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_order-alter-Column-20150423">
+		<addColumn tableName="t_order">
+			<column name="cshippingcode" type="VARCHAR(25)" remarks="物流代码" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="luojh"
+		id="t_shipping_method_detail-alter-Column-20150424">
+		<addColumn tableName="t_shipping_method_detail">
+			<column name="igroupid" type="INTEGER" remarks="分组编号" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="luojh"
+		id="t_shipping_method_detail-test_data-20150424">
+		<delete tableName="t_shipping_method_detail">
+		</delete>
+		<loadData tableName="t_shipping_method_detail"
+			file="init/t_shipping_method_detail-20150424.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh"
+		id="t_shipping_method_detail-test_data-2015042416">
+		<delete tableName="t_shipping_method_detail">
+		</delete>
+		<loadData tableName="t_shipping_method_detail"
+			file="init/t_shipping_method_detail-2015042416.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet id="t_order-addcolumn-20150501" author="Reason">
+		<addColumn tableName="t_order">
+			<column name="cvhost" type="VARCHAR(80)" remarks="vhost" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_order_status-init_data-20150502" author="luojh">
+		<addColumn tableName="t_order_status">
+			<column name="iorder" type="INTEGER" remarks="订单状态排序" />
+		</addColumn>
+		<delete tableName="t_order_status">
+		</delete>
+		<loadData tableName="t_order_status" file="init/t_order_status-20150502.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet id="t_order_status-init_data-2015050212" author="luojh">
+		<delete tableName="t_order_status">
+		</delete>
+		<loadData tableName="t_order_status" file="init/t_order_status-2015050212.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_order_currency_rate-create-20150512">
+		<createTable tableName="t_order_currency_rate" remarks="订单货币汇率">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cordernumber" type="VARCHAR(30)" remarks="订单ID" />
+			<column name="ccurrency" type="VARCHAR(12)" remarks="货币类型" />
+			<column name="frate" type="DOUBLE" remarks="美元兑货币的汇率" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_order-createIndex_cordernumber-20150521">
+		<createIndex indexName="idx_order_cordernumber" tableName="t_order"
+			unique="true">
+			<column name="cordernumber" type="VARCHAR(50)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_dropshipping-create-20150525">
+		<createTable tableName="t_dropshipping" remarks="DropShipping">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cdropshippingid" type="VARCHAR(50)" remarks="DropShipping ID" />
+			<column name="iorderid" type="INTEGER" remarks="DropShipping Order订单ID" />
+			<column name="cordernumber" type="VARCHAR(30)" remarks="订单ID" />
+			<column name="cuseremail" type="VARCHAR(80)" remarks="用户邮箱" />
+			<column name="cdescription" type="VARCHAR(1500)" remarks="描述" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_dropshipping_order-create-20150525">
+		<createTable tableName="t_dropshipping_order" remarks="DropShipping订单">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cdropshippingid" type="VARCHAR(50)" remarks="DropShipping ID" />
+			<column name="cuseremail" type="VARCHAR(80)" remarks="用户邮箱" />
+			<column name="cuserorderid" type="VARCHAR(30)" remarks="用户订单ID" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点id" />
+			<column name="ccountrysn" type="VARCHAR(30)" remarks="国家简写" />
+			<column name="ccountry" type="VARCHAR(100)" remarks="国家" />
+			<column name="cstreetaddress" type="VARCHAR(180)" remarks="街道地址" />
+			<column name="ccity" type="VARCHAR(80)" remarks="城市" />
+			<column name="cprovince" type="VARCHAR(100)" remarks="洲(省)" />
+			<column name="cpostalcode" type="VARCHAR(80)" remarks="邮政编码" />
+			<column name="ctelephone" type="VARCHAR(40)" remarks="联系电话" />
+			<column name="cfirstname" type="VARCHAR(40)" remarks="收件人First Name" />
+			<column name="ccnote" type="VARCHAR(1000)" remarks="备注" />
+			<column name="cerrorlog" type="VARCHAR(1000)" remarks="错误信息" />
+			<column name="ftotal" type="FLOAT" remarks="基本费用" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="duserdate" type="DATETIME" remarks="用户创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh"
+		id="t_dropshipping_order_detail-create-20150525">
+		<createTable tableName="t_dropshipping_order_detail"
+			remarks="DropShipping订单明细表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iorderid" type="INTEGER" remarks="DropShipping订单号 " />
+			<column name="csku" type="VARCHAR(30)" remarks="SKU" />
+			<column name="clistingid" type="VARCHAR(40)" remarks="Listingid" />
+			<column name="ctitle" type="VARCHAR(200)" remarks="商品标题" />
+			<column name="iqty" type="INTEGER" remarks="数量" />
+			<column name="fprice" type="FLOAT" remarks="单价" />
+			<column name="ftotalprice" type="FLOAT" remarks="总价" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_dropshipping_order_detail-addcolumn-20150529"
+		author="luojh">
+		<addColumn tableName="t_dropshipping_order_detail">
+			<column name="foriginalprice" type="FLOAT" remarks="原价" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_dropshipping_order-addcolumn-20150530"
+		author="luojh">
+		<addColumn tableName="t_dropshipping_order">
+			<column name="ccurrency" type="VARCHAR(30)" remarks="结算货币" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_dropshipping_map-create-20150525">
+		<dropTable tableName="t_dropshipping" />
+		<createTable tableName="t_dropshipping_map" remarks="DropShipping">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cdropshippingid" type="VARCHAR(50)" remarks="DropShipping ID" />
+			<column name="iorderid" type="INTEGER" remarks="DropShipping Order订单ID" />
+			<column name="cordernumber" type="VARCHAR(30)" remarks="订单ID" />
+			<column name="cuseremail" type="VARCHAR(80)" remarks="用户邮箱" />
+			<column name="cdescription" type="VARCHAR(1500)" remarks="描述" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_dropshipping-create-20150603">
+		<createTable tableName="t_dropshipping" remarks="DropShipping主表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cdropshippingid" type="VARCHAR(50)" remarks="DropShipping ID" />
+			<column name="cuseremail" type="VARCHAR(80)" remarks="用户邮箱" />
+			<column name="ftotalprice" type="FLOAT" remarks="总价" />
+			<column name="bpaid" type="BOOL" defaultValue="false" remarks="是否付款 " />
+			<column name="ccurrency " type="VARCHAR(12)" remarks="货币类型" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点ID" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_dropshipping-addcolumn-20150605" author="luojh">
+		<addColumn tableName="t_dropshipping">
+			<column name="bused" type="BOOL" defaultValue="false" remarks="是否已使用" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_payment_callback-create-20150611">
+		<createTable tableName="t_payment_callback" remarks="DropShipping主表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cordernumber" type="VARCHAR(40)" remarks="订单编号" />
+			<column name="ccontent" type="VARCHAR(5000)" remarks="回调的内容" />
+			<column name="cpaymentid" type="VARCHAR(30)" remarks="支付方式" />
+			<column name="cresponse" type="VARCHAR(1500)" remarks="返回内容" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点ID" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_payment_account-test_data-20150611"
+		context="test">
+		<loadData tableName="t_payment_account" file="samples/t_payment_account-20150611.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_payment_account-init_data-20150611">
+		<loadData tableName="t_payment_account" file="init/t_payment_account-20150611.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh"
+		id="t_order_detail-createIndex_iorderid_clistingid_commentid-20150521">
+		<createIndex indexName="idx_order_detail_iorderid_clistingid_commentid"
+			tableName="t_order_detail" unique="false">
+			<column name="iorderid" type="INTEFER" />
+			<column name="clistingid" type="VARCHAR(40)" />
+			<column name="commentid" type="INTEFER" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_parameter-create-20150629">
+		<createTable tableName="t_shipping_parameter" remarks="物流方式参数表">
+			<column name="ckey" type="VARCHAR(40)" remarks="唯一键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cjsonvalue" type="VARCHAR(5000)" remarks="JSON格式的值" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_parameter-init_data-20150629">
+		<loadData tableName="t_shipping_parameter" file="init/t_shipping_parameter-20150629.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_preparatory_order-create">
+		<createTable tableName="t_preparatory_order" remarks="预备订单表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ino" type="INTEGER" remarks="排序号" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点id" />
+			<column name="istorageid" type="INTEGER" remarks="发货仓库 (结算物流)" />
+			<column name="ccartid" type="VARCHAR(80)" remarks="购物车编号" />
+			<column name="cmemberemail" type="VARCHAR(100)" remarks="会员Email" />
+			<column name="ccurrency" type="VARCHAR(15)" remarks="货币" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+		<createIndex indexName="idx_preparatory_order_ccartid"
+			tableName="t_preparatory_order" unique="false">
+			<column name="ccartid" type="VARCHAR(80)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_preparatory_detail-create">
+		<createTable tableName="t_preparatory_detail" remarks="预备订单明细表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cid" type="VARCHAR(80)" remarks="CartItemID" />
+			<column name="cparentid" type="VARCHAR(80)" remarks="Parent CartItemID" />
+			<column name="iorderid" type="INTEGER" remarks="订单号 " />
+			<column name="ctitle" type="VARCHAR(240)" remarks="标题" />
+			<column name="csku" type="VARCHAR(30)" remarks="SKU" />
+			<column name="clistingid" type="VARCHAR(40)" remarks="Listingid" />
+			<column name="iqty" type="INTEGER" remarks="数量" />
+			<column name="fprice" type="FLOAT" remarks="单价" />
+			<column name="ftotalprices" type="FLOAT" remarks="总价" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="fweight" type="FLOAT" remarks="单个sku的重量" />
+			<column name="foriginalprice" type="FLOAT" remarks="原价" />
+			<column name="bismain" type="BOOL" remarks="是否主产品" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_total_order-create">
+		<createTable tableName="t_total_order" remarks="总订单表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cid" type="VARCHAR(80)" remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_total_order_map-create">
+		<createTable tableName="t_total_order_map" remarks="总订单关联表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iorderid" type="INTEGER" remarks="Order ID" />
+			<column name="itotalid" type="INTEGER" remarks="Total Order ID" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_shipping_parameter-init_data-20150728">
+		<delete tableName="t_shipping_parameter" />
+		<loadData tableName="t_shipping_parameter" file="init/t_shipping_parameter-20150728.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	
+	<changeSet id="t_order_add_column_ipaymentstatus" author="lijun">
+		<addColumn tableName="t_order">
+			<column name="ipaymentstatus" type="INTEGER" remarks="0:未支付  1:已经支付  2:pending"></column>
+		</addColumn>
+	</changeSet>
+	
+	<changeSet author="liudi" id="t_payment_account-2015112416" context="test">
+		<loadData tableName="t_payment_account" file="samples/t_payment_account-2015112416.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="liudi" id="t_payment_account-2015121210" context="test">
+		<loadData tableName="t_payment_account" file="samples/t_payment_account-2015121210.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	
+	
+	
+</databaseChangeLog>

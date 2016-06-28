@@ -1,0 +1,47 @@
+@(product: valueobjects.product.ProductBadge)
+
+@import services.base._
+@import services.base.utils._
+@import views.html.home.img
+
+@if(product!=null){
+
+<div class="wishListEditorBox">
+
+	<label class="input_control"> 
+	<input type="checkbox" value="@product.getListingId()" />
+
+		<div class="checkbox chooseClick lineBlock">
+			<span></span>
+		</div>
+	</label>
+
+	<div class="shoppingCart_imgBox lineBlock">
+		@product.getPrice().getDiscountOption().asScala.map{ d =>
+		@if(product.getPrice().isDiscounted()){
+		<div class="discount_icon">
+			<span class="discountBIG">@Utils.percent(d)</span>
+		</div>
+		
+		 } 
+		} 
+		<a href="@controllers.product.routes.Product.view(product.getUrl)">
+			@img(product.getImageUrl(), product.getTitle(), 168, 168, null) </a>
+	</div>
+	<div class="shoppingCart_TxtBox lineBlock">
+		<a href="@controllers.product.routes.Product.view(product.getUrl)">
+		<h5>
+			@if(product.getTitle()!=null && product.getTitle().length>70){
+				@product.getTitle.substring(0,70)...
+			}else{
+				@product.getTitle 
+			}
+		</h5></a>
+		<div class="product_price lineBlock">
+		@product.getPrice.getSymbol@Utils.money(product.getPrice.getUnitPrice)</div>
+		<div class="product_priceGR lineBlock">
+		@product.getPrice.getSymbol@Utils.money(product.getPrice.getUnitBasePrice)</div>
+	</div>
+</div>
+
+ }

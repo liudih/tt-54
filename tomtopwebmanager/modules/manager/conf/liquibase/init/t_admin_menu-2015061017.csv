@@ -1,0 +1,3 @@
+﻿"iid","cname","iparentid","ilevel","cclass","curl","ccreateuser","cenname"
+"110","视频审核管理","3","2","110","/sysadmin/video/manager","liudi","VideoCheckManager"
+"111","图片审核管理","3","2","111","/sysadmin/photo/manager","liudi","PhotoCheckManager"

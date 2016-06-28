@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.member.ForgetPasswdBaseMapper">
+	<resultMap id="BaseResultMap" type="dto.member.ForgetPasswdBase">
+		<id column="cid" property="cid" jdbcType="VARCHAR" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+		<result column="cmemberemail" property="cmemberemail" jdbcType="VARCHAR" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+		<result column="buse" property="buse" jdbcType="BOOLEAN" />
+		<result column="crandomcode" property="crandomcode" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		cid, iwebsiteid,cmemberemail, dcreatedate, buse,crandomcode
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from t_forget_passwd_base
+		where cid = #{cid,jdbcType=VARCHAR}
+	</select>
+	<insert id="insertSelective" parameterType="dto.member.ForgetPasswdBase">
+		insert into t_forget_passwd_base
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				cid,
+			</if>
+			<if test="iwebsiteid != null">
+				iwebsiteid,
+			</if>
+			<if test="cmemberemail != null">
+				cmemberemail,
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate,
+			</if>
+			<if test="crandomcode != null">
+				crandomcode,
+			</if>
+
+			buse,
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				#{cid,jdbcType=VARCHAR},
+			</if>
+			<if test="iwebsiteid != null">
+				#{iwebsiteid,jdbcType=INTEGER},
+			</if>
+			<if test="cmemberemail != null">
+				#{cmemberemail,jdbcType=VARCHAR},
+			</if>
+			<if test="ccountry != null">
+				#{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="crandomcode != null">
+				#{crandomcode,jdbcType=VARCHAR},
+			</if>
+
+			#{buse,jdbcType=BOOLEAN},
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="dto.member.ForgetPasswdBase">
+		update t_forget_passwd_base
+		<set>
+			<if test="iwebsiteid != null">
+				iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+			</if>
+			<if test="cmemberemail != null">
+				cmemberemail = #{cmemberemail,jdbcType=VARCHAR},
+			</if>
+			<if test="ccountry != null">
+				dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="crandomcode != null">
+				crandomcode = #{crandomcode,jdbcType=VARCHAR},
+			</if>
+			buse = #{buse,jdbcType=BOOLEAN},
+		</set>
+		where cid = #{cid,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="dto.member.ForgetPasswdBase">
+		update t_forget_passwd_base
+		set iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+		cmemberemail = #{cmemberemail,jdbcType=VARCHAR},
+		dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+		crandomcode = #{crandomcode,jdbcType=VARCHAR},
+		buse = #{buse,jdbcType=BOOLEAN}
+		where cid = #{cid,jdbcType=VARCHAR}
+	</update>
+</mapper>

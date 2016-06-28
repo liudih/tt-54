@@ -1,0 +1,17 @@
+@(items: List[valueobjects.order_api.cart.CartItem],isCart: Boolean = true,currency:dto.Currency)
+@items.map{ i => 
+	@i match { 
+		case si : valueobjects.order_api.cart.SingleCartItem => { 
+			@single(si,isCart,currency,false) 
+		}
+		case bi : valueobjects.order_api.cart.BundleCartItem => { 
+			@bundle(bi,isCart,currency,false) 
+		}
+		case e : valueobjects.order_api.cart.NonExistenceCartItem => {
+			@if(isCart){@non_single(e,isCart,currency,false)}
+		}
+		case eb : valueobjects.order_api.cart.NonExistenceBundleCartItem => {
+			@if(isCart){@non_bundle(eb,isCart,currency,false)}
+		} 
+	} 
+}

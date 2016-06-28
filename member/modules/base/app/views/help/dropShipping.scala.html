@@ -1,0 +1,128 @@
+@views.html.base.master{
+	@services.base.HtmlUtils.misc().addHeadOnce{
+		<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/styles.css")?@version.BuildVersion.build()" />
+	}
+	<div class="container affiliateBox accountRight">
+		<div class="Bread_crumbs_Box">
+			<ul class="Bread_crumbs">
+				<li class="Bread_home"><a href="@controllers.base.routes.Home.home()"></a></li>
+				<li>
+					<p>
+						<a class="Bread_link" href="javascript:;">@Messages("dropshipping")</a>
+					</p>
+				</li>
+				<div class="clear"></div>
+			</ul>
+		</div>
+		<a class="affiliateBanner" href="javascript:;">
+		<img src="@controllers.base.routes.Assets.at("/images/dropshippingBanner.jpg")"></a>
+		<h5 class="firstH5">@Messages("why.choose.tomtop")</h5>
+		<ul class="chooseTT">
+			<li>@Messages("no.stock.risk")</li>
+			<li>@Messages("fast.shipping")</li>
+			<li>@Messages("customization")</li>
+			<li>@Messages("extra.discounts")</li>
+			<div class="clear"></div>
+		</ul>
+		<p class="affTxt">
+			<span class="orange">100,000 </span> @Messages("items.in")<span class="orange"> 300 </span>
+			@Messages("categories.available.for.drop.shipping")<br>@Messages("no.stock.risk.for.no.stock.risk.for.drop.shippers")
+			<br>@Messages("no.tomtop.logo.on.packing.label.non.logoproduct.pictures.available")
+			<br> @Messages("packages.can.be.customized.with.your.company.or.website.name.and.logo.as.required")
+			<br>@Messages("fast.and.simple.online.operation.for.tomtop.orders")
+		</p>
+		<h5>@Messages("how.does.drop.shipping.benefit.you")</h5>
+		<p>@Messages("drop.shipping.is.an.easy.way.for.you.to.start.earning.profit.by.selling.quality.products.by.listing.our.products.on.your.website.and.taking.advantage.of.drop.shipping.you.will")</p>
+		<ul class="shippingBenefit dropPub">
+			<li><em>1</em>@Messages("no.joining.fee")</li>
+			<li><em>2</em>@Messages("3.15.off.you.get.rewarded.the.more.you.order.as.your.total.order.history.increases.you.automatically.get.better.discount.levels.making.you.even.more.competitive")</li>
+			<li><em>3</em>@Messages("become.a.worldwide.e.commerce.retailer.at.a.low.cost.with.no.risk")</li>
+			<li><em>4</em>@Messages("exclusive.drop.shipping.weekly.deals.newsletter")</li>
+			<li><em>5</em>@Messages("offer.a.wide.selection.of.products.without.the.need.to.purchase.or.store.inventory")</li>
+			<li><em>6</em>@Messages("select.product.types.on.tomtop.com.and.determine.your.own.retail.prices.and.profit")</li>
+			<li><em>7</em>@Messages("have.your.products.packaged.and.shipped.to.your.customers.by.us.at.no.extra.cost")</li>
+		</ul>
+		<h5>@Messages("how.to.do.drop.shipping.with.tomtop")</h5>
+		<div class="affiliateProgramWork">
+			<img src="@controllers.base.routes.Assets.at("/images/dropTT.jpg")">
+		</div>
+		<h5>@Messages("for.single.orders")</h5>
+		<ul class="singleOrders dropPub">
+			<li><em>1</em>@Messages("sell.tomtop.products.on.your.own.webstore.ebay")</li>
+			<li><em>2</em>@Messages("select.products.on.tomtop.com.and.add.to.shopping.cart")</li>
+			<li><em>3</em>@Messages("click.add.drop.shipping.service.on.shopping.cart.page")</li>
+			<li><em>4</em>@Messages("submit.the.order.and.finish.the.payment.remrember.to.set.the.shipping.address.as.your.customers")</li>
+			<li><em>5</em>@Messages("tomtop.will.prepare.your.order.and.ship.out.to.your.customer.directly")</li>
+		</ul>
+		<h5>@Messages("our.commission.policy")</h5>
+		<p>@Messages("you.can.get.extra.discounts.in.tomtop.as.a.drop.shipper")</p>
+		<table class="policyTable" width="800" border="0" cellspacing="0"
+			cellpadding="0">
+			<tr>
+				<td width="46%" class="bg1">@Messages("grades")</td>
+				<td width="9%" class=" bg1">@Messages("vip0")</td>
+				<td width="9%" class="bg1">@Messages("vip.1")</td>
+				<td width="9%" class="bg1">@Messages("vip.2")</td>
+				<td width="9%" class="bg1">@Messages("vip.3")</td>
+				<td width="9%" class="bg1">@Messages("vip.4")</td>
+				<td width="9%" class="bg1 right_bordre">@Messages("vip.5")</td>
+			</tr>
+			<tr>
+				<td>@Messages("total.order.amount")</td>
+				<td>&lt;$499</td>
+				<td>&lt;$4999</td>
+				<td>&lt;$19999</td>
+				<td>&lt;$49999</td>
+				<td>&lt;$99999</td>
+				<td class="right_bordre">&gt;$100,000+</td>
+			</tr>
+			<tr>
+				<td>@Messages("service.fee.transaction.fee.monthly")</td>
+				<td>@Messages("free")</td>
+				<td>@Messages("free")</td>
+				<td>@Messages("free")</td>
+				<td>@Messages("free")</td>
+				<td>@Messages("free")</td>
+				<td class="right_bordre">@Messages("free")</td>
+			</tr>
+			<tr>
+				<td>@Messages("products.you.can.add.update.in.catalog.monthly")</td>
+				<td>100</td>
+				<td>500</td>
+				<td>1000</td>
+				<td>2000</td>
+				<td>3000</td>
+				<td class="right_bordre">5000</td>
+			</tr>
+			<tr>
+				<td>@Messages("download.product.images")</td>
+				<td>@Messages("yes")</td>
+				<td>@Messages("yes")</td>
+				<td>@Messages("yes")</td>
+				<td>@Messages("yes")</td>
+				<td>@Messages("yes")</td>
+				<td class="right_bordre">@Messages("yes")</td>
+			</tr>
+			<tr>
+				<td class="bottom_bordre">@Messages("enjoy.dropship.price")</td>
+				<td class="bottom_bordre">@Messages("no")</td>
+				<td class="bottom_bordre">@Messages("yes")</td>
+				<td class="bottom_bordre">@Messages("yes")</td>
+				<td class="bottom_bordre">@Messages("yes")</td>
+				<td class="bottom_bordre">@Messages("yes")</td>
+				<td class="bottom_bordre right_bordre">@Messages("yes")</td>
+			</tr>
+		</table>
+		<h5>@Messages("not.a.member.yet")</h5>
+		<p>@Messages("just.3.easy.steps")</p>
+		<p class="pImg">
+			<img src="@controllers.base.routes.Assets.at("/images/memberYet.jpg")">
+		</p>
+		<p><!-- 
+			@Messages("note.dropshippers.and.wholesalers.can.not.enjoy.tomtop.permissions")
+			<br> -->
+			@Messages("for.any.inquiries.and.price.bargain.contact.dropshipping.tomtop.com")
+		</p>
+		<input class="JoinNow" type="button" value="@Messages("join.now")">
+	</div>
+}

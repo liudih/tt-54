@@ -1,0 +1,393 @@
+iid,iwebsiteid,ctype,ctitle,ccontent,ccreateuser
+1,1,Activate,Account Activation on TOMTOP.,"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
+<html xmlns=""http://www.w3.org/1999/xhtml"">
+<head>
+<meta http-equiv=""Content-Type"" content=""text/html; charset=utf-8"" />
+<title>email</title>
+<style>
+body {margin-left: 0px;margin-top: 0px;margin-right: 0px;margin-bottom: 0px;}
+*{ padding:0px; margin:0px;}
+</style>
+</head>
+
+<body>
+<div style=""width:600px; padding-bottom:20px; margin:0 auto; font-family:'Tahoma';color:#666666; font-size:12px; box-shadow:1px 1px 3px 3px #e4e4e4;"">
+<table width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"">
+  <tr>
+    <td width=""67%"" style=""padding:20px 0 15px 15px; font-size:12px;""><img border=""0"" src=""http://staging.tomtop.com/base/assets/img/tomtop_logo.png"" /></td>
+    <td width=""14%"" style=""padding:20px 0 15px 15px; font-size:12px;"" valign=""bottom""><a style=""text-decoration:none; color:#666;"" href=""http://www.tomtop.com"">Home</a></td>
+    <td width=""19%"" style=""padding:20px 0 15px 15px; font-size:12px;"" valign=""bottom""><a style=""text-decoration:none; color:#666;"" href=""http://staging.tomtop.com/base/cms"">Help</a></td>
+  </tr>
+</table>
+<table width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"" bgcolor=""#666666"">
+  <tr>
+    <td style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff;"" href=""http://www.tomtop.com/product/newarrivals"">New Arrivals</a></td>
+    <td valign=""middle"" style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff; display:block;"" href=""http://www.tomtop.com/interaction/superdeals"">Super Deals</a></td>
+    <td valign=""middle"" style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff; display:block; "" href=""http://www.tomtop.com/product/dailydeal"">Daily Deals</a></td>
+    <td valign=""middle"" style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff; display:block; "" href=""http://www.tomtop.com/product/clearance"">Clearance</a></td>
+  </tr>
+</table>
+<table style=""font-size:12px; line-height:25px;padding-top:10px; padding-bottom:30px;"" width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"">
+  <tr>
+    <td>
+    <p style=""padding:5px 35px 0 35px;""><span style=""color:#2f7fe2; font-size:16px; font-weight:bold;"">Dear {{ toemail }},</span></p>
+      <p style=""padding:5px 35px 0 35px; margin-bottom:0;"">Thanks for registering on TOMTOP.com. </p>
+  <p style=""padding:5px 35px 0 35px;""><a href="""" target=""_blank"" style="" text-decoration:none;""><span style=""font-size:12px; font-weight:bold; color:#FFF; background-color:#2f7fe2; padding:4px 10px;"">Account Activation</span></a><br /> One more step to activate your account.</p>
+      <p style=""padding:5px 35px 0 35px;"">If it does not work, please paste the link into your web browser's address field to complete the registration process.<br />
+Link: <a href="""" target=""_blank"" style=""color:#09F;"">{{ url }}</a>
+</p>
+      <p style=""padding:5px 35px 0 35px;"">Thanks for choosing TOMTOP£¡<br />
+If you have any questions, feel free to contact customer service at <u>wholesale@tomtop.com</u> or by phone at
+<span style=""font-size:14px; font-weight:bold;"">+86-755-83998006-8025.</span></p>
+      <p style=""padding:5px 35px 0 35px;"">Thank you.<br />
+      TOMTOP Team </p>
+      </td>
+  </tr>
+</table>
+<div style=""width:90%; clear:both; border-top:1px dashed #ccc; height:20px; margin-bottom:20px; margin:auto;""></div>
+<table width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"">
+  <tr>
+    <td align=""right""><a href=""http://www.facebook.com/pages/TOMTOP/104613349590201"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_03.jpg"" width=""41"" height=""38"" alt=""Facebook "" border=""0"" /></a></td>
+    <td><a href=""http://www.facebook.com/pages/TOMTOP/104613349590201"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;"">Like us <br />on Facebook </a></td>
+    <td align=""right""><a href=""http://twitter.com/tomtopfans"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_05.jpg"" width=""41"" height=""38"" alt=""Twitter "" border=""0"" /></a></td>
+    <td><a href=""http://twitter.com/tomtopfans"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;"">Fllow us <br />on Twitter </a></td>
+    <td align=""right""><a href=""http://pinterest.com/tomtop"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_07.jpg"" width=""41"" height=""38"" alt=""Pinterest "" border=""0"" /></a></td>
+    <td><a href=""http://pinterest.com/tomtop"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;"">Pin us <br />on Pinterest </a></td>
+    <td align=""right""><a href=""http://www.youtube.com/linksempire"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_11.jpg"" width=""41"" height=""38"" alt=""Youtube  "" border=""0"" /></a></td>
+    <td><a href=""http://www.youtube.com/linksempire"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;""> Watch us <br />on Youtube  </a></td>
+  </tr>
+  <tr>
+    <td colspan=""8"" align=""center"">&nbsp;</td>
+    </tr>
+  <tr>
+    <td colspan=""8"" align=""center"">Copyright ? 2004~2015 tomtop.com All rights reserved.</td>
+    </tr>
+</table>
+</div>
+</body>
+</html>
+",
+2,1,UpdatePass, Reset Your TOMTOP Account Password.,"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
+<html xmlns=""http://www.w3.org/1999/xhtml"">
+<head>
+<meta http-equiv=""Content-Type"" content=""text/html; charset=utf-8"" />
+<title>email</title>
+<style>
+body {margin-left: 0px;margin-top: 0px;margin-right: 0px;margin-bottom: 0px;}
+*{ padding:0px; margin:0px;}
+</style>
+</head>
+
+<body>
+<div style=""width:600px; padding-bottom:20px; margin:0 auto; font-family:'Tahoma';color:#666666; font-size:12px; box-shadow:1px 1px 3px 3px #e4e4e4;"">
+<table width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"">
+  <tr>
+    <td width=""67%"" style=""padding:20px 0 15px 15px; font-size:12px;""><img border=""0"" src=""http://staging.tomtop.com/base/assets/img/tomtop_logo.png"" /></td>
+    <td width=""14%"" style=""padding:20px 0 15px 15px; font-size:12px;"" valign=""bottom""><a style=""text-decoration:none; color:#666;"" href=""http://www.tomtop.com"">Home</a></td>
+    <td width=""19%"" style=""padding:20px 0 15px 15px; font-size:12px;"" valign=""bottom""><a style=""text-decoration:none; color:#666;"" href=""http://staging.tomtop.com/base/cms"">Help</a></td>
+  </tr>
+</table>
+<table width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"" bgcolor=""#666666"">
+  <tr>
+    <td style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff;"" href=""http://www.tomtop.com/product/newarrivals"">New Arrivals</a></td>
+    <td valign=""middle"" style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff; display:block;"" href=""http://www.tomtop.com/interaction/superdeals"">Super Deals</a></td>
+    <td valign=""middle"" style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff; display:block; "" href=""http://www.tomtop.com/product/dailydeal"">Daily Deals</a></td>
+    <td valign=""middle"" style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff; display:block; "" href=""http://www.tomtop.com/product/clearance"">Clearance</a></td>
+  </tr>
+</table>
+<table style=""font-size:12px; line-height:20px;padding-top:10px; padding-bottom:30px;"" width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"">
+  <tr>
+    <td>
+    <p style=""padding:5px 35px 0 35px;""><span style=""color:#2f7fe2; font-size:16px; font-weight:bold;"">Dear {{ toemail }},</span></p>
+      <p style=""padding:5px 35px 0 35px; margin-bottom:0;"">There was a request to change the password of your account. If you have requested to change your password, please click on the following button in two hours.</p>
+  <p style=""padding:5px 35px 0 35px;""><a href="""" target=""_blank"" style="" text-decoration:none;""><span style=""font-size:12px; font-weight:bold; color:#FFF; background-color:#2f7fe2; padding:4px 10px;"">Change Password</span></a><br /></p>
+      <p style=""padding:20px 35px 0 35px;"">If it does not work, please paste this link into your web browser's address field to change.<br />
+Link: <a href="""" target=""_blank"" style=""color:#09F;"">{{ url }}</a>
+</p>
+      <p style=""padding:20px 35px 0 35px;"">If you did not make this request, you can ignore this message and your password will remain the same. 
+Any questions, please contact customer service at at <u>wholesale@tomtop.com</u> or by phone at<span style=""font-size:14px; font-weight:bold;"">+86-755-83998006-8025</span>.
+</span></p>
+      <p style=""padding:20px 35px 0 35px;"">Thank you.<br />
+      TOMTOP Team </p>
+      </td>
+  </tr>
+</table>
+<div style=""width:90%; clear:both; border-top:1px dashed #ccc; height:20px; margin-bottom:20px; margin:auto;""></div>
+<table width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"">
+  <tr>
+    <td align=""right""><a href=""http://www.facebook.com/pages/TOMTOP/104613349590201"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_03.jpg"" width=""41"" height=""38"" alt=""Facebook "" border=""0"" /></a></td>
+    <td><a href=""http://www.facebook.com/pages/TOMTOP/104613349590201"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;"">Like us <br />on Facebook </a></td>
+    <td align=""right""><a href=""http://twitter.com/tomtopfans"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_05.jpg"" width=""41"" height=""38"" alt=""Twitter "" border=""0"" /></a></td>
+    <td><a href=""http://twitter.com/tomtopfans"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;"">Fllow us <br />on Twitter </a></td>
+    <td align=""right""><a href=""http://pinterest.com/tomtop"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_07.jpg"" width=""41"" height=""38"" alt=""Pinterest "" border=""0"" /></a></td>
+    <td><a href=""http://pinterest.com/tomtop"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;"">Pin us <br />on Pinterest </a></td>
+    <td align=""right""><a href=""http://www.youtube.com/linksempire"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_11.jpg"" width=""41"" height=""38"" alt=""Youtube  "" border=""0"" /></a></td>
+    <td><a href=""http://www.youtube.com/linksempire"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;""> Watch us <br />on Youtube  </a></td>
+  </tr>
+  <tr>
+    <td colspan=""8"" align=""center"">&nbsp;</td>
+    </tr>
+  <tr>
+    <td colspan=""8"" align=""center"">Copyright ? 2004~2015 tomtop.com All rights reserved.</td>
+    </tr>
+</table>
+</div>
+</body>
+</html>
+",luys
+3,1,text/html,Newsletter subscription success,"<table cellspacing=""0"" cellpadding=""0"" border=""0"" style=""color: #333333;background: #ffffff;padding: 0;margin: 0;width: 100.0%;font: 15.0px   1.25em;""> <tbody><tr width=""100%""> <td valign=""top"" align=""left"" style=""background: #f0f0f0;font: 15.0px   1.25em;""> <table style=""border: none; padding: 0px 18px; margin: 50px auto; width: 500px;"" _ow=""500px""> <tbody> <tr width=""100%""> <td valign=""top"" align=""left"" style=""border-top-left-radius: 4.0px;border-top-right-radius: 4.0px;background: #0079bf;text-align: center;vertical-align: middle;font-size: 30.0px;font-weight: bold;color: #ffffff;""> tomtop.com </td> </tr> <tr width=""100%""> <td valign=""top"" align=""left"" style=""border-bottom-left-radius: 4.0px;border-bottom-right-radius: 4.0px;background: #ffffff;padding: 18.0px;""> <h1 style=""font-size: 20.0px;margin: 0;color: #333333;""> Hey {{ username }} </h1>
+<p style=""font: 15.0px   1.25em;""> We're ready to activate your account. All we need to do is make sure this is your email address.</p><p style=""font: 15.0px   1.25em;"">
+<a href=""{{ url }}"" target=""_blank"" style=""border-radius: 3px; color: rgb(255, 255, 255); display: block; font-weight: 700; font-size: 16px; line-height: 1.25em; margin: 24px auto; padding: 10px 18px; text-decoration: none; width: 180px; text-align: center; height: auto; background: rgb(58, 165, 76);""> Verify Address </a></p>
+<p>Not open connection, copy the following link address to activate</p>
+<p>{{ url }}</p>
+</td> </tr></tbody> </table> </td> </tr></tbody> </table>",
+4,1,WelcomeRegist,Welcome to TOMTOP family.,"<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
+<html xmlns=""http://www.w3.org/1999/xhtml"">
+<head>
+<meta http-equiv=""Content-Type"" content=""text/html; charset=utf-8"" />
+<title>email</title>
+<style>
+body {margin-left: 0px;margin-top: 0px;margin-right: 0px;margin-bottom: 0px;}
+*{ padding:0px; margin:0px;}
+</style>
+</head>
+
+<body>
+<div style=""width:600px; padding-bottom:20px; margin:0 auto; font-family:'Tahoma';color:#666666; font-size:12px; box-shadow:1px 1px 3px 3px #e4e4e4;"">
+<table width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"">
+  <tr>
+    <td width=""67%"" style=""padding:20px 0 15px 15px; font-size:12px;""><img border=""0"" src=""http://staging.tomtop.com/base/assets/img/tomtop_logo.png"" /></td>
+    <td width=""14%"" style=""padding:20px 0 15px 15px; font-size:12px;"" valign=""bottom""><a style=""text-decoration:none; color:#666;"" href=""http://www.tomtop.com"">Home</a></td>
+    <td width=""19%"" style=""padding:20px 0 15px 15px; font-size:12px;"" valign=""bottom""><a style=""text-decoration:none; color:#666;"" href=""http://staging.tomtop.com/base/cms"">Help</a></td>
+  </tr>
+</table>
+<table width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"" bgcolor=""#666666"">
+  <tr>
+    <td style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff;"" href=""http://www.tomtop.com/product/newarrivals"">New Arrivals</a></td>
+    <td valign=""middle"" style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff; display:block;"" href=""http://www.tomtop.com/interaction/superdeals"">Super Deals</a></td>
+    <td valign=""middle"" style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff; display:block; "" href=""http://www.tomtop.com/product/dailydeal"">Daily Deals</a></td>
+    <td valign=""middle"" style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff; display:block; "" href=""http://www.tomtop.com/product/clearance"">Clearance</a></td>
+  </tr>
+</table>
+<table style=""font-size:12px; line-height:25px;padding-top:10px; padding-bottom:30px;"" width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"">
+  <tr>
+    <td>
+    
+    <p style=""padding:5px 35px 0 35px;""><span style=""color:#2f7fe2; font-size:16px; font-weight:bold;"">Dear {{ toemail }},</span></p>
+      <p style=""padding:5px 35px 0 35px; margin-bottom:0;"">Welcome to TOMTOP family. Thank you for activating your account. And we are delighted to serve you wholeheartedly. Your support is the greatest motivation for us. </p>
+  <p style=""padding:5px 35px 0 35px;""><span style=""font-size:14px; font-weight:bold;"">Your Account Information:</span><br /> E-mail: {{ toemail }}<br />Password: **********</p>
+         <p style=""padding:5px 35px 0 35px; margin-bottom:0;"">You are one of the winners to get 10USD coupon,
+       </p>
+      <table width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"">
+  <tr>
+    <td width=""20%"" style=""padding-left:35px;"">coupon code:</td>
+    <td width=""11%"" style=""text-align:center;color:#ff7301;font-size:16px; border:1px dashed #ff7301;"">T10USD</td>
+    <td width=""69%"">&nbsp;&nbsp;, that you can use it <span style=""color:#ff7301"">five times</span>. <a style=""text-decoration:underline;color:#666;"" href=""http://www.tomtop.com"" target=""_blank"">Buy now</a></td>
+  </tr>
+</table><br />
+      <p style=""padding:5px 35px 0 35px;""><a href=""http://www.tomtop.com/member/login"" target=""_blank"" style=""color:#2f7fe2;"">Login</a> to your account, to check the TOMTOP Points you have gained and get our welcome gift to start your shopping on TOMTOP. (100 TOMTOP Points = $1)<br />
+You will also be able to do the following conveniently:<br />
+Manage your online profile<br />
+Check your points <br />
+Apply for more coupons worth $50<br />
+Check your order status<br />
+View your order history<br />
+View billing and shipping information <br />
+Create wishlists<br />
+......<br />
+</p>
+ <p style=""padding:5px 35px 0 35px;"">Below is the product categories you subscribed: <br />
+      <a href=""http://www.tomtop.com/Tablet-PC-Cellphone"" target=""_blank"" style=""color:#666; font-weight:bold; text-decoration:none;"">Tablet PC & Cellphone</a><br />
+      <a href=""http://www.tomtop.com/Computer-Networking"" target=""_blank"" style=""color:#666; font-weight:bold; text-decoration:none;"">Computer & Networking</a><br />
+      <a href=""http://www.tomtop.com/RC-Models-Hobbies"" target=""_blank"" style=""color:#666; font-weight:bold; text-decoration:none;"">RC Models & Hobbies</a><br />
+      <a href=""http://www.tomtop.com/Test-Equipment-Tools"" target=""_blank"" style=""color:#666; font-weight:bold; text-decoration:none;"">Test Equipment & Tools</a><br />
+      <a href=""http://www.tomtop.com/Cameras-Photo-Accessories"" target=""_blank"" style=""color:#666; font-weight:bold; text-decoration:none;"">Cameras & Photo Accessories</a><br />
+      <a href=""http://www.tomtop.com/Lighting-Flashlights-LEDs"" target=""_blank"" style=""color:#666; font-weight:bold; text-decoration:none;"">Lighting/Flashlights/LEDs</a><br />
+      <a href=""http://www.tomtop.com/Home-and-Garden"" target=""_blank"" style=""color:#666; font-weight:bold; text-decoration:none;"">Home and Garden</a><br />
+      <a href=""http://www.tomtop.com/Apparel-Jewelry"" target=""_blank"" style=""color:#666; font-weight:bold; text-decoration:none;"">Apparel & Jewelry</a><br />
+      <a href=""http://www.tomtop.com/Health-Beauty"" target=""_blank"" style=""color:#666; font-weight:bold; text-decoration:none;"">Health & Beauty</a><br />
+      <a href=""http://www.tomtop.com/Sports-Outdoor"" target=""_blank"" style=""color:#666; font-weight:bold; text-decoration:none;"">Sports & Outdoor</a><br />
+      <a href=""http://www.tomtop.com/Car-Accessories"" target=""_blank"" style=""color:#666; font-weight:bold; text-decoration:none;"">Car Accessories</a><br />
+      <a href=""http://www.tomtop.com/Video-Audio"" target=""_blank"" style=""color:#666; font-weight:bold; text-decoration:none;"">Video & Audio</a><br />
+      <a href=""http://www.tomtop.com/Musical-Instruments"" target=""_blank"" style=""color:#666; font-weight:bold; text-decoration:none;"">Musical Instruments</a><br />
+      <a href=""http://www.tomtop.com/Toys-Games"" target=""_blank"" style=""color:#666; font-weight:bold; text-decoration:none;"">Toys & Games</a><br />
+      <a href=""http://www.tomtop.com/product/newarrivals"" target=""_blank"" style=""color:#666; font-weight:bold; text-decoration:none;"">New Arrivals</a><br />
+      <a href=""http://www.tomtop.com/interaction/superdeals"" target=""_blank"" style=""color:#666; font-weight:bold; text-decoration:none;"">Super Deals</a><br />
+      <a href=""http://www.tomtop.com/product/dailydeal"" target=""_blank"" style=""color:#666; font-weight:bold; text-decoration:none;"">Daily Deals</a><br />
+      <a href=""http://www.tomtop.com/product/clearance"" target=""_blank"" style=""color:#666; font-weight:bold; text-decoration:none;"">Clearance</a><br />
+      </p>
+      <p style=""padding:5px 35px 0 35px;"">Thanks for choosing TOMTOP!<br />
+If you have any questions, feel free to contact customer service at <u>wholesale@tomtop.com</u> or by phone at
+<span style=""font-size:14px; font-weight:bold;"">+86-755-83998006-8025. </span></p>
+      <p style=""padding:5px 35px 0 35px;"">Thank you.<br />
+      TOMTOP Team </p>
+      </td>
+  </tr>
+</table>
+<div style=""width:90%; clear:both; border-top:1px dashed #ccc; height:20px; margin-bottom:20px; margin:auto;""></div>
+<table width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"">
+  <tr>
+    <td align=""right""><a href=""http://www.facebook.com/pages/TOMTOP/104613349590201"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_03.jpg"" width=""41"" height=""38"" alt=""Facebook "" border=""0"" /></a></td>
+    <td><a href=""http://www.facebook.com/pages/TOMTOP/104613349590201"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;"">Like us <br />on Facebook </a></td>
+    <td align=""right""><a href=""http://twitter.com/tomtopfans"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_05.jpg"" width=""41"" height=""38"" alt=""Twitter "" border=""0"" /></a></td>
+    <td><a href=""http://twitter.com/tomtopfans"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;"">Fllow us <br />on Twitter </a></td>
+    <td align=""right""><a href=""http://pinterest.com/tomtop"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_07.jpg"" width=""41"" height=""38"" alt=""Pinterest "" border=""0"" /></a></td>
+    <td><a href=""http://pinterest.com/tomtop"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;"">Pin us <br />on Pinterest </a></td>
+    <td align=""right""><a href=""http://www.youtube.com/linksempire"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_11.jpg"" width=""41"" height=""38"" alt=""Youtube  "" border=""0"" /></a></td>
+    <td><a href=""http://www.youtube.com/linksempire"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;""> Watch us <br />on Youtube  </a></td>
+  </tr>
+  <tr>
+    <td colspan=""8"" align=""center"">&nbsp;</td>
+    </tr>
+  <tr>
+    <td colspan=""8"" align=""center"">Copyright ? 2004~2015 tomtop.com All rights reserved.</td>
+    </tr>
+</table>
+</div>
+</body>
+</html>
+",
+5,1,CommentsSubmit,"Dear, Your review has been submitted successfully.  ","<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
+<html xmlns=""http://www.w3.org/1999/xhtml"">
+<head>
+<meta http-equiv=""Content-Type"" content=""text/html; charset=utf-8"" />
+<title>email</title>
+<style>
+body {margin-left: 0px;margin-top: 0px;margin-right: 0px;margin-bottom: 0px;}
+*{ padding:0px; margin:0px;}
+</style>
+</head>
+
+<body>
+<div style=""width:600px; padding-bottom:20px; margin:0 auto; font-family:'Tahoma';color:#666666; font-size:12px; box-shadow:1px 1px 3px 3px #e4e4e4;"">
+<table width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"">
+  <tr>
+    <td width=""67%"" style=""padding:20px 0 15px 15px; font-size:12px;""><img border=""0"" src=""http://staging.tomtop.com/base/assets/img/tomtop_logo.png"" /></td>
+    <td width=""14%"" style=""padding:20px 0 15px 15px; font-size:12px;"" valign=""bottom""><a style=""text-decoration:none; color:#666;"" href=""http://www.tomtop.com"">Home</a></td>
+    <td width=""19%"" style=""padding:20px 0 15px 15px; font-size:12px;"" valign=""bottom""><a style=""text-decoration:none; color:#666;"" href=""http://staging.tomtop.com/base/cms"">Help</a></td>
+  </tr>
+</table>
+<table width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"" bgcolor=""#666666"">
+  <tr>
+    <td style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff;"" href=""http://www.tomtop.com/product/newarrivals"">New Arrivals</a></td>
+    <td valign=""middle"" style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff; display:block;"" href=""http://www.tomtop.com/interaction/superdeals"">Super Deals</a></td>
+    <td valign=""middle"" style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff; display:block; "" href=""http://www.tomtop.com/product/dailydeal"">Daily Deals</a></td>
+    <td valign=""middle"" style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff; display:block; "" href=""http://www.tomtop.com/product/clearance"">Clearance</a></td>
+  </tr>
+</table>
+<table style=""font-size:12px; line-height:20px;padding-top:10px; padding-bottom:30px;"" width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"">
+  <tr>
+    <td>
+      <p style=""padding:5px 35px 0 35px; font-size:14px; font-weight:bold; color:#2f7fe2"">Dear {{toemail}},</p>
+      <p style=""padding:20px 35px 0 35px;"">Thanks for your support to us.<br />
+      Your product review has been submitted successfully. Please wait for a few days for us to check it. Once it has been approved and published, we will inform you via an email and send corresponding TOMTOP points to your account.</p>
+      <p style=""padding:20px 35px 0 35px;"">Thanks for choosing TOMTOP.com.<br />
+      We are looking forward to serve you well. Any questions, please feel free to contact us at <u>wholesale@tomtop.com.</u> </p>
+      <p style=""padding:20px 35px 0 35px;"">Best regards,<br />
+       TOMTOP Team </p>
+      </td>
+  </tr>
+</table>
+<div style=""width:90%; clear:both; border-top:1px dashed #ccc; height:20px; margin-bottom:20px; margin:auto;""></div>
+<table width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"">
+  <tr>
+    <td align=""right""><a href=""http://www.facebook.com/pages/TOMTOP/104613349590201"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_03.jpg"" width=""41"" height=""38"" alt=""Facebook "" border=""0"" /></a></td>
+    <td><a href=""http://www.facebook.com/pages/TOMTOP/104613349590201"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;"">Like us <br />on Facebook </a></td>
+    <td align=""right""><a href=""http://twitter.com/tomtopfans"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_05.jpg"" width=""41"" height=""38"" alt=""Twitter "" border=""0"" /></a></td>
+    <td><a href=""http://twitter.com/tomtopfans"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;"">Fllow us <br />on Twitter </a></td>
+    <td align=""right""><a href=""http://pinterest.com/tomtop"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_07.jpg"" width=""41"" height=""38"" alt=""Pinterest "" border=""0"" /></a></td>
+    <td><a href=""http://pinterest.com/tomtop"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;"">Pin us <br />on Pinterest </a></td>
+    <td align=""right""><a href=""http://www.youtube.com/linksempire"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_11.jpg"" width=""41"" height=""38"" alt=""Youtube  "" border=""0"" /></a></td>
+    <td><a href=""http://www.youtube.com/linksempire"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;""> Watch us <br />on Youtube  </a></td>
+  </tr>
+  <tr>
+    <td colspan=""8"" align=""center"">&nbsp;</td>
+    </tr>
+  <tr>
+    <td colspan=""8"" align=""center"">Copyright ? 2004~2015 tomtop.com All rights reserved.</td>
+    </tr>
+</table>
+</div>
+</body>
+</html>
+",
+6,1,CommentsSucceed,"Dear, Your review has been approved. Thank you!","<!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
+<html xmlns=""http://www.w3.org/1999/xhtml"">
+<head>
+<meta http-equiv=""Content-Type"" content=""text/html; charset=utf-8"" />
+<title>email</title>
+<style>
+body {margin-left: 0px;margin-top: 0px;margin-right: 0px;margin-bottom: 0px;}
+*{ padding:0px; margin:0px;}
+</style>
+</head>
+
+<body>
+<div style=""width:600px; padding-bottom:20px; margin:0 auto; font-family:'Tahoma';color:#666666; font-size:12px; box-shadow:1px 1px 3px 3px #e4e4e4;"">
+<table width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"">
+  <tr>
+    <td width=""67%"" style=""padding:20px 0 15px 15px; font-size:12px;""><img border=""0"" src=""http://staging.tomtop.com/base/assets/img/tomtop_logo.png"" /></td>
+    <td width=""14%"" style=""padding:20px 0 15px 15px; font-size:12px;"" valign=""bottom""><a style=""text-decoration:none; color:#666;"" href=""http://www.tomtop.com"">Home</a></td>
+    <td width=""19%"" style=""padding:20px 0 15px 15px; font-size:12px;"" valign=""bottom""><a style=""text-decoration:none; color:#666;"" href=""http://staging.tomtop.com/base/cms"">Help</a></td>
+  </tr>
+</table>
+<table width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"" bgcolor=""#666666"">
+  <tr>
+    <td style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff;"" href=""http://www.tomtop.com/product/newarrivals"">New Arrivals</a></td>
+    <td valign=""middle"" style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff; display:block;"" href=""http://www.tomtop.com/interaction/superdeals"">Super Deals</a></td>
+    <td valign=""middle"" style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff; display:block; "" href=""http://www.tomtop.com/product/dailydeal"">Daily Deals</a></td>
+    <td valign=""middle"" style=""padding:7px 0; width:146px; border-left:1px solid #8b8b8b;color:#fff; text-align:center; font-size:15px;""><a style=""text-decoration:none; color:#fff; display:block; "" href=""http://www.tomtop.com/product/clearance"">Clearance</a></td>
+  </tr>
+</table>
+<table style=""font-size:12px; line-height:20px;padding-top:10px; padding-bottom:30px;"" width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"">
+  <tr>
+    <td>
+      <p style=""padding:5px 35px 0 35px; font-size:14px; font-weight:bold; color:#2f7fe2"">Dear {{toemail}},</p>
+      <p style=""padding:20px 35px 0 35px;"">Thanks for submitting your product review. It has just been published and we would like to reward you. TOMTOP Points have been sent to your TOMTOP account. You can login to check via ""My TOMTOP Points"". 
+TOMTOP Points can be used directly when placing an order. <br />
+<span style=""font-size:14px; font-weight:bold;"">(100 TOMTOP Points = 1 USD)</span> They can also be converted into coupons and if you save enough, you can get more rewards.</p>
+      <p style=""padding:20px 35px 0 35px;"">Visit our <a href=""#"" target=""_blank"" style=""color:#2f7fe2"">Points</a> page for more information!</p>
+      <p style=""padding:20px 35px 0 35px;"">Thanks for shopping with us and giving your valuable feedback.</p>
+      <p style=""padding:20px 35px 0 35px;"">Best regards,<br />
+       TOMTOP Team </p>
+      <div style=""width:90%; padding:20px 30px 0px 30px;"">
+       <p style=""padding:5px; font-weight:bold;"">The following activities are going on:</p>
+       <table width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"">
+         <tr>
+           <td><a href="""" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/newsletter-edm316-20150116.jpg"" alt="""" border=""0"" /></a></td>
+           <td width=""20"">&nbsp;</td>
+           <td><a href="""" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/newsletter-edm318-20150123.jpg"" alt="""" border=""0"" /></a></td>
+         </tr>
+         <tr>
+           <td align=""center"">72 hours flash sale</td>
+           <td>&nbsp;</td>
+           <td align=""center"">Weekend super deals</td>
+         </tr>
+       </table>
+     </div>
+      </td>
+  </tr>
+</table>
+<div style=""width:90%; clear:both; border-top:1px dashed #ccc; height:20px; margin-bottom:20px; margin:auto;""></div>
+<table width=""100%"" border=""0"" cellspacing=""0"" cellpadding=""0"">
+  <tr>
+    <td align=""right""><a href=""http://www.facebook.com/pages/TOMTOP/104613349590201"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_03.jpg"" width=""41"" height=""38"" alt=""Facebook "" border=""0"" /></a></td>
+    <td><a href=""http://www.facebook.com/pages/TOMTOP/104613349590201"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;"">Like us <br />on Facebook </a></td>
+    <td align=""right""><a href=""http://twitter.com/tomtopfans"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_05.jpg"" width=""41"" height=""38"" alt=""Twitter "" border=""0"" /></a></td>
+    <td><a href=""http://twitter.com/tomtopfans"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;"">Fllow us <br />on Twitter </a></td>
+    <td align=""right""><a href=""http://pinterest.com/tomtop"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_07.jpg"" width=""41"" height=""38"" alt=""Pinterest "" border=""0"" /></a></td>
+    <td><a href=""http://pinterest.com/tomtop"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;"">Pin us <br />on Pinterest </a></td>
+    <td align=""right""><a href=""http://www.youtube.com/linksempire"" target=""_blank""><img src=""http://www.tomtop.com/images/yinyong/email20150323_11.jpg"" width=""41"" height=""38"" alt=""Youtube  "" border=""0"" /></a></td>
+    <td><a href=""http://www.youtube.com/linksempire"" target=""_blank"" style=""font-size:12px; color:#666; text-decoration:none;""> Watch us <br />on Youtube  </a></td>
+  </tr>
+  <tr>
+    <td colspan=""8"" align=""center"">&nbsp;</td>
+    </tr>
+  <tr>
+    <td colspan=""8"" align=""center"">Copyright ? 2004~2015 tomtop.com All rights reserved.</td>
+    </tr>
+</table>
+</div>
+</body>
+</html>
+",

@@ -1,0 +1,82 @@
+@(frm: Form[forms.member.login.LoginForm],
+	 reg: Form[forms.member.register.RegisterForm],
+	 backUrl: String,
+	 errorsMap:  Map[String, List[String]],
+	providerHelper: extensions.member.login.LoginProviderHelper
+  )
+@import views.html.helper._
+@views.html.base.master{
+	<article class="common_wrapper">
+    	<section class="container">
+        	<h2>@Messages("login.customers")</h2>
+            <div class="account_box">
+            @if(providerHelper.getProviders!=null && providerHelper.getProviders.size>0){
+            	 <div class="singInBottwo">
+        			<h3 class="legend">@Messages("you.can.sign.in.with.an.existing.account"):</h3>
+        			<div class="lg_top">
+		        	@for( p <- providerHelper.getProviders){
+		        		@p.getLoginButton()
+		        	}
+        			</div>
+        		</div>
+        	}
+            	@form(controllers.member.routes.Login.logining(backUrl),'class->"form-signin",'role->"form",'id->"loginForm",'autocomplete->"off") {
+            		<h3 class="legend">@Messages("sign.in.with.your.account"):</h3>
+                    <div class="frm_cont">
+                    	<label for="emailAddress">@Messages("email.address")</label>
+                    	<p class="frm_write">
+                          <input type="text" name="email" id="email" />
+                            @if(errorsMap!=null && errorsMap.size()>0){
+		               			@if(errorsMap.containsKey("email")){
+		            	       	 	@errorsMap.get("email").map{e=>
+		            	           		@e
+		            	        	 }
+		            	      	}
+		            	    }
+                        </p>
+                        <em>*</em>
+                    </div>
+                    <div class="frm_cont">
+                    	<label for="password">@Messages("password")</label>
+                    	<p class="frm_write">
+                          <input type="password" id="password" name="password"/>
+                           @if(errorsMap!=null && errorsMap.size()>0){
+			            	   @if(errorsMap.containsKey("password")){
+			            	        @errorsMap.get("password").map{e=>
+			            	           @e
+			            	        }
+			            	   }
+			            	}
+                        </p>
+                        <em>*</em>           
+                    </div>
+                    @if(errorsMap!=null && errorsMap.size()>0){
+	            	   @if(errorsMap.containsKey("accounterror")){
+	            	        @errorsMap.get("accounterror").map{e=>
+	            	           @e
+	            	        }
+	            	   }
+	            	}
+	            	@if(backUrl != null) {
+				 		<input type="hidden" name="backUrl" value="@backUrl" />
+				 	}
+                    <div class="frm_cont">
+                    	<label></label>
+                        <a class="forget" href="@controllers.member.routes.ForgetPassword.forget()">@Messages("forgot.your.password") ?</a>
+                    </div>
+                    <div class="buttons-set">
+                    	<p>* @Messages("required.fields")</p>
+                    	<button type="submit" title="Login" class="btn">@Messages("login")</button>
+                    </div>
+        		}
+        		 <p>@Messages("do.not.have.an.account.yet") ?<a style="padding-left:8px;color:#05a8b1" href="@controllers.member.routes.Register.registerFrom()">@Messages("create.your.dodocool.account")</a></p>
+            </div>
+        </section>
+    </article>
+    
+    @services.dodocool.base.HtmlUtils.misc().addTailOnce{
+    		<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.validate.min.js")'></script>
+			<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+     		<script  language="javascript" type="text/javascript" src='@controllers.member.routes.Assets.at("js/member/loginValidation.js")'></script>
+     }
+}

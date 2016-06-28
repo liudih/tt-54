@@ -1,0 +1,57 @@
+@(menuID: String)
+@menuRender = @{extensions.InjectorInstance.getInstance(classOf[services.member.account.MemberAccountMenuRenderer])}
+
+<ul class="accountLeft">
+    	<li class="leftCategory"><em></em>@Messages("account")</li>
+    	    @menuRender.getMenuItems("account", menuID).map{ i =>
+    	    	@i
+    	    }
+           
+            <!--  <li class="leftAct"><a href="javascript:;">My Message <span class="blue">(2)</span></a></li>-->
+            <!-- <li><a href="javascript:;">My Points</a></li>-->
+            <!-- <li><a href="javascript:;">My VIP</a></li>-->
+    	    <li class="leftCategory"><em></em>@Messages("order")</li>
+    	    @menuRender.getMenuItems("order", menuID).map{ i =>
+    	    	@i
+    	    }
+            <!--  <li><a href="javascript:;">My RMA</a></li>-->
+            <!-- <li><a href="javascript:;">Order Tracking</a></li>-->
+    	   <li class="leftCategory"><em></em>@Messages("shopping")</li>
+            @menuRender.getMenuItems("shopping", menuID).map{ i =>
+    	    	@i
+    	    }
+    	    <!-- <li><a href="javascript:;">Shopping Cart <span class="color999">(1)</span></a></li>-->
+            <!-- <li><a href="javascript:;">Product Requests</a></li>-->
+    	    <!-- <li class="leftCategory"><em></em>Payment</li>-->
+            <!-- <li><a href="javascript:;">My Coupons</a></li>-->
+    	    <li class="leftCategory"><em></em>@Messages("community")</li>
+    	    @menuRender.getMenuItems("community", menuID).map{ i =>
+    	    	@i
+    	    }
+           <!-- <li><a href="javascript:;">My Product Posts</a></li>-->
+           <!-- <li><a href="javascript:;">My Subscriptions</a></li>-->
+    	   <!--<li class="leftCategory"><em></em>Customer Service</li>-->
+           <!-- <li><a href="javascript:;">Feedback</a></li>-->
+           <!-- <li><a href="javascript:;">My Complaints</a></li>-->
+           <!-- <li><a href="javascript:;">Phone Call</a></li>-->
+           <!-- <li><a href="javascript:;">Online Service-Live Chat</a></li>-->
+    	   <!--<li class="leftCategory"><em></em>Partner</li>-->
+           <!-- <li><a href="javascript:;">Wholesale</a></li>-->
+           <!--<li><a href="javascript:;">Dropship</a></li>-->
+           <!--<li><a href="javascript:;">Affiliate</a></li>-->
+    	   <!--<li class="leftCategory"><em></em>Help Center</li>-->
+           <!-- <li><a href="javascript:;">Help</a></li>-->
+      <li class="leftCategory"><em></em>Affiliate Program</li>
+            @menuRender.getMenuItems("affiliate", menuID).map{ i =>
+    	    	@i
+    	    }
+      <li class="leftCategory"><em></em>@Messages("dropship")</li>
+            @menuRender.getMenuItems("dropship", menuID).map{ i =>
+    	    	@i
+    	    } 
+      
+      <li class="leftCategory"><em></em>Wholesale</li>
+            @menuRender.getMenuItems("wholesale", menuID).map{ i =>
+    	    	@i
+    	    }   
+    </ul>

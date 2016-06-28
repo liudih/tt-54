@@ -1,0 +1,26 @@
+@(voteItemFragment : valueobjects.research.vote.VoteItemFragment)
+
+	<div class="likesAbs" style="right: 0px;">
+		<div class="likesFix" style="position: absolute; right: 0px; top: 0px;">
+			<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-532965a902fc0807" async="async"></script> 
+		</div>
+	</div>
+	<ul class="productWarp lbBox">
+		@if(voteItemFragment.getPageItemList().size() > 0){
+			@for((vi, index) <- voteItemFragment.getPageItemList().zipWithIndex) {
+				<li class="productBox lineBlock">
+					<a class="votesImg" href="@if(vi.getCimgtargeturl()!=null){@vi.getCimgtargeturl()}else{javascript:;}" target="_blank">
+						<span class="votesImgB">
+							<span><img src="@if(vi.getCimgurl()!=null){@vi.getCimgurl()}"></span>
+						</span>
+						<span class="votesImgT">@if(vi.getCvalue()!=null){@vi.getPageItemName()}</span>
+					</a>
+					<div class="lbBox">
+						<p class="lineBlock votesNum">Votes:<br><span id="itemCount@vi.getIid()">@if(voteItemFragment.getItemHitCount()!=null && voteItemFragment.getItemHitCount().get(vi.getIid())!=null){@voteItemFragment.getItemHitCount().get(vi.getIid()).getItemCount()}else{0}</span></p>
+						<p class="lineBlock votesZan votesClick" id="@vi.getIid()"> </p>
+					</div>
+				</li>
+			}
+		}
+	</ul>
+

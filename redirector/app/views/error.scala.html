@@ -1,0 +1,29 @@
+@(request: play.mvc.Http.RequestHeader, t: Throwable, errorcode: String)
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<title>error page</title>
+</head>
+<body>
+<div class="container error404" style="width:300px;height:100px;margin:0 auto;">
+    <div class="Bread_crumbs_Box">
+        <ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="/"></a></li>
+            <li>
+                <p>
+                    error
+                </p>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <div class="errorPage">
+    	<div class="errorTxt">
+            <b>Oops!  Something went wrong! (@errorcode)</b>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

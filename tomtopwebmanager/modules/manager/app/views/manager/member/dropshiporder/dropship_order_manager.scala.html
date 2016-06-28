@@ -1,0 +1,202 @@
+@(nameMap: Map[String, dto.order.OrderStatus])
+
+@import views.html.helper._
+@helper.javascriptRouter("order")(
+	controllers.manager.routes.javascript.Order.exportOrderList,
+	controllers.manager.routes.javascript.Order.exportOrderDetailsList
+)
+@views.html.manager.main {
+<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN STYLE CUSTOMIZER -->
+						<div class="color-panel hidden-phone">
+							<div class="color-mode-icons icon-color"></div>
+							<div class="color-mode-icons icon-color-close"></div>
+							<div class="color-mode">
+								<p>THEME COLOR</p>
+								<ul class="inline">
+									<li class="color-black current color-default" data-style="default"></li>
+									<li class="color-blue" data-style="blue"></li>
+									<li class="color-brown" data-style="brown"></li>
+									<li class="color-purple" data-style="purple"></li>
+									<li class="color-grey" data-style="grey"></li>
+									<li class="color-white color-light" data-style="light"></li>
+								</ul>
+								<label>
+									<span>Layout</span>
+									<select class="layout-option m-wrap small">
+										<option value="fluid" selected="">Fluid</option>
+										<option value="boxed">Boxed</option>
+									</select>
+								</label>
+								<label>
+									<span>Header</span>
+									<select class="header-option m-wrap small">
+										<option value="fixed" selected="">Fixed</option>
+										<option value="default">Default</option>
+									</select>
+								</label>
+								<label>
+									<span>Sidebar</span>
+									<select class="sidebar-option m-wrap small">
+										<option value="fixed">Fixed</option>
+										<option value="default" selected="">Default</option>
+									</select>
+								</label>
+								<label>
+									<span>Footer</span>
+									<select class="footer-option m-wrap small">
+										<option value="fixed">Fixed</option>
+										<option value="default" selected="">Default</option>
+									</select>
+								</label>
+							</div>
+						</div>
+						<!-- END BEGIN STYLE CUSTOMIZER -->  
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+
+						<h3 class="page-title">
+							DropShip订单管理 <small>DropShip订单管理 </small>
+						</h3>
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="/sysadmin">Home</a> 
+								<i class="icon-angle-right"></i>
+							</li>
+							<li><a href="#">DropShip订单管理</a></li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				
+				<!-- BEGIN PAGE CONTENT-->
+				
+				<div class="row-fluid" id="productmanager_modle" style="display:none">
+					<div id="productExplainEdit_modle">
+					</div>
+				</div>
+				
+				@form(controllers.manager.routes.DropShipOrder.search(), 'id->"searchOrders", 'onsubmit->"return false"){
+					<div class="row-fluid">
+						<div class="order_ll_select">
+							<div class="order_ll_col">
+						    	<div class="order_ll_inline">
+						        	<p>站点选择</p>
+						            	@services.manager.ChooseService.getInstance().website("siteId", null, true)
+						        </div>
+						    	<div class="order_ll_inline">
+						        	<p>支付方式</p>
+						            	@services.manager.ChooseService.getInstance().payment("paymentId", "-1")
+						        </div>
+						    	<div class="order_ll_inline">
+						        	<p>订单状态</p>
+										@nameMap.map{e =>
+											<input type="checkbox" value="@e._2.getIid()">@e._2.getCname()
+										}
+						        </div>
+						    </div>
+						
+							<div class="order_ll_col">
+						    	<div class="order_ll_inline">
+						        	<p>订单号</p>
+									<input name="orderNumber" type="text" placeholder="10000" class="order_ll_txt">
+						        </div>
+    						    <div class="order_ll_inline">
+						        	<p>总订单号</p>
+									<input name="cdropshippingid" type="text" placeholder="10000" class="order_ll_txt">
+						        </div>
+						    	<div class="order_ll_inline">
+						        	<p>客户邮箱</p>
+						            <input name="email" class="order_ll_txt" type="text"/>
+						        </div>
+						    </div>
+							<input type="hidden" id="orderStatusValue" name="status" value="">
+							<input type="hidden" name="pageSize" value="30">
+							<input type="hidden" name="pageNum">
+							<input type="hidden" name="isShow">
+												
+							<div class="order_ll_col">
+						    	<div class="order_ll_inline">
+						        	<p>交易号</p>
+						            <input class="order_ll_txt" type="text" name="transactionId" placeholder="15041007130714014" maxLength="80"/>
+						        </div>
+								<div class="order_ll_inline">
+						        	<p>DropShip客户邮箱</p>
+						            <input name="useremail" class="order_ll_txt" type="text"/>
+						        </div>
+								<div class="order_ll_inline">
+						        	<p>订单来源</p>
+						            	@services.manager.ChooseService.getInstance().vhost("vhost", "-1")
+						        </div>
+						    </div>
+						    
+						    <div class="order_ll_col">
+						    	<div class="order_ll_inline">
+						        	<p>订单日期</p>
+						            <input id="orderdatestart" name="start" type="text" data-date-format="dd-mm-yyyy" class="order_ll_date" placeholder="start:"/> -
+						            <input id="orderdateend" name="end" type="text" data-date-format="dd-mm-yyyy" class="order_ll_date" placeholder="end:" />
+						        </div>
+						        &nbsp;&nbsp;
+						    	<div class="order_ll_inline">
+						        	<p>支付日期</p>
+						            <input id="paymentDateStart" name="paymentStart" type="text" data-date-format="dd-mm-yyyy" class="order_ll_date" placeholder="start:"/> -
+						            <input id="paymentDateEnd" name="paymentEnd" type="text" data-date-format="dd-mm-yyyy" class="order_ll_date" placeholder="end:" />
+						        </div>
+						    </div>
+						    <div class="order_ll_col">
+						    	<div class="order_ll_inline">
+						        	<p>&nbsp;</p>
+						            <input class="order_ll_Search" id="search_orders_submit" type="button" value="Search" />
+						        </div>
+							    <div class="order_ll_inline">
+							        	<p>&nbsp;</p>
+							            <input class="order_ll_Search" id="download_order" type="button" value="download" />
+							    </div>
+							    <div class="order_ll_inline">
+							        	<p>&nbsp;</p>
+							            <input class="order_ll_Search" id="download_order_details" type="button" value="download(details)" />
+							    </div>
+						    </div>
+						    <div class="order_ll_col">
+						    	<div class="order_ll_inline">
+						        	<ul class="order_ll_show">
+						            	<li>Show</li>
+						            	<li><a class="order_ll_aActi" href="javascript:;" tag="pageSize" value="30">30</a></li>
+						            	<li><a href="javascript:;" tag="pageSize" value="50">50</a></li>
+						            	<li><a href="javascript:;" tag="pageSize" value="100">100</a></li>
+						            </ul>
+							    </div>
+						    </div>
+						</div>
+					</div>
+				}
+				<div class="waiting_ll" style="display:none;">
+				</div>
+				<div class="accountBox">
+					<div class="orderBox">
+						<div class="xxkDiv">
+							<div id="search_orders_html">
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>	
+		<iframe id="ifile" style="display:none"></iframe>
+		<input type="hidden" id="dropshipOrderQuery" value="dropshipOrder">
+		@services.base.HtmlUtils.misc().addTailOnce{
+			<link rel="stylesheet" type="text/css"  href="@controllers.manager.routes.Assets.at("css/manager/ordermanager.css")" />
+			<link href="@controllers.manager.routes.Assets.at("css/manager/bootstrap-datetimepicker.css")" rel="stylesheet" type="text/css" media="screen"/>
+			<script src="@controllers.manager.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.manager.routes.Assets.at("js/manager/ordermanagerdetail")" ></script>
+			<script type="text/javascript">
+				$('input[type=checkbox]').change(function(){
+			    	$('#orderStatusValue').val($('input[type=checkbox]:checked').map(function(){return this.value}).get().join(','))
+			  	})
+			</script>
+		} 
+}
+

@@ -1,0 +1,149 @@
+@(
+messages : valueobjects.base.Page[entity.messaging.Broadcast]
+)
+@import views.html.helper._	
+
+@services.base.HtmlUtils.misc().addHeadOnce{
+<script src="@controllers.base.routes.Assets.at("js/lib/jquery.json.min.js")"></script>
+<script src="@controllers.messaging.routes.Assets.at("confirm/jquery.confirm.js")"></script>
+<link rel="stylesheet" type="text/css" href="@controllers.messaging.routes.Assets.at("confirm/jquery.confirm.css")" />
+}
+
+@views.html.member.base.master("message-list") {
+      <div class="accountRight accountMessageBox" id="myMessageContainer">
+    	<h6>@Messages("messaging.myMessage")</h6>
+        <div class="xxkDiv">
+            <ul class="blackXXK">
+                <li class="xxkActi inboxN_click">@Messages("messaging.inbox")</li>
+                <li class="Recycle">
+                	<a id="markedAsReadMessage" class="lineBlock read_accDh" href="javascript:;">
+                		<em></em>@Messages("messaging.markedAsRead")
+					</a>
+					<a id="deleteMessage" class="lineBlock delete_accDh" href="javascript:;">
+						<em></em>@Messages("messaging.delete")
+					</a>
+					
+                </li>
+                <div class="clear"></div>
+            </ul>
+            <div class="block">
+            <table class="messageTable" border="1" cellpadding="0" cellspacing="0" width="100%">
+                  <tbody>
+                  <tr>
+                    <th><a href="javascript:;" class="rightAll"><span class=""></span></a></th>
+                    <th>@Messages("messaging.from")</th>
+                    <th>@Messages("messaging.subject")</th>
+                    <th>@Messages("messaging.date")</th>
+                  </tr>
+
+				@if(messages != null && messages.getList().size()>0){
+				@messages.getList().map{m=>
+					<tr class="@if(m.getStatus == 1){aNormal}">
+	                    <td><a href="javascript:;" class="rightThis"><span t="@m.getTable" messageId="@m.getId" class=""></span></a></td>
+	                    <td>@m.getFrom</td>
+	                    <td><a class="aBold" href="javascript:;" t="@m.getTable" messageId="@m.getId">@m.getSubject</a></td>
+	                    <td>@m.getCreateDateStr</td>
+                	</tr>
+				} 
+				}
+
+				
+                </tbody></table>
+                
+                <div class="arrayNEX">
+			        @form(controllers.messaging.member.routes.MyMessage.listMyMessage(),'id->"searchbar",'role->"form",'enctype->"multipart/form-data"){
+			          
+			          
+			        }
+		           
+		           @views.html.product.gadget.pagination((messages.pageNo-1),messages.totalPages)
+		        </div>
+		        <div class="clear"></div>
+            </div>
+                </div>
+            </div>
+    </div>
+    
+    </div>
+    
+    @services.base.HtmlUtils.misc().addTailOnce{
+      <script type="text/javascript">
+      		$(function(){
+      			var input = '<input type="hidden" id="p" name="p" value="1" />'; 
+      			$('#searchbar').append(input);
+      			
+      		});
+			$('#deleteMessage').click(function(){
+				
+				$.confirm({
+					'title'		: 'Delete Confirmation',
+					'message'	: 'You are about to delete this item. <br />It cannot be restored at a later time! Continue?',
+					'buttons'	: {
+						'Yes'	: {
+							'class'	: 'blue',
+							'action': function(){
+								//防止用户多次点击
+								$(this).unbind('click');
+								var container = $('#myMessageContainer');
+								var deleteUrl = '@controllers.messaging.member.routes.MyMessage.delete()';
+								//获取checked
+								var checked = container.find('table>tbody>tr>td>a>span.afters');
+								var messageIds = [];
+								$.each(checked,function(){
+									//debugger;
+									var id = $(this).attr('messageId');
+									var t = $(this).attr('t');
+									var para = {'id' : id,'t' : t};
+									messageIds.push(para);
+								});
+								
+								if(messageIds.length > 0){
+									var ids = $.toJSON(messageIds);
+									window.location.href = deleteUrl + '?ids=' + ids;
+									
+								}
+							}
+						},
+						'No'	: {
+							'class'	: 'gray',
+						}
+					}
+				});
+				
+			});
+			
+			var detailUrl = '@controllers.messaging.member.routes.MyMessage.detail()';
+			$('a.aBold').click(function(){
+				var id = $(this).attr('messageId');
+				var t = $(this).attr('t');
+				window.location.href = detailUrl + '?id=' + id + '&t=' + t;
+			});
+			
+			//标记为已读
+			$('#markedAsReadMessage').click(function(){
+				//防止用户多次点击
+				$(this).unbind('click');
+				var container = $('#myMessageContainer');
+				var url = '@controllers.messaging.member.routes.MyMessage.markedAsRead()';
+				//获取checked
+				var checked = container.find('table>tbody>tr>td>a>span.afters');
+				var messageIds = [];
+				$.each(checked,function(){
+					//debugger;
+					var id = $(this).attr('messageId');
+					var t = $(this).attr('t');
+					var para = {'id' : id,'t' : t};
+					messageIds.push(para);
+				});
+				
+				if(messageIds.length > 0){
+					var ids = $.toJSON(messageIds);
+					window.location.href = url + '?ids=' + ids;
+					
+				}
+			});
+        
+      </script>
+    }
+    
+ }

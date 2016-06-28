@@ -1,0 +1,61 @@
+@(items:List[valueobjects.order_api.OrderItem],
+	order:dto.order.Order,
+	currency:dto.Currency,
+	isReview:Boolean,
+	bills: List[dto.order.BillDetail])
+@import services.base._
+@import services.base.utils._
+
+<div class="shoppingCart_con">
+<div class="productOrTT">@Messages("product.information")</div>
+              
+<table class="detailesTab" width="100%" border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th class="itemTH">@Messages("item")</th>
+		<th class="descriptionTH">@Messages("udescription")</th>
+		<th class="priceTH">@Messages("nprice")</th>
+		<th class="quanTH">@Messages("qualitys")</th>
+		<th class="totalTH">@Messages("utotal")</th>
+		<th>@Messages("review")</th>
+	</tr>
+	<tr>
+		<td colspan="6">
+		@items.map{ i => 
+			@order_product_list(i,currency,i.isReview) 
+		}
+		</td>
+	</tr>
+</table>
+
+<table class="orderB_table">
+	<tboby>
+		<tr>
+			<td class="cart_bottom"></td>
+			<td align="right">
+				<table class="grandTotal" width="500" cellspacing="0" cellpadding="0" border="0">
+					<tbody>
+						<tr>
+							<td>@Messages("order.subtotal")</td><td width="105">@currency.getCsymbol @Utils.money(order.getFordersubtotal,currency.getCcode)</td>
+						</tr>
+						<tr>
+							<td class="airmailB">@Messages("shipping.cost")</td>
+							<td width="105"><b>@currency.getCsymbol @Utils.money(order.getFshippingprice,currency.getCcode)</b></td>
+						</tr>
+						@bills.map{b=>
+							<tr>
+								<td>@Messages(b.getCtype) (@b.getCmsg):</td>
+								<td><span class="green">@currency.getCsymbol @Utils.money(b.getFtotalprice,currency.getCcode)</span></td>
+							</tr>
+						}
+						<tr class="grandTotal_txt">
+							<td>@Messages("grand.total")</td>
+							<td><span class="orange">@currency.getCsymbol @Utils.money(order.getFgrandtotal,currency.getCcode)</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</tboby>
+</table>
+
+</div>

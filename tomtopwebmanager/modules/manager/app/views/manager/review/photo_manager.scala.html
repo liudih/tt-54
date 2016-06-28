@@ -1,0 +1,315 @@
+@(vlist: valueobjects.base.Page[dto.interaction.InteractionProductMemberPhotos],
+	st:Integer
+)
+@hosturl = @{play.Play.application().configuration().getString("host.link")}
+@import services.base._
+@import services.base.utils._
+@views.html.manager.main{
+	<h3 class="page-title">
+		Photo management <small></small>
+	</h3>
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-home"></i>
+			<a href="javascript:;">商品管理</a> 
+			<i class="icon-angle-right"></i>
+		</li>
+		<li>
+			<a href="javascript:;">Photo management</a>
+		</li>
+	</ul>
+	<div class="clearfix">
+		<form id="selectform">
+			状态：
+			<select name="st" >
+				<option value="-1">-全部-</option>
+				<option value="0" @if(st==0){selected="selected"}>未审核</option>
+				<option value="1" @if(st==1){selected="selected"} >审核通过</option>
+				<option value="2" @if(st==2){selected="selected"} >审核未通过</option>
+			</select> 
+			<button class="btn blue">筛选</button>
+			<input type="hidden" name="p" id="p" value="@vlist.pageNo()" />
+			<input type="hidden" id="totalPages" value="@vlist.totalPages()"/>
+		</form>
+	</div>
+	<table class="table table-striped table-hover table-bordered">
+		<thead>
+			<tr>
+				<th>批量</th>
+				<th>编号</th>
+				<th>sku</th>
+				<th>评论编号</th>
+				<th>用户邮箱</th>
+				<th>图片路径</th>
+				<th>上传时间</th>
+				<th>审核人</th>
+				<th>审核状态</th>
+				<th>审核时间</th>
+				<th>审核操作</th>
+			</tr>
+		</thead>
+		<tbody>
+		@if(vlist.getList.size>0){
+			@vlist.getList.map{i=>
+				<tr id="tr_@i.getIid">
+					<td>
+						@if(i.getIauditorstatus == null || i.getIauditorstatus == 0){
+					  	<input type="checkbox"  value="@i.getIid">
+					   	}
+					</td>
+					<td class="iid">@i.getIid</td>
+					<td>@i.getCsku</td>
+					<td class="commentid">@i.getIcommentid</td>
+					<td class="email">@i.getCmemberemail</td>
+					<td>
+					@if(i.getCimageurl.indexOf("http")<0){
+					<a href="@hosturl@i.getCimageurl.substring(1)" target="_blank">
+					<img src="@hosturl@i.getCimageurl.substring(1)" style="height:60px;width:100px;" /></a>
+					}else{
+					<a href="@i.getCimageurl" target="_blank">
+					<img src="@i.getCimageurl" style="height:60px;width:100px;" /></a>
+					}
+					</td>
+					<td>@DateFormatUtils.getStrFromYYYYMMDDHHMMSS(i.getDcreatedate)</td>
+					<td>@i.getCauditoruser</td>
+					<td id="state_@i.getIid">
+						@if(i.getIauditorstatus == 0){未审核} 
+						@if(i.getIauditorstatus == 1){通过}
+						@if(i.getIauditorstatus == 2){不通过}
+					</td>
+					<td id="auditdate_@i.getIid">@DateFormatUtils.getStrFromYYYYMMDDHHMMSS(i.getDauditordate)</td>
+					<td>
+					<input type="hidden" class="iwebsiteid" value="@i.getIwebsiteid()" />
+					<input type="hidden" class="iauditorstatus" value="@i.getIauditorstatus()" />
+					@if(i.getIauditorstatus == null || i.getIauditorstatus == 0){
+					<a onclick="binddata(this)" class="editCmsContent" data-toggle="modal" data-target="#edit-cms-content-modal"
+							href="javascript:;"><button class="btn green">审核</button></a>
+					}
+							
+					</td>
+				</tr>
+			}
+		}
+		</tbody>
+	</table>
+	<a id="checkAll">全选</a> &nbsp; 
+	<a id="checkNone">全不选</a> &nbsp; 
+	<a id="checkRevise">反选</a>
+	<select class="span2" id="review_batch_vertify"  onchange="batchChange(this);" class="form-control">
+		<option value="0" selected="selected">批量操作</option>
+		<option value="1">通过</option>
+		<option value="2">不通过</option>
+	</select>
+	<span id="batch_points" style="display:none;">积分：<input type="text" id="allpoints" value="10"/></span>
+	<button id="batch_submit" type="button" class="btn btn-default">提交</button>
+	
+	<div class="row-fluid">
+		<div class="span">
+			<div class="dataTables_info">当前第@vlist.pageNo()页|共@vlist.totalPages()页|共@vlist.totalCount  条记录</div>
+		</div>
+		<div class="span">
+			<div id="advertising-paginator"></div>
+		</div>
+	</div>
+	
+   <div id="edit-cms-content-modal" style="width:900px;margin-left:-450px" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<form class="form-horizontal" id="theform"  onSubmit="return false;">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+			<h3 id="myModalLabel">审核</h3>
+		  </div>
+		  <div class="modal-body">
+				<input type="hidden" name="iid" value="" />
+				<input type="hidden" name="email" value="" />
+				<input type="hidden" name="siteid" value="" />
+				<input type="hidden" name="commentid" value="" />
+				<div class="control-group">
+					<label class="control-label">状态：</label>
+					<div class="controls">
+						<select id="istatus" name="istatus" >
+							<option value="0" >未审核</option>
+							<option value="1" >审核通过</option>
+							<option value="2" >审核不通过</option>
+						</select>
+					</div>
+				</div>
+				<div class="control-group" id="showpoint" style="display:none;">
+					<label class="control-label">输入积分<span class="required">*</span></label>
+					<div class="controls">
+						<input value="10" style="padding:0 !important;" type="text" id="points" name="points" placeholder="input points" class="m-wrap medium span6">
+					</div>
+				</div>
+		  </div>
+		  <div class="modal-footer" style="margin-bottom: -20px;">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+			<button class="btn blue" onclick="submitShenhe()" >提交</button>
+		  </div>
+		  </form>
+	</div>
+
+
+	
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/bootstrap-paginator.js")'></script>
+		<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/manager_common.js")'></script>
+		<script type="text/javascript">
+		$("#edit-cms-content-modal").on("hidden", function() {
+		    $(this).removeData("modal");
+		    var a = document.getElementById("istatus");
+		    a.options[0].selected = true;
+		});
+		$(document).on("change","#istatus",function(){
+			var val = this.value;
+			var commentid = $("#theform input[name='commentid']:eq(0)").val();
+			if(val==1 && commentid==""){
+				$("#theform #showpoint").show();
+			}else{
+				$("#theform #showpoint").hide();
+			}
+		});
+		function submitShenhe(){
+			var state = $("#istatus").val();
+			if(state==0){
+				return false;
+			}
+			var points = $("#points").val();
+			if(parseInt(points)>20){
+				alert("Too many points!");
+				return false;
+			}
+			var url = "@controllers.manager.routes.Photo.verify()";
+			$.ajax({
+				url : url,
+				type : "POST",
+				data : $("#theform").serialize(),
+				dataType : "json",
+				success : function(data) {
+					if(data.result == "success"){
+						alert("success!");
+						location.reload();
+					} else {
+						alert("error!");
+					}
+				}
+			});
+		}
+		//绑定数据
+		function binddata(node){
+			$("#theform input[type='hidden']").val("");
+			var tr = $(node).parent().parent();
+			var iid = tr.find(".iid:eq(0)").html();
+			var email = tr.find(".email:eq(0)").html();
+			var siteid = tr.find(".iwebsiteid:eq(0)").val();
+			var status = tr.find(".iauditorstatus:eq(0)").val();
+			var commentid = tr.find(".commentid:eq(0)").html();
+			var form = $("#theform");
+			form.find("input[name='iid']:eq(0)").val(iid);
+			form.find("input[name='email']:eq(0)").val(email);
+			form.find("input[name='siteid']:eq(0)").val(siteid);
+			if(commentid.length>0){
+				$("#theform #showpoint").hide();
+				form.find("input[name='commentid']:eq(0)").val(commentid);
+			}
+		}
+		
+		$(function(){
+			var pageNo = $("#p").val();
+			var totalPages = $("#totalPages").val();
+			paginationCommon(pageNo,totalPages,"selectform","advertising-paginator");
+		});
+		// 全选
+		  $("#checkAll").on("click", function () {
+		      $("input[type=checkbox]").each(function(){
+		    	  $(this).parent().addClass("checked");
+		      })
+		  });
+
+		  // 全不选
+		  $("#checkNone").on("click", function () {
+		      $("input[type=checkbox]").each(function(){
+		      	 $(this).parent().removeClass("checked");
+		      })
+		  });
+		  
+		  //反选
+		  $("#checkRevise").on("click", function () {
+			  $("input[type=checkbox]").each(function(){
+				 var node =  $(this).parent();
+				 var isChecked = node.attr("class");
+				 if(isChecked == undefined || isChecked ==""){
+					 node.addClass("checked");
+				 } else {
+					 node.removeClass();
+				 }
+			  })
+		  });
+		  function batchChange(node){
+			  var val = parseInt(node.value);
+			  if(val==1){
+				  $("#batch_points").show();
+			  }else{
+				  $("#batch_points").hide();
+			  }
+		  }
+		  //批量处理
+		  $("#batch_submit").click(function(){
+			  var ids = new Array();
+			  $("input[type=checkbox]").each(function(){
+				  var node =  $(this).parent();
+				  var isChecked = node.attr("class");
+					 if(isChecked == "checked"){
+						 var childnode = node.find("input[type=checkbox]");
+						 var id = childnode.val();
+						 var tr = $("#tr_"+id);
+						 var email = tr.find(".email:eq(0)").html();
+						 var siteid = tr.find(".iwebsiteid:eq(0)").val();
+						 var commentid = tr.find(".commentid:eq(0)").html();
+						 if(email==null || email==""){
+							 email = "-";
+						 }
+						 if(siteid==null || siteid==""){
+							 siteid = "1";
+						 }
+						 if(commentid==null || commentid==""){
+							 commentid = "0";
+						 }
+						 ids.push(id+","+email+","+siteid+","+commentid);
+					 }
+			  });
+			  if(ids.length==0){
+				  alert("请至少选择一条要审核的评论");
+				  return false;
+			  }
+			  var points = $("#allpoints").val();
+			  if(points>20){
+				  alert("too many points!");
+				  return false;
+			  }
+			  var status = parseInt($("#review_batch_vertify").val());
+			  if(status==0){
+				  return false;
+			  }
+			  var idsString = ids.join(";");
+			  var url = "@controllers.manager.routes.Photo.batchverify()";
+				$.ajax({
+					url : url,
+					type : "POST",
+					data : {
+						"batchstring":idsString,
+						"points":points,
+						"status":status
+					},
+					dataType : "json",
+					success : function(data) {
+						if(data.result == "success"){
+							alert("success!");
+							location.reload();
+						} else {
+							alert("error!");
+						}
+					}
+				});
+		  });
+		</script>
+	}
+}

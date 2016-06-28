@@ -1,0 +1,38 @@
+@(currentCurrency :String,
+currencyList :List[dto.Currency])
+@helper.javascriptRouter("js_routes")(
+		controllers.base.routes.javascript.Regional.regionalSettings)
+				<a class="popBoxClick block100" href="javascript:;"> </a>
+	        		<div class="publicePop_Box popBoxNone topCurrency_zIndex">
+	        			<div class="topCurrency_box rightTop_popBox">
+	        				<i class="sClean closePop"> </i>
+	        				<p>Current Currency: @currentCurrency</p>
+	        				<div class="CurrencyBox">
+	        					<p>Currency:</p>
+	        					<ul class="lbBox CurrencyBox_ul li_clickPop">
+	        					
+	        					@if(null!=currencyList&&currencyList.size>0){
+	        					@currencyList.map{c=>
+	        					@if(null!=c){
+	        					@if(currentCurrency==c.getCcode){
+	        					<li class="lineBlock aciClick lbBox aciCss">
+	        						<p class="lineBlock">@c.getCsymbol</p>
+	        						<p class="lineBlock" code="@c.getCcode">@c.getCcode</p>
+	        						</li>
+	        						}else{
+	        						<li class="lineBlock aciClick lbBox">
+	        						<p class="lineBlock">@c.getCsymbol</p>
+	        						<p class="lineBlock" code="@c.getCcode">@c.getCcode</p>
+	        						</li>
+	        						}
+	        						}
+	        						}
+	        		}
+	        					</ul>
+	        				</div>
+	        			</div>
+						<div class="blackPop"> </div>
+	        		</div>
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+@controllers.base.routes.Assets.at("js/select_currency.js")
+}		

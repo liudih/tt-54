@@ -1,0 +1,51 @@
+GET     /:title.html                             @controllers.product.Product.view(title: String)
+
+GET    /assets/*file          					 controllers.product.Assets.at(path="/public", file)
+
+GET    /categories             					 @controllers.product.Category.categoies()
+GET    /imgxy/:width/:height/*imgfile            @controllers.image.Image.viewScaled(imgfile: String, width: Int, height: Int)
+GET    /img/*imgfile                             @controllers.image.Image.view(imgfile: String)
+GET    /edm/*imgfile                             @controllers.image.Image.edmView(imgfile: String)
+GET    /activity/*imgfile                        @controllers.image.Image.activityView(imgfile: String)
+
+GET    /search-view                       		 @controllers.search.ProductSearch.searchNavigation()
+
+GET    /search-suggest                           @controllers.search.ProductSearch.suggest(q: String ?= null)
+
+GET    /product                      			 @controllers.search.ProductSearch.search(q:String ?= null,st: Int ?=0)
+
+GET   /product/more           					 @controllers.search.ProductSearch.searchMore(kw: String ?= null, p: Int ?=0)
+
+GET   /product/hotsales                          @controllers.product.Product.hotSales()
+
+GET   /product/freeshipping                      @controllers.product.Product.freeShipping()
+
+GET   /freeshipping/more                         @controllers.product.Product.freeShippingMore()
+
+GET   /hotsales/more                             @controllers.product.Product.hotSalesMore()
+
+GET   /recommend/more                            @controllers.product.Product.recommendMore()
+
+GET   /multiatribute                             @controllers.product.Product.getMultiatributeProduct(clistingid: String?="")
+
+GET   /product/dailydeal                         @controllers.product.Product.dailyDeals()
+
+GET   /product-description/:ctitle.html          @controllers.product.Product.productDescription(ctitle:String)
+
+GET   /product/newarrivals                       @controllers.product.Product.newArrivals()
+
+GET   /newarrivals/more                          @controllers.product.Product.newArrivalsMore()
+
+GET   /recommend                                 @controllers.product.Product.recommend()
+
+GET   /showproductstorage           @controllers.product.Product.showProductStorage(listingid: String)
+
+
+#
+# Category should be the last route as it need to support url like:
+# /computers-networking/keyboards-mice-input/barcode-scanners
+#
+GET      /*cpath                                                              @controllers.product.Category.subCategories(cpath: String, p: Int ?= 1, limit: Int ?=5, filter: String ?= null, st: Int ?=0)
+
+
+

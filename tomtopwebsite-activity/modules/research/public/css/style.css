@@ -1,0 +1,143 @@
+/*格式化*/
+* {margin:0px; padding:0px; border:0px;}
+body {font-family:Verdana ,Arial, Helvetica, sans-serif; font-size:12px; line-height:14px; color:#333; background:#a7070e url(http://www.tomtop.com/activity/images/edm/christmas-20151020-1920x480.png) repeat-y center top; background-attachment:fixed; overflow-x:hidden;}
+img {border:none;}
+a {display:block; color:#333; text-decoration:none;}
+.clear {clear:both;}
+/*头部*/
+.head {width:100%; height:auto; padding:20px 0px; border-bottom:0px #000 solid; background:#fff;}
+.head table {width:100%; min-width:300px; max-width:1200px; margin:auto;}
+.logo {width:24%; min-width:100px; padding:0px 20px 0px 5px; border-right:1px #cdcdcd solid;}
+.logo img {width:100%; max-width:200px;}
+.home {margin-left:20px;}
+.home li {list-style:none; float:left; height:16px; line-height:16px;}
+.home li:first-child {width:60px; margin-right:10px;}
+.home li:first-child em {width:12px; height:14px; margin-left:10px; vertical-align:middle; display:inline-block; background:url(http://www.tomtop.com/img/images/edm/SpecialTopicBackground-20151005.png) no-repeat -16px -1px; background-size:128px auto;}
+.head table span {width:160px; font-family:Arial; color:#1077C7; cursor:pointer;}
+/*banner*/
+.banner {width:100%; height:auto; background:url(http://www.tomtop.com/img/images/edm/christmas-20151020-1920x580.jpg) no-repeat center top;}
+.bannerMain {width:100%; min-width:320px; max-width:1200px; margin:auto; position:relative;}
+.gaffer {width:381px; height:352px; position:absolute; top:185px; right:-28px; animation:banner 3s 2s; -moz-animation:banner 3s 2s; -ms-animation:banner 3s 2s; -o-animation:banner 3s 2s; -webkit-animation:banner 3s 2s;}
+/*规则*/
+.rules {width:1200px; height:160px; margin:0px auto 100px auto; position:relative; background:#fffdcd;}
+.rules p {height:160px; padding:12px 0px 0px 272px; font-size:18px; line-height:24px; color:#fe0511; border:5px #12b098 dashed;}
+.decorative01 {width:185px; height:168px; position:absolute; top:-15px; left:52px;}
+.decorative02 {width:143px; height:178px; position:absolute; bottom:-110px; right:50px; z-index:999;}
+.decorative03 {width:1210px; height:74px; position:absolute; top:180px; left:-5px; z-index:998; background:url(http://www.tomtop.com/img/images/edm/christmas-20151020-1210x74.png) no-repeat;}
+/*快速导航*/
+#nav {width:100%; position:fixed; bottom:200px; opacity:0; filter:alpha(opacity:0);}
+#navs {max-width:1200px; margin:auto; position:relative;}
+#navs-top {width:50px; height:35px; position:absolute; right:-52px; bottom:37px; border-top-left-radius:3px; border-top-right-radius:3px; background:#7a0000; z-index:999;}
+#navs-top span {width:100%; height:100%; display:block; background:url(http://www.tomtop.com/img/images/edm/SpecialTopicBackground-20151005.png) no-repeat -263px -86px; background-size:500px auto;}
+#navs-bottom {width:50px; height:35px; position:absolute; right:-52px; bottom:0px; margin-top:5px; border-bottom-left-radius:3px; border-bottom-right-radius:3px; background:#7a0000; z-index:999;}
+#navs-bottom span {width:100%; height:100%; display:block; background:url(http://www.tomtop.com/img/images/edm/SpecialTopicBackground-20151005.png) no-repeat -326px -86px; background-size:500px auto;}
+#navs-top:hover,#navs-bottom:hover {background:#5a0000;}
+/*主体*/
+.main {width:100%; height:auto;}
+/*主体框*/
+.Contents {width:100%; min-width:308px; max-width:1216px; margin:auto;}
+/*副产品*/
+.main ul li {width:25%; list-style:none; float:left;}
+.productContents {margin:4px; padding:10px 5% 20px 5%; position:relative; background:#fff;}
+.discount {width:40px; height:50px; position:absolute; top:10px; right:12px; font-family:Arial; font-size:18px; font-weight:bold; color:#fff; text-align:right; padding:6px 16px 0px 0px; background:url(http://www.tomtop.com/img/images/edm/SpecialTopicBackground-20151005.png) no-repeat -7px -7px; background-size:505px auto; z-index:999;}
+.product-img a img {width:100%;}
+.productContents>h1 {height:28px; margin:15px 0px; font-size:12px; font-weight:inherit; overflow:hidden;}
+.product-price {font-family:impact ,Arial, Helvetica, sans-serif; font-size:24px; color:#ff4a00; float:left;}
+.product-price p {margin-bottom:8px; font-family:Verdana ,Arial, Helvetica, sans-serif; font-size:12px; color:#666; text-decoration:line-through;}
+.product-buynow {width:95px; height:32px; margin-top:8px;  float:right; text-align:center; line-height:32px; font-family:Arial; font-size:14px; font-weight:bold; background:#ff4a00;}
+.product-buynow:hover {box-shadow:0px 0px 4px #d29d0c; background:#ff6400;}
+.product-buynow a {color:#fff;}
+/*感恩*/
+.Thanksgiving {width:1200px; margin:auto; margin-bottom:20px; position:relative;}
+.Thanksgiving ul {position:absolute; top:272px; right:120px;}
+.Thanksgiving ul li {width:170px; height:82px; padding-top:21px; float:left; list-style:none; font-size:16px; color:#fff; text-shadow:1px 1px #333; text-align:center;}
+.Thanksgiving ul li p {margin:12px 0px 10px 0px; font-size:24px;}
+/*点赞*/
+.lineBlock {line-height:20px;}
+/*页脚*/
+.foot {width:100%; height:auto; background:#DCDCDC;}
+.foots {width:100%; min-width:300px; max-width:1200px; height:auto; margin:auto;}
+.foots ul {padding:100px 0px 20px 0px; margin:0px 10px; border-bottom:1px #999 solid;}
+.foots ul li {width:16.66%; height:45px; margin:10px 0px; list-style:none; float:left;}
+.foots ul li span {width:45px; height:45px; margin-left:15%; display:inline-block; background-image:url(http://www.tomtop.com/img/images/edm/SpecialTopicBackground-20151005.png); background-repeat:no-repeat; background-size:400px auto;}
+.foots ul li a {padding-top:10px; display:inline-block; vertical-align:top;}
+.foots ul li a:hover {color:#09F;}
+.footFacebook {background-position:-8px -106px;}
+.footTwitter {background-position:-76px -106px;}
+.footPinterest {background-position:-144px -106px;}
+.footTOMTOPblog {background-position:-212px -106px;}
+.footYoutube {background-position:-280px -106px;}
+.footGoogle {background-position:-348px -106px;}
+.footFacebook {background-position:-8px -106px;}
+.footTwitter {background-position:-76px -106px;}
+.footPinterest {background-position:-144px -106px;}
+.footTOMTOPblog {background-position:-212px -106px;}
+.footYoutube {background-position:-280px -106px;}
+.footGoogle {background-position:-348px -106px;}
+.foots ul li:hover .footFacebook {background-position:-8px -159px;}
+.foots ul li:hover .footTwitter {background-position:-76px -159px;}
+.foots ul li:hover .footPinterest {background-position:-144px -159px;}
+.foots ul li:hover .footTOMTOPblog {background-position:-212px -159px;}
+.foots ul li:hover .footYoutube {background-position:-280px -159px;}
+.foots ul li:hover .footGoogle {background-position:-348px -159px;}
+.Copyright {margin:0px 10px; padding:50px 0px; text-align:center; border-top:1px #fff solid;}
+
+@keyframes banner{
+	0% {transform:translateX(1000px);}
+	80% {transform:translateX(-20px);}
+	100% {transform:translateX(0px);}
+}
+@-moz-keyframes banner{
+	0% {-moz-transform:translateX(1000px);}
+	80% {-moz-transform:translateX(-20px);}
+	100% {-moz-transform:translateX(0px);}
+}
+@-ms-keyframes banner{
+	0% {-ms-transform:translateX(1000px);}
+	80% {-ms-transform:translateX(-20px);}
+	100% {-ms-transform:translateX(0px);}
+}
+@-o-keyframes banner{
+	0% {-o-transform:translateX(1000px);}
+	80% {-o-transform:translateX(-20px);}
+	100% {-o-transform:translateX(0px);}
+}
+@-webkit-keyframes banner{
+	0% {-webkit-transform:translateX(1000px);}
+	80% {-webkit-transform:translateX(-20px);}
+	100% {-webkit-transform:translateX(0px);}
+}
+
+@media(max-width:320px)
+{
+	.classifyMain {height:40px; line-height:40px;}
+	.classifyMain a {height:24px; top:8px; line-height:24px;}
+	.main ul li {width:100%;}
+	.foots ul li {width:100%;}
+}
+@media(min-width:321px) and (max-width:640px)
+{
+	.classifyMain {height:40px; line-height:40px;}
+	.classifyMain a {height:24px; top:8px; line-height:24px;}
+	.main ul li {width:50%;}
+	.product-price,.product-buynow {float:none; margin:auto; text-align:center;}
+	.product-buynow {width:120px; margin-top:10px;}
+	.foots ul li {width:50%;}
+}
+@media(min-width:641px) and (max-width:1023px)
+{
+	.main ul li {width:33.33%;}
+	.foots ul li {width:33.33%;}
+}
+@media(min-width:1024px) and (max-width:1399px)
+{
+	.Contents {max-width:1008px;}
+	.classify {margin:30px 4px 6px 4px;}
+	.productContents {margin:4px;}
+	
+}
+@media(min-width:1400px)
+{
+	.classify {margin:30px 8px 6px 8px;}
+	.productContents {margin:8px;}
+}

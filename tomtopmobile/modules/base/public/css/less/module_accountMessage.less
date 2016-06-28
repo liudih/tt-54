@@ -1,0 +1,28 @@
+@import "public.less";
+
+.messageOperation{
+  padding:10px;
+  li{font-size:14px;
+    &.floatR{p{margin-right:10px;}}
+  }
+  &:first-child{font-weight:bold;}
+}
+.accountMessage_ul{
+  background-color:#fff;.border();
+  li{
+    padding:15px 0px;border-top:1px solid #ccc;
+    .checkbox{margin-left:10px;margin-right:0px;}
+    .span65{.txtLength();}
+    >a{&.blue{font-weight:bold;font-size:14px;}}
+    >*{vertical-align:middle;}
+    &:first-child{background-color:#e1e8ed;padding:10px 0px;font-weight:bold;border-top:0px;}
+  }
+}
+.emailMessageTitle{border-bottom:1px solid #ccc;padding:20px 15px 10px 15px;.txtLength();}
+.emailMessageCon{padding:25px 15px;
+  >p{margin-bottom:15px;}
+  >div{margin-top:30px;>p{font-size:16px;}}
+}
+@media(min-width:50px) and (max-width:590px){
+
+}

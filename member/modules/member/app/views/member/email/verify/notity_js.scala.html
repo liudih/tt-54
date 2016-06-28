@@ -1,0 +1,18 @@
+<script type="text/javascript">
+$('.verifi').on('click',function(e){
+	   var s= s || {};
+	   s.url=$(this).attr('href');
+	   s.success=function(data){
+		 if(data){
+			 $('.accouHomeBox').append($(data));
+		 }
+		 
+	   }
+	   $.ajax(s);
+	   return false;
+});
+$(document).on('click','.email-closePop',function(e){
+	$(this).parents(".clickPop").slideUp();
+	$(".bkBlack").fadeOut(function(){$(".bkBlack").remove()});	
+});
+</script>

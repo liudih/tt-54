@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rabbit.conf.mapper.product.ProductImageMapper">
+	<resultMap id="BaseResultMap" type="com.rabbit.dto.product.ProductImage">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+		<result column="csku" property="csku" jdbcType="VARCHAR" />
+		<result column="cimageurl" property="cimageurl" jdbcType="VARCHAR" />
+		<result column="clabel" property="clabel" jdbcType="VARCHAR" />
+		<result column="iorder" property="iorder" jdbcType="INTEGER" />
+		<result column="bthumbnail" property="bthumbnail" jdbcType="BIT" />
+		<result column="bsmallimage" property="bsmallimage" jdbcType="BIT" />
+		<result column="bbaseimage" property="bbaseimage" jdbcType="BIT" />
+		<result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, clistingid, csku, cimageurl, clabel, iorder,coriginalurl,bfetch,
+		bthumbnail, bsmallimage,
+		bbaseimage,ccreateuser
+	</sql>
+	<insert id="batchInsert" parameterType="com.rabbit.dto.product.ProductImage">
+		insert into t_product_image (clistingid, csku,
+		cimageurl, clabel,
+		iorder,
+		bthumbnail, bsmallimage, bbaseimage,ccreateuser,bshowondetails,coriginalurl,bfetch
+		)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.clistingid,jdbcType=VARCHAR},
+			#{item.csku,jdbcType=VARCHAR},
+			#{item.cimageurl,jdbcType=VARCHAR},
+			#{item.clabel,jdbcType=VARCHAR}, #{item.iorder,jdbcType=INTEGER},
+			#{item.bthumbnail,jdbcType=BIT}, #{item.bsmallimage,jdbcType=BIT},
+			#{item.bbaseimage,jdbcType=BIT},#{item.ccreateuser,jdbcType=VARCHAR},
+			#{item.bshowondetails,jdbcType=BIT},
+			#{item.coriginalurl,jdbcType=VARCHAR},
+			#{item.bfetch,jdbcType=BIT}
+			)
+		</foreach>
+	</insert>
+	<update id="updateImages" parameterType="com.rabbit.dto.product.ProductImage">
+		update t_product_image
+		set
+		cimageurl = #{cimageurl,jdbcType=VARCHAR},
+		coriginalurl = #{coriginalurl,jdbcType=VARCHAR},
+		clabel =
+		#{clabel,jdbcType=VARCHAR},
+		bthumbnail = #{bthumbnail,jdbcType=BIT},
+		bsmallimage = #{bsmallimage,jdbcType=BIT},
+		bbaseimage =
+		#{bbaseimage,jdbcType=BIT},
+		ccreateuser =
+		#{ccreateuser,jdbcType=VARCHAR},
+		bshowondetails = #{bshowondetails,jdbcType=BIT} 
+		where clistingid =
+		#{clistingid,jdbcType=VARCHAR} and
+		csku = #{csku,jdbcType=VARCHAR} and
+		iorder = #{iorder,jdbcType=INTEGER}
+	</update>
+	<select id="getImageUrlByClistingid" resultType="com.rabbit.dto.product.ProductImage">
+		select <include refid="Base_Column_List" /> from t_product_image where clistingid in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach>
+	</select>
+	<select id="getProductSmallImageForMemberViewsByListingIds"
+		resultType="com.rabbit.dto.product.ProductImage">
+		select <include refid="Base_Column_List" /> from t_product_image where bsmallimage = true
+		and clistingid in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach>
+	</select>
+</mapper>

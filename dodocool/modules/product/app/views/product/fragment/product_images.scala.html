@@ -1,0 +1,103 @@
+@(fragment: valueobjects.product.ProductImages, title: String)
+@import views.html.product.image
+@xy = @{play.Play.application().configuration().getString("image.url")}
+@original = @{play.Play.application().configuration().getString("image.domain.original")}
+@if(null != fragment){
+ <div class="left-pro">
+      	<div class="goods_info_box clearfix">
+              <div class="goods_info_left" id="upDownbox">
+                  <a  class="a_up"></a>
+                  <div class="goods_smallimg_box">
+                      <ul class="goods_smallimg_list">
+                      <!-- class="sel_img" 选中 -->
+                      	@fragment.getThumbnails().map{ i =>
+                      		<li>
+                       		@if(i.getCimageurl.startsWith("http://") || i.getCimageurl.startsWith("https://")) {
+                       			<a href="@i.getCimageurl" class="cloud-zoom-gallery" rel="useZoom: 'zoom1', smallImage: '@i.getCimageurl' ">
+                                    @image(i.getCimageurl(),null,120,120,"zoom-tiny-image")
+                                </a>
+                            } else {
+                            	<a href="@original@controllers.image.routes.Image.view(i.getCimageurl)" class="cloud-zoom-gallery" rel="useZoom: 'zoom1', smallImage: '@original@controllers.image.routes.Image.view(i.getCimageurl)' ">
+                                  		@image(i.getCimageurl(),null,120,120,"zoom-tiny-image")
+                               	</a>
+                            }
+                           </li>
+						}
+                      </ul>
+                  </div>
+                  <a  class="a_down"></a>
+              </div>
+              <div class="goods_info_img">
+		            @if(null != fragment.getBaseImages && fragment.getBaseImages.size()>0){
+						@if(fragment.getBaseImages.get(0).getCimageurl.startsWith("http://") || fragment.getBaseImages.get(0).getCimageurl.startsWith("https://")) {
+							<a href="@fragment.getBaseImages.get(0).getCimageurl" class="cloud-zoom"  id='zoom1' rel="adjustX:10, adjustY:-4">
+			                   @image(fragment.getBaseImages.get(0).getCimageurl(),null,null,null,"")
+			                </a>
+						}else{
+							<a href="@original@controllers.image.routes.Image.view(fragment.getBaseImages.get(0).getCimageurl)" class="cloud-zoom"  id='zoom1' rel="adjustX:10, adjustY:-4">
+			                   @image(fragment.getBaseImages.get(0).getCimageurl(),null,null,null,"")
+			                </a>
+						}
+			        }
+              </div>
+              <!--图片弹出层-->
+              <div class="pop_layer" id="pop_img">
+                  <div class="pop_img_box">
+                      <a class="pop_close"></a>
+                      <h3>@title</h3>
+                      <div class="pop_img">
+                          <span class="a_pop_left"></span>
+                          <span class="a_pop_right"></span>
+                          <div class="pop_img_a">
+		                    @if(null != fragment.getBaseImages && fragment.getBaseImages.size()>0){
+								@if(fragment.getBaseImages.get(0).getCimageurl.startsWith("http://") || fragment.getBaseImages.get(0).getCimageurl.startsWith("https://")) {
+								  <a href="@fragment.getBaseImages.get(0).getCimageurl" class = 'cloud-zoom'id='zoom2'  rel="position:'inside',showTitle:false,adjustX:-4,adjustY:-4">
+	                                  @image(fragment.getBaseImages.get(0).getCimageurl(),"Optional title display",null,null,"")
+	                              </a>
+								}else{
+								  <a href="@original@controllers.image.routes.Image.view(fragment.getBaseImages.get(0).getCimageurl)" class = 'cloud-zoom'id='zoom2'  rel="position:'inside',showTitle:false,adjustX:-4,adjustY:-4">
+	                                   @image(fragment.getBaseImages.get(0).getCimageurl(),"Optional title display",null,null,"")
+	                              </a>
+								}
+					        }
+                          </div>
+                      </div>
+                      <div class="pop_imglist_box">
+                          <ul class="pop_img_list">
+                          	<!-- class="sel_pop_img" -->
+	                          @fragment.getThumbnails().map{ i =>
+	                          	<li>
+			                          @if(i.getCimageurl.startsWith("http://") || i.getCimageurl.startsWith("https://")) {
+		                                 <a href="@i.getCimageurl"  class="cloud-zoom-gallery" rel="useZoom: 'zoom2', smallImage: '@i.getCimageurl'">
+		                                     @image(i.getCimageurl(),null,120,120,"zoom-tiny-image")
+		                                 </a>
+			                          } else {
+			                             <a href="@original@controllers.image.routes.Image.view(i.getCimageurl)"  class="cloud-zoom-gallery" rel="useZoom: 'zoom2', smallImage: '@original@controllers.image.routes.Image.view(i.getCimageurl)'">
+			                                @image(i.getCimageurl(),null,120,120,"zoom-tiny-image")
+			                             </a>
+			                          }
+	                           </li>
+							}
+                        </ul>
+                     </div>
+                 </div>
+                 <div class="black_layer"></div>
+            </div>
+    	</div>
+   </div>	
+}
+@services.dodocool.base.HtmlUtils.misc().addHeadOnce{
+	<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/goods_show_info.js")'></script>
+	<script>
+		$(function(){
+			$(".goods_smallimg_list li:first-child").addClass("sel_img");
+			$(".pop_img_list li:first-child").addClass("sel_pop_img");
+		});
+	 </script>
+}
+     
+     
+               
+               
+               
+               

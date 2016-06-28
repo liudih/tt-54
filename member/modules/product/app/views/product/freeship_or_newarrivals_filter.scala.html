@@ -1,0 +1,28 @@
+@(freeornewflag:Integer)
+
+<p class="dirTitle">Filter Options:</p>
+<ul class="firThisBox">
+	@if(freeornewflag==0){
+	    <li id="arrival-ui" >
+			<a class="rightThis thisAci" data-name="productType" data-value="new" href="javascript:;"><span></span></a>
+			@Messages("new.arrivals")
+		</li>
+		<li id="freeShipping-ui" >
+		<a class="rightThis thisAci" data-name="productType" data-value="freeShipping" href="javascript:;"><span></span></a>
+		@Messages("free.shipping")
+		</li>
+	}else{
+		@if(freeornewflag==1){
+			<li id="freeShipping-ui" >
+				<a class="rightThis thisAci" data-name="productType" data-value="freeShipping" href="javascript:;"><span></span></a>
+				@Messages("free.shipping")
+			</li>
+		}else{
+			<li id="arrival-ui" >
+				<a class="rightThis thisAci" data-name="productType" data-value="new" href="javascript:;"><span></span></a>
+				@Messages("new.arrivals")
+			</li>
+		}
+	}
+    
+</ul>

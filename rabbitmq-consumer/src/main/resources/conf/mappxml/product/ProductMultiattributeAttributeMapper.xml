@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rabbit.conf.mapper.product.ProductMultiattributeAttributeMapper">
+	<resultMap id="BaseResultMap" type="com.rabbit.dto.product.ProductMultiattributeAttribute">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+		<result column="cparentsku" property="cparentsku" jdbcType="VARCHAR" />
+		<result column="ckey" property="ckey" jdbcType="VARCHAR" />
+		<result column="bshowimg" property="bshowimg" jdbcType="BIT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, iwebsiteid, cparentsku, ikey, bshowimg
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_product_multiattribute_attribute
+		where iid = #{iid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_product_multiattribute_attribute
+		where iid = #{iid,jdbcType=INTEGER}
+	</delete>
+	<insert id="batchInsert" parameterType="java.util.List">
+		insert into t_product_multiattribute_attribute (iwebsiteid,
+		cparentsku,
+		ikey, bshowimg)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.iwebsiteid,jdbcType=INTEGER}, #{item.cparentsku,jdbcType=VARCHAR},
+			#{item.ikey,jdbcType=INTEGER}, #{item.bshowimg,jdbcType=BIT})
+		</foreach>
+	</insert>
+	<insert id="insert" parameterType="com.rabbit.dto.product.ProductMultiattributeAttribute">
+		insert into t_product_multiattribute_attribute (iid, iwebsiteid,
+		cparentsku,
+		ikey, bshowimg)
+		values (#{iid,jdbcType=INTEGER}, #{iwebsiteid,jdbcType=INTEGER},
+		#{cparentsku,jdbcType=VARCHAR},
+		#{ikey,jdbcType=INTEGER}, #{bshowimg,jdbcType=BIT})
+	</insert>
+	<insert id="insertSelective" parameterType="com.rabbit.dto.product.ProductMultiattributeAttribute">
+		insert into t_product_multiattribute_attribute
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				iid,
+			</if>
+			<if test="iwebsiteid != null">
+				iwebsiteid,
+			</if>
+			<if test="cparentsku != null">
+				cparentsku,
+			</if>
+			<if test="ikey != null">
+				ikey,
+			</if>
+			<if test="bshowimg != null">
+				bshowimg,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				#{iid,jdbcType=INTEGER},
+			</if>
+			<if test="iwebsiteid != null">
+				#{iwebsiteid,jdbcType=INTEGER},
+			</if>
+			<if test="cparentsku != null">
+				#{cparentsku,jdbcType=VARCHAR},
+			</if>
+			<if test="ikey != null">
+				#{ikey,jdbcType=INTEGER},
+			</if>
+			<if test="bshowimg != null">
+				#{bshowimg,jdbcType=BIT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.rabbit.dto.product.ProductMultiattributeAttribute">
+		update t_product_multiattribute_attribute
+		<set>
+			<if test="iwebsiteid != null">
+				iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+			</if>
+			<if test="cparentsku != null">
+				cparentsku = #{cparentsku,jdbcType=VARCHAR},
+			</if>
+			<if test="ikey != null">
+				ckey = #{ikey,jdbcType=INTEGER},
+			</if>
+			<if test="bshowimg != null">
+				bshowimg = #{bshowimg,jdbcType=BIT},
+			</if>
+		</set>
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.rabbit.dto.product.ProductMultiattributeAttribute">
+		update t_product_multiattribute_attribute
+		set iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+		cparentsku = #{cparentsku,jdbcType=VARCHAR},
+		ikey = #{ikey,jdbcType=INTEGER},
+		bshowimg = #{bshowimg,jdbcType=BIT}
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+</mapper>

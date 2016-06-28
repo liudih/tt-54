@@ -1,0 +1,94 @@
+@(listingId:String,
+	collectCount:Integer,
+	isCollect:Boolean,
+	isColor:Boolean,
+	isFreeship:Boolean,
+	isVideo:Boolean,
+	isDropship:Boolean,
+	bdropshipShow:Boolean,
+	otherLogins: List[Html]
+	)
+<ul class="product_iconList">
+@if(isColor){
+	<ol class="product_color lineBlock">
+	   	<p><span>@Messages("multiple.color")</span></p>
+	</ol>
+}
+@if(isFreeship){
+	<ol class="product_free lineBlock">
+	   	<p><span>@Messages("free.shipping")</span></p>
+	</ol>
+}
+@if(isVideo){
+	<ol class="product_video lineBlock">
+	   	<p><span>@Messages("product.video")</span></p>
+	</ol>	
+}
+<ol class="product_24H lineBlock">
+   	<p><span>@Messages("ships.in.24hrs")</span></p>
+</ol> 
+@if(bdropshipShow){
+	<ol class="product_ds lineBlock @if(isDropship){productAct } " onclick="dropshipCollect('@listingId',this)">
+	    <p><span>@Messages("dropshipping")</span></p>
+	</ol>
+}
+<ol class="product_hart @if(isCollect){product_hartAci} lineBlock" onclick="collect('@listingId',this)">(@collectCount)</ol>
+</ul>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+<script>
+var collecturl = "@controllers.interaction.routes.Collect.collect()";
+var membercollecturl = "@controllers.interaction.routes.Collect.getcollect()";
+var loginurl = "@controllers.member.routes.Login.loginForm()" + "?backUrl="+escape(location.href);
+function collect(lid,node) {
+	var jdom = $(node);
+	if(jdom.hasClass("product_hartAci")){
+		return;
+	}
+	var action = "add";
+	$.get(collecturl, {
+		"lid" : lid,
+		"action" : action
+	}, function(data) {
+		if (data.result == "nologin") {
+			alert("You are not logged in");
+			location.href = loginurl;
+			return;
+		}
+		if (data.result == "success") {
+			if (action == "add") {
+				jdom.addClass("product_hartAci");
+				var text = jdom.html();
+				var num = parseInt(text.substring(1,text.length-1))+1;
+				jdom.html("("+num+")");
+			} 
+		} else {
+			alert(data.result);
+		}
+	}, "json");
+}
+
+var addDropshipCollectUrl = "@controllers.interaction.routes.Dropship.addDropshipProduct()";
+function dropshipCollect(lid,node){
+	var jdom = $(node);
+	if(jdom.hasClass("productAct")){
+		return;
+	}
+	var dataJson =JSON.stringify({"listingid":lid});
+	$.ajax({
+		url : addDropshipCollectUrl,
+		type : "POST",
+		data : dataJson,
+		contentType : "application/json",
+		success : function(data) {
+			if(data == "success"){
+				jdom.addClass("productAct");
+			} else {
+				alert("add failure");
+			}
+		}
+	});
+}
+
+</script>
+}

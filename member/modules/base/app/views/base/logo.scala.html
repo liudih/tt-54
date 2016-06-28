@@ -1,0 +1,56 @@
+@()
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@urlprefix = @{play.Play.application().configuration().getString("member.urlprefix")}
+<div class="topNavigation_box container">
+    <div class="topNavigation_logo">
+    		<div class="topNav_logoT"><a href="@urlprefix"><img src="@controllers.base.routes.Assets.at("img/Tomtop_logo0603_01.png")" /></a></div>
+            <div class="topNav_logoB"><img src="@controllers.base.routes.Assets.at("img/Tomtop_logo0603_02.png")" /></div>
+    </div>
+    <div class="topNavigation_txt">
+            <ul class="topBrd">
+                <li><a href="@urlprefix/product/newarrivals">@Messages("new.arrivals")</a></li>
+                <li class="underFree"><a href="@urlprefix/product/freeshipping">@Messages("free.shipping")</a></li>
+                <li><a href="@urlprefix/product/clearance">@Messages("clearance")</a></li>
+                <li class="UnderSJ_top underDeals">
+                	<dl>
+                        <dt class=""><a href="@urlprefix/product/dailydeal">@Messages("deals")</a><span></span></dt>
+                        <dd>
+                            <ul>
+                                <li><a href="@urlprefix/product/special"><img src="@controllers.base.routes.Assets.at("images/dh_deals.jpg")" /></a></li>
+                                <li><a href="@urlprefix/product/dailydeal"><img src="@controllers.base.routes.Assets.at("images/dh_dailyDeals.jpg")" /></a></li>
+                                <li><a href="@urlprefix/interaction/superdeals"><img src="@controllers.base.routes.Assets.at("images/dh_superDeals.jpg")" /></a></li>
+                               <!--  <li><a href="/interaction/showcopy"><img src="@controllers.base.routes.Assets.at("images/buyone.jpg")" /></a></li> -->
+                            </ul>
+                        </dd>
+                    </dl>
+                	<!-- <a href="/product/dailydeal">@Messages("daily.deals")</a> -->
+                </li>
+                @tp.get("gadget-dropdown")
+                <li class="UnderSJ_top">
+                    <dl>
+                        <dt class=""><a href="/promotion.html">Promotion</a><span></span></dt>
+                    </dl>
+                 </li>
+            </ul>
+    </div>
+    <div class="topNavigation_app">
+<!--             <div class="appStore"></div>
+            <div class="googlePlay"></div> -->
+            <div class="clear"></div>
+            <ul class="dropShipping_ul">
+                <a href="/member/dropship/ad">
+                	<li class="dropShipping_txt" rel="nofollow"><em class="dropShipping"></em>@Messages("drop")<br />@Messages("shippings")</li>
+                </a>
+                <a href="@controllers.help.routes.Help.viplevels()">
+                	<li class="dropShipping_txt" rel="nofollow"><em class="redeemPoints"></em>@Messages("vip")<br />@Messages("club")</li>
+                </a>
+                <a href="/tracking/affiliate">
+                	<li class="dropShipping_txt" rel="nofollow"><em class="affiliateProgram"></em>@Messages("affiliate")<br />@Messages("program")</li>
+                </a>
+                <div class="clear"></div>
+            </ul>
+    </div>
+    <div class="clear"></div>
+</div>
+
+

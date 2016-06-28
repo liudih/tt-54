@@ -1,0 +1,46 @@
+@(storageParentList :List[dto.StorageParent] ,
+iid:Integer,
+cstoragename:String, 
+ccarrivalcountry: String,
+allCountries:List[dto.Country])
+@import views.html.helper._
+<div id="update-arrrival@iid"  class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	 @form(controllers.manager.storage.routes.StorageManagerController.updateStorageArrival()){
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+		    <h3>修改仓库可送达地区</h3>
+		</div>
+		<div class="modal-body">
+			<input type="hidden" name="iid" value="@iid">
+			<div class="control-group">
+				<label class="control-label">仓库</label>
+				<div class="controls">
+				
+					<select name="istorageid" id="storageName">
+					        	@if(null != storageParentList && storageParentList.size >0){
+									@storageParentList.map{ n =>
+										<option value="@n.getIid()">@n.getCstoragename()</option>
+									}
+								}
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">可送达国家</label>
+				<div class="controls">
+					<select name="ccarrivalcountry">
+					        	@if(null != allCountries && allCountries.size >0){
+									@allCountries.map{ n =>
+										<option value="@n.getCshortname()" @if(ccarrivalcountry==n.getCshortname()){selected="selected"}>@n.getCname()</option>
+									}
+								}
+					</select>
+				</div>
+			</div>
+		</div>
+	    <div class="modal-footer" style="margin-bottom: -20px;">
+		     <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
+             <button type="submit" class="btn blue">保存</button>
+	    </div>
+	}
+</div>

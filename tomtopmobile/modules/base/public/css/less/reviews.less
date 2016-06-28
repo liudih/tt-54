@@ -1,0 +1,107 @@
+@import "public.less";
+
+.productReviews_inf{
+   margin-bottom:15px;
+   li{vertical-align:middle;margin-right:10px;}
+  .productReviews_hade{width:40px;height:40px;background-image:url("../../images/icon/hade.png");background-size:100% auto;.border(@C:#dddddd);} 
+  .productReviews_name{font-weight:bold;color:#333;}
+  .productReviews_date{color:#999;}
+}
+
+
+.review_Rating{
+  margin:20px 0px;
+  li{vertical-align:middle;
+    &.reviews_TS{font-size:14px;
+      .orange{font-size:18px;font-weight:bold;}
+    }
+  }
+    .product_StarsW{overflow:hidden;}
+    .product_Reviews{
+      width:100px;height:20px; .bkImg_stars(-0px,-25px);background-size:100% auto;
+      .product_Stars{width:100px;height:20px;.bkImg_stars(-0px,-3px);background-size:100% auto;}
+    }
+}
+
+.startPercentage{
+  margin-top:10px;font-size:12px;
+  li{margin:2px 0;}
+  .percentageBox{
+    width:145px;height:11px;.ground(#ffd179);.border(@C:#fe9601);display:inline-block;margin:0px 5px;vertical-align:middle;
+    >div{
+      height:9px;.ground(#fea801);
+      &.percentageFive{width:60%;}
+      &.percentageFour{width:10%;}
+      &.percentageThree{width:10%;}
+      &.percentageTwo{width:10%;}
+      &.percentageOne{width:10%;}
+    }
+  }
+}
+
+.blockStar{
+  position:relative;top:-6px;width:300px;padding:5px;margin-left:-30px;
+    li{min-width:100px;vertical-align:middle;}
+    .productReviews{width:90px;height:20px; position:relative; .bkImg_stars(-0px,-23px); margin-right:5px;background-size:100% auto;
+      >div{height:15px; overflow:hidden;}
+      .productStars_bk{width:90px;height:20px;.bkImg_stars(-0px,-3px);background-size:100% auto;}
+      .productStar_All{width:80%;}
+      .productStar_Us{width:90%;}
+      .productStar_Sh{width:70%;}
+      .productStar_Pr{width:90%;}
+      .productStar_Qu{width:70%;}
+    }
+  .hoveSTText{text-align:right;}
+}
+
+.review_people{margin-top:30px;width:94%;margin-left:3%;}
+.review_txtPic{
+  .review_Pic_P{
+    .review_Pic_Pul{
+      margin-top:15px;
+      li{.border();width:70px;height:70px;overflow:hidden;margin-right:10px;
+        img{width:70px;height:70px;}
+      }
+    }
+  }
+}
+
+.reviews_more{display:block;position:relative;border-top:1px solid #ccc;border-bottom:1px solid #ccc;padding:20px 20px;margin-top:30px;text-align:center;font-size:16px;
+    &:after{content:"";position:absolute;right:1%;top:14px;width:35px;height:35px;.bkImg_c(0px,0px);background-size:100% auto;}
+}
+
+@media (min-width:590px){
+  .productReviews_inf{
+     margin-bottom:15px;
+     li{font-size:16px;margin-right:10px;}
+  }
+  .review_Rating{
+     li{font-size:14px;}
+    .product_Reviews{
+      width:200px;height:35px; .bkImg_stars(-0px,-52px);
+      .product_Stars{width:200px;height:35px;.bkImg_stars(-0px,-7px);}
+    }
+  }
+  .startPercentage{
+    margin-top:10px;margin-bottom:30px;font-size:14px;
+    li{margin:7px 0;}
+    .percentageBox{
+      width:190px;height:15px;.ground(#ffd179);.border(@C:#fe9601);display:inline-block;margin:0px 5px;
+      >div{
+        height:13px;.ground(#fea801);
+      }
+    }
+  }
+  .blockStar{
+      top:-6px;width:300px;padding:5px;margin-left:-30px;
+      li{font-size:14px;margin:3px 0px;}
+      .productReviews{width:120px;height:23px; position:relative; .bkImg_stars(-0px,-30px); margin-right:5px;background-size:100% auto;
+        >div{height:23px; overflow:hidden;}
+        .productStars_bk{width:120px;height:23px;.bkImg_stars(-0px,-3px);background-size:100% auto;}
+      }
+  }
+  .reviews_more{padding:25px 20px;
+    &:after{content:"";position:absolute;right:1%;top:14px;width:40px;height:40px;.bkImg_c(0px,0px);background-size:100% auto;}
+   }
+}
+

@@ -1,0 +1,29 @@
+@(order: dto.order.Order,
+	cy: dto.Currency,
+	details: List[dto.order.OrderDetail])
+@import services.base.utils._
+<div class="lineBlock orderDetail_left">
+	<h6>@Messages("order.detail")</h6>
+	<div class="orderDetail_con">
+		<h6 class="marT">@Messages("order.total"):
+			<span class="orange">@cy.getCsymbol @Utils.money(order.getFgrandtotal)</span>
+			<a href="javascript:location.reload();" class="refresh TS"><p class="TsTxt">Refresh Price</p></a>
+		</h6>
+		<ul class="payOrder_box">
+			@details.map{d =>
+				<li>
+					<p class="payOrder_title">@Messages("order.number"): </p>
+					<b class="payOrder_number">@d.getCsku</b>
+					<p class="payOrder_txt">@d.getCtitle</p>
+					<p class="payOrder_price">@cy.getCsymbol @d.getFtotalprices</p>
+				</li>
+			}
+		</ul>
+		<p class="security">
+			<em></em>
+			<b class="blue">Buyer Protection by TOMTOP</b>
+			<span><i></i>Full Refund if you don't receive your order</span>
+			<span><i></i>Refund or Keep items not as described</span>
+		</p>
+	</div>
+</div>

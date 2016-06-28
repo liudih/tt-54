@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rabbit.conf.mapper.category.CategoryFilterAttributeMapper" >
+  <resultMap id="BaseResultMap" type="com.rabbit.dto.category.CategoryFilterAttribute" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="icategoryid" property="icategoryid" jdbcType="INTEGER" />
+    <result column="iattributekeyid" property="iattributekeyid" jdbcType="INTEGER" />
+    <result column="iattributevalueid" property="iattributevalueid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, icategoryid, iattributekeyid, iattributevalueid
+  </sql>
+  <insert id="insert" parameterType="com.rabbit.dto.category.CategoryFilterAttribute" >
+    insert into t_category_filter_attribute (icategoryid, iattributekeyid, 
+      iattributevalueid)
+    values (#{icategoryid,jdbcType=INTEGER}, #{iattributekeyid,jdbcType=INTEGER}, 
+      #{iattributevalueid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.rabbit.dto.category.CategoryFilterAttribute" >
+    insert into t_category_filter_attribute
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="icategoryid != null" >
+        icategoryid,
+      </if>
+      <if test="iattributekeyid != null" >
+        iattributekeyid,
+      </if>
+      <if test="iattributevalueid != null" >
+        iattributevalueid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="icategoryid != null" >
+        #{icategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="iattributekeyid != null" >
+        #{iattributekeyid,jdbcType=INTEGER},
+      </if>
+      <if test="iattributevalueid != null" >
+        #{iattributevalueid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

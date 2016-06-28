@@ -1,0 +1,17 @@
+GET    /assets/*file                   controllers.cart.Assets.at(path="/public", file)
+
+GET   /save                            @controllers.cart.Cart.saveCart(data: String)
+
+GET   /cartsize                        @controllers.cart.Cart.showCartSize()
+
+GET   /cartview                        @controllers.cart.Cart.cartView()
+
+GET   /editnum                         @controllers.cart.Cart.editNum(cid: String, num: Integer)
+
+GET   /delcart                         @controllers.cart.Cart.delCart(lisid: String?="", isall: String?="")
+
+GET   /refreshTotal      			   @controllers.cart.Cart.refreshTotal()
+
+GET   /refreshCartTable	               @controllers.cart.Cart.refreshCartTable()
+
+GET   /addToAmzonCart	               @controllers.cart.Cart.addToAmzonCart()

@@ -1,0 +1,85 @@
+@(frm:Form[valueobjects.product.ProductActivityDetail],
+  issuccess:Boolean)
+
+@import views.html.helper._
+@helper.javascriptRouter("getfreeRoutes")(
+	controllers.product.routes.javascript.Product.getMultiatributeProduct,
+	controllers.manager.activity.routes.javascript.ProductActivity.getPrice
+)
+
+@views.html.manager.main {
+
+	<h3 class="page-title">
+		Buy one Get one Free <small></small>
+	</h3>
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-home"></i>
+			<a href="/sysadmin">@Messages("home")</a> 
+			<i class="icon-angle-right"></i>
+		</li>
+		<li>
+			<a href="">Buy one Get one Free</a>
+		</li>
+	</ul>
+	@if(issuccess!=null){
+		<input type="hidden" value="@issuccess" id="result">
+	}
+	@form(controllers.manager.activity.routes.ProductActivity.copyListing() ,'id->"free-form"){
+		<table>
+			<tr>
+				<td class="hd_title"><strong>主产品:</strong></td>
+				<td>
+					<input type="text" id="cparentspu" name="cparentspu" value=""/>
+					<input type="checkbox" id="cheP" class="ch" />
+					<div id="cskuP" >
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="hd_title"><strong>副产品:</strong></td>
+				<td>
+					<input type="text" id="csubspu" name="csubspu" value=""/>
+					<input type="checkbox" id="che"  />
+					<div id="csku" >
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td class="hd_title"><strong>主产品价格:</strong></td>
+				<td>
+					<input type="text" name="fprice" value="" id="fprice"/>
+				</td>
+			</tr>
+			<tr>
+				<td class="hd_title"><strong>数量:</strong></td>
+				<td>
+					<input type="text" name="iqty" value="" id="qty"/>
+				</td>
+			</tr>
+			<tr>
+				<td class="hd_title"><strong>开始时间:</strong></td>
+				<td>
+					<input id="orderdatestart" name="dfromdate" type="text" data-date-format="dd-mm-yyyy" class="order_ll_date" placeholder="start:"/>
+				</td>
+			</tr>
+			<tr>
+				<td class="hd_title"><strong>结束时间:</strong></td>
+				<td>
+					<input id="orderdateend" name="dtodate" type="text" data-date-format="dd-mm-yyyy" class="order_ll_date" placeholder="end:" />
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" style="text-align:center">
+					<button type="submit" class="btn" id="sform">Submit</button>
+				</td>
+			</tr>
+		</table>
+	}
+
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<link href="@controllers.manager.routes.Assets.at("css/manager/bootstrap-datetimepicker.css")" rel="stylesheet" type="text/css" media="screen"/>
+		<script src="@controllers.manager.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.manager.routes.Assets.at("js/manager/getonefree")" ></script>
+	}
+
+}

@@ -1,0 +1,18 @@
+
+@(adminUser:dto.AdminUser)
+ 
+@if(adminUser!=null){
+	<div class="control-group">
+		<label class="control-label">新密码<span class="required">*</span></label>
+		<div class="controls">
+			<input type="hidden" value="@adminUser.getIid()" name="iid" />
+			<input type="text" value="" name="cnewpasswd_one" placeholder="密码" class="m-wrap medium span6">
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label">重复密码<span class="required">*</span></label>
+		<div class="controls">
+			<input type="text" value="" name="cnewpasswd_two" placeholder="密码" class="m-wrap medium span6">
+		</div>
+	</div>
+}

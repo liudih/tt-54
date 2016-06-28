@@ -1,0 +1,25 @@
+@(hotCategories: List[valueobjects.product.category.HotCategory])
+
+<h5 id="f4">@Messages("hot.categories")<a href="javascript:;">@**    @Messages("more") >>    **@   </a></h5>
+@if(null != hotCategories && hotCategories.size() > 0) {
+	<ul class="HotCategoriesUL">
+		@hotCategories.map { p =>
+			<li>
+				<a class="HotCategoriesImg" href="@if(null != p.getImgLinkUrl){@p.getImgLinkUrl}">
+					<img width="220px" height="150px" 
+						src='@if(null != p.getLabelNameId){@controllers.product.routes.CategoryAPI.getCategoryImage(p.getLabelNameId,"categorylabelType")}' 
+						title="@p.getPrompt"/>
+				</a>  
+				<p>@p.getFirstCategoryName</p>
+				@if(null !=p.getSecondCategoryNameAndPathMap && p.getSecondCategoryNameAndPathMap.size() >0){
+					@p.getSecondCategoryNameAndPathMap.map {i =>
+						@i.map { j =>
+							<ol><a href="@controllers.product.routes.CategoryProduct.showCategoryProduct(j._2)">@j._1</a></ol>
+						}
+					}
+				}
+			</li>
+		}
+		<div class="clear"></div>
+	</ul>
+}

@@ -1,0 +1,17 @@
+@(product:valueobjects.base.Page[valueobjects.product.ProductBadge],
+	sharebtn:List[extensions.interaction.share.IShareProvider])
+
+@if(product.getList().size()>0){
+	<h6>@Messages("my.wishlist")<a class="morBT" href="@controllers.interaction.routes.Collect.wishList()">More &gt;&gt;</a></h6>
+	@wishlist_table(product,1,sharebtn)	
+}else{
+<h6>@Messages("my.wishlist")</h6>
+<ul class="choWishlist">
+	<div style="margin:0 auto;height:34px;width:270px;">
+		<p style="font: bold 18px georgia;">@Messages("you.have.no.favorite.on.file")</p>
+		<a class="blue u" href="/">@Messages("its.time.to.do.some.shopping")</a>
+	</div>
+    <div class="clear"></div>
+</ul>
+}
+

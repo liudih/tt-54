@@ -1,0 +1,135 @@
+@(banner:entity.tracking.AffiliateBanner, targetlist:
+List[entity.manager.EnumAffiliateBanner.Target], bannertypelist:
+List[entity.manager.EnumAffiliateBanner.BannerType] )
+@import views.html.helper._ 
+@if(banner!=null){
+<input type="hidden" name="iid" value="@banner.getIid()" />
+<input type="hidden" id="editcategory" value="@banner.getIcategoryid()" />
+<div class="row-fluid">
+	<div class="span6">
+		<div class="control-group">
+			<label class="control-label" for="iwebsiteid">WebSite</label>
+			@services.manager.ChooseService.getInstance().website("iwebsiteid",
+			null, true)}
+		</div>
+
+		<div class="control-group">
+			<label class="control-label">Title<span class="required">*</span></label>
+			<div class="controls">
+				<input style="padding: 0 !important;" value="@banner.getCtitle()"
+					type="text" name="ctitle" placeholder=""
+					class="m-wrap medium span6">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">Link</label>
+			<div class="controls">
+				<input style="padding: 0 !important;" value="@banner.getClink()"
+					type="text" name="clink" placeholder="" class="m-wrap medium span6">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">Category<span class="required">*</span></label>
+			<div class="controls">
+				<select name="icategoryid" id="category-edit">
+				</select>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">Banner Type</label>
+			<div class="controls">
+				<select name="cbannertype" id="cbannertypee">
+					@bannertypelist.map{b=>
+					<option value="@b.getBannerid()"
+						@if(banner.getCbannertype()==b.getBannerid()){selected="selected"}>@b.getBannername()</option>
+					}
+				</select>
+			</div>
+		</div>
+		<div class="control-group" id="sourcefe">
+			<label class="control-label">Source File</label>
+			<div class="controls">
+				<input id="bbannerfile" name="bbannerfile" multiple="multiple"
+					type="file" class="isImage">
+			</div>
+		</div>
+		<div class="control-group" id ="div-dese" style="display:none;">
+					<label class="control-label">描述</label>
+					<div class="controls">
+						<input type="text" name="cdescription" id="cdescription" value="@banner.getCdescription()"/>
+					</div>
+				</div>
+	</div>
+	<div class="span6">
+		<div class="control-group" id ="div-wide">
+			<label class="control-label">Width(px)</label>
+			<div class="controls">
+				<input style="padding: 0 !important;" value="@banner.getIwidth()"
+					type="text" name="iwidth" placeholder=""
+					class="m-wrap medium span6">
+			</div>
+		</div>
+		<div class="control-group" id="div-heie">
+			<label class="control-label">Height(px)</label>
+			<div class="controls">
+				<input style="padding: 0 !important;" value="@banner.getIheight()"
+					type="text" name="iheight" placeholder=""
+					class="m-wrap medium span6">
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">Target</label>
+			<div class="controls">
+				<select name="ctarget"> @targetlist.map{b=>
+					<option
+						value="@b.getTargetid() @if(banner.getCtarget()==b.getTargetid()){selected="selected"} ">@b.getTargetname()</option>
+					}
+				</select>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">Disable</label>
+			<div class="controls">
+				<label class="radio"> <input type="radio" name="bstatus"
+					value="true" @if(banner.getBstatus()==true){checked="checked"}>是
+				</label> <label class="radio"> <input type="radio" name="bstatus"
+					value="false" @if(banner.getBstatus()==false){checked="checked"}>否
+				</label>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">fellow</label>
+			<div class="controls">
+				<label class="radio"> <input type="radio"
+					name="brelnofollow" value="true"
+					@if(banner.getBrelnofollow()==true){checked="checked"}>是
+				</label> <label class="radio"> <input type="radio"
+					name="brelnofollow" value="false"
+					@if(banner.getBrelnofollow()==false){checked="checked"}>否
+				</label>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$("#cbannertypee").change(function() {
+		//清除二级下拉列表
+		var cb = $("#cbannertypee option:selected").text();
+		if (cb == "text") {
+			$("#sourcefe,#div-wide,#div-heie").hide();
+			$("#div-dese").css("display","block")
+		} else {
+			$("#sourcefe,#div-wide,#div-heie").show();
+			$("#div-dese").css("display","none")
+		}
+	});
+	$(function() {
+		getcategory('edit');
+		var cb = $("#cbannertypee option:selected").text();
+		if (cb == "text") {
+			$("#sourcefe,#div-wide,#div-heie").hide();
+			$("#div-dese").css("display","block")
+		}
+	});
+</script>

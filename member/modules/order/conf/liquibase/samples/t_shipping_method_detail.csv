@@ -1,0 +1,5 @@
+ilanguageid,ishippingid,cname,ctitle,ccontent,cfreecontent
+1,1,ChinaDHL,ChinaDHL,DHL CONTEXT,null
+1,2,ChinaEMS,ChinaEMS,EMS CONTEXT,null
+1,3,ChinaLandMailTracking,ChinaLandMailTracking,LandMail,null
+1,4,UKUPS,UKUPS,UKUPS CONTENT,null

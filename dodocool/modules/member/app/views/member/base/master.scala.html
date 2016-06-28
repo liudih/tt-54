@@ -1,0 +1,28 @@
+@(menuID: String, member:dto.member.MemberBase)(body: Html)
+@import views.html.helper._	;var random=Math.random()
+@views.html.base.master{
+<article class="pro_wrapper_item">
+	<section class="pro_wrapper clearfix">
+    	<div class="user_side">
+        	<div class="user_side_in">
+            	<h3 class="profile_h3">User Profile</h3>
+            	<div class="user-profile clearfix">
+                	<img class="fl mr15" width="84" height="84" src="@controllers.member.routes.MemberProfile.getPhoto(member.getCemail())&random=@random" />
+                	<p class="name">@member.getCaccount()</p>
+               	 	<p class="sex">
+               	 		@if(member.getIgender==1){Male} 
+               	 		@if(member.getIgender==2){Female}
+               	 	</p>
+                	<p class="state">
+                		@services.dodocool.base.CountryService.getInstance().getCountryName(member.getCcountry())
+                	</p>
+            	</div>
+            	@menu(menuID)
+            </div>
+         </div>
+         <div class="user_main">
+        	@body
+         </div>
+    </section>
+</article>
+}

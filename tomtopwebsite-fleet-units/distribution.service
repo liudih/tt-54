@@ -1,0 +1,17 @@
+[Unit]
+Description=Nginx for Application Distribution
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill nginx-dist
+ExecStartPre=-/usr/bin/docker rm nginx-dist
+ExecStartPre=/bin/bash -c '(/usr/bin/docker images | grep 192.168.7.15:5000/nginx) || /usr/bin/docker pull 192.168.7.15:5000/nginx'
+ExecStart=/usr/bin/docker run --name='nginx-dist' \
+        -v /data/nginx-dist/data:/usr/share/nginx/html \
+        -p 82:80 \
+        192.168.7.15:5000/nginx
+ExecStop=/usr/bin/docker stop nginx-dist
+Restart=always
+

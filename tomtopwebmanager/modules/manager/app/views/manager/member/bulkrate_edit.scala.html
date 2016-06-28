@@ -1,0 +1,22 @@
+@(bulk:entity.loyalty.BulkRate)
+@if(bulk!=null){
+<input type="hidden" name="iid" value="@bulk.getIid()" />
+<div class="control-group">
+	<label class="control-label">数量</label>
+	<div class="controls">
+		<input value="@bulk.getIqty()" type="text" name="iqty" placeholder="数量" class="m-wrap medium span6" style="padding:0 !important;">
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">折扣</label>
+	<div class="controls">
+		<input value="@bulk.getFdiscount()" type="text" name="fdiscount" placeholder="折扣" class="m-wrap medium span6" style="padding:0 !important;">
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">毛利率</label>
+	<div class="controls">
+		<input value="@bulk.getFgrossprofit()" type="text" name="fgrossprofit" placeholder="毛利率" class="m-wrap medium span6" style="padding:0 !important;">
+	</div>
+</div>
+}

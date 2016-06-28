@@ -1,0 +1,16 @@
+@(types:List[dto.ProductPostType],listingid:String)
+@if(types!=null && types.size()>0){
+
+    <ul class="ProductQA_navigation">
+        <li><a href="@controllers.interaction.routes.Post.list(listingid)">@Messages("all")</a></li>
+        @types.map{t=>
+        
+          <li><a href="@controllers.interaction.routes.Post.list(listingid,t.getIid())">@t.getCcode()</a></li>
+        }
+        <div class="clear"></div>
+    </ul>
+}
+
+
+
+

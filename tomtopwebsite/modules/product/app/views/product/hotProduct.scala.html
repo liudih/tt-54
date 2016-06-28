@@ -1,0 +1,12 @@
+@(keylist: List[dto.search.KeywordSuggest])
+<ul class="key_tags">
+                    <li class="abcde_title">@Messages("hot.products")</li>
+                    @if(keylist!=null){
+                    <li>
+                    	@keylist.map{k=>
+                        <span class="color4"> <a href="@controllers.search.routes.ProductSearch.search()?q=@k.getCkeyword" target="_blank">@k.getCkeyword</a> </span> 
+                        }
+                    </li>
+                    }
+                    <div class="clear"></div>
+                </ul>

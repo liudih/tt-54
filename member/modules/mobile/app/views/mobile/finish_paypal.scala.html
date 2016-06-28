@@ -1,0 +1,30 @@
+@(oid : String)
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no,maximum-scale=1.0">
+<link rel="icon" href="@controllers.mobile.routes.Assets.at("favicon.ico")" type="image/x-icon">
+
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/jquery-1.9.1.js")"></script>
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/main.js")"></script>
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/public.js")"></script>
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/scroll.js")"></script>
+
+<link href="@controllers.mobile.routes.Assets.at("css/style.css")" rel="stylesheet" media="screen">
+<link href="@controllers.mobile.routes.Assets.at("css/bottom.css")" rel="stylesheet" media="screen">
+<link href="@controllers.mobile.routes.Assets.at("css/mobile.css")" rel="stylesheet" media="screen">
+<link href="@controllers.mobile.routes.Assets.at("css/top.css")" rel="stylesheet" media="screen">
+<link href="" rel="stylesheet" type="text/css">
+<link href="@controllers.mobile.routes.Assets.at("css/paymentMethod.css")" rel="stylesheet" type="text/css">
+
+<body>
+<p class="PaymentMethod_title"> Order Number: @oid </p>
+<p class="PaymentMethod_title"> Finish Payment  </p>
+	
+<a href="tomtop://action=payfinish" id="go-pay-now" class="button_orange span98 marT">Finish</a>
+
+</body>
+
+</head>
+</html>

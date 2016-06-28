@@ -1,0 +1,15 @@
+@(banners : List[valueobjects.product.AdItem])
+ 
+
+@if(banners!=null && banners.size()>0){
+   	@banners.map{ b=>
+  	        @if(b.getCbgimageurl() != null){
+  	        	<div style="text-align:center;background-image:url(@b.getCbgimageurl()) ; @if(b.isBbgimgtile()){ background-repeat: repeat-x;}else{background-repeat: no-repeat;} background-color:#@b.getCbgcolor;">
+  	        	<a href="@b.getUrl()"><img src="@b.getImgUrl()" title="@b.getTitle()"></a></div>
+  	        }else{
+  	        	<div style="text-align:center;background-color:#@b.getCbgcolor();"><a href="@b.getUrl()"><img src="@b.getImgUrl()" title="@b.getTitle()"></a></div>
+  	        }
+   	     
+     }
+     
+}

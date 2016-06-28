@@ -1,0 +1,19 @@
+@(attribute: valueobjects.dodocool.product.ProductMultiAttribute)
+@if(null != attribute && null != attribute.getAttributeMap){
+	@attribute.getAttributeMap.map{i =>
+		<div class="pro_detail_color">
+			@if(i._1 == "color" && null != i._2 && i._2.size>0){
+				@i._1 :
+	      		@i._2.map{ p =>
+	      			@if(attribute.getCurrentListingId == p.getClistingid){
+	      				<span class="color-icon"></span>
+	      			}
+					@if(p.isBshowimg == true){
+						<a href="@controllers.product.routes.Product.view(p.getUrl)" class="color-bg @p.getCvalue.toLowerCase" title="@p.getCvalue"></a>
+					}
+				}
+			}
+ 		</div>
+ 		<br>
+	}
+}

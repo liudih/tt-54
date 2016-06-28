@@ -1,0 +1,21 @@
+GET    /assets/*file        controllers.interaction.Assets.at(path="/public", file)
+
+POST   /product-reviews     @controllers.interaction.ProductReviews.getReviews()
+
+POST   /product-comment     @controllers.interaction.ProductFaq.comment()
+
+POST   /product-faq         @controllers.interaction.ProductFaq.getFaqs()
+
+POST   /product-faq-reply   @controllers.interaction.ProductFaq.reply()
+
+GET    /faq                 @controllers.interaction.Faq.home()
+
+GET    /search              @controllers.interaction.Faq.search(key: String)
+
+GET    /contact             @controllers.interaction.Contact.home()
+
+GET    /nextcategory        @controllers.interaction.Contact.getNextCategory(categoryid: Int)
+
+GET    /products            @controllers.interaction.Contact.getProduct(categoryid: Int)
+
+POST   /savecontact         @controllers.interaction.Contact.saveEmailContact()

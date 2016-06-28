@@ -1,0 +1,75 @@
+@(bi: valueobjects.cart.BundleCartItem,
+	isLate: Boolean=false)
+@import services.base._
+@import services.base.utils._
+@baseUrl = @{play.Play.application().configuration().getString("main_website")}
+                    
+<div class="warehouse_goods itemline">
+	<input type="hidden" class="storageid" value="@bi.getStorageID()" autocomplete="off" />
+	<input type="hidden" class="iqty" value="@bi.getIqty()" autocomplete="off" />
+    <div class="warehouse_goods_left">
+    	@if(bi.getChildList().size()>1){
+    	@bi.getChildList().map{ kk=>
+        <dd>
+        	<input type="hidden" class="clistingid" value="@kk.getClistingid()" />
+	        <a href="@if(kk.getCurl()!=null){@baseUrl/@kk.getCurl()@Html(".html")}" >
+				@img(kk.getCimageurl(), kk.getCtitle(), 100, 100, null)
+			</a>
+	        <div class="wares_item_box">
+	            <h5><a href="@if(kk.getCurl()!=null){@baseUrl/@kk.getCurl()@Html(".html")}" >@kk.getCtitle()</a></h5>
+	            <p> <span>SKU:<i>@kk.getSku()</i></span> 
+					@if(null !=kk.getAttributeMap){
+						@kk.getAttributeMap.map{ j=>
+							<span>
+							@if(null != j._1 && j._1.length>0){@j._1.substring(0,1).toUpperCase@j._1.substring(1)}
+							 : <i class="bold">@j._2</i></span>
+						}
+					}
+				</p>
+	            <div class="a_operation">
+	            	@if(!isLate){
+			            <a href="javascript:void(0);" onclick="addLaterCart(this)">@Messages("save_later")</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+			            <a href="javascript:void(0);" onclick="delitem(this)">@Messages("cart.remove")</a>
+		            }else{
+		            	<a href="javascript:void(0);" onclick="moveToCart(this)">@Messages("move_cart")</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+			            <a href="javascript:void(0);" onclick="addcollect('@kk.getClistingid()','add')" >@Messages("add_wishlist")</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+			            <a href="javascript:void(0);" onclick="delLateritem(this)">@Messages("cart.remove")</a>
+		            }
+	            </div>
+	        </div>
+	        <div class="wares_price_box">
+	        	@if(!isLate){
+	            @if(kk.getPrice()!=null){
+				@if(kk.getPrice().getDiscount()!=null && kk.getPrice().getDiscount()>0){
+					<p class="wares_price_through">@kk.getPrice().getSymbol() @Utils.money(kk.getPrice().getUnitBasePrice(),kk.getPrice().getCurrency())</p>
+				}
+				<p>@kk.getPrice().getSymbol() @Utils.money(kk.getPrice().getUnitPrice(),kk.getPrice().getCurrency())</p>
+				
+				}
+				}
+	        </div>
+    	</dd>
+    	}
+    	}
+    </div>
+    <div class="warehouse_goods_right">
+        <div class="wares_qty_box">
+        	@if(!isLate){
+            <span class="wares_qty_minus" onclick="updateItem('sub',this)"></span>
+			<span class="wares_qty_num"><input type="text" class="input_num" value="@bi.getIqty()" autocomplete="off" /></span>
+			<span class="wares_qty_add" onclick="updateItem('add',this)"></span>
+			}
+        </div>
+        <div class="wares_total_box" style="padding-left:40px;">
+            <p><a href="javascript:;">Combo Deal</a></p>
+            @if(bi.getPrice()!=null){
+            <input type="hidden" class="theprice" value="@Utils.money(bi.getPrice().getPrice(), bi.getPrice().getCurrency())" />
+			<p>@bi.getPrice().getSymbol() @Utils.money(bi.getPrice().getPrice(), bi.getPrice().getCurrency())</p>
+			@if(bi.getPrice().getDiscount()!=null && bi.getPrice().getDiscount()>0){
+				<div>@Messages("you_save")</br>@bi.getPrice().getSymbol() @Utils.money((bi.getPrice().getUnitBasePrice()-bi.getPrice().getUnitPrice())*bi.getIqty(), bi.getPrice().getCurrency())
+				(@Utils.percent(bi.getPrice().getDiscount())%)</div>
+			}
+			}
+        </div>
+    </div>
+</div>

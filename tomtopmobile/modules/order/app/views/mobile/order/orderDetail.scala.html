@@ -1,0 +1,16 @@
+@(order : dto.order.Order,helper : plugins.mobile.order.OrderDetailPluginHelper)
+
+@import views.html.helper._	
+
+@views.html.base.sub_master("Order Detail"){
+
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+	@controllers.base.routes.Assets.at("css/paymentMethod.css")
+}
+	
+<div class="container">
+@helper.renderPlugin("product-detail",order)
+@helper.renderPlugin("payent-method",order)
+
+</div>
+}

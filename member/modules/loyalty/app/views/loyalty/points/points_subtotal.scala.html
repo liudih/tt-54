@@ -1,0 +1,29 @@
+@(cart: facades.cart.Cart, extra: valueobjects.order_api.ExtraLineView,currency:dto.Currency)
+@import views.html.helper._
+@import services.base.utils._
+<td>@extra.getMessage() (@extra.getPayLoad):</td>
+<td>
+	<span class="green">@currency.getCsymbol   @Utils.money(extra.getMoney)</span>
+	<div id="delPoints" class="couponClose">X</div>
+</td>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+  <script type="text/javascript">
+  $(function(){
+	  $('#delPoints').click(function(){
+		  $.ajax({ 
+      		  type: 'GET',  
+      			contentType : 'application/json',
+      	        dataType : "JSON",
+      	        url: '@controllers.loyalty.routes.Points.deleteExtra()',
+      	        error: function () {
+      	           
+      	        },  
+      	        success:function(data){
+      	        	window.location.reload();
+      	        }
+      	  })
+	  });
+  })
+  </script>
+}

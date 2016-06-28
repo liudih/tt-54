@@ -1,0 +1,4 @@
+﻿"iid","cname","iparentid","ilevel","cclass","curl","ccreateuser","cenname"
+37,文档上传管理,0,1,3,,lij,UploadFile
+38,文档上传管理,37,2,38,/sysadmin/uploadfile,lij,UploadFileMgr
+39,文档上传路径管理,37,2,39,/sysadmin/uploadfilepath,lij,UploadFilePathMgr

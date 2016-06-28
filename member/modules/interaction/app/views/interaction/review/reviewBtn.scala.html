@@ -1,0 +1,37 @@
+@() @helper.javascriptRouter("js_routes")(
+controllers.member.routes.javascript.Login.login,
+controllers.interaction.review.routes.javascript.ProductReview.checkSign
+)
+
+
+<input id="writeButton" class="writeReview write_A_review" type="submit"
+	value="@Messages("write.a.review")" />
+@views.html.member.login.loginredirect()
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript">
+	$('#writeButton').on(
+			'click',
+			function(e) {
+				var self = this;
+				var s = s || {};
+				s.url = js_routes.controllers.interaction.review.ProductReview
+						.checkSign().url
+				s.type = 'get';
+				async: false;
+				s.data = {};
+				s.success = function(data) {
+					if (data != undefined && data) {
+
+						showDlg.call(self);
+						return;
+					}
+					location.href = js_routes.controllers.member.Login
+							.login(location.href).url
+
+				}
+				$.ajax(s);
+
+			})
+</script>
+
+}

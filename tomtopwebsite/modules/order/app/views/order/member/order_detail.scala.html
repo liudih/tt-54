@@ -1,0 +1,70 @@
+@(items:List[valueobjects.order_api.OrderItem],
+	order:dto.order.Order,
+	currency:dto.Currency,
+	bills: List[dto.order.BillDetail],
+	discount: Double)
+@import services.base._
+@import services.base.utils._
+<h6>@Messages("product.list")</h6>
+<table class="detailesTab paymentTh" width="100%" border="0" cellspacing="0" cellpadding="0">
+		<th class="itemTH">@Messages("item")</th>
+		<th class="descriptionTH">@Messages("description")</th>
+		<th class="priceTH">@Messages("price")</th>
+		<th class="quanTH">@Messages("qualitys")</th>
+		<th class="totalTH">@Messages("utotal")</th>
+	<tr>
+		<td colspan="5">
+		<div class="attributeBOX paymentMethodPro">
+        	<div class="aymentMethodHid">
+        		<div class="aymentMethodShow">
+				@items.map{ i => 
+					@order_product_list(i,currency,false)
+				}
+				<ul>
+                    <li>
+                        <table class="grandTotal" border="0" cellspacing="0" cellpadding="0">
+							<tbody>
+								<tr>
+									<td>@Messages("order.subtotal")</td><td width="105">@currency.getCsymbol @Utils.money(order.getFordersubtotal,currency.getCcode)</td>
+								</tr>
+								<tr>
+									<td class="airmailB">@Messages("shipping.cost")</td>
+									<td width="105"><b>@currency.getCsymbol @Utils.money(order.getFshippingprice,currency.getCcode)</b></td>
+								</tr>
+								@bills.map{b=>
+									<tr>
+										<td>@Messages(b.getCtype) (@b.getCmsg):</td>
+										<td><span class="green">@currency.getCsymbol @Utils.money(b.getFtotalprice,currency.getCcode)</span></td>
+									</tr>
+								}
+								@if(discount != null){
+									<tr>
+										<td>@Messages("order.discount_total"):</td>
+										<td><span class="green">@currency.getCsymbol @Utils.money(discount,currency.getCcode)</span></td>
+									</tr>
+								}
+								<tr class="grandTotal_txt">
+									<td>@Messages("grand.total")</td>
+									<td><span class="orange">@currency.getCsymbol @Utils.money(order.getFgrandtotal,currency.getCcode)</span></td>
+								</tr>
+							</tbody>
+						</table>
+                    </li>
+                </ul>
+				</div>
+            </div>
+            <div class="searchUD">
+                <b>
+                    <span class="attMs">@Messages("order.more")</span>
+                    <span class="attLs">@Messages("order.less")</span><em></em>
+                </b>
+            </div>
+		</div>
+			<!-- <div class="totalPrice">
+				<p>
+					@Messages("order.subtotal") <span> @currency.getCsymbol @Utils.money(order.getFordersubtotal())</span>
+				</p>
+			</div> -->
+		</td>
+	</tr>
+</table>

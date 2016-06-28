@@ -1,0 +1,184 @@
+@(product:valueobjects.base.Page[valueobjects.product.ProductBadge],
+	index: Integer=0,
+	sharebtn:List[extensions.interaction.share.IShareProvider])
+@urlprefix = @{play.Play.application().configuration().getString("member.urlprefix")}
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+@helper.javascriptRouter("collectRoutes")(
+	controllers.interaction.routes.javascript.Collect.collect,
+	controllers.interaction.routes.javascript.Collect.delCollect
+)
+<ul class="choWishlist">
+	<li class="allFirstLi">
+		<a href="javascript:;" class="rightAll"><span></span></a>
+		<a class="rightAll delete" href="javascript:;"><p class="reMAll">@Messages("remove.all")</p>
+            <p class="deletePop" style="display: none;">
+                <i></i>@Messages("remove.all.from.your.cart")<br>
+                <input type="button" value="@Messages("yes")" onclick="removeSelected()" class="deleteYes"/>
+                <input type="button" value="@Messages("no")">
+            </p>
+        </a>
+		<!-- <p class="reMAll" onclick="removeSelected()">Remove all</p> -->
+	</li>
+	@if(index==0){
+	    <li class="wisItems">@Messages("showing") <span>1</span> - <span>10</span> @Messages("of") <span>@product.totalCount</span>@Messages("items")</li>
+	    <li class="showNub">@Messages("show") 
+		    <a @if(product.pageSize==10){class="showAc"} href="javascript:;">10</a>
+		    <a @if(product.pageSize==20){class="showAc"} href="javascript:;">20</a>
+		    <a @if(product.pageSize==40){class="showAc"} href="javascript:;">40</a></li>
+    }
+    <div class="clear"></div>
+</ul>
+<table cellspacing="0" cellpadding="0" border="1" width="100%" class="myRevi">
+      <tbody>
+      <tr>
+	<th class="choINP">&nbsp;</th>
+	<th>@Messages("item")</th>
+	<th class="capTh">@Messages("description")</th>
+	<th>@Messages("price")</th>
+	<th>@Messages("options")</th>
+      </tr>
+      @product.getList().asScala.filter(p => p!=null).map{ p=>
+      <!-- @p.getListingId -->
+	<tr id="item_@p.getListingId" class="product_item">
+		<input type="hidden" class="plistingid" value="@p.getListingId()"/>
+		<input type="hidden" class="pricehtml" @if(p.getPrice()!=null){value="@p.getPrice.getSymbol @Utils.money(p.getPrice.getUnitPrice)"} />
+		
+		<td class="tdRela"><a class="rightThis" href="javascript:;"><span class="" data="@p.getListingId"></span></a></td>
+		<td class="firImg descTd">
+		<a href="@urlprefix@controllers.product.routes.Product.view(p.getUrl)">
+					@img(p.getImageUrl(), p.getTitle(), 60, 60, null)
+				</a>
+		</td>
+		<td>
+		    <a class="wisTT" title="@p.getTitle" href="@urlprefix@controllers.product.routes.Product.view(p.getUrl)">
+				    @if(p.getTitle()!=null && p.getTitle().length>50){
+					@p.getTitle.substring(0,50)...
+				    }else{
+					@p.getTitle
+				    }
+				    </a>
+		    <!-- <p class="wisSku">SKU:PA1413</p> 
+		    <div class="productReviews">
+			<div class="productStar"></div>
+		    </div> (<span class="orange">12</span>reiews)-->
+		    @p.getExtended().map{e=>@e}
+		    <p class="wisAdd" style="margin-top: 0px;">@Messages("added") @p.getCollectDate</p>
+		</td>
+		@if(p.getPrice!=null){
+			<td class="wisPri">@p.getPrice.getSymbol @Utils.money(p.getPrice.getUnitPrice)</td>
+		}
+		<td class="wisAddCar">
+		    @views.html.product.cart_add_button()
+		    <!-- <a href="javascript:;" class="removeX">Remove</a> -->
+		    <a class="removeX delete" href="javascript:;">@Messages("remove")
+                <p class="deletePop" >
+                    <i></i>@Messages("remove.all.from.your.cart")<br>
+                    <input type="button" value="@Messages("yes")" onclick="delcollect('@p.getListingId')" />
+                    <input type="button" value="@Messages("no")" />
+                </p>
+            </a>
+                    
+		    <li class="wisFx">
+			    @sharebtn.asScala.map{ s=>
+			    	@if(s.isInstanceOf[extensions.interaction.share.PinterestShareProvider]){
+			    		@s.getShareButton(controllers.product.routes.Product.view(p.getUrl).absoluteURL(play.mvc.Http.Context.current().request()),if(p.getImageUrl()!=null && p.getImageUrl().startsWith("http")) p.getImageUrl() else controllers.image.routes.Image.view(p.getImageUrl()).absoluteURL(play.mvc.Http.Context.current().request()),p.getTitle())
+			    	}else{
+			    		@s.getShareButton(controllers.product.routes.Product.view(p.getUrl).absoluteURL(play.mvc.Http.Context.current().request()),null,null)
+			    	}
+		        }
+				@*<!-- 
+				<span class="wisFF" onclick="affShareOnFacebook('@controllers.product.routes.Product.view(p.getUrl).absoluteURL(play.mvc.Http.Context.current().request())')" title="Share on Facebook"></span>
+				<span class="wisGZ" onclick="affShareOnTwitter('@controllers.product.routes.Product.view(p.getUrl).absoluteURL(play.mvc.Http.Context.current().request())')" title="Share on Twitter"></span>
+				<span class="wisGG" onclick="affShareGooglePlus('@controllers.product.routes.Product.view(p.getUrl).absoluteURL(play.mvc.Http.Context.current().request())')" title="Share on Google Plus"></span>
+				<span class="wisQQ" onclick="affSharePinterest('@controllers.product.routes.Product.view(p.getUrl).absoluteURL(play.mvc.Http.Context.current().request())','@if(p.getImageUrl()!=null && p.getImageUrl().startsWith("http")){@p.getImageUrl()}else{@controllers.image.routes.Image.view(p.getImageUrl()).absoluteURL(play.mvc.Http.Context.current().request())}','@p.getTitle')"></span>
+				 -->*@
+			</li>
+		</td>
+	  </tr>
+      }
+    </tbody>
+</table>
+@views.html.product.gadget.addcart_js()
+@services.base.HtmlUtils.misc().addTailOnce{
+	<script type="text/javascript">
+		$(".viewCart").click(function(){location.href='http://cart.tomtop.com'});
+		$(".continueShopping").click(function(){$('.addTo_cartHide').hide()});
+		function delcollect(lid) {
+			var collecturl = collectRoutes.controllers.interaction.Collect.collect().url;
+			$.get(collecturl, {
+				"lid" : lid,
+				"action" : "del"
+			}, function(data) {
+				if (data.result == "nologin") {
+					alert("You are not logged in");
+					location.href = "/";
+					return;
+				}
+				if (data.result == "success") {
+					$("#item_"+lid).hide();
+				} else {
+					alert(data.result);
+				}
+			}, "json");
+		}
+		function removeSelected(){
+			var arr = [];
+			$(".rightThis").children("span").each(function(i,e){
+				var n = $(this);
+				if(n.hasClass("afters") && n.attr("data")!=null){
+					arr[arr.length] = n.attr("data");
+				}
+			});
+			arr.join(",");
+			if(arr==""){
+				return;
+			}
+			var delcollecturl = collectRoutes.controllers.interaction.Collect.delCollect(arr).url;
+			$.get(delcollecturl, {
+			}, function(data) {
+				if (data.result == "success") {
+					location.reload();
+				} else {
+					alert(data.result);
+				}
+			}, "json");
+		}
+	</script>
+<script type="text/javascript">
+    function affShareOnFacebook(url) {
+        var shareUrl = 'https://www.facebook.com/sharer/sharer.php?u=';
+        shareUrl += encodeURIComponent(url);
+        popWin(shareUrl,'facebook',getPopupPosition(570,360)+',resizable=yes,scrollbars=yes');
+    }
+    function affShareOnTwitter(url) {
+        var shareUrl = 'https://twitter.com/intent/tweet?original_referer=';
+        shareUrl += encodeURIComponent(window.location.href) + '&text=&url=';
+        shareUrl += encodeURIComponent(url);
+        popWin(shareUrl,'twitter',getPopupPosition(480,320)+',resizable=yes,scrollbars=yes');
+    }
+    function affShareGooglePlus(url) {
+        var shareUrl = 'https://plus.google.com/share?url=';
+        shareUrl += encodeURIComponent(url);
+        popWin(shareUrl,'google',getPopupPosition(500,360)+',resizable=yes,scrollbars=yes');
+    }
+    function affSharePinterest(url,image,title){
+    	var shareUrl = "http://www.pinterest.com/pin/create/button/?url="+encodeURIComponent(url)+"&amp;media="+encodeURIComponent(image)+"&amp;description="+encodeURIComponent(title);
+    	open(shareUrl,'Pinterest','width=310,height=240,left=150,top=150,resizable=no,scrollbars=no,status=yes,toolbar=no,location=no,menubar=no,menu=yes');
+    }
+    function getPopupPosition(width,height){
+        var screenX     = typeof window.screenX != 'undefined' ? window.screenX : window.screenLeft;
+        var	screenY     = typeof window.screenY != 'undefined' ? window.screenY : window.screenTop;
+        var	outerWidth  = typeof window.outerWidth != 'undefined' ? window.outerWidth : document.body.clientWidth;
+        var	outerHeight = typeof window.outerHeight != 'undefined' ? window.outerHeight : (document.body.clientHeight - 22);
+        var left = parseInt(screenX + ((outerWidth - width) / 2), 10);
+        var top  = parseInt(screenY + ((outerHeight - height) / 2.5), 10);
+        return 'width='+width+',height='+height+',left='+left+',top='+top;
+    }
+    function popWin(url,win,para) {
+        var win = window.open(url,win,para);
+        win.focus();
+    }
+</script>	
+}

@@ -1,0 +1,8 @@
+ckey,cjsonvalue
+"freeshipping_code","[""RSP"",""P"",""RFP"",""ZPE"",""MP""]"
+"p_code","[""RSP"",""MPT"",""PT"",""RSPT"",""MP"",""RFPT"",""RFP"",""P""]"
+"notspecial_code","[""ZPTE"",""P"",""PT""]"
+"specail_code","[""RSP"",""MPT"",""RFPT"",""RFP"",""PTU3"",""H2"",""UE"",""RSPT"",""PE"",""UU3"",""D"",""ZPE"",""DD"",""MP"",""E""]"
+"storageid_map","{""P"":1,""PT"":1,""RSP"":1,""RSPT"":1,""H2"":1,""MP"":1,""MPT"":1,""RFP"":1,""RFPT"":1,""D"":1,""E"":1,""ZPE"":1,""ZPTE"":1,""PTU3"":2,""UU3"":2,""DD"":5,""PE"":3,""UE"":3}"
+"notracking_endprice","30.0"
+"freeshipping_endprice","5.0"

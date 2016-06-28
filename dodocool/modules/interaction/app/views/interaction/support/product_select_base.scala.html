@@ -1,0 +1,9 @@
+@(products: List[dto.product.ProductMessage])
+
+<select style="width:100%" id="clistingid" name="clistingid">
+	@if(null != products){
+		@products.map{ i=>
+			<option value="@i.getListingid" data-sku="@i.getSku()">@i.getTitle</option>
+		}
+	}
+</select>

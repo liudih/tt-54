@@ -1,0 +1,5 @@
+ckeyword,irank,icategoryid,ilanguageid,iwebsiteid,cinfo,iresults,bmachine
+phone,10,null,1,1,Phone Related,11,false
+iphone,20,null,1,1,iPhone Related,10,false
+samsung,30,null,1,1,Samsung Related,5,false
+xiaomi,40,null,1,1,Xiaomi,6,false

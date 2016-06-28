@@ -1,0 +1,17 @@
+@(ProductItemFragment : valueobjects.research.vote.ProductItemFragment)
+
+<div>
+	<h5 class="mightLikeTitle">Products You Might Like</h5>
+	@if(ProductItemFragment.getProductBadgeList().size() > 0){
+        <div class="container LevelOne">
+	        <div class="dirRight lineBlock">	
+		        <ul class="arrangeClick arrangeLess block" data="0.99">
+			        @ProductItemFragment.getProductBadgeList().map{pb =>
+			        	@views.html.base.product.badge(pb,true)
+			        }
+			        <div class="clear"></div>
+	        	</ul>
+        	</div>
+       	</div>
+     }
+</div>

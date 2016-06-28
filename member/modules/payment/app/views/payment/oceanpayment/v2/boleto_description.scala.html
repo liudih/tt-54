@@ -1,0 +1,20 @@
+@(mis: valueobjects.member.MemberInSession)
+
+<div class="method_con_boleto" >
+<input type="hidden" name="userName" value="@mis.getUsername">
+<input type="hidden" name="userEmail" value="@mis.getEmail">
+    <div class="boleto_img"></div>
+    <div class="boleto_con">
+    <input typpe="text" name="pay_typeCode" style="display:none;" value="boleto">
+        Type<div class="boleto_input">
+                <h5>
+                <i tag="v" style="font-style: normal;">Boleto</i>
+                <span></span>
+                </h5>
+                <ul>
+                    <li v="boleto">Boleto</li>
+                    <li v="_tef">Transferências Bancária</li>
+                </ul>
+        </div>
+    </div>
+</div>

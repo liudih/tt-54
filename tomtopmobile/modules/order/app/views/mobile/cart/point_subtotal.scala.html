@@ -1,0 +1,12 @@
+@(money : Double,cc : dto.Currency,points : Int)
+@import views.html.helper._	
+
+
+<tr>
+	<td>
+		point(@points):
+	</td>
+	<td>
+		@cc.getCsymbol() @money
+	</td>
+</tr>

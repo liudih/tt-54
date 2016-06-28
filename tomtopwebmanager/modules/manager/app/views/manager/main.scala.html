@@ -1,0 +1,450 @@
+@(body: Html)
+@menu = @{services.manager.AdminMenuEnquiryService.getInstance().getAdminMenuObject()}
+@user = @{services.manager.AdminUserService.getInstance().getCuerrentUser()}
+@link=  @{services.manager.AdminUserService.getInstance().getNewWebUrl()}
+
+<!DOCTYPE html>
+
+<head>
+
+	<meta charset="utf-8" />
+
+	<title>@Messages("tomtop.adminsystem")</title>
+
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+	<meta content="" name="description" />
+
+	<meta content="" name="author" />
+
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->
+	<link href="@controllers.manager.routes.Assets.at("css/manager/bootstrap.min.css")" rel="stylesheet" type="text/css"/>
+
+	<link href="@controllers.manager.routes.Assets.at("css/manager/bootstrap-responsive.min.css")" rel="stylesheet" type="text/css"/>
+
+	<link href="@controllers.manager.routes.Assets.at("css/manager/font-awesome.min.css")" rel="stylesheet" type="text/css"/>
+
+	<link href="@controllers.manager.routes.Assets.at("css/manager/style-metro.css")" rel="stylesheet" type="text/css"/>
+
+	<link href="@controllers.manager.routes.Assets.at("css/manager/style.css")" rel="stylesheet" type="text/css"/>
+
+	<link href="@controllers.manager.routes.Assets.at("css/manager/style-responsive.css")" rel="stylesheet" type="text/css"/>
+
+	<link href="@controllers.manager.routes.Assets.at("css/manager/default.css")" rel="stylesheet" type="text/css" id="style_color"/>
+
+	<link href="@controllers.manager.routes.Assets.at("css/manager/uniform.default.css")" rel="stylesheet" type="text/css"/>
+	
+	<link href="@controllers.manager.routes.Assets.at("css/manager/select2_metro.css")" rel="stylesheet" type="text/css"/>
+	<link href="@controllers.manager.routes.Assets.at("css/manager/DT_bootstrap.css")" rel="stylesheet" type="text/css"/>
+	
+	<!-- END GLOBAL MANDATORY STYLES -->
+
+	<!-- BEGIN PAGE LEVEL STYLES --> 
+
+	<link href="@controllers.manager.routes.Assets.at("css/manager/jquery.gritter.css")" rel="stylesheet" type="text/css"/>
+
+	<link href="@controllers.manager.routes.Assets.at("css/manager/daterangepicker.css")" rel="stylesheet" type="text/css" />
+
+	<link href="@controllers.manager.routes.Assets.at("css/manager/fullcalendar.css")" rel="stylesheet" type="text/css"/>
+
+	<link href="@controllers.manager.routes.Assets.at("css/manager/jqvmap.css")" rel="stylesheet" type="text/css" media="screen"/>
+
+	<link href="@controllers.manager.routes.Assets.at("css/manager/jquery.easy-pie-chart.css")" rel="stylesheet" type="text/css" media="screen"/>
+
+     <link href="@controllers.manager.routes.Assets.at("css/manager/bootstrap-fileupload.css")" rel="stylesheet" type="text/css" media="screen"/>
+ 
+   <link href="@controllers.manager.routes.Assets.at("css/manager/jquery.fancybox.css")" rel="stylesheet" type="text/css" media="screen"/>
+   
+   <link href="@controllers.manager.routes.Assets.at("css/manager/jquery.dataTables.css")" rel="stylesheet" type="text/css" media="screen"/>
+   <link href='@controllers.manager.routes.Assets.at("plugins/colpick/css/colpick.css")' rel="stylesheet" type="text/css"/>
+   
+   <script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/ckeditor/ckeditor.js")'></script>
+   
+   
+    <!-- <link href="@controllers.manager.routes.Assets.at("css/manager/ckeditor/sample.css")" rel="stylesheet" type="text/css" media="screen"/> -->
+	<!-- END PAGE LEVEL STYLES -->
+	<!-- zTree styles start -->
+	<link href="@controllers.manager.routes.Assets.at("plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css")" rel="stylesheet" type="text/css"/>
+	<!-- end   zTree styles -->
+	<!-- add by lijun -->
+	@services.base.HtmlUtils.misc().getHead().map { h => @h }
+</head>
+
+<!-- END HEAD -->
+
+<!-- BEGIN BODY -->
+
+<body class="page-header-fixed">
+
+	<!-- BEGIN HEADER -->
+
+	<div class="header navbar navbar-inverse navbar-fixed-top">
+
+		<!-- BEGIN TOP NAVIGATION BAR -->
+
+		<div class="navbar-inner">
+
+			<div class="container-fluid">
+
+				<!-- BEGIN LOGO -->
+
+				<a class="brand" href="index.html">
+
+				<img src="@controllers.manager.routes.Assets.at("image/logo.png")" alt="logo">
+
+				</a>
+
+				<!-- END LOGO -->
+
+				<!-- BEGIN RESPONSIVE MENU TOGGLER -->
+
+				<a href="javascript:;" class="btn-navbar collapsed" data-toggle="collapse" data-target=".nav-collapse">
+
+				<img src="@controllers.manager.routes.Assets.at("image/menu-toggler.png")" alt="" />
+
+				</a>          
+
+				<!-- END RESPONSIVE MENU TOGGLER -->            
+
+				<!-- BEGIN TOP NAVIGATION MENU -->              
+
+				<ul class="nav pull-right">
+
+					<!-- BEGIN INBOX DROPDOWN -->
+
+
+					<!-- END INBOX DROPDOWN -->
+
+
+					<!-- BEGIN USER LOGIN DROPDOWN -->
+
+					<li class="dropdown user" style="padding:10px 18px 0 0; color:#fff">
+						<span><a style="padding-right:4px;color:#fff" href="@link" target="_blank">新站点</a></span>
+						<span>欢迎您，@user.getCusername()</span>
+						<span><a style="padding-right:4px;color:#fff" href="@controllers.manager.routes.AdminUser.modifyPwdList()">修改密码</a></span>
+						<span><a style="padding-right:4px;color:#fff" href="@controllers.manager.routes.AdminUser.exit()">注销</a></span>
+
+						<i class="icon-angle-down"></i>
+
+						<ul class="dropdown-menu">
+
+							<li><a href="extra_profile.html"><i class="icon-user"></i>@Messages("my.profile")</a></li>
+
+							<li><a href="page_calendar.html"><i class="icon-calendar"></i> @Messages("my.calendar")</a></li>
+
+							<li><a href="inbox.html"><i class="icon-envelope"></i> @Messages("my.inbox") (3)</a></li>
+
+							<li><a href="#"><i class="icon-tasks"></i> @Messages("my.tasks")</a></li>
+
+							<li class="divider"></li>
+
+							<li><a href="extra_lock.html"><i class="icon-lock"></i> @Messages("lock.screen")</a></li>
+
+							<li><a href="login.html"><i class="icon-key"></i> @Messages("log.out")</a></li>
+
+						</ul>
+
+					</li>
+
+					<!-- END USER LOGIN DROPDOWN -->
+
+				</ul>
+
+				<!-- END TOP NAVIGATION MENU --> 
+
+			</div>
+
+		</div>
+
+		<!-- END TOP NAVIGATION BAR -->
+
+	</div>
+
+	<!-- END HEADER -->
+
+	<!-- BEGIN CONTAINER -->
+
+	<div class="page-container">
+
+		<!-- BEGIN SIDEBAR -->
+
+		<div class="page-sidebar nav-collapse collapse">
+
+			<!-- BEGIN SIDEBAR MENU -->        
+
+			<ul class="page-sidebar-menu">
+				<!--<li>
+
+					<div class="sidebar-toggler hidden-phone"></div>
+
+				</li>-->
+                <li class="start">
+
+					<a href="">
+
+					<i class="icon-home"></i> 
+
+					<span class="title">@Messages("dashboard")</span>
+
+					<span class="selected"></span>
+
+					</a>
+
+				</li>
+				
+			<!--  	<begin>-->
+				@menu.getAdminTopMenus().map{ i=>
+				<li>
+
+					<a href="javascript:;">
+
+					<i class="@i.getCclass"></i> 
+
+					<span class="title">@i.getCname</span>
+
+					<span class="arrow "></span>
+
+					</a>
+
+					<ul class="sub-menu">
+						@menu.getAdminNextMenus(i.getIid).map { j=>
+						<li class="menu" data-id="j.getIid()" data-pathname="@j.getCurl">
+							@if(j.getIid() == 83){
+								<a href="javascript:;" tag='@j.getCurl' id="livechat_customerservice_win" onclick="">@j.getCname</a>
+							}else{
+								@if(j.getIid() == 90){
+								<a href="javascript:;" onclick="window.open('@j.getCurl','LiveChatHistory','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=1250,height=470,left=180,top=140');">@j.getCname</a>
+								}else{
+									<a href="@j.getCurl" target="_top"> @j.getCname</a>
+								}
+							}
+							
+							
+						</li>
+						}
+					</ul>
+
+				</li>
+				}
+
+			</ul>
+
+			<!-- END SIDEBAR MENU -->
+
+		</div>
+
+		<!-- END SIDEBAR -->
+
+		<!-- BEGIN PAGE -->
+
+		<div class="page-content">
+
+			<!-- BEGIN SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+
+			<div id="portlet-config" class="modal hide">
+
+				<div class="modal-header">
+
+					<button data-dismiss="modal" class="close" type="button"></button>
+
+					<h3>@Messages("widget.settings")</h3>
+
+				</div>
+
+				<div class="modal-body">
+
+					@Messages("widget.settings.form.goes.here")
+
+				</div>
+
+			</div>
+
+			<!-- END SAMPLE PORTLET CONFIGURATION MODAL FORM-->
+
+			<!-- BEGIN PAGE CONTAINER-->
+
+			<div class="container-fluid">
+
+				<div id="dashboard" style="overflow:inherit;">
+
+					<!-- BEGIN DASHBOARD STATS -->
+					@body
+					<!-- END DASHBOARD STATS -->
+
+				</div>
+
+			</div>
+
+			<!-- END PAGE CONTAINER-->    
+
+		</div>
+
+		<!-- END PAGE -->
+
+	</div>
+
+	<!-- END CONTAINER -->
+
+	<!-- BEGIN FOOTER -->
+
+	<div class="footer">
+
+		<div class="footer-inner">
+
+			2015 &copy; @Messages("metronic.by.tomtop")
+
+		</div>
+
+		<div class="footer-tools">
+
+			<span class="go-top">
+
+			<i class="icon-angle-up"></i>
+
+			</span>
+
+		</div>
+
+	</div>
+
+	<!-- END FOOTER -->
+
+	<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+
+	<!-- BEGIN CORE PLUGINS -->
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery-1.10.1.min.js")" type="text/javascript"></script>
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery-migrate-1.2.1.min.js")" type="text/javascript"></script>
+
+	<!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery-ui-1.10.1.custom.min.js")" type="text/javascript"></script>      
+
+	<script src="@controllers.manager.routes.Assets.at("js/bootstrap.min.js")" type="text/javascript"></script>
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.ui.widget.js")" type="text/javascript"></script>      
+
+
+	<!--[if lt IE 9]>
+
+	<script src="media/js/excanvas.min.js"></script>
+
+	<script src="media/js/respond.min.js"></script>  
+
+	<![endif]-->   
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.slimscroll.min.js")" type="text/javascript"></script>
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.blockui.min.js")" type="text/javascript"></script>  
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.cookie.min.js")" type="text/javascript"></script>
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.uniform.min.js")" type="text/javascript" ></script>
+
+	<!-- END CORE PLUGINS -->
+
+	<!-- BEGIN PAGE LEVEL PLUGINS -->
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.vmap.js")" type="text/javascript"></script>   
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.vmap.russia.js")" type="text/javascript"></script>
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.vmap.world.js")" type="text/javascript"></script>
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.vmap.europe.js")" type="text/javascript"></script>
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.vmap.germany.js")" type="text/javascript"></script>
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.vmap.usa.js")" type="text/javascript"></script>
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.vmap.sampledata.js")" type="text/javascript"></script>  
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.flot.js")" type="text/javascript"></script>
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.flot.resize.js")" type="text/javascript"></script>
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.pulsate.min.js")" type="text/javascript"></script>
+
+	<script src="@controllers.manager.routes.Assets.at("js/date.js")" type="text/javascript"></script>
+
+	<script src="@controllers.manager.routes.Assets.at("js/daterangepicker.js")" type="text/javascript"></script>     
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.gritter.js")" type="text/javascript"></script>
+
+	<script src="@controllers.manager.routes.Assets.at("js/fullcalendar.min.js")" type="text/javascript"></script>
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.easy-pie-chart.js")" type="text/javascript"></script>
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.sparkline.min.js")" type="text/javascript"></script>  
+
+	
+    <script src="@controllers.manager.routes.Assets.at("js/bootstrap-fileupload.js")" type="text/javascript"></script>  
+
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.fancybox.pack.js")" type="text/javascript"></script>
+	
+	<script src="@controllers.manager.routes.Assets.at("js/jquery.easyui.min.js")" type="text/javascript"></script>  
+
+	<!-- END PAGE LEVEL PLUGINS -->
+
+	<!-- zTree scripts start -->
+	<script type="text/javascript" src="@controllers.manager.routes.Assets.at("plugins/zTree_v3/js/jquery.ztree.core-3.5.min.js")"></script>
+	<script type="text/javascript" src="@controllers.manager.routes.Assets.at("plugins/zTree_v3/js/jquery.ztree.excheck-3.5.min.js")"></script>
+	<script type="text/javascript" src="@controllers.manager.routes.Assets.at("plugins/zTree_v3/js/jquery.ztree.exedit-3.5.min.js")"></script>
+	<!-- end zTree scripts   -->
+
+	<!-- BEGIN PAGE LEVEL SCRIPTS -->
+	<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/jquery.dataTables.js")'></script>
+		
+	<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/jquery.dataTables.min.js")'></script>
+
+	<script src="@controllers.manager.routes.Assets.at("js/index.js")" type="text/javascript"></script>
+	
+	<script  language="javascript" type="text/javascript" src='@controllers.manager.routes.Assets.at("js/jquery.validate.min.js")'></script>
+	
+	<script  language="javascript" type="text/javascript" src='@controllers.manager.routes.Assets.at("js/jquery.metadata.js")'></script>
+	
+	<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/ckeditor/bootstrap-ckeditor-modal-fix.js")'></script>
+	
+	<script type="text/javascript" src="@controllers.manager.routes.Assets.at("js/select2.min.js")"></script>
+	<script type="text/javascript" src="@controllers.manager.routes.Assets.at("js/DT_bootstrap.js")"></script>
+	<script type="text/javascript" src="@controllers.manager.routes.Assets.at("js/app.js")" type="text/javascript"></script>
+	<script type="text/javascript" src="@controllers.manager.routes.Assets.at("js/table-editable.js")"></script>    
+	<!-- END PAGE LEVEL SCRIPTS -->  
+	<script>
+
+		jQuery(document).ready(function() {    
+
+		   App.init(); // initlayout and core plugins
+		   TableEditable.init();
+		   
+		   Index.init();
+		   App.initFancybox();
+		   
+		   $("#livechat_customerservice_win").click(function(){
+		   		 if (window.Notification){
+		   		 	 Notification.requestPermission();
+		   		 }
+				window.open($("#livechat_customerservice_win").attr('tag'),'LiveChat','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=750,height=470,left=180,top=140');
+			});
+		   
+		   //init menu
+		   var pathname = jQuery.trim(window.location.pathname);
+		   $(".page-sidebar-menu li[class^=menu]").each(function()  
+		   { 
+	   			var path = jQuery.trim($(this).data('pathname'));
+	   			if (pathname == path) {
+	   				$(this).addClass('active');
+	   				$(this).parentsUntil('.page-sidebar-menu').addClass('active');
+	   			}
+			});
+		});
+
+	</script>
+
+	<!-- END JAVASCRIPTS -->
+<script type="text/javascript">  var _gaq = _gaq || [];  _gaq.push(['_setAccount', 'UA-37564768-1']);  _gaq.push(['_setDomainName', 'keenthemes.com']);  _gaq.push(['_setAllowLinker', true]);  _gaq.push(['_trackPageview']);  (function() {    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);  })();</script></body>
+
+
+<!-- END BODY -->
+@services.base.HtmlUtils.misc().getTail().map { h => @h }
+</html>

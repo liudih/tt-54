@@ -1,0 +1,82 @@
+GET    /assets/*file                  controllers.interaction.Assets.at(path="/public",file: String)
+
+GET    /:listingid/post               @controllers.interaction.Post.list(listingid:String,itypeid:Int?=0,page:Int?=1,pageSize:Int?=15)
+
+GET    /showcopy                      @controllers.interaction.ProductCopy.showProduct(p: Int ?= 1, limit: Int ?=6)
+
+POST   /addpost                       @controllers.interaction.Post.add()
+
+POST   /addpostevalute                @controllers.interaction.Post.addEvalute()
+
+GET    /collect                       @controllers.interaction.Collect.collect(lid: String?="", action: String?="")
+
+GET    /delcollect                    @controllers.interaction.Collect.delCollect(lids: String)
+
+GET    /membercollect                 @controllers.interaction.Collect.getcollect(listingid:String?="")
+
+GET    /wishlist                      @controllers.interaction.Collect.wishList(p: Int ?= 1, limit: Int ?=10, categoryid: Integer ?=null,sort: String?="date", searchname:String?=null)
+
+POST   /addpricematch                 @controllers.interaction.PriceMatch.addData()
+
+POST   /addwholesale                  @controllers.interaction.Wholesale.addData()
+
+POST   /addreport                     @controllers.interaction.ReportError.addData()
+
+POST   /nextsuperdeals                @controllers.home.Home.getNextSuperDeals()
+
+GET    /priceMatch                    @controllers.interaction.PriceMatch.priceMatchResult(p: Int ?= 1, limit: Int ?=10,filter:String?="pe",da:Int ?=6)
+
+GET    /superdeals                    @controllers.interaction.SuperDeals.superDeal(p:Int?=1, limit:Int?=16)		
+
+GET    /superdeals/more               @controllers.interaction.SuperDeals.superDealMore(p:Int?=1)
+
+POST   /product-photos/push-preveiw   @controllers.interaction.ProductPhotos.pushPreveiwImageWithSession()
+
+GET    /product-photos/get-preveiw    @controllers.interaction.ProductPhotos.getPreveiwImageWithSession(index:Int)
+
+GET    /product-photos/del-preveiw    @controllers.interaction.ProductPhotos.delPreveiwImageWithSession(index:Int)
+
+POST   /product-photos/add-comment    @controllers.interaction.ProductPhotos.addComment()
+
+GET    /product-photos/at             @controllers.interaction.ProductPhotos.at(iid:Int)
+
+POST   /productvideo/save             @controllers.interaction.MemberVideo.addVideo(data:String)
+
+GET    /featured                      @controllers.interaction.InteractionProductLabel.getFeatured()
+
+GET    /member-product-post           @controllers.interaction.MemberProductPost.list(reply:Int?=0 ,itypeid:Int?=0,date:Int?=0,p:Int?=1,pageSize:Int?=10)
+
+GET    /member-product-post-datil     @controllers.interaction.MemberProductPost.detail(listingid:String,iid:Int)
+
+GET    /productphotos/checkIsUpload   @controllers.interaction.ProductPhotos.checkIsUpload(listingid:String)
+
+GET    /productphotos/checknum        @controllers.interaction.ProductPhotos.checkNum(listingid:String?="",updatenum:Int?=0)
+
+GET    /productvideo/checknum         @controllers.interaction.MemberVideo.checkNum(listingid:String?="")
+
+GET    /getrecommend                  @controllers.interaction.Browse.getRecommend()
+
+GET    /together                      @controllers.interaction.Browse.setBoughtTogetherBayBrowse()
+
+GET    /dailydeals                    @controllers.interaction.DailyDeals.dailyDeal()
+
+GET    /updateDailyDeals              @controllers.interaction.DailyDeals.updateDailyDeals()
+
+#-------------dropship-----
+GET    /dropship/add                  @controllers.interaction.Dropship.addDropshipProductView()
+GET    /dropship/list                 @controllers.interaction.Dropship.dropshipProductList(p: Int?=1, pageSize: Int?=10, status: String?="all",sku: String?="")
+GET    /dropship/wishlist             @controllers.interaction.Dropship.dropshipWishlist()
+POST   /dropship/add                  @controllers.interaction.Dropship.addDropshipProduct()
+POST   /dropship/batch-add            @controllers.interaction.Dropship.batchAddDropshipProduct()
+POST   /dropship/batch-set            @controllers.interaction.Dropship.batchSetDropshipProduct()
+POST   /dropship/batch-delete         @controllers.interaction.Dropship.batchDeleteDropshipProduct()
+POST   /dropship/delete               @controllers.interaction.Dropship.deleteDropshipProduct()
+GET    /dropship/download             @controllers.interaction.Dropship.downloadDropshipProducts()
+POST   /dropship/put-off              @controllers.interaction.Dropship.dropshipPutOff()
+POST   /dropship/batch-put-off        @controllers.interaction.Dropship.batchPutOffDropshipProduct()
+POST   /dropship/get                  @controllers.interaction.Dropship.isDropshipProduct()
+
+
+GET    /updateDailyDeals              @controllers.interaction.DailyDeals.updateDailyDeals()
+
+GET    /recommendlabel/img           @controllers.interaction.LabelImage.view(iid: Int,langid: Int)

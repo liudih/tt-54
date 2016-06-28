@@ -1,0 +1,36 @@
+@(review : dto.ReviewsCountList)
+@helper.javascriptRouter("js_evaluteRoutes")(
+    controllers.interaction.review.routes.javascript.ProductReview.addEvalute,
+    controllers.member.routes.javascript.Login.login
+)
+<p>@Messages("was.this.review.helpful.to.you")</p>
+<p class="ProductUseful" onclick="checkReview(this);">
+	<a class="black" data-helpful="1" data-icommentid="@review.getCommentId()" href="javascript:;">@Messages("yes") (@review.getHelpfulqty)</a>
+	@Messages("or") 
+	<a class="black" data-helpful="0" data-icommentid="@review.getCommentId()" href="javascript:;">@Messages("no") (@review.getNothelpfulqty)</a>
+</p>
+@services.base.HtmlUtils.misc().addTailOnce{
+ <script type="text/javascript">
+	$('.ProductUseful a').on('click',function(e) {
+		var url = js_evaluteRoutes.controllers.interaction.review.ProductReview.addEvalute().url;
+		var txt = $(this).text();
+		var data = data || {};
+		data.icommentid = $(this).data('icommentid');
+		data.helpfulcode = $(this).data('helpful');
+		var $self=$(this);
+		$.post(url, data, function(data) {
+			if (data) {
+				if (data.errorCode == 0) {
+					$self.text(txt.replace(/\d+/,function(w){
+						return parseInt(w)+1;
+					}))
+				} else if (data.errorCode == 1) {
+					
+					location.href=js_routes.controllers.member.Login.login(location.href).url
+				}
+			}
+		});
+	});
+
+</script>
+}

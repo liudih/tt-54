@@ -1,0 +1,25 @@
+# control channel
+POST   /control                   @controllers.livechat.LiveChat.control()
+
+# data channel
+POST   /data/:chatSessionID       @controllers.livechat.LiveChat.data(chatSessionID: String)	
+
+# livechat UI
+GET    /chatroom/init/:roleId     @controllers.livechat.LiveChatUI.chatroom(roleId:Integer)
+
+GET    /enquiry                   @controllers.livechat.LiveChatUI.startEnquiry()
+GET    /enquiry/topic             @controllers.livechat.LiveChatUI.supportTopic()
+GET    /support                   @controllers.livechat.LiveChatUI.startSupport()
+GET    /waiting/:dest/:number     @controllers.livechat.LiveChatUI.waiting(dest: String, number:Int)
+GET    /customerServiceWaiting    @controllers.livechat.LiveChatUI.customerServiceWaiting()
+
+GET    /assets/*file              controllers.livechat.Assets.at(path="/public", file)
+
+POST    /refresh    			  @controllers.livechat.LiveChat.refresh()
+
+GET     /leave					  @controllers.livechat.LiveChat.leave()
+POST    /leave/save				  @controllers.livechat.LiveChat.leaveSave()
+
+POST   /score    			  	  @controllers.livechat.LiveChat.saveLivechatCommentScore()
+GET	   /topic/:lang				  @controllers.livechat.LiveChat.getTopic(lang:Integer)
+GET    /cs/status				  @controllers.livechat.LiveChat.getActiveCustomerService()

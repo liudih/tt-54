@@ -1,0 +1,8 @@
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+<div class="slider js_ease ease home-category">
+    <div class="frame js_frame" id="parent">
+        <ul class="slides js_slides" id="content">
+        	@tp.get("category")
+        </ul>
+    </div>
+</div>

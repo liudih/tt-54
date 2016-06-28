@@ -1,0 +1,180 @@
+@(product: valueobjects.product.ProductCopyView)
+@import views.html.product.img
+@import services.base._
+@import services.base.utils._
+@helper.javascriptRouter("cartRoutes")(
+	controllers.cart.routes.javascript.Cart.saveCart,
+	controllers.cart.routes.javascript.Cart.cartview,
+	controllers.product.routes.javascript.Product.getMultiatributeProduct,
+	controllers.image.routes.javascript.Image.viewScaled
+)
+@displayMain(title: String,symbol: String,price: String,star: 
+	Integer,count: Integer, listingid: String, mainlistingid: String, url: String ,attribute : List[dto.ProductAttributeItem],oldprice:Double) = {
+        	<div class="oneFree_relative">
+                <h1><a target='_blank' href="@controllers.product.routes.Product.view(url)">
+                	<span id="title_@listingid">
+	                		@title
+                	</span>
+                </a></h1>
+                <div class="oneFree_price">
+                	<p class="lineBlock">@symbol @price</p>
+					<p class="lineBlock oneFree_priceGR">@symbol @oldprice</p>
+                </div>
+                <div class="colorBox_Free">
+                    <div class="middle_T multiattribute_c lineBlock attributesSelection" id="@listingid" data-id="@listingid" data-mainid="@mainlistingid">@Messages("attributes.select")</div>
+                    	<div class="parameter lineBlock" id="attributes@listingid">
+		                    @if(attribute!=null){
+		                    	@attribute.asScala.map{item=>
+				                    <p class="lineBlock">@item.getKey():<span>@item.getValue()</span></p>
+		                    	}
+		                    }
+	                    </div>
+                </div>
+                @views.html.interaction.fragment.average_score_and_review_count.render(star,count)
+            </div>
+}
+
+
+@views.html.base.master{
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	 <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/styles.css")?@version.BuildVersion.build()" />
+ 	 <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/simplePagination.css")">
+ 	 <script src="@controllers.product.routes.Assets.at("js/product/product.min.js")"></script> 
+}
+
+
+<div id="bundle-sale" class="butGetFree_Box container">
+	<div class="Bread_crumbs_Box">
+        <ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="javascript:;"></a></li>
+            <li>
+                <p>
+                    <a class="Bread_link" href="javascript:;">@Messages("buy.one.get.one")</a>
+                </p>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+	<h5 class="ts_text">@Messages("buy.one.get.one") !</h5>
+	@if(product!=null){
+		<form id="theform">
+		<input type="hidden" name="p" id="p" value="@product.getActivityPage().pageNo"/> 
+		<input type="hidden" name="limit" id="limit" value="@product.getActivityPage().pageSize"/>
+		</form>
+		<!--弹出颜色选择-->
+		<div class="chooseProduct_color chooseProduct_colorLeft" id="multiatri_">
+			<div class="chooseColor_box">
+		        <div class="chooseColor_con"  id="multiatribute_">
+		        </div>
+		    </div>
+	        <div class="clear"></div>
+	        <div class="chooseProduct_input">
+	            <input type="submit" id="cancel_multiatribute_" class="Cancel" value="@Messages("cancle")" />
+	            <input type="submit" class="chooseOk" value="@Messages("ok")" id="submit_multiatribute_">
+	        </div>
+	        <div class="chooseProduct_close"></div>
+	        <div class="chooseProduct_sj"></div>
+	    </div>
+		<!--弹出颜色选择结束-->
+		@product.getActivityPage().getList().asScala.map{p=>
+			<div class="oneFree_list">
+				<a class="oneFree_pic lineBlock" target='_blank' href="@controllers.product.routes.Product.view(product.getParentUrl()(p.getCparentlistingid()))" id="img_href_@p.getCparentlistingid()">
+					@img(product.getParentImgurl()(p.getCparentlistingid()),product.getParentTitle()(p.getCparentlistingid()),277,277,null)
+				</a>
+       				 <div class="oneFree_texts lineBlock">
+						@displayMain(product.getParentTitle()(p.getCparentlistingid()),
+						product.getPrice()(p.getCparentlistingid()).getSymbol(),Utils.money(product.getPrice()(p.getCparentlistingid()).getPrice()),
+						product.getParentStar()(p.getCparentlistingid()),product.getParentCount()(p.getCparentlistingid()),p.getCparentlistingid(),
+						p.getCparentlistingid(),product.getParentUrl()(p.getCparentlistingid()),product.getParentMap()(p.getCparentlistingid()),product.getOldpPrice()(p.getCparentlistingid()))
+						<div class="oneFree_list oneFree_Free">
+							<a class="oneFree_pic lineBlock" target='_blank' href="@controllers.product.routes.Product.view(product.getSubUrl()(p.getCsublistingid()))" id="img_href_@p.getCsublistingid()">
+								@img(product.getImgurl()(p.getCsublistingid()),product.getTitle()(p.getCsublistingid()),100,100,null,'id->"img_href_(p.getCsublistingid()")
+							</a>
+        					<div class="oneFree_texts lineBlock">
+								@displayMain(product.getTitle()(p.getCsublistingid()),product.getPrice()(p.getCsublistingid()).getSymbol(),
+								Utils.money(product.getPrice()(p.getCsublistingid()).getPrice()),product.getStar()(p.getCsublistingid()),
+								product.getCount()(p.getCsublistingid()),p.getCsublistingid(),p.getCparentlistingid(),product.getSubUrl()(p.getCsublistingid()),
+								product.getSubMap()(p.getCsublistingid()),product.getOldPrice()(p.getCsublistingid()))
+							</div>
+						</div>
+					</div>
+			
+			        <div class="oneFree_buyBut addto_cart">
+			        	<p class="lineBlock">
+			        		<lable id="bundel-sale-totalprice@p.getCparentlistingid()">@product.getPrice()(p.getCsublistingid()).getSymbol() @Utils.money(product.getPrice()(p.getCparentlistingid()).getPrice()+product.getPrice()(p.getCsublistingid()).getPrice())</lable>
+			        	</p>
+			        	<input type="hidden" class="add@p.getCparentlistingid() addtocart@p.getCparentlistingid()" data-tag="true" value="@p.getCparentlistingid()"/> 
+			            <input type="hidden" class="add@p.getCsublistingid() addtocart@p.getCparentlistingid()" data-tag="false" value="@p.getCsublistingid()"/> 
+			            <input class="bundel-sale-addtocart orangeInput @if(product.getOutOfDate()(p.getCparentlistingid())=="true"){grayInt}else{buttCart}" type="submit" value="@Messages("add.to.cart")" data-listingid="@p.getCparentlistingid()">
+			            <div class="addTo_cartHide" style="display: none;" id="hiddenCartResult_2">
+			            	<div id="add_toCart_result">
+				  				<div style="text-align:center;" id="loading@p.getCparentlistingid()" aria-hidden="true">
+				     				<img style="width:40px;height:40px;margin-top:30px;" src="@controllers.base.routes.Assets.at("img/loading-middle.gif")"/>
+					    		</div>
+								<span class="addTo_sj"></span>
+								<span class="addTo_close"></span> 
+								<div id="fail-add@p.getCparentlistingid()" style="display: none;">
+								<h2 style="color:red;">@Messages("add.fail")</h2>
+								</div>
+								<div id="success-add@p.getCparentlistingid()" style="display: none;">
+									<p class="cart_title">
+										<em></em>
+										<span id="productTotal@p.getCparentlistingid()"></span>@Messages("item.added.to.cart")
+									</p>
+									<p class="cart_txt">
+										<b id="success-qty@p.getCparentlistingid()"></b>
+										@Messages("total.item.in.your.cart")
+										<br>
+										<span>@Messages("cart.total")</span>
+										<span class="orange" id="total-price-2@p.getCparentlistingid()"></span>
+									</p>
+									<div>
+										<input type="submit" value="@Messages("view.cart")" class="viewCart">
+										<input type="submit" value="@Messages("continue.shopping")" class="continueShopping">
+									</div>
+								</div>
+  						</div>
+			            
+			            </div>
+			            
+			            <input class="bundel-sale-buyitnow @if(product.getOutOfDate()(p.getCparentlistingid())=="true"){hsInputs grayInt}else{hsInputs}" type="submit" value="@Messages("buy.now")" data-listingid="@p.getCparentlistingid()">
+			            
+			        </div>
+		        
+				</div>
+				}
+			
+			<div class="pagination-holder clearfix">
+					<div id="light-pagination" class="pagination"></div>
+			</div>
+			<div class="clear"></div>
+
+}
+</div>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+	  	<script src="@controllers.base.routes.Assets.at("js/lib/jquery.simplePagination.js")" ></script>
+	  	<script src="@controllers.base.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.interaction.routes.Assets.at("js/interaction/addcart")" ></script>
+	  	<script>
+	  	$(".viewCart").click(function(){location.href='@controllers.cart.routes.Cart.cartview()'});
+		$(".continueShopping").click(function(){$('.addTo_cartHide').hide()});
+		$('#light-pagination').pagination({
+			pages: @product.getActivityPage().totalPages,
+			currentPage: @product.getActivityPage().pageNo,
+			hrefTextPrefix: 'javascript:void(',
+			hrefTextSuffix: ')',
+			cssStyle: 'light-theme',
+			selectOnClick: true,
+			onPageClick: function(pageNumber, event) {
+				$("#p").val(pageNumber);
+				$("#theform").submit();
+			}
+		});
+		</script>
+}
+
+}
+ 
+
+ 
+ 

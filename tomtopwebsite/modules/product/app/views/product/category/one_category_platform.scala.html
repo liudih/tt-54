@@ -1,0 +1,28 @@
+@(roots: List[valueobjects.product.category.CategoryComposite],
+catMap: Map[Integer,Collection[dto.Category]]
+)
+@if(roots!=null){
+	@roots.zipWithIndex.map{r=>
+		@if(r._1.getSelf().getCcontent()!=null && !"".equals(r._1.getSelf().getCcontent())){
+		<div class="twoDir_Box">
+			<h5 id="box_@{r._2+1}">@r._1.getSelf().getCname()</h5>
+			<div class="directoryBox">
+				<ul class="directoryDH">
+					   @if(catMap.containsKey(r._1.getSelf().getIcategoryid())) {
+				            @catMap(r._1.getSelf().getIcategoryid()).map{ h =>
+				            	@if(null == h.getCpath() || h.getCpath().isEmpty){
+				            		<li><a href="#">@h.getCname()</a></li>
+				            	}else{
+				            		<li><a href="@controllers.product.routes.CategoryProduct.showCategoryProduct(h.getCpath())">@h.getCname()</a></li>
+				            	}
+				            }
+				    	}
+	            	 
+            	</ul>
+            	
+            	@Html(r._1.getSelf().getCcontent())
+			</div>
+		</div>
+		}
+	}
+}

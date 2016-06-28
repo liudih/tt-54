@@ -1,0 +1,16 @@
+# payment routes
+GET		/assets/*file				controllers.payment.impl.Assets.at(path="/public", file)
+
+POST	/ocean/userPOST				@controllers.payment.OceanPayment.userPOST()
+
+POST	/ocean/serverPOST			@controllers.payment.OceanPayment.serverPOST()
+
+GET		/wiretransfer				@controllers.payment.Payment.toWireTransfer()
+
+GET		/bt				@controllers.payment.Braintree.index()
+
+POST	/gettoken				@controllers.payment.Braintree.getToken()
+
+POST	/checkout				@controllers.payment.Braintree.checkout()
+
+POST	/ocean/validsignvalue		@controllers.payment.OceanPayment.getOceanValidSignValue()

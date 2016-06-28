@@ -1,0 +1,9 @@
+cname,cremark
+"Payment Pending","待付款"
+"Payment Confirmed","收款成功"
+"Order Cancelled","订单已取消"
+"Processing","订单正在处理中（从成功收款到到发货这段时间）"
+"On Hold","订单审核中，比如可能这个单的付款有些问题，我们暂时hold住，不发货"
+"Dispatched","订单已发货"
+"Completed","订单已完成"
+"Refunded","已退款"

@@ -1,0 +1,127 @@
+@(vo: valueobjects.order_api.payment.PaymentContext, ipp: extensions.payment.IPaymentProvider, account: java.util.Map[String,String], list: java.util.List[valueobjects.payment.SummaryInformation])
+@import services.base._
+@import services.base.utils._
+
+<div class="shoppingCart_con orderD_con">
+	<div class="print">
+		<span></span>
+		<p>@Messages("thank.shopping.your.order.received")
+		<br>
+		@Messages("your.next.step.complete.your") @ipp.name() @Messages("payment.and.submit.your.payment.details")
+		</p>
+		<a href="@controllers.base.routes.Home.home()">@Messages("return.to.homepage")</a>
+		<a href="@controllers.member.routes.Home.index()">@Messages("account")</a>
+		<a href="@controllers.order.member.routes.MemberOrder.index()">@Messages("my.order")</a>
+		<a href="javascript:window.print()"><em></em></a>
+	</div>
+	<div class="paymentINF">
+		<p class="INF_Title">@Messages("payment")</p>
+		<img src="@ipp.iconUrl()">@Messages("bank.to.bank.wire.transfer")
+		<p>
+			@Messages("beneficiary.bank"): @account.get("bank")<br>
+			@Messages("bank.account") @account.get("account")<br>
+			@Messages("beneficiary"): @account.get("beneficiary")<br>
+			@Messages("uswift.code"): @account.get("swift.code")<br>
+			@Messages("bank.address"): @account.get("address")<br>
+		</p>
+		<p>
+		@Messages("note"):<br>
+		1.  @Messages("international.transfers.responsible.responsible.transferred")<br>
+		
+		2. @Messages("payment.hsbc.account.described.allow.paymen.through")<br>
+		1) @Messages("working.banks.complete.transaction.depending.banks")<br>
+		2) @Messages("working..process.payment.match.order")<br>
+		3) @Messages("receive.email.confirm.process.order")<br>
+		
+		</p>
+		<p>@Messages("after.payment.notice.detailed.payment.following.procedures.tomtop.account")</p>
+		<p>@Messages("login.tomtop.account")<br>
+			@Messages("click.order.list.from.my.orders")<br>
+			@Messages("click.pay")<br>
+			@Messages("click.complete.payment.fill.related.information.verification")<br>
+			@Messages("clicksubmit.finish.procedures")
+		</p>
+	</div>    
+	<div class="paymentINF INF_bot">
+		<p class="INF_Title INF_TOrder">@Messages("order.details")</p>
+		<table class="INF_tab" width="100%" border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<td>@Messages("order.number")</td>
+				<td>@vo.getOrder().getOrder().getCordernumber</td>
+			</tr>
+			<tr>
+				<td>@Messages("recipient.country.region")</td>
+				<td>@vo.getOrder().getOrder().getCcountry()</td>
+			</tr>
+			<tr>
+				<td>@Messages("first.name")</td>
+				<td>@vo.getOrder().getOrder().getCfirstname()</td>
+			</tr>
+			<tr>
+				<td>@Messages("last.name")</td>
+				<td>@vo.getOrder().getOrder().getClastname()</td>
+			</tr>
+			<tr>
+				<td>@Messages("address.line")</td>
+				<td>@vo.getOrder().getOrder().getCstreetaddress()</td>
+			</tr>
+			<tr>
+				<td>@Messages("city")</td>
+				<td>@vo.getOrder().getOrder().getCcity()</td>
+			</tr>
+			<tr>
+				<td>@Messages("state.province.region") </td>
+				<td>@vo.getOrder().getOrder().getCprovince()</td>
+			</tr>
+			<tr>
+				<td>@Messages("zip.postal.code") </td>
+				<td>@vo.getOrder().getOrder().getCpostalcode()</td>
+			</tr>
+			<tr>
+				<td>@Messages("phone.number") </td>
+				<td>@vo.getOrder().getOrder().getCtelephone()</td>
+			</tr>
+		</table>
+	</div>  
+	<table class="orderB_table" width="100%">
+		<tr>
+			<td align="right">
+				<table class="grandTotal" width="500" border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td>@Messages("order.subtotal")</td>
+						<td width="155"><b>@vo.getCurrency().getCsymbol() @Utils.money(vo.getOrder().getOrder().getFordersubtotal(),vo.getCurrency().getCcode)</b></td>
+					</tr>
+					<tr>
+						<td class="airmailB">
+							<div class="tuackNumber">
+								<p>
+									<img src="@controllers.base.routes.Assets.at(vo.getShippingMethod.getCimageurl)" height="25">
+									@vo.getShippingMethod.getCcontent
+								</p>@Messages("shipping.cost"):
+							</div>
+						</td>
+						<td width="155"><b>@vo.getCurrency().getCsymbol() @Utils.money(vo.getOrder().getOrder().getFshippingprice(),vo.getCurrency().getCcode)</b></td>
+					</tr>
+					@list.map{b=>
+						<tr>
+							<td>@Messages(b.getType()) (@b.getMsg()):</td>
+							<td><span class="green">@vo.getCurrency().getCsymbol() @Utils.money(b.getMoney,vo.getCurrency().getCcode)</span></td>
+						</tr>
+					}
+					<tr class="grandTotal_txt">
+						<td>@Messages("grand.total")</td>
+						<td><span class="orange">@vo.getCurrency().getCsymbol() @Utils.money(vo.getOrder().getOrder().getFgrandtotal(),vo.getCurrency().getCcode)</span></td>
+					</tr>
+					<!-- <tr class="earned">
+						<td colspan="2">@Messages("this.order.earned.xxx.tomtop.points")</td>
+					</tr> -->
+				</table>
+			</td>
+		</tr>
+	</table>
+	<div class="bottomA">
+		<a href="@controllers.base.routes.Home.home()">@Messages("return.to.homepage")</a>
+		<a href="@controllers.member.routes.Home.index()">@Messages("account")</a>
+  		<a href="@controllers.order.member.routes.MemberOrder.index()">@Messages("my.order")</a>
+	</div>
+</div>

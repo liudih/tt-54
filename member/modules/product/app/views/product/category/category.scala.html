@@ -1,0 +1,33 @@
+@(roots: List[valueobjects.product.category.CategoryComposite],
+ partitioned: Map[Integer, Map[valueobjects.product.category.CategoryComposite, List[Html]]],
+ storageIdAndNameMap: Map[Integer,String]
+ )
+@import views.html.helper._
+
+@if(roots != null && roots.size() > 0) {
+	<div class="topSearch_title">
+	<!--topNa-->
+	<div class="minframe fl">
+	    <div id="left_menu">
+	          <ul id="menu_index_top">
+		          <li>
+		              <h2><span><a href="@controllers.product.routes.CategoryProduct.getAllCategories">@Messages("shop.all.categories")</a></span></h2>
+		          </li>
+	         </ul>
+	         <div class="menu" id="light_menu" >
+	            <ul id="nav">
+	            	@category_storage(storageIdAndNameMap)
+	            	@roots.map{ r =>
+	            		@if(r.getSelf()!=null){
+							@category_inc(r, partitioned(r.getSelf().getIid()))
+						}
+			   		}
+	            </ul>
+	            <div class="clear"></div>
+	         </div>
+	         <div class="clear"></div>
+	     </div>
+	    </div>
+	    <!--topNaOver-->
+	 </div>
+ }

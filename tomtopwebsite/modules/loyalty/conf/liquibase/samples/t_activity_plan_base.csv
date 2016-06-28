@@ -1,0 +1,2 @@
+iwebsiteid,cdotype,cawardtype,ctitle,crule,benabled,dbegindate,denddate
+1,paymentorder,points,¸¶¿î½±Àø»ı·Ö,p<=20?0:(6+(1.8*ceil((p-20)/10))),true,20150219,20150820

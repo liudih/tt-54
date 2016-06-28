@@ -1,0 +1,14 @@
+@(products :List[valueobjects.product.ProductBadge])
+
+<div>
+	<div class="dealsL_tt">
+		<h6>Hot Sales</h6>
+		<a class="rightMore" href="@controllers.product.routes.Product.hotSales()"> More &gt;&gt; </a>
+	</div>
+	@if(null!=products && products.size()>0){
+		@products.take(2).zipWithIndex.map{p=>
+			@home_product_two_badge(p._1,p._2)
+		}
+	}
+</div>
+

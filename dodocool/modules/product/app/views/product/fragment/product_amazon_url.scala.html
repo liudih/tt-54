@@ -1,0 +1,23 @@
+@(fragment: valueobjects.product.ProductAmazonUrl, render: valueobjects.dodocool.product.ProductRenderContext)
+
+<div class="list-tab">
+	@if(null != fragment && null != fragment.getUrlMap && fragment.getUrlMap.size > 0){
+		<h5>@Messages("choose.your.country")</h5>
+		<ul class="clearfix" id="clearfixId">
+			@fragment.getUrlMap.map{ i =>
+				<li><a name="choose_country" href="javascript:;" value="@i._2" data-country="@i._1">@i._1</a></li>
+			}
+		</ul>
+	}
+	<a class="fl buyamazon @if(null == fragment || null == fragment.getUrlMap || fragment.getUrlMap.size==0 ){	opa_buy	}" target="_blank"
+		id="buynow" rel="nofollow" href="@if(null != fragment.getDefaultUrl){@fragment.getDefaultUrl} else{javascript:void(0);}" @if(fragment.containsUsWebsite()){style="display:none;"}>
+		<i>@Messages("buy.at.amazon")</i>
+	</a>
+	@if(fragment.containsUsWebsite()){
+		@render.renderFragment("add-to-cart-menu") 
+	}
+</div>
+
+@services.dodocool.base.HtmlUtils.misc().addHeadOnce{
+		<script src="@controllers.product.routes.Assets.at("js/product_detail.js")"></script>
+}

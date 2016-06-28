@@ -1,0 +1,11 @@
+#GET		/				@controllers.Appliaction.index()
+
+POST   /transurl			@controllers.Shorturl.addShorturl()
+
+POST   /getvisit			@controllers.Shorturl.getVisit()
+
+
+-> /common                common.Routes
+
+
+GET   /*cpath			@controllers.Shorturl.transShorturl(cpath: String)

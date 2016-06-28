@@ -1,0 +1,19 @@
+@(table: Html)
+
+<div class="container payFWait">
+	@if(table == null){
+		<p>Can't found account with this payment method!</p>
+	}else {
+		<p class="loading">
+			<i>@Messages("redirecting")</i>
+			<img src="@controllers.base.routes.Assets.at("images/payment_wait.gif")">
+		</p>
+		@table
+		<div class="payFSuc">
+			<em></em>
+			<p class="waitTT">@Messages("thank.you.shopping.tomtop.com")</p>
+			<p>@Messages("processing.complete.order.wait.take.based")</p>
+			<p>@Messages("encounter.problems.contact.via") <a href="javascript:;">@Messages("customer.service")</a></p>
+		</div>
+	}
+</div>

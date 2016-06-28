@@ -1,0 +1,3 @@
+﻿"iid","cname","iparentid","ilevel","cclass","curl","ccreateuser","dcreatedate","cenname"
+"44","个人中心","0","1","44","","xcf","2015-04-14","PersonCenter"
+"45","修改密码","44","2","45","/sysadmin/user/modifypwdlist","xcf","2015-04-14","ModifyPassword"

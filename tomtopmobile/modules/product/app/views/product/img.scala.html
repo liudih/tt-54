@@ -1,0 +1,19 @@
+@(imgUrl: String, imgTitle: String, width: Integer, height: Integer, clazz: String, args: (Symbol,Any)*)
+@if(imgUrl != null) {
+@if(imgUrl.startsWith("http://") || imgUrl.startsWith("https://")) {
+  @if(width != null && height != null) {
+	 <img itemprop="image" @if(imgTitle != null){title="@imgTitle" alt="@imgTitle"} src="@imgUrl" @if(clazz != null){class="@clazz"} 
+	 	@toHtmlArgs(args.filter(arg => arg._1.name != "width" && arg._1.name != "height").toMap)>
+  } else {
+	 <img  itemprop="image" @if(imgTitle != null){title="@imgTitle" alt="@imgTitle"} src="@imgUrl" @if(clazz != null){class="@clazz"} @toHtmlArgs(args.toMap)>
+  }
+}else{
+  @if(width != null && height != null) {
+	 <img itemprop="image" @if(imgTitle != null){title="@imgTitle" alt="@imgTitle"} src="@controllers.image.routes.Image.viewScaled(imgUrl, width, height)" @if(clazz != null){class="@clazz"} @toHtmlArgs(args.toMap)>
+  } else {
+	 <img itemprop="image" @if(imgTitle != null){title="@imgTitle" alt="@imgTitle"} src="@controllers.image.routes.Image.view(imgUrl)" @if(clazz != null){class="@clazz"} @toHtmlArgs(args.toMap)>
+  }
+}
+} else {
+	<img src="@controllers.base.routes.Assets.at("images/imgNone377.jpg")" />
+}

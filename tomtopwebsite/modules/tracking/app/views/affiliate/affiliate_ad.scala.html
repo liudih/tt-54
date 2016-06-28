@@ -1,0 +1,204 @@
+@(list: valueobjects.base.Page[entity.tracking.AffiliateBanner],
+	list2: valueobjects.base.Page[entity.tracking.AffiliateBanner],
+	aid: String)
+@views.html.member.base.master("affiliate-center"){
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/styles.css")?@version.BuildVersion.build()" />
+}
+    <div class="accountRight affilliate_Boxs">
+        <h5>Ad Center</h5>
+        <div class="xxkDiv">
+            <ul class="blackXXK">
+                <li class="xxkActi">Affiliate link</li>
+                <li>Affiliate Banners</li>
+                <li>Affiliate Text</li>
+                <div class="clear"></div>
+            </ul>
+            <div class="xxkBOX boxRa block">
+            	<br/>
+            	<!-- <p class="affMethod">Method 1</p>-->
+                <div class="affmethodPaddL">
+                	Simple add"hz" to any URLs and your referrals will be tracked. Here are sample URLs that you may begin using immediately:
+                    <p class="marT">Example 1: Link to our homepage:</p>
+                    <input value="http://www.tomtop.com?aid=@aid" class="affillInWeb" type="text" placeholder="http://www.tomtop.com/?aid=@aid">
+                    <a class="hsInputs lineBlock copyCls" href="javascript:;">Get code</a>
+                    <span class="icon_success lineBlock">Get Code Succeed!</span>
+                    
+                    <p class="marT">Example 2: Link to our special product:</p>
+                    <input value="http://www.tomtop.com/meike-mk-dr750-built-in-2-4g-wireless-remote-control-vertical-battery-grip-holder-for-nikon-d750-d1959.html?aid=@aid" class="affillInWeb" type="text" placeholder="http://www.tomtop.com/meike-mk-dr750-built-in-2-4g-wireless-remote-control-vertical-battery-grip-holder-for-nikon-d750-d1959.html?aid=@aid">
+                    <a class="hsInputs lineBlock copyCls" href="javascript:;">Get code</a>
+                    <span class="icon_success lineBlock">Get Code Succeed!</span>
+                    
+                    <p class="marT">Example 3: Link to our cell phone category:</p>
+                    <input value="http://www.tomtop.com/Tablet-PC-Cellphone/Cell-Phones?aid=@aid" class="affillInWeb" type="text" placeholder="http://www.tomtop.com/Tablet-PC-Cellphone/Cell-Phones?aid=@aid">
+                    <a class="hsInputs lineBlock copyCls" href="javascript:;">Get code</a>
+                    <span class="icon_success lineBlock">Get Code Succeed!</span>
+                </div>
+            	<!-- <p class="affMethod">Method 2</p>
+                <div class="affmethodPaddL">
+                	<p class="marB15">You can log in to copy the account directly if you have actived your affiliate account.</p>
+                    <img src="@controllers.base.routes.Assets.at("/images/affilliate_ad.jpg")" />
+                </div>-->
+            </div>
+            <div class="xxkBOX boxRa">
+            	<ul class="affBannerTitle_ul">
+                	<li class="lineBlock affBannerPicture">Picture</li>
+                	<li class="lineBlock affBannerTitle">Title</li>
+                	<li class="lineBlock affBannerCategory">Category</li>
+                	<li class="lineBlock affBannerAction">Action</li>
+                </ul>
+                <div id="dataContent1">
+                @affiliate_ad_list(list.getList(),aid)
+                </div>
+                <form id="theform1">
+                <input type="hidden" name="p" id="p" value="1"/>
+                <div class="arrayNEX affNext">
+	                <div class="pagination-holder clearfix" >
+						<div id="light-pagination" class="pagination"></div>
+					</div>
+				</div>
+				</form>
+            </div>
+            <div class="xxkBOX boxRa">
+            	<ul class="affBannerTitle_ul affBannerText_ul">
+                	<li class="lineBlock affBannerTitle">Title</li>
+                	<li class="lineBlock affBannerCategory">Category</li>
+                	<li class="lineBlock affBannerAction">Action</li>
+                </ul>
+                <div id="dataContent2">
+                @affiliate_ad_list_text(list2.getList(),aid)
+                </div>
+                <form id="theform2">
+                <input type="hidden" name="p" id="p2" value="1"/>
+				<div class="arrayNEX affNext">
+	                <div class="pagination-holder clearfix" >
+						<div id="light-pagination2" class="pagination"></div>
+					</div>
+				</div>
+				</form>
+            </div>
+       </div>
+    </div>
+@services.base.HtmlUtils.misc().addHeadOnce{
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/simplePagination.css")">
+}
+@services.base.HtmlUtils.misc().addTailOnce{
+	<script src="@controllers.base.routes.Assets.at("js/lib/jquery.simplePagination.js")" ></script>
+	<script src="@controllers.base.routes.Assets.at("js/lib/jquery.zclip.min.js")" ></script>
+  	<script type="text/javascript">
+	function tanKuang(node){
+		var val = node.value;
+		var html = '';
+		if(val!="0"){
+			$(node).siblings(".account_x").fadeIn();
+			copyfun();
+			var an = $(node).next().find("textarea:eq(0)");
+			var areatext = $(node).next().find(".hidedata:eq(0)").html();
+			switch(val){
+			case "200":
+				areatext = areatext.replace("{1}","200");
+				areatext = areatext.replace("{2}","200");
+				break;
+			case "250":
+				areatext = areatext.replace("{1}","250");
+				areatext = areatext.replace("{2}","250");
+				break;
+			case "600":
+				areatext = areatext.replace("{1}","160");
+				areatext = areatext.replace("{2}","600");
+				break;
+			default:
+			}
+			var link = $(node).next().find(".hidelink:eq(0)").val();
+			if(link!=null && (link.indexOf("http://")!=-1||link.indexOf("https://")!=-1)){
+				if(link.indexOf("/",9)>0){
+					var re = /(\w+)\//i;
+					link=link.replace(re,function(d){
+					   	return d+"aid/@aid/";
+					});
+				}else{
+					link += "/aid/@aid/";
+				}
+			}
+			areatext = areatext.replace("{3}",link);
+			an.val(areatext);
+		}
+	}
+	function tanKuang2(node){
+		$(node).siblings(".account_x").fadeIn();
+		copyfun();
+		var an = $(node).next().find("textarea:eq(0)");
+		var areatext = $(node).next().find(".hidedata:eq(0)").html();
+		$(node).next().find(".showframe:eq(0)").html(areatext);
+		an.val(areatext);
+	}
+	$('#light-pagination').pagination({
+		pages: @list.totalPages(),
+		currentPage: @list.pageNo(),
+		hrefTextPrefix: 'javascript:void(',
+		hrefTextSuffix: ')',
+		cssStyle: 'light-theme',
+		selectOnClick: true,
+		onPageClick: function(pageNumber, event) {
+			$("#p").val(pageNumber);
+			showDate(pageNumber,1);
+		}
+	});
+	$('#light-pagination2').pagination({
+		pages: @list2.totalPages(),
+		currentPage: @list2.pageNo(),
+		hrefTextPrefix: 'javascript:void(',
+		hrefTextSuffix: ')',
+		cssStyle: 'light-theme',
+		selectOnClick: true,
+		onPageClick: function(pageNumber, event) {
+			$("#p2").val(pageNumber);
+			showDate(pageNumber,2);
+		}
+	});
+	function showDate(page,type){
+		$.ajax({
+			url : "@controllers.affiliate.routes.AffiliateHome.affiliateAdAjax()",
+			type : "get",
+			dataType : "json",
+			data: {
+				p: page,
+				t: type
+			},
+			success : function(data) {
+				$("#dataContent"+type).html(data.html);
+			},
+			complete : function(XHR, TS) {
+			}
+		});
+	}
+	$(document).ready(function(){
+	    $('.copyCls').zclip({
+	        path:'@controllers.base.routes.Assets.at("js/lib/ZeroClipboard.swf").absoluteURL(play.mvc.Http.Context.current().request())',
+	        copy:function(){
+	        	return $(this).prev().val();
+			},
+			afterCopy:function(){
+				var n = $(this).next();
+				n.css("display","block");
+				setTimeout(function(){n.hide()},3000); 
+			}
+	    });
+	});
+	
+	function copyfun(){
+		$(".copytextCls").zclip({
+	        path:'@controllers.base.routes.Assets.at("js/lib/ZeroClipboard.swf").absoluteURL(play.mvc.Http.Context.current().request())',
+	        copy:function(){
+	        	return $(this).prev().val(); 
+			},
+			afterCopy:function(){
+				var n = $(this).next();
+				n.show();
+				setTimeout(function(){n.hide()},3000); 
+			}
+	    });
+	}
+	</script>
+}
+}

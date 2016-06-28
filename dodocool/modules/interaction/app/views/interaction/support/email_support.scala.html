@@ -1,0 +1,59 @@
+@(categorys: Map[Integer, String],
+nextcategorys: Map[Integer, String],
+products: List[dto.product.ProductMessage])
+@import views.html.helper._
+<div class="supportDesWrapper">
+	@form(controllers.interaction.routes.Contact.saveEmailContact,'class->"e_form",'id->"contactForm",'autocomplete->"off") {
+		<h3 class="legend" style="margin-top: -30px"> * @Messages("these.fields.are.mandatory")</h3>
+		<div class="frm_cont">
+			<label>@Messages("product.category"):<em>*</em></label> 
+			@views.html.interaction.support.select_base.render("rootCategory", categorys)
+			@views.html.interaction.support.select_base.render("nextCategory", nextcategorys)
+		</div>
+		<div class="frm_cont">
+			<label>@Messages("product"):<em>*</em></label> 
+			@views.html.interaction.support.product_select_base.render(products)
+			<input type="hidden" id="csku" name="csku"/>
+		</div>
+		<div class="frm_cont">
+			<label for="subject">@Messages("subject"):<em>*</em></label> 
+			<input type="text" id="ctitle" name="ctitle"/>
+		</div>
+		<div class="frm_cont">
+			<label>@Messages("detailed.description.of.the.problem"):<em>*</em></label>
+			<textarea name="cquestion" id="cquestion"></textarea>
+		</div>
+		<!-- <div class="buttons-set tr">
+			<button type="submit" title="Next" class="btn">&nbsp;Next&nbsp;</button>
+		</div> -->
+		<!-- <div class="frm_cont">
+			<label for="name">Your Name：<em>*</em></label> <input type="text"
+				id="name" />
+		</div> -->
+		<!-- <div class="frm_cont">
+			<label for="location">Your Location：<em>*</em></label> <select><option></option></select>
+		</div> -->
+		<div class="frm_cont">
+			<label for="emailAddress">@Messages("your.email.address"):<em>*</em></label> 
+			<input type="text" id="cmemberemail" name="cmemberemail"/>
+		</div>
+		<div class="frm_cont">
+			<label for="confirmemad">@Messages("confirm.your.email.address"):<em>*</em></label>
+			<input type="text" id="confirm_email" name="confirm_email"/>
+		</div>
+		<!-- <div class="frm_cont">
+			<label for="phone">Your Phone No：<em>*</em></label> <input
+				type="text" id="phone" />
+		</div> -->
+		<div class="buttons-set tr">
+			<button type="submit" title="Back" class="btn">&nbsp;@Messages("back")&nbsp;</button>
+			<button type="submit" title="Submit" class="btn">&nbsp;@Messages("submit")&nbsp;</button>
+		</div>
+	}
+</div>
+
+@services.dodocool.base.HtmlUtils.misc().addTailOnce{
+	<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.validate.min.js")'></script>
+	<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+	<script  language="javascript" type="text/javascript" src='@controllers.interaction.routes.Assets.at("js/support_contact.js")'></script>
+}

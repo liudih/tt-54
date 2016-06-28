@@ -1,0 +1,193 @@
+@(vo:valueobjects.base.Page[dto.CustomerServiceScoreDTO],
+	typeList:List[entity.manager.CustomerServiceScoreType],
+	searchForm:forms.CustomerServiceScoreForm)
+@import views.html.helper._
+@import services.base.utils.DateFormatUtils
+
+@views.html.manager.main {
+	<div class="container-fluid">
+		<!-- BEGIN PAGE HEADER-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN STYLE CUSTOMIZER -->
+				<div class="color-panel hidden-phone">
+					<div class="color-mode-icons icon-color"></div>
+					<div class="color-mode-icons icon-color-close"></div>
+					<div class="color-mode">
+						<p>THEME COLOR</p>
+						<ul class="inline">
+							<li class="color-black current color-default" data-style="default"></li>
+							<li class="color-blue" data-style="blue"></li>
+							<li class="color-brown" data-style="brown"></li>
+							<li class="color-purple" data-style="purple"></li>
+							<li class="color-grey" data-style="grey"></li>
+							<li class="color-white color-light" data-style="light"></li>
+						</ul>
+						<label> <span>Layout</span> <select
+							class="layout-option m-wrap small">
+								<option value="fluid" selected="">Fluid</option>
+								<option value="boxed">Boxed</option>
+						</select>
+						</label> <label> <span>Header</span> <select
+							class="header-option m-wrap small">
+								<option value="fixed" selected="">Fixed</option>
+								<option value="default">Default</option>
+						</select>
+						</label> <label> <span>Sidebar</span> <select
+							class="sidebar-option m-wrap small">
+								<option value="fixed">Fixed</option>
+								<option value="default" selected="">Default</option>
+						</select>
+						</label> <label> <span>Footer</span> <select
+							class="footer-option m-wrap small">
+								<option value="fixed">Fixed</option>
+								<option value="default" selected="">Default</option>
+						</select>
+						</label>
+					</div>
+				</div>
+				<!-- END BEGIN STYLE CUSTOMIZER -->
+				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+	
+				<h3 class="page-title">
+					客服管理 <small>客服评分管理</small>
+				</h3>
+				<ul class="breadcrumb">
+					<li><i class="icon-home"></i> <a href="/sysadmin">Home</a> <i
+						class="icon-angle-right"></i></li>
+					<li><a href="#">客服管理</a> <i class="icon-angle-right"></i></li>
+					<li><a href="#">客服评分管理</a></li>
+				</ul>
+				<!-- END PAGE TITLE & BREADCRUMB-->
+	
+			</div>
+		</div>
+		<!-- END PAGE HEADER-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN EXAMPLE TABLE PORTLET-->
+				<div class="portlet box light-grey">
+					<div class="portlet-title">
+						<div class="caption">
+							<i class="icon-edit"></i>客服评分管理
+						</div>
+					</div>
+					<div class="portlet-body">
+						<div class="span12">
+							@form(controllers.manager.routes.CustomerService.scoreSearch(), 'id->"search_form"){
+								<input type="hidden" name="p" value="@vo.pageNo">
+								客服：<input type="text" name="name" class="m-wrap medium span6" @if(searchForm!=null){value="@searchForm.getName"}>
+								类型：<select name="typeID">
+									<option value>All</option>
+									@if(searchForm!=null){
+										@typeList.map{t=>
+											<option value="@t.getIid" @if(t.getIid.equals(searchForm.getTypeID)){selected="selected"}>@t.getCname</option>
+										}
+									}else{
+										@typeList.map{t=>
+											<option value="@t.getIid">@t.getCname</option>
+										}
+									}
+								</select>
+								<input class="btn green" type="submit" value="Search">
+							}
+							<div id="sample_editable_1_length" class="dataTables_length">
+							</div>
+						</div>
+						<div id="sample_editable_1_wrapper"
+							class="dataTables_wrapper form-inline" role="grid">
+							<table class="table table-striped table-hover table-bordered"
+								id="user_table">
+								<thead>
+									<tr>
+										<th>Session ID</th>
+										<th>客服别名</th>
+										<th>客户别名</th>
+										<th>主题</th>
+										<th>内容</th>
+										<th>评分类型</th>
+										<th>评分</th>
+										<th>时间</th>
+									</tr>
+								</thead>
+								<tbody>
+									@vo.getList().map{s=>
+										<tr class="" id="@s.getIid()">
+											<td>@s.getCsessionid</td>
+											<td>@s.getCcustomerservicealias</td>
+											<td>@s.getCcustomeralias</td>
+											<td>@s.getCtopic</td>
+											<td>@s.getCcontent</td>
+											<td>@s.getCtype</td>
+											<td>@s.getIscore</td>
+											<td>@DateFormatUtils.getStrFromYYYYMMDDHHMMSS(s.getDcreatedate())</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+							<div class="row-fluid">
+								@if(vo != null) {
+									<div class="span6">
+										<div class="dataTables_info" id="sample_editable_1_info">当前第@vo.pageNo()页|共@vo.totalPages()页</div>
+									</div>
+									<div class="span6">
+										<div class="dataTables_paginate paging_bootstrap pagination">
+											@if(vo.totalPages()>=1){
+											 @if(searchForm!=null){
+												<ul id="search_page">
+													@if(1 >= vo.pageNo()){
+														<li class="disabled"><a href="javascript:;">«</a></li>
+													}else{
+														<li><a href="javascript:;" value="@vo.pageNo()" tag="pageNum">«</a></li>
+													}
+													@for(i <- vo.pageNo - 5 to vo.pageNo + 5 if i > 0 ; if i <= vo.totalPages) {
+														@if(i == vo.pageNo){
+															<li class="disabled"><a href="javascript:;">@i</a></li>
+														}else{
+															<li><a href="javascript:;" value="@i" tag="pageNum">@i</a></li>
+														}
+													}
+													@if(vo.pageNo >= vo.totalPages){
+														<li class="disabled"><a href="javascript:;">»</a></li>
+													}else{
+														<li><a href="javascript:;" value="@vo.pageNo()" tag="pageNum">»</a></li>
+													}
+												</ul>
+											 }else{
+												<ul>
+													@if(1 >= vo.pageNo()){
+														<li class="disabled"><a href="javascript:;">«</a></li>
+													}else{
+														<li><a href="@controllers.manager.routes.CustomerService.scoreManage(vo.pageNo())" value="@vo.pageNo()" tag="pageNum">«</a></li>
+													}
+													@for(i <- vo.pageNo - 5 to vo.pageNo + 5 if i > 0 ; if i <= vo.totalPages) {
+														@if(i == vo.pageNo){
+															<li class="disabled"><a href="javascript:;">@i</a></li>
+														}else{
+															<li><a href="@controllers.manager.routes.CustomerService.scoreManage(i)" value="@i" tag="pageNum">@i</a></li>
+														}
+													}
+													@if(vo.pageNo >= vo.totalPages){
+														<li class="disabled"><a href="javascript:;">»</a></li>
+													}else{
+														<li><a href="@controllers.manager.routes.CustomerService.scoreManage(vo.pageNo())" value="@vo.pageNo()" tag="pageNum">»</a></li>
+													}
+												</ul>
+											 }
+											}
+										</div>
+									</div>
+								}
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- END EXAMPLE TABLE PORTLET-->
+			</div>
+		</div>
+	</div>
+
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<script src="@controllers.manager.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.manager.routes.Assets.at("js/manager/mcustomerservice")" ></script>
+	}
+}

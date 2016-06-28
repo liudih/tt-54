@@ -1,0 +1,32 @@
+@(context: valueobjects.product.ProductRenderContext, price: valueobjects.price.Price, imgurl: String)
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+<div class="topAdd_Fixed" id="topAdd_Fixed">
+    <div class="topAdd_FixedBorder">
+    	<ul>
+        	<li class="pro_topPop">
+            	<p class="topAdd_img">
+            	@img(imgurl, null, 120, 120, "img-thumbnail", 'width->45, 'height->45)
+            	</p>
+                <ol>
+                	<p>@context.getAttribute("title")</p>
+                    <p><span class="orange">@price.getSymbol()@Utils.money(price.getUnitPrice())</span> 
+                    	<span>
+                    		@if(null != price) {
+	                    		@price.getDiscountOption().asScala.map{ d =>
+	                				(@Utils.percent(d)% OFF)}
+                    		} else {
+                    			@context.getAttribute("price")
+                    		}
+                		</span>
+                	</p>
+                </ol>
+            </li>
+        	<li class="top_rightPaly">
+                    @views.html.product.cart_add_button()
+                    <input type="hidden" id="total-price-3" value="@price.getUnitPrice()">
+            </li>
+        </ul>
+    </div>
+</div>

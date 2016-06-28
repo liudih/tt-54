@@ -1,0 +1,32 @@
+GET    /assets/*file           controllers.wholesale.Assets.at(path="/public", file)
+#----------- wholesale ----------------
+
+GET    /join                   @controllers.wholesale.WholeSale.join()
+
+POST   /update                 @controllers.wholesale.WholeSale.updateWholeSaleBase()
+
+GET    /applywholesale         @controllers.wholesale.WholeSale.applyWholeSale()
+
+GET    /applysuccess           @controllers.wholesale.WholeSale.joinSuccess()
+
+GET    /list			       @controllers.wholesale.WholeSaleProductList.list()
+
+POST   /addproduct             @controllers.wholesale.WholeSaleProductList.addProduct()
+
+POST   /add                    @controllers.wholesale.WholeSale.addWholesaleProduct()
+
+POST   /validate               @controllers.wholesale.WholeSale.wholesaleValidate()
+
+POST   /chooseproduct          @controllers.wholesale.WholeSaleProductList.chooseProduct()
+
+POST   /updateproductqty       @controllers.wholesale.WholeSaleProductList.updateProductQty(iid : Int, qty : Int)
+
+POST   /deleteproduct          @controllers.wholesale.WholeSaleProductList.deleteProduct(iid : Int)
+
+POST   /delerteall             @controllers.wholesale.WholeSaleProductList.deleteAllProduct()
+
+POST   /placeorder             @controllers.wholesale.WholeSale.placeOrder()
+
+GET    /order				   @controllers.wholesale.WholesaleOrder.index()
+
+GET		/checkproductstatus  	@controllers.wholesale.WholeSaleProductList.checkStockAndStatus()

@@ -1,0 +1,33 @@
+@(themeGroupFragment : valueobjects.loyalty.ThemeGroupFragment)
+
+@services.base.HtmlUtils.misc().addHeadOnce{
+}
+<div>
+	@if(themeGroupFragment.getTgList().size() > 0){
+		@for((tg, index) <- themeGroupFragment.getTgList().zipWithIndex) {
+    		<div class="theme_main">
+				<div class="theme_product">
+					<div class="classify">
+			            <div class="classifys">
+			                <div class="Floor">@(index+1)F</div>
+			                <div class="classify-title">@tg.getThemeGroupName()</div>
+			                <a href="@tg.getCurl()" target="_blank">View More</a>
+			            </div>
+			        </div>
+			        @if(tg.getPbList().size() > 0){
+				        <div class="container LevelOne">
+					        <div class="dirRight lineBlock">	
+						        <ul class="arrangeClick arrangeLess block" data="0.99">
+							        @tg.getPbList().map{pb =>
+							        	@views.html.product.gadget.badge_big(pb)
+							        }
+							        <div class="clear"></div>
+					        	</ul>
+				        	</div>
+			        	</div>
+		        	}
+		        </div>
+	        </div>
+		}
+	}
+</div>

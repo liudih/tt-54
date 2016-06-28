@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.loyalty.CouponBaseMapper">
+
+	<resultMap type="entity.loyalty.PromoCode" id="baseRM">
+		<id column="iid" property="id" jdbcType="INTEGER" />
+		<result column="iwebsiteid" property="websiteId" jdbcType="INTEGER" />
+		<result column="imemberid" property="memberId" jdbcType="INTEGER" />
+		<result column="ccode" property="code" jdbcType="VARCHAR" />
+		<result column="icodeid" property="codeId" jdbcType="INTEGER" />
+		<result column="ccode" property="code" jdbcType="VARCHAR" />
+		<result column="fparvalue" property="parValue" jdbcType="FLOAT" />
+		<result column="ccurrency" property="currency" jdbcType="VARCHAR" />
+		<result column="cremark" property="remark" jdbcType="VARCHAR" />
+		<result column="dcreatedate" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="denddate" property="endDate" jdbcType="TIMESTAMP" />
+		<result column="istatus" property="status" jdbcType="INTEGER" />
+		<result column="iruleid" property="ruleId" jdbcType="INTEGER" />
+		<result column="rulename" property="ruleName" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="baseColumn">
+		a.iwebsiteid,a.imemberid,a.ccode,a.fparvalue,a.ccurrency,a.cremark,a.dcreatedate,a.denddate,a.istatus,a.iruleid
+	</sql>
+
+	
+	
+	
+	
+	<select id="select" resultMap="baseRM" parameterType="map">
+		select a.iid,c.cname as rulename,
+		<include refid="baseColumn"></include>
+		from t_coupon_base a
+		left join t_coupon_rule c
+		on a.iruleid=c.iid
+		where 1 = 1
+		<if test="ruleId != null and ruleId != '' ">
+			and  a.iruleid = ${ruleId}
+		</if>
+		<if test="code != null and code != '' ">
+			and a.ccode=#{code}
+		</if>
+		<if test="startDate != null and startDate != '' ">
+			and a.dcreatedate >= '${startDate} 00:00'
+		</if>
+		<if test="endDate != null and endDate != '' ">
+			and a.dcreatedate &lt;= '${endDate} 23:59'
+		</if>
+			
+		<if test="pageSize != null">
+			order by a.dcreatedate desc limit ${pageSize} offset
+			(${pageSize} *
+			(${page} - 1))
+		</if>
+		
+	</select>
+	<select id="getTotal" resultType="java.lang.Integer" parameterType="map">
+		select count(iid) from t_coupon_base
+	</select>
+	
+	
+		
+	<insert id="add" parameterType="entity.loyalty.PromoCode">
+		insert into t_coupon_base
+		(
+		iwebsiteid,imemberid,ccode,fparvalue,ccurrency,cremark,dcreatedate,denddate,istatus,iruleid
+		)
+		values(${websiteId},#{memberId},#{code},#{parValue},#{currency},#{remark},now(),#{endDate},0,#{ruleId})
+	</insert>
+	
+	<delete id="delete" parameterType="map">
+		delete from t_member_coupon
+		where iid =${id}
+	</delete>
+	<select id="isUsed" resultType="Int" parameterType="map">
+		select count(iid) from t_order_coupon a
+		where a.ccode=#{code} and a.cemail=#{email} and a.istatus != 0
+	</select>
+</mapper>

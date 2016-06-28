@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.loyalty.CouponMapper">
+
+	<resultMap type="entity.loyalty.Coupon" id="baseRM">
+		<id column="iid" property="id" jdbcType="INTEGER" />
+		<result column="iwebsiteid" property="websiteId" jdbcType="INTEGER" />
+		<result column="cemail" property="email" jdbcType="VARCHAR" />
+		<result column="iruleid" property="ruleId" jdbcType="INTEGER" />
+		<result column="icodeid" property="codeId" jdbcType="INTEGER" />
+		<result column="ccode" property="code" jdbcType="VARCHAR" />
+		<result column="itype" property="type" jdbcType="INTEGER" />
+		<result column="istatus" property="status" jdbcType="INTEGER" />
+		<result column="icreator" property="creator" jdbcType="INTEGER" />
+		<result column="dcreatedate" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="cmodifierid" property="modifierId" jdbcType="INTEGER" />
+		<result column="cmodifydate" property="modifyDate" jdbcType="TIMESTAMP" />
+		<result column="ruleName" property="ruleName" jdbcType="VARCHAR" />
+		<result column="iparentid" property="parentId" jdbcType="INTEGER" />
+		<result column="startdate" property="validStartDate" jdbcType="TIMESTAMP" />
+		<result column="enddate" property="validEndDate" jdbcType="TIMESTAMP" />
+		<result column="usedtimes" property="usedtimes" jdbcType="INTEGER" />
+		<result column="times" property="times" jdbcType="INTEGER" />
+		<result column="iorderid" property="orderId" jdbcType="INTEGER" />
+		<result column="forderamountlimit" property="minAmount" jdbcType="DOUBLE" />
+		<result column="fcouponamount" property="par" jdbcType="DOUBLE" />
+		<result column="fdiscount" property="discount" jdbcType="DOUBLE" />
+		<result column="valuetype" property="valueType" jdbcType="INTEGER" />
+		<result column="ivalidity" property="validDays" jdbcType="INTEGER" />
+		<result column="ccurrency" property="currency" jdbcType="INTEGER" />
+		<result column="ctimetype" property="timeType" jdbcType="VARCHAR" />
+		<result column="cordernumber" property="orderNumber" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="baseColumn">
+		a.iid,a.iwebsiteid,a.cemail,a.iruleid,a.icodeid,a.itype,a.istatus,a.icreator,a.dcreatedate,a.cmodifierid,a.cmodifydate,a.iparentid
+	</sql>
+
+	<sql id="common-1">
+		<include refid="baseColumn"></include>
+		,b.ccode,c.cname as ruleName
+		from t_member_coupon a
+		left JOIN t_coupon_code b
+		on a.icodeid = b.iid
+		left join t_coupon_rule c
+		on b.icouponruleid=c.iid
+	</sql>
+	
+	<sql id="common-2">
+		select a.icodeid,b.ccode,c.cname as ruleName,c.startdate,c.enddate,forderamountlimit,fcouponamount
+		,c.itype as valuetype,c.fdiscount,c.ivalidity,c.ccurrency,ctimetype,a.dcreatedate
+		<if test="used != null and used != '' ">
+			,iorderid,cordernumber
+		</if>
+		from t_member_coupon a
+		inner join t_coupon_code b
+		on a.icodeid = b.iid
+		inner join t_coupon_rule c
+		on b.icouponruleid = c.iid
+		<if test="used != null and used != '' ">
+		inner join t_cart_coupon d
+		on b.ccode=d.ccode and d.istatus=2
+		</if>
+		where a.cemail=#{userEmail}  and a.iwebsiteid=1 
+		<if test="unused != null and unused != '' ">
+		and not exists
+		(
+			select * from t_cart_coupon 
+			where (istatus=2 or istatus=1) and ccode=b.ccode
+		)
+		</if>
+		
+		and a.istatus != 5 and a.istatus != 1 and a.itype != 6
+		
+	</sql>
+	
+	<sql id="common-3">
+		<include refid="baseColumn"></include>
+		,b.ccode,c.cname as ruleName
+		from t_member_coupon a
+		left join t_coupon_base b
+		on a.icodeid=b.iid
+		left join t_coupon_rule c
+		on b.iruleid=c.iid
+	</sql>
+	
+	<select id="selectForPage" resultMap="baseRM" parameterType="map">
+		select *
+		from (
+			select
+			<include refid="common-1"></include>
+			where a.itype != 6
+			union all
+			select
+			<include refid="common-3"></include>
+			where a.itype = 6
+		)a
+		where a.istatus != 5
+		<if test="email != null">
+			and a.cemail=#{email}
+		</if>
+		<if test="code != null">
+			and a.ccode=#{code}
+		</if>
+		order by a.dcreatedate desc limit ${pageSize} offset
+		(${pageSize} *
+		(${page} - 1))
+	</select>
+	<select id="getTotal" resultType="java.lang.Integer"
+		parameterType="map">
+		select count(iid) from t_member_coupon
+		where istatus != 5
+		<if test="email != null">
+			and cemail=#{email}
+		</if>
+	</select>
+	
+	<select id="select" parameterType="map" resultMap="baseRM">
+		select
+		<include refid="common-1"></include>
+		<where>
+			<if test="id != null and id != '' ">
+				a.iid = ${id}
+			</if>
+		</where>
+	</select>
+		
+	<insert id="add" parameterType="entity.loyalty.Coupon">
+		insert into t_member_coupon(iwebsiteid,cemail,iruleid,icodeid,itype,istatus,icreator,dcreatedate,iparentid)
+		values(${websiteId},lower(#{email}),${ruleId},#{codeId},${type},${status},${creator},now(),${parentId})
+	</insert>
+	
+	<delete id="delete" parameterType="map">
+		delete from t_member_coupon
+		where iid =${id}
+	</delete>
+	
+	<update id="update" parameterType="entity.loyalty.Coupon">
+		update t_member_coupon
+		<set>
+			<if test="email != null and email != '' ">
+				cemail = lower(#{email}),
+			</if>
+			<if test="ruleId != null and ruleId != '' ">
+				iruleid = ${ruleId},
+			</if>
+			<if test="type != null and type != '' ">
+				itype = ${type},
+			</if>
+			<if test="status != null and status != '' ">
+				istatus = ${status},
+			</if>
+			<if test="modifierId != null and modifierId != '' ">
+				cmodifierid = ${modifierId},
+			</if>
+			<if test="parentId != null and parentId != '' ">
+				iparentid = ${parentId},
+			</if>
+			<if test="codeId != null and codeId != '' ">
+				icodeId = ${codeId},
+			</if>
+			cmodifydate = now()
+		</set>
+		where iid = ${id}
+	</update>
+	
+	<select id="selectMyCouponForPage" parameterType="map" resultMap="baseRM">
+		<include refid="common-2"></include>
+		<if test="page != null and page !='' ">
+		order by a.dcreatedate desc limit ${pageSize} offset
+		(${pageSize} * (${page} - 1))
+		</if>
+	</select>
+	
+	<select id="isExisted" parameterType="map" resultType="int">
+		select count(*) from t_member_coupon 
+		<where>
+			1=1
+			<if test="userEmail != null and userEmail != '' ">
+				and cemail=#{userEmail}
+			</if>
+			<if test="type != null and type != '' ">
+				and itype = ${type}
+			</if>
+		</where>
+	
+	</select>
+	
+	<select id="getTotalMyCoupon" resultType="int" parameterType="map">
+		select count(*) from
+		(
+			<include refid="common-2"></include>
+		)w
+	</select>
+	
+	<select id="myCouponUseable" parameterType="map" resultType="int">
+		select count(a.iid) from t_member_coupon a
+		inner join t_coupon_code b
+		on a.icodeid = b.iid
+		inner join t_cart_coupon c
+		on b.ccode=c.ccode
+		where a.cemail=#{userEmail}
+		and b.ccode=#{code}
+		and c.istatus !=0
+	</select>
+	
+	<select id="isOwnCoupon" parameterType="map" resultType="int">
+		select count(a.iid) from t_member_coupon a
+		inner join t_coupon_code b
+		on a.icodeid = b.iid
+		where a.cemail=#{userEmail}
+		and b.ccode=#{code}
+	</select>
+</mapper>

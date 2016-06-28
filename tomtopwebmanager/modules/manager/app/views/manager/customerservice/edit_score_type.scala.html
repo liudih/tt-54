@@ -1,0 +1,15 @@
+@(scoreType:entity.manager.CustomerServiceScoreType)
+
+<input type="hidden" name="iid" value="@scoreType.getIid">
+<div class="control-group">
+	<label class="control-label">名称</label>
+	<div class="controls">
+		<input type="text" name="cname" value="@scoreType.getCname">
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">描述</label>
+	<div class="controls">
+		<input type="text" name="cdescription" value="@scoreType.getCdescription">
+	</div>
+</div>

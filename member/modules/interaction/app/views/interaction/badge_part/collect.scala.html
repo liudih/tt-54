@@ -1,0 +1,46 @@
+@(listingId:String,
+	collectCount:Integer,
+	isCollect:Boolean,
+	otherLogins: List[Html]
+	)
+
+<p class="product_hart @if(isCollect){product_hartAci} lineBlock" onclick="collect('@listingId',this)">(@collectCount)</p>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+@views.html.member.login.login_common(otherLogins) 
+@views.html.member.login.loginredirect()
+<script type="text/javascript">
+var collecturl = "@controllers.interaction.routes.Collect.collect()";
+var membercollecturl = "@controllers.interaction.routes.Collect.getcollect()";
+var loginurl = "@controllers.member.routes.Login.loginForm()" + "?backUrl="+escape(location.href);
+function collect(lid,node) {
+	var jdom = $(node);
+	if(jdom.hasClass("product_hartAci")){
+		return;
+	}
+	var action = "add";
+	$.get(collecturl, {
+		"lid" : lid,
+		"action" : action
+	}, function(data) {
+		if (data.result == "nologin") {
+			$("#blogin").show();
+			return;
+		}
+		if (data.result == "success") {
+			if (action == "add") {
+				jdom.addClass("product_hartAci");
+				var text = jdom.html();
+				var num = parseInt(text.substring(1,text.length-1))+1;
+				jdom.html("("+num+")");
+			} 
+		} else {
+			alert(data.result);
+		}
+	}, "json");
+}
+
+</script>
+}

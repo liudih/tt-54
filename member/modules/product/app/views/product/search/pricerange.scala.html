@@ -1,0 +1,43 @@
+@(sc: valueobjects.search.SearchContext)
+@currency = @{services.base.FoundationService._getCurrencyObj()}
+@import views.html.helper._
+@helper.javascriptRouter("_currency")(
+	controllers.search.routes.javascript.ProductSearch.currencyConversion
+)
+
+@import services.search.filter._
+<li id="rangeOfPrice-ui" class="rangeOfPrice">
+	@if(sc.extractFirst(classOf[PriceRangeFilter]).isDefined()) {
+		@sc.extractFirst(classOf[PriceRangeFilter]).asScala.map { c:PriceRangeFilter =>
+ 			@currency.getCsymbol<input type="text" id="minPrice" value="@if(c.getPriceRange().hasLowerBound()){@c.getPriceRange().lowerEndpoint()}" tag="@currency.getCcode" /> - 
+ 			@currency.getCsymbol<input type="text" id="maxPrice" value="@if(c.getPriceRange().hasUpperBound()){@c.getPriceRange().upperEndpoint()}" tag="@currency.getCcode"/>
+ 			<input type="submit" class="searchOk" value="@Messages("ok")" id="pricerange-ui">
+ 		}
+	} else {
+			@currency.getCsymbol<input type="text" value="" id="minPrice" tag="@currency.getCcode"> - 
+			@currency.getCsymbol<input type="text" value="" id="maxPrice" tag="@currency.getCcode">
+ 			<input type="submit" class="searchOk" value="@Messages("ok")" id="pricerange-ui">
+	}
+</li>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+<script>
+   var currencyCode = $("#minPrice").attr("tag");
+   var lprice = $("#minPrice").val();
+   var hprice = $("#maxPrice").val();
+	//把美元USD价格转换成指定货币价格
+	var dataJson = JSON.stringify({"ccode":currencyCode,"lowerPrice":lprice,"higherPrice":hprice});
+	$.ajax({
+		url : _currency.controllers.search.ProductSearch.currencyConversion().url,
+		type : "POST",
+		data : dataJson,
+		contentType : "application/json",
+		success : function(data) {
+			var lowerPrice = parseFloat(data.lowerPrice).toFixed(2);
+			var higherPrice = parseFloat(data.higherPrice).toFixed(2);
+			$("#minPrice").val(lowerPrice);
+			$("#maxPrice").val(higherPrice);	
+		}
+	});
+</script>
+}

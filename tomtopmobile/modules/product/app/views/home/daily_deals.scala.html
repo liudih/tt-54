@@ -1,0 +1,56 @@
+@(dailylist: List[valueobjects.product.ProductBadge])
+@import services.base._
+@import services.base.utils._
+
+<div class="dealsL_tt">
+	<h6>Daily Deals</h6>
+	<a class="rightMore" href="@controllers.product.routes.Product.dailyDeals()"> More &gt;&gt; </a>
+</div>
+@if(null!=dailylist&&dailylist.size()>0&&null!=dailylist.get(0)){
+<ul class="product_page_Expires">
+	<li class="lineBlock">Deal Expires:</li>
+	<li class="lineBlock orange" id="remainTime"></li>
+</ul>
+@dailylist.get(0).getPrice().getValidToOption().asScala.map { validTo =>
+<div id="remainSeconds" style="display:none">@DateFormatUtils.untilNowInSeconds(validTo)</div>}
+@dailydetail(dailylist.get(0))
+
+@services.base.HtmlUtils.misc().addTail{
+<script>
+	var SysSecond;
+	var InterValObj;
+	function SetRemainTime() {
+		if (SysSecond > 0) {
+			SysSecond = SysSecond - 1;
+			var second = Math.floor(SysSecond % 60);
+			var minite = Math.floor((SysSecond / 60) % 60);
+			var hour = Math.floor((SysSecond / 3600) % 24);
+			var day = Math.floor((SysSecond / 3600) / 24);
+			if (second <= 9) {
+				second = '0' + second;
+			}
+			if (minite <= 9) {
+				minite = '0' + minite;
+			}
+			if (hour <= 9) {
+				hour = '0' + hour;
+			}
+			if (day <= 9) {
+				day = '0' + day;
+			}
+			$("#remainTime").html(
+					day + ":" + hour + ":" + minite + ":" + second);
+		} else {
+			window.clearInterval(InterValObj);
+		}
+	}
+	$(function() {
+		SysSecond = parseInt($("#remainSeconds").html());
+		InterValObj = window.setInterval(SetRemainTime, 1000);
+	})
+</script>
+}
+} else {
+<a class="product_img">@img(null,"",560,560,null)</a>
+</br></br></br></br>
+}

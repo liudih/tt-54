@@ -1,0 +1,296 @@
+@(recommendlabelName: java.util.LinkedHashMap[dto.SimpleLanguage, dto.label.RecommendLabelAndName],
+categorylist: List[dto.product.CategoryWebsiteWithName])
+@import views.html.helper._
+
+@views.html.manager.main {
+<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN STYLE CUSTOMIZER -->
+						<div class="color-panel hidden-phone">
+							<div class="color-mode-icons icon-color"></div>
+							<div class="color-mode-icons icon-color-close"></div>
+							<div class="color-mode">
+								<p>THEME COLOR</p>
+								<ul class="inline">
+									<li class="color-black current color-default" data-style="default"></li>
+									<li class="color-blue" data-style="blue"></li>
+									<li class="color-brown" data-style="brown"></li>
+									<li class="color-purple" data-style="purple"></li>
+									<li class="color-grey" data-style="grey"></li>
+									<li class="color-white color-light" data-style="light"></li>
+								</ul>
+								<label>
+									<span>Layout</span>
+									<select class="layout-option m-wrap small">
+										<option value="fluid" selected="">Fluid</option>
+										<option value="boxed">Boxed</option>
+									</select>
+								</label>
+								<label>
+									<span>Header</span>
+									<select class="header-option m-wrap small">
+										<option value="fixed" selected="">Fixed</option>
+										<option value="default">Default</option>
+									</select>
+								</label>
+								<label>
+									<span>Sidebar</span>
+									<select class="sidebar-option m-wrap small">
+										<option value="fixed">Fixed</option>
+										<option value="default" selected="">Default</option>
+									</select>
+								</label>
+								<label>
+									<span>Footer</span>
+									<select class="footer-option m-wrap small">
+										<option value="fixed">Fixed</option>
+										<option value="default" selected="">Default</option>
+									</select>
+								</label>
+							</div>
+						</div>
+						<!-- END BEGIN STYLE CUSTOMIZER -->  
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+
+						<h3 class="page-title">
+							推荐客户喜爱标签管理 <small>添加标签</small>
+						</h3>
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="/sysadmin">Home</a> 
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href="@controllers.manager.routes.RecommendLabel.recommendLabelManager()">推荐客户喜爱标签管理</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>添加标签信息</li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				
+				<!-- BEGIN PAGE CONTENT-->
+		
+				<div class="row-fluid">
+				<form action="@controllers.manager.routes.RecommendLabel.RecommendLabelNameSave()" method="POST" enctype="multipart/form-data" id="saveRecommendLabel" onsubmit="return vaildSubmit()">	
+					<div class="span12">
+						<div class="span4">
+						    <label for="websiteid">站点选择</label>
+							@services.manager.ChooseService.getInstance().website("siteId", 1, true)
+						</div>
+						
+						<div class="span4">
+						    <label for="device">设备选择</label>
+							@services.manager.ChooseService.getInstance().device("cdevice", null,true)
+						</div>
+					</div>
+					<div class="control-group">
+						<div class="controls">
+						<label>品类</label>
+						 <select id="category1" name="category1" onchange="addCategory()">
+							<option value="">------------Category------------</option> 
+								@for( i<- categorylist){
+									<option value="@i.getIcategoryid,@i.getCname()" >@i.getCname()</option> 
+								}
+							</select>
+							<select id="category2" name="category2" onchange="addChildCategory()" style="display: none;">
+							</select>
+							<select id="category3" name="category3" style="display: none;">
+							</select>
+						</div>
+					</div>
+					<div>
+						<div class="tabbable tabbable-custom boxless">
+							<ul class="productDescription_navigation">
+							</ul>
+							<ul class="nav nav-tabs">
+								@if(recommendlabelName.size() > 0) {
+									@recommendlabelName.map{ e =>
+									<li @if(1==e._1.getIid()){class="active"}><a href="#tab_@e._1.getIid()" data-toggle="tab">@e._1.getCname()</a></li>
+									}
+								}
+							</ul>
+							<div class="tab-content">
+								@recommendlabelName.map{ e =>
+									<div class="tab-pane @if(1==e._1.getIid()){active}" id="tab_@e._1.getIid()">
+										<div class="portlet box blue">
+											<div class="portlet-title">
+												<div class="caption"><i class="icon-reorder"></i>属性列表</div>
+												<div class="tools">
+													<a href="javascript:;" class="collapse"></a>
+													<a href="#portlet-config" data-toggle="modal" class="config"></a>
+													<a href="javascript:;" class="reload"></a>
+													<a href="javascript:;" class="remove"></a>
+												</div>
+											</div>
+											<div class="portlet-body form">
+												
+												<!-- BEGIN FORM-->
+													<div class="row-fluid">
+														<div class="control-group">
+															<label class="control-label">图片</label>
+															<input id="imagefiles@e._1.getIid()" class="prvimage" name="image@e._1.getIid()" multiple="multiple" type="file">
+															<div id="prvimagefiles@e._1.getIid()">预览容器</div>
+														</div>
+							
+														<div class="control-group">
+															<label class="control-label" for="firstName">标签名称</label>
+															<div class="controls">
+																<input type="text" name="clabelname@e._1.getIid()" id="clabelname@e._1.getIid()" class="m-wrap span12 required" value="" maxlength="100" />
+															</div>
+														</div>
+													 </div>
+													
+												<!-- END FORM--> 
+											</div>
+										</div>
+									</div>	
+								}
+								<button name="submit" type="submit" class="btn blue"><i class="icon-ok"></i> Save</button>
+							</div>
+						</div>
+					</div></form>
+				</div>
+			
+				<!-- END PAGE CONTENT -->
+				
+			</div> 
+			@services.base.HtmlUtils.misc().addTailOnce{
+				<script src="@controllers.manager.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.manager.routes.Assets.at("js/manager/recommendlabelimg")"></script>
+				<script>
+				//$(document).ready(function(){
+					$('#siteId').on("change",function() {
+						$("#category1").css('display','none'); 
+						$("#category2").css('display','none'); 
+						$("#category3").css('display','none'); 
+						$("#category1 option").remove();
+					    $("#category2 option").remove();
+						$("#category3 option").remove();
+						var siteid=$("#siteId").val();
+						if(siteid != "" && siteid != null){
+							var url =  '@controllers.manager.routes.CategoryRecommend.rootCategory(0)';
+							url += "?siteid=" + siteid;
+							//alert(url);
+							$.ajax({url: url, 
+								type: 'get', 
+								dataType: 'json', 
+								timeout: 1000, 
+								error: function(){alert('Error publish');}, 
+								success: function(res){
+								    $("#category1").append("<option value=''>------------Category------------</option>");
+								     $.each(res,function(key,value) {
+								    	 if(key != -1){
+								    	 	$("#category1").append("<option value='"+key+","+value+"'>"+value+"</option>");
+								    	 }
+								     	});
+								     $("#category1").css('display','inline-block'); 
+									} 
+								})
+						}
+					});
+				//});
+				function addCategory(){
+					$("#category2").css('display','none'); 
+					$("#category3").css('display','none'); 
+				    $("#category2 option").remove();
+					$("#category3 option").remove();
+					var c1=$("#category1").val();
+					var siteid=$("#siteId").val();	
+					if(c1 != ""){
+						var cs1 = new Array();
+						cs1 = c1.split(',');
+						var url =  '@controllers.manager.routes.CategoryRecommend.childCategory(0)';
+						url += "?categoryid=" +cs1[0] + "&siteid=" + siteid;
+						$.ajax({url: url, 
+							type: 'get', 
+							dataType: 'json', 
+							timeout: 1000, 
+							error: function(){alert('Error publish');}, 
+							success: function(res){
+								 var b = 0;
+							    $("#category2").append("<option value=''></option>");
+							     $.each(res,function(key,value) {
+							    	 if(key == -1){
+							    		 b = key;
+							    	 }else{
+							    		 $("#category2").append("<option value='"+key+","+value+"'>"+value+"</option>");
+							    	 }
+							     	});
+							     if(b == 0){
+							     	$("#category2").css('display','inline-block'); 
+							     }
+								} 
+							})
+					}
+				}
+
+				function addChildCategory(){
+					$("#category3").css('display','none'); 
+					$("#category3 option").remove();
+					var c2=$("#category2").val();
+					var siteid=$("#siteId").val();	
+					if(c2 != ""){
+						var cs2 = new Array();
+						cs2 = c2.split(',');
+						var url =  '@controllers.manager.routes.CategoryRecommend.childCategory(0)';
+						url += "?categoryid=" + cs2[0] + "&siteid=" + siteid;
+						$.ajax({url: url, 
+							type: 'get', 
+							dataType: 'json', 
+							timeout: 1000, 
+							error: function(){alert('Error publish');}, 
+							success: function(res){
+							    var b = 0;
+							    $("#category3").append("<option value=''></option>");
+							     $.each(res,function(key,value) {
+							    	 if(key == -1){
+							    		 b = key;
+							    	 }else{
+							    		 $("#category3").append("<option value='"+key+","+value+"'>"+value+"</option>");
+							    	 }
+							     	});
+							     if(b == 0){
+							     	$("#category3").css('display','inline-block'); 
+							     }
+								} 
+							})
+					}
+				}
+				
+				function vaildSubmit(){
+					var siteid=$("#siteId").val();	
+					var cdevice=$("#cdevice").val();
+					var category1=$("#category1").val();
+					var image=$("#imagefiles1").val();
+					var clabelname=$("#clabelname1").val();
+					if($.trim(siteid) == ""){
+						alert("请选择站点");return false;
+					}
+					if($.trim(cdevice) == ""){
+						alert("请选择设备");return false;
+					}
+					if($.trim(category1) == ""){
+						alert("请选择品类");return false;
+					}
+					if($.trim(image) == ""){
+						alert("请选择上传图片");return false;
+					}
+					if($.trim(clabelname) == ""){
+						alert("请填写标签名称");return false;
+					}
+					if($.trim(clabelname).length > 100){
+						alert("标签名称过长");return false;
+					}
+					// $("#saveRecommendLabel").submit();
+					return true;
+				}
+		
+				</script>
+			}
+}

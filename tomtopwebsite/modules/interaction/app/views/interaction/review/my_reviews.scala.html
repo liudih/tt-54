@@ -1,0 +1,118 @@
+@(reviews :valueobjects.base.Page[valueobjects.interaction.ReviewsInMemberCenter])
+@import views.html.product.img
+@if(null != reviews.getList && reviews.getList.size()>0){
+<h6>
+	@Messages("my.reviews") <a href="@controllers.interaction.review.routes.MemberReview.reviewlist()">@Messages("more") >></a>
+</h6>
+<table class="myRevi" width="100%" border="1" cellspacing="0"
+	cellpadding="0">
+	<tr>
+		<th>@Messages("items")</th>
+		<th class="capTh">@Messages("review.caption")</th>
+		<th>@Messages("post.date")</th>
+		<th>@Messages("points")</th>
+		<th><select>
+				<option>@Messages("status")</option>
+				<option>@Messages("pending")</option>
+				<option>@Messages("approved")</option>
+				<option>@Messages("failed")</option>
+		</select></th>
+		<th>@Messages("options")</th>
+	</tr>
+		@reviews.getList.map{i=>
+		<tr>
+			<td class="firImg"><a href="@controllers.product.routes.Product.view(i.getProductUrl())">
+					@img(i.getProductSmallImageUrl, null, 120, 120, null, 'width->72, 'height->72)
+			</a></td>
+			<td>
+				<div class="productReviews reviHover">
+					<div class="productReviews">
+						<div class="productStar" style="width: @if(i.getFoverallratingStarWidth == 0){0%} else {@i.getFoverallratingStarWidth%}"></div> 
+					</div>
+					<ul class="hoverStar">
+						<li class="hoveSTText hoverAll">@Messages("overall.rating")</li>
+						<li class="hoverAll">
+							<div class="productReviews">
+								<div class="productStar" style="width: @if(i.getFoverallratingStarWidth == 0){0%} else {@i.getFoverallratingStarWidth%}"></div> 
+							</div>
+						</li>
+						<li class="hoveSTText">@Messages("usefulness")</li>
+						<li>
+							<div class="productReviews">
+								<div class="productStar" style="width: @if(i.getIusefulness == 0){0%} else {@i.getIusefulness%}"></div> 
+							</div>
+						</li>
+						<li class="hoveSTText">@Messages("shipping")</li>
+						<li>
+							<div class="productReviews">
+								<div class="productStar" style="width: @if(i.getIshippingStarWidth == 0){0%} else {@i.getIshippingStarWidth%}"></div> 	
+							</div>
+						</li>
+						<li class="hoveSTText">@Messages("price")</li>
+						<li>
+							<div class="productReviews">
+								<div class="productStar" style="width: @if(i.getIpriceStarWidth == 0){0%} else {@i.getIpriceStarWidth%}"></div> 
+							</div>
+						</li>
+						<li class="hoveSTText">@Messages("quality")</li>
+						<li>
+							<div class="productReviews">
+								<div class="productStar" style="width: @if(i.getIqualityStarWidth == 0){0%} else {@i.getIqualityStarWidth%}"></div> 
+							</div>
+						</li>
+					</ul>
+				</div>
+				<p>@i.getCcomment</p>
+				<ul class="writePic">
+					@i.getCommentPhotosUrl.map{j=>
+						<li>
+							@if(j.startsWith("http://") || j.startsWith("https://")) { 
+								<img height="50" width="50" src="@j">
+							} else { 
+								<img height="50" width="50" src="@controllers.image.routes.Image.view(j)" /> 
+							}
+						</li> 
+					}
+					<li class="writeVideo"><img src="@i.getCommentVideoUrl"></li>
+				</ul> <!--addPic-->
+				<div class="blockPopup_box">
+					<div class="customer_popBox scrollWZ">
+						<input value="0" type="hidden" name="nowIndex" class="nowIndex" />
+						<div class="customer_popClose"></div>
+						<div class="customer_leftClick cursor"></div>
+						<div class="customer_rightClick cursor"></div>
+						<div class="scrollBox">
+							<div class="customer_popPicBox">
+								<ul class="customer_bigPic">
+									@i.getCommentPhotosUrl.map{j=>
+										<li>
+											@if(j.startsWith("http://") || j.startsWith("https://")) { 
+												<img height="50" width="50" src="@j">
+											} else { 
+												<img height="50" width="50" src="@controllers.image.routes.Image.view(j)" /> 
+											}
+										</li> 
+									}
+								</ul>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="blockPopup_black"></div>
+				</div> <!--addPicOver-->
+				<div class="clear"></div>
+			</td>
+			<td class="myDate">@i.getDcreatedate</td>
+			<td class="myPoints"></td>
+			<td class="myUnapproved">@i.getIstate</td>
+			<td class="myView"><a class="blue" href="@controllers.interaction.review.routes.MemberReview.reviewlist()">@Messages("view")</a></td>
+		</tr>
+		}
+	} else {
+		<h6>@Messages("my.reviews")</h6>
+		<div style="margin:0 auto;height:34px;width:270px;">
+			<p style="font: bold 18px georgia;">@Messages("You have no reviews")</p>
+		</div>
+	    <div class="clear"></div>
+	}
+</table>

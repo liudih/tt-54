@@ -1,0 +1,1 @@
+@(selectid: String, website: Collection[dto.Website],id: Integer = 0)<div id="123">	<select id="@selectid" name="@selectid">	<option value ="-1"></option>		@for( i<- website){			@if(i.getIid() == id){				<option value ="@i.getIid()" selected="selected">@i.getCcode()</option>			}else{				<option value ="@i.getIid()">@i.getCcode()</option>			}		}	</select>	</div>

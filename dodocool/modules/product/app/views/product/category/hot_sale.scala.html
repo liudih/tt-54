@@ -1,0 +1,12 @@
+@(products: List[dto.product.ProductMessage])
+
+<div class="side">
+    <h3 class="hd">@Messages("hot.sellers")</h3>
+    <div class="bd">
+    	@if(products!=null && products.size()!=0){
+		      @products.map{p=>
+	         	@views.html.product.fragment.badge.render(p, 55, 55)
+	         }
+	     }
+    </div>
+</div>

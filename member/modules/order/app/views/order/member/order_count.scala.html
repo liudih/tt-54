@@ -1,0 +1,12 @@
+@(vo: valueobjects.order_api.OrderCount)
+
+<ul class="orderUl">
+	<li><p>@Messages("my.order")</p><span>@vo.getAll()</span></li>
+	<li><p>@Messages("payment.pending")</p><span>@vo.getPending()</span></li>
+	<li><p>@Messages("payment.confirmed")</p><span>@vo.getConfirmed()</span></li>
+	<li><p>@Messages("processing")</p><span>@vo.getProcessing()</span></li>
+	<li><p>@Messages("dispatched")</p><span>@vo.getDispatched()</span></li>
+	<li><p>@Messages("order.cancelled")</p><span>@vo.getCancelled()</span></li>
+	<li><p>@Messages("refunded")</p><span>@vo.getRefunded()</span></li>
+	<div class="clear"></div>
+</ul>

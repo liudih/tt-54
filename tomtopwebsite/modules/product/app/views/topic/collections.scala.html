@@ -1,0 +1,103 @@
+@(vo: valueobjects.topic.CollectionsPage)
+@import views.html.helper._
+@helper.javascriptRouter("collectionRoute")(
+	controllers.topic.routes.javascript.Topic.refresh
+)
+@views.html.base.minimal(false){
+	@services.base.HtmlUtils.misc().addHeadOnce{
+		<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/search.css")?@version.BuildVersion.build()" />
+	}
+	<div class="container LevelOne collectionsBox">
+		<div class="Bread_crumbs_Box">
+			<ul class="Bread_crumbs">
+				<li class="Bread_home"><a href="@controllers.base.routes.Home.home()"></a></li>
+				<li>
+					<p>
+						<a class="Bread_link" href="javascript:;">@Messages("collection")</a>
+					</p>
+				</li>
+				<div class="clear"></div>
+			</ul>
+		</div>
+		<div class="xxxDiv marT">
+			<ul class="blackXXK">
+				@vo.getTypes().zipWithIndex.map{e =>
+					<li @if(e._2 == 0){class="xxkActi"}>
+						@e._1
+					</li>
+				}
+				<div class="clear"></div>
+			</ul>
+			@vo.getTypes().zipWithIndex.map{e =>
+				<div class="xxkBOX arrangeClick @if(e._2 == 0){block}">
+					<div class="attributeBOX">
+						<div class="attributeHid">
+							<ul>
+								<li>
+									<ol>@Messages("language"):
+									</ol>
+									<ol>
+										<div class="attML_BOX newArivals_sp" name="form_div" type="@e._1">
+											@vo.getSlList().map{l =>
+												<span @if(l.getIid() == vo.getDefaultLanguageId()){class="spanActive"} tag="@e._2" name ="languageId" value="@l.getIid()">
+													<a href="javascript:;">
+														@l.getCname()<em></em>
+													</a>
+												</span>
+											}
+											<div class="clear"></div>
+										</div>
+									</ol> <span class="attM">@Messages("more")<em></em></span> <span class="attL">@Messages("less")<em></em></span>
+									<div class="clear"></div>
+								</li>
+								<li>
+									<ol>@Messages("year"):
+									</ol>
+									<ol>
+										<div class="attML_BOX newArivals_sp" name="form_div" type="@e._1">
+											@vo.getYears().zipWithIndex.map{y =>
+												<span @if(y._2 == 0){class="spanActive"} tag="@e._2" name ="year" value="@y._1">
+													<a href="javascript:;">@y._1<em></em></a>
+												</span>
+											}
+											<div class="clear"></div>
+										</div>
+									</ol> <span class="attM">@Messages("more")<em></em></span> <span class="attL">@Messages("less")<em></em></span>
+									<div class="clear"></div>
+								</li>
+								<li>
+									<ol>@Messages("month"):
+									</ol>
+									<ol>
+										<div class="attML_BOX newArivals_sp" name="form_div" type="@e._1">
+											<span class="spanActive" tag="@e._2" name ="month"><a href="javascript:;">@Messages("all")<em></em></a></span>
+											<span tag="@e._2" name ="month" value="1"><a href="javascript:;">@Messages("january")<em></em></a></span>
+											<span tag="@e._2" name ="month" value="2"><a href="javascript:;">@Messages("february")<em></em></a></span>
+											<span tag="@e._2" name ="month" value="3"><a href="javascript:;">@Messages("march")<em></em></a></span>
+											<span tag="@e._2" name ="month" value="4"><a href="javascript:;">@Messages("april")<em></em></a></span>
+											<span tag="@e._2" name ="month" value="5"><a href="javascript:;">@Messages("may")<em></em></a></span>
+											<span tag="@e._2" name ="month" value="6"><a href="javascript:;">@Messages("june")<em></em></a></span>
+											<span tag="@e._2" name ="month" value="7"><a href="javascript:;">@Messages("july")<em></em></a></span>
+											<span tag="@e._2" name ="month" value="8"><a href="javascript:;">@Messages("august")<em></em></a></span>
+											<span tag="@e._2" name ="month" value="9"><a href="javascript:;">@Messages("september")<em></em></a></span>
+											<span tag="@e._2" name ="month" value="10"><a href="javascript:;">@Messages("october")<em></em></a></span>
+											<span tag="@e._2" name ="month" value="11"><a href="javascript:;">@Messages("november")<em></em></a></span>
+											<span tag="@e._2" name ="month" value="12"><a href="javascript:;">@Messages("december")<em></em></a></span>
+											<div class="clear"></div>
+										</div>
+									</ol> <span class="attM">@Messages("more")<em></em></span> <span class="attL">@Messages("less")<em></em></span>
+									<div class="clear"></div>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<h6><span></span></h6>
+					@views.html.topic.topicPageList.render(e._1,vo.getMap().get(e._1))
+				</div>
+			}
+		</div>
+	</div>
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<script src="@controllers.base.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.product.routes.Assets.at("js/product/mtopicpage")"></script>
+	}
+}

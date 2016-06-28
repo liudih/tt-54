@@ -1,0 +1,96 @@
+@import extensions.member.account.Position
+@(member:dto.Member, 
+	htmls: Map[Position, java.util.Collection[Html]])
+@import views.html.helper._	
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+@views.html.member.base.master("home") {
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" /> 
+}
+ <div class="accountRight accouHomeBox">
+
+    	<h6>@Messages("my.account")</h6>
+         @tp.get("member-photo")
+
+        <div class="headRight">
+        	<p><b class="myName">@member.getCaccount()</b>, @Messages("welcome.to.my.account")@if(!member.isBactivated){<a href="@controllers.member.routes.Register.doResendActivationEmail"><span class="blue"> . resend active email</span></a>}</p>
+           
+	        @if(htmls.containsKey(Position.PROFILE)) {
+	            @htmls.get(Position.PROFILE).map{ h =>
+	            	@h
+	            }
+	        }
+        </div>  
+        <div class="clear"></div>
+        @if(htmls.containsKey(Position.STATISTICS)) {
+        <ul class="accInf">
+        	@htmls.get(Position.STATISTICS).map{ h =>
+        		@h
+        	}
+        </ul>
+        }
+        <div class="clear"></div>
+        
+	<!-- 	<h6>@Messages("one.more.step.to.get.the.welcome.gifts")</h6>
+        <p>@Messages("3.options.coupons.below.select.like.finish.email.process.code.automatically.sent.account.valid.30.days.only.once")</p>
+        <ul class="couponUl">
+        	<li>
+            	<p>
+                	<span class="orange">50.0-8.0</span>
+                    @Messages("8.off.orders.us.50.00.or.more")
+                </p>
+                <a href="javascript:;">@Messages("get.the.coupon")</a>
+            </li>
+        	<li>
+            	<p>
+                	<span class="orange">50.0-8.0</span>
+                    @Messages("8.off.orders.us.50.00.or.more")
+                </p>
+                <a href="javascript:;">@Messages("get.the.coupon")</a>
+            </li>
+        	<li>
+            	<p>
+                	<span class="orange">50.0-8.0</span>
+                    @Messages("8.off.orders.us.50.00.or.more")
+                </p>
+                <a class="overdue" href="javascript:;">@Messages("get.the.coupon")</a>
+            </li>
+        	<li>
+            	<p>
+                	<span class="orange">50.0-8.0</span>
+                    @Messages("8.off.orders.us.50.00.or.more")
+                </p>
+                <a href="javascript:;">@Messages("get.the.coupon")</a>
+            </li>
+            <div class="clear"></div>
+        </ul> -->
+        @if(htmls.containsKey(Position.BODY)) {
+            @htmls.get(Position.BODY).map{ h =>
+            	@h
+            }
+        }
+        <div class="clear"></div>
+        <div class="xxkDiv autoH">
+            <ul class="blackXXK">
+                <li class="xxkActi">@Messages("super.deals")</li>
+                <li>@Messages("you.view.history")</li>
+                <div class="clear"></div>
+            </ul>
+			@tp.get("super-deals-in-member")
+            <div class="clear"></div>
+             @tp.get("member-browse-history-in-member-center")
+            <div class="clear"></div>
+        </div>
+    </div>
+
+  
+@services.base.HtmlUtils.misc().addTailOnce{
+<script src='@controllers.base.routes.Assets.at("js/lib/jquery.form.js")'></script>
+<script src='@controllers.base.routes.Assets.at("js/lib/jquery.imgpreview.js")'></script>
+  @views.html.member.email.verify.notity_js()
+<script>
+  $("#photo").preview({preview:'preview'});  
+  </script>
+} 
+}

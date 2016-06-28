@@ -1,0 +1,74 @@
+@(bi : valueobjects.order_api.OrderItem,
+	currency:dto.Currency,
+	isReview:Boolean = false)
+@urlprefix = @{play.Play.application().configuration().getString("member.urlprefix")}
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+<ul class="cartListUL" id="cart_item_num@bi.getCid()">
+	<input type="hidden" class="listingId" value="@bi.getClistingid()"/>
+    <li class="cartListLI">
+        <a class="rightThis" href="javascript:;"><!-- <span></span> --></a>
+        <a class="inBlock pro_img" href="@if(bi.getCurl()!=null){@urlprefix@controllers.product.routes.Product.view(bi.getCurl())}">
+        	@img(bi.getCimageurl(), bi.getCtitle(), 120, 120, null)
+        </a>
+        <div class="inBlock pro_info">
+            <a href="@if(bi.getCurl()!=null){@urlprefix@controllers.product.routes.Product.view(bi.getCurl())}">
+            @bi.getCtitle()
+            </a>
+            <p class="parameter"><span>@Messages("sku") @bi.getSku()</span><!-- <span>Color:White</span><span>Power:3W</span> -->
+            	@if(null !=bi.getAttributeMap){
+            		@bi.getAttributeMap.map{ j=>
+            		    @if(null != j._1 && j._1.length>0){@j._1.substring(0,1).toUpperCase@j._1.substring(1)}
+            		    : @j._2 &nbsp;
+            		}
+		        }
+            </p>
+        </div>
+        <div class="inBlock pro_price">
+            <p class="newPrice">@currency.getCsymbol <span>@Utils.money(bi.getUnitPrice(),currency.getCcode)</span></p>
+        </div>
+		<ul class="qty_num inBlock" style="text-align:center;">
+			<li class="qty_nums">@bi.getIqty()</li>
+		</ul>
+        <span class="pro_total inBlock" data="@bi.getClistingid">@currency.getCsymbol <span>@Utils.money(bi.getTotalPrice(),currency.getCcode)</span></span>
+        @if(isReview){
+        	<a class="orderReview" href="/review/product/@bi.getClistingid()/write">Review</a>
+        }
+    </li>
+	@if(bi.getChildList().size()>0){
+    <li class="cartListToge">
+    	<p class="listTogeTitle">@Messages("frequently.buy.together")<i></i></p>
+    	@bi.getChildList().map{ k =>
+    	<input type="hidden" class="listingId" value="@k.getClistingid()"/>
+    	<ol>
+            <a class="inBlock" href="@if(k.getCurl()!=null){@controllers.product.routes.Product.view(k.getCurl())}">
+            @img(k.getCimageurl(), null, 120, 120, null)</a>
+            <div class="inBlock pro_info">
+                <a href="@if(k.getCurl()!=null){@controllers.product.routes.Product.view(k.getCurl())}">@k.getCtitle()</a>
+                <p class="parameter"><span>@Messages("sku") @k.getSku()</span><!-- <span>Color:White</span><span>Power:3W</span> -->
+	                <span>
+		            	@if(null !=k.getAttributeMap){
+		            		@k.getAttributeMap.map{ j=>
+		            		    @if(null != j._1 && j._1.length>0){@j._1.substring(0,1).toUpperCase@j._1.substring(1)}
+		            		     : @j._2 &nbsp;
+		            		}
+		            	}
+		            </span>
+                </p>
+            </div>
+            <div class="inBlock pro_price">
+		            <p class="newPrice">@currency.getCsymbol <span>@Utils.money(k.getUnitPrice(),currency.getCcode)</span></p>
+            </div>
+            <ul class="qty_num inBlock">
+                <li class="qty_nums">@k.getIqty()</li>
+            </ul>
+            <span class="pro_total inBlock" data="@k.getClistingid">@currency.getCsymbol <span>@Utils.money(k.getTotalPrice(),currency.getCcode)</span></span>
+            @if(isReview){
+	        	<a class="orderReview" href="/review/product/@k.getClistingid()/write">Review</a>
+	        }
+        </ol>
+        }
+    </li>
+    }
+</ul>

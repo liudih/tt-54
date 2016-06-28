@@ -1,0 +1,12 @@
+<!--  主体内容开始  -->
+@websitename=@{services.configuration.ApplicationConfigService._getCurrentWebsiteName()}
+<article id="hotLink">
+   	<div class="container">
+       	<ul class="clearfix">
+           	   <li><a href="/product/newarrivals"><img src="@controllers.base.routes.Assets.at("images/t_btn_01.png")" alt="" /><h2>@Messages("new.arrivals")</h2></a></li>
+               <li><a href="/product/deals"><img src="@controllers.base.routes.Assets.at("images/t_btn_02.png")" alt="" /><h2>@Messages("product.deals")</h2></a></li>
+               <li><a href="/member/register"><img src="@controllers.base.routes.Assets.at("images/t_btn_03.png")" alt="" /><h2>@Messages("become.a.dodo.user",websitename)</h2></a></li>
+           </ul>
+       </div>
+   </article>
+<!--  主体内容结束  -->

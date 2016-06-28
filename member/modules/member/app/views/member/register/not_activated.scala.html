@@ -1,0 +1,33 @@
+@(email: String)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@views.html.base.master{
+	<div class="container accountBox">
+    @write_review_select()
+    <div class="accountRight verificationBox">
+            <div class="emailBx">
+    			<h6 class="f18">@Messages("sorry.account")（@email） @Messages("activation.failed")!</h6>
+                <b class="emailAds">@email</b><a href="@controllers.member.routes.Register.regValide(email)" class="sendEmail">@Messages("send.confirm.email")</a>
+                <p class="marT">
+                    @Messages("click.button.sent.confirmation.the.above.email.address")<br>
+                    <a class="blue" href="@controllers.base.routes.Cms.getCmsContentByMenuId(30)">@Messages("want.change.register.email.click.here")</a>
+                </p>
+            </div>
+        <div class="clear"></div>
+        <div class="xxkDiv autoH">
+            <ul class="blackXXK">
+                <li class="xxkActi">@Messages("super.deals")</li>
+                <li>@Messages("you.view.history")</li>
+                <div class="clear"></div>
+            </ul>
+            @tp.get("super-deals-in-member")
+            <div class="clear"></div>
+             @tp.get("member-browse-history-in-member-center")
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+   @services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.member.routes.Assets.at("css/styles.css")?@version.BuildVersion.build()" /> 
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/login.css")?@version.BuildVersion.build()" /> 
+   }
+ }

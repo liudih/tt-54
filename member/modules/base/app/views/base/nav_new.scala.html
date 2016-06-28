@@ -1,0 +1,36 @@
+@()
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@urlprefix = @{play.Play.application().configuration().getString("member.urlprefix")}
+<nav class="contentInside pu_mainNav_Warp lbBox insideNav">
+	<div class="classifyNav lineBlock">
+		 
+		 @tp.get("category")
+	</div>
+	<ul class="mainNav lineBlock lbBox">
+		<li class="lineBlock"><a href="@urlprefix/product/newarrivals">@Messages("new.arrivals")</a></li>
+		<li class="lineBlock"><a href="@urlprefix/product/hot">@Messages("top.sellers")</a></li>
+		<li class="lineBlock"><a href="@urlprefix/product/freeshipping">@Messages("free.shipping")</a></li>
+		<li class="pu_mainNavHover lineBlock">
+			<a class="mainNavTxt" href="@urlprefix/product/dailydeal">@Messages("deals")<i class="icon-arr"> </i></a>
+			<div class="pu_mainNavSub dealsNav">
+				<a href="@urlprefix/interaction/superdeals"><img src="@controllers.base.routes.Assets.at("images/dh_superDeals.jpg")" /></a>
+				<a href="@urlprefix/product/dailydeal"><img src="@controllers.base.routes.Assets.at("images/dh_dailyDeals.jpg")" /></a>
+				<a href="@urlprefix/product/special"><img src="@controllers.base.routes.Assets.at("images/dh_deals.jpg")" /></a>
+			</div>
+		</li>
+		<li class="lineBlock pu_mainNavHover">
+			<a class="mainNavTxt" href="@urlprefix/product/gadget/4">@Messages("under") $4.99<i class="icon-arr"> </i></a>
+			<div class="pu_mainNavSub">
+				<a href="@urlprefix/product/gadget/0">@Messages("under") $0.99</a>
+				<a href="@urlprefix/product/gadget/1">@Messages("under") $1.99</a>
+				<a href="@urlprefix/product/gadget/2">@Messages("under") $2.99</a>
+				<a href="@urlprefix/product/gadget/3">@Messages("under") $3.99</a>
+				<a href="@urlprefix/product/gadget/4">@Messages("under") $4.99</a>
+			</div>
+		</li>
+		<li class="lineBlock"><a href="@urlprefix/product/clearance">@Messages("clearance")</a></li>
+		<li class="lineBlock pu_mainNavHover">
+			<a class="mainNavTxt" href="/promotion.html">Promotion</a>
+		</li>
+	</ul>
+</nav>

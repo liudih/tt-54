@@ -1,0 +1,79 @@
+@(id:String,url:String)
+<div class="salesAmountChart">
+   <div class="chartTable" style=" position: relative;padding: 0;">
+   <div id='@(id+"chart-content")' style="padding-left:20px;">
+      <canvas id='@(id+"_chart")' width="900" height="450" style="cursor: pointer;"></canvas>
+   </div>
+   <div id='@(id+"msg")' style="display:none; line-height:450px;  width: 940px; height: 450px; text-align: center;color: #666;font-size: 18px;" >
+	      not found data!
+   </div>
+   <div id='@(id+"lodding")' style="display:none;  position: absolute;width:100%;height:100%;top:0;left=0;" > <div  class="throbber" style="display:block;  position: absolute;left: 50%;top: 50%;margin-left: -8px;margin-top: -8px;"></div></div>
+</div>
+@views.html.affiliate.report.total_tag()
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+
+<script type="text/javascript">
+
+	$(function() {
+		function ajaxLoad() {
+			$
+					.get(
+							"@url",
+							{},
+							function(json) {
+								var id = "@id";
+								var $msg = $('#' + id + "msg");
+								var $ctx = $('#' + id + 'chart-content');
+								var $loading = $('#' + id + "loading");
+								if (json.result && json.result.length > 0) {
+									$msg.hide();
+									$ctx.show();
+									var da = [];
+									var ls = [];
+									$.each(json.result, function() {
+
+										da.push(this.value)
+										ls.push(this.label)
+									});
+
+									new RGraph.Line(
+											{
+												id : '@(id+"_chart")',
+												data : da,
+												options : {
+
+													tooltips : {
+														self : function(o,
+																text, x, y,
+																idx, e) {
+
+														},
+														hotspot : {
+															xonly : true
+														}
+													},
+													filled : true,
+													fillstyle : [
+															'Gradient(rgba(124, 181, 236, 0.74902):rgba(124, 181, 236, 0.74902)',
+
+													],
+													numxticks : 6,
+													labels : ls
+												}
+											}).draw()
+
+								} else {
+									$msg.show();
+									$ctx.hide();
+
+								}
+								$loading.hide();
+							});
+		}
+		ajaxLoad();
+
+	});
+</script>
+
+}

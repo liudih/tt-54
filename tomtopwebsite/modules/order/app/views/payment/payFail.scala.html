@@ -1,0 +1,35 @@
+@(
+	orderNum: String,
+	errorMessage: String,
+	errorCode: String,
+	retryUrl : String
+	)
+@livechaturl = @{services.base.ConfigService.getLivechatUrl()}
+@views.html.base.minimal(true,true,false){
+	@services.base.HtmlUtils.misc().addHeadOnce{
+		 <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/product.css")?@version.BuildVersion.build()" />
+		 <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/newshopping2.css")?@version.BuildVersion.build()" /> 
+	}
+	<div class="newshopping_success newshopping_nosuccess">
+	    <span class="icon_cry"></span>
+	    <div class="newshopping_success_con">
+	        <h3>@Messages("fail_tip")</h3>
+	        <div class="nosuccess_con">
+	            <p><strong>@Messages("fail.detail"):</strong></p>
+	            @if(errorCode!=null&&errorCode.length()>0){
+		        	<p>@Messages("fail.code"): @errorCode</p>
+		        }
+	            <p>@Messages("fail.message"): @errorMessage</p>
+	        </div>
+	        <div>
+	        	<a href="@if(retryUrl != null){@retryUrl}else{@controllers.order.routes.OrderProcessing.replaceOrder(orderNum)}" class="a_try_again">@Messages("try_again")</a>
+	        </div>
+	        <div class="nosuccess_con">
+	            <p>@Messages("nosuccess.1")</p>
+	            <p>1. <a href="@livechaturl"  target="_blank" rel="nofollow">@Messages("nosuccess.2")</a></p>
+	            <p>2. <a href="/base/cms">@Messages("nosuccess.3")</a></p>
+	            <p>@Messages("nosuccess.4")</p>
+	        </div>
+	    </div>
+	</div>
+}

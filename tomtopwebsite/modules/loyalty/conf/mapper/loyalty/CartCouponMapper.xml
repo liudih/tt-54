@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.loyalty.CartCouponMapper">
+
+	<resultMap type="entity.loyalty.CartCoupon" id="CartCoupon"></resultMap>
+
+	<insert id="insert" parameterType="entity.loyalty.CartCoupon"
+		useGeneratedKeys="true" keyProperty="iid">
+		insert into t_cart_coupon
+		(
+			ccode,
+			istatus,
+			ccartid,
+			cemail,
+			cordernumber
+		)
+		values
+		(
+			#{ccode,jdbcType=VARCHAR},
+			#{istatus,jdbcType=INTEGER},
+			#{ccartid,jdbcType=VARCHAR},
+			#{cemail,jdbcType=VARCHAR},
+			#{orderNumber,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<update id="update" parameterType="entity.loyalty.CartCoupon">
+		update t_cart_coupon
+		<set>
+			<if test="ccode != null">
+				ccode = #{ccode,jdbcType=VARCHAR},
+			</if>
+			<if test="istatus != null">
+				istatus = #{istatus,jdbcType=INTEGER},
+			</if>
+			<if test="ccartid != null">
+				ccartid = #{ccartid,jdbcType=VARCHAR},
+			</if>
+			<if test="cemail != null">
+				cemail = #{cemail,jdbcType=VARCHAR},
+			</if>
+			<if test="orderId != null">
+				iorderid = #{orderId,jdbcType=INTEGER},
+			</if>
+			<if test="orderNumber != null and orderNumber != '' ">
+				cordernumber = #{orderNumber,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where 
+		<choose>
+			<when test="iid != null and iid != ''">
+				iid=#{iid,jdbcType=INTEGER}
+			</when>
+			<when test="ccode != null and ccode != ''  and ccartid != null and ccartid != '' ">
+				ccode= #{ccode,jdbcType=VARCHAR} and ccartid = #{ccartid,jdbcType=VARCHAR}
+			</when>
+		</choose>
+		
+		
+	</update>
+	
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete  from t_cart_coupon where iid=#{0}
+	</delete>
+	
+	<select id="getCartCouponByCondition" resultType="entity.loyalty.CartCoupon" parameterType="entity.loyalty.CartCoupon">
+		select * from t_cart_coupon
+		<where>
+			<if test="ccode != null">
+				and ccode = #{ccode,jdbcType=VARCHAR}
+			</if>
+			<if test="ccartid != null">
+				and ccartid = #{ccartid,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
+	<insert id="insertCartCoupon" parameterType="entity.loyalty.CartCoupon"
+		useGeneratedKeys="true" keyProperty="iid">
+		insert into t_cart_coupon
+		(
+			ccode,
+			istatus,
+			cemail,
+			cordernumber,
+			iorderid
+			
+		)
+		values
+		(
+			#{ccode,jdbcType=VARCHAR},
+			#{istatus,jdbcType=INTEGER},
+			#{cemail,jdbcType=VARCHAR},
+			#{orderNumber,jdbcType=VARCHAR},
+			#{orderId,jdbcType=INTEGER}
+		)
+	</insert>
+	
+	<update id="updateOrderCoupon" parameterType="entity.loyalty.CartCoupon">
+		update t_cart_coupon
+		<set>
+			<if test="ccode != null">
+				ccode = #{ccode,jdbcType=VARCHAR},
+			</if>
+			<if test="istatus != null">
+				istatus = #{istatus,jdbcType=INTEGER},
+			</if>
+			
+			<if test="cemail != null">
+				cemail = #{cemail,jdbcType=VARCHAR},
+			</if>
+			<if test="orderId != null">
+				iorderid = #{orderId,jdbcType=INTEGER},
+			</if>
+		</set>
+		where 
+		<choose>
+			<when test="iid != null and iid != ''">
+				iid=#{iid,jdbcType=INTEGER}
+			</when>
+			<when test="ccode != null and ccode != ''  and orderNumber != null and orderNumber != '' ">
+				ccode= #{ccode,jdbcType=VARCHAR} and cordernumber = #{orderNumber,jdbcType=VARCHAR}
+			</when>
+		</choose>
+		
+	</update>
+	
+</mapper>

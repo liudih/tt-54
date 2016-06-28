@@ -1,0 +1,13 @@
+@(productPosts: List[dto.interaction.ProductPost])
+
+<div id="faq">
+@if(null != productPosts){
+	 @productPosts.map{i=>
+	 	<div class="guide_pro pt30">
+			<h3 class="legend">@i.getCtitle()</h3>
+			<p>@i.getCquestion()</p>
+		    <p>@i.getCanswer()</p>
+		</div>
+	 }
+}
+</div>

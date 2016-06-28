@@ -1,0 +1,35 @@
+[Unit]
+Description=TomTop Website PostgreSQL
+
+# Requirements
+Requires=etcd.service
+Requires=docker.service
+
+# Dependency ordering
+After=etcd.service
+After=docker.service
+
+[Service]
+
+TimeoutStartSec=0
+
+# Change killmode from "control-group" to "none" to let Docker remove
+# work correctly.
+KillMode=none
+
+# Pre-start and Start
+## Directives with "=-" are allowed to fail without consequence
+ExecStartPre=-/usr/bin/docker kill tomtopwebsite-postgresql
+ExecStartPre=-/usr/bin/docker rm tomtopwebsite-postgresql
+ExecStartPre=-/bin/bash -c "/usr/bin/docker pull 192.168.7.15:5000/postgres"
+ExecStart=/bin/bash -c "/usr/bin/docker run --name tomtopwebsite-postgresql \
+	-p 5432:5432 \
+        -e 'POSTGRES_USER=tomtopwebsite' \
+        -e 'POSTGRES_PASSWORD=tomtopwebsite' \
+        -v /data/tomtopwebsite-postgresql:/var/lib/postgresql/data \
+	192.168.7.15:5000/postgres"
+
+# Stop
+ExecStop=/usr/bin/docker stop tomtopwebsite-postgresql
+
+Restart=always

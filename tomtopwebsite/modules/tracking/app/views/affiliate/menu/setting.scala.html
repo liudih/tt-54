@@ -1,0 +1,6 @@
+@(display:Boolean,highliht:Boolean)
+@if(display){
+<li @if(highliht){ class="leftAct" } >
+   <a href="@controllers.affiliate.routes.AffiliateHome.Setting()">Setting</a>
+</li>
+}

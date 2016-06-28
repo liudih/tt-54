@@ -1,0 +1,4 @@
+cpaymentid,iwebsiteid,fbeginprice,fendprice,cbusiness
+oceanpayment_credit,1,0,10000,"{""account"":""140143"",""terminal"":""14014302"",""secureCode"":""B4886nrZ""}"
+oceanpayment_yandex,1,0,10000,"{""account"":""140143"",""terminal"":""14014301"",""secureCode"":""2486Z228""}"
+oceanpayment_qiwi,1,0,10000,"{""account"":""140143"",""terminal"":""14014301"",""secureCode"":""2486Z228""}"

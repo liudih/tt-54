@@ -1,0 +1,248 @@
+@(
+types:List[dto.ProductPostType],
+listingid:String,
+loginEmail:String
+)
+@import views.html.helper._
+<div class="blockPopup_box" >
+	<div class="postPhotos_popBox scrollWZ" style="margin-top: -272.5px;">
+		<div class="customer_popClose"></div>
+		<div class="scrollBox" style="overflow-y: auto;">
+		@form(controllers.interaction.routes.Post.add,'id->"post-form"){
+			<p class="matchTitle">@Messages("customer.q.a")</p>
+			
+			<div class="QA_left">
+				<p>@Messages("my.question.example")*</p>
+				<input type="hidden" name="clistingid" value="@listingid">
+				<div class="qaListER form-element">
+				   <input type="text" name="ctitle">
+				   <span id="ctitle-error" class="edit_error" ></span>
+				   <span class="rightUse"></span>
+				</div>
+				<p>@Messages("more.details.maximum.characters")*</p>
+				 <div class="qaListER form-element">
+					<textarea name="cquestion"></textarea>
+				 <span id="cquestion-error" class="edit_error" ></span>
+					 <span class="rightUse"></span>
+				</div>
+				 <div class=" form-element selectER">
+				  @Messages("type"): 
+				<select name="itypeid">
+				  <option value="0">@Messages("please.choose.question.type")</option>
+				  @if(types!=null && types.size()>0){
+				      @types.map{t=>
+				       <option value=" @t.getIid()"> @t.getCcode()</option>
+				      }
+				  }
+				</select> 
+				<span id="itypeid-error" class="edit_error"></span>
+				<span class="rightUse"></span>
+				</div>
+				@if(loginEmail == null) {
+				<p>
+					<b>@Messages("tell.us.a.little.about.yourself")</b>
+				</p>
+				}
+				<table width='100%' border="0" cellspacing="0" cellpadding="0">
+					<tbody>
+					@if(loginEmail == null) {
+						<tr>
+							<td width="45">@Messages("name")*</td>
+							<td>
+							  <div class="form-element">
+							     <input type="text" name="canswer">
+							       <span id="canswer-error" class="edit_error" ></span>
+							      <span class="rightUse"></span>
+							  </div>
+							  </td>
+						</tr>
+						<tr>
+							<td>@Messages("emails")*</td>
+							<td>
+							  	<div class="form-element">
+							     <input type="text" name="cmemberemail">
+							     <span id="cmemberemail-error" class="edit_error"></span>
+							     <span class="rightUse"></span>
+							     </div>
+							</td>
+						</tr>
+					} else {
+						<input type="hidden" name="cmemberemail" value="@loginEmail"/>
+					}
+						<tr>
+							<td></td>
+							<td><div class="code_txt"><img id="codeimg" src="@controllers.base.routes.Captcha.generate()" width="100"></div></td>
+						</tr>
+						<tr>
+						<td>@Messages("code")*</td>
+						 <td>
+							<div class="form-element">
+							   <input class="code" name="captcha" id="faqcaptcha" type="text"  >
+							  <span id="tokencode-error" class="edit_error"></span>
+							   <span class="rightUse"></span>
+							</div>
+							
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="QA_right">
+					<b>@Messages("product.q.a.guidelines")</b>
+                       <p>@Messages("you.are.invited.to.ask.questions.and.offer.answers.to.the.questions.posted.here")</p>
+                       <ul>
+                       	<li>@Messages("information.that.changes.such.as.price.and.promotional.details.inappropriate.language.or.tone")</li>
+                       	<li>@Messages("information.about.other.companies.and.web.sites")</li>
+                       	<li>@Messages("personal.or.private.information")</li>
+                       </ul>
+	                   @Messages("need.to.get.help.from.our.customer.service.team.contact.us.now")
+			</div>
+			<div class="clear"></div>
+			<div class="QA_bottom">
+				<input type="submit" class="orangeInput" value='@Messages("submit")'><input type="button" class="hsInput cancelClose" value='@Messages("cancel")'>
+			</div>
+		}
+		</div>
+	</div>
+	<div class="blockPopup_black"></div>
+</div>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+	<script  type="text/javascript"  src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+	<script  type="text/javascript"  src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+	<script type="text/javascript">
+	$('#codeimg').on('click',reloadCode);
+	 function reloadCode(){
+		 var $img=$(this);
+		 var url=$img.attr('src');
+		 $img.attr('src',url+"?_t="+Math.random());
+	 }
+	 var html='<label id="{id}-error" class="edit_error" for="{id}">{msg}</label>'
+	 function showError(form,required){
+		 for(var i in required){
+			 var msg=required[i];
+			 var $ele=$(form).find('input[name='+i+']');
+			 $ele.after(html.replace('{id}',i).replace('{msg}',msg));
+			 $ele.parents('.form-element').addClass('error').removeClass('rights');
+		 }
+	 }
+     function ajaxSubmit(form){
+    	 var url=$(form).attr('action');
+    	 var data=$(form).serialize();
+    	 $.post(url,data,function(data)	{
+    		   if(data){
+					if(data.errorCode==0){
+						$(".blockPopup_box").fadeOut();
+						form.reset();
+						reloadCode.call($('#codeimg'));
+					}else if(data.errorCode==1){
+						showError(form,data.required)
+					}
+				}
+			});
+     }
+	 var options={
+				submitHandler : function(form) {
+					ajaxSubmit(form)
+				},
+				ignore : "",
+                errorClass:'edit_error',
+				rules : {
+					ctitle:{
+						required : true,
+						maxlength : 100
+					},
+					cquestion: {
+						required : true,
+						maxlength : 250
+					},
+					itypeid:{
+						min : 1
+					},
+					@if(loginEmail == null) {
+					cmemberemail : {
+						required : true,
+						email:true
+					},
+					canswer:{
+						required : true,
+					},
+					}
+					captcha : {
+						remote:{
+				               type:"POST",
+				               url:"@controllers.base.routes.Captcha.checkCaptcha()",
+				               data:{
+				            	    captcha:function(){return $("#faqcaptcha").val();}
+				                }
+				              } ,
+				        required : true,
+					}
+				},
+				messages : {
+					ctitle:{
+						required : "Last title is required.",
+						maxlength : "No more than {0} characters."
+					},
+					cquestion : {
+						required : "Last question is required.",
+						maxlength : "No more than {0} characters."
+					},
+					itypeid:{
+						min:"Please choose a question type."
+					},
+					@if(loginEmail == null) {
+					cmemberemail : {
+						required : "Please enter an email.",
+					},
+					canswer:{
+						required : "Please enter an name.",
+					},
+					}
+					captcha : {
+						required : "Please enter an code.",
+						remote:"code error."
+					}
+				},
+				highlight : function( element,error) {
+					$(element).addClass("edit_INerror");
+					var $eleform=$(element).parents('.form-element');
+					$eleform.removeClass('rights');
+					$eleform.addClass('error');
+				},
+				errorPlacement: function(error, element) {
+			        var errorMsg=$(error).html();
+			        $(element).next('span').html(errorMsg);
+			     },
+				unhighlight : function(element, error, valid) {
+					$(element).removeClass("edit_INerror");
+					var $eleform=$(element).parents('.form-element');
+					$eleform.removeClass('error');
+					$eleform.addClass('rights');
+				},
+				success : function() {
+				}
+			}
+           $('#post-form').validate(options);
+     </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

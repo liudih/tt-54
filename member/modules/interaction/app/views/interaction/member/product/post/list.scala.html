@@ -1,0 +1,206 @@
+@(
+postPage :valueobjects.base.Page[dto.ProductPost],
+types:List[dto.ProductPostType]
+
+)
+@import views.html.helper._	
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@views.html.member.base.master("product-post") {
+<div class="accountRight accouMatchBox">
+    	<h6>@Messages("umy.q")&amp;@Messages("ua") </h6>
+        <ul class="reviewTT_ul">
+            <li>
+                <select name="date">
+                    <option value="0">@Messages("all.date")</option>
+                    <option value="3">@Messages("last.3.months")</option>
+                    <option value="6">@Messages("last.6.months")</option>
+                    <option value="12">@Messages("last.year")</option>
+                    
+                </select>
+            </li>
+            <li>
+                <select name="reply">
+                    <option value="0">@Messages("all")</option>
+                    <option value="1">@Messages("pending.reply")</option>
+                    <option value="2">@Messages("replied")</option>
+                </select>
+            </li>
+            <li>
+               @if(types!=null && types.size()>0){
+                 <select name="itypeid">
+                      <option value="0">@Messages("all")</option>
+                     @types.map{t=>
+                       <option value="@t.getIid()">@t.getCcode()</option>
+                     }
+                 </select>
+                }
+            </li>
+            <li class="wisItems">@Messages("showing") <span>1</span> - <span>10</span> @Messages("of") <span>6</span> @Messages("items")</li>
+            <li class="showNub">@Messages("show") 
+            <select name="pageSize">
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                    <option value="40">20</option>
+                    <option value="40">40</option>
+            </select>
+            </li>
+            <div class="clear"></div>
+        </ul>
+        <div class="QA_title">
+        	<span class="QA_Items">@Messages("uitems ")</span>
+        	<span class="QA_Content">@Messages("content")</span>
+        	<span class="QA_Type">@Messages("type")</span>
+        	<span class="QA_Status">@Messages("status")</span>
+        	<span class="QA_RequestDate">@Messages("requestdate")</span>
+        	<span class="QA_View">@Messages("view") </span>
+            <div class="clear"></div>
+        </div>
+        <ul class="QA_Box">
+           @if(postPage != null&&postPage.getList().size()>0){ 
+                         @postPage.getList().map{m=>
+                             <li>
+							    <span class="QA_Items">
+							    <img  height="57" width="57" src="@controllers.member.routes.Photo.get(m.getSelf().getCmemberemail)"></span>
+							    <span class="QA_Content">
+							    	<b>Q:@m.getSelf().getCtitle </b>
+							        <p>@m.getSelf().getCquestion </p>
+							    </span>
+							    <span class="QA_Type">@m.getSelf().getCcode()</span>
+							    <span class="QA_Status">@if(m.getSelf().getBreply()){Replied}else{pending Replied}</span>
+							    <span class="QA_RequestDate">@services.base.utils.DateFormatUtils.getDateMDY(m.getSelf().getDcreatedate) </span>
+							    <span class="QA_View"><a class="blue" href='@controllers.interaction.routes.MemberProductPost.detail(m.getSelf().getClistingid,m.getSelf().getIid)'>@Messages("view") </a></span>
+							   @if(m.getSelf().getBreply()){
+							     <ol>
+							     	 <b>A:</b><p>@m.getSelf().getCanswer</p>
+							         <p><span class="QA_by">By</span> @m.getSelf().getCrecoveryuser <span class="tomtopDate">@services.base.utils.DateFormatUtils.getDateMDY(m.getSelf().getDrecoverydate)</span> </p> 
+							          @views.html.interaction.product.post.vote(m)
+							     </ol>
+							    }
+								<div class="clear"></div>
+							</li>
+                         }   
+           }
+        	
+        </ul>
+        <div class="arrayNEX">
+           @form(controllers.interaction.routes.MemberProductPost.list(),'id->"searchbar",'role->"form",'enctype->"multipart/form-data"){
+            
+           }
+           @views.html.product.gadget.pagination((postPage.pageNo-1),postPage.totalPages)
+           
+        </div>
+    	<div class="clear"></div>
+        <div class="xxkDiv autoH">
+            <ul class="blackXXK">
+                <li class="xxkActi">@Messages("super.deals")</li>
+                <li>@Messages("you.view.history")</li>
+                <div class="clear"></div>
+            </ul>
+			@tp.get("super-deals-in-member")
+            <div class="clear"></div>
+             @tp.get("member-browse-history-in-member-center")
+            <div class="clear"></div>
+        </div>
+    </div>
+    
+    @services.base.HtmlUtils.misc().addTailOnce{
+      <script type="text/javascript">
+
+        
+         (function(){
+        	 
+        	 
+        	 function reloadData(n,v,f){
+            	 var url= location.href;
+            	 if(url.indexOf('?')!=-1){
+            		 var reg = new RegExp("(\\?|&)"+ n +"=([^&]*)(&|$)");
+            		 url=url.match(n)?url.replace(reg,function(w){
+                         if(v==='0'){
+                             if(w.match('^\\?.*&$')){
+                            	return '?';
+                             }
+                        	 return w.replace(reg,'');
+                         }
+            			 var val= w.replace(/=([^&]*)/,'='+v);
+            			 return val;
+            		 }):url+'&'+n+'='+v;
+            		 if(f && typeof f==='function'){
+            			 location.href=f.call(this,url);
+            		 }else{
+            			 location.href=url;
+            		 }
+            		
+            	 }else{
+            		 location.href=url+'?'+n+'='+v;;
+            	 }
+             }
+           
+        	    function q(name) {
+	      		    var reg = new RegExp("(^|&)" + name + "=([^&]*)", "i");
+	      		    var r = window.location.search.substr(1).match(reg);
+	      		    if (r != null) return unescape(r[2]); return null;
+      		    }
+        	    function s(n,v){
+        	    	if(v!=null){
+	               	     var $select=$('select[name='+n+']');
+	               	     var $option=$select.find('option[value='+v+']')
+	               	     var $clone=$option.clone(true);
+	               	     var $frist= $select.children(":first");
+	               	     $frist.before($clone);
+	               	     $clone.attr("selected",true);
+	               	     $option.remove();
+               	    }
+        	    }
+        	  
+        	   s('date',q('date'));
+        	   s('reply',q('reply'));
+        	   s('itypeid',q('itypeid'));
+        	   s('pageSize',q('pageSize'));
+        	   
+        	   $('select[name=date]').on('change',function(e){
+      	    	 reloadData('date',$(this).val());
+      	       });
+      	     
+               $('select[name=reply]').on('change',function(e){
+              	 reloadData('reply',$(this).val());
+               });
+               $('select[name=itypeid]').on('change',function(e){
+              	 reloadData('itypeid',$(this).val());
+               });
+               $('select[name=pageSize]').on('change',function(e){
+              	 reloadData('pageSize',$(this).val(),function(url){
+              		 var reg = new RegExp("p=\\d+");
+	           		 if(q('p')){
+	           			 return url.replace(reg,'p=1');
+	           		 }
+	           		 return url;
+              	 });
+               });
+        	   var str=location.search.substr(1);
+        	   var $form=$('#searchbar');
+        	   if(!q('p')){
+        		  var html='<input type="hidden" id="p" name="p" value="1" />'; 
+     			  $form.append(html);
+        	   }
+        	   if(str){
+        		  var reg= new RegExp('[a-zA-Z0-9]*=[a-zA-Z0-9]*','ig')
+        		  var params=str.match(reg);
+        		  for(var i in params){        			 
+        			  var param=params[i].split('=');
+        			  var name=param[0];
+        			  var value=param[1];
+        			  var html='<input id="'+name+'" type="hidden" name="'+name+'" value="'+value+'" />'; 
+        			  $form.append(html);
+        		  }
+        	   }
+        	    
+         })();
+         
+       
+         
+	    
+      
+      </script>
+    }
+    
+ }

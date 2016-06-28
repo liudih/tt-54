@@ -1,0 +1,39 @@
+@(body: Html)
+@meta = @{services.base.utils.MetaUtils.currentMetaBuilder().build()}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Cache-Control" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+	<title>@meta.getTitle() - TOMTOP</title>
+	<meta name="description" content="@meta.getDescription()">
+	<link rel="icon" href="@controllers.base.routes.Assets.at("favicon.ico")" type="image/x-icon"><meta name="keywords" content="@meta.getKeywords()">
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" /> 
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/tomtop.css")">
+	<script src="@controllers.base.routes.Assets.at("lib/jquery/jquery.min.js")"></script>
+	<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+	<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+	<script src="@controllers.base.routes.Assets.at("js/lib/public.js")?@version.BuildVersion.build()"></script>
+	<script src="@controllers.base.routes.Assets.at("js/lib/main.js")?@version.BuildVersion.build()"></script>
+	@services.base.HtmlUtils.misc().getHead().map { h =>
+		@h
+	}
+	</head>
+	<body>
+		<div class="container" id="top_s">
+			<div class="shoppingCart_top" >
+				<div class="topNavigation_logo navigationCart_logo lineBlock">
+			    		<div class="topNav_logoT"><a href="/"><img src="@controllers.base.routes.Assets.at("img/Tomtop_logo0603_01.png")" /></a></div>
+			            <div class="topNav_logoB"><img src="@controllers.base.routes.Assets.at("img/Tomtop_logo0603_02.png")" /></div>
+			    </div>
+			</div>
+			@body
+		</div>
+		<script src="@controllers.base.routes.Assets.at("js/lib/jquery.json.min.js")"></script>
+		@services.base.HtmlUtils.misc().getTail().map { h =>
+			@h
+		}
+	</body>
+</html>

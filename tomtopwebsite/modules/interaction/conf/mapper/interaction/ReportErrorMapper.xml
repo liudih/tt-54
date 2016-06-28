@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.interaction.ReportErrorMapper" >
+  <resultMap id="BaseResultMap" type="dto.interaction.ReportError" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+    <result column="csku" property="csku" jdbcType="VARCHAR" />
+    <result column="cerrortype" property="cerrortype" jdbcType="VARCHAR" />
+    <result column="cemail" property="cemail" jdbcType="VARCHAR" />
+    <result column="cinquiry" property="cinquiry" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, clistingid, csku, cerrortype, cemail, cinquiry, dcreatedate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_report_error
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_report_error
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="dto.interaction.ReportError" >
+    insert into t_report_error (iid, clistingid, csku, 
+      cerrortype, cemail, cinquiry, 
+      dcreatedate)
+    values (#{iid,jdbcType=INTEGER}, #{clistingid,jdbcType=VARCHAR}, #{csku,jdbcType=VARCHAR}, 
+      #{cerrortype,jdbcType=VARCHAR}, #{cemail,jdbcType=VARCHAR}, #{cinquiry,jdbcType=VARCHAR}, 
+      #{dcreatedate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="dto.interaction.ReportError" >
+    insert into t_report_error
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="clistingid != null" >
+        clistingid,
+      </if>
+      <if test="csku != null" >
+        csku,
+      </if>
+      <if test="cerrortype != null" >
+        cerrortype,
+      </if>
+      <if test="cemail != null" >
+        cemail,
+      </if>
+      <if test="cinquiry != null" >
+        cinquiry,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="clistingid != null" >
+        #{clistingid,jdbcType=VARCHAR},
+      </if>
+      <if test="csku != null" >
+        #{csku,jdbcType=VARCHAR},
+      </if>
+      <if test="cerrortype != null" >
+        #{cerrortype,jdbcType=VARCHAR},
+      </if>
+      <if test="cemail != null" >
+        #{cemail,jdbcType=VARCHAR},
+      </if>
+      <if test="cinquiry != null" >
+        #{cinquiry,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dto.interaction.ReportError" >
+    update t_report_error
+    <set >
+      <if test="clistingid != null" >
+        clistingid = #{clistingid,jdbcType=VARCHAR},
+      </if>
+      <if test="csku != null" >
+        csku = #{csku,jdbcType=VARCHAR},
+      </if>
+      <if test="cerrortype != null" >
+        cerrortype = #{cerrortype,jdbcType=VARCHAR},
+      </if>
+      <if test="cemail != null" >
+        cemail = #{cemail,jdbcType=VARCHAR},
+      </if>
+      <if test="cinquiry != null" >
+        cinquiry = #{cinquiry,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dto.interaction.ReportError" >
+    update t_report_error
+    set clistingid = #{clistingid,jdbcType=VARCHAR},
+      csku = #{csku,jdbcType=VARCHAR},
+      cerrortype = #{cerrortype,jdbcType=VARCHAR},
+      cemail = #{cemail,jdbcType=VARCHAR},
+      cinquiry = #{cinquiry,jdbcType=VARCHAR},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

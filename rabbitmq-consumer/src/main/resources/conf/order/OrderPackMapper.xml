@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rabbit.conf.ordermapper.order.OrderPackMapper" >
+  <resultMap id="BaseResultMap" type="com.rabbit.dto.order.OrderPack" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="iorderid" property="iorderid" jdbcType="INTEGER" />
+    <result column="csku" property="csku" jdbcType="VARCHAR" />
+    <result column="iqty" property="iqty" jdbcType="INTEGER" />
+    <result column="cshippingtype" property="cshippingtype" jdbcType="VARCHAR" />
+    <result column="fshippingprice" property="fshippingprice" jdbcType="DOUBLE" />
+    <result column="ctrackingnumber" property="ctrackingnumber" jdbcType="VARCHAR" />
+    <result column="dshippingdate" property="dshippingdate" jdbcType="TIMESTAMP" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, iorderid, csku, iqty, cshippingtype, fshippingprice, ctrackingnumber, dshippingdate, 
+    dcreatedate
+  </sql>
+  <insert id="insert" parameterType="com.rabbit.dto.order.OrderPack" >
+    insert into t_order_pack (iorderid, csku, 
+      iqty, cshippingtype, fshippingprice, 
+      ctrackingnumber, dshippingdate
+      )
+    values (#{iorderid,jdbcType=INTEGER}, #{csku,jdbcType=VARCHAR}, 
+      #{iqty,jdbcType=INTEGER}, #{cshippingtype,jdbcType=VARCHAR}, #{fshippingprice,jdbcType=DOUBLE}, 
+      #{ctrackingnumber,jdbcType=VARCHAR}, #{dshippingdate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rabbit.dto.order.OrderPack" >
+    update t_order_pack
+    <set >
+      <if test="iorderid != null" >
+        iorderid = #{iorderid,jdbcType=INTEGER},
+      </if>
+      <if test="csku != null" >
+        csku = #{csku,jdbcType=VARCHAR},
+      </if>
+      <if test="iqty != null" >
+        iqty = #{iqty,jdbcType=INTEGER},
+      </if>
+      <if test="cshippingtype != null" >
+        cshippingtype = #{cshippingtype,jdbcType=VARCHAR},
+      </if>
+      <if test="fshippingprice != null" >
+        fshippingprice = #{fshippingprice,jdbcType=DOUBLE},
+      </if>
+      <if test="ctrackingnumber != null" >
+        ctrackingnumber = #{ctrackingnumber,jdbcType=VARCHAR},
+      </if>
+      <if test="dshippingdate != null" >
+        dshippingdate = #{dshippingdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <insert id="batchInsert" parameterType="List">
+	  insert into t_order_pack (iorderid, csku, 
+	      iqty, cshippingtype, fshippingprice, 
+	      ctrackingnumber, dshippingdate) values 
+		<foreach collection ="list" item ="item" index ="index" separator =",">
+			(#{item.iorderid}, #{item.csku}, #{item.iqty}, #{item.cshippingtype}, #{item.fshippingprice}, #{item.ctrackingnumber}, #{item.dshippingdate})
+		</foreach>
+	</insert>
+</mapper>

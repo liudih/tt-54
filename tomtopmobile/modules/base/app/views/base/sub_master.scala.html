@@ -1,0 +1,71 @@
+@(title: String=null)(body: Html)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@meta = @{services.base.utils.MetaUtils.currentMetaBuilder().build()}
+@services.base.HtmlUtils.beforeRender()
+@cdnurl = @{play.Play.application().configuration().getString("tomtopwebsite_cdn_url")}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no,maximum-scale=1.0">
+<meta name="description" content="@meta.getDescription()">
+<meta name="keywords" content="@meta.getKeywords()">
+@meta.getProperties().map{p =>
+  <meta property="@p._1" content="@p._2">
+}
+<title>@meta.getTitle()</title>
+<link rel="icon" href="@controllers.base.routes.Assets.at("favicon.ico")" type="image/x-icon">
+<link href="@controllers.base.routes.Assets.at("css/css/style.css")" rel="stylesheet" media="screen">
+<link href="@controllers.base.routes.Assets.at("css/css/mobile.css")" rel="stylesheet" media="screen">
+<link href="@controllers.base.routes.Assets.at("css/css/top.css")" rel="stylesheet" media="screen">
+<link href="@controllers.base.routes.Assets.at("css/css/bottom.css")" rel="stylesheet" media="screen">
+<link href="@(cdnurl)mtomtop/css/skin_festival.css" rel="stylesheet" media="screen">
+
+<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/jquery-1.9.1.js")'></script>
+<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/public.js")'></script>
+<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/main.js")'></script>
+<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/scroll.js")'></script>
+<script type="text/javascript" src="@(cdnurl)mtomtop/js/skin_festival.js"></script>
+	
+@services.base.HtmlUtils.misc().getHead().map { h =>
+	@h
+}
+</head>
+<body>
+
+@views.html.base.quick_navigation()
+
+<div class="container">
+	<div class="header" id="header">
+		<div class="headerFixed">
+	    	<div class="header_cat lineBlock"><a href="javascript:;" onclick="history.go(-1);" >&nbsp;</a></div>
+	    	@if(title!=null && title!=""){
+    			<h3 class="header_title lineBlock">@title</h3>
+    		}else{
+    			<div class="header_logo lineBlock">
+		    		<a href="/">
+		    		<img src="@controllers.base.routes.Assets.at("images/icon/logo.png")" />
+		    		</a>
+	    		</div>
+    		}
+	        <ul class="header_login lineBlock">
+				<li class="header_loginL lineBlock">
+			     	@tp.get("search-navigation-bar")
+			    </li>
+		       	<li class="header_loginD lineBlock">@tp.get("currency-all")</li>
+		       	<li class="header_loginC lineBlock">@tp.get("cart-bar")</li>
+			</ul>
+        </div>
+    </div>
+</div>
+
+@body
+@views.html.base.footer()
+
+
+@services.base.HtmlUtils.misc().getTail().map { h =>
+			@h
+}
+</body>
+</html>
+@services.base.HtmlUtils.afterRender()

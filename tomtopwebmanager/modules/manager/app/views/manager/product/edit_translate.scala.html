@@ -1,0 +1,244 @@
+@(translateList: List[dto.product.ProductTranslate],
+langIdMap: Map[Integer, dto.Language],
+listingId: String)
+
+@import views.html.helper._
+
+@views.html.manager.main{
+	<div class="container-fluid">
+		<!-- BEGIN PAGE HEADER-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN STYLE CUSTOMIZER -->
+				<div class="color-panel hidden-phone">
+					<div class="color-mode-icons icon-color"></div>
+					<div class="color-mode-icons icon-color-close"></div>
+					<div class="color-mode">
+						<p>THEME COLOR</p>
+						<ul class="inline">
+							<li class="color-black current color-default" data-style="default"></li>
+							<li class="color-blue" data-style="blue"></li>
+							<li class="color-brown" data-style="brown"></li>
+							<li class="color-purple" data-style="purple"></li>
+							<li class="color-grey" data-style="grey"></li>
+							<li class="color-white color-light" data-style="light"></li>
+						</ul>
+						<label> <span>Layout</span> <select
+							class="layout-option m-wrap small">
+								<option value="fluid" selected="">Fluid</option>
+								<option value="boxed">Boxed</option>
+						</select>
+						</label> <label> <span>Header</span> <select
+							class="header-option m-wrap small">
+								<option value="fixed" selected="">Fixed</option>
+								<option value="default">Default</option>
+						</select>
+						</label> <label> <span>Sidebar</span> <select
+							class="sidebar-option m-wrap small">
+								<option value="fixed">Fixed</option>
+								<option value="default" selected="">Default</option>
+						</select>
+						</label> <label> <span>Footer</span> <select
+							class="footer-option m-wrap small">
+								<option value="fixed">Fixed</option>
+								<option value="default" selected="">Default</option>
+						</select>
+						</label>
+					</div>
+				</div>
+				<!-- END BEGIN STYLE CUSTOMIZER -->
+				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+	
+				<h3 class="page-title">
+					商品管理 <small>商品一览表</small>
+				</h3>
+				<ul class="breadcrumb">
+					<li><i class="icon-home"></i> <a href="/sysadmin">Home</a> <i
+						class="icon-angle-right"></i></li>
+					<li><a href="#">商品管理</a> <i class="icon-angle-right"></i></li>
+					<li><a href="#">商品一览表</a> <i class="icon-angle-right"></i></li>
+					<li><a href="#">编辑商品描述</a></li>
+				</ul>
+				<!-- END PAGE TITLE & BREADCRUMB-->
+			</div>
+		</div>
+		
+
+		<div class="tabbable tabbable-custom">
+			<ul class="nav nav-tabs">
+				@translateList.zipWithIndex.map{t =>
+					<li class="@if(t._2==0){active}">
+						<a href="#language_@t._1.getIlanguageid" data-toggle="tab">@langIdMap.get(t._1.getIlanguageid).getCname</a>
+					</li>
+				}
+				<li class="">
+					<a href="#language_new" data-toggle="tab">New</a>
+				</li>
+			</ul>
+			<div class="tab-content">
+				@translateList.zipWithIndex.map{ t =>
+					<div class="tab-pane@if(t._2==0){ active}" id="language_@t._1.getIlanguageid">
+						@form(controllers.manager.routes.Product.saveTranslate(), 'id->"save_translate"){
+							<input name="iid" type="hidden" value="@t._1.getIid">
+							<input name="clistingid" type="hidden" value="@t._1.getClistingid">
+							@*<div class="control-group">
+								<label class="control-label">标题</label>
+								<div class="controls">
+									<textarea name="ctitle" id="ctitle_@t._2" class="required m-wrap" style="width: 1320px; height: 105px; font-size: 24px !important;">@t._1.getCtitle</textarea>
+									<script type="text/javascript"> 
+										CKEDITOR.replace('ctitle_@t._2');
+										CKEDITOR.config.bodyClass = 'required'; 
+									</script>
+								</div>
+							</div>*@
+							<div class="control-group">
+								<label class="control-label">描述</label>
+								<div class="controls">
+									<textarea name="cdescription" id="cdescription_@t._2" class="required m-wrap" style="width: 1320px; height: 105px; font-size: 24px !important;">@t._1.getCdescription</textarea>
+									<script type="text/javascript"> 
+										CKEDITOR.replace('cdescription_@t._2');
+										CKEDITOR.config.bodyClass = 'required'; 
+									</script>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">多语种关键字</label>
+								<div class="controls">
+									<textarea name="ckeyword" id="ckeyword_@t._2" class="required m-wrap" style="width: 1320px; height: 105px; font-size: 24px !important;">@t._1.getCkeyword</textarea>
+									<script type="text/javascript"> 
+										CKEDITOR.replace('ckeyword_@t._2');
+										CKEDITOR.config.bodyClass = 'required'; 
+									</script>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">meta description</label>
+								<div class="controls">
+									<textarea name="cmetadescription" id="cmetadescription_@t._2" class="required m-wrap" style="width: 1320px; height: 105px; font-size: 24px !important;">@t._1.getCmetadescription</textarea>
+									<script type="text/javascript"> 
+										CKEDITOR.replace('cmetadescription_@t._2');
+										CKEDITOR.config.bodyClass = 'required'; 
+									</script>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">meta title</label>
+								<div class="controls">
+									<textarea name="cmetatitle" id="cmetatitle_@t._2" class="required m-wrap" style="width: 1320px; height: 105px; font-size: 24px !important;">@t._1.getCmetatitle</textarea>
+									<script type="text/javascript"> 
+										CKEDITOR.replace('cmetatitle_@t._2');
+										CKEDITOR.config.bodyClass = 'required'; 
+									</script>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">meta keyword</label>
+								<div class="controls">
+									<textarea name="cmetakeyword" id="cmetakeyword_@t._2" class="required m-wrap" style="width: 1320px; height: 105px; font-size: 24px !important;">@t._1.getCmetakeyword</textarea>
+									<script type="text/javascript"> 
+										CKEDITOR.replace('cmetakeyword_@t._2');
+										CKEDITOR.config.bodyClass = 'required'; 
+									</script>
+								</div>
+							</div>
+							<div class="control-group">
+								<button type="submit" class="btn blue"><i class="icon-ok"></i>保存</button>
+								<a href="@controllers.manager.routes.Product.deleteTranslate(t._1.getIid, listingId)"><i class="icon-trash"></i>删除</a>
+							</div>
+							
+						}
+					</div>
+				}
+				<div class="tab-pane" id="language_new">
+					@form(controllers.manager.routes.Product.saveTranslate(), 'id->"save_translate"){
+						<input name="clistingid" type="hidden" value="@listingId">
+						<div class="control-group">
+							<label class="control-label">语言</label>
+							<div class="controls">
+								<select name="ilanguageid">
+									@langIdMap.zipWithIndex.map{l =>
+										<option value="@l._1._1" if(l._2==0){selected="selected"}>@l._1._2.getCname</option>
+									}
+								</select>
+							</div>
+						</div>
+						@*<div class="control-group">
+							<label class="control-label">标题</label>
+							<div class="controls">
+								<textarea name="ctitle" id="ctitle_new" class="required m-wrap" style="width: 1320px; height: 105px; font-size: 24px !important;"></textarea>
+								<script type="text/javascript"> 
+									CKEDITOR.replace('ctitle_new');
+									CKEDITOR.config.bodyClass = 'required'; 
+								</script>
+							</div>
+						</div>*@
+						<div class="control-group">
+							<label class="control-label">描述</label>
+							<div class="controls">
+								<textarea name="cdescription" id="cdescription_new" class="required m-wrap" style="width: 1320px; height: 105px; font-size: 24px !important;"></textarea>
+								<script type="text/javascript"> 
+									CKEDITOR.replace('cdescription_new');
+									CKEDITOR.config.bodyClass = 'required'; 
+								</script>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">多语种关键字</label>
+							<div class="controls">
+								<textarea name="ckeyword" id="ckeyword_new" class="required m-wrap" style="width: 1320px; height: 105px; font-size: 24px !important;"></textarea>
+								<script type="text/javascript"> 
+									CKEDITOR.replace('ckeyword_new');
+									CKEDITOR.config.bodyClass = 'required'; 
+								</script>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">meta description</label>
+							<div class="controls">
+								<textarea name="cmetadescription" id="cmetadescription_new" class="required m-wrap" style="width: 1320px; height: 105px; font-size: 24px !important;"></textarea>
+								<script type="text/javascript"> 
+									CKEDITOR.replace('cmetadescription_new');
+									CKEDITOR.config.bodyClass = 'required'; 
+								</script>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">meta title</label>
+							<div class="controls">
+								<textarea name="cmetatitle" id="cmetatitle" class="required m-wrap" style="width: 1320px; height: 105px; font-size: 24px !important;"></textarea>
+								<script type="text/javascript"> 
+									CKEDITOR.replace('cmetatitle_new');
+									CKEDITOR.config.bodyClass = 'required'; 
+								</script>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">meta keyword</label>
+							<div class="controls">
+								<textarea name="cmetakeyword" id="cmetakeyword_new" class="required m-wrap" style="width: 1320px; height: 105px; font-size: 24px !important;"></textarea>
+								<script type="text/javascript"> 
+									CKEDITOR.replace('cmetakeyword_new');
+									CKEDITOR.config.bodyClass = 'required'; 
+								</script>
+							</div>
+						</div>
+						<div class="control-group">
+							<button type="submit" class="btn blue"><i class="icon-ok"></i>保存</button>
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<script>
+			$("form").submit(function(){
+				for ( instance in CKEDITOR.instances ) {
+					 CKEDITOR.instances[instance].updateElement();
+					 var data = CKEDITOR.instances[instance].getData();
+				}
+				return true;
+			});
+		</script>
+	} 
+}

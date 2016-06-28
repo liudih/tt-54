@@ -1,0 +1,162 @@
+@(clist: List[valueobjects.product.category.CategoryClearance],
+	page: Integer,
+	subscribeHtmls: Set[extensions.product.subscribe.ISubscribeProvider])
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@views.html.base.master{
+@helper.javascriptRouter("clearanceRoutes")(
+)
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/search.css")?@version.BuildVersion.build()" /> 
+}
+<div class="container clearanceBox LevelOne">
+    <div class="Bread_crumbs_Box">
+        <ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="/"></a></li>
+            <li>
+                <p>
+                    <a class="Bread_link" href="/product/clearance">@Messages("clearance")</a>
+                </p>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <p class="clearance">@Messages("clearance.in.all.categories")</p>
+    @subscribeHtmls.map{s=>
+    	@s.getHtml()
+    }
+    <div id="clearanceCon">
+	    @clearance_more(clist,page)
+    </div>
+    <input type="hidden" value="1" id="clearancePage" />
+    <div class="bottomMores" id="showloading" style="display:none;"></div>
+    <div class="bottomMore" onclick="moreClearance()">@Messages("more")<img src="@controllers.base.routes.Assets.at("images/more.png")"></div>
+</div>
+@tp.get("member-browse-history")
+@services.base.HtmlUtils.misc().addTailOnce{
+ 	<script>
+ 	$(function(){
+ 		try{
+	 		$(".cleBigBox").each(function(i,e){
+	 			var tid = $(this).find(".clearHideBox:eq(0)").attr("id");
+	 			myMove(tid,"clearMoveBox","clearPic");
+	 		});
+ 		}catch(e){};
+ 	});
+ 	function myMove(myId,moveBox,smallBox){
+ 		//数量不足隐藏右边按钮
+		var csize = $("#"+myId+" ul > li").length;
+		if(csize<8){
+			$("#"+myId+" .browseRight_click").hide();
+		}
+ 		var oDiv = document.getElementById(myId);
+ 		var divBox = getByClass(oDiv,moveBox)[0];
+ 		var SmallBox = getByClass(oDiv,smallBox);
+ 		var leftClick = getByClass(oDiv,"browseLeft_click")[0];
+ 		var rightClick = getByClass(oDiv,"browseRight_click")[0];
+ 		var ready = true;
+ 		var pagenode = $(oDiv).find(".pagenum:eq(0)");
+ 		var totalpage = 1;
+ 		rightClick.onclick = function(){
+ 			var categoryid = $(oDiv).find(".categoryid:eq(0)").val();
+ 			var page = parseInt(pagenode.val())+1;
+ 			if(page>totalpage){
+ 				$.ajax({
+ 	 				url: clearanceRoutes.controllers.product.Product.clearanceMoreProduct().url,
+ 	 				type: "get",
+ 	 				dataType: "json",
+ 	 				async: false,
+ 	 				data:{
+ 	 					"p":page,
+ 	 					"categoryid": categoryid
+ 	 				},
+ 	 				success:function(data){
+ 	 					if(data.size>0){
+ 		 					$(divBox).append(data.html);
+ 		 					totalpage = data.page;	//增加的页数为总页数
+ 	 					}else{
+ 	 						rightClick.style.display = "none";
+ 	 					}
+ 	 				}
+ 	 			});
+ 			}
+ 			SmallBox = getByClass(oDiv,smallBox);
+ 			divBox.style.width = (SmallBox[0].offsetWidth+8)*SmallBox.length+"px";
+ 			if(!ready)return;
+ 			ready = false;
+ 			pagenode.val(page);	//滑动则页数+1
+ 			if(divBox.offsetWidth+divBox.offsetLeft<=oDiv.offsetWidth){
+ 				startMove(divBox,{left:oDiv.offsetWidth-divBox.offsetWidth},function(){ready=true})
+ 			}else if(divBox.offsetWidth-divBox.offsetLeft>oDiv.offsetWidth*2){
+ 				startMove(divBox,{left:divBox.offsetLeft-oDiv.offsetWidth},function(){ready=true})
+ 			}else{
+ 				startMove(divBox,{left:divBox.offsetLeft-(divBox.offsetWidth+divBox.offsetLeft-oDiv.offsetWidth)},function(){ready=true})
+ 			}
+ 			/*if(divBox.offsetWidth+divBox.offsetLeft<=oDiv.offsetWidth*2){
+ 				rightClick.style.display = "none";
+ 			}*/
+ 			leftClick.style.display = "block";
+ 			
+ 		}
+ 		leftClick.onclick = function(){
+ 			if(!ready)return;
+ 			ready = false;
+ 			pagenode.val(parseInt(pagenode.val())-1);//滑动则页数-1
+ 			if(divBox.offsetLeft == 0){
+ 				startMove(divBox,{left:0},function(){ready=true})
+ 			}
+ 			else if(-divBox.offsetLeft >= oDiv.offsetWidth){
+ 				startMove(divBox,{left:divBox.offsetLeft+oDiv.offsetWidth},function(){ready=true})
+ 			}
+ 			else{
+ 				startMove(divBox,{left:divBox.offsetLeft-divBox.offsetLeft},function(){ready=true})
+ 			}
+ 			rightClick.style.display = "block";
+ 			if(-divBox.offsetLeft<=oDiv.offsetWidth){
+ 				leftClick.style.display = "none";
+ 			}
+ 		}
+ 		if(divBox.style.left==0){
+ 			leftClick.style.display = "none";
+ 		}
+ 		leftClick.onmouseover = rightClick.onmouseover = oDiv.onmouseover = function(){
+ 			startMove(leftClick,{opacity:100})
+ 			startMove(rightClick,{opacity:100})
+ 		}
+ 		leftClick.onmouseout = rightClick.onmouseout = oDiv.onmouseout = function(){
+ 			startMove(leftClick,{opacity:0})
+ 			startMove(rightClick,{opacity:0})
+ 		}
+ 	}
+ 	function moreClearance(){
+ 		var page = parseInt($("#clearancePage").val())+1;
+ 		$("#showloading").show();
+ 		$.ajax({
+			url: clearanceRoutes.controllers.product.Product.clearanceMore().url,
+			type: "get",
+			dataType: "json",
+			async: false,
+			data:{
+				"p":page
+			},
+			success:function(data){
+				if(data.size>0){
+ 					$("#clearanceCon").append(data.html);
+ 					$("#clearancePage").val(data.page);
+ 					for(var i=0;i<data.ids.length;i++){
+						var box = $("#cateBox_"+data.ids[i]);
+						var tid = box.find(".clearHideBox:eq(0)").attr("id");
+			 			myMove(tid,"clearMoveBox","clearPic");
+ 					}
+				}else{
+					$(".bottomMore").hide();
+				}
+			},
+			complete:function(){
+				$("#showloading").hide();
+			}
+		});
+ 	}
+ 	</script>
+}
+
+}

@@ -1,0 +1,15 @@
+@()
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+ 	  	@controllers.base.routes.Assets.at("css/categories_page.css")
+  }
+@views.html.base.sub_master(){
+	<div class="container">	
+		<div class="categoriesBox">
+			<h5>All Categories</h5>
+			<ul class="categoriesCon">
+				@tp.get("category")
+			</ul>
+		</div>
+	</div>
+}

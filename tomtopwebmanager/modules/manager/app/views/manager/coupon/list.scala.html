@@ -1,0 +1,421 @@
+@( messages : valueobjects.base.Page[entity.loyalty.Coupon], types :
+Array[enums.loyalty.coupon.manager.Type], rules :
+List[entity.loyalty.CouponRule], websiteMap : Map[java.lang.Integer, java.lang.String]) @import views.html.helper._
+
+@helper.javascriptRouter("js_routes")(controllers.manager.coupon.routes.javascript.Send.getWebsiteById)
+@views.html.manager.main {
+
+
+<div class="container-fluid">
+	<!-- BEGIN PAGE HEADER-->
+	<div class="row-fluid">
+		<div class="span12">
+			<!-- BEGIN STYLE CUSTOMIZER -->
+			<div class="color-panel hidden-phone">
+				<div class="color-mode-icons icon-color"></div>
+				<div class="color-mode-icons icon-color-close"></div>
+				<div class="color-mode">
+					<p>THEME COLOR</p>
+					<ul class="inline">
+						<li class="color-black current color-default" data-style="default"></li>
+						<li class="color-blue" data-style="blue"></li>
+						<li class="color-brown" data-style="brown"></li>
+						<li class="color-purple" data-style="purple"></li>
+						<li class="color-grey" data-style="grey"></li>
+						<li class="color-white color-light" data-style="light"></li>
+					</ul>
+					<label> <span>Layout</span> <select
+						class="layout-option m-wrap small">
+							<option value="fluid" selected="">Fluid</option>
+							<option value="boxed">Boxed</option>
+					</select>
+					</label> <label> <span>Header</span> <select
+						class="header-option m-wrap small">
+							<option value="fixed" selected="">Fixed</option>
+							<option value="default">Default</option>
+					</select>
+					</label> <label> <span>Sidebar</span> <select
+						class="sidebar-option m-wrap small">
+							<option value="fixed">Fixed</option>
+							<option value="default" selected="">Default</option>
+					</select>
+					</label> <label> <span>Footer</span> <select
+						class="footer-option m-wrap small">
+							<option value="fixed">Fixed</option>
+							<option value="default" selected="">Default</option>
+					</select>
+					</label>
+				</div>
+			</div>
+			<!-- END BEGIN STYLE CUSTOMIZER -->
+			<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+
+			<h3 class="page-title">
+				Marketing <small>Coupon Manage</small>
+			</h3>
+			<ul class="breadcrumb">
+				<li><i class="icon-home"></i> <a href="/sysadmin">Home</a> <i
+					class="icon-angle-right"></i></li>
+				<li><a href="#">Marketing</a> <i class="icon-angle-right"></i>
+				</li>
+				<li><a href="#">Coupon Send</a></li>
+			</ul>
+			<!-- END PAGE TITLE & BREADCRUMB-->
+
+		</div>
+	</div>
+	<!-- END PAGE HEADER-->
+
+	<!-- BEGIN PAGE CONTENT-->
+	<div class="row-fluid">
+		<div class="span12">
+			<!-- BEGIN EXAMPLE TABLE PORTLET-->
+			<div class="portlet box blue">
+				<div class="portlet-title">
+					<div class="caption">
+						<i class="icon-edit"></i>Coupon Manage
+					</div>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a> <a
+							href="#portlet-config" data-toggle="modal" class="config"></a> <a
+							href="javascript:;" class="reload"></a> <a href="javascript:;"
+							class="remove"></a>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<div class="clearfix">
+						<div class="btn-group">
+							<button id="add_btn" class="btn green" data-toggle="modal" data-target="#add-message-modal">
+								add <i class="icon-plus"></i>
+							</button>
+						</div>
+						@form(controllers.manager.coupon.routes.Send.list(1,15),
+							'class->"form-horizontal", 'id->"searchForm"){
+							<input type="text" id="search-email" name="email" placeholder="email" />
+							<!--  <input type="text" id="search-code" name="code" placeholder="code" />-->
+							
+							<div  class="btn blue" onclick="search()">search</div>
+							<div  class="btn blue" onclick="reset()">reset</div>
+						
+						}
+					</div>
+					<div id="sample_editable_1_wrapper"
+						class="dataTables_wrapper form-inline" role="grid">
+
+
+						<br />
+
+						<table class="table table-striped table-hover table-bordered"
+							id="message_table" style="table-layout:fixedj;">
+							<thead>
+								<tr>
+									<th>websiteId</th>
+									<th>email</th>
+									<th>ruleName</th>
+									<th>code</th>
+									<!--  <th>type</th>-->
+									<th>status</th>
+									<th>creator</th>
+									<th>create time</th>
+									<th>operate</th>
+								</tr>
+							</thead>
+							<tbody>
+								@messages.getList().map{m=>
+								<tr class="">
+									<td>@websiteMap.get(m.getWebsiteId)</td>
+									<td name="email" class="" style="word-break:break-all;width:200px;">@m.getEmail</td>
+									<td style="">@m.getRuleName</td>
+									<td class="">@m.getCode</td>
+									<!--<td class="">@m.getTypeEnum.getDescribeEN</td>-->
+									<td name="status">@m.getStatusEnum.getDescribeEN</td>
+									<td class="">@m.getCreatorName</td>
+									<td class="">@m.getCreateDateStr</td>
+									<td class="@m.getStatus">
+										@if(m.getStatus == 4){ 
+											<a href="javascript:;" operateType="modify" coupon-id="@m.getId" coupon-type="@m.getType" coupon-rule="@m.getRuleId">edit </a>
+											<a href="javascript:;" operateType="delete" coupon-id="@m.getId">delete </a> 
+											<a href="javascript:;" operateType="publish" coupon-id="@m.getId">Send</a>
+										}
+										@if(m.getStatus == 3){
+											<a href="javascript:;" operateType="lock" coupon-id="@m.getId">lock</a> 
+										}
+										@if(m.getStatus == 1){
+											<a href="javascript:;" operateType="unlock" coupon-id="@m.getId">unlock</a> 
+										}
+									</td>
+								</tr>
+								}
+							</tbody>
+						</table>
+
+						<div class="row-fluid">
+							<div class="span6">
+								<div class="dataTables_info" id="sample_editable_1_info">current
+									page:@messages.pageNo()|total pages@messages.totalPages()</div>
+							</div>
+							<div class="span6">
+								<div class="dataTables_paginate paging_bootstrap pagination">
+									@if(messages.totalPages>1){
+									<ul>
+										@if(1 == messages.pageNo){
+											<li class="disabled"><a href="javascript:;">«</a></li>
+										 }else{
+											<li><a	href="@controllers.manager.coupon.routes.Send.list(messages.pageNo-1)">«</a></li>
+										} 
+										@for(i <- messages.pageNo - 5 to messages.pageNo + 5 if i > 0 ; if i <=messages.totalPages){ 
+											@if(i ==messages.pageNo){
+												<li class="disabled"><a href="javascript:;">@i</a></li> 
+											}else{
+												<li><a	href="@controllers.manager.coupon.routes.Send.list(i)">@i</a></li>
+											}
+										 } 
+										@if(messages.pageNo >= messages.totalPages){
+											<li class="disabled"><a href="javascript:;">»</a></li>
+										 }else{
+											<li><a	href="@controllers.manager.coupon.routes.Send.list(messages.pageNo+1)">»</a></li>
+										}
+									</ul>
+									}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- END EXAMPLE TABLE PORTLET-->
+			</div>
+		</div>
+		<!-- END PAGE CONTENT -->
+	</div>
+</div>
+
+
+@form(controllers.manager.coupon.routes.Send.addOrUpdate(),
+'class->"form-horizontal", 'id->"addForm",'enctype->"multipart/form-data"){
+<input id="coupon-id" type="text" style="display: none;" name="id" />
+<div id="add-message-modal" style="width: 800px" class="modal hide fade"
+	tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
+
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true"></button>
+		<h3 id="myModalLabel">add coupon</h3>
+	</div>
+	<div class="modal-body">
+	
+	<!--  
+		<div class="control-group">
+			<label class="control-label">type<span class="required">*</span></label>
+			<div class="controls">
+				<select id="type" name="type"> @types.map{t=>
+					@if(0 != t.getCode){
+					<option value="@t.getCode">@t.getDescribeEN</option> 
+					}
+					}
+				</select>
+			</div>
+		</div>
+	-->
+		<div class="control-group">
+			<label class="control-label">rule<span class="required">*</span></label>
+			<div class="controls">
+				<select id="rule" name="ruleId"> @rules.map{r=>
+					<option value="@r.getIid">@r.getCname</option> }
+				</select>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">website</label>
+			<div class="controls">
+				<input type="text" id="couponRuleWebsiteName" readonly="readonly">
+			</div>
+		</div>
+		<div id="specifyUsers" class="control-group" style="display:block;">
+			<label class="control-label">Specify users<span class="required">*</span></label>
+			<div  class="controls">
+				<textarea name="email"
+					style="height: 400px; width: 400px;" placeholder="please seperate with comma or ENTER"></textarea>
+			</div>
+		</div>
+
+	</div>
+
+	
+
+	<div id="modal-footer" class="modal-footer" style="margin-bottom: -20px;">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">close</button>
+		<div class="btn blue" onclick="valid()">save</div>
+	</div>
+</div>
+}
+
+
+
+<div id="detail-message-modal" style="width: 800px"
+	class="modal hide fade" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true"></button>
+		<h3 id="myModalLabel" class="blue">content detail</h3>
+	</div>
+
+	<div id="message-body" style="padding-left: 50px; padding-right: 50px;">
+	</div>
+
+	<div class="modal-footer" style="margin-bottom: -20px;"></div>
+</div>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript">
+	function reset(){
+		window.location.href = '@controllers.manager.coupon.routes.Send.list(1,15)';
+	}
+	function search(){
+		var email = $('#search-email').val();
+		//var code = $('#search-code').val();
+		if(email){
+			$('#searchForm').submit();
+		}
+	}
+	//验证必填数据是否填了
+	function valid(){
+//		var type = $('#type').val();
+		var rule = $('#rule').val();
+		/* if(!type){
+			alert('type must select');
+			return;
+		} */
+		if(!rule){
+			alert('rule must select');
+			return;
+		}
+		var email = $('#specifyUsers').find('textarea').val();
+		if(!email){
+			alert('users must be Specified');
+			return;
+		}
+		/* var emails = email.split(/,|\n/);
+		//验证邮箱是否合法
+		for(var i = 0 ; i < emails.length ; i++){
+			var cell = emails[i].trim();
+			if(cell){
+				var regex = /^([\w\-_\.]+)@@([0-9a-z]+\.[a-z]{2,3}(\.[a-z]{2})?)$/g;
+				if(!regex.test(cell)){
+					alert(cell + ' is not valid email');
+					return;
+				}
+			}
+			
+		}  */
+		$('#addForm').submit();
+	}
+	
+	$('#type').change(function(){
+			var type = $(this).val();
+			if(0 != type){
+				$('#specifyUsers').show();
+			}else if(0 == type){
+				$('#specifyUsers').hide();
+			}
+	}); 
+	
+	
+	$('#message_table').find('a[operateType=modify]').click(function(){
+		var id = $(this).attr('coupon-id');
+		var type = $(this).attr('coupon-type');
+		var rule = $(this).attr('coupon-rule');
+		
+		var parent = $(this).parent();	
+		var email = parent.parent().find("td[name=email]").text();
+		
+		$('#add-message-modal').modal();
+		
+		if(0 != type){
+			$('#specifyUsers').show();
+		}
+		$('#specifyUsers').find('textarea').text(email);
+		$('#coupon-id').val(id);
+		$('#type').val(type);
+		$('#rule').val(rule);
+		
+	});
+	
+	var publishUrl = '@controllers.manager.coupon.routes.Send.publish(0)';
+	var listUrl = '@controllers.manager.coupon.routes.Send.list(1,15)';
+	publishUrl = publishUrl.substring(0,publishUrl.length - 1);
+	$('#message_table').find('a[operateType=publish]').click(function(){
+		var parent = $(this).parent();	
+		//防止多次点击
+		parent.empty();
+		var id = $(this).attr('coupon-id');
+		//var status = parent.parent().find("td[name=status]");
+		if(window.confirm('Do you confirm to publish? the Coupon will be puhlish, and you can\'t edit or delete it.')){
+			$.ajax({url: publishUrl + id, 
+				type: 'post', 
+				dataType: 'json', 
+				date : {'id' : id},
+				timeout: 1000, 
+				error: function(){
+					window.location.href = listUrl;
+				}, 
+				success: function(result){
+						if(result.succeed === true){
+							window.location.href = listUrl;
+						}
+					} 
+				})
+		}
+	});
+	
+	var deleteUrl = '@controllers.manager.coupon.routes.Send.delete(0)';
+	deleteUrl = deleteUrl.substring(0,deleteUrl.length - 1);
+	$('#message_table').find('a[operateType=delete]').click(function(){
+		var id = $(this).attr('coupon-id');
+		if(window.confirm('do you want to delete?')){
+			window.location.href = deleteUrl + id;
+		}
+	});	
+	var lockUrl = '@controllers.manager.coupon.routes.Send.lock(0)';
+	lockUrl = lockUrl.substring(0,lockUrl.length - 1);
+	$('#message_table').find('a[operateType=lock]').click(function(){
+		var id = $(this).attr('coupon-id');
+		if(window.confirm('do you want to lock?')){
+			window.location.href = lockUrl + id;
+		}
+	});	
+	var unlockUrl = '@controllers.manager.coupon.routes.Send.unlock(0)';
+	unlockUrl = unlockUrl.substring(0,unlockUrl.length - 1);
+	$('#message_table').find('a[operateType=unlock]').click(function(){
+		var id = $(this).attr('coupon-id');
+		if(window.confirm('do you want to unlock?')){
+			window.location.href = unlockUrl + id;
+		}
+	});	
+	
+	$(function(){
+		var url = js_routes.controllers.manager.coupon.Send.getWebsiteById($("#rule").val()).url;
+		$.ajax({
+			url : url,
+			type : "GET",
+			dataType : "json",
+			success : function(data){
+				$("#couponRuleWebsiteName").val(data.data);
+			}
+		});
+		$("#rule").change(function(){
+			var url = js_routes.controllers.manager.coupon.Send.getWebsiteById($("#rule").val()).url;
+			$.ajax({
+				url : url,
+				type : "GET",
+				dataType : "json",
+				success : function(data){
+					$("#couponRuleWebsiteName").val(data.data);
+				}
+			});
+		});
+	});
+</script>
+} 
+}

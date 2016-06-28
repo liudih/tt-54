@@ -1,0 +1,23 @@
+@(vo: valueobjects.order_api.ShippingMethodInformations, 
+currency: dto.Currency)
+<div id="shipping-method">
+	<input id="shipping-method-input" name="shippingMethodId" type="text" style="display:none;">
+	<hr class="grayHR100">
+	<h5>Select Shipping Method:</h5>
+	@vo.getList().zipWithIndex.map{e =>
+		<ul class="selectShippingMethod lbBox chooseOneBox" value="@e._1.getFreight()" methodId="@e._1.getId()" onclick="bindClickForShippingMethod(this)" >
+			<li class="lineBlock input_control span10">
+			<input type="radio" />
+		@if(e._2 == 0){
+			<div class="radio orgRadio lineBlock aciCss"><span> </span></div>
+		}else{
+			<div class="radio orgRadio lineBlock"><span> </span></div>
+		}
+			<p class="lineBlock marR orgColor"><b>@e._1.getTitle()</b><br>@e._1.getContext()</p>
+			<p class="lineBlock selectShippingMethod_R floatR orgColor">@currency.getCsymbol() @e._1.getFreight()</p>
+			</li>
+		</ul>
+	}
+		
+
+</div>

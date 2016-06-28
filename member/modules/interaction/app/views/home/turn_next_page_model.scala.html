@@ -1,0 +1,38 @@
+@(ctx: play.mvc.Http.Context,
+	badges: List[valueobjects.product.ProductBadge],
+	maxPage: Integer,
+	perPage: Integer,
+	nextPageAjaxUrl: String,
+	header: Html,
+	divClass: String,
+	divId: String,
+	ulClass: String,
+	liClass: String,
+	isTime:Boolean=false
+	)
+@import views.html.helper._
+
+@header
+<div class="@divClass" id="@divId">
+  	<a class="browseLeft_click" href="javascript:;" value="0"></a>
+  	<a class="browseRight_click" href="javascript:;" index="0" total_page="0" max_page="@maxPage" next_page_ajax_url="@nextPageAjaxUrl" per_page="@perPage"></a>
+    <ul class="@ulClass">
+    	@if(null != badges && badges.size>0){
+		  	@badges.map{p=>
+				@views.html.product.badge_home(p,Html("<li class ='" + liClass + "'>"),Html("</li>"),isTime)
+		    }
+    	}
+  		 <div class="clear"></div>
+  	</ul>
+</div>
+
+@services.base.HtmlUtils.misc(ctx).addTailOnce{
+  	<script>
+  		$(function(){
+ 			try{myMove("@divId","@ulClass","@liClass");}catch(e){};
+			$(".retroclockbox_xs").each(function(i,e){
+ 				timedownFun(this.id, true,"xs",true);
+  			});
+  		});
+  	</script>
+}  

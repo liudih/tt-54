@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd"
+	objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+	<changeSet author="fcl" id="t_cart_base-20141229">
+		<createTable tableName="t_cart_base" remarks="购物车">
+			<column name="cid" type="VARCHAR(50)" remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cuuid" type="VARCHAR(50)" remarks="客户端id" />
+			<column name="cmemberemail" type="VARCHAR(100)" remarks="邮箱" />
+			<column name="bgenerateorders" type="BOOL" remarks="是否生成订单"
+				defaultValue="false" />
+			<column name="ccreateuser" type="VARCHAR(50)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+	<changeSet author="fcl" id="t_cart_item-20141229">
+		<createTable tableName="t_cart_item" remarks="购物车item类型">
+			<column name="cid" type="VARCHAR(50)" remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ccartbaseid" type="VARCHAR(50)" remarks="购物车id" />
+			<column name="iitemtype" type="INTEGER" remarks="类型" />
+			<column name="iqty" type="INTEGER" remarks="数量" />
+			<column name="ccreateuser" type="VARCHAR(50)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="clastupdateduser" type="VARCHAR(50)" remarks="修改人" />
+			<column name="dlastupdateddate" type="DATETIME" remarks="修改时间" />
+		</createTable>
+	</changeSet>
+	<changeSet author="fcl" id="t_cart_item_list-20141229">
+		<createTable tableName="t_cart_item_list" remarks="购物车详细">
+			<column name="ccartitemid" type="VARCHAR(50)" remarks="组id" />
+			<column name="bismain" type="BOOL" remarks="是否主产品" />
+			<column name="clistingid" type="varchar(50)" remarks="产品listingid" />
+			<column name="iqty" type="INTEGER" remarks="数量" />
+		</createTable>
+	</changeSet>
+	<changeSet author="liudi" id="t_cart_item_list_addition-20150317">
+		<createTable tableName="t_cart_item_list_addition"
+			remarks="购物车优惠信息">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ccartitemid" type="VARCHAR(50)" remarks="组id" />
+			<column name="clistingid" type="varchar(50)" remarks="产品listingid" />
+			<column name="money" type="FLOAT" remarks="优惠金额" />
+			<column name="description" type="VARCHAR(200)" remarks="描述" />
+			<column name="status" type="INTEGER" remarks="状态,0:无优惠,1:有优惠" />
+			<column name="ccreateuser" type="VARCHAR(50)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_cart_extra-create">
+		<createTable tableName="t_cart_extra" remarks="购物车额外的支付">
+			<column name="cid" type="VARCHAR(50)" remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ccartbaseid" type="VARCHAR(50)" remarks="购物车编号" />
+			<column name="cpluginid" type="VARCHAR(50)" remarks="扩展IOrderExtrasProvider的ID" />
+			<column name="cpayload" type="VARCHAR(2000)" remarks="插件相关的内容信息" />
+			<column name="ccreateuser" type="VARCHAR(50)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="lij" id="t_cart_item_history-20150110">
+		<createTable tableName="t_cart_item_history" remarks="购物车删除历史记录">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cuuid" type="VARCHAR(50)" remarks="客户端id" />
+			<column name="cmemberemail" type="VARCHAR(100)" remarks="邮箱" />
+			<column name="clistingid" type="varchar(50)" remarks="产品listingid" />
+			<column name="ccreateuser" type="VARCHAR(50)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="dadddate" type="DATETIME" remarks="添加购物车时间" />
+			<column name="dupdatedate" type="DATETIME" defaultValue="now()"
+				remarks="更新时间" />
+		</createTable>
+	</changeSet>
+	<changeSet author="liudi" id="t_cart_history-20150925">
+		<createTable tableName="t_cart_history" remarks="购物车操作历史记录">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cip" type="VARCHAR(100)" remarks="ip地址" />
+			<column name="cmemberemail" type="VARCHAR(100)" remarks="邮箱" />
+			<column name="clistingid" type="varchar(50)" remarks="产品listingid" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()" remarks="创建时间" />
+			<column name="itype" type="INTEGER" remarks="1:增加;2:更新;3:删除" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_cart_extra-expand_payload-20150325">
+		<modifyDataType tableName="t_cart_extra" columnName="cpayload"
+			newDataType="TEXT" />
+	</changeSet>
+
+	<changeSet id="t_cart_item_list-addcolumn-20150717" author="luojh">
+		<addColumn tableName="t_cart_item_list">
+			<column name="istorageid" type="INTEGER" remarks="仓库ID" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_cart_base-addcolumn-20150814" author="liudi">
+		<addColumn tableName="t_cart_base">
+			<column name="iwebsiteid" type="INTEGER" remarks="站点id" />
+		</addColumn>
+		<addColumn tableName="t_cart_item">
+			<column name="cdevice" type="VARCHAR(50)" remarks="设备名称" />
+		</addColumn>
+	</changeSet>
+	<changeSet author="fcl" id="t_cart_extra-unique-20150926">
+		<addUniqueConstraint columnNames="ccartbaseid,cpluginid"
+			tableName="t_cart_extra" constraintName="t_cart_extra_ccartbaseid_cpluginid_UniqueConstraint" />
+	</changeSet>
+	
+</databaseChangeLog>

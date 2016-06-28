@@ -1,0 +1,59 @@
+@(totalPoint : Int)
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+	@controllers.base.routes.Assets.at("js/grid.min.js")
+}
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+ 	@controllers.base.routes.Assets.at("css/accountOrder.css")
+}
+
+@import views.html.helper._
+@views.html.base.master{
+<div class="container bg_color_gray marT_6">
+		<p class="points_txt font18 span98">My Points:<span class="blue">@totalPoint</span></p>
+		<p class="points_txt span98">100 TOMTOP Points = US $1.00 </p>
+		<table id="my-points-overview" width="100%" cellpadding="0" cellspacing="0" border="0">
+		</table>
+		<p class="points_txt span98">Points Reward</p>
+		<table id="my-points-reward-overview" width="100%" cellpadding="0" cellspacing="0" border="0">
+		</table>
+</div>
+@services.base.HtmlUtils.misc().addTail{
+<script type="text/javascript">
+
+	 $.fn.bsgrid.init('my-points-overview', {
+		url : '@controllers.member.routes.PointController.getMyPointOverview()',
+		columns : [ {
+			'name' : 'Total Points',
+			'index' : 'totalPoint'
+		} ,
+		{
+			'name' : 'Available Points',
+			'index' : 'useablePoint'
+		},
+		{
+			'name' : 'Pending Points',
+			'index' : 'lockedPoint'
+		}
+		]
+	}); 
+	
+	$.fn.bsgrid.init('my-points-reward-overview', {
+		url : '@controllers.member.routes.PointController.getMyPointDetail()',
+		columns : [ {
+			'name' : 'Date',
+			'index' : 'dcreatedate'
+		} ,
+		{
+			'name' : 'From',
+			'index' : 'csource'
+		},
+		{
+			'name' : 'Points',
+			'index' : 'iintegral'
+		}
+		]
+	});
+	
+</script>
+}
+}

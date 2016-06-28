@@ -1,0 +1,131 @@
+@import "public.less";
+
+.indexDailyDeals_box{
+  width:98%;margin-left:1%;border:0px !important;
+  .DailyDeals_left{position:relative;.border();margin-top:30px;padding-top:45px;min-height:400px;}
+  .dealsL_tt{
+    position:absolute;top:-13px;width:100%;
+    h6{display:inline-block;padding:3px;background-color:#fff;border-radius:3px;margin-left:10px;}
+    .rightMore{position:absolute;display:block;padding:3px;background-color:#fff;right:10px;top:2px;border-radius:3px;font-size:12px;}
+  }
+  .product_page_Expires{
+    position:absolute;top:15px;left:13px;padding:3px;background-color:rgba(255,255,255,0.8);border-radius:3px;
+    li{font-size:13px;}
+   }
+   .DailyDeals_right{
+    width:50%;margin-top:30px;min-height:400px;
+    .product_price{padding-bottom:5px;}
+    .product_priceGR{padding-left:15px;padding-bottom:5px;}
+   }
+   .DailyDeals_Rtop,.DailyDeals_Rbottom{
+     position:relative;.border();margin-left:-1px;
+     .DailyDeals_R_Left,.DailyDeals_R_Right{
+       width:48%;margin:0 1%;margin-top:4px;
+     }
+   }
+   .DailyDeals_Rbottom{position:absolute;bottom:0px;width:47%;
+      .product_price{padding-top:15px;padding-bottom:20px;}
+   }
+}
+.dealsIn,.dealsStart{
+  .product_page_Expires{text-align:center;padding-top:20px;padding-bottom:10px;}
+  .product_box{width:49%;}
+}
+.dealsStart{
+  .discount_icon{.zIndex(-1px,-651px);}
+}
+.superDaily{
+  .border();width:97.8%;margin-left:1%;position:relative;
+  li{&:first-child{position:relative;}}
+  .product_title{h5{max-height:38px;overflow:hidden;white-space:normal;}}
+  .product_con{border:0px;margin:0px;position:unset;}
+  .describeTxtL{padding-left:15px;color:#b3b3b3;max-height:57px;overflow:hidden;margin-bottom:20px;
+    li{.txtLength();list-style-type:disc;list-style-position:inside;font-size:15px;outside:normal;padding-right:5px;}
+  }
+  .product_bottom{position:relative;bottom:0px;right:0px;width:100%;border:0px;background-color:transparent;padding:10px 0px;}
+}
+
+@media(min-width:50px) and (max-width:590px){
+    .discount_icon{right:4%;top:15px;width:50px;height:50px;.zIndex(-1px,-200px);padding-right:16px;font-size:18px;padding-top:5px;}
+}
+@media(min-width:50px) and (max-width:350px){
+  .indexDailyDeals_box{
+    .DailyDeals_left{width:100%;margin-top:10px;}
+   .DailyDeals_right{width:100%;min-height:435px;}
+   .DailyDeals_Rbottom{width:100%;position:relative;margin-top:30px;}
+  }
+  .superDaily{
+    li{width:100% !important;}
+    .product_con{
+      .product_bottom{width:100%;}
+    }
+    .product_title{h5{max-height:20px;}}
+    .describeTxtL{margin-bottom:10px;
+      li{font-size:12px;}
+    }
+  }
+}
+@media(min-width:350px) and (max-width:450px){
+  .indexDailyDeals_box{
+    .DailyDeals_left{width:100%;margin-top:10px;}
+   .DailyDeals_right{width:100%;min-height:485px;}
+   .DailyDeals_Rbottom{width:100%;position:relative;margin-top:30px;}
+  }
+  .superDaily{
+    li{width:100% !important;}
+    .product_con{
+      .product_bottom{width:100%;}
+    }
+    .product_title{h5{max-height:20px;}}
+    .describeTxtL{margin-bottom:20px;margin-top:10px;
+      li{font-size:12px;}
+    }
+  }
+}
+@media(min-width:450px) and (max-width:590px){
+  .indexDailyDeals_box{
+    .DailyDeals_left{width:53%;margin-top:10px;}
+   .DailyDeals_right{width:47%;margin-top:10px;}
+   .DailyDeals_Rtop,.DailyDeals_Rbottom{min-height:190px;}
+  }
+  .superDaily{
+    .product_title{h5{max-height:38px;}}
+    .describeTxtL{margin-bottom:25px;margin-top:15px;
+      li{font-size:12px;}
+    }
+  }
+}
+@media (min-width:590px){
+  .indexDailyDeals_box{
+    .DailyDeals_left{width:53%;margin-top:10px;}
+   .DailyDeals_right{width:47%;margin-top:10px;}
+   .DailyDeals_Rtop,.DailyDeals_Rbottom{min-height:200px;}
+  }
+  .superDaily{
+    .product_title{h5{max-height:38px;}}
+    .describeTxtL{margin-bottom:15%;margin-top:10%;max-height:120px;
+      li{font-size:14px;word-wrap:break-word;overflow:visible;white-space:normal;}
+    }
+  }
+}
+@media (min-width:768px){
+  .indexDailyDeals_box{
+   .DailyDeals_Rtop,.DailyDeals_Rbottom{min-height:245px;}
+  }
+  .superDaily{.border();width:97%;margin-left:1.5%;  
+    .product_title{h5{max-height:50px;}}
+    .describeTxtL{margin-bottom:40px;margin-top:40px;}
+    .span5{width:45%!important;}
+    .product_con{width:53%!important;}
+  }
+}
+@media (min-width:1000px){
+  .indexDailyDeals_box{
+   .DailyDeals_Rtop,.DailyDeals_Rbottom{min-height:305px;}
+  }
+  .superDaily{
+    .describeTxtL{margin-bottom:50px;margin-top:50px;}
+    .span5{width:33%!important;}
+    .product_con{width:63%!important;}
+  }
+}

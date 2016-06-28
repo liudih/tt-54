@@ -1,0 +1,23 @@
+@(oneCmsMenuList: List[dto.CmsMenu],
+cmsMenuMap: Map[Integer,List[dto.CmsMenu]]
+)
+ 
+ 
+ <h4 class="helpH4">@Messages("help.center")</h4>
+    <ul class="helpLeft">
+   @oneCmsMenuList.map{u=>
+   	<li><em class="@u.getCclass()"></em>@u.getCname()<span></span></li>
+    	@if(cmsMenuMap.containsKey(u.getIid())) {
+            @cmsMenuMap(u.getIid()).map{ h =>
+            	@if(null == h.getCurl() || h.getCurl().isEmpty){
+            		<ol><a href="@controllers.base.routes.Cms.getCmsContentByMenuId(h.getIid())">@h.getCname()</a></ol>
+            	}else{
+            		<ol><a href="@h.getCurl()">@h.getCname()</a></ol>
+            	}
+            }
+    	}
+	}
+</ul>
+     
+                       
+                                               

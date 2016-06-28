@@ -1,0 +1,62 @@
+@(fragment: valueobjects.order_api.cart.ProductStorageMap)
+@storageMap = @{fragment.getStorageMap}
+@import views.html.helper._
+@helper.javascriptRouter("js_ShippingRoutes")(
+	controllers.order.routes.javascript.ShippingController.refreshInProduct
+)
+<div class="productSpecialSize_box">
+	<div class="productSpecialSize_txt">@Messages("ship.from"):</div>
+	<ul class="colorOverf">
+		@fragment.getProductStorageMapLists.zipWithIndex.map{s=>
+			@if(s._2 == 0) {
+				@if(storageMap.get(s._1.getIstorageid) != null){
+					<li data-tag="storage" class="productSpecialSize rightDown_SJ" data-id="@s._1.getIstorageid">@storageMap.get(s._1.getIstorageid).getCstoragename</li>
+				}
+			} else {
+				@if(storageMap.get(s._1.getIstorageid) != null){
+					<li data-tag="storage" class="productSpecialSize" data-id="@s._1.getIstorageid">@storageMap.get(s._1.getIstorageid).getCstoragename</li>
+				}
+			}
+		}
+	</ul>
+	<div class="clear"></div>
+</div>
+@product_shipping(fragment.getShippingMethodInformations, fragment.getCurrency)
+@services.base.HtmlUtils.misc().addTailOnce {
+	<script>
+		$(function() {
+			$(".val").off("click");
+			$(".val").unbind("click");
+			$(".val").undelegate("click");
+			$("div").delegate(".val", "click", function(e){
+				$(this).siblings(".vals").toggle();
+				e.stopPropagation();
+			});
+			$(".vals > li").off("click");
+			$(".vals > li").unbind("click");
+			$(".vals > li").undelegate("click");
+			setEvent();
+			
+			$("li[data-tag='storage']").click(function(e) {
+				var qty = $("#cart-button-qty").val();
+				var listingID = $("li#clistingid").attr("value");
+				var storageID = $(this).attr("data-id");
+				var url = js_ShippingRoutes.controllers.order.ShippingController.refreshInProduct(parseInt(storageID), listingID, parseInt(qty)).url;
+				$.get(url, function(data) {
+					$("#product_shipping_infos").replaceWith(data);
+					setEvent();
+				}, "html");
+			});
+		})
+		
+		function setEvent() {
+			$(".vals > li").click(function(e){
+				$(".val > .i-country-code").text($(this).find(".i-country-code").text())
+				var freight = $(this).children("span").attr("span-data");
+				$("#shipping_price_span").text(freight);
+				$(this).parents(".vals").hide();
+				e.stopPropagation();
+			});
+		}
+	</script>
+}

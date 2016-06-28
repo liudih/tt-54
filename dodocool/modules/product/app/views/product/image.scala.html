@@ -1,0 +1,38 @@
+@(imgUrl: String, imgTitle: String, width: Integer, height: Integer, clazz: String, args: (Symbol,Any)*)
+@xy = @{play.Play.application().configuration().getString("image.url")}
+@original = @{play.Play.application().configuration().getString("image.domain.original")}
+@if(imgUrl != null) {
+@if(imgUrl.startsWith("http://") || imgUrl.startsWith("https://")) {
+  @if(width != null && height != null) {
+	 <img @if(imgTitle != null){title="@imgTitle"} src="@imgUrl" @if(clazz != null){class="@clazz"} 
+	 	@toHtmlArgs(args.filter(arg => arg._1.name != "width" && arg._1.name != "height").toMap)>
+  } else {
+	 <img @if(imgTitle != null){title="@imgTitle"} src="@imgUrl" @if(clazz != null){class="@clazz"} @toHtmlArgs(args.toMap)>
+  }
+}else{
+  @if(width != null && height != null) {
+	 <img @if(imgTitle != null){title="@imgTitle"}
+	 @if(xy != null){
+	 	src="@xy@width/@height/@imgUrl"
+	 }else{
+	 	src="@controllers.image.routes.Image.viewScaled(imgUrl, width, height)"
+	 }
+	   @if(clazz != null){class="@clazz"} @toHtmlArgs(args.toMap)>
+  } else {
+	 <img @if(imgTitle != null){title="@imgTitle"}
+	  @if(original != null){
+	 	 src=" 
+	 	  @if(imgUrl.startsWith("/")){
+	           	  		 @original@imgUrl
+	           	  		}else{
+	           	  			@original/@imgUrl
+	           	  		}"
+	 }else{
+	 	src="@controllers.image.routes.Image.view(imgUrl)"
+	 }
+	   @if(clazz != null){class="@clazz"} @toHtmlArgs(args.toMap)>
+  }
+}
+} else {
+	<img src="@controllers.base.routes.Assets.at("images/imgNone377.jpg")" />
+}

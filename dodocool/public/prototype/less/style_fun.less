@@ -1,0 +1,65 @@
+//样式函数
+//背景样式函数
+.po_bgsmall(@x,@y){
+  background-image: url("@{base-url}");
+  background-repeat: no-repeat;
+  background-position:@arguments;
+}
+.po_bgbig(@x,@y){
+  background-image: url("@{big-url}");
+  background-repeat: no-repeat;
+  background-position:@arguments;
+}
+.rex_btnbg(@x,@y){
+  background-image: url("@{png-url}");
+  background-repeat: repeat-x;
+  background-position:@arguments;
+}
+.po_othericon(@x,@y){
+  background-image: url("@{png_noR}");
+  background-repeat: no-repeat;
+  background-position:@arguments;
+}
+.po_flag(@x:0,@y:0){
+  background-image: url("@{png_flag}");
+  background-repeat: no-repeat;
+  background-position:@arguments;
+}
+//边框样式函数
+.bor_l_f(@length:1px,@color:#ccc){
+  border-left: @length solid @color;
+  border-right: @length solid @color;
+}
+.border(@L:1px,@T:1px,@R:1px,@B:1px,@C:#ccc,@S:solid){
+  border-left-width:@L;
+  border-top-width:@T;
+  border-right-width:@R;
+  border-bottom-width:@B;
+  border-color:@C;
+  border-style:@S;
+}
+//阴影样式函数
+.box-shadow(@x:2px,@y:2px,@z:3px,@color:#ccc){
+  box-shadow:@arguments;
+  -moz-box-shadow:@arguments;
+  -webkit-box-shadow:@arguments;
+}
+//取消选择文本样式函数
+.user-select{
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+
+}
+//盒子水平居中
+.center_h(@witdh:1200px;){
+    width: @witdh;
+    margin: 0 auto;
+}
+
+
+
+
+
+

@@ -1,0 +1,83 @@
+@(ctx : extensions.order.CampaignUiContext)
+@import views.html.helper._	
+
+	<li class="lbBox">
+	 
+	@if(ctx.getExtraLine == null){
+		<input id="point_apply" name="point" class="lineBlock CouponPoints_Input" type="number" placeholder="Enter TOMTOP Points">
+		<a id="point_apply_btn" class="lineBlock CouponPoints_button" href="javascript:;">Apply</a>
+	}else{
+		<input id="point_apply" name="point" value="@ctx.getExtraLine.getPayload" readonly class="lineBlock CouponPoints_Input" type="number" placeholder="Enter TOMTOP Points">
+		<a id="point_apply_btn" class="lineBlock CouponPoints_button bg_color_white" href="javascript:;">Cancel</a>
+	}
+	</li>
+
+	
+ 
+	@services.base.HtmlUtils.misc().addTail{
+	<script type="text/javascript">
+$(function(){
+	$('#point_apply_btn').unbind('click');
+	$('#point_apply_btn').click(function(){
+		@if(ctx.getExtraLine == null){
+			$(this).hide();
+			var point = $('#point_apply').val();
+			if(!point){
+				ttmErrorAlert('input points',3000);
+				$(this).show();
+				return ;
+			}
+			
+			$.ajax({url: '@controllers.cart.routes.PointController.usePoint()', 
+	 				type: 'POST', 
+	 				data:'{"point" : ' + point + '}', 
+	 				dataType: 'json', 
+	 				timeout: 5000, 
+	 				contentType : 'application/json; charset=UTF-8',
+	 				error: function(){
+	 					ttmErrorAlert('use point failed',3000);
+	 					$('#point_apply_btn').show();
+	 				}, 
+	 				success: function(result){
+	 					if(!result.succeed){
+	 						ttmErrorAlert('use point failed',3000);
+	 						$('#point_apply_btn').show();
+	 					}else{
+	 						//ttmSucceedAlert('use point succeed',3000);
+	 						window.location.reload();
+	 					}
+	 				} 
+	 			});
+			return false;
+		}else{
+			//防止用户多次提交
+			$(this).hide();
+			
+			$.ajax({url: '@controllers.cart.routes.PointController.cancelUsedPoint()', 
+ 				type: 'POST', 
+ 				dataType: 'json', 
+ 				timeout: 5000, 
+ 				contentType : 'application/json; charset=UTF-8',
+ 				error: function(){
+ 					ttmErrorAlert('cancal points failed',3000);
+ 					$('#point_apply_btn').show();
+ 				}, 
+ 				success: function(result){
+ 					if(!result.succeed){
+ 						ttmErrorAlert('cancal points failed',3000);
+ 						$('#point_apply_btn').show();
+ 					}else{
+ 						//ttmSucceedAlert('use point succeed',3000);
+ 						window.location.reload();
+ 					}
+ 				} 
+ 			});
+		}
+	});
+});
+	</script>
+	}
+
+
+
+

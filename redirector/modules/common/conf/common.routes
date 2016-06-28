@@ -1,0 +1,4 @@
+#GET /liquibase/update			@controllers.common.LiquibaseController.update(doit: Boolean ?= false, fixChecksum:Boolean ?= false, context: String ?= "production")
+#GET /liquibase/rollback/:tag	@controllers.common.LiquibaseController.rollback(tag: String, doit: Boolean ?= false, context: String ?= "production")
+
+GET /liquibase/reset			@controllers.common.LiquibaseController.destructiveUpdate()

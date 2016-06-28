@@ -1,0 +1,140 @@
+@(dropShipLevels: List[dto.member.DropShipLevel], mail: String,otherLogins: List[Html], isLogin: Boolean)
+@import services.member._
+@country = @{services.base.FoundationService._getCountryObj()}
+@helper.javascriptRouter("dropship")(
+	controllers.member.routes.javascript.Login.checkSign
+)
+@views.html.base.master{
+	@services.base.HtmlUtils.misc().addHeadOnce{
+		<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/styles.css")?@version.BuildVersion.build()" />
+	}
+	<div class="container affiliateBox accountRight">
+		<div class="Bread_crumbs_Box">
+			<ul class="Bread_crumbs">
+				<li class="Bread_home"><a href="@controllers.base.routes.Home.home()"></a></li>
+				<li>
+					<p>
+						<a class="Bread_link" href="javascript:;">@Messages("dropshipping")</a>
+					</p>
+				</li>
+				<div class="clear"></div>
+			</ul>
+		</div>
+		<a class="affiliateBanner" href="@if(isLogin==true){/member/dropship/join}else{javascript:;}" data="@controllers.member.routes.Login.loginForm()" onclick="dropShip()">
+		<img src="@controllers.base.routes.Assets.at("/images/dropshippingBanner.jpg")"></a>
+		<h5 class="firstH5">@Messages("why.choose.tomtop")</h5>
+		<ul class="chooseTT">
+			<li>@Messages("no.stock.risk")</li>
+			<li>@Messages("fast.shipping")</li>
+			<li>@Messages("customization")</li>
+			<li>@Messages("extra.discounts")</li>
+			<div class="clear"></div>
+		</ul>
+		<p class="affTxt">
+			<span class="orange">100,000 </span> @Messages("items.in")<span class="orange"> 300 </span>
+			@Messages("categories.available.for.drop.shipping")<br>@Messages("no.stock.risk.for.no.stock.risk.for.drop.shippers")
+			<br>@Messages("no.tomtop.logo.on.packing.label.non.logoproduct.pictures.available")
+			<br> @Messages("packages.can.be.customized.with.your.company.or.website.name.and.logo.as.required")
+			<br>@Messages("fast.and.simple.online.operation.for.tomtop.orders")
+		</p>
+		<h5>@Messages("how.does.drop.shipping.benefit.you")</h5>
+		<p>@Messages("drop.shipping.is.an.easy.way.for.you.to.start.earning.profit.by.selling.quality.products.by.listing.our.products.on.your.website.and.taking.advantage.of.drop.shipping.you.will")</p>
+		<ul class="shippingBenefit dropPub">
+			<li><em>1</em>@Messages("no.joining.fee")</li>
+			<li><em>2</em>@Messages("3.15.off.you.get.rewarded.the.more.you.order.as.your.total.order.history.increases.you.automatically.get.better.discount.levels.making.you.even.more.competitive")</li>
+			<li><em>3</em>@Messages("become.a.worldwide.e.commerce.retailer.at.a.low.cost.with.no.risk")</li>
+			<li><em>4</em>@Messages("exclusive.drop.shipping.weekly.deals.newsletter")</li>
+			<li><em>5</em>@Messages("offer.a.wide.selection.of.products.without.the.need.to.purchase.or.store.inventory")</li>
+			<li><em>6</em>@Messages("select.product.types.on.tomtop.com.and.determine.your.own.retail.prices.and.profit")</li>
+			<li><em>7</em>@Messages("have.your.products.packaged.and.shipped.to.your.customers.by.us.at.no.extra.cost")</li>
+		</ul>
+		<h5>@Messages("how.to.do.drop.shipping.with.tomtop")</h5>
+		<div class="affiliateProgramWork">
+			<img src="@controllers.base.routes.Assets.at("/images/dropTT.jpg")">
+		</div>
+		<h5>@Messages("for.single.orders")</h5>
+		<ul class="singleOrders dropPub">
+			<li><em>1</em>@Messages("sell.tomtop.products.on.your.own.webstore.ebay")</li>
+			<li><em>2</em>@Messages("select.products.on.tomtop.com.and.add.to.shopping.cart")</li>
+			<li><em>3</em>@Messages("click.add.drop.shipping.service.on.shopping.cart.page")</li>
+			<li><em>4</em>@Messages("submit.the.order.and.finish.the.payment.remrember.to.set.the.shipping.address.as.your.customers")</li>
+			<li><em>5</em>@Messages("tomtop.will.prepare.your.order.and.ship.out.to.your.customer.directly")</li>
+		</ul>
+		<h5>@Messages("our.commission.policy")</h5>
+		<p>@Messages("you.can.get.extra.discounts.in.tomtop.as.a.drop.shipper")</p>
+		<div class="policy_DIV lbBox">
+        	<ul class="lineBlock">
+            	<li>@Messages("grades")</li>
+            	<li>@Messages("total.order.amount")</li>
+            	<li>@Messages("discount.off")</li>
+            	<li>@Messages("service.fee.transaction.fee.monthly")</li>
+            	<li>@Messages("you.can.add.update.products.in.catalog")</li>
+            	<li>@Messages("download.product.images")</li>
+            	<li>@Messages("enjoy.dropship.price")</li>
+            </ul>
+            @dropShipLevels.map{ i=>
+	        	<ul class="lineBlock">
+	            	<li>@i.getClevelname()</li>
+	            	<li> >$ @i.getFtotal()</li>
+	            	<li>@String.format("%3.1f", double2Double({i.getDiscount()*100}))%</li>
+	            	<li>@Messages("free")</li>
+	            	<li>@i.getIproductcount()</li>
+	            	<li>@Messages("yes")</li>
+	            	<li>@Messages("yes")</li>
+	            </ul>
+            }
+	    </div>
+		<h5>@Messages("not.a.member.yet")</h5>
+		<p>@Messages("just.3.easy.steps")</p>
+		<ul class="pImg">
+	    	<li class="pImgStep1 lineBlock"><b>@Messages("step")1</b><p>@Messages("register.an.account.and.sign.in.your.account")</p></li>
+	    	<li class="pImgStep2 lineBlock"><b>@Messages("step")2</b><p>@Messages("fill.in.the.request.form.online.and.submit")</p></li>
+	    	<li class="pImgStep3 lineBlock"><b>@Messages("step")3</b><p>@Messages("become.a.drop.shipping.client.after.our.approval")</p></li>
+	    </ul>
+	    <p><br>
+			@Messages("for.any.inquiries.and.price.bargain.contact.dropshipping.tomtop.com") @mail</p>
+		<a href="@if(isLogin==true){/member/dropship/join}else{javascript:;}" data="@controllers.member.routes.Login.loginForm()">
+			<input class="JoinNow" type="button" value="@Messages("join.now")" id="joinShip"  onclick="dropShip()">
+		</a>
+	</div>
+	
+	
+	@views.html.member.login.login_common(otherLogins)
+	@views.html.member.login.loginredirect()
+
+
+@services.base.HtmlUtils.misc().addTailOnce{
+<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+
+<script>
+
+function  dropShip() {
+	var self=this;
+ 	var s =s || {};
+ 	s.url=dropship.controllers.member.Login.checkSign().url
+ 	s.type='get';
+ 	async:false;
+ 	s.data={};
+ 	s.success=function(data){
+ 		if(data!=undefined && data){
+ 			var s =s || {};
+ 			s.type='get';
+ 			async:false;
+ 			s.success=function(dataa){
+ 			}
+ 		}else{
+ 			$("#blogin").show();
+ 		}
+ 	}
+ 	$.ajax(s);
+ 	$("#showText").hide();
+	
+};
+
+</script>
+
+}
+
+	
+}

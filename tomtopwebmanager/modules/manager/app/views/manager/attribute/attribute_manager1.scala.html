@@ -1,0 +1,154 @@
+@(attribute: java.util.LinkedHashMap[dto.SimpleLanguage, java.util.Collection[dto.AttributeKeyItem]],
+langaugeidselected: Integer)
+@showAttribute(attributeKey: dto.AttributeKeyItem, languageName: String) = {
+	<h3 class="form-section">属性名</h3>
+	<div class="row-fluid">
+		<div class="span6 ">
+			<div class="control-group">
+				<label class="control-label" for="firstName">key Name</label>
+				<div class="controls">
+					<input type="text" id="@attributeKey.getIid()" name="@languageName" class="m-wrap span12" value="@attributeKey.getCkeyname()" placeholder="请输入属性值">
+				</div>
+			</div>
+		</div>
+	</div>
+	<h3 class="form-section">属性值</h3>
+	@attributeKey.getAttributeValue().map{value =>
+		<div class="row-fluid">
+			<div class="span6 ">
+				<div class="control-group">
+					<div class="controls">
+						<input type="text" class="m-wrap span12" keyid="@attributeKey.getIid()" id="@value.getIid()" value="@value.getCvaluename()">
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+}
+@views.html.manager.main {
+<div class="container-fluid">
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN STYLE CUSTOMIZER -->
+						<div class="color-panel hidden-phone">
+							<div class="color-mode-icons icon-color"></div>
+							<div class="color-mode-icons icon-color-close"></div>
+							<div class="color-mode">
+								<p>THEME COLOR</p>
+								<ul class="inline">
+									<li class="color-black current color-default" data-style="default"></li>
+									<li class="color-blue" data-style="blue"></li>
+									<li class="color-brown" data-style="brown"></li>
+									<li class="color-purple" data-style="purple"></li>
+									<li class="color-grey" data-style="grey"></li>
+									<li class="color-white color-light" data-style="light"></li>
+								</ul>
+								<label>
+									<span>Layout</span>
+									<select class="layout-option m-wrap small">
+										<option value="fluid" selected="">Fluid</option>
+										<option value="boxed">Boxed</option>
+									</select>
+								</label>
+								<label>
+									<span>Header</span>
+									<select class="header-option m-wrap small">
+										<option value="fixed" selected="">Fixed</option>
+										<option value="default">Default</option>
+									</select>
+								</label>
+								<label>
+									<span>Sidebar</span>
+									<select class="sidebar-option m-wrap small">
+										<option value="fixed">Fixed</option>
+										<option value="default" selected="">Default</option>
+									</select>
+								</label>
+								<label>
+									<span>Footer</span>
+									<select class="footer-option m-wrap small">
+										<option value="fixed">Fixed</option>
+										<option value="default" selected="">Default</option>
+									</select>
+								</label>
+							</div>
+						</div>
+						<!-- END BEGIN STYLE CUSTOMIZER -->  
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+
+						<h3 class="page-title">
+							商品属性管理 <small>管理商品的多种属性</small>
+						</h3>
+						<ul class="breadcrumb">
+							<li>
+								<i class="icon-home"></i>
+								<a href="/sysadmin">Home</a> 
+								<i class="icon-angle-right"></i>
+							</li>
+							<li>
+								<a href="#">商品管理</a>
+								<i class="icon-angle-right"></i>
+							</li>
+							<li><a href="#">商品属性管理</a></li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				
+				<!-- BEGIN PAGE CONTENT-->
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="tabbable tabbable-custom boxless">
+							<ul class="productDescription_navigation">
+							</ul>
+							<ul class="nav nav-tabs">
+								@if(attribute.size() > 0) {
+									@attribute.map{ e =>
+									<li @if(langaugeidselected==e._1.getIid()){class="active"}><a href="#tab_@e._1.getIid()" data-toggle="tab">@e._1.getCname()</a></li>
+									}
+								}
+							</ul>
+							<div class="tab-content">
+								@attribute.map{ e =>
+									<div class="tab-pane @if(langaugeidselected==e._1.getIid()){active}" id="tab_@e._1.getIid()">
+										<div class="portlet box blue">
+											<div class="portlet-title">
+												<div class="caption"><i class="icon-reorder"></i>属性列表</div>
+												<div class="tools">
+													<a href="javascript:;" class="collapse"></a>
+													<a href="#portlet-config" data-toggle="modal" class="config"></a>
+													<a href="javascript:;" class="reload"></a>
+													<a href="javascript:;" class="remove"></a>
+												</div>
+											</div>
+											<div class="portlet-body form">
+												<!-- BEGIN FORM-->
+												<form action="#" class="horizontal-form">
+													@e._2.map{a =>
+														@showAttribute(a, e._1.getCname())
+													}
+													<div class="form-actions">
+														<button type="button" class="btn blue" name="submitAttribute" value="@e._1.getCname()"><i class="icon-ok"></i> Save</button>
+														<button type="button" class="btn">Cancel</button>
+													</div>
+												</form>
+												<!-- END FORM--> 
+											</div>
+										</div>
+									</div>	
+								}
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- END PAGE CONTENT -->
+
+			</div>
+			@services.base.HtmlUtils.misc().addTailOnce{
+				<script src="@controllers.manager.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.manager.routes.Assets.at("js/manager/categorydetail")" ></script>
+			}        
+}

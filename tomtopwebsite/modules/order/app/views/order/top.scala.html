@@ -1,0 +1,91 @@
+@(step: Integer, isManual: Boolean)(body: Html)
+@meta = @{services.base.utils.MetaUtils.currentMetaBuilder().build()}
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Cache-Control" content="no-cache"/>
+	<meta http-equiv="Expires" content="0"/>
+	<title>@meta.getTitle() - TOMTOP</title>
+	<meta name="description" content="@meta.getDescription()">
+	<link rel="icon" href="@controllers.base.routes.Assets.at("favicon.ico")" type="image/x-icon"><meta name="keywords" content="@meta.getKeywords()">
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" /> 
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/tomtop.css")">
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/base/country.css")" />
+	<link rel="stylesheet" type="text/css" href="@controllers.base.routes.Assets.at("css/shopping.css")" />
+	<link rel="stylesheet" type="text/css" href="@controllers.base.routes.Assets.at("css/newshopping.css")" />
+	<script src="@controllers.base.routes.Assets.at("lib/jquery/jquery.min.js")"></script>
+	<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+	<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+	<script src="@controllers.base.routes.Assets.at("js/lib/public.js")?@version.BuildVersion.build()"></script>
+	<script src="@controllers.base.routes.Assets.at("js/lib/main.js")?@version.BuildVersion.build()"></script>
+	@services.base.HtmlUtils.misc().getHead().map { h =>
+		@h
+	}
+	</head>
+	<body>
+		@views.html.base.nav_live_chat()
+		<div class="container@if(isManual){ printPage}" id="top_s">
+			<div class="shoppingCart_top" >
+				<div class="topNavigation_logo navigationCart_logo lineBlock">
+			    		<div class="topNav_logoT"><a href="/"><img src="@controllers.base.routes.Assets.at("img/Tomtop_logo0603_01.png")" /></a></div>
+			            <div class="topNav_logoB"><img src="@controllers.base.routes.Assets.at("img/Tomtop_logo0603_02.png")" /></div>
+			    </div>
+				
+				@tp.get("login-pop")
+					 
+					<ul class="shop_process">
+				    		@if(step == 1){
+				    			<li class="current_state"><span>1</span>@Messages("newshopping.banner.1")</li>
+						        <!--当到第二步的页面时，第二个li标签添加多个样式名为“current_state1”-->
+						        <li class="nocurrent_state"><span>2</span>@Messages("newshopping.banner.2")</li>
+						        <li class="normal_state"><span>3</span>@Messages("newshopping.banner.3")</li>
+				    		}else{
+				    			@if(step == 2){
+				    				<li class="current_state"><span>1</span>@Messages("newshopping.banner.1")</li>
+							        <!--当到第二步的页面时，第二个li标签添加多个样式名为“current_state1”-->
+							        <li class="nocurrent_state current_state1"><span>2</span>@Messages("newshopping.banner.2")</li>
+							        <li class="normal_state"><span>3</span>@Messages("newshopping.banner.3")</li>
+				    			}else{
+				    				<li class="current_state"><span>1</span>@Messages("newshopping.banner.1")</li>
+							        <!--当到第二步的页面时，第二个li标签添加多个样式名为“current_state1”-->
+							        <li class="current_state current_state1"><span>2</span>@Messages("newshopping.banner.2")</li>
+							        <li class="normal_state"><span>3</span>@Messages("newshopping.banner.3")</li>
+				    			}
+				    		}
+				    </ul>
+			</div>
+			@body
+		</div>
+		<div class="hotProduct_box boxFramework">
+			@tp.get("hot-product")
+		    @tp.get("send-email-home-2")
+	    <div class="clear"></div>
+		</div>
+		<!--购物车底部-->
+		<div class="shopping_bottom">
+		    <div>
+		        <a class="icon_paypal"></a>
+		        <a class="icon_visa"></a>
+		        <a class="icon_qiwi"></a>
+		        <a class="icon_ehb"></a>
+		        <a class="icon_boleto"></a>
+		        <a class="icon_wiae"></a>
+		        <a class="icon_norton" href="javascript:vrsn_splash()"></a>
+		        <a class="icon_money"></a>
+		    </div>
+		    <div>
+		        <a class="icon_china"></a>
+		        <a class="icon_ems"></a>
+		        <a class="icon_dhl"></a>
+		        <a class="icon_ups"></a>
+		    </div>
+		    <p>Copyright © 2004- 2015 TOMTOP Inc. All Rights Reserved. (Build: @version.BuildVersion.build())</p>
+		</div>
+		@services.base.HtmlUtils.misc().getTail().map { h =>
+			@h
+		}
+	</body>
+</html>

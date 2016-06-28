@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.base.EmailAccountMapper">
+     <resultMap id="BaseResultMap" type="dto.EmailAccount">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+		<result column="ctype" property="ctype" jdbcType="VARCHAR" />
+		<result column="csmtphostName" property="csmtphostName" jdbcType="VARCHAR" />
+		<result column="iserverport" property="iserverport" jdbcType="INTEGER" />
+		<result column="cusername" property="cusername" jdbcType="VARCHAR" />
+		<result column="cpassword" property="cpassword" jdbcType="VARCHAR" />
+	    <result column="cemail" property="cemail" jdbcType="VARCHAR" />
+		<result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+	</resultMap>
+    <sql id="t_email_account" >
+    iid,iwebsiteid,ctype,csmtphostName,cemail,iserverport,cusername,cpassword,ccreateuser,dcreatedate
+    </sql>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+		    delete from t_email_account
+		    where iid = #{iid,jdbcType=INTEGER}
+    </delete>
+     
+  <insert id="insert" parameterType="dto.EmailAccount" >
+    insert into t_email_account (iwebsiteid, cemail,ctype, csmtphostName, iserverport, cusername, cpassword,ccreateuser,dcreatedate)
+    values (
+       #{iwebsiteid,jdbcType=INTEGER},
+       #{cemail,jdbcType=VARCHAR}, 
+       #{ctype,jdbcType=VARCHAR}, 
+       #{csmtphostName,jdbcType=VARCHAR},
+       #{iserverport,jdbcType=INTEGER},
+       #{cusername,jdbcType=VARCHAR}, 
+       #{cpassword,jdbcType=VARCHAR},
+       #{ccreateuser,jdbcType=VARCHAR},
+       #{dcreatedate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+ 
+    <insert id="insertSelective" parameterType="dto.EmailAccount" >
+    insert into t_email_account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="iwebsiteid != null" >
+        iwebsiteid,
+      </if>
+      <if test="cemail != null" >
+        cemail,
+      </if>
+      <if test="ctype != null" >
+        ctype,
+      </if>
+      <if test="csmtphostName != null" >
+        csmtphostName,
+      </if>
+      <if test="iserverport != null">
+      	iserverport,
+      </if>
+       <if test="cpassword != null" >
+        cpassword,
+      </if>
+      <if test="cusername != null">
+      	cusername,
+      </if>
+      <if test="ccreateuser != null" >
+        ccreateuser,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="iwebsiteid != null" >
+        #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+       <if test="cemail != null" >
+        #{cemail,jdbcType=INTEGER},
+      </if>
+      <if test="ctype != null" >
+        #{ctype,jdbcType=VARCHAR},
+      </if>
+      <if test="csmtphostName != null" >
+        #{csmtphostName,jdbcType=VARCHAR},
+      </if>
+      <if test="iserverport != null" >
+        #{iserverport,jdbcType=INTEGER},
+      </if>
+      <if test="cpassword != null" >
+        #{cpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="cusername != null" >
+        #{cusername,jdbcType=VARCHAR},
+      </if>
+      <if test="ccreateuser != null" >
+        #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+    <update id="updateByPrimaryKeySelective" parameterType="dto.EmailAccount" >
+    update t_email_account
+    <set >
+      <if test="iwebsiteid != null" >
+        iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="ctype != null" >
+        ctype = #{ctype,jdbcType=VARCHAR},
+      </if>
+       <if test="cemail != null" >
+        cemail = #{cemail,jdbcType=VARCHAR},
+      </if>
+      <if test="csmtphostName != null" >
+        csmtphostName = #{csmtphostName,jdbcType=VARCHAR},
+      </if>
+      <if test="iserverport != null" >
+        iserverport = #{iserverport,jdbcType=INTEGER},
+      </if>
+      <if test="cpassword != null" >
+        cpassword = #{cpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="cusername != null" >
+        cusername = #{cusername,jdbcType=VARCHAR},
+      </if>
+   	  <if test="ccreateuser != null" >
+        ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+    
+      <update id="updateByPrimaryKey" parameterType="dto.EmailAccount" >
+    update t_email_account
+    set iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+	      ctype = #{ctype,jdbcType=VARCHAR},
+	      csmtphostName = #{csmtphostName,jdbcType=VARCHAR},
+	      cemail = #{cemail,jdbcType=VARCHAR},
+	      iserverport = #{iserverport,jdbcType=INTEGER},
+	      cpassword = #{cpassword,jdbcType=VARCHAR},
+	      cusername = #{cusername,jdbcType=VARCHAR},
+	      ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+	      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  
+</mapper>

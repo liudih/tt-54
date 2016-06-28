@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.CategoryWebsiteMapper">
+	<resultMap id="BaseResultMap" type="dto.product.CategoryPlatform">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+	    <result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+	    <result column="icategoryid" property="icategoryid" jdbcType="INTEGER" />
+	    <result column="iparentid" property="iparentid" jdbcType="INTEGER" />
+	    <result column="cpath" property="cpath" jdbcType="VARCHAR" />
+	    <result column="ilevel" property="ilevel" jdbcType="INTEGER" />
+	    <result column="iposition" property="iposition" jdbcType="INTEGER" />
+	    <result column="ichildrencount" property="ichildrencount" jdbcType="INTEGER" />
+	    <result column="bshow" property="bshow" jdbcType="BOOLEAN" />
+	    <result column="bhasbgimage" property="bhasbgimage" jdbcType="BOOLEAN" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, iwebsiteid, icategoryid, iparentid, cpath, ilevel, iposition, ichildrencount, bshow,bhasbgimage
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_category_website
+		where iid = #{iid,jdbcType=INTEGER}
+	</select>
+
+	<insert id="insert" parameterType="dto.product.CategoryPlatform">
+		insert into 
+		t_category_website (iid, iwebsiteid, icategoryid, 
+	      iparentid, cpath, ilevel, 
+	      iposition, ichildrencount, bshow,bhasbgimage
+	     )
+	    values (#{iid,jdbcType=INTEGER}, #{iwebsiteid,jdbcType=INTEGER}, #{icategoryid,jdbcType=INTEGER}, 
+	      #{iparentid,jdbcType=INTEGER}, #{cpath,jdbcType=VARCHAR}, #{ilevel,jdbcType=INTEGER}, 
+	      #{iposition,jdbcType=INTEGER}, #{ichildrencount,jdbcType=INTEGER}, #{bshow,jdbcType=BOOLEAN},#{bhasbgimage,jdbcType=BOOLEAN}
+	     )
+	</insert>
+    <insert id="insertSelective" parameterType="dto.product.CategoryPlatform" >
+     insert into t_category_website
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >iid,</if>
+      <if test="iwebsiteid != null" >iwebsiteid,</if>
+      <if test="icategoryid != null" >icategoryid,</if>
+      <if test="iparentid != null" >iparentid,</if>
+      <if test="cpath != null" >cpath,</if>
+      <if test="ilevel != null" >ilevel,</if>
+      <if test="iposition != null" >iposition,</if>
+      <if test="ichildrencount != null" >ichildrencount,</if>
+      <if test="bshow != null" >bshow,</if>
+      <if test="bhasbgimage != null" >bhasbgimage,</if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >#{iid,jdbcType=INTEGER},</if>
+       <if test="iwebsiteid != null" >#{iwebsiteid,jdbcType=INTEGER},</if>
+      <if test="icategoryid != null" >#{icategoryid,jdbcType=INTEGER},</if>
+      <if test="iparentid != null" >#{iparentid,jdbcType=INTEGER},</if>
+      <if test="cpath != null" >#{cpath,jdbcType=VARCHAR},</if>
+      <if test="ilevel != null" >#{ilevel,jdbcType=INTEGER},</if>
+      <if test="iposition != null" >#{iposition,jdbcType=INTEGER},</if>
+      <if test="ichildrencount != null" >#{ichildrencount,jdbcType=INTEGER},</if>
+      <if test="bshow != null" >#{bshow,jdbcType=BOOLEAN},</if>
+      <if test="bhasbgimage != null" >#{bhasbgimage,jdbcType=BOOLEAN},</if>
+    </trim>
+  </insert>
+	<update id="updateByPrimaryKeySelective" parameterType="dto.product.CategoryPlatform">
+		update t_category_website
+	    <set >
+	      <if test="iwebsiteid != null" >
+	        iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+	      </if>
+	      <if test="icategoryid != null" >
+	        icategoryid = #{icategoryid,jdbcType=INTEGER},
+	      </if>
+	      <if test="iparentid != null" >
+	        iparentid = #{iparentid,jdbcType=INTEGER},
+	      </if>
+	      <if test="cpath != null" >
+	        cpath = #{cpath,jdbcType=VARCHAR},
+	      </if>
+	      <if test="ilevel != null" >
+	        ilevel = #{ilevel,jdbcType=INTEGER},
+	      </if>
+	      <if test="iposition != null" >
+	        iposition = #{iposition,jdbcType=INTEGER},
+	      </if>
+	      <if test="ichildrencount != null" >
+	        ichildrencount = #{ichildrencount,jdbcType=INTEGER},
+	      </if>
+	      <if test="bshow != null" >
+	        bshow = #{bshow,jdbcType=BOOLEAN},
+	      </if>
+	      <if test="bhasbgimage != null" >
+	        bhasbgimage = #{bhasbgimage,jdbcType=BOOLEAN}
+	      </if>
+	    </set>
+      where iid = #{iid,jdbcType=INTEGER}
+    </update>
+	<update id="updateByPrimaryKey" parameterType="dto.product.CategoryPlatform">
+		update t_category_website
+	    set iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+	      icategoryid = #{icategoryid,jdbcType=INTEGER},
+	      iparentid = #{iparentid,jdbcType=INTEGER},
+	      cpath = #{cpath,jdbcType=VARCHAR},
+	      ilevel = #{ilevel,jdbcType=INTEGER},
+	      iposition = #{iposition,jdbcType=INTEGER},
+	      ichildrencount = #{ichildrencount,jdbcType=INTEGER},
+	      bshow = #{bshow,jdbcType=BOOLEAN},
+	      bhasbgimage = #{bhasbgimage,jdbcType=BOOLEAN}
+	    where iid = #{iid,jdbcType=INTEGER}
+	</update>
+	<select id="getCategoriesByListingids" resultType="dto.product.CategoryWebsiteWithName">
+		SELECT distinct p.*, n.cname from t_category_website p
+			inner join t_category_name n on n.icategoryid = p.icategoryid
+			inner join t_product_category_mapper m on m.icategory = p.icategoryid
+			WHERE m.clistingid in
+			<foreach item="item" index="index" collection="list" open="("
+				separator="," close=")">#{item}</foreach>
+			and n.ilanguageid = #{1}
+			and p.iwebsiteid = #{2} ORDER BY iposition
+	</select>
+</mapper>

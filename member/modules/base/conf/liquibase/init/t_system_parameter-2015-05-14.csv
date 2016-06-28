@@ -1,0 +1,7 @@
+iwebsiteid,cparameterkey,cparametervalue
+1,DailyDealCreateDateLower,7
+1,DailyDealCreateDateHight,30
+1,DailyDealDiscountRangeLower,0.4
+1,DailyDealDiscountRangeHigher,1.0
+1,DailyDealPriceRangeLower,0.0
+1,DailyDealPriceRangeHigher,100.0

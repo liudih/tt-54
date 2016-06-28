@@ -1,0 +1,7 @@
+@()
+@tp = @{services.dodocool.base.template.TemplateService.getInstance().getContents()}
+@views.html.base.master{
+ 	 @tp.get("home_banner")
+	@contend()
+	@email_form()
+}

@@ -1,0 +1,65 @@
+GET    /assets/*file          controllers.cart.Assets.at(path="/public", file)
+
+GET			/						@controllers.cart.CartController.cartview(storageid: String?="")
+GET			/test						@controllers.cart.CartController.test()
+
+POST		/savecartitem			@controllers.cart.CartController.saveCartItem()
+
+POST		/delcartitem			@controllers.cart.CartController.delCartItem()
+
+POST		/updatecartitem			@controllers.cart.CartController.updateCartItem()
+
+#GET		/all					@controllers.cart.CartController.allItems()
+
+GET			/checkstatus				@controllers.cart.CartController.checkCartStatus(islogin:Int?=0)
+
+POST		/saveLaterCartItem			@controllers.cart.CartController.saveLaterCartItem()
+
+POST		/updateCartLaterItem			@controllers.cart.CartController.updateCartLaterItem()
+
+POST		/delCartLaterItem			@controllers.cart.CartController.delCartLaterItem()
+
+GET			/getallcountry				@controllers.cart.member.Country.getAllCountries()
+
+POST    	/signin                     @controllers.cart.member.Login.signin()
+
+POST    	/register              		@controllers.cart.member.Login.register()
+
+POST    	/validateCategory              		@controllers.cart.member.Login.validateCategory()
+
+GET    	/validEmail              		@controllers.cart.member.Login.validEmail(email: String?="")
+
+
+GET    	/logout              		@controllers.cart.member.Login.logout()
+
+GET    	/captcha              		@controllers.cart.member.Login.createCaptcha()
+
+GET		/adddropshipping			@controllers.cart.CartController.addDropShipping(storageid: Int?=1)
+
+#-----------interaction -------------------
+
+GET    /collect                       @controllers.cart.interaction.Collect.collect(lid: String?="", action: String?="")
+
+GET    /delcollect                    @controllers.cart.interaction.Collect.delCollect(lids: String)
+
+GET    /membercollect                 @controllers.cart.interaction.Collect.getcollect(listingid:String?="")
+
+GET    /coupon/apply                           @controllers.cart.LoyaltyController.applyCoupon(code :String?=null)
+
+GET    /coupon/usablecoupon/get                         @controllers.cart.LoyaltyController.getUsableCoupon()
+
+POST    /points/apply                         @controllers.cart.LoyaltyController.applyPoints(costpoints :Integer)
+
+GET    /promo/apply                         @controllers.cart.LoyaltyController.applyPromo(code :String?=null)
+
+GET    /prefer/all                         @controllers.cart.LoyaltyController.getAllCurrentPrefer()
+
+POST    /prefer/undo                         @controllers.cart.LoyaltyController.undoCurrentPrefer()
+
+POST    /prefer/point/undo                   @controllers.cart.LoyaltyController.undoCurrentPoint()
+
+GET     /points/get                    @controllers.cart.LoyaltyController.getMyUsablePoint()
+
+POST	/storageid/set						@controllers.cart.CartController.setStorageid(storageid: String?="")
+
+GET    /clear/loyalty					 @controllers.cart.LoyaltyController.undoCurrentPoint()

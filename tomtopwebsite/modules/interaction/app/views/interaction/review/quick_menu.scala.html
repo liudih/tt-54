@@ -1,0 +1,2 @@
+@urlprefix = @{play.Play.application().configuration().getString("member.defaultdomain")}
+<li><a href="@urlprefix@controllers.interaction.review.routes.MemberReview.reviewlist()">@Messages("my.reviews")</a></li>

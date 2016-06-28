@@ -1,0 +1,152 @@
+@(files: List[dto.image.UploadFilePath])
+@import views.html.helper._
+@helper.javascriptRouter("uploadfileRoutes")(
+	controllers.manager.routes.javascript.UploadFilePath.uploadFilePathManager,
+	controllers.manager.routes.javascript.UploadFilePath.deleteUploadFilePath
+)
+@views.html.manager.main {
+<div class="container-fluid">
+		<!-- BEGIN PAGE HEADER-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN STYLE CUSTOMIZER -->
+				<div class="color-panel hidden-phone">
+					<div class="color-mode-icons icon-color"></div>
+					<div class="color-mode-icons icon-color-close"></div>
+					<div class="color-mode">
+						<p>THEME COLOR</p>
+						<ul class="inline">
+							<li class="color-black current color-default" data-style="default"></li>
+							<li class="color-blue" data-style="blue"></li>
+							<li class="color-brown" data-style="brown"></li>
+							<li class="color-purple" data-style="purple"></li>
+							<li class="color-grey" data-style="grey"></li>
+							<li class="color-white color-light" data-style="light"></li>
+						</ul>
+						<label>
+							<span>Layout</span>
+							<select class="layout-option m-wrap small">
+								<option value="fluid" selected="">Fluid</option>
+								<option value="boxed">Boxed</option>
+							</select>
+						</label>
+						<label>
+							<span>Header</span>
+							<select class="header-option m-wrap small">
+								<option value="fixed" selected="">Fixed</option>
+								<option value="default">Default</option>
+							</select>
+						</label>
+						<label>
+							<span>Sidebar</span>
+							<select class="sidebar-option m-wrap small">
+								<option value="fixed">Fixed</option>
+								<option value="default" selected="">Default</option>
+							</select>
+						</label>
+						<label>
+							<span>Footer</span>
+							<select class="footer-option m-wrap small">
+								<option value="fixed">Fixed</option>
+								<option value="default" selected="">Default</option>
+							</select>
+						</label>
+					</div>
+				</div>
+				<!-- END BEGIN STYLE CUSTOMIZER -->  
+				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+
+				<h3 class="page-title">
+					文档上传管理 <small>文档上传路径管理 </small>
+				</h3>
+				<ul class="breadcrumb">
+					<li>
+						<i class="icon-home"></i>
+						<a href="/sysadmin">Home</a> 
+						<i class="icon-angle-right"></i>
+					</li>
+					<li>
+						<a href="">文档上传路径管理</a> 
+					</li>
+				</ul>
+				<!-- END PAGE TITLE & BREADCRUMB-->
+
+			</div>
+		</div>
+		<!-- END PAGE HEADER-->
+		
+		<!-- BEGIN PAGE CONTENT-->
+		
+		<div class="portlet-body">
+			<div class="clearfix">
+				<div class="btn-group">
+					<a class="edit" data-toggle="modal" data-target="#add-filepath-modal">
+						<button id="add_user_btn" class="btn green">
+							新增文档目录 <i class="icon-plus"></i>
+						</button>
+						<i class="icon-pencil"></i></a>
+				</div>
+			</div>
+		</div>
+		
+		<div class="accountBox">
+			<div class="xxkDiv">
+				<div id="search_file_html">
+					@if(files.size() > 0){
+					<table class="table table-striped table-bordered table-hover table-full-width dataTable" id="pathtable" aria-describedby="sample_2_info">
+						<thead>
+							<tr role="row">
+								<th rowspan="1" colspan="1" style="width: 30%;">文档路径</th>
+								<th rowspan="1" colspan="1" style="width: 10%;">创建人</th>
+								<th rowspan="1" colspan="1" style="width: 10%;">删除</th>
+							</tr>
+						</thead>
+		
+						<tbody role="alert" aria-live="polite" aria-relevant="all">
+						   @files.asScala.map{i=>
+								<tr class="odd">
+									<td>
+										@i.getCpath()
+									</td>
+									<td>
+										@i.getCcreateuser()
+									</td>
+									<td>
+										<a class="delete" href="javascript:;" data-id="@i.getIid()"><i class="icon-trash"></i></a>
+									</td>
+								</tr>
+							}
+						</tbody>
+					</table>
+					}
+				</div>
+			</div>
+		</div>
+		
+		@form(controllers.manager.routes.UploadFilePath.saveUploadFilePath(), 'id->"addFilePath", 'onsubmit->"return false"){
+			<div id="add-filepath-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-header">
+				    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				    <h3 id="myModalLabel">新增文档路径 </h3>
+				  </div>
+				   <div class="modal-body form-horizontal">
+						<div class="control-group">
+							<label class="control-label">文档路径：</label>
+							<div class="controls">
+								<input type="text" value="" name="cpath" placeholder="images" class="m-wrap medium span6" required>
+							</div>
+						</div>
+				   </div>
+				   <div class="modal-footer" style="margin-bottom: -20px;">
+				    <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+				    <button class="btn blue" type="submit">保存</button>
+				  </div>
+			</div>
+		}
+</div>	
+	
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<script src="@controllers.manager.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.manager.routes.Assets.at("js/manager/uploadfiledetail")" ></script>
+	} 
+}
+

@@ -1,0 +1,499 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no,maximum-scale=1.0">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<title>tomtop</title>
+<link type="text/css" rel="stylesheet" href="../css/css/style.css" />
+<link type="text/css" rel="stylesheet" href="../css/css/top.css" />
+<link type="text/css" rel="stylesheet" href="../css/css/mobile.css" />
+<link type="text/css" rel="stylesheet" href="../css/css/zIndex.css" />
+<link type="text/css" rel="stylesheet" href="../css/css/icon.css" />
+<link type="text/css" rel="stylesheet" href="../css/css/countries.css" />
+<link type="text/css" rel="stylesheet" href="../css/css/share.css" />
+<link type="text/css" rel="stylesheet" href="../css/css/ProductOptions.css" />
+<script type="text/javascript" src="../js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="../js/public.js"></script>
+<script type="text/javascript" src="../js/main.js"></script>
+<style>
+	body{background-color:#f9f9f9;}
+	img{border:0px;}
+	pre{ background: #f5f5f5 none repeat scroll 0 0;border: 1px dotted #785;margin: 10px 0 0;padding: 10px;width:100%;}
+	.margin{margin:15px 0px;}
+	.container{width:1200px;margin:0 auto;background-color:#fff;padding:20px;}
+	.TAB_NavCss li{padding:15px 50px;background-color:#E1E1E1;cursor: pointer;}
+	.TAB_NavCss li:hover{background-color:#0387da;color:#fff;}
+	.TAB_NavCss li.aciCss{background-color:#0387da;color:#fff;}
+	.publicTAB_css{width:100%;margin-bottom:35px;}
+  	.publicTAB_css li{padding:15px 50px;text-align:center;font-size:16px;border-bottom:1px solid #ccc;height:60px;cursor:pointer;}
+  	.publicTAB_css li.aciCss{font-size:20px;font-weight:bold;color:#333;border-bottom:2px solid #1077c6; color:#1077c6;}
+  	.childrenLine>span{display:inline-block;}
+</style>
+</head>
+
+<body>
+<div class="container TAB_Box">
+	<ul class="TAB_Nav publicTAB_css lbBox">
+		<li class="lineBlock aciCss">表单属性</li>
+		<li class="lineBlock">弹框属性</li>
+		<li class="lineBlock">ICON图标</li>
+		<li class="lineBlock">css格式化</li>
+		<li class="lineBlock">移动端格式化</li>
+	</ul>
+	<div class="TAB_Con block">
+		<h5 class="margin">多选示例元素</h5>
+		<label class="input_control lineBlock"> 
+			<input type="checkbox">
+			<div class="checkbox chooseClick"><span></span></div>
+		</label>
+		<label class="input_control lineBlock"> 
+			<input type="checkbox">
+			<div class="checkbox aciCss chooseClick"><span></span></div>
+		</label>
+		<label class="input_control lineBlock"> 
+			<input type="checkbox" disabled="disabled">
+			<div class="checkbox chooseClick"><span></span></div>
+		</label>
+		<label class="input_control lineBlock"> 
+			<input type="checkbox" checked="checked" disabled="disabled">
+			<div class="checkbox chooseClick"><span></span></div>
+		</label>
+	<p class="margin">示例代码</p>
+	<p>选中 <span class="red">aciCss</span></p>
+	<p>禁止取消 <span class="red">disabled="disabled"</span></p>
+	<p>禁止选中 <span class="red">checked="checked" disabled="disabled"</span></p>
+<pre>
+	<xmp>
+	未选择
+	<label class="input_control lineBlock"> 
+		<input type="checkbox">
+		<div class="checkbox chooseClick"><span></span></div>
+	</label>
+	选中
+	<label class="input_control lineBlock"> 
+		<input type="checkbox">
+		<div class="checkbox aciCss chooseClick"><span></span></div>
+	</label>
+	禁止选择
+	<label class="input_control lineBlock"> 
+		<input type="checkbox" disabled="disabled">
+		<div class="checkbox chooseClick"><span></span></div>
+	</label>
+	禁止取消
+	<label class="input_control lineBlock"> 
+		<input type="checkbox" checked="checked" disabled="disabled">
+		<div class="checkbox chooseClick"><span></span></div>
+	</label>
+	</xmp>
+</pre>
+
+	<h5 class="margin">单选示例元素</h5>
+	<div class="publicePop_conMP chooseOneBox lineBlock">
+		<label class="chooseOneLabel input_control">
+			<input type="radio">
+			<div class="radio lineBlock"><span> </span></div>
+		</label>
+	</div>
+	<div class="publicePop_conMP chooseOneBox lineBlock">
+		<label class="chooseOneLabel input_control">
+			<input type="radio">
+			<div class="radio aciCss lineBlock"><span> </span></div>
+		</label>
+	</div>
+	<div class="publicePop_conMP chooseOneBox lineBlock">
+		<label class="chooseOneLabel input_control">
+			<input type="radio" disabled="disabled">
+			<div class="radio lineBlock"><span> </span></div>
+		</label>
+	</div>
+	<div class="publicePop_conMP chooseOneBox lineBlock">
+		<label class="chooseOneLabel input_control">
+			<input type="radio" disabled="disabled" checked="checked">
+			<div class="radio lineBlock"><span> </span></div>
+		</label>
+	</div>
+
+	<p class="margin">示例代码</p>
+<pre>
+	<xmp>
+	<div class="publicePop_conMP chooseOneBox">
+		<label class="chooseOneLabel input_control">
+			<input type="radio" disabled="disabled">
+			<div class="radio lineBlock"><span> </span></div>
+		</label>
+	</div>
+	</xmp>
+</pre>
+
+	<h5 class="margin">筛选滑块</h5>
+	<div class="slider_buttonBox slider_buttonOpen slider_buttonClick lineBlock">
+		<label class="slider_buttonLabel input_control">
+			<span class="slider_button"> </span>
+		</label>
+	</div>
+	<p class="lineBlock">打开</p>
+	<div class="slider_buttonBox slider_buttonClick lineBlock">
+		<label class="slider_buttonLabel input_control">
+			<span class="slider_button"> </span>
+		</label>
+	</div>
+	<p class="lineBlock">关闭</p>
+	<div class="slider_buttonBox slider_buttonOpen lineBlock">
+		<label class="slider_buttonLabel input_control">
+			<span class="slider_button"> </span>
+		</label>
+	</div>
+	<p class="lineBlock">禁止关闭</p>
+	<div class="slider_buttonBox lineBlock">
+		<label class="slider_buttonLabel input_control">
+			<span class="slider_button"> </span>
+		</label>
+	</div>
+	<p class="lineBlock">禁止打开</p>
+
+	<p class="margin">示例代码(打开状态给父级元素添加 <span class="red">slider_buttonOpen</span> 无法点击去掉 <span class="red">slider_buttonClick</span>)</p>
+<pre>
+	<xmp>
+	<div class="slider_buttonBox slider_buttonOpen slider_buttonClick">
+		<label class="slider_buttonLabel input_control">
+			<span class="slider_button"> </span>
+		</label>
+	</div>
+	</xmp>
+</pre>
+
+	<h5 class="margin">input框和宽度说明</h5>
+	<p>默认状态input框class <span class="red">txtInput</span></p>
+	<p>报错、警告、成功、必填class <span class="red">input_error、input_ warning、input_ success、input_ required</span></p>
+	<p>span1-10宽度为百分比 <span class="red">span1/span2.......span10</span></p>
+	<div class="input_control">
+		<input class="txtInput" type="text" placeholder="无状态无宽度 txtInput" />
+    	<i class="sClean"> </i>
+	</div>
+	<div class="input_control span3">
+		<input class="txtInput input_error" type="text" placeholder="span3报错状态" />
+    	<i class="sClean"> </i>
+		<label><p class="red errorRed">*The email you've entered is invalid.</p></label>
+	</div>
+	<div class="input_control span9">
+		<input class="txtInput input_warning" type="text" placeholder="span9 警告状态" />
+    	<i class="sClean"> </i>
+	</div>
+	<p class="margin">示例代码(宽度为90%警告状态) <span class="red">sClean</span>为清除按钮</p>
+<pre>
+	<xmp>
+	<div class="input_control span9">
+		<input class="txtInput input_warning" type="text" placeholder="span9 警告状态" />
+		<i class="sClean"> </i>
+	</div>
+	</xmp>
+</pre>
+
+
+	<h5 class="margin">公用国家 </h5>
+	<p>需要引用<span class="red">countries.css</span></p>
+	<div class="countriesSelect input_control">
+		<input type="text" placeholder="Country" class="txtInput placeholder_country placeholder_countryClick">
+        <div class="select_country select_countryNone">
+              <ul class="country_list">
+              	<li>mexico</li>
+              	<li>China</li>
+              	<li>United States</li>
+              	<li>Congo</li>
+              	<li>MICRONESIA</li>
+              	<li>Andorra</li>
+              	<li>United Arab Emirates</li>
+              </ul>
+         </div>
+	</div>
+<pre>
+	<xmp>
+	<div class="countriesSelect input_control">
+		<input type="text" placeholder="Country" class="txtInput placeholder_country placeholder_countryClick">
+	        <div class="select_country select_countryNone">
+	              <ul class="country_list">
+	              	<li>mexico</li>
+	              	<li>China</li>
+	              	<li>United States</li>
+	              	<li>Congo</li>
+	              	<li>MICRONESIA</li>
+	              	<li>Andorra</li>
+	              	<li>United Arab Emirates</li>
+	              </ul>
+	         </div>
+	</div>
+	</xmp>
+</pre>
+
+
+	<h5 class="margin">公用按钮 </h5>
+	<p class="margin">购物流程、过滤、展示(<span class="red">button_orange</span>) 与个人信息有关系(<span class="red">button_blue</span>) Coupon(<span class="red">button_silvergray</span>)</p>
+	<a class="button_cancel span2" href="javascript:;">Cancel</a>
+	<a class="button_gray span2 noDrop" href="javascript:;">Reset</a>
+	<a class="button_orange span2" href="javascript:;">Apply</a>
+	<a class="button_blue span2" href="javascript:;">Apply</a>
+	<a class="button_silvergray span2" href="javascript:;">Apply</a>
+	<p class="margin">示例代码(a标签和input标签同样适用) 不能点击样式class(<span class="red">noDrop</span>)</p>
+<pre>
+	<xmp>
+	<a class="button_cancel span2" href="javascript:;">Cancel</a>
+	<a class="button_gray span2 noDrop" href="javascript:;">Reset</a>
+	<input class="button_silvergray span2" type="button" value="Apply"  />
+	</xmp>
+</pre>
+
+
+	</div>
+	
+	<!--/////////////////////////////////////////////////////////////////////-->
+	<div class="TAB_Con">
+
+		<h5 class="margin">公用提示弹框 </h5>
+		<a href="javascript:;" class="dialogClick">点击这里</a>
+		<p class="margin">示例代码(只需要给要弹出的地方加class <span class="red">dialogClick</span>) 已做公用，Dialog(fun)传入要执行的方法就行(找刘迪)</p>
+<pre>
+	<xmp>
+	<a href="javascript:;" class="dialogClick">点击这里</a>
+	
+	按钮及相关文字传输需写成变量 目前状态
+	var params ={content:'Remove from your cart?',button1:'Cancel',button2:'Sure'};
+	</xmp>
+</pre>
+<h5 class="margin">购买确认弹框 </h5>
+		<a href="javascript:;" class="successfulPop_click">购买确认点击这里</a><br>
+		<a href="javascript:;" class="errorPop_click">报错弹框点击这里</a>
+		<p class="margin">示例代码(只需要给要弹出的地方加class <span class="red">successfulPop_click</span>)</p>
+		<p class="margin">示例代码(只需要给报错弹出的地方加class <span class="red">errorPop_click</span>)</p>
+<pre>
+	<xmp>
+	<a href="javascript:;" class="successfulPop_click">点击这里</a>
+	
+	按钮及相关文字传输需写成变量 目前状态
+	var params ={content:'Add cart successfully!'};
+	</xmp>
+</pre>
+		<h5 class="margin">公用底部弹框 </h5>
+		<div>
+			<a href="javascript:;" class="popBoxFilter">点击这里</a>
+			<div class="publicePop_Box popBoxNone">
+				<div class="publicePop_con">
+					<i class="sClean iconClose"> </i>
+					<div class="product_page_w lbBox">
+						<h5>Product Options</h5>
+						<p class="product_page_csTxt lineBlock">Color:</p>
+						<ul class="product_page_colorPic lineBlock">
+							<li class="lineBlock aciClick aciCss"><img src="../images/delete/color_01.jpg"></li>
+							<li class="lineBlock invalids"><img src="../images/delete/color_02.jpg"></li>
+							<li class="lineBlock aciClick"><img src="../images/delete/color_02.jpg"></li>
+							<li class="lineBlock aciClick"><img src="../images/delete/color_02.jpg"></li>
+							<li class="lineBlock aciClick"><img src="../images/delete/color_02.jpg"></li>
+							<li class="lineBlock aciClick"><img src="../images/delete/color_02.jpg"></li>
+							<li class="lineBlock aciClick"><img src="../images/delete/color_02.jpg"></li>
+							<li class="lineBlock aciClick"><img src="../images/delete/color_02.jpg"></li>
+							<li class="lineBlock aciClick"><img src="../images/delete/color_02.jpg"></li>
+							<li class="lineBlock aciClick"><img src="../images/delete/color_02.jpg"></li>
+							<li class="lineBlock aciClick"><img src="../images/delete/color_02.jpg"></li>
+							<li class="lineBlock aciClick"><img src="../images/delete/color_02.jpg"></li>
+						</ul>
+						<p class="product_page_csTxt lineBlock">Size:</p>
+						<ul class="product_page_sziePic lineBlock">
+							<li class="lineBlock aciClick aciCss">M</li>
+							<li class="lineBlock invalids">L</li>
+							<li class="lineBlock aciClick">XL</li>
+							<li class="lineBlock aciClick">XXL</li>
+						</ul>
+					</div>
+				</div>
+				<div class="blackPop"> </div>
+			</div>
+		</div>
+		<p class="margin">示例代码(按钮名称  <span class="red">popBoxFilter</span>) ProductOptions(需加载 <span class="red">ProductOptions.css</span>)</p>
+<pre>
+	<xmp>
+	<div>
+		<a href="javascript:;" class="popBoxFilter">点击这里</a>
+		<div class="publicePop_Box popBoxNone">
+			<div class="publicePop_con">
+				<i class="sClean iconClose"> </i>
+				Sometxt...
+			</div>
+			<div class="blackPop"> </div>
+		</div>
+	</div>
+	</xmp>
+</pre>
+
+		<h5 class="margin">公用选项卡 </h5>
+		<p class="margin">当前样式加class <span class="red">aciCss</span></p>
+<pre>
+	<xmp>
+	<div class="TAB_Box">
+		<!--选项卡导航-->
+		<ul class="TAB_Nav publicTAB_css lbBox">
+			<li class="lineBlock aciCss">Login</li>
+			<li class="lineBlock">Register</li>
+		</ul>
+		<!--选项卡内容-->
+		<div class="TAB_Con block">
+			Some txt...
+		</div>
+		<div class="TAB_Con">
+			Some txt...
+		</div>
+	</div>
+	</xmp>
+</pre>
+		
+	</div>
+	<!--/////////////////////////////////////////////////////////////////////-->
+	
+	<div class="TAB_Con">
+
+		<h5 class="margin">ICON图标 </h5>
+		<div class="childrenLine">
+			<span class="home_Icon_sx"> </span>
+			<span class="categories_Icon"> </span>
+			<span class="shoppingCart_Icon"> </span>
+			<span class="search_Icon"> </span>
+			<span class="heart_Icon"> </span>
+			<span class="login_Icon"> </span>
+			<span class="more_Icon"> </span>
+			<span class="logout_Icon"> </span>
+			<span class="lock_Icon"> </span>
+			<span class="book_Icon"> </span>
+			<span class="review_Icon"> </span>
+			<span class="leftArrow_Icon"> </span>
+			<span class="messages_icon"> </span>
+			<span class="coupon_icon"> </span>
+			<span class="points_icon"> </span>
+			<span class="deletePro"> </span>
+		</div>
+		<div class="shareIcon">
+			<a href="javascript:;" class="faceBook lineBlock"> </a>
+			<a href="javascript:;" class="paypal lineBlock"> </a>
+			<a href="javascript:;" class="twitter lineBlock"> </a>
+			<a href="javascript:;" class="google lineBlock"> </a>
+		</div>
+			<div class="closeDownApp closeDownApp_Css">
+				<div class="cssX"> </div>
+			</div>
+		<p class="margin">代码示例 <span class="red">取相应的class名字即可</span></p>
+<pre>
+	<xmp>
+	<span class="categories_Icon"> </span>
+	<span class="shoppingCart_Icon"> </span>
+	<span class="search_Icon"> </span>
+	<span class="heart_Icon"> </span>
+	<span class="login_Icon"> </span>
+	<span class="more_Icon"> </span>
+	......
+	</xmp>
+</pre>
+		
+	</div>
+	<!--/////////////////////////////////////////////////////////////////////-->
+	
+	<div class="TAB_Con">
+
+		<h5 class="margin">css样式格式化 </h5>
+<pre>	
+	*{margin:0;padding:0;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+	html{font-family:Arial,sans-serif;font-size:12px;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;color:#666666;}
+	ul,ol{margin:0;padding:0;list-style-type:none;}
+	li{margin:0;padding:0;}
+	input{font-family:Arial,sans-serif;font-size:12px;}
+	input:focus{outline:medium none;}
+	table{border-spacing:0;border-collapse:collapse;border-color:#ccc;background-color:transparent; font-size:12px;}
+	td,th{padding:0;border-color:#ccc;}
+	th{text-align:center;}
+	a{color:#333;text-decoration:none;}
+ 	a:active,a:hover{outline:0;color:#1177cc;}
+	img{border:0px;}
+	h1,h2,h3,h4,h5,h6{color:#333;}
+	.fon26,h1{font-size:26px;}
+	.fon24,h2{font-size:24px;}
+	.fon22,h3{font-size:22px;}
+	.fon20,h4{font-size:20px;}
+	.fon18,h5{font-size:18px;}
+	.fon16,h6{font-size:16px;}
+	.fon14{font-size:14px;}
+	
+	.floatL{float:left;}
+	.floatR{float:right;}
+	.alignL{text-aling:left;}
+	.alignC{text-align:center;}
+	.alignR{text-align:right;}
+	.relative{position:relative;}
+	.block{display:block;}
+	
+	.span1{width:10% !important;}
+	.span2{width:20% !important;}
+	.span3{width:30% !important;}
+	.span4{width:40% !important;}
+	.span5{width:50% !important;}
+	.span6{width:60% !important;}
+	.span7{width:70% !important;}
+	.span8{width:80% !important;}
+	.span9{width:90% !important;}
+	.span10{width:100% !important;}
+	.span33{width:33.3% !important;}
+	.span45{width:45% !important;}
+	.span48{width:48% !important;}
+	
+	.fz_blue{color:#1177cc;}
+	.fz_orange{color:#ff6600;}
+	.fz_red{color:#dd4422;}
+	.fz_black{color:#000000;}
+	.fz_white{color:#FFFFFF;}
+	.fz_grayDark{color:#333333;}
+	.fz_grayLight{color:#666666;}
+	.fz_grayLighter{color:#EFEFEF;}
+	
+	.bg_blue{background-color:#1177cc;}
+	.bg_orange{background-color:#ff6600;}
+	.bg_red{background-color:#dd4422;}
+	.bg_black{background-color:#000000;}
+	.bg_white{background-color:#FFFFFF;}
+	.bg_grayDark{background-color:#333333;}
+	.bg_grayLight{background-color:#666666;}
+	.bg_grayLighter{background-color:#EFEFEF;}
+	
+	.bd_blue{border-color:#1177cc;}
+	.bd_orange{border-color:#ff6600;}
+	.bd_red{border-color:#dd4422;}
+	.bd_black{border-color:#000000;}
+	.bd_white{border-color:#FFFFFF;}
+	.bd_grayDark{border-color:#333333;}
+	.bd_grayLight{border-color:#666666;}
+	.bd_grayLighter{border-color:#EFEFEF;}
+	
+	.lineBlock{display:inline-block;zoom:1;*display:inline;font-size:12px;letter-spacing:normal;word-spacing:normal;vertical-align:top;}
+	.lbBox{font-size:0px;*word-spacing:-1px;}
+	.empty{width:1px;height:100%;font-size:0px;vertical-align:middle;display:inline-block;}
+	
+</pre>
+		
+	</div>
+	<!--/////////////////////////////////////////////////////////////////////-->
+	
+	<div class="TAB_Con">
+
+		<h5 class="margin">移动端顶部格式化 </h5>
+<pre>
+	<xmp>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no,maximum-scale=1.0">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	</xmp>
+</pre>
+		
+	</div>
+	<!--/////////////////////////////////////////////////////////////////////-->
+	
+	
+	
+</div>
+</body>
+</html>

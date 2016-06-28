@@ -1,0 +1,277 @@
+@(vo: valueobjects.base.Page[dto.topic.TopicPage],
+siteMap: Map[Integer,dto.Website],
+langMap: Map[Integer,dto.SimpleLanguage])
+@import views.html.helper._
+@helper.javascriptRouter("js_AdvertisingRoutes")(
+	controllers.manager.routes.javascript.Advertising.deleteAdvertising
+)
+
+@views.html.manager.main {
+<link href="@controllers.manager.routes.Assets.at("css/manager/bootstrap-datetimepicker.css")" rel="stylesheet" type="text/css" media="screen"/>
+<div class="container-fluid">
+	<!-- BEGIN PAGE HEADER-->
+	<div class="row-fluid">
+		<div class="span12">
+			<!-- BEGIN STYLE CUSTOMIZER -->
+			<div class="color-panel hidden-phone">
+				<div class="color-mode-icons icon-color"></div>
+				<div class="color-mode-icons icon-color-close"></div>
+				<div class="color-mode">
+					<p>THEME COLOR</p>
+					<ul class="inline">
+						<li class="color-black current color-default" data-style="default"></li>
+						<li class="color-blue" data-style="blue"></li>
+						<li class="color-brown" data-style="brown"></li>
+						<li class="color-purple" data-style="purple"></li>
+						<li class="color-grey" data-style="grey"></li>
+						<li class="color-white color-light" data-style="light"></li>
+					</ul>
+					<label> <span>Layout</span> <select
+						class="layout-option m-wrap small">
+							<option value="fluid" selected="">Fluid</option>
+							<option value="boxed">Boxed</option>
+					</select>
+					</label> <label> <span>Header</span> <select
+						class="header-option m-wrap small">
+							<option value="fixed" selected="">Fixed</option>
+							<option value="default">Default</option>
+					</select>
+					</label> <label> <span>Sidebar</span> <select
+						class="sidebar-option m-wrap small">
+							<option value="fixed">Fixed</option>
+							<option value="default" selected="">Default</option>
+					</select>
+					</label> <label> <span>Footer</span> <select
+						class="footer-option m-wrap small">
+							<option value="fixed">Fixed</option>
+							<option value="default" selected="">Default</option>
+					</select>
+					</label>
+				</div>
+			</div>
+			<!-- END BEGIN STYLE CUSTOMIZER -->
+			<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+
+			<h3 class="page-title">
+				广告管理 <small>专题页管理</small>
+			</h3>
+			<ul class="breadcrumb">
+				<li><i class="icon-home"></i> <a href="/sysadmin">Home</a> <i
+					class="icon-angle-right"></i></li>
+				<li><a href="#">广告管理</a> <i class="icon-angle-right"></i></li>
+				<li><a href="#">专题页管理</a></li>
+			</ul>
+			<!-- END PAGE TITLE & BREADCRUMB-->
+		</div>
+	</div>
+	<!-- END PAGE HEADER-->
+	<!-- BEGIN PAGE CONTENT-->
+	<div class="row-fluid">
+		<div class="span12">
+			<!-- BEGIN EXAMPLE TABLE PORTLET-->
+			<div class="portlet box blue">
+				<div class="portlet-title">
+					<div class="caption">
+						<i class="icon-edit"></i>专题页管理
+					</div>
+					<div class="tools">
+						<a href="javascript:;" class="collapse"></a> <a
+							href="#portlet-config" data-toggle="modal" class="config"></a> <a
+							href="javascript:;" class="reload"></a> <a href="javascript:;"
+							class="remove"></a>
+					</div>
+				</div>
+				<div class="portlet-body">
+					<div class="clearfix">
+						<div class="btn-group">
+							<button id="add_collections_btn" class="btn green" data-toggle="modal" data-target="#add-collections-modal">
+								添加新专题页 <i class="icon-plus"></i>
+							</button>
+						</div>
+					</div>
+					<div id="sample_editable_1_wrapper"
+						class="dataTables_wrapper form-inline" role="grid">
+						<div class="row-fluid">
+							<div class="span6">
+								<div id="sample_editable_1_length" class="dataTables_length">
+								</div>
+							</div>
+						</div>
+						<table class="table table-striped table-hover table-bordered"
+							id="advertising_table">
+							<thead>
+								<tr>
+									<th>标题</th>
+									<th>类型</th>
+									<th>Html地址</th>
+									<th>语言</th>
+									<th>站点</th>
+									<th>是否显示</th>
+									<th>创建人</th>
+									<th>创建时间</th>
+								</tr>
+							</thead>
+							<tbody>
+								@vo.getList().map{e=>
+
+								<tr class="" id="@e.getIid()">
+
+									<td>@e.getCtitle()</td>
+									<td>@e.getCtype()</td>
+									<td>@e.getChtmlurl()</td>
+									<td>@langMap.get(e.getIlanguageid()).getCname()</td>
+									<td>@siteMap.get(e.getIwebsiteid()).getCurl()</td>
+									<td>@e.getBshow()</td>
+									<td>@e.getIcreateuserid()</td>
+									<td>@services.base.utils.DateFormatUtils.getStrFromYYYYMMDDHHMMSS(e.getDcreatedate())</td>
+									<td>
+										<a class="editCollections" data-toggle="modal" data-target="#edit-collections-modal" href="@controllers.manager.routes.Collections.edit(e.getIid())">
+											<i class="icon-pencil"></i>
+										</a>
+									</td>
+									<td>
+										<a class="deleteCollections" href="@controllers.manager.routes.Collections.delete(e.getIid())" data-id="@e.getIid()">
+											<i class="icon-trash"></i>
+										</a>
+									</td>
+								</tr>
+								}
+							</tbody>
+						</table>
+						<div class="row-fluid">
+							<div class="span6">
+								<div class="dataTables_info" id="sample_editable_1_info">当前第@vo.pageNo()页|共@vo.totalPages()页</div>
+							</div>
+							<div class="span6">
+								<div class="dataTables_paginate paging_bootstrap pagination">
+									@if(vo.totalPages()>1){
+									<ul>
+										@if(1 == vo.pageNo()){
+										<li class="disabled"><a href="javascript:;">«</a></li>
+										}else{
+										<li><a href="@controllers.manager.routes.Collections.manager(vo.pageNo()-1)">«</a></li>
+										}
+										@for(i <- vo.pageNo() - 5 to vo.pageNo() + 5 if i > 0 ; if i <=vo.totalPages()) {
+											@if(i == vo.pageNo()){
+											<li class="disabled"><a href="javascript:;">@i</a></li>
+											}else{
+											<li><a href="@controllers.manager.routes.Collections.manager(i)">@i</a></li>
+											}
+										}
+										@if(vo.pageNo() >= vo.totalPages()){
+										<li class="disabled"><a href="javascript:;">»</a></li>
+										}else{
+										<li><a href="@controllers.manager.routes.Collections.manager(vo.pageNo()+1)">»</a></li>
+										}
+									</ul>
+									}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- END EXAMPLE TABLE PORTLET-->
+			</div>
+		</div>
+		<!-- END PAGE CONTENT -->
+		<div id="edit-collections-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			@form(controllers.manager.routes.Collections.save(), 'class->"form-horizontal", 'enctype->"multipart/form-data", 'id->"editCollectionsForm"){
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h3 id="myModalLabel">编辑专题页</h3>
+				</div>
+				<div class="modal-body">
+				</div>
+				<div class="modal-footer" style="margin-bottom: -20px;">
+					<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+					<button class="btn blue" id="add-collections-btn">保存</button>
+				</div>
+			}
+		</div>
+		
+		<div id="add-collections-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			@form(controllers.manager.routes.Collections.save(), 'class->"form-horizontal", 'enctype->"multipart/form-data", 'id->"addCollectionsForm"){
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+					<h3 id="myModalLabel">添加专题页</h3>
+				</div>
+				<div class="modal-body">
+					<div class="modal-body">
+						<div class="control-group">
+							<label class="control-label">标题</label>
+							<div class="controls">
+								<input type="text" name="ctitle" placeholder="标题" class="m-wrap medium span6">
+							</div>
+						</div>
+					</div>
+					<div class="modal-body">
+						<div class="control-group">
+							<label class="control-label">类型</label>
+							<div class="controls">
+								<input type="text" name="ctype" placeholder="类型" class="m-wrap medium span6">
+							</div>
+						</div>
+					</div>
+					<div class="modal-body">
+						<div class="control-group">
+							<label class="control-label">Html文件</label>
+							<div class="controls">
+								<input type="file" name="html" accept=".html">
+							</div>
+						</div>
+					</div>
+					<div class="modal-body">
+						<div class="control-group">
+							<label class="control-label">Html文件路径</label>
+							<div class="controls">
+								<input type="text" name="chtmlurl" value="">
+							</div>
+						</div>
+					</div>
+					<div class="modal-body">
+						<div class="control-group">
+							<label class="control-label">图片</label>
+							<div class="controls">
+								<input type="file" name="cimage" placeholder="图片" class="isImage" accept="image/*">
+							</div>
+						</div>
+					</div>
+					<div class="modal-body">
+						<div class="control-group">
+							<label class="control-label">语言</label>
+							@services.manager.ChooseService.getInstance().language("ilanguageid", null)
+						</div>
+					</div>
+					<div class="modal-body">
+						<div class="control-group">
+							<label class="control-label">站点</label>
+							@services.manager.ChooseService.getInstance().website("iwebsiteid", null, true)
+						</div>
+					</div>
+					<div class="modal-body">
+						<div class="control-group">
+							<label class="control-label">是否显示</label>
+							@services.manager.ChooseService.getInstance().yesOrNo("bshow", null)
+						</div>
+					</div>
+					<div class="modal-body">
+						<div class="control-group">
+							<label class="control-label">日期</label>
+							<div class="controls">
+								<input id="dcreatedate" type="text" name="dcreatedate" class="isImage">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer" style="margin-bottom: -20px;">
+					<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+					<button class="btn blue" id="add-collections-btn">保存</button>
+				</div>
+			}	
+		</div>
+	</div>
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+	<script src="@controllers.manager.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.manager.routes.Assets.at("js/manager/mcollections")" ></script>
+}
+}

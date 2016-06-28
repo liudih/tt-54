@@ -1,0 +1,73 @@
+@(bi: valueobjects.order_api.OrderItem,
+	currency: dto.Currency)
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+<ul class="cartListUL oneS">
+	<input type="hidden" class="listingId" value="@bi.getClistingid()"/>
+    <li class="cartListLI">
+        <a class="rightThis" href="javascript:;"></a>
+        <a class="inBlock pro_img" href="@if(bi.getCurl()!=null){@controllers.product.routes.Product.view(bi.getCurl())}">
+        	@img(bi.getCimageurl(), null, 120, 120, null)
+        </a>
+        <div class="inBlock pro_info">
+            <a href="@if(bi.getCurl()!=null){@controllers.product.routes.Product.view(bi.getCurl())}">
+            	@if(bi.getCtitle()!=null && bi.getCtitle().length()>100){
+            		@bi.getCtitle().substring(0,100)...
+            	}else{
+            		@bi.getCtitle()
+            	}
+            </a>
+            <p class="parameter"><span>@Messages("sku") @bi.getSku()</span>
+	            <span>
+	            	@if(null !=bi.getAttributeMap){
+	            		@bi.getAttributeMap.map{ j=>
+	            		    @if(null != j._1 && j._1.length>0){@j._1.substring(0,1).toUpperCase@j._1.substring(1)}
+	            		    : @j._2 &nbsp;
+	            		}
+	            	}
+		         </span>
+	        </p>
+        </div>
+        <div class="inBlock pro_price">
+        <p class="newPrice">@currency.getCsymbol <span>@Utils.money(bi.getUnitPrice())</span></p>
+        </div>
+
+		<ul class="qty_num inBlock" style="text-align:center;">
+			<li class="qty_nums">@bi.getIqty()</li>
+		</ul>
+        <span class="pro_total inBlock" data="@bi.getClistingid">@currency.getCsymbol <span>@Utils.money(bi.getTotalPrice)</span></span>
+    </li>
+	@if(bi.getChildList().size()>1){
+    <li class="cartListToge">
+    	<p class="listTogeTitle">@Messages("frequently.buy.together")<i></i></p>
+    	@bi.getChildList().filter(!_.getBismain()).map{ k =>
+    	<input type="hidden" class="listingId" value="@k.getClistingid()"/>
+    	<ol class="list01_bd" flag="@k.getCid()_@k.getClistingid">
+            <a class="inBlock pro_img" href="@if(k.getCurl()!=null){@controllers.product.routes.Product.view(k.getCurl())}">
+            @img(k.getCimageurl(), null, 120, 120, null)</a>
+            <div class="inBlock pro_info">
+                <a href="@if(k.getCurl()!=null){@controllers.product.routes.Product.view(k.getCurl())}">@k.getCtitle()</a>
+                <p class="parameter"><span>@Messages("sku") @k.getSku()</span>
+	                 <span>
+		            	@if(null !=k.getAttributeMap){
+		            		@k.getAttributeMap.map{ j=>
+		            		    @if(null != j._1 && j._1.length>0){@j._1.substring(0,1).toUpperCase@j._1.substring(1)}
+		            		    : @j._2 &nbsp;
+		            		}
+		            	}
+			         </span>
+		         </p>
+            </div>
+            <div class="inBlock pro_price">
+            <p class="newPrice">@currency.getCsymbol <span>@Utils.money(k.getUnitPrice())</span></p>
+            </div>
+            <ul class="qty_num inBlock">
+                <li class="qty_nums">@(k.getIqty()*bi.getIqty())</li>
+            </ul>
+            <span class="pro_total inBlock" data="@k.getClistingid">@currency.getCsymbol <span>@Utils.money(k.getTotalPrice()*bi.getIqty())</span></span>
+        </ol>
+        }
+    </li>
+    }
+</ul>

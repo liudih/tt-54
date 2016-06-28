@@ -1,0 +1,921 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+
+	<changeSet author="reason" id="t_integral_behavior-create">
+		<createTable tableName="t_integral_behavior" remarks="积分行为表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点id" />
+			<column name="cname" type="VARCHAR(40)" remarks="行为名称" />
+			<column name="iintegral" type="INTEGER" remarks="积分" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_member_integral_history-create">
+		<createTable tableName="t_member_integral_history"
+			remarks="用户积分获取表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="cemail" type="VARCHAR(80)" remarks="用户邮箱" />
+			<column name="cdotype" type="VARCHAR(60)" remarks="行为类型" />
+			<column name="iintegral" type="INTEGER" remarks="积分" />
+			<column name="cremark" type="VARCHAR(2000)" remarks="备注" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_integral_use_rule-create">
+		<createTable tableName="t_integral_use_rule" remarks="用户使用规则表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="imembergroupid" type="INTEGER" remarks="用户分组id" />
+			<column name="iintegral" type="INTEGER" remarks="积分" />
+			<column name="fmoney" type="FLOAT" remarks="金额" />
+			<column name="ccurrency" type="VARCHAR(100)" remarks="货币" />
+			<column name="imaxuse" type="INTEGER" remarks="每单最多使用" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_coupon_type-create">
+		<createTable tableName="t_coupon_type" remarks="购物卷类型表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ctype" type="VARCHAR(60)" remarks="购物卷类型" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_coupon_rule-create">
+		<createTable tableName="t_coupon_rule" remarks="购物卷规则表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="itype" type="INTEGER" remarks="购物卷类型id" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_coupon_base-create">
+		<createTable tableName="t_coupon_base" remarks="购物卷基础表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="imemberid" type="INTEGER" remarks="用户编号" />
+			<column name="ccode" type="VARCHAR(60)" remarks="购物卷号码" />
+			<column name="fparvalue" type="FLOAT" remarks="面值" />
+			<column name="ccurrency" type="VARCHAR(100)" remarks="货币名称: e.g. EUR" />
+			<column name="cremark" type="VARCHAR(2000)" remarks="备注" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="denddate" type="DATETIME" remarks="有效期" />
+			<column name="istatus" type="INTEGER" defaultValue="0"
+				remarks="状态(0未使用、1锁定中、2已使用)" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_member_consume_code-create">
+		<createTable tableName="t_member_consume_code" remarks="用户消费卷表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="cemail" type="VARCHAR(80)" remarks="用户邮箱" />
+			<column name="ccode" type="VARCHAR(80)" remarks="消费码" />
+			<column name="ffacevalue" type="FLOAT" remarks="面值" />
+			<column name="cremark" type="VARCHAR(2000)" remarks="备注" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_memeber_edm-create">
+		<createTable tableName="t_member_edm" remarks="edm订阅表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="cemail" type="VARCHAR(80)" remarks="用户邮箱" />
+			<column name="icategoty" type="INTEGER" remarks="订阅品类" />
+			<column name="benabled" type="BOOL" remarks="是否启用" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_bulk-create">
+		<createTable tableName="t_bulk" remarks="用户分组享有的批发表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="igroupid" type="INTEGER" remarks="用户分组">
+				<constraints nullable="false" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="SiteID">
+				<constraints nullable="false" />
+			</column>
+			<column name="cremark" type="VARCHAR(2000)" remarks="备注" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="denddate" type="DATETIME" remarks="有效期" />
+			<column name="istatus" type="INTEGER" defaultValue="0"
+				remarks="状态(0未生效、1已生效)" />
+		</createTable>
+		<createTable tableName="t_bulk_rate" remarks="批发优惠明细">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ibulkid" type="INTEGER" remarks="外键－批发表ID">
+				<constraints nullable="false" />
+			</column>
+			<column name="iqty" type="INTEGER" remarks="购买数量大于这个数量，这一行的折扣就会生效">
+				<constraints nullable="false" />
+			</column>
+			<column name="fdiscount" type="FLOAT" remarks="折扣：0.1代表百分之十的折扣">
+				<constraints nullable="false" />
+			</column>
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+		<addForeignKeyConstraint constraintName="fk_t_bulk_rate_ibulkid"
+			baseTableName="t_bulk_rate" baseColumnNames="ibulkid"
+			referencedTableName="t_bulk" referencedColumnNames="iid" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_activity_plan_base-create">
+		<createTable tableName="t_activity_plan_base" remarks="活动计划表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="cdotype" type="VARCHAR(30)" remarks="行为类型" />
+			<column name="cawardtype" type="VARCHAR(30)" remarks="奖励类型" />
+			<column name="ctitle" type="VARCHAR(600)" remarks="活动名称(多语言)" />
+			<column name="crule" type="VARCHAR(1200)" remarks="奖励规则" />
+			<column name="benabled" type="BOOL" remarks="是否启用" />
+			<column name="dbegindate" type="DATETIME" remarks="活动开始时间" />
+			<column name="denddate" type="DATETIME" remarks="活动结束时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_activity_do_type-create">
+		<createTable tableName="t_activity_do_type" remarks="活动类型表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cname" type="VARCHAR(50)" remarks="类型名称" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+
+
+	<changeSet author="liquibase-docs" id="dropTable-example">
+		<dropTable cascadeConstraints="true" schemaName="public"
+			tableName="t_activity_do_type" />
+
+		<createTable tableName="t_activity_do_type" remarks="活动类型表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cname" type="VARCHAR(150)" remarks="类型名称" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+
+
+
+	<changeSet author="reason" id="t_activity_dotype_rule_element_-create">
+		<createTable tableName="t_activity_dotype_rule_element"
+			remarks="活动类型规则元素表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cdotype" type="VARCHAR(30)" remarks="行为类型" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="cshowname" type="VARCHAR(30)" remarks="元素名称" />
+			<column name="creplacename" type="VARCHAR(30)" remarks="元素名称" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_activity_award_type-create">
+		<createTable tableName="t_activity_award_type" remarks="奖励类型表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cname" type="VARCHAR(30)" remarks="类型名称" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+
+	<changeSet author="reason" id="t_order_coupon-create">
+		<createTable tableName="t_order_coupon" remarks="订单购物卷消费记录表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ccode" type="VARCHAR(60)" remarks="购物卷号码" />
+			<column name="fparvalue" type="FLOAT" remarks="面值" />
+			<column name="istatus" type="INTEGER" defaultValue="0"
+				remarks="状态(0未使用、1锁定中、2已使用)" />
+			<column name="iorderid" type="INTEGER" remarks="订单编号" />
+			<column name="cemail" type="VARCHAR(40)" remarks="使用人" />
+			<column name="dusedate" type="DATETIME" defaultValue="now()"
+				remarks="使用时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="ljh" id="t_order_points-create">
+		<createTable tableName="t_order_points" remarks="订单积分消费记录表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ipointsid" type="INTEGER" remarks="积分记录ID" />
+			<column name="fparvalue" type="FLOAT" remarks="面值" />
+			<column name="istatus" type="INTEGER" defaultValue="0"
+				remarks="状态(0未使用、1锁定中、2已使用)" />
+			<column name="iorderid" type="INTEGER" remarks="订单编号" />
+			<column name="cemail" type="VARCHAR(40)" remarks="使用人" />
+			<column name="dusedate" type="DATETIME" defaultValue="now()"
+				remarks="使用时间" />
+		</createTable>
+	</changeSet>
+
+
+	<changeSet author="reason" id="t_campaign_type-create">
+		<createTable tableName="t_campaign_type" remarks="活动类型表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cname" type="VARCHAR(50)" remarks="类型名称" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_campaign_base-create">
+		<createTable tableName="t_campaign_base" remarks="活动主表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="cdotype" type="VARCHAR(30)" remarks="行为类型" />
+			<column name="cawardtype" type="VARCHAR(30)" remarks="奖励类型" />
+			<column name="ctitle" type="VARCHAR(600)" remarks="活动名称" />
+			<column name="benabled" type="BOOL" remarks="是否启用" />
+			<column name="dbegindate" type="DATETIME" remarks="活动开始时间" />
+			<column name="denddate" type="DATETIME" remarks="活动结束时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_campaign_condition-create">
+		<createTable tableName="t_campaign_condition" remarks="活动条件表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icampaignid" type="INTEGER" remarks="活动编号" />
+			<column name="cawardtype" type="VARCHAR(30)" remarks="奖励类型" />
+			<column name="ctitle" type="VARCHAR(600)" remarks="活动名称(多语言)" />
+			<column name="crule" type="VARCHAR(1200)" remarks="奖励规则" />
+			<column name="benabled" type="BOOL" remarks="是否启用" />
+			<column name="dbegindate" type="DATETIME" remarks="活动开始时间" />
+			<column name="denddate" type="DATETIME" remarks="活动结束时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_coupon_type-data">
+		<loadData tableName="t_coupon_type" file="init/t_coupon_type.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="fcl" id="t_activity_do_type-data">
+		<loadData tableName="t_activity_do_type" file="init/t_activity_do_type.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_activity_plan_base-test"
+		context="test">
+		<loadData tableName="t_activity_plan_base" file="samples/t_activity_plan_base.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_activity_award_type-test"
+		context="test">
+		<loadData tableName="t_activity_award_type" file="samples/t_activity_award_type.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_activity_do_type-test"
+		context="test">
+		<loadData tableName="t_activity_do_type" file="samples/t_activity_do_type.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_activity_dotype_rule_element-test"
+		context="test">
+		<loadData tableName="t_activity_dotype_rule_element"
+			file="samples/t_activity_dotype_rule_element.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_integral_behavior-test"
+		context="test">
+		<loadData tableName="t_integral_behavior" file="samples/t_integral_behavior.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="ljh" id="t_coupon_base-test" context="test">
+		<loadData tableName="t_coupon_base" file="samples/t_coupon_base.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="ljh" id="t_member_integral_history-test"
+		context="test">
+		<loadData tableName="t_member_integral_history" file="samples/t_member_integral_history.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="ljh" id="t_integral_use_rule-test"
+		context="test">
+		<loadData tableName="t_integral_use_rule" file="samples/t_integral_use_rule.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_bulk_-test-data" context="test">
+		<loadData tableName="t_bulk" file="samples/t_bulk.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_bulk_rate" file="samples/t_bulk_rate.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_bulk_rate-grossprofit-20150317">
+		<addColumn tableName="t_bulk_rate">
+			<column name="fgrossprofit" type="FLOAT" remarks="相对成本价的毛利率设置">
+				<constraints nullable="true" />
+			</column>
+		</addColumn>
+		<dropNotNullConstraint tableName="t_bulk_rate"
+			columnName="fdiscount" />
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_promo_code-create-20150327">
+		<createTable tableName="t_promo_code" remarks="推广码规则">
+			<column name="ccode" type="VARCHAR(20)" remarks="主键：推广码">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="crules" type="VARCHAR(1000)" remarks="RuleID (CSV)" />
+			<column name="cactions" type="VARCHAR(1000)" remarks="ActionID (CSV)" />
+			<column name="cruleparams" type="TEXT" remarks="Rule Params in JSON" />
+			<column name="cactionparams" type="TEXT" remarks="Action Params in JSON" />
+			<column name="dbegindate" type="DATETIME" remarks="有效时间" />
+			<column name="denddate" type="DATETIME" remarks="有效时间" />
+			<column name="dcreateuser" type="VARCHAR(20)" remarks="创建用户" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_promo_code-test_data-20150327"
+		context="test">
+		<loadData tableName="t_promo_code" file="samples/t_promo_code.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="liudi" id="t_memeber_edm-rename_column-20150401">
+		<renameColumn catalogName="cat" columnDataType="int"
+			newColumnName="ccategory" oldColumnName="icategoty" remarks="category name"
+			schemaName="public" tableName="t_member_edm" />
+	</changeSet>
+
+	<changeSet author="liudi" id="t_memeber_edm-modify_data_type-20150401">
+		<modifyDataType catalogName="cat" columnName="ccategory"
+			newDataType="VARCHAR(300)" schemaName="public" tableName="t_member_edm" />
+	</changeSet>
+
+	<changeSet author="lij"
+		id="t_member_integral_history-istatus-20150415">
+		<addColumn tableName="t_member_integral_history">
+			<column name="istatus" type="INTEGER" defaultValue="1"
+				remarks="审核状态(0未审、1通过、2未通过)" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="Reason" id="t_campaign_product_map-create">
+		<createTable tableName="t_campaign_product_map" remarks="活动产品对应表(用以删除listing)">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icampaignid" type="INTEGER" remarks="活动编号" />
+			<column name="clistingid" type="VARCHAR(40)" remarks="产品编号" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="chris"
+		id="t_member_integral_history-added_csource_column-20150507">
+		<addColumn tableName="t_member_integral_history">
+			<column name="csource" type="VARCHAR(200)" remarks="积分来源" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="Chris" id="t_integral_type-create-20150518">
+		<createTable tableName="t_integral_type" remarks="积分类型表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iintegral" type="INTEGER" remarks="积分" />
+			<column name="ctypename" type="VARCHAR(100)" remarks="类型名称" />
+			<column name="bneedcheck" type="BOOL" defaultValue="false"
+				remarks="是否需要审核0否， 1是" />
+			<column name="icreator" type="INTEGER" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="xiaoch" id="t_coupon_rule-add-column-20150515">
+		<addColumn tableName="t_coupon_rule">
+			<column name="cname" type="VARCHAR(200)" remarks="规则名称" />
+			<column name="iwebsiteid" type="INT" remarks="website id" />
+			<column name="ccurrency" type="INT" remarks="币种" />
+			<column name="fcouponamount" type="FLOAT" remarks="coupon金额" />
+			<column name="forderamount" type="FLOAT" remarks="订单金额高于多少方能使用" />
+			<column name="forderamountlimit" type="FLOAT" remarks="每笔订单能使用的coupon金额" />
+			<column name="iusetimes" type="INT" remarks="使用次数" />
+			<column name="bstatus" type="BOOL" remarks="状态(0 禁用,1 可用)"
+				defaultValue="0" />
+			<column name="bbindid" type="BOOL" remarks="是否绑定账号(0否，1是)"
+				defaultValue="1" />
+			<column name="cdescription" type="VARCHAR(200)" remarks="描述" />
+			<column name="startdate" type="DATETIME" remarks="使用期限开始时间" />
+			<column name="enddate" type="DATETIME" remarks="使用期限结束时间" />
+			<column name="icreator" type="INT" remarks="创建人ID" />
+		</addColumn>
+		<dropColumn tableName="t_coupon_rule">
+			<column name="ccreateuser"></column>
+		</dropColumn>
+	</changeSet>
+
+	<changeSet author="xiaoch" id="t_coupon_code-create">
+		<createTable tableName="t_coupon_code" remarks="coupon code">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icouponruleid" type="INTEGER" remarks="规则id" />
+			<column name="ccode" type="VARCHAR(15)" remarks="coupon code" />
+			<column name="dcreatedate" type="DATETIME" remarks="创建时间"
+				defaultValue="now()" />
+			<column name="icreator" type="INTEGER" remarks="创建人id" />
+		</createTable>
+		<addUniqueConstraint catalogName="code"
+			columnNames="ccode" constraintName="t_coupon_code_uniccode"
+			deferrable="true" disabled="true" initiallyDeferred="true"
+			schemaName="public" tableName="t_coupon_code" />
+	</changeSet>
+
+	<changeSet author="lijun" id="create-table-t_member_coupon">
+		<createTable tableName="t_member_coupon">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点ID" />
+			<column name="cemail" type="VARCHAR(100)" remarks="会员邮箱" />
+			<column name="iruleid" type="INTEGER" remarks="规则的id" />
+			<column name="icodeid" type="INTEGER" remarks="code id" />
+			<column name="itype" type="INTEGER" remarks="类型" />
+			<column name="istatus" type="INTEGER" remarks="状态 0未使用 1锁定中 2已使用" />
+			<column name="icreator" type="INTEGER" remarks="创建人id" />
+			<column name="dcreatedate" type="DATETIME" remarks="创建时间" />
+			<column name="cmodifierid" type="INTEGER" remarks="修改人id" />
+			<column name="cmodifydate" type="DATETIME" remarks="修改时间" />
+			<column name="iparentid" type="INTEGER" remarks="父节点id" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="xiaoch" id="t_coupon_rule-add-column-20150602">
+		<addColumn tableName="t_coupon_rule">
+			<column name="iloginterminal" type="VARCHAR(50)" remarks="登录终端ID" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="xiaoch" id="t_coupon_rule-add-data-20150525">
+		<loadData tableName="t_coupon_rule" file="samples/t_coupon_rule-20150525.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xiaoch" id="t_coupon_rule_categoryfilter-create">
+		<createTable tableName="t_coupon_rule_categoryfilter"
+			remarks="coupon rule商品类型过滤表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icategoryid" type="INTEGER" remarks="商品类型id" />
+			<column name="iruleid" type="INTEGER" remarks="coupon 规则 id" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_member_coupon-modify-cemail-size" author="lijun">
+		<modifyDataType tableName="t_member_coupon" columnName="cemail"
+			newDataType="VARCHAR(8000)" />
+	</changeSet>
+
+	<changeSet author="chris" id="t_member_sign-create-20150525">
+		<createTable tableName="t_member_sign" remarks="会员签到表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点 ID" />
+			<column name="cemail" type="VARCHAR(100)" remarks="会员邮箱" />
+			<column name="isigncount" type="INTEGER" remarks="签到次数" />
+			<column name="dlastsigndate" type="DATETIME" remarks="最近一次签到时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="chris" id="t_member_sign_rule-create-20150525">
+		<createTable tableName="t_member_sign_rule" remarks="会员签到规则表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icount" type="INTEGER" remarks="签到天数" />
+			<column name="integral" type="INTEGER" remarks="积分" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="chris" id="t_member_sign_rule-add-init-data-20150529">
+		<loadData tableName="t_member_sign_rule" file="init/t_member_sign_rule-2015-05-29.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xiaoch" id="t_coupon_code-add-column-20150603">
+		<addColumn tableName="t_coupon_code">
+			<column name="iusestatus" type="INTEGER" remarks="使用状态" />
+		</addColumn>
+	</changeSet>
+	
+	<changeSet author="xiaoch" id="t_coupon_type-update-data-20150604">
+		<delete tableName="t_coupon_type">
+			<where>iid = 3</where>
+		</delete>
+		<loadUpdateData tableName="t_coupon_type"
+			file="init/t_coupon_type-20150604.csv" primaryKey="iid"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	
+	<changeSet author="xiaoch" id="t_coupon_rule-modify_data_type-20150604">
+		<dropColumn tableName="t_coupon_rule">
+			<column name="bstatus"></column>
+			<column name="forderamount"></column>
+			<column name="iusetimes"></column>
+		</dropColumn>
+		<addColumn tableName="t_coupon_rule">
+			<column name="ivalidity" type="INTEGER" remarks="有效期(单位:天)" />
+			<column name="istatus" type="INTEGER" remarks="规则状态" defaultValueComputed="0" />
+			<column name="fdiscount" type="FLOAT" remarks="折扣(单位:%)" />
+			<column name="ctimetype" type="VARCHAR(10)" remarks="时间类型" />
+			<column name="cproducttype" type="VARCHAR(100)" remarks="商品类型" />
+ 		</addColumn>
+ 	</changeSet>
+ 	
+ 	<changeSet author="xiaoch" id="t_cart_coupon-create-20150612">
+		<createTable tableName="t_cart_coupon" remarks="购物卷消费记录表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ccode" type="VARCHAR(60)" remarks="购物卷号码" />
+			<column name="istatus" type="INTEGER" defaultValue="0"
+				remarks="状态(0未使用、1锁定中、2已使用)" />
+			<column name="ccartid" type="VARCHAR(100)" remarks="购物车编号" />
+			<column name="cemail" type="VARCHAR(40)" remarks="使用人" />
+			<column name="dusedate" type="DATETIME" defaultValue="now()"
+				remarks="使用时间" />
+		</createTable>
+	</changeSet>
+ 	
+ 	<changeSet author="xiaoch" id="t_coupon_rule-modify_data-20150617">
+		<dropColumn tableName="t_coupon_rule">
+			<column name="bbindid"></column>
+			<column name="iwebsiteid"></column>
+		</dropColumn>
+		<addColumn tableName="t_coupon_rule">
+			<column name="cwebsiteid" type="VARCHAR(300)" remarks="站点id" />
+ 		</addColumn>
+ 	</changeSet>
+ 	
+ 	<changeSet author="xiaoch" id="t_coupon_rule-update-data-20150619">
+		<loadUpdateData tableName="t_coupon_rule"
+			file="init/t_coupon_rule-20150619.csv" primaryKey="iid"
+			relativeToChangelogFile="true">
+		</loadUpdateData>
+	</changeSet>
+	
+	<changeSet author="xiaoch" id="t_coupon_rule-drop_column-20150622">
+		<dropColumn tableName="t_coupon_rule">
+			<column name="iloginterminal"></column>
+		</dropColumn>
+ 	</changeSet>
+ 	
+	<changeSet author="lijun" id="t_coupon_cart-add_column-20150623">
+		<addColumn tableName="t_cart_coupon">
+		<column name="iorderid" type="INTEGER"></column>
+		<column name="cordernumber" type="VARCHAR(100)"></column>
+		</addColumn>
+ 	</changeSet>
+ 	
+ 	<changeSet id="t_coupon_base-add-iruleid-column" author="lijun">
+ 		<addColumn tableName="t_coupon_base">
+ 			<column name="iruleid" type="INTEGER"></column>
+ 		</addColumn>
+ 	</changeSet>
+ 	
+ 	<changeSet id="t_order_coupon-add-cordernumber-column" author="lijun">
+ 		<addColumn tableName="t_order_coupon">
+ 			<column name="cordernumber" type="VARCHAR(100)"></column>
+ 		</addColumn>
+ 	</changeSet>
+ 	<changeSet id="t_coupon_base-add-add-primarykey" author="lijun">
+ 		<addUniqueConstraint tableName="t_coupon_base" columnNames="ccode"/>
+ 	</changeSet>
+ 	
+ 	<changeSet id="t_coupon_base-delete-ccode-primarykey" author="lijun">
+ 		<dropUniqueConstraint tableName="t_coupon_base" constraintName="t_coupon_base_ccode_key"/>
+ 	</changeSet>
+ 	<changeSet id="t_coupon_base-modify-primarykey" author="lijun">
+ 		<addUniqueConstraint tableName="t_coupon_base" columnNames="ccode,iwebsiteid"/>
+ 	</changeSet>
+ 	
+ 	<changeSet author="wzx" id="t_collect_customer_share-create-1">
+		<createTable tableName="t_collect_customer_share"
+			remarks="收集客户分享">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cemail" type="VARCHAR(80)" remarks="邮箱"  defaultValue="-"/>
+			<column name="cshare" type="VARCHAR(1500)" remarks="分享类容"  defaultValue="-"/>
+			<column name="curl" type="VARCHAR(300)" remarks="用户分享链接地址"  defaultValue="-"/>
+			<column name="ctype" type="VARCHAR(300)" remarks="用户所在当前页面地址"  defaultValue="-"/>
+			<column name="ccountry" type="VARCHAR(15)" remarks="国家"  defaultValue="-"/>
+			<column name="ccreateruser" type="VARCHAR(20)" remarks="用户"  defaultValue="-"/>
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="dupdatedate"  type="DATETIME" defaultValue="now()"
+				remarks="更新时间" />
+		</createTable>
+	</changeSet>
+ 	<changeSet id="t_coupon_rule-add-useterminal-column" author="xiaoch">
+ 		<addColumn tableName="t_coupon_rule">
+ 			<column name="cuseterminal" type="VARCHAR(20)" remarks="允许使用的终端"></column>
+ 			<column name="csku" type="VARCHAR(2000)" remarks="限制使用指定的sku商品"></column>
+ 		</addColumn>
+ 	</changeSet>
+ 	<changeSet author="wzx" id="t_collect_customer_share-20150923001">
+		<dropColumn tableName="t_collect_customer_share">
+			<column name="cshare"></column>
+		</dropColumn>
+ 	</changeSet>
+ 	
+ 	<!-- 2015/10/05 添加这样主题所用到的表，共6张-->
+ 	<changeSet id="t_theme_css-create" author="liulj">
+ 		<createTable tableName="t_theme_css" remarks="主题样式表">
+ 			<column name="iid" type="INTEGER" autoIncrement="true" remarks="主键">
+ 				<constraints nullable="false" primaryKey="true"/>
+ 			</column>
+ 			<column name="cvalue" type="VARCHAR(8000)" remarks="样式的值">
+ 				<constraints nullable="false"/>
+ 			</column>
+ 			<column name="cname" type="VARCHAR(200)"  remarks="样式模块的名字">
+ 				<constraints nullable="false"/>
+ 			</column>
+ 			<column name="ccreateuser" type="VARCHAR(30)" remarks="创建人" defaultValue="-"></column>
+ 			<column name="dcreatedate" type="DATETIME"  defaultValue="now()" remarks="创建时间"></column>
+ 			<column name="cupdateuser" type="VARCHAR(30)" remarks="修改人" defaultValue="-"></column>
+ 			<column name="dupdatedate" type="DATETIME"  defaultValue="now()" remarks="修改时间"></column> 			
+ 		</createTable>
+ 	</changeSet>
+ 	<changeSet id="t_theme-create" author="liulj">
+ 		<createTable tableName="t_theme" remarks="主题表">
+ 			<column name="iid" type="INTEGER" autoIncrement="true" remarks="主键">
+ 				<constraints nullable="false" primaryKey="true"/>
+ 			</column>
+ 			<column name="curl" type="VARCHAR(200)" remarks="专题的请求url">
+ 				<constraints nullable="false"/>
+ 			</column>
+ 			<column name="cbannerurl" type="VARCHAR(500)" remarks="广告url"></column>
+ 			<column name="icssid" type="INTEGER" remarks="样式模块的id">
+ 				<constraints nullable="false" foreignKeyName="T_THEME_FC_ICSSID"
+ 				 referencedTableName="t_theme_css" referencedColumnNames="iid"/>
+ 			</column>
+ 			<column name="ccreateuser" type="VARCHAR(30)" remarks="创建人" defaultValue="-"></column>
+ 			<column name="dcreatedate" type="DATETIME"  defaultValue="now()" remarks="创建时间"></column>
+ 			<column name="cupdateuser" type="VARCHAR(30)" remarks="修改人" defaultValue="-"></column>
+ 			<column name="dupdatedate" type="DATETIME"  defaultValue="now()" remarks="修改时间"></column>
+ 		</createTable>
+ 	</changeSet>
+ 	<changeSet id="t_theme_title-create" author="liulj">
+ 		<createTable tableName="t_theme_title" remarks="主题标题(支持国际化)">
+ 			<column name="iid" type="INTEGER" autoIncrement="true" remarks="主键">
+ 				<constraints nullable="false" primaryKey="true"/>
+ 			</column>
+ 			<column name="ithemeid" type="INTEGER" remarks="主题的id">
+ 				<constraints nullable="false"  foreignKeyName="T_THEME_TITLE_FC_ITHEMEID"
+ 				 referencedTableName="t_theme" referencedColumnNames="iid"/>
+ 			</column>
+ 			<column name="ctitle" type="VARCHAR(200)" remarks="标题值">
+ 				<constraints nullable="false"/>
+ 			</column>
+ 			<column name="ilanguageid" type="INTEGER" remarks="语言id">
+ 				<constraints nullable="false"/>
+ 			</column>
+ 			<column name="iwebsiteid" type="INTEGER" remarks="站点id">
+ 				<constraints nullable="false"/>
+ 			</column>
+ 		</createTable>
+ 	</changeSet>
+ 	<changeSet id="t_theme_group-create" author="liulj">
+ 		<createTable tableName="t_theme_group" remarks="主题的分组">
+ 			<column name="iid" type="INTEGER" autoIncrement="true" remarks="主键">
+ 				<constraints nullable="false" primaryKey="true"/>
+ 			</column>
+ 			<column name="ithemeid" type="INTEGER" remarks="主题的id">
+ 				<constraints nullable="false"  foreignKeyName="T_THEME_GROUP_FC_ITHEMEID"
+ 				 referencedTableName="t_theme" referencedColumnNames="iid"/>
+ 			</column>
+ 			<column name="isort" type="INTEGER" remarks="排序的位置">
+ 				<constraints nullable="false"/>
+ 			</column>
+ 		</createTable>
+ 	</changeSet>
+ 	<changeSet id="t_theme_group_name-create" author="liulj">
+ 		<createTable tableName="t_theme_group_name" remarks="主题组名字(支持国际化)">
+ 			<column name="iid" type="INTEGER" autoIncrement="true" remarks="主键">
+ 				<constraints nullable="false" primaryKey="true"/>
+ 			</column>
+ 			<column name="igroupid" type="INTEGER" remarks="组id">
+ 				<constraints nullable="false" foreignKeyName="T_THEME_GROUP_NAME_FC_IGROUPID"
+ 				 referencedTableName="t_theme_group" referencedColumnNames="iid"/>
+ 			</column>
+ 			<column name="cname" type="VARCHAR(200)" remarks="组名字">
+ 				<constraints nullable="false"/>
+ 			</column>
+ 			<column name="ilanguageid" type="INTEGER" remarks="语言id">
+ 				<constraints nullable="false"/>
+ 			</column>
+ 			<column name="iwebsiteid" type="INTEGER" remarks="站点id">
+ 				<constraints nullable="false"/>
+ 			</column>
+ 		</createTable>
+ 	</changeSet>
+ 	<changeSet id="t_theme_sku_relation-create" author="liulj">
+ 		<createTable tableName="t_theme_sku_relation" remarks="主题与产品关联表">
+ 			<column name="iid" type="INTEGER" autoIncrement="true" remarks="主键">
+ 				<constraints nullable="false" primaryKey="true"/>
+ 			</column>
+ 			<column name="ithemeid" type="INTEGER" remarks="主题的id">
+ 				<constraints nullable="false"  foreignKeyName="T_THEME_SKU_RELATION_FC_ITHEMEID"
+ 				 referencedTableName="t_theme" referencedColumnNames="iid"/>
+ 			</column>
+ 			<column name="igroupid" type="INTEGER" remarks="组id">
+ 				<constraints nullable="false" foreignKeyName="T_THEME_SKU_RELATION_FC_IGROUPID"
+ 				 referencedTableName="t_theme_group" referencedColumnNames="iid"/>
+ 			</column>
+ 			<column name="csku" type="VARCHAR(30)" remarks="产品sku">
+ 				<constraints nullable="false"/>
+ 			</column>
+ 			<column name="isort" type="INTEGER" remarks="排序的位置">
+ 				<constraints nullable="false"/>
+ 			</column>
+ 		</createTable>
+ 	</changeSet> 
+ 	<changeSet id="t_theme-add-UniqueKey" author="liulj">
+ 		<addUniqueConstraint columnNames="curl" tableName="t_theme"/>
+ 	</changeSet>	
+ 	<changeSet id="t_theme_css-add-UniqueKey" author="liulj">
+ 		<addUniqueConstraint columnNames="cname" tableName="t_theme_css"/>
+ 	</changeSet>
+ 	<changeSet id="t_theme-add-column-2015100701" author="liulj">
+ 		<addColumn tableName="t_theme">
+ 			<column name="ienable" type="INTEGER" defaultValue="0"  remarks="是否启用,0为不启动，1为启动" >
+ 				<constraints nullable="false"/>
+ 			</column>
+ 			<column name="denablestartdate"  type="DATETIME"  defaultValue="now()"  remarks="启用起始时间"></column>
+ 			<column name="denableenddate"  type="DATETIME"  defaultValue="now()"  remarks="启用结束时间"></column>
+ 		</addColumn>
+ 	</changeSet>
+ 	<changeSet id="t_theme_group-add-column-2015100701" author="liulj">
+ 		<addColumn tableName="t_theme_group">
+ 			<column name="curl" type="VARCHAR(255)" remarks="组的跳转url"></column>
+ 		</addColumn>
+ 	</changeSet>	
+ 	
+ 	<changeSet id="t_theme-title-group-delete-column-20151000800" author="liulj">
+ 		<dropColumn tableName="t_theme_title" columnName="iwebsiteid"></dropColumn>
+ 		<dropColumn tableName="t_theme_group_name" columnName="iwebsiteid"></dropColumn>
+ 		<addColumn tableName="t_theme">
+ 			<column name="iwebsiteid" type="INTEGER" remarks="站点id">
+ 				<constraints nullable="false"/>
+ 			</column>
+ 		</addColumn> 		
+ 	</changeSet>	
+ 	<changeSet id="t_theme_title-theme_group_name-drop-notnull-20151000900" author="liulj">
+ 		<dropNotNullConstraint tableName="t_theme_title" columnName="ctitle"/>
+ 		<dropNotNullConstraint tableName="t_theme_group_name" columnName="cname"/> 		
+ 	</changeSet>
+ 	<changeSet id="t_theme_title-group_name-modify-fk-20151000901" author="liulj">
+ 		<dropForeignKeyConstraint baseTableName="t_theme_title" constraintName="T_THEME_TITLE_FC_ITHEMEID"/>
+ 		<dropForeignKeyConstraint baseTableName="t_theme_group" constraintName="T_THEME_GROUP_FC_ITHEMEID"/>
+ 		<dropForeignKeyConstraint baseTableName="t_theme_group_name" constraintName="T_THEME_GROUP_NAME_FC_IGROUPID"/>
+ 		<dropForeignKeyConstraint baseTableName="t_theme_sku_relation" constraintName="T_THEME_SKU_RELATION_FC_ITHEMEID"/>
+ 		<dropForeignKeyConstraint baseTableName="t_theme_sku_relation" constraintName="T_THEME_SKU_RELATION_FC_IGROUPID"/>
+ 		
+ 		<addForeignKeyConstraint constraintName="T_THEME_TITLE_FC_ITHEMEID"  baseColumnNames="ithemeid" baseTableName="t_theme_title" referencedTableName="t_theme" referencedColumnNames="iid" onDelete="CASCADE"/>
+ 		<addForeignKeyConstraint constraintName="T_THEME_GROUP_FC_ITHEMEID"  baseColumnNames="ithemeid" baseTableName="t_theme_group" referencedTableName="t_theme" referencedColumnNames="iid" onDelete="CASCADE"/>
+ 		<addForeignKeyConstraint constraintName="T_THEME_GROUP_NAME_FC_IGROUPID"  baseColumnNames="igroupid" baseTableName="t_theme_group_name" referencedTableName="t_theme_group" referencedColumnNames="iid" onDelete="CASCADE"/>
+ 		<addForeignKeyConstraint constraintName="T_THEME_SKU_RELATION_FC_ITHEMEID"  baseColumnNames="ithemeid" baseTableName="t_theme_sku_relation" referencedTableName="t_theme" referencedColumnNames="iid" onDelete="CASCADE"/>
+ 		<addForeignKeyConstraint constraintName="T_THEME_SKU_RELATION_FC_IGROUPID"  baseColumnNames="igroupid" baseTableName="t_theme_sku_relation" referencedTableName="t_theme_group" referencedColumnNames="iid" onDelete="CASCADE"/>
+ 	</changeSet>
+	<changeSet id="t_theme_css-modify-column2015111200" author="liulj">
+		<modifyDataType tableName="t_theme_css" columnName="cvalue" newDataType="VARCHAR(20000)"/>
+	</changeSet>
+	<changeSet author="xin" id="t_coupon_sku_relation-create">
+		<createTable tableName="t_coupon_sku_relation" remarks="sku对应送coupon表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="csku" type="VARCHAR(50)" remarks="sku" />
+			<column name="ccode" type="VARCHAR(60)" remarks="coupon code" />
+			<column name="isEnabled" type="BOOLEAN" defaultValue="false" remarks="是否启用" />
+			<column name="dcreatedate" type="DATETIME" defaultValueComputed="now()" remarks="创建时间" />
+			<column name="ccreateuser" type="VARCHAR(30)" remarks="创建人" defaultValue="-"></column>
+			<column name="dupdatedate" type="DATETIME" defaultValueComputed="now()" remarks="修改时间" />
+			<column name="cupdateuser" type="VARCHAR(30)" remarks="修改人" defaultValue="-"></column>
+		</createTable>
+	</changeSet>
+	<changeSet id="t_coupon_sku_relation-delete-column-20161000800" author="liuxin">
+ 		<dropColumn tableName="t_coupon_sku_relation" columnName="ccode"></dropColumn>
+ 		<addColumn tableName="t_coupon_sku_relation">
+ 			<column name="iruleid" type="INTEGER" remarks="规则id">
+ 			</column>
+ 		</addColumn> 		
+ 	</changeSet>
+ 	<changeSet id="t_coupon_sku_relation-delete-column-20161000801" author="liuxin">
+ 		<dropColumn tableName="t_coupon_sku_relation" columnName="isEnabled"></dropColumn>
+ 		<addColumn tableName="t_coupon_sku_relation">
+ 			<column name="isenabled" type="BOOLEAN" remarks="是否启用">
+ 			</column>
+ 		</addColumn> 		
+ 	</changeSet>
+</databaseChangeLog>

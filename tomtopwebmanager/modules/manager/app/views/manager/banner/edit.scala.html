@@ -1,0 +1,178 @@
+ @( banner:dto.Banner, websiteChoose:java.util.Collection[dto.Website],
+languges:List[dto.Language] ) @if(banner!=null){
+
+<div class="tabbable tabbable-custom tabbable-full-width edit_custom">
+	<input type="hidden" name="iid" value="@banner.getIid()"> <input
+		type="hidden" name="ilanguageid" value="@banner.getIlanguageid()">
+	<ul class="nav nav-tabs">
+
+		<li class="active"><a href="#tab_edit_1" data-toggle="tab">添加图片</a></li>
+
+		<li class=""><a href="#tab_edit_2" data-toggle="tab">背景设置</a></li>
+
+	</ul>
+
+	<div class="tab-content">
+
+		<div class="tab-pane row-fluid active" id="tab_edit_1">
+			<div class="span6">
+
+				<div class="control-group">
+
+					<label class="control-label">站点</label>
+
+					<div class="controls">
+
+						<select name="iwebsiteid"> @if(websiteChoose!=null &&
+							websiteChoose.size>0){ @for( i<- websiteChoose){
+							@if(i.getIid()==banner.getIwebsiteid){
+							<option value="@i.getIid()" selected="selected">@i.getCcode()</option>
+							}else{
+							<option value="@i.getIid()">@i.getCcode()</option> } } }
+						</select>
+
+
+					</div>
+
+				</div>
+				<div class="control-group">
+
+					<label class="control-label">语言</label>
+
+					<div class="controls">
+						<select name="ilanguageid"> @if(languges!=null
+							&&languges.size>0){ @for( i<- languges){
+							@if(i.getIid==banner.getIlanguageid){
+							<option value="@i.getIid()" selected="selected">@i.getCname()</option>
+							}else{
+							<option value="@i.getIid()">@i.getCname()</option> } } }
+						</select>
+
+
+					</div>
+
+				</div>
+				<div class="control-group">
+
+					<label class="control-label">标题</label>
+
+					<div class="controls">
+
+						<input type="text" name="ctitle" value="@banner.getCtitle()">
+
+					</div>
+
+				</div>
+
+
+				<div class="control-group">
+					<label class="control-label">连接</label>
+					<div class="controls">
+						<input type="text" name="curl" value="@banner.getCurl()" />
+					</div>
+				</div>
+
+
+				<div class="control-group">
+					<label class="control-label">状态</label>
+					<div class="controls" style="margin-left: 200px;">
+						<label class="radio"> <input type="radio" name="bstatus"
+							value="true" @if(banner.getBstatus){checked="checked"} >
+							启用
+						</label> <label class="radio"> <input type="radio" name="bstatus"
+							value="false" @if(!banner.getBstatus){checked="checked"}>
+							禁用
+						</label>
+					</div>
+				</div>
+
+			</div>
+			<div class="span6">
+				<div class="control-group">
+					<label class="control-label">图片</label>
+					<div class="controls">
+						<div class="fileupload fileupload-new" data-provides="fileupload"
+							data-uploadtype="image" data-fnSuccess='fnUploadSuccess'
+							data-fnError='fnUploadError'>
+							<div class="fileupload-new thumbnail">
+								<img src="@controllers.base.routes.Banner.at(banner.getIid)"
+									alt="@banner.getCtitle()" width='500' height='115' />
+							</div>
+							<div class="fileupload-preview fileupload-exists thumbnail"
+								style="max-width: 702px; max-height: 166px; line-height: 20px;">
+							</div>
+							<div>
+								<span class="btn default btn-file"> <span
+									class="fileupload-new"> <i class="fa fa-paper-clip"></i>
+										选择图片
+								</span> <span class="fileupload-exists"> <i class="fa fa-undo"></i>更改
+								</span> <input type="file" name="bfile" class="default" />
+								</span> <a href="#" class="btn red fileupload-exists"
+									data-dismiss="fileupload"><i class="fa fa-trash-o"></i>删除</a>
+							</div>
+							<div id="file-error-msg"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane profile-classic row-fluid" id="tab_edit_2">
+			<div class="span6">
+				<div class="control-group">
+					<label class="control-label">背景图片</label>
+					<div class="controls">
+						<div class="fileupload fileupload-new" data-provides="fileupload"
+							data-uploadtype="image" data-preWidth="300" data-preHeight="150"
+							data-fnSuccess='fnUploadSuccess' data-fnError='fnUploadError'>
+							<div class="fileupload-new thumbnail"  style="height:190px;width: 10px;padding: 0px;border: 0px;">
+								@if(banner.getBhasbgimage){ <img
+									src="@controllers.base.routes.Banner.bgimg(banner.getIid)"
+									width='500' height='115' /> }else{ <img
+									src='@controllers.manager.routes.Assets.at("image/imgbg.gif")'
+									alt="" /> }
+
+							</div>
+							<div class="fileupload-preview fileupload-exists thumbnail"
+								style="max-width: 500px; max-height: 250px; line-height: 20px;">
+							</div>
+							<div>
+								<span class="btn default btn-file"> <span
+									class="fileupload-new"> <i class="fa fa-paper-clip"></i>
+										选择图片
+								</span> <span class="fileupload-exists"> <i class="fa fa-undo"></i>更改
+								</span> <input type="file" name="bbgimagefile" class="default" />
+								</span> <a href="#" class="btn red fileupload-exists"
+									data-dismiss="fileupload"><i class="fa fa-trash-o"></i>删除</a>
+							</div>
+							<div id="file-error-msg"></div>
+						</div>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label"
+						style="display: inline-block; vertical-align: middle;">平铺</label>
+					<div class=""
+						style="display: inline-block; vertical-align: middle;margin-top: 7px;margin-left: 10px;">
+						<input type="checkbox" name="bbgimgtile" @if(banner.getBbgimgtile){checked}   />
+					</div>
+				</div>
+			</div>
+			<div class="span6">
+				<div class="control-group">
+					<label class="control-label">背景颜色</label>
+					<div class="controls">
+						<div style="vertical-align: top; display: inline-block;">
+							<input type="text" name="cbgcolor" id="edit_picker"
+								value='@banner.getCbgcolor'>
+						</div>
+						<div id="edit_previewcolor"
+							style="vertical-align: middle; display: inline-block; height: 30px; width: 30px; background: @banner.getCbgcolor;"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	}

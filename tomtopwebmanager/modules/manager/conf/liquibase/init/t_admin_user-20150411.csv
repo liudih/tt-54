@@ -1,0 +1,3 @@
+iid,cusername,cjobnumber,cpasswd,cemail,cphone,ccreateuser,badmin
+1,reason,224,a2550eeab0724a691192ca13982e6ebd,reason0617@gmail.com,15602902166,reason,true
+2,superuser,225,bf9f8d1f05dc08cc3b02e8fcf2c2ba57,reason0617@gmail.com,15602902166,reason,true

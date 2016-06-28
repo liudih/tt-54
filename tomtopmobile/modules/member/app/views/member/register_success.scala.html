@@ -1,0 +1,13 @@
+@(email :String
+)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+@views.html.base.master{
+		
+	<p class="fon14 textL line18 container" style="font-size:14px; padding:40px 20px;line-height:24px;">Welcome to TOMTOP </br>
+	An activated email has been sent to your email 
+	<span class="blue">@email</span>
+	</br> Please login to your mailbox, and follow the instructions to complete the verification.</p>
+	<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/app_extension.js")'></script>
+	
+}

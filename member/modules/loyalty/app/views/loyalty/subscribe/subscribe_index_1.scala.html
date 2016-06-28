@@ -1,0 +1,8 @@
+@(ctx: play.mvc.Http.Context)
+<div class="emailSub">
+   <form onSubmit="return false;">
+     <input type="text" placeholder="@Messages("enter.your.email.address")" class="subscribeBox" />
+     <input class="blackInput" type="button" value="@Messages("submit")" onclick="sendEmail(this);" />
+   </form>
+</div>
+@subscribe_js_common(ctx)

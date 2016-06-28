@@ -1,0 +1,156 @@
+@(  badge: valueobjects.product.ProductBadge,
+	  scores : Double,
+      pages : valueobjects.base.Page[dto.ReviewsCountList] ,
+      starsWidth : Integer,
+      fList : List[dto.interaction.Foverallrating],
+      otherLogins: List[Html]
+    )
+@import views.html.helper._
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+@views.html.base.master{
+<div class="container">
+@if(badge!=null){
+	<input type="hidden" name="clistingid" value="@badge.getListingId()" />
+			@if(badge.getUrl!=null && badge.getUrl!=""){
+    			@write_review_select(badge.getTitle(),controllers.product.routes.Product.view(badge.getUrl).toString())
+    		}
+            <div class="customerReviews review_list">
+                		<div class="browse_title"><a href="@controllers.product.routes.Product.view(badge.getUrl)">@Messages("back.to.product.page")</a></div>
+                        <ul class="reviewLise_pro">
+                        	<li>@img(badge.getImageUrl(),badge.getTitle(), null, null, null, 'width->150, 'height->150)</li>
+                            <li class="reviewLise_txt">
+                            	<p>@badge.getTitle() </p>
+                            	@if(badge.getPrice!=null){
+                                <p>@Messages("sale.price")<span>@badge.getPrice.getSymbol @Utils.money(badge.getPrice.getUnitPrice)</span></p>
+                                }
+                            </li>
+                        </ul>
+                        
+                        <div class="writeReviews">
+                        	<h6>@Messages("average.customer.review")</h6>
+							<div class="clear"></div>
+                        <div class="leftSTxt">
+                            @views.html.interaction.review.show_review_star.render(starsWidth)
+                             <span class="score">@scores</span> 
+                            (<span class="orange">@pages.totalCount()</span>@Messages("reiews"))
+                        </div>
+							  <div class="clear"></div>
+                        <ul class="startPercentage">
+                        	@fList.map{f => 
+							<li><span class="blue">@f.getType() @Messages("stars")</span>
+							<div class="percentageBox">
+								<div class="percentageFive" style="width:@services.base.utils.Utils.percent(f.getPercentage)%"></div>
+							</div> <span >@f.getNum() (@services.base.utils.Utils.percent(f.getPercentage())%)</span></li>
+			                }
+                        </ul>
+                        
+                        @form(controllers.interaction.review.routes.ProductReview.addReview(badge.getListingId())) {
+                        	 <input type="hidden" name="orderDetailId" class="orderDetailId" value="" />
+                        	 <input type="hidden" name="isVip" class="isVip" value="" />
+                      		@views.html.interaction.fragment.reviewBtn(otherLogins)
+                       }
+                      		<!--  <input id="writeButton" class="write_A_review" type="submit" value="@Messages("write.a.review")" />--> 
+                             <!--video  -->
+                                <div class="blockPopup_box noPermissions">
+                                        <div class="postPhotos_popBox">
+                                            <div class="customer_popClose"></div>
+                                            <div class="ReviewsN">
+                                            	<em></em>
+                                            	<p class="ReviewsTitle">@Messages("reviews.are.only.accepted.from.actual.purchases")</p>
+                                                <p>@Messages("reviews.require") </p>
+                                            </div>
+                                        </div>
+                                        <div class="blockPopup_black"></div>
+                                </div>
+                              <!--videoOver -->
+                        </div>
+                        @if(pages.totalPages>1){
+                       <div class="arrayNEX affNext">
+			                <div class="pagination-holder clearfix" >
+								<div id="light-pagination" class="pagination"></div>
+							</div>
+						</div>
+						}
+						
+                        @comment_list_common(pages.getList())
+                      
+                        <div class="clear"></div>
+                        
+                        <div class="review_page review_pageBot writeReviews">
+                       	 @form(controllers.interaction.review.routes.ProductReview.addReview(badge.getListingId())) {
+                       	 		<input type="hidden" name="orderDetailId" class="orderDetailId" value="" />
+                      			<input type="hidden" name="isVip" class="isVip" value="" />
+                      			@views.html.interaction.fragment.reviewBtn(otherLogins)
+                         }
+                        	<!--  <input id="writeButton" class="write_A_review" type="submit" value="@Messages("write.a.review")" />-->
+                             <!--video-->
+                                <div class="blockPopup_box noPermissions">
+                                        <div class="postPhotos_popBox">
+                                            <div class="customer_popClose"></div>
+                                            <div class="ReviewsN">
+                                            	<em></em>
+                                            	<p class="ReviewsTitle">@Messages("reviews.are.only.accepted.from.actual.purchases")</p>
+                                                <p>@Messages("reviews.require") </p>
+                                            </div>
+                                        </div>
+                                        <div class="blockPopup_black"></div>
+                                </div>
+                              <!--videoOver-->
+                        </div>
+                        
+                   @if(pages.totalPages>1){ 
+        			<div class="arrayNEX affNext">
+		                <div class="pagination-holder clearfix" >
+							<div id="light-pagination2" class="pagination"></div>
+						</div>
+					</div>
+					}
+					<form id="theform2" action="@controllers.interaction.review.routes.ProductReview.showAll(badge.getListingId())">
+					<input type="hidden" name="page" id="p" value="@pages.pageNo()" />
+					</form>
+<!--ReviewsOver-->
+</div>
+}
+</div>
+
+@services.base.HtmlUtils.misc().addHeadOnce{
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/simplePagination.css")">
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/product.css")?@version.BuildVersion.build()" />
+}
+@services.base.HtmlUtils.misc().addTailOnce{
+<script src="@controllers.base.routes.Assets.at("js/lib/jquery.simplePagination.js")" ></script>
+<script type="text/javascript">
+$('#light-pagination').pagination({
+	pages: @pages.totalPages(),
+	currentPage: @pages.pageNo(),
+	hrefTextPrefix: 'javascript:void(',
+	hrefTextSuffix: ')',
+	cssStyle: 'light-theme',
+	selectOnClick: true,
+	onPageClick: function(pageNumber, event) {
+		$("#p").val(pageNumber);
+		$("#theform2")[0].submit();
+	}
+});
+$('#light-pagination2').pagination({
+	pages: @pages.totalPages(),
+	currentPage: @pages.pageNo(),
+	hrefTextPrefix: 'javascript:void(',
+	hrefTextSuffix: ')',
+	cssStyle: 'light-theme',
+	selectOnClick: true,
+	onPageClick: function(pageNumber, event) {
+		$("#p").val(pageNumber);
+		$("#theform2")[0].submit();
+	}
+});
+function affShareOnFacebook(url) {
+     var shareUrl = 'https://www.facebook.com/sharer/sharer.php?u=';
+     shareUrl += encodeURIComponent(url);
+     popWin(shareUrl,'facebook',getPopupPosition(570,360)+',resizable=yes,scrollbars=yes');
+}
+</script>
+}
+}

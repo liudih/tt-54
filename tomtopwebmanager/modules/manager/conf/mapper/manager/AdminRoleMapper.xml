@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.manager.AdminRoleMapper" >
+ 
+  <resultMap id="BaseResultMap" type="entity.manager.AdminRole" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="crolename" property="ipositonid" jdbcType="VARCHAR" />
+    <result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select *
+    from t_admin_role
+    where iid = #{iid,jdbcType=BIGINT} limit 1
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_admin_role
+    where iid = #{iid,jdbcType=BIGINT}
+  </delete>
+  
+  
+  <insert id="insert" parameterType="entity.manager.AdminRole" useGeneratedKeys="true" keyProperty="iid" >
+    insert into t_admin_role ( crolename, ccreateuser, dcreatedate)
+    values (#{crolename,jdbcType=VARCHAR}
+      , #{ccreateuser,jdbcType=VARCHAR}, #{dcreatedate,jdbcType=TIMESTAMP})
+  </insert>
+ 
+  <update id="updateByPrimaryKey" parameterType="entity.manager.AdminRole" >
+    update t_admin_role
+    set crolename = #{crolename,jdbcType=VARCHAR},
+     ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+     dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP}
+      
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

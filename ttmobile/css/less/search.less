@@ -1,0 +1,63 @@
+@import "public.less";
+
+.search{
+	position:relative;margin-bottom:12px;
+	.searchTxt_Div{position:relative;width:98%;margin-left:1%;
+		.searchInp{.radius();.border();padding:5px 45px 5px 45px;font-size:18px;
+		  &:focus{outline:medium none;}
+		}
+     .searchCSS{position:absolute;width:40px;height:40px;top:20px;left:5px;.bkImg(-0px,-279px);background-size:100% auto;}
+     
+	}
+}
+.hotSearches_position{
+  .hotSearches{position:absolute;z-index:8000;background-color:#fff;display:none;}
+}
+.hotSearches{
+  width:98%;margin-left:1%;padding:15px 15px 40px 15px;.border();
+  h5{padding-left:20px;}
+  .hotSearches_ul{
+    border-top:1px solid #efefef;margin-top:15px;font-size:14px;
+    li{position:relative;padding:0px 10px 0px 50px;border-bottom:1px solid #efefef;height:50px;line-height:50px;.txtLength();
+      a{display:block;}
+    }
+    .searchFirst,.searchSecond,.searchThird{
+      &:after{position:absolute;left:20px;top:15px;width:18px;height:18px;line-height:18px;.radius(2px);.ground(#0387da);color:#fff;text-align:center;font-size:14px;}
+     }
+    .searchFirst{&:after{content:"1";}}
+    .searchSecond{&:after{content:"2";}}
+    .searchThird{&:after{content:"3";}}
+  }
+}
+@media(min-width:50px) and (max-width:590px){
+  .search{
+    position:relative;
+    .searchTxt_Div{position:relative;width:98%;margin-left:1%;
+      .searchInp{.radius();.border();padding:5px 45px 5px 45px;font-size:18px;
+        &:focus{outline:medium none;}
+      }
+       .searchCSS{position:absolute;width:40px;height:40px;top:14px;left:5px;.bkImg(-0px,-279px);background-size:100% auto;}
+       
+    }
+  }
+}
+@media(min-width:350px){
+  .hotSearches{padding:15px 15px 40px 15px;
+    .hotSearches_ul{
+      font-size:14px;
+    }
+  }
+}
+@media (min-width:768px){
+  .hotSearches{padding:15px 15px 40px 15px;
+    .hotSearches_ul{
+      font-size:16px;
+      li{padding:0px 10px 0px 50px;
+        height:60px;line-height:60px;
+      }
+      .searchFirst,.searchSecond,.searchThird{
+      &:after{left:20px;top:20px;width:18px;height:18px;line-height:18px;.radius(2px);}
+     }
+    }
+  }
+}

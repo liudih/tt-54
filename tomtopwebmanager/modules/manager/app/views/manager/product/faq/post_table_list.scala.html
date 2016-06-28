@@ -1,0 +1,109 @@
+@(items:List[dto.interaction.ProductPost], pageCount: Int, pageNum: Int, pageTotal: Int)
+@import services.base.utils._
+@helper.javascriptRouter("orderRoutes")(
+	controllers.manager.routes.javascript.Order.updateOrderStatus,
+	controllers.manager.routes.javascript.Order.getPaypalMessage
+)
+<div id="search_post_html" style="padding-bottom: 100px;">
+		<div class="portlet-body">
+			<table class="order_ll_box" width="100%" border="0" cellspacing="1" cellpadding="0" id="oderlist">
+				<thead>
+					  <tr>
+					    <th class="order_ll_Id">
+					    	<p class="inlineBlock">website</p>
+					    	<p class="inlineBlock">sku</p>
+					    </th>
+					    <th class="order_ll_zhifu">
+					    	<p class="inlineBlock">state</p>
+					    	<p class="inlineBlock">reply</p>
+					    </th>
+					    <th class=order_ll_dizhi>
+					        <p class="inlineBlock">message</p>
+					    </th>
+					    <th class="order_ll_caozuo"><p class="inlineBlock">操作</p></th>
+					  </tr>
+				</thead>
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+				@if(items != null) {
+					@items.map{i=>
+						<tr class="order_ll_infTR">
+						    <td>
+						    	<p class="order_ll_marT"><span class="order_ll_999">Website:</span>@i.getIwebsiteid()</p>
+						    	<p class="order_ll_marT"><span class="order_ll_999">sku:</span>@i.getCsku()</p>
+						    </td>
+						    <td>
+						    	<p class="order_ll_marT"><span class="order_ll_999">State:</span>@i.getIstate()</p>
+						    	<p class="order_ll_marT"><span class="order_ll_999">Reply:</span>@i.getBreply()</p>
+						    </td>
+						    <td class="order_ll_center">
+					       		<p class="order_ll_inline"><span class="order_ll_adds">Email:</span>  @i.getCtitle()</p>
+					            <p class="order_ll_inline"><span class="order_ll_adds">Title : </span> @i.getCtitle()</p>
+					            <p class="order_ll_inline"><span class="order_ll_adds">Question :</span> @i.getCquestion()</p>
+					            <p class="order_ll_marT">
+						    		<span class="order_ll_999">Create date:</span>
+						    		@if(null != i.getDcreatedate()){
+						    			@services.base.utils.DateFormatUtils.getStrFromYYYYMMDDHHMMSS(i.getDcreatedate())
+						    		}
+						    	</p>
+					            <hr style="border:0;border-top:1px solid #ccc;">
+						    	<p class="order_ll_marT"><span class="order_ll_999">Recovery user:</span>@i.getCrecoveryuser()</p>
+						    	<p class="order_ll_marT">
+						    		<span class="order_ll_999">Recovery date:</span>
+						    		@if(null != i.getDrecoverydate()){
+						    			@services.base.utils.DateFormatUtils.getStrFromYYYYMMDDHHMMSS(i.getDrecoverydate())
+						    		}
+						    	</p>
+						   		<p class="order_ll_marT"><span class="order_ll_999">Answer:</span>@i.getCanswer()</p>
+						    </td>
+						    <td>
+						    	<div class="order_ll_stateBox">
+									<a data-toggle="modal" data-target="#update-answer@i.getIid()" name="#update-answer@i.getIid()"  class="order_ll_price">
+										reply
+									</a>
+									@views.html.manager.product.faq.reply_answer.render(i.getIid(),i.getCanswer())
+								</div>
+						    </td>
+						  </tr>
+					}
+				} else {
+					 <tr class="order_ll_infTR">
+							<td colspan="6" style="text-align:center;"><h4>暂无信息</h4></td>
+					 </tr>
+				}
+				</tbody>
+			</table>
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="dataTables_info">当前第 <span>@pageNum</span> 页|共 <span>@pageTotal</span> 页| 共 <span>@pageCount</span> 条记录</div>
+				</div>
+				<div class="span6">
+					<div class="dataTables_paginate paging_bootstrap pagination">
+						<input id="pagenum" value="@pageNum" type="hidden"> 
+						<input id="pagetotal" value="@pageTotal" type="hidden"> 
+						
+						@if(pageTotal>1){
+						<ul>
+							@if(1 == pageNum){
+							<li class="disabled"><a href="javascript:;">«</a></li>
+							}else{
+							<li><a href="javascript:;" tag="pageNum" value="1">«</a></li>
+							}
+							@for(i <- pageNum - 6 to pageNum + 6 if i >= 1; if i<= pageTotal) {
+								@if(i == pageNum){
+								<li class="disabled"><a href="javascript:;" tag="pageNum" value="@i">@i</a></li>
+								}else{
+								<li><a href="javascript:;" tag="pageNum" value="@i">@i</a></li>
+								}
+							}
+							@if(pageNum >= pageTotal){
+							<li class="disabled"><a href="javascript:;">»</a></li>
+							}else{
+							<li><a href="javascript:;" tag="pageNum" value="@pageTotal">»</a></li>
+							}
+						</ul>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

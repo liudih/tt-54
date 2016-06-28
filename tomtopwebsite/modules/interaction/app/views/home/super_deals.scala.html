@@ -1,0 +1,172 @@
+@(products: valueobjects.base.Page[valueobjects.product.ProductBadge],
+	products2: valueobjects.base.Page[valueobjects.product.ProductBadge],
+	sc: valueobjects.search.SearchContext,
+	catelist: List[dto.product.CategoryWebsiteWithName],
+	req: Map[String, Array[String]],
+	subscribeHtmls: List[Html])
+@import services.base._
+@import services.base.utils._
+@views.html.base.master{
+	@helper.javascriptRouter("dealsRoutes")(
+		controllers.interaction.routes.javascript.SuperDeals.superDealMore
+	)
+	@services.base.HtmlUtils.misc().addHeadOnce{
+	 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/search.css")?@version.BuildVersion.build()" /> 
+	}
+<div class="container LevelOne">
+    <div class="Bread_crumbs_Box oneLevel">
+        <ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="/"></a></li>
+            <li>
+                <p>
+                    <a class="Bread_link" href="javascript:;">@Messages("super.deals")</a>
+                </p>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <div class="DealsBox">
+    	@subscribeHtmls.map{ s=>
+    		@s
+    	}
+        <h5>@Messages("super.deals")</h5>
+        <h6>@Messages("recommendations.for.you")</h6>
+        <div class="superD_box" id="superD_box">
+            <a class="browseLeft_click" href="javascript:;"></a>
+            <a class="browseRight_click" href="javascript:;"></a>
+        	<div class="superDMove_box">
+            	@products.getList().map{p=>
+                <div class="superDCon_box">
+                    <h1>
+                    @if(p.getTitle()!=null && p.getTitle().length>80){
+				    	@p.getTitle.substring(0,80)...
+				    }else{
+				    	@p.getTitle
+				    }
+				    </h1>
+                    <div class="superDCon_Txt">
+                    	@p.getPrice().getDiscountOption().asScala.map{ d =>
+							@if(p.getPrice().isDiscounted()){
+								<span class="discountBIG">@Utils.percent(d)</span>
+							}
+						}
+						<a class="ddBigImg" href="@controllers.product.routes.Product.view(p.getUrl)">
+							@views.html.product.img(p.getImageUrl(),p.getTitle(),377,377,null)
+						</a>
+                        <div class="ddTxt">
+                        	@if(p.getPrice()!=null){
+                        	<p>@Messages("deals.ends.in")</p>
+                            <table width="147" border="0" cellspacing="0" cellpadding="0">
+                              <tr>
+                                <td colspan="4">
+									@p.getPrice().getValidToOption().asScala.map { validTo =><br/>
+										<div class="retroclockbox_xs" id="retroclockbox_xs_big@p.getListingId" data="@DateFormatUtils.untilNowInMilliseconds(validTo)"></div>
+								    }
+								</td>
+                              </tr>
+                              <tr>
+                             	 @**
+                                <td>@Messages("day")</td>
+                                <td>@Messages("hr")</td>
+                                <td>@Messages("min")</td>
+                                <td>@Messages("sec")</td>
+                                **@
+                              </tr>
+                            </table>
+                            }
+                            <ul class="dealsInfs">
+                            @if(p.getPrice!=null){
+								<li>@Messages("was.price")<br><span>@p.getPrice.getSymbol @Utils.money(p.getPrice.getUnitBasePrice) </span></li>
+								<li>@Messages("save")<br>@p.getPrice.getSymbol @Utils.money(p.getPrice().getUnitBasePrice()-p.getPrice().getUnitPrice())</li>
+							}
+                            <div class="clear"></div>
+                        	</ul>
+                            <span class="supPrice">@p.getPrice.getSymbol @Utils.money(p.getPrice.getUnitPrice)</span>
+                            <ul class="dealsInfsLi">
+	                            @p.getSellingPoints.take(3).map{ psp =>
+					        		<li title="@psp.getCcontent">
+					        		@if(psp.getCcontent()!=null && psp.getCcontent().length>25){
+								    	@psp.getCcontent.substring(0,25)...
+								    }else{
+								    	@psp.getCcontent
+								    }
+					        		</li>
+								}
+                        	</ul>
+                            @p.getExtended().map{ i=>
+								@i 
+							}
+                            <input class="yellowInput" type="button" value="@Messages("view.deals")" onclick="location.href='@controllers.product.routes.Product.view(p.getUrl)'">
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </div>
+        <ul class="indexBanner_list" id="indexBanner_list">
+            @for(e <- 0 until products.getList().take(10).size()/2){
+            <li @if(e==0){class="listActive"}></li>
+            }
+        </ul>
+    </div>
+    @views.html.home.cartegory_single_select_bar(catelist)
+    @views.html.product.sortbar{
+	<!-- 选中的品类 -->
+		@if(sc.extractFirst(classOf[services.search.filter.CategorySearchFilter]).isDefined()) {
+			@sc.extractFirst(classOf[services.search.filter.CategorySearchFilter]).asScala.map{k =>
+				@k.getCategories().take(1).map{m => <input type="hidden" id="category" name="category" value="@m" />} 
+			}
+		}else{
+			<input type="hidden" id="category" name="category" value="" />
+		}
+	}(req)(sc)
+    <ul class="arrangeClick superDealsFour arrangeFour block">
+    	<div id="badgeContent">
+		@products2.getList().map{p=>
+    		@views.html.product.gadget.badge_big(p,true)
+    	}
+        </div>
+        <div class="clear"></div>
+        <div class="bottomMores" id="showloading" style="display:none;"></div>
+        <div class="bottomMore" onclick="moreData()">@Messages("more")<img src="@controllers.base.routes.Assets.at("images/more.png")"></div>
+     </ul>
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+<script>
+	$(function(){
+		$(".retroclockbox_xs").each(function(i,e){
+			timedownFun(this.id, true,"xs",true);
+		});
+	})
+	function moreData(){
+		var page = parseInt($("#p").val())+1;
+		$("#p").val(page);
+		var formdata = $("#searchbar").serialize();
+		var url = dealsRoutes.controllers.interaction.SuperDeals.superDealMore().url;
+		url += url.indexOf("?")<0 ? ("?"+formdata) : formdata;
+		$("#showloading").show();
+		$.ajax({
+			url: url,
+			type: "get",
+			dataType: "json",
+			async: false,
+			success:function(data){
+				if(data.size>0){
+					$("#badgeContent").append(data.html);
+					$("#p").val(data.page);
+					var arrlis = data.listings.split(",");
+					for(var i=0;i<arrlis.length;i++){
+						timedownFun("retroclockbox_xs_"+arrlis[i], true,"xs",true);
+					}
+				}else{
+					$(".bottomMore").hide();
+				}
+			},
+			complete:function(){
+				$("#showloading").hide();
+			}
+		});
+	}
+</script>
+}
+}

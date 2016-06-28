@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, target-densitydpi=high-dpi, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta content="telephone=no" name="format-detection" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>dodocool</title>
+<meta name="Keywords" content="" />
+<meta name="Description" content="" />
+<link rel="shortcut icon" href="images/dodocool.ico" type="image/x-icon" />
+<link rel="stylesheet" type="text/css" href="css/base.css">
+<link rel="stylesheet" type="text/css" href="css/page.css">
+
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+<![endif]-->
+
+<!--[if IE 6]>
+<script src="js/DD_belatedPNG_0.0.8a-min.js"></script>
+<script>
+	DD_belatedPNG.fix('.logo,.caret,.follow_b_icn a');
+</script>
+<![endif]-->
+
+</head>
+
+<body>
+
+	<!--  header头部开始  -->
+	<header id="header">
+		<div class="container">
+			<h1 class="logo"><a href="index.html">dodocool</a></h1>
+            <a id="menu-btn" href="javascript:;"></a>
+            <nav class="top_menu">
+            	<ul class="clearfix">
+            		  <li id="menu_li" class="rel">
+                    		<a href="#">products<b class="caret"></b></a>
+                    		<ul class="sub_menu_ul">
+								<li><a href=""><b class="mfi_b"></b>MFI Product</a></li>
+								<li><a href=""><b class="battert_b"></b>External Batteries</a></li>
+								<li><a href=""><b class="charger_b"></b>Charger</a></li>
+                                <li><a href=""><b class="cover_b"></b>Protection</a></li>
+                                <li><a href=""><b class="usb_b"></b>Connectivity</a></li>
+                                <li><a href=""><b class="other_b"></b>Others</a></li>
+                    	    </ul>
+                      </li>
+                      <li><a href="#">support</a></li>
+                </ul>
+            </nav>
+            <div class="topSearch">
+            	<div class="loginbar tr">
+                	<a href="">sign in</a>/<a href="">register</a>
+                </div>
+            	<div class="input_group">
+            		<input type="text" id="txtSearchN" class="form-control" placeholder="dodocool.com" />
+                	<span class="glass"></span>
+            	</div>
+            </div>   
+		</div> <!--  container end  -->
+    </header>
+	<!--  header头部结束  -->
+
+    
+    <!-- breadcrumb -->
+    <div class="breadcrumb">
+    	<ol class="clearfix">
+        	<li class="mr15">Your Position:</li>
+            <li><a href="">Home</a><span>&gt;</span></li>
+            <li class="active">Edit User Profile </li>
+        </ol>
+    </div>
+    
+    
+	<!--  主体内容开始  -->
+	<article class="pro_wrapper_item">
+    	<section class="pro_wrapper clearfix">
+        	<div class="user_side">
+            	<div class="user_side_in">
+                	<h3 class="profile_h3">User Profile</h3>
+                	<div class="user-profile clearfix">
+                    	<img class="fl mr15" src="images/act.jpg" />
+                    	<p class="name">XXX</p>
+                   	 	<p class="sex">Male</p>
+                    	<p class="state">United States</p>
+                	</div>
+                	<ul class="user-info">
+                    	<li><a href="">Member Center</a></li>
+                    	<li><a href="">Edit User Profile</a></li>
+                    	<li><a href="">Dodo User</a></li>
+                    	<li><a href="">Message</a></li>
+                    	<li><a href="">My Posts</a></li>
+                	</ul>
+                </div>
+            </div>
+            <div class="user_main">
+            	<div class="user_main_in">
+                	<h3 class="profile_h3">Edit User Profile</h3>
+                    <div class="main_in_box pd_0">
+                    	<div class="info">
+                    		<p><label>Username：</label><span>XXX</span></p>
+                    		<p><label>Profile photo：</label><img class="file_btn" src="images/act.jpg" /></p>
+                        </div>
+                        <div class="info">
+                        	<p><label>E-mail：</label><input type="text" placeholder="xxx@xxx.xxx" /><a class="pl20" href="javascript:;">Change Email</a></p>
+                            <p><label>Password：</label><a class="pass_btn" href="javascript:;">Change Password</a></p>
+                        	<p><label>Gender：</label><input type="radio" name="sex" />Male<input class="ml40" type="radio" name="sex" />Female</p>
+                        	<p><label>Gender：</label><select class="mr15"><option>01</option></select><select class="mr15"><option>01</option></select><select><option>01</option></select></p>
+                            <p><label>Location：</label><select><option>United States</option></select></p>
+                      
+                      	 <div id="calendar">
+                    	<select id="idMonth" name="month">
+                        	@Messages("month")
+                        </select>
+                    	<select id="idDay" name="day">
+                        	@Messages("day")
+                        </select>
+                    	<select id="idYear" name="year">
+                        	@Messages("year")
+                        </select>
+                     
+             
+                    </div>
+                        </div>
+                        <div class="info">
+                    		<p><label>My Device：</label><input type="text" placeholder="" /></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </article>
+	<!--  主体内容结束  -->
+	
+    <!--  footer底部开始  -->
+	<footer id="footer">
+    	<div class="container clearfix">
+        	<div class="lt">
+            	<div class="list_box">
+                	<h4>Best Sellers</h4>
+					<ul class="list-unstyled">
+						<li><a title="" href="">Astro Mini (Black)</a></li>
+                        <li><a title="" href="">40W Wall Charger</a></li>
+                        <li><a title="" href="">Lightning Cable</a></li>
+                        <li><a title="" href="">24W Car Charger</a></li>
+					</ul>
+                </div>
+                <div class="list_box">
+                	<h4>About Us</h4>
+     				<ul class="list-unstyled">
+       					<li><a href="">Our Company</a></li> 
+       					<li><a href="">Press Center</a></li> 
+      					<li><a href="">Contact Anker</a></li> 
+	      				<li><a href="">Wholesale</a></li>
+     				</ul>   
+                </div>
+                <div class="list_box">
+                	<h4>Partner Program</h4>
+     				<ul class="list-unstyled">
+       					<li><a href="">Wholesale</a></li> 
+     				</ul>   
+                </div>
+                <div class="list_box">
+                	<h4>Support</h4>
+    				<ul class="list-unstyled">
+                    	<li><a href="">Drivers &amp; Downloads</a></li>
+	    				<li><a href="">Customer Service</a></li>
+	    				<li><a href="">Privacy Policy</a></li>
+	    				<li><a href="">Terms of Service</a></li>
+	    				<li><a href="">FAQ</a></li>
+    				</ul>
+                </div>
+            </div>
+            <div class="rt">
+            	<div class="lang_box clearfix">
+                	<h5>Please select a language</h5>
+					<div class="dropdown rel fl">
+			 			<button type="button" class="btn">English<b class="caret"></b></button>
+		  	  			<ul class="menu">
+			        		<li><a href="" title="Deutsch">Deutsch</a></li>
+			        		<li><a href="" title="Français">Français</a></li>
+			        		<li><a href="" title="Italiano">Italiano</a></li>
+			        		<li><a href="" title="中文(简体)">中文(简体)</a></li>
+			        		<li><a href="" title="日本語">日本語</a></li>
+			        		<li><a href="" title="Español">Español</a></li>
+			  			</ul>
+					</div>
+                </div>
+            	<div class="follow_box">
+                	<h5>Follow us</h5>
+                	<div class="follow_b_icn">
+                    	<a class="fb" target="_blank" rel="nofollow" href=""></a>
+     				 	<a class="tw" target="_blank" rel="nofollow" href=""></a>
+      					<a class="yb" target="_blank" rel="nofollow" href=""></a>
+                    </div>
+                </div>	
+            </div>
+        </div>
+    </footer>
+	<!--  footer底部结束  -->
+    <div class="copyright">
+    	<p>Copyright &copy; 2014 dodocool inc. All rights reserved.</p>
+    </div>
+    
+    <div class="modal-backdrop"></div>
+    <div class="modal change_modal" id="boxModal">
+        <div class="modal-content">
+        	<button type="button" class="close"> × </button>
+            <div class="main_in_box">
+            	
+                <p class="frm_cont"><label>Old Password：</label><input type="password" placeholder="">
+                <span id="error_msg" class="error_style">dasdsadasdasdasdasdsadssdasdsadasdasdasdas</span>
+                </p>
+                <p class="frm_cont"><label>New Password：</label><input type="password" placeholder=""><span id="error_msg" class="error_style">dasdsadasdasdasdasdsadssdasdsadasdasdasdas</span></p>
+                <p class="frm_cont"><label>Confirm password：</label><input type="password" placeholder=""><span id="error_msg" class="error_style">dasdsadasdasdasdasdsadssdasdsadasdasdasdas</span></p>
+                <p class="pt10 tc"><label></label><button type="submit" title="Submit" class="btn">&nbsp;Submit&nbsp;</button></p>
+                
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-backdrop"></div>
+    <div class="upHead clickPop">
+              <button type="button" class="close"> × </button>
+            	<h6>Create custom picture</h6>
+                Upload Picture:
+                <div class="upFileHead"> 
+					<form action="/member/photo/pushwithSession" method="POST" id="preview-form" role="form" enctype="multipart/form-data"> 
+                  		<input name="file" type="file"><a href="javascript:;">Browse..</a>               
+					</form>
+                </div>       
+                <div style="display: none;" id="loading" class="throbber"></div><div class="msg" style="color:red;"></div><div class="msg" style="color:red;"></div>
+                <p>Select a picture file on your computer(50KB max,jpg,gif,png,bmp only)<br>
+                Please be advised, a 120x120 pixel image is best for upload.</p>         
+				<form action="/member/photo/push" method="POST" role="form" id="photo-form">           
+	                <input class="picSave" value="Save" type="submit" disabled="disabled"> 
+	                <input class="closePop" value="Cancel" type="button">       
+				</form>
+                <div class="rightHead">
+                	<p>Preview</p>
+                	<div id="preview">
+                    	<img src="images/act.jpg" height="120" width="120" />
+                	</div>
+                </div>  
+            </div>
+    
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/scrolltotop.js"></script>
+    <script src="js/jquery.lazyload.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/jquery.flexslider-min.js"></script>   <!-- 幻灯片滚动 -->
+    <script src="js/mzp-packed.js"></script>   <!-- 图片局部放大 -->
+ <!--   <script>
+<<<<<<< Updated upstream
+		(function ($) {
+=======
+    (function ($) {
+>>>>>>> Stashed changes
+	    //SELECT控件设置函数
+	    function setSelectControl(oSelect, iStart, iLength, iIndex) {
+	        oSelect.empty();
+	        for (var i = 0; i < iLength; i++) {
+	            if ((parseInt(iStart) + i) == iIndex)
+	                oSelect.append("<option selected='selected' value='" + (parseInt(iStart) + i) + "'>" + (parseInt(iStart) + i) + "</option>");
+	            else
+	                oSelect.append("<option value='" + (parseInt(iStart) + i) + "'>" + (parseInt(iStart) + i) + "</option>");
+	        }
+	    }
+	    $.fn.DateSelector = function (options) {
+	        options = options || {};
+	 
+	        //初始化
+	        this._options = {
+	            ctlYearId: null,
+	            ctlMonthId: null,
+	            ctlDayId: null,
+	            defYear: 0,
+	            defMonth: 0,
+	            defDay: 0,
+	            minYear: 1882,
+	            maxYear: new Date().getFullYear()
+	        }
+	 
+	        for (var property in options) {
+	            this._options[property] = options[property];
+	        }
+	 
+	        this.yearValueId = $("#" + this._options.ctlYearId);
+	        this.monthValueId = $("#" + this._options.ctlMonthId);
+	        this.dayValueId = $("#" + this._options.ctlDayId);
+	 
+	        var dt = new Date(),
+	        iMonth = parseInt(this.monthValueId.attr("data") || this._options.defMonth),
+	        iDay = parseInt(this.dayValueId.attr("data") || this._options.defDay),
+	        iMinYear = parseInt(this._options.minYear),
+	        iMaxYear = parseInt(this._options.maxYear);
+	                 
+	        this.Year = parseInt(this.yearValueId.attr("data") || this._options.defYear) || dt.getFullYear();
+	        this.Month = 1 <= iMonth && iMonth <= 12 ? iMonth : dt.getMonth() + 1;
+	        this.Day = iDay > 0 ? iDay : dt.getDate();
+	        this.minYear = iMinYear && iMinYear < this.Year ? iMinYear : this.Year;
+	        this.maxYear = iMaxYear && iMaxYear > this.Year ? iMaxYear : this.Year;
+	 
+	        //初始化控件
+	        //设置年
+	        setSelectControl(this.yearValueId, this.minYear, this.maxYear - this.minYear + 1, this.Year);
+	        //设置月
+	        setSelectControl(this.monthValueId, 1, 12, this.Month);
+	        //设置日
+	        var daysInMonth = new Date(this.Year, this.Month, 0).getDate(); //获取指定年月的当月天数[new Date(year, month, 0).getDate()]
+	        if (this.Day > daysInMonth) { this.Day = daysInMonth; };
+	        setSelectControl(this.dayValueId, 1, daysInMonth, this.Day);
+	 
+	        var oThis = this;
+	        //绑定控件事件
+	        this.yearValueId.change(function () {
+	            oThis.Year = $(this).val();
+	            setSelectControl(oThis.monthValueId, 1, 12, oThis.Month);
+	            oThis.monthValueId.change();
+	        });
+	        this.monthValueId.change(function () {
+	            oThis.Month = $(this).val();
+	            var daysInMonth = new Date(oThis.Year, oThis.Month, 0).getDate();
+	            if (oThis.Day > daysInMonth) { oThis.Day = daysInMonth; };
+	            setSelectControl(oThis.dayValueId, 1, daysInMonth, oThis.Day);
+	        });
+	        this.dayValueId.change(function () {
+	            oThis.Day = $(this).val();
+	        });
+	    }
+	})(jQuery);
+<<<<<<< Updated upstream
+	</script>
+=======
+    </script>
+>>>>>>> Stashed changes
+-->
+
+
+</body>
+</html>

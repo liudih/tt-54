@@ -1,0 +1,76 @@
+@(vo: valueobjects.order_api.OrderSummaryInfo, 
+currency: dto.Currency)
+@import views.html.helper._
+@import services.base.utils._
+@helper.javascriptRouter("summary")(
+	controllers.order.routes.javascript.OrderProcessing.placeOrder
+)
+<h5>@Messages("order.summary")</h5>
+<table class="orderB_table">
+	<tr>
+		<td class="cart_bottom">
+			<label><input type="checkbox"> @Messages("leave.a.message")</label>
+			<p class="leaveMT">
+				<textarea name="message" maxlength="1500"></textarea><br>
+				<span><i class="red">*</i> @Messages("write.anything.like.require.more.placed.order.such.shipping.order.related.requirements")</span>
+			</p>
+		</td>
+		<td align="right">
+			<table class="grandTotal" width="500" border="0" cellspacing="0" cellpadding="0">
+				<tr>
+					<td>@Messages("order.subtotal") </td>
+					<td width="155"><b>@currency.getCsymbol() <span name="total_fragment" class="total_fragment_total">@Utils.money(vo.getTotal())</span></b></td>
+				</tr>
+				<tr>
+					<td class="airmailB">
+						<div class="tuackNumber">
+							<p id="total_fragment_shipping_context"></p>@Messages("shipping.cost"):
+						</div>
+					</td>
+					<td width="155">
+						<b>@currency.getCsymbol() 
+							<span name="total_fragment" currency="@currency.getCcode" id="total_fragment_shipping">0.00</span>
+						</b>
+					</td>
+				</tr>
+				@*vo.getList.map{b=>
+					<tr>
+						<td>@b.getMessage (@b.getPayLoad):</td>
+						<td><span class="green">@currency.getCsymbol <span name="total_fragment">@Utils.money(b.getMoney)</span></span></td>
+					</tr>
+				}*@
+				@if(vo.getDiscount != null && vo.getDiscount != 0){
+					<tr>
+						<td>@Messages("discount")</td>
+						<td><span class="green">@currency.getCsymbol <span name="total_fragment" id="order-total-discount">@Utils.money(vo.getDiscount)</span></span></td>
+					</tr>
+				}
+				<tr class="grandTotal_txt">
+					<td>@Messages("grand.total"):</td>
+					<td><span class="orange">@currency.getCsymbol() <span currency="@currency.getCcode" id="grand_total">0.00</span></span></td>
+				</tr>
+				@*<tr class="earned">
+					<td colspan="2">@Messages("this.order.earned.11.tomtop.points")</td>
+				</tr>*@
+			</table>
+		</td>
+	</tr>
+	<tr class="Continue">
+		<td></td>
+		<td class="continusRe">
+			<p class="ContinueSpay"><input class="spayOut" type="submit" value="@Messages("place.your.order")"></p>
+			<div class="clear"></div>
+			<p class="spayOutErr">
+				<span id="addressErr" style="display:none">@Messages("please.provide.valid.shipping.address")</span>
+				<span id="shippingMethodErr" style="display:none"><br>@Messages("shipping.required")</span>
+			</p>
+			<p class="security">
+				<em></em>
+				<b class="blue">@Messages("buyer.protection.by.tomtop")</b>
+				<span><i></i>@Messages("full.refund.if.you.dont.receive.your.order")</span>
+				<span><i></i>@Messages("refund.or.keep.items.not.as.described")</span>
+			</p>
+			<div class="clear"></div>
+		</td>
+	</tr>
+</table>

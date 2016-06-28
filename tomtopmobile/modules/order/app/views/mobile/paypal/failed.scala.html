@@ -1,0 +1,25 @@
+@(errorMessage: String,
+	errorCode: String,
+	retryUrl: String)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+@views.html.base.sub_master("Payment Failed"){
+
+	@services.base.HtmlUtils.misc().addHeadCssOnce{
+		@controllers.base.routes.Assets.at("css/paySuccess.css")
+	}
+		
+	<div class="container">
+		<div class="textPageFile">
+			<h5>We're sorry. An error occurred and we're on the case. Please try again later.</h5>
+			<p class="marT30"><strong>Details:</strong></p>
+			<p>Error Code: @errorCode</p>
+			<p>Error Message: @errorMessage</p>
+			@if(retryUrl != null){
+				<a class="span98 button_orange marT" href="@retryUrl">Pay Again</a>
+			}
+		</div>
+	</div>
+	
+	 @tp.get("recent-history")
+}

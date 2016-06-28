@@ -1,0 +1,7 @@
+@(ctx: play.mvc.Http.Context)
+<div class="RTsub">
+	@Messages("get.the.latest.discounts.by.email")
+ 	<input type="text" placeholder="@Messages("enter.your.email.address")" class="subscribeBox" />
+ 	<input type="button" class="blackInput" value="@Messages("submit")" onclick="sendEmail(this);">
+</div>
+@subscribe_js_common(ctx)

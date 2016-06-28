@@ -1,0 +1,26 @@
+@tp = @{services.dodocool.base.template.TemplateService.getInstance().getContents()}
+@logoPath=@{services.configuration.ApplicationConfigService._getLogoImagePath()}
+	<header id="header">
+		<div class="container">
+			<h1 class="logo">
+				<a href="/">
+					<img src="@controllers.base.routes.Assets.at(logoPath+"/logo_bg.png")" alt="@logoPath" />
+				</a>
+			</h1>
+            <a id="menu-btn" href="javascript:;"></a>
+            <nav class="top_menu">
+            	<ul class="clearfix">
+            		  <li id="menu_li">
+                    		<a href="javascript:void(0)">@Messages("products")<b class="caret"></b></a>
+                    		@tp.get("index_category")
+                      </li>
+                      <li><a href="@controllers.base.routes.Support.home()">@Messages("support")</a></li>
+                </ul>
+            </nav>
+            <div class="topSearch">
+            	@tp.get("member-header")
+                @tp.get("search-bar")
+            </div>
+            @tp.get("cart-header")
+		</div> <!--  container end  -->
+    </header>

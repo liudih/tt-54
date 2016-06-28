@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tomtop.product.mappers.product.CategoryWebsiteMapper">
+	<resultMap id="BaseResultMap" type="com.tomtop.product.models.dto.CategoryPlatformDto">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+	    <result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+	    <result column="icategoryid" property="icategoryid" jdbcType="INTEGER" />
+	    <result column="iparentid" property="iparentid" jdbcType="INTEGER" />
+	    <result column="cpath" property="cpath" jdbcType="VARCHAR" />
+	    <result column="ilevel" property="ilevel" jdbcType="INTEGER" />
+	    <result column="iposition" property="iposition" jdbcType="INTEGER" />
+	    <result column="ichildrencount" property="ichildrencount" jdbcType="INTEGER" />
+	    <result column="bshow" property="bshow" jdbcType="BOOLEAN" />
+	    <result column="bhasbgimage" property="bhasbgimage" jdbcType="BOOLEAN" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, iwebsiteid, icategoryid, iparentid, cpath, ilevel, iposition, ichildrencount, bshow,bhasbgimage
+	</sql>
+
+	<select id="getCategoriesByListingids" resultType="com.tomtop.product.models.dto.CategoryWebsiteWithNameDto">
+		SELECT distinct p.*, n.cname,n.cdescription from t_category_website p
+			inner join t_category_name n on n.icategoryid = p.icategoryid
+			inner join t_product_category_mapper m on m.icategory = p.icategoryid
+			WHERE m.clistingid in
+			<foreach item="item" index="index" collection="list" open="("
+				separator="," close=")">#{item}</foreach>
+			and n.ilanguageid = #{1}
+			and p.iwebsiteid = #{2} ORDER BY iposition
+	</select>
+	
+	<select id="getCategories" parameterType="map" resultType="com.tomtop.product.models.dto.CategoryWebsiteWithNameDto">
+		select p.*, n.cname,n.cdescription,m.curl as cbgimglink,m.iid as ibgimageid,ilanguageid ,
+		case when n.cmetadescription is null then n.ctitle else n.cmetadescription end as metaDescription,
+		case when n.cmetatitle is null then n.ctitle else n.cmetatitle end as metaTitle,
+		case when n.cmetakeyword is null then n.ctitle else n.cmetakeyword end as metaKeyWords
+		from t_category_website p
+		inner join t_category_name n 
+			on n.icategoryid = p.icategoryid 
+		left  join t_category_backgroundimages m 
+			on m.icategorynameid = n.iid 
+		where 1=1
+		<if test="level != null">
+			<choose>
+				<when test="level == 1">
+					and p.ilevel=#{level} and iparentid is null
+				</when>
+				<otherwise>
+					and p.ilevel=#{level}
+				</otherwise>
+			</choose>
+		</if>
+		
+		<if test="websiteId != null">
+			and p.iwebsiteid = #{websiteId}
+		</if>
+		
+		<if test="langId != null">
+			and n.ilanguageid = #{langId}
+		</if>
+		
+		<if test="categoryId != null">
+			and p.icategoryid = #{categoryId}
+		</if>
+		
+		<choose>
+			<when test="bshow != null">
+				<choose>
+					<when test="bshow == 1">
+						and  p.bshow=true
+					</when>
+					<otherwise>
+						and  p.bshow=false
+					</otherwise>
+				</choose>
+			</when>
+			<otherwise>
+				and  p.bshow=true
+			</otherwise>
+		</choose>
+		
+		<if test="parentId != null">
+			and iparentid = #{parentId}
+		</if>
+		  
+		order by iposition;
+	
+	</select>
+	
+</mapper>

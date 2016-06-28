@@ -1,0 +1,21 @@
+@(options: List[dto.product.AttachmentDesc])
+
+<div class="row-fluid" id="attachmentDescs">
+	<div class="control-group">
+		<div class="controls">
+			@if(options!=null){
+				<div class="row-fluid">
+					@options.map{ attachment =>
+						<div class="span3">
+							<input type="radio" name="iattachmentdescid" value="@attachment.getIid()" />@attachment.getCtitle()
+						</div>
+					}
+				</div>
+			}else{
+				<div class="row-fluid">
+						<div class="span3">not found data!</div>
+			    </div>
+			}
+		</div>
+	</div>
+</div>

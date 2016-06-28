@@ -1,0 +1,51 @@
+GET     	/assets/*file               controllers.member.Assets.at(path="/public", file)
+
+GET     	/login                      @controllers.member.Login.login(type : Int ?= 0)
+POST    	/signin                     @controllers.member.Login.signin()
+GET    		/signout                    @controllers.member.Login.signout()
+GET    		/captcha.png                @controllers.member.Login.createCaptcha()
+GET    		/validateEmail              @controllers.member.Login.validateEmail(email : String ?= "")
+POST    	/register              		@controllers.member.Login.register()
+GET    	   /register-success           @controllers.member.Login.registerSuccess()
+GET    		/checkCountry              @controllers.member.Login.validateCountry(countryId : Int ?= 0,country : String ?= "")
+
+GET 	/fpview							@controllers.member.Login.forgetPasswordView()
+POST 	/fp								@controllers.member.Login.forgetPassword()
+GET    	/validateCategory               @controllers.member.Login.validateCategory(category : String ?= "")
+POST    	/getMyPointDetail           @controllers.member.PointController.getMyPointDetail(pageSize : Int ?=30,curPage : Int ?= 1)
+POST    	/getMyPointOverview           @controllers.member.PointController.getMyPointOverview()
+GET    	/my-point-view          		@controllers.member.PointController.view()
+
+GET 	/home				            @controllers.member.MemberController.home()
+
+GET 	/myprofile				        @controllers.member.MemberController.getMyProfile()
+
+GET 	/updateprofilechange		    @controllers.member.MemberController.updateProfileChange()
+
+GET 	/findpasswordresult				@controllers.member.Login.findPasswordResult()
+
+GET 	/findpasswordcheck				@controllers.member.Login.checkEmail()
+
+GET 	/findpasswordtimeout			@controllers.member.Login.timeout()
+
+POST 	/passwordreset					@controllers.member.ResetPassword.saveResetPassword()
+
+GET 	/resetpass						@controllers.member.ResetPassword.resetPasswordValide(cid :String?=null)
+
+GET 	/validateemailexist				@controllers.member.Login.validateEmailIsExist(email : String ?= "")
+
+GET 	/billingaddress				    @controllers.member.AddressController.billingAddress()
+
+GET 	/shippingaddress			    @controllers.member.AddressController.shippingAddress()
+
+POST 	/address/addorupdate			@controllers.member.AddressController.addOrUpdateAddress()
+
+POST 	/address/delete					@controllers.member.AddressController.delete(id :Int)
+
+POST 	/address/setdefaultaddress		@controllers.member.AddressController.setDefaultAddress(id :Int)
+
+POST 	/newpwd							@controllers.member.ResetPassword.saveNewPassword()
+
+GET 	/newpwdform						@controllers.member.ResetPassword.resetPasswordForm()
+GET 	/activate-email					@controllers.member.Login.activeMember(email : String ?= null ,code : String ?= null)
+

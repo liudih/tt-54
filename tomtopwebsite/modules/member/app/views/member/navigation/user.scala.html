@@ -1,0 +1,25 @@
+@(mis: valueobjects.member.MemberInSession,total : Integer)
+@menuRender = @{extensions.InjectorInstance.getInstance(classOf[services.member.MemberQuickMenuRenderer])}
+	<div class="topSearch_signIn">
+	  		<div class="topSearch_signInOver">
+	              <div class="topSearch_icon"></div>
+	              <div class="topSearch_txt">
+                    <span class="orange">@mis.getUsername()</span><br />
+	                <b><a href="@controllers.member.routes.Home.index()"><span>@Messages("my.tomtop")</span>@if(total != null){(@total)}</a></b>
+	              </div>
+	              <div class="clear"></div>
+	          </div>
+	          <ul class="sinOut">
+	          	<li><a href="@controllers.member.routes.Register.registerUpdateFrom()">@Messages("my.profile")</a></li>
+	          	@menuRender.getMenuItems().map{ i =>
+	          		@i
+	          	}
+	          	@*<li><a href="#">@Messages("my.points")</a></li>
+	          	<li><a href="#">@Messages("my.coupons")</a></li>*@
+	            <hr class="login_hr" />
+	            <li class="sinOut_input"><a href="@controllers.member.routes.Login.logout()"><input type="button" value='@Messages("sign.out")' /></a></li>
+	          </ul>
+	</div>
+	
+	
+	

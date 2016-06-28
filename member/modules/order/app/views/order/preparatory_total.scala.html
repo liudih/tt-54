@@ -1,0 +1,38 @@
+@(subTotal: Double,
+	cy: dto.Currency)
+
+@import services.base.utils._
+
+<div class="totalPrice">
+	<table class="orderB_table">
+		<tbody>
+			<tr>
+				<td class="cart_bottom"></td>
+				<td align="right">
+					<table width="500" cellspacing="0" cellpadding="0" border="0" class="grandTotal">
+						<tbody>
+							<tr>
+								<td>@Messages("order.subtotal"):</td>
+								<td width="155"><b>@cy.getCsymbol <span span-type="order-subTotal">@Utils.money(subTotal)</span></b></td>
+							</tr>
+							<tr>
+								<td class="airmailB">
+									<div class="tuackNumber">@Messages("shipping.cost"):</div>
+								</td>
+								<td width="155"><b>@cy.getCsymbol <span span-type="order-shipping-price">0.0</span></b></td>
+							</tr>
+							<tr class="grandTotal_txt">
+								<td>@Messages("grand.total"):</td>
+								<td><span class="orange">@cy.getCsymbol <strong strong-type="order-total">0.0</strong></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			<tr class="Continue">
+				<td></td>
+				<td class="continusRe"></td>
+			</tr>
+		</tbody>
+	</table>
+</div>

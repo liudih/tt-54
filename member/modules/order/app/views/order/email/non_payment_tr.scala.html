@@ -1,0 +1,12 @@
+@(details: List[dto.order.OrderDetail],
+ symbol: String)
+
+@details.map{d =>
+	<tr>
+		<td bgcolor="#FFFFFF" style="padding:6px; line-height:120%;">@d.getCtitle</td>
+		<td bgcolor="#FFFFFF" style="text-align:center;">@d.getCsku</td>
+		<td bgcolor="#FFFFFF" style="text-align:center;">@symbol @d.getFprice</td>
+		<td bgcolor="#FFFFFF" style="text-align:center;">@d.getIqty</td>
+		<td bgcolor="#FFFFFF" style="text-align:center;">@symbol @d.getFtotalprices</td>
+	</tr>
+}

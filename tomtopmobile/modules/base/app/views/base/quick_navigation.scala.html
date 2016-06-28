@@ -1,0 +1,24 @@
+@()
+
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+<div class="TT_absLB">
+	<a class="TT_center quickNavClick" href="javascript:;"> </a>
+	<div class="csstransforms quickNavBox" style="display: none;">
+		<div class="quickNavCon">
+			<div class="cn-wrapper" id="cn-wrapper">
+				<a class="quickNav_centerHome" href="/"><span><em class="home_Icon_big"> </em></span></a>
+			    <ul>
+			      @tp.get("member_login_navigation")
+			      <li><a href="/search-view"><span class="search_Icon"> </span></a></li>
+			      <li><a href="/cart"><span class="shoppingCart_Icon"> </span></a></li>
+			      <li><a href="/interaction/wishlist"><span class="heart_Icon"> </span></a></li>
+			      <li><a href="javascript:;"><span class="more_Icon"> </span></a></li>
+			     </ul>
+			</div>
+		</div>
+		<div class="quickNavBlockPop"> </div>
+	</div>
+</div>
+
+<a class="TT_top" href="#header">&nbsp;</a>

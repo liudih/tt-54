@@ -1,0 +1,12 @@
+@(selectId: String,
+selectObj: Map[Integer, String])
+<p style="float:left; width:150px; overflow:hidden">
+<select id="@selectId" name="@selectId">
+	<option value=""></option>
+	@if(null != selectObj){
+		@selectObj.map{ i=>
+			<option value="@i._1">@i._2</option>
+		}
+	}
+</select>
+</p>

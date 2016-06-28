@@ -1,0 +1,8 @@
+@(order : dto.order.Order,currency : dto.Currency)
+
+@import services.base.utils._
+	<div class="statusNo">
+		<p class="lineBlock">Order No: <span>@order.getCordernumber()</span></p>
+		<p class="lineBlock fz_orange">Total: <span>@currency.getCsymbol()@Utils.money(order.getFgrandtotal)</span></p>
+	</div>
+	

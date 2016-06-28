@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.loyalty.BulkRateMapper">
+  <resultMap id="BaseResultMap" type="entity.loyalty.BulkRate">
+    <id column="iid" jdbcType="INTEGER" property="iid" />
+    <result column="ibulkid" jdbcType="INTEGER" property="ibulkid" />
+    <result column="iqty" jdbcType="INTEGER" property="iqty" />
+    <result column="fdiscount" jdbcType="DOUBLE" property="fdiscount" />
+    <result column="dcreatedate" jdbcType="TIMESTAMP" property="dcreatedate" />
+    <result column="fgrossprofit" jdbcType="DOUBLE" property="fgrossprofit" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    iid, ibulkid, iqty, fdiscount, dcreatedate, fgrossprofit
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_bulk_rate
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_bulk_rate
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.loyalty.BulkRate">
+    insert into t_bulk_rate (iid, ibulkid, iqty, 
+      fdiscount, dcreatedate, fgrossprofit
+      )
+    values (#{iid,jdbcType=INTEGER}, #{ibulkid,jdbcType=INTEGER}, #{iqty,jdbcType=INTEGER}, 
+      #{fdiscount,jdbcType=DOUBLE}, #{dcreatedate,jdbcType=TIMESTAMP}, #{fgrossprofit,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.loyalty.BulkRate" useGeneratedKeys="true" keyProperty="iid" >
+    insert into t_bulk_rate
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="iid != null">
+        iid,
+      </if>
+      <if test="ibulkid != null">
+        ibulkid,
+      </if>
+      <if test="iqty != null">
+        iqty,
+      </if>
+      <if test="fdiscount != null">
+        fdiscount,
+      </if>
+      <if test="dcreatedate != null">
+        dcreatedate,
+      </if>
+      <if test="fgrossprofit != null">
+        fgrossprofit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="iid != null">
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="ibulkid != null">
+        #{ibulkid,jdbcType=INTEGER},
+      </if>
+      <if test="iqty != null">
+        #{iqty,jdbcType=INTEGER},
+      </if>
+      <if test="fdiscount != null">
+        #{fdiscount,jdbcType=DOUBLE},
+      </if>
+      <if test="dcreatedate != null">
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fgrossprofit != null">
+        #{fgrossprofit,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.loyalty.BulkRate">
+    update t_bulk_rate
+    <set>
+      <if test="ibulkid != null">
+        ibulkid = #{ibulkid,jdbcType=INTEGER},
+      </if>
+      <if test="iqty != null">
+        iqty = #{iqty,jdbcType=INTEGER},
+      </if>
+      <if test="fdiscount != null">
+        fdiscount = #{fdiscount,jdbcType=DOUBLE},
+      </if>
+      <if test="dcreatedate != null">
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="fgrossprofit != null">
+        fgrossprofit = #{fgrossprofit,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.loyalty.BulkRate">
+    update t_bulk_rate
+    set ibulkid = #{ibulkid,jdbcType=INTEGER},
+      iqty = #{iqty,jdbcType=INTEGER},
+      fdiscount = #{fdiscount,jdbcType=DOUBLE},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      fgrossprofit = #{fgrossprofit,jdbcType=DOUBLE}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

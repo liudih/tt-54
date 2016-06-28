@@ -1,0 +1,93 @@
+@(webSites:List[dto.Website],
+info:dto.AffiliateInfo)
+<input type="hidden" name="iid" value="@info.getIid()" />
+<div class="row-fluid">
+	<div class="span6">
+		<div class="control-group">
+			<label class="control-label" for="iwebsiteid">WebSite</label>
+			<div class="controls">
+				<select name="iwebsiteid" >
+					@if(webSites!=null && webSites.size()>0){
+						@webSites.map{e=>
+							@if(e.getIid()==info.getIwebsiteid()){
+			    				<option value="@info.getIwebsiteid()" selected="selected"  style="display:none;">@e.getCcode()</option>		
+			    				<option value="@e.getIid()">@e.getCcode()</option>		
+							}else{
+		    					<option value="@e.getIid()">@e.getCcode()</option>		
+							}
+						}
+					}
+				</select>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">AID</label>
+			<div class="controls">
+				<input type="text" name="caid" id="caid" value="@info.getCaid()" readonly/>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">Active Status</label>
+			<div class="controls" style="margin-left: 25px;">
+				<label class="radio"> <input type="radio" name="bstatus"
+					value="true"
+					@if(info.getBstatus()){  
+						checked="checked"
+					}> yes
+				</label> <label class="radio"> <input type="radio" name="bstatus"
+					value="false" @if(!info.getBstatus()){  
+						checked="checked"
+					}> no
+				</label>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">Inside/Outside</label>
+			<div class="controls" style="margin-left: 25px;">
+				<label class="radio"> <input type="radio" name="bexternal"
+					value="true" @if(info.getBexternal()){
+						checked="checked"
+					}> Inside
+				</label> <label class="radio"> <input type="radio" name="bexternal"
+					value="false" @if(!info.getBexternal()){  
+						checked="checked"
+					}> Outside
+				</label>
+			</div>
+		</div>
+	</div>
+
+	<div class="span6">
+		<div class="control-group">
+			<label class="control-label">Member</label>
+			<div class="controls">
+				<input type="text" name="cemail" value="@info.getCemail()" />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">PayPal</label>
+			<div class="controls">
+				<input type="text" name="cpaypalemail" value="@info.getCpaypalemail()" />
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">E-mail Notice</label>
+			<div class="controls" style="margin-left: 25px;">
+				<label class="radio"> <input type="radio"
+					name="breceivenotification" value="true"
+					@if(info.getBreceivenotification()){ 
+						checked="checked"
+					}
+					>
+					yes
+				</label> <label class="radio"> <input type="radio"
+					name="breceivenotification" value="false"
+					@if(!info.getBreceivenotification()){ 
+						checked="checked"
+					}
+					> no
+				</label>
+			</div>
+		</div>		
+	</div>
+</div>

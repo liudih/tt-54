@@ -1,0 +1,8 @@
+@(plist: List[valueobjects.product.ProductBadge])
+<div class="container bg_white">
+	<h5 class="marT span98">Your Recent History:</h5>
+	@plist.map{p=>
+		@views.html.product.badge_base(p)
+	}
+	
+</div>

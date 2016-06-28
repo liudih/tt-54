@@ -1,0 +1,106 @@
+@(items:List[valueobjects.order_api.OrderItem],
+	order:dto.order.Order,
+	currency:String,
+	bills: List[dto.order.BillDetail],
+	idMap: Map[Integer, dto.order.OrderStatus],
+	vo: valueobjects.order_api.payment.PaymentContext,
+	packlist: List[dto.order.OrderPack],
+	historyMap: Map[String, dto.order.OrderStatusHistory],
+	dispatched:  dto.order.OrderStatusHistory,
+	discount: Double
+	
+	)
+@import services.base._
+@import services.base.utils._	
+
+@views.html.base.sub_master("Order Detail"){
+
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+ 	@controllers.base.routes.Assets.at("css/accountOrder.css")
+}
+<div class="container bg_color_gray marTop_10">
+	<div class="statusNo">
+		<p class="lineBlock">Order No: <span>@order.getCordernumber()</span></p>
+		<p class="lineBlock">Order status:<span>@idMap.get(order.getIstatus()).getCname()</span></p>
+	</div>
+	<ul class="orderCustomer">
+		<li class="lbBox">
+			<p class="lineBlock">Customer Name:</p>
+			<p class="lineBlock">@order.getCfirstname() @order.getClastname()</p>
+		</li>
+		<li class="lbBox">
+			<p class="lineBlock">Shipping Address:</p>
+			<p class="lineBlock">
+				@order.getCstreetaddress() &nbsp&nbsp
+				@order.getCcity() &nbsp&nbsp
+				@order.getCprovince() &nbsp&nbsp
+				@order.getCcountry() &nbsp&nbsp
+				@order.getCpostalcode() &nbsp&nbsp
+				@order.getCtelephone() &nbsp&nbsp
+			</p>
+		</li>
+		<li class="lbBox">
+			<p class="lineBlock">Shipping Method:</p>
+			<p class="lineBlock">@if(vo.getShippingMethod() != null){@vo.getShippingMethod().getCtitle()}</p>
+		</li>
+		@if(packlist.size()>0){
+		<li class="lbBox">
+			<p class="lineBlock">Track Number:</p>
+			<p class="lineBlock blue">
+				@packlist.map{p=>
+			   		<a target="_blank" href="http://www.17track.net/en/result/post.shtml?nums=@p.getCtrackingnumber" class="orderMiddle">@Messages("untracked")<br>@p.getCtrackingnumber</a>
+		    	}
+			</p>
+		</li>
+		}
+		<li class="lbBox">
+			<p class="lineBlock">Order Placed Date:</p>
+			<p class="lineBlock">@services.base.utils.DateFormatUtils.getStrFromYYYYMMDDHHMMSS(order.getDcreatedate())</p>
+		</li>
+		@if(dispatched != null) {
+		<li class="lbBox">
+			<p class="lineBlock">Shipped Date:</p>
+			<p class="lineBlock">@services.base.utils.DateFormatUtils.getStrFromYYYYMMDDHHMMSS(dispatched.getDcreatedate())</p>
+		</li>
+		}
+	</ul>
+	@items.map{ i => 
+		@order_bundle(i,currency,i.isReview())
+	}
+	<div class="payTable">
+		<table width="100%" cellspacing="0" cellpadding="0" border="0" class="cart_orderPriceTable">
+			<tr>
+				<td>Order subtotal:</td>
+				<td>@currency @Utils.money(order.getFordersubtotal)</td>
+			</tr>
+			<tr>
+				<td>Shipping Cost:</td>
+				<td>@currency @Utils.money(order.getFshippingprice)</td>
+			</tr>
+			@bills.map{b=>
+				<tr>
+					<td>@b.getCtype (@b.getCmsg):</td>
+					<td>@currency @Utils.money(b.getFtotalprice)</td>
+				</tr>
+			}
+			@if(discount != null){
+				<tr>
+					<td>Discount Total:</td>
+					<td>@currency @Utils.money(discount)</td>
+				</tr>
+			}
+			<tr>
+				<td class="GrandTotal">Grand Total:</td>
+				<td class="GrandTotalNumber">@currency @Utils.money(order.getFgrandtotal)</td>
+			</tr>
+		</table>
+		@if(idMap.get(order.getIstatus()).getCname()=="Payment Pending"){
+			<a class="button_orange span98" href="@controllers.order.routes.OrderController.viewOrder(order.getCordernumber())">Place Order</a>
+		}
+		@if(idMap.get(order.getIstatus()).getCname()=="Completed"){
+			<a class="button_blue span98" href="javascript:;">Completed</a>
+		}
+	</div>
+</div>
+}
+

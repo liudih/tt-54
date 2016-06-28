@@ -1,0 +1,39 @@
+@(clist:List[dto.product.CategoryWebsiteWithName],
+	blist:valueobjects.base.Page[valueobjects.product.ProductBadge],
+	subcategory:Integer,
+	req: Map[String, Array[String]],
+	cpath: String
+	)
+
+@import services.base._
+@import services.base.utils._
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+ 	  	@controllers.base.routes.Assets.at("css/subCategories_page.css")
+  }
+@views.html.base.sub_master(){
+<div class="container">
+	
+	@views.html.product.sort_common(clist, subcategory+"", req)
+	
+	<div id="badgeContent">
+	@blist.getList().map{c=>
+		@views.html.product.badge_base(c)
+	}
+	</div>
+</div>
+
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+ 	@controllers.base.routes.Assets.at("js/jquery.esn.autobrowse.min.js")
+ 	@controllers.base.routes.Assets.at("js/jstorage.min.js")
+ 	@controllers.product.routes.Assets.at("js/scroll_load.js")
+}
+
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript">
+var moreurl = "@controllers.product.routes.Category.subCategories(cpath)";
+moreurl = moreurl + "?" + $("#searchbar").serialize();
+</script>
+}
+}

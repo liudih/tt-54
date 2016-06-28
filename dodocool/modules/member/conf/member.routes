@@ -1,0 +1,49 @@
+GET    /login                       @controllers.member.Login.login()
+
+POST   /login                       @controllers.member.Login.logining(backUrl: String ?= null)
+
+GET    /logout                      @controllers.member.Login.logout()
+
+GET    /register                    @controllers.member.Register.registerFrom()
+
+POST   /register                    @controllers.member.Register.register()
+
+GET    /check                       @controllers.member.Register.checkEmail(email: String?="")
+
+GET    /assets/*file                controllers.member.Assets.at(path="/public", file)
+
+GET    /home                        @controllers.member.Home.index()
+
+GET    /photo                       @controllers.member.MemberProfile.getPhoto(email: String?="")
+
+GET    /forget                      @controllers.member.ForgetPassword.forget()
+
+GET    /edits                       @controllers.member.Edits.editsMember()
+
+POST   /edits                       @controllers.member.Edits.updateMember()
+
+GET    /forget                      @controllers.member.ForgetPassword.forget()
+
+POST   /forget                      @controllers.member.ForgetPassword.sendEmail()
+
+GET    /sendpass                    @controllers.member.ForgetPassword.findPasswordSend(email:String, result:Boolean)
+
+GET    /findpassEmail               @controllers.member.ForgetPassword.findPasswordEmail(email : String)
+
+GET    /resetpass                   @controllers.member.PasswordReset.passwordResetForm(cid :String?=null)
+
+POST   /resetpass                   @controllers.member.PasswordReset.passwordReset(backUrl: String ?= null)
+
+GET    /timeout                     @controllers.member.PasswordReset.timeout(id : Int)
+
+GET    /timesout                    @controllers.member.PasswordReset.timesout()
+
+GET    /has-modify                  @controllers.member.PasswordReset.hasModify()
+
+POST   /edits-password              @controllers.member.Edits.updatePasswords()
+
+POST   /photo-push                  @controllers.member.Photo.uploads()
+
+GET    /login-redirect/*targetUrl   controllers.member.Login.saveReferrerBeforeLogin(targetUrl: String)
+
+POST   /login-redirect/*targetUrl   controllers.member.Login.saveReferrerBeforeLogin(targetUrl: String)

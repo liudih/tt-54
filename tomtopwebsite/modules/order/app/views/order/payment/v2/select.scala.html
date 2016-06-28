@@ -1,0 +1,40 @@
+@(providers: List[extensions.payment.IPaymentProvider], 
+	payment: String, 
+	context: valueobjects.order_api.payment.PaymentContext)
+<h2 class="h2_product">@Messages("payment.methods")</h2>
+
+
+<div class="ns_payment_method clearfix">
+                <ul class="payment_method_tab">
+                    <li class="sel"><div class="payment_item"><span><i></i></span></div></li>
+                    <li class="needBill"><div class="payment_item visa"><span><i></i></span></div></li>
+                    <li class="needBill"><div class="payment_item jcb"><span><i></i></span></div></li>
+                    <li class=""><div class="payment_item webm"><span><i></i></span></div></li>
+                    
+                    <li class=""><div class="payment_item qiwi"><span><i></i></span></div></li>
+                    <li class=""><div class="payment_item ekc"><span><i></i></span></div></li>
+                    <li class=""><div class="payment_item boleto"><span><i></i></span></div></li>
+                    <!-- <li class=""><div class="payment_item wire"><span><i></i></span></div></li> -->
+                    
+                    <!-- <li class=""><div class="payment_item sofort"><span><i></i></span></div></li>
+                    <li class=""><div class="payment_item giro"><span><i></i></span></div></li>
+                    <li class=""><div class="payment_item instant"><span><i></i></span></div></li>
+                    <li class=""><div class="payment_item tele"><span><i></i></span></div></li> -->
+                </ul>
+                <ul class="payment_method_con">
+                    
+               @if(payment == null) {
+					@providers.zipWithIndex.map{ p =>
+							<li name="@p._1.name()" style="@if(p._2 == 0){display:block;}">
+								<input type="radio" name="paymentId" @if(p._2 == 0){checked="checked"} value="@p._1.id()" style="display:none;">
+								@p._1.getDescription(context)	
+							</li>
+					}
+				}
+                   
+
+                </ul>
+               <!--  <div class="btn_more_payment"><span></span>More Payment Methods</div> -->
+            </div>
+            
+

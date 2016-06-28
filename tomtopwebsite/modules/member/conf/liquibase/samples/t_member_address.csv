@@ -1,0 +1,3 @@
+cmemberemail,iaddressid,bdefault,cfirstname,cmiddlename,clastname,ccompany,cstreetaddress,ccity,icountry,cprovince,cpostalcode,ctelephone,cfax,cvatnumber
+test@test.com,1,true,cfirstname,cmiddlename,clastname,ccompany,cstreetaddress,ccity,1,Florida,cpostalcode,ctelephone,cfax,cvatnumber
+keyinger00@163.com,1,true,Yi,juan,fei,xiaoniu,baoan,shenz,1,Hawaii,cpostalcode,ctelephone,cfax,cvatnumber

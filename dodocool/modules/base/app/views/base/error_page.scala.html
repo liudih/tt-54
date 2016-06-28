@@ -1,0 +1,29 @@
+@(request: play.mvc.Http.RequestHeader, t: Throwable, errorcode: String)
+@views.html.base.master{
+<!--  主体内容开始  -->
+<article class="common_wrapper">
+	<section class="container">
+		<div class="account_box common_tips wrong_tips">
+			<div class="common_tips_icon">
+				<img src="@controllers.base.routes.Assets.at("images/tip_120_1.png")">
+			</div>
+			<div class="common_tips_con">
+				<h3>
+					@Messages("oops.Something.went.wrong") <span>(@errorcode)</span>
+				</h3>
+				@Messages("do.not.try.so.hard")
+				<div class="goTo">
+					<h4>@Messages("to.proceed.you.can")</h4>
+					<a href="/">@Messages("return.to.the.home.page")</a>
+					<!-- <p>
+						If you need further help,Please contact our<a href="">Customer
+							Service Express.</a>
+					</p> -->
+				</div>
+			</div>
+		</div>
+	</section>
+</article>
+<!--  主体内容结束  -->
+}
+

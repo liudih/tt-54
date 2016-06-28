@@ -1,0 +1,8 @@
+@(appId: String, returnUrl: String,css : String)
+<form meathod="get" action="https://www.facebook.com/dialog/oauth" class="logIcon lineBlock">
+<input type="hidden" name="client_id" value="@appId" />
+<input type="hidden" name="redirect_uri" value="@returnUrl" />
+<input type="hidden" name="response_type" value="code" />
+<input type="hidden" name="scope" value="email" />
+<input class="@css" type="submit" value=""/>
+</form>

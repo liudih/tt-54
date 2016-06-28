@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+	
+	<changeSet author="chris" id="t_message_info-20150428">
+		<createTable tableName="t_message_info" remarks="消息表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INT" remarks="Website ID" />
+			<column name="isendid" type="INT" remarks="发送人ID"/>
+			<column name="cfrom" type="VARCHAR(200)" remarks="消息来源" />
+			<column name="csubject" type="VARCHAR(500)" remarks="标题" />
+			<column name="ccontent" type="VARCHAR(8000)" remarks="内容"/>			
+			<column name="itype" type="INT" remarks="类型（订单状态变更 ，积分获取等等）" />
+			<column name="istatus" type="INT" remarks="消息状态（1已读， 0未读）"/>				
+			<column name="isendmethod" type="INT" remarks="发送方式（系统发送，人工发送）" />			
+			<column name="dcreatedate" type="DATETIME" defaultValueComputed="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+	
+	<changeSet author="chris" id="t_message_broadcast-20150428">
+		<createTable tableName="t_message_broadcast" remarks="广播表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INT" remarks="Website ID" />
+			<column name="isendid" type="INT" remarks="发送人ID"/>
+			<column name="cfrom" type="VARCHAR(200)" remarks="消息来源" />
+			<column name="csubject" type="VARCHAR(500)" remarks="标题" />
+			<column name="ccontent" type="VARCHAR(8000)" remarks="内容"/>			
+			<column name="itype" type="INT" remarks="类型（订单状态变更 ，积分获取等等）" />			
+			<column name="isendmethod" type="INT" remarks="发送方式（系统发送，人工发送）" />			
+			<column name="dcreatedate" type="DATETIME" defaultValueComputed="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="t_message_info-added_cemail_column-20150428"
+		author="chris">
+		<addColumn tableName="t_message_info">
+			<column name="cemail" type="VARCHAR(100)" remarks="用户邮箱"/>
+		</addColumn>
+	</changeSet>
+	
+	<changeSet id="t_message_info_add_ibroadcastid" author="lijun">
+		<addColumn tableName="t_message_info">
+			<column name="ibroadcastid" type="INT" remarks="外键t_message_broadcast表iid"></column>
+		</addColumn>
+	</changeSet>
+	
+	<changeSet id="t_message_broadcast_add_columns_20150512" author="lijun">
+		<addColumn tableName="t_message_broadcast">
+			<column name="istatus" type="INT" remarks="3(推送)"></column>
+			<column name="imodifierid" type="INT" remarks="修改人"></column>
+			<column name="dmodifydate" type="DATETIME" remarks="修改时间"></column>
+		</addColumn>
+	</changeSet>
+</databaseChangeLog>

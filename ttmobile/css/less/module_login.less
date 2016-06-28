@@ -1,0 +1,73 @@
+@import "public.less";
+
+.login_nav{
+  width:100%;text-align:center;margin-bottom:35px;
+  li{width:49%;text-align:center;font-size:16px;padding:8px 8px 10px 8px;border-bottom:1px solid #ccc;height:50px;
+    &.aciCss{font-size:20px;font-weight:bold;color:#333;border-bottom:2px solid #1077c6; color:#1077c6;}
+  }
+}
+.Login_forgotBox{height:50px;}
+.Login_forgotTxt{
+  display:inline-block;float:right;font-size:16px;color:#bebebe;padding:5px 15px;
+}
+.Reg_pageButton,.login_pageButton{width:98%;margin-left:1%;background-color:#1077c6;color:#fff;font-size:18px;border:0px;padding:15px;.radius();
+  &:focus{outline:medium none;background-color:#075d9e;}
+}
+.shareLogin_Txt{text-align:center;margin-top:40px;margin-bottom:20px;color:#a7a7a7;}
+.loginInput_box{
+   position:relative;margin-bottom:15px;
+   .emailIcon{position:absolute;top:18px;left:10px;display:block;width:55px;height:35px;.login(0,-9px);background-size:100% auto;}
+   .lockIcon{position:absolute;top:18px;left:10px;display:block;width:55px;height:36px;.login(0,-64px);background-size:100% auto;}
+  .txtInput{padding-left:75px;}
+}
+.RegisterInput_box{position:relative;margin-bottom:30px;
+  .emailPrompt{width:100%;position:absolute;top:59px;background-color:#fff;z-index:9;.border();box-shadow:2px 2px 3px #ccc;
+    li{width:100%;padding:10px 10px;border-bottom:1px solid #ccc;background-color:#f8f8f8;}
+  }
+}
+.TAB_Register{width:98%;margin-left:1%;
+  .Reg_pageButton{margin-top:50px;}
+  .countriesSelect{
+    .select_country{top:59px;}
+    .placeholder_country{height:50px;}
+  }
+}
+.emailPromptNone{display:none;}
+.emailPrompt{width:100%;position:absolute;top:59px;background-color:#fff;z-index:9;.border();box-shadow:2px 2px 3px #ccc;
+  li{width:100%;padding:10px 75px;border-bottom:1px solid #ccc;background-color:#f8f8f8;}
+}
+
+.codeBox{margin-top:35px;margin-bottom:15px;width:98%;margin-left:1%;
+  li{vertical-align:middle;}
+  .txtInput{margin:0px !important;}
+  .width_30{width:30%;}
+}
+.sendEmailOk{padding:30px 5px;text-align:center;
+  .lineBlock{vertical-align:middle;text-align:left;}
+  p{padding-left:10px;}
+}
+
+.forgotPass{font-size:18px;margin-top:25px;margin-bottom:15px;font-weight:bold;}
+
+@media (min-width:590px){
+  .loginInput_box{margin-bottom:30px;
+    .emailIcon{top:23px;left:20px;width:55px;height:35px;}
+    .lockIcon{top:23px;left:20px;width:55px;height:36px;}
+   }
+   
+  .RegisterInput_box{.emailPrompt{top:69px;}}
+   .emailPrompt{top:69px;}
+  .shareLogin_Txt{margin-top:70px;margin-bottom:50px;}
+  .Login_forgotTxt{padding:5px 15px;}
+  .login_pageButton{padding:20px;}
+  .login_nav{
+    li{padding:15px;height:60px;}
+  }
+  .TAB_Register{
+    .Reg_pageButton{margin-top:70px;}
+  .countriesSelect{
+    .select_country{top:67px;}
+    .placeholder_country{height:58px;}
+  }
+  }
+}

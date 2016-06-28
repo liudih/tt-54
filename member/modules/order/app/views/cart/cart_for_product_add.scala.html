@@ -1,0 +1,65 @@
+@(cartForm: Form[valueobjects.order_api.cart.CartItem],
+  	cartItem: valueobjects.order_api.cart.CartItem, 
+  	vo: valueobjects.order_api.cart.CartComposite,
+	renderer: services.cart.CartCompositeRenderer)
+@import services.base._
+@import services.base.utils._
+@helper.javascriptRouter("cartRoutes")(
+	controllers.cart.routes.javascript.Cart.saveCart,
+	controllers.cart.routes.javascript.Cart.cartview
+)
+<div class="rightPaly_box">
+  		<p class="qty_txt">@Messages("qty")</p>
+  		<ul class="qty_num">
+  			<li class="qty_num_Reduction" id="cart-button-qty-sub" name="submit.add-to-cart">
+		  	</li>
+		  	<li class="qty_nums" value="@cartItem.getClistingid" id="clistingid">
+		  		<input id="cart-button-qty" type="text" value="1" name="qty" autocomplete="off">
+		  	</li>
+		  	<li class="qty_num_add" id="cart-button-qty-add" name="submit.add-to-cart">
+			</li>
+		</ul>
+		<div class="clear"></div>
+		<div class="totalPrice_box">
+			@renderer.renderFragment(vo, "bulk_price_info")
+			<input type="hidden" value="@cartItem.getPrice().getSymbol()" id="priceSymbol">
+            <p class="totalPrice_txt">@Messages("total.price")@cartItem.getPrice().getSymbol()<span id="total-price-1" currency="@cartItem.getPrice.getCurrency" name="fprice">@Utils.money(cartItem.getPrice().getPrice())</span></p>
+        </div>
+  		@views.html.product.cart_add_button()
+  		<input class="rightPaly_out lengthWord" id="soldout" value="@Messages("add.to.cart")" type="button" />
+  	
+  		<input class="rightPaly_buyNow" type="button" id="buynow" value="@Messages("buy.now")" >
+  	 @renderer.renderFragment(vo, "product_collect")
+  	 @renderer.renderFragment(vo, "dropship_collect")
+  	 @renderer.renderFragment(vo, "wholesale_collect")
+	<div class="rightPaly_line"></div>
+  	<div class="rightPalyNorton_icon">
+   		<ul>
+	       	<li class="">
+	       		<a href="javascript:vrsn_splash()" tabindex="-1">
+	       		<img name="seal" border="true" src="@controllers.base.routes.Assets.at("nortonseal/nortonseal2.gif")" oncontextmenu="return false;" alt="Click to Verify - This site has chosen an SSL Certificate to improve Web site security">
+	       		</a>
+	       	</li>
+	        <div class="clear"></div>
+       </ul>
+   	</div>
+   	<p class="rightPalyPayment_txt">@Messages("payment.methods")</p>
+	<div class="rightPalyPayment_icon"></div>
+  	<input hidden="true" id="total-price" value="@cartItem.getPrice().getPrice()">
+  </div>
+  
+  <!-- heart成功弹框 -->
+  <div class="blockPopup_box" id="wishListPOP" >
+		<div class="postPhotos_popBox">
+			<div class="customer_popClose"></div>
+			<p>@Messages("successfully.added.item.wishlist")</p>
+			<input type="button" value="OK" id="collectok">
+		</div>
+		<div class="blockPopup_black"></div>
+	</div>
+  
+  <div class="panel-body">
+</div>
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+	@controllers.base.routes.Assets.at("nortonseal/nortonseal.js")
+}

@@ -1,0 +1,42 @@
+@(vo: valueobjects.order_api.ExistingOrderComposite, 
+renderer: services.order.OrderCompositeRenderer)
+@import views.html.helper._
+@helper.javascriptRouter("orderRoutes")(
+	controllers.cart.routes.javascript.Cart.checkCart,
+	controllers.cart.routes.javascript.Cart.cartview
+)
+@views.html.order.top(2,false) {
+	<div class="shoppingCart_con orderD_con">
+		<h5>@Messages("orders.details")</h5>
+		<div class="blackBK"></div>
+		@if(flash.get("error") != null){
+			<div class="error">@flash.get("error")</div>
+		}
+		@*if(vo.getExistingOrderContext.isSelect){
+			@renderer.renderFragment(vo, "shipping-address")
+		}
+		@renderer.renderFragment(vo, "billing-address")*@
+		@if(vo.getExistingOrderContext.isSelect){
+			@renderer.renderFragment(vo, "shipping-method")
+		}
+		@renderer.renderFragment(vo, "cart-product")
+		@form(controllers.order.routes.OrderProcessing.submitOrder(), 'id -> "place_order") {
+			@renderer.renderFragment(vo, "payment")
+			@renderer.renderFragment(vo, "summary")
+			<input name="shippingMethodId" type="hidden">
+			<input name="addressId" type="hidden">
+			<input type="hidden" name="isOrder" value="1">
+			<input type="hidden" name="isSelect" value="@vo.getExistingOrderContext.isSelect">
+			<input type="hidden" name="orderID" value="@vo.getExistingOrderContext.getOrder.getCordernumber"/>
+		}
+	    <div class="cart_bot">
+           	<em></em><span>@Messages("secure.checkout")</span> <br>@Messages("shopping.always.safe.secure")<i></i>
+		</div>
+	</div>
+	@services.base.HtmlUtils.misc().addTailOnce {
+		<script src="@controllers.order.routes.Assets.at("js/order/controller/neworder.js")" ></script>
+	 	<script type="text/javascript" src="@controllers.order.routes.Assets.at("js/member/shippingAddress.js")"></script>
+	  	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/base/country.css")" />
+	}
+}
+	

@@ -1,0 +1,19 @@
+@(fragment: valueobjects.product.ProductImages, title: String)
+@import views.html.home.img
+		<div class="product_banner">
+		<div class="scroll relative">
+			<div class="scroll_box" id="scroll_img" url="@fragment.getThumbnails.get(0).getCimageurl()">
+			<ul class="scroll_wrap">
+			 @fragment.getThumbnails().map{ i =>
+			 <li><a href="#">
+	         
+	          @img(i.getCimageurl(),null,2000,2000,"zoom-tiny-image")	
+	          </a></li>
+	          }
+          </ul>
+			</div>
+			  <ul class="lbBox scroll_position" id='scroll_position'>
+			  </ul>
+		</div>    
+		</div>
+                

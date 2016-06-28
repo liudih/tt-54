@@ -1,0 +1,91 @@
+@views.html.base.master{
+	@services.base.HtmlUtils.misc().addHeadOnce{
+		<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/styles.css")?@version.BuildVersion.build()" />
+	}
+	<div class="container affiliateBox accountRight">
+		<div class="Bread_crumbs_Box">
+			<ul class="Bread_crumbs">
+				<li class="Bread_home"><a href="/"></a></li>
+				<li>
+					<p>
+						<a class="Bread_link" href="javascript:;">@Messages("affiliate.program")</a>
+					</p>
+				</li>
+				<div class="clear"></div>
+			</ul>
+		</div>
+		<a class="affiliateBanner" href="javascript:;"><img
+			src="@controllers.base.routes.Assets.at("/images/affiliateBanner.jpg")"></a>
+		<h5 class="firstH5">@Messages("tomtop.affiliate.program")</h5>
+		<p class="affTxt">
+		@Messages("welcome.to.tomtop.affiliate.program.page.tomtop.affiliate.program.is.available.shareasale.com.we.offer.all.the.affiliates.attractive.tiered.commission.rates.besides.we.constantly.provide.our.affiliates.with.non.expiring.exclusive.coupon.codes.most.popular.deals.coolest.banners.regularly.updated.datafeed.etc")
+		</p>
+		<p class="affTxt">
+		@Messages("its.completely.free.for.you.to.join.us.and.start.the.business.we.pay.commission.to.you.for.every.valid.transaction.via.your.business.or.non.business.channels.want.to.see.what.you.can.make.with.us.join.our.affiliate.program.today")
+		</p>
+		<h5>@Messages("how.to.join.our.affiliate.program")</h5>
+		<ul class="affiliateProgram affPub">
+			<li>@Messages("log.in.shareasale.com.as.an.affiliate.or.a.publisher")</li>
+			<li>@Messages("search.for.our.account.shareasale.id.27868.or.click.the.id.numbers")</li>
+			<li>@Messages("grab.the.tomtop.link.from.the.site.and.add.it.to.your.own.websites")</li>
+			<li>@Messages("now.all.you.need.to.do.is.drive.traffic.to.tomtop.and.watch.the.affiliate.commissions.roll.in")</li>
+			<li>@Messages("affiliate.network.shareasale.linkshare.pay.6.12.commission.per.sale")</li>
+		</ul>
+		<h5>@Messages("how.does.the.affiliate.program.work")</h5>
+		<div class="affiliateProgramWork">
+			<img src="@controllers.base.routes.Assets.at("/images/affiliateProgramWork.jpg")">
+		</div>
+		<h5>@Messages("why.choose.us")</h5>
+		<ul class="affiliateChoose affPub">
+			<li>@Messages("huge.product.data.feed")</li>
+			<li>@Messages("innovative.and.new.products.updated.daily")</li>
+			<li>@Messages("competitive.price.and.discount")</li>
+			<li>@Messages("promotions.launched.regularly")</li>
+			<li>@Messages("competitive.commission")</li>
+			<li>@Messages("product.updated.frequently")</li>
+		</ul>
+		<h5>@Messages("our.commission.policy")</h5>
+		<table class="policyTable" width="800" border="0" cellspacing="0"
+			cellpadding="0">
+			<tr>
+				<td width="36%" class="bg1">@Messages("level.tomtop")</td>
+				<td width="13%" class=" bg1">@Messages("rate")</td>
+				<td width="51%" class="bg1 right_bordre">@Messages("to.reach.this.level.monthly.sales.amount")</td>
+			</tr>
+			<tr>
+				<td>@Messages("level.1")<em class="Level1"></em></td>
+				<td>6%</td>
+				<td class="right_bordre">@Messages("0.999")</td>
+			</tr>
+			<tr>
+				<td>@Messages("level.2")<em class="Level2"></em></td>
+				<td>7%</td>
+				<td class="right_bordre">@Messages("1000.4999")</td>
+			</tr>
+			<tr>
+				<td>@Messages("level.3")<em class="Level3"></em></td>
+				<td>8%</td>
+				<td class="right_bordre">@Messages("5000.9999")</td>
+			</tr>
+			<tr>
+				<td>@Messages("level.4")<em class="Level4"></em></td>
+				<td>10%</td>
+				<td class="right_bordre">@Messages("10000.19999")</td>
+			</tr>
+			<tr>
+				<td class="bottom_bordre">@Messages("level.5")<em class="Level5"></em></td>
+				<td class="bottom_bordre">12%</td>
+				<td class="bottom_bordre right_bordre">@Messages("more.than.20000")</td>
+			</tr>
+		</table>
+		<h5>@Messages("what.we.can.provide")</h5>
+		<ul class="provide affPub">
+			<li>@Messages("competitive.commission.30.60.cookie.days")</li>
+			<li>@Messages("a.weekly.product.feed")</li>
+			<li>@Messages("daily.deal.and.weekly.deal.promotions")</li>
+			<li>@Messages("regularly.updated.banners.including.store.banners.and.promotional.banners")</li>
+			<li>@Messages("frequent.newsletters")</li>
+			<li>@Messages("professional.affiliate.team.support")</li>
+		</ul>
+	</div>
+}

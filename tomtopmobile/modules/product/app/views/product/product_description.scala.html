@@ -1,0 +1,21 @@
+@(vo: valueobjects.product.ProductComposite, renderer: services.product.ProductCompositeRenderer)
+
+
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+	@controllers.base.routes.Assets.at("css/productDescription_page.css")
+}
+
+@services.base.HtmlUtils.misc().addHeadScriptOnce{
+	@controllers.base.routes.Assets.at("js/scroll.js")
+	@controllers.base.routes.Assets.at("js/video.js")
+}
+
+@views.html.base.sub_master("Product Description"){
+
+   <div class="container">
+     <div class="conW98 Description">
+	@renderer.renderFragment(vo, "description")
+	 </div>
+	</div>
+}
+

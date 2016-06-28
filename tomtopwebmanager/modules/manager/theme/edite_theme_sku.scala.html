@@ -1,0 +1,41 @@
+@(theme:forms.loyalty.theme.template.ThemeSkuRelationForm,
+	themes:List[entity.loyalty.Theme],
+	groups:List[forms.loyalty.theme.template.ThemeGroupForm])
+<table class="table table-striped table-hover table-bordered">
+	<tr>
+		<td>id</td>
+		<td><input type="text" name="iid" value="@theme.getIid" readonly="readonly"></td>
+	</tr>	
+	<tr>
+		<td>sku<span class="required">*</span></td>
+		<td><input type="text" name="csku" value="@theme.getCsku" ></td>
+	</tr>
+	<tr>
+		<td>theme url<span class="required">*</span></td>
+		<td>
+			@if(themes != null && themes.size() > 0){<input type="hidden" value="@themes(0).getIwebsiteid" name="iwebsiteid" >}
+			<select name="ithemeid" class="themeurl">
+			@themes.map{ e =>
+				<option value="@e.getIid"  @if(e.getIid == theme.getIthemeid){ selected="selected"}>@e.getCurl</option>
+			}										
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>group<span class="required">*</span></td>
+		<td>
+			<select class="groupname" name="igroupid">
+				@groups.map{e=>
+					<option value="@e.getIid" @if(e.getIid == theme.getIgroupid){selected="selected"}>@e.getCname</option>
+				}
+			</select>	
+		</td>
+	</tr>
+	<tr>
+		<td>sort<span class="required">*</span></td>
+		<td><input type="text" name="isort" value="@theme.getIsort" ></td>
+	</tr>
+</table>
+<script type="text/javascript">
+	bindEvent();
+</script>

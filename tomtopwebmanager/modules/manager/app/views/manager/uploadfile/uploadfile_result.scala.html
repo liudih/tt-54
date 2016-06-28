@@ -1,0 +1,44 @@
+@(result: Map[String, List[dto.image.ImgUseMapping]])
+@import services.base._
+<div id="result">
+	<div class="row-fluid">
+		<div class="control-group">
+			@result.map{i=>
+				@if(i._1.equals("success") && i._2.size() > 0){
+				<div class="success">
+					<h3 class="fs30">Success</h3>
+					@i._2.map{ j =>
+						@if(null != j.getClabel && !"".equals(j.getClabel) ){
+							@if("edm".equals(j.getClabel)){
+								<a href="@controllers.image.routes.Image.edmView(j.getCpath)" target="_blank">@j.getCpath</a>
+							} else {
+							  @if("activity".equals(j.getClabel)){
+								<a href="@controllers.image.routes.Image.activityView(j.getCpath)" target="_blank">@j.getCpath</a>
+							  } else {
+							 	 <a href="@controllers.image.routes.Image.view(j.getCpath)" target="_blank">@j.getCpath</a>
+							  }
+							}
+						} else {
+							<a href="@controllers.image.routes.Image.view(j.getCpath)" target="_blank">@j.getCpath</a>
+						}
+					}
+				</div>
+				}
+				@if(i._1.equals("fail") && i._2.size() > 0){
+				<div class="fail">
+					<h3 class="fs30">Fail</h3>
+					@i._2.map{ j =>
+						<span>@j.getCpath</span>
+					}
+				</div>
+				}
+			}
+		</div>
+	</div>
+</div>
+<style>
+.control-group .fs30{ font-size:30px;}
+.fail{ padding:0 0 15px 20px;border:1px solid #f16048; margin-bottom:10px; background:#faebe7}
+.fail span,.success a{ display:block;padding-left:5px}
+.success{ padding:0 0 15px 20px;border:1px solid #35aa47;background:#dff0d8}
+</style>

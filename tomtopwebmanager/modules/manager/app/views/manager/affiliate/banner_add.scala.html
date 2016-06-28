@@ -1,0 +1,188 @@
+@(bannertypelist: List[entity.manager.EnumAffiliateBanner.BannerType],
+targetlist: List[entity.manager.EnumAffiliateBanner.Target])
+@language = @{services.base.FoundationService._getLanguageObj.getIid}
+@import views.html.helper._
+<input type="hidden" name="languageid" value="@language" />
+<div id="add-banner-modal" class="modal hide fade" tabindex="-1"
+	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+	style="width: 940px; margin-left: -471px;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true"></button>
+		<h3 id="myModalLabel">Add Banner</h3>
+	</div>
+	<div class="modal-body">
+		<div class="row-fluid">
+			<div class="span6">
+				<div class="control-group">
+					<label class="control-label" for="iwebsiteid">WebSite</label>
+					<div class="controls">
+						@services.manager.ChooseService.getInstance().website("iwebsiteid",
+						null, true)</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Title<span class="required">*</span></label>
+					<div class="controls">
+						<input type="text" name="ctitle" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Category<span class="required">*</span></label>
+					<div class="controls">
+						<select name="icategoryid" id="category-add">
+							<option value=""></option>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Banner Type</label>
+					<div class="controls">
+						<select name="cbannertype" id="cbannertype">
+							@bannertypelist.map{b=>
+							<option value="@b.getBannerid()">@b.getBannername()</option> }
+						</select>
+					</div>
+				</div>
+				<div class="control-group" id="sourcef">
+					<label class="control-label">Source File</label>
+					<div class="controls">
+						<input id="bbannerfile" name="bbannerfile" multiple="multiple"
+							type="file" class="isImage">
+					</div>
+				</div>
+				<div class="control-group" id ="div-desa" style="display:none;">
+					<label class="control-label">描述</label>
+					<div class="controls">
+						<input type="text" name="cdescription" id="cdescription" />
+					</div>
+				</div>
+			</div>
+			<div class="span6">
+				<div class="control-group">
+					<label class="control-label">Link</label>
+					<div class="controls">
+						<input type="text" name="clink" id="clink" />
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Target</label>
+					<div class="controls">
+						<select name="ctarget"> @targetlist.map{b=>
+							<option value="@b.getTargetid()">@b.getTargetname()</option> }
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">Disable</label>
+					<div class="controls">
+						<label class="radio"> <input type="radio" name="bstatus"
+							value="true" checked="checked">yes
+						</label> <label class="radio"> <input type="radio" name="bstatus"
+							value="false">no
+						</label>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">fellow</label>
+					<div class="controls">
+						<label class="radio"> <input type="radio"
+							name="brelnofollow" value="true">yes
+						</label> <label class="radio"> <input type="radio"
+							name="brelnofollow" value="false" checked="checked">no
+						</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer" style="margin-bottom: -20px;">
+		<button type="button" class="btn btn-default" data-dismiss="modal">
+			Close</button>
+		<button class="btn blue" type="submit">Save</button>
+	</div>
+	<!-- 添加结束 -->
+	@services.base.HtmlUtils.misc().addTailOnce{
+	<script type="text/javascript">
+function getselect(){
+	var selectcate=$("#editcategory").val();
+	 $("#category-edit").val(selectcate);
+};
+<!--默认请求后台 -->
+/**
+ * type= add or edit
+ */
+function getcategory(type){
+	var websiteid=$("#iwebsiteid").val();
+	var languageid=$("#languageid").val();
+	var url = js_routes.controllers.manager.Affiliate.getCategory(languageid,websiteid).url;
+	$.ajax({
+		url : url, 
+		type : "GET", 
+		dataType : "json",
+		async : true,
+		success : function(data) {
+			if (data.result == "success") {
+				$.each(data.data,function (i,item) {
+					if('add' == type){
+				    	$("#category-add").append($("<option/>").text(item.cname).attr("value",item.icategoryid));
+					}else if('edit' == type){
+						$("#category-edit").append($("<option/>").text(item.cname).attr("value",item.icategoryid));
+						getselect();
+					}
+				
+				});		   
+				
+			}else{
+				alert(data.result);
+			}
+		},
+		complete : function() {
+		}
+	});
+}
+
+<!--修改website触发-->
+$("#iwebsiteid").change(function () {
+    //清除二级下拉列表
+    $("#icategoryid").empty();
+    var websiteid=$("#iwebsiteid").val();
+    var languageid=$("#languageid").val();
+    var changeurl = js_routes.controllers.manager.Affiliate.getCategory(languageid,websiteid).url;
+	console.log(changeurl);
+	$.ajax({
+		url : changeurl, 
+		type : "GET",
+		dataType : "json",
+		async : true,
+		success : function(data) {
+			if (data.result == "success") {
+$.each(data.data,function (i,item) {
+    $("#icategoryid").append($("<option/>").text(item.cname).attr("value",item.icategoryid));
+
+});		   
+				
+			}else{
+				alert(data.result);
+			}
+		},
+		complete : function() {
+		}
+	});
+});
+$("#cbannertype").change(function () {
+    //清除二级下拉列表
+   var cb= $("#cbannertype option:selected").text();
+   if(cb=="text"){
+	   $("#sourcef").hide();
+	   $("#div-desa").css("display","block");
+   }
+   else
+	   {
+	   $("#sourcef").show();
+	   $("#div-desa").css("display","none");
+	   }
+
+});		  
+$(function(){getcategory('add')});
+</script>
+	}

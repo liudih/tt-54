@@ -1,0 +1,33 @@
+@(order : dto.order.Order,paypalForm : dto.payment.WebPaymentResult)
+
+<p class="PaymentMethod_title">Payment Method:</p>
+@if(paypalForm != null && paypalForm.getRes != null){
+<div class="bg_color_gray PaymentMethod_Con">
+	<p class="paymentBT">Global</p>
+	<div class="chooseOneBox payment_choose">
+			<label class="chooseOneLabel input_control">
+				<input type="radio">
+				<div class="radio lineBlock aciCss"><span> </span></div>
+				<div class="paymentImg lineBlock"><img src="@controllers.base.routes.Assets.at("images/PayPal.jpg")"></div>
+				<p class="payment_txt lineBlock">PayPal</p>
+			</label>
+		</div>
+		@*Html.apply(paypalForm.getRes)*@
+</div>
+	
+<a href="javascript:;" id="go-pay-now" class="button_orange span98 marT">Pay Now</a>
+
+@services.base.HtmlUtils.misc().addTail{
+<script type="text/javascript">
+$(function(){
+	$('#go-pay-now').click(function(){
+		//$('#paypalForm').submit();
+		window.location.href='/paypal/ec?ordernum=@order.getCordernumber';
+	});
+});
+</script>
+}
+}else{
+	<a href="javascript:;" id="go-pay-now" class="button_gray span98 marT">Pay Now</a>
+	<p class="red errorRed">sorry! the system is busy now, please try it later!</p>
+}

@@ -1,0 +1,15 @@
+
+          <div id="div_point" class="promo_code coupon_code">
+              <p ><label><input id="loyalty_point" type="radio" value="" />@Messages("points")</label> </p>
+                <form id="loyalty_point" onsubmit="return false">
+                   <input id="point_code_input" name="code" type="text"/>
+                   <span id="point_insert"></span>
+                   <input id="point_button_apply" type="submit" value="@Messages("cart.apply")" />
+                   <input id="point_button_cancel" type="submit" class="cancel" value="@Messages("cart.cancel")"  style="display:none">
+                 </form>
+                  <p type="hidden" class="p_error" style="display: none;">@Messages("cart.loyalty.error")</p>
+                 <form id="undo_loyalty_point" action="@controllers.cart.routes.LoyaltyController.undoCurrentPoint()" method="post">
+                 </form>
+           </div>
+          
+

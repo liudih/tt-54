@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.ProductEntityMapMapper">
+	<resultMap id="BaseResultMap" type="dto.product.ProductEntityMap">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+		<result column="csku" property="csku" jdbcType="VARCHAR" />
+		<result column="ckeyname" property="ckeyname" jdbcType="VARCHAR" />
+		<result column="cvaluename" property="cvaluename" jdbcType="VARCHAR" />
+		<result column="ikey" property="ikey" jdbcType="INTEGER" />
+		<result column="ivalue" property="ivalue" jdbcType="INTEGER" />
+		<result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="DATE" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, clistingid, csku, ikey, ivalue, ccreateuser,
+		dcreatedate
+	</sql>
+	<select id="getProductEntityMapListByListingIds" resultType="dto.product.ProductEntityMap">
+		select * from t_product_entity_map tentity
+		inner join
+		t_attribute_key_name tkey on tentity.ikey=tkey.ikeyid and
+		tkey.ilanguageid=#{1}
+		inner join t_attribute_value_name tvalue on
+		tentity.ivalue= tvalue.ivalueid and tvalue.ilanguageid=#{1}
+		inner join
+		t_product_multiattribute_sku tsku
+		on tsku.csku = tentity.csku
+		inner join
+		t_product_multiattribute_attribute tma
+		on tsku.cparentsku =tma.cparentsku and tentity.ikey = tma.ikey
+		where tma.iwebsiteid=#{2} and 
+		tentity.clistingid in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach>
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_product_entity_map
+		where iid = #{iid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="dto.product.ProductEntityMap">
+		insert into
+		t_product_entity_map ( clistingid, csku,
+		ikey, ivalue, ccreateuser,
+		dcreatedate,multiattribute,bshow)
+		values (
+		#{clistingid,jdbcType=VARCHAR},
+		#{csku,jdbcType=VARCHAR},
+		#{ikey,jdbcType=INTEGER}, #{ivalue,jdbcType=VARCHAR},
+		#{ccreateuser,jdbcType=VARCHAR},
+		#{dcreatedate,jdbcType=DATE},
+		#{multiattribute,jdbcType=BIT},#{bshow})
+	</insert>
+	<insert id="batchInsert" parameterType="java.util.List">
+		insert into t_product_entity_map (clistingid, csku,ikey,
+		ivalue,iwebsiteid,bshow, ccreateuser, dcreatedate,multiattribute)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.clistingid,jdbcType=VARCHAR},
+			#{item.csku,jdbcType=VARCHAR},
+			#{item.ikey,jdbcType=INTEGER},
+			#{item.ivalue,jdbcType=INTEGER},#{item.iwebsiteid,jdbcType=INTEGER},
+			#{item.bshow},
+			#{item.ccreateuser,jdbcType=VARCHAR},
+			#{item.dcreatedate,jdbcType=DATE},#{item.multiattribute,jdbcType=BIT})
+		</foreach>
+	</insert>
+	<insert id="insertSelective" parameterType="dto.product.ProductEntityMap"
+		useGeneratedKeys="true" keyProperty="iid">
+		insert into t_product_entity_map
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				iid,
+			</if>
+			<if test="clistingid != null">
+				clistingid,
+			</if>
+			<if test="csku != null">
+				csku,
+			</if>
+			<if test="ikey != null">
+				ikey,
+			</if>
+			<if test="ivalue != null">
+				ivalue,
+			</if>
+			<if test="iwebsiteid != null">
+				iwebsiteid,
+			</if>
+			<if test="bshow != null">
+				bshow,
+			</if>
+			<if test="multiattribute != null">
+				multiattribute,
+			</if>
+			<if test="ccreateuser != null">
+				ccreateuser,
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				#{iid,jdbcType=INTEGER},
+			</if>
+			<if test="clistingid != null">
+				#{clistingid,jdbcType=VARCHAR},
+			</if>
+			<if test="csku != null">
+				#{csku,jdbcType=VARCHAR},
+			</if>
+			<if test="ikey != null">
+				#{ikey,jdbcType=VARCHAR},
+			</if>
+			<if test="ivalue != null">
+				#{ivalue,jdbcType=VARCHAR},
+			</if>
+			<if test="iwebsiteid != null">
+				#{iwebsiteid},
+			</if>
+			<if test="bshow != null">
+				#{bshow},
+			</if>
+			<if test="multiattribute != null">
+				#{multiattribute},
+			</if>
+			<if test="ccreateuser != null">
+				#{ccreateuser,jdbcType=VARCHAR},
+			</if>
+			<if test="dcreatedate != null">
+				#{dcreatedate,jdbcType=DATE},
+			</if>
+		</trim>
+	</insert>
+</mapper>

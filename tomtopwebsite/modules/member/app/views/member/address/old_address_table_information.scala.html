@@ -1,0 +1,71 @@
+@(i: dto.member.MemberAddress,countryMap:Map[Integer,dto.Country],allCountrys: List[dto.Country])
+				  <tr>
+	                <td><span class="red">*</span> @Messages("name")</td>
+	                <td>
+	               		<input type="hidden" name="iid" value="@i.getIid">
+	                	<input  type="text" value="@i.getCfirstname()" name="cfirstname" maxlength="20">
+	                	<input  type="text" value="@i.getClastname()" name="clastname" maxlength="20">
+	                </td>
+	              </tr>
+	              <tr>
+					<td><span class="red">*</span>@Messages("street")</td>
+					<td><textarea class="streetTA" name="cstreetaddress" maxlength="180">@i.getCstreetaddress()</textarea> </td>
+	              </tr>
+	              <tr>
+					<td><span class="red">*</span>@Messages("country")</td>
+					<td class="edit_country">
+						<div class="Countries_box country">
+							<div class="select_country">
+								<h3 class="flag_@if(null != countryMap.get(i.getIcountry())){@countryMap.get(i.getIcountry()).getCshortname}">
+									<em></em>
+									<span id="current_coutry_span@i.getIid">@if(null != countryMap.get(i.getIcountry())){@countryMap.get(i.getIcountry()).getCname}</span>
+									<em class="ship_xSJ"></em>
+								</h3>
+								<div class="country_all">
+									<div class="search_country">
+										<input type="text" name="search" >
+									</div>
+									<div class="country_list">
+										<ul name="countrylist" tag="@i.getIid">
+										@if(allCountrys != null && allCountrys.size>0){
+	                                      	@allCountrys.map{p=>
+	                                      		<li name="country_li" class="flag_@p.getCshortname" countryCode="@p.getCshortname"><em></em><span name='country' value="@p.getIid">@p.getCname</span></li>	
+	                                      	}
+	                                    }
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="clear"></div>
+						</div> 
+						<input type="hidden" id="hidden_icountry_value@i.getIid" name="icountry" value="@i.getIcountry">
+						<div class="clear"></div>
+					</td>
+				</tr>
+	             <tr>
+	                <td valign="top"><span class="red">*</span>@Messages("state.province.region")</td>
+	                <td>
+	                	<input type="text" value="@i.getCprovince" name="cprovince" id="input_current_province@i.getIid" class="current_province" maxlength="600">
+	                	<ul name="province_list" class="province_list" style="display: none;" tag="@i.getIid"></ul> 
+	                </td>
+	              </tr>
+				  <tr>
+	                <td><span class="red">*</span>@Messages("city")</td>
+	                <td>
+	                	<input type="text" value="@i.getCcity()" name="ccity" maxlength="80">
+	                </td>
+	              </tr>
+	              <tr>
+	                <td><span class="red">*</span>@Messages("zip.postal.code")</td>
+	                <td>
+	                	<input type="text" value="@i.getCpostalcode()" name="cpostalcode" maxlength="80">
+	                    
+	                </td>
+	              </tr>
+	              <tr>
+	                <td><span class="red">*</span>@Messages("phone.number")</td>
+	                <td>
+	                	<input type="text"  value="@i.getCtelephone()" name="ctelephone" maxlength="40">
+	                    
+	                </td>
+	              </tr>

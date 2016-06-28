@@ -1,0 +1,37 @@
+@(cartlist :List[valueobjects.cart.CartItem])
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+@cartlist.map{c=>
+ 
+
+<li class="lbBox" id="drop-@c.getId()">
+	<a class="cartHeader_IMG lineBlock" href="@if(c.getCurl()!=null){@controllers.product.routes.Product.view(c.getCurl())}">
+	@img(c.getCimageurl(),c.getCtitle(),120,120,null, 'width->80, 'height->80, 'alt->c.getCtitle())
+	</a>
+	<div class="lineBlock cartHeader_TXT">
+		<a class="cartTxt" href="@if(c.getCurl()!=null){@controllers.product.routes.Product.view(c.getCurl())}">
+		@if(c.getCtitle()!=null && c.getCtitle().length>50){
+	    	@c.getCtitle().substring(0,50)...
+	    }else{
+	    	@c.getCtitle()
+	    }
+	    </a>
+	   
+		<p class="cartSale">
+		 @if(c.getPrice()!=null){
+	    	@if(c.getPrice().getDiscount()!=null&&c.getPrice().getDiscount()>0){
+			<span class="saleOff">@Utils.percent(c.getPrice().getDiscount())% OFF</span>
+			<span class="seleNum"> @c.getPrice.getSymbol @Utils.money(c.getPrice().getUnitBasePrice()) </span>
+			}
+		}
+		</p>
+			
+		<p>
+			<span class="cartPrice">@c.getPrice.getSymbol @Utils.money(c.getPrice().getUnitPrice())</span>
+			<span>x@c.getIqty()</span>
+		</p>
+	</div>
+	<a class="icon-small-close" onclick="deldrop('@c.getId()','@c.getStorageID()')" href="#"> </a>
+</li>
+}

@@ -1,0 +1,12 @@
+@(sc: valueobjects.search.SearchContext)
+<li id="popularity-ui" class="sortA">
+	
+	@if(sc.extractFirst(classOf[services.search.sort.ViewCountSortOrder]).isDefined()) {
+		@sc.extractFirst(classOf[services.search.sort.ViewCountSortOrder]).asScala.map{c=>
+			<a data-name='popularity' @if(c.isAsc()){data-value='asc'}else{ data-value='desc'}>@Messages("most.popular")<em class="sortUD"></em></a>
+		}
+	} else {
+		<a data-name='popularity' data-value='desc'>@Messages("most.popular")<em class="sortUD"></em></a>
+	}
+</li>
+

@@ -1,0 +1,703 @@
+@(couponRuleList: valueobjects.base.Page[forms.loyalty.CouponRuleForm],
+currencyList:List[dto.Currency],
+couponTypeList:List[entity.loyalty.CouponType],
+timeTypeList:List[enums.loyalty.coupon.manager.CouponRuleSelect.TimeType],
+productTypesList:List[dto.product.ProductLabelType]) 
+@terminalList = @{enums.loyalty.coupon.manager.CouponRuleBack.UseTerminal.getAllTerminal()}
+@import views.html.helper._ 
+@import enums.loyalty.coupon.manager.CouponRuleBack._ 
+@import enums.loyalty.coupon.manager.CouponRuleSelect._
+
+@helper.javascriptRouter("js_routes")(controllers.manager.coupon.routes.javascript.Rule.del,
+controllers.manager.coupon.routes.javascript.Rule.getProductCategory,
+controllers.manager.coupon.routes.javascript.Rule.addTreeCheck,
+controllers.manager.coupon.routes.javascript.Rule.getTreeCheckByRuleId,
+controllers.manager.coupon.routes.javascript.Rule.ChangeStatusOff,
+controllers.manager.coupon.routes.javascript.Rule.ChangeStatusOn )
+
+@views.html.manager.main {
+<input type="hidden" id="catefilterid" value="" />
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<h3 class="page-title">
+				Coupon Rule List<small></small>
+			</h3>
+			<ul class="breadcrumb">
+				<li><i class="icon-home"></i> <a href="/sysadmin">Home</a> <i
+					class="icon-angle-right"></i></li>
+				<li><a href="javascript:;">Coupon</a> <i
+					class="icon-angle-right"></i></li>
+				<li><a href="javascript:;">Rule</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="clearfix">
+				<div class="btn-group">
+					<button id="add_advertising_btn" class="btn green"
+						data-toggle="modal" data-target="#add-banner-modal">
+						Add <i class="icon-plus"></i>
+					</button>
+				</div>
+				@form(controllers.manager.coupon.routes.Rule.add(),
+				'id->"addform"){@couponrule_add(currencyList,couponTypeList,timeTypeList,productTypesList,terminalList)}
+			</div>
+		</div>
+	</div>
+	<!-- search form start -->
+	<div class="row-fluid">
+		@form(controllers.manager.coupon.routes.Rule.getAll(1,15),
+		'class->"form-horizontal", 'id->"rulesearchForm"){
+		<div class="span3">
+			<p>Rule Name</p>
+			<input type="text" name="cname" placeholder="rule name" />
+		</div>
+		<div class="span3">
+			<p>Coupon Type</p>
+			<select name="itype">
+				<option value=""></option>
+				<option value="1">Cash Coupon</option>
+				<option value="2">Discount Coupon</option>
+			</select>
+		</div>
+		<div class="span3">
+			<p>Available Status</p>
+			<select name="istatus">
+				<option value=""></option>
+				<option value="0">off</option>
+				<option value="1">on</option>
+			</select>
+		</div>
+		<div class="span3">
+			<p>Time Type</p>
+			<select name="ctimetype" id="search-timetype">
+				<option value=""></option>
+				<option value="Validity">Validity</option>
+				<option value="Date">Date</option>
+			</select>
+		</div>
+		<div id="div-search-date" style="display: none">
+			<label for="dtp_input1">Start Date</label>
+			<div class="input-group date form_datetime col-md-5" data-date=""
+				data-date-format="yyyy-mm-dd hh:ii"
+				data-link-field="dtp_input_startDate">
+				<input name="startdateStr" id="add_startdate" class="form-control"
+					size="16" type="text" value="" readonly> <span
+					class="input-group-addon"><span
+					class="glyphicon glyphicon-remove"></span></span> <span
+					class="input-group-addon"><span
+					class="glyphicon glyphicon-th"></span></span>
+			</div>
+			<input type="hidden" id="dtp_input_startDate" value="" /> <label
+				for="dtp_input1">End Date</label>
+			<div class="input-group date form_datetime col-md-5" data-date=""
+				data-date-format="yyyy-mm-dd hh:ii"
+				data-link-field="dtp_input_endDate">
+				<input name="enddateStr" id="add_endtate" class="form-control"
+					size="16" type="text" value="" readonly> <span
+					class="input-group-addon"><span
+					class="glyphicon glyphicon-remove"></span></span> <span
+					class="input-group-addon"><span
+					class="glyphicon glyphicon-th"></span></span>
+			</div>
+			<input type="hidden" id="dtp_input_endDate" value="" />
+		</div>
+		<br>
+		<div id="div-search-validity" style="display: none">
+			<p>Validity</p>
+			<input type="text" name="validityMini" placeholder="" />day - <input
+				type="text" name="validityMax" placeholder="" />day
+		</div>
+		<br>
+		<button class="btn blue" type="submit">search</button>
+		<div class="btn blue" id="rulesearchreset">reset</div>
+	</div>
+	}
+	<!-- end search form -->
+	<div class="row-fluid">
+		<div class="span12">
+			<div id="sample_editable_1_wrapper"
+				class="dataTables_wrapper form-inline" role="grid">
+				<table class="table table-striped table-hover table-bordered"
+					id="couponrule_table">
+					<thead>
+						<tr>
+							<th>Rule Name</th>
+							<th>Coupon Type</th>
+							<th>currency</th>
+							<th>Value</th>
+							<th>Discount</th>
+							<th>Lowest Consumption Amount</th>
+							<th>Status</th>
+							<th>Category Exclusion</th>
+							<th>Description</th>
+							<th>Time Type</th>
+							<th>Validity</th>
+							<th>Start Date</th>
+							<th>End Date</th>
+							<th>Available</th>
+							<th>Edit</th>
+							<th>Delete</th>
+						</tr>
+					</thead>
+					<tbody>
+						@couponRuleList.getList().map{b=>
+						<tr>
+							<td>@b.getCname</td>
+							<td>@b.getTypeName</td> @if(b.getTypeName=="Cash Coupon"){
+							<td>@b.getCurrencyName</td>
+							<td>@b.getFcouponamount</td>
+							<td></td> }else{
+							<td></td>
+							<td></td>
+							<td>@b.getFdiscount()%</td>}
+							<td>@b.getForderamountlimit</td>
+							<td>@{ if (Status.OFF.getStatusid == b.getIstatus) "off"
+								else if (Status.ON.getStatusid == b.getIstatus) "on" else
+								"closed" 
+								}
+							</td>
+							<td>
+								<a name="editTree" class="editCmsContent" href="javascript:;" onclick="edittreefilter('@b.getIid()')">
+									<i class="icon-pencil"></i>
+								</a>
+							</td>
+							<td>@b.getCdescription()</td>
+							<td>@b.getCtimetype</td> 
+							@if(TimeType.VALIDITY.getTypeid == b.getCtimetype){
+							<td>@b.getIvalidity</td>
+							<td></td>
+							<td></td> 
+							}else{
+							<td></td>
+							<td>@b.getStartdateStr</td>
+							<td>@b.getEnddateStr</td> 
+							} 
+							@if(Status.ON.getStatusid == b.getIstatus){
+								<td>
+								<a class="deletecms_content" href="javascript:;"
+									onclick="statusoff('@b.getIid()')">close</a>
+								<td><a class="editCmsContent"
+									href="@controllers.manager.coupon.routes.Rule.get(b.getIid())"
+									data-target="#modify-banner-modal" data-toggle="modal"><i
+										class="icon-pencil"></i></a>
+								</td>  
+							} 
+							@if(Status.OFF.getStatusid == b.getIstatus){
+								<td><a class="deletecms_content" operate="statuson"
+									rule-website="@b.getCwebsiteid" rule-coupontype="@b.getTypeName"
+									rule-validity="@b.getIvalidity"
+									rule-startdate="@b.getStartdateStr"
+									rule-enddate="@b.getEnddateStr" rule-id="@b.getIid"
+									rule-timetype="@b.getCtimetype" rule-par="@b.getFcouponamount"
+									rule-currency="@b.getCurrencyName"
+									rule-discount="@b.getForderamountlimit" href="javascript:;">publish</a>
+								</td>
+								<td><a class="editCmsContent"
+									href="@controllers.manager.coupon.routes.Rule.get(b.getIid())"
+									data-target="#modify-banner-modal" data-toggle="modal"><i
+										class="icon-pencil"></i></a></td> 
+							}
+							@if(Status.CLOSED.getStatusid == b.getIstatus){
+							<td>
+								<a class="deletecms_content" href="@controllers.manager.coupon.routes.Rule.reopen(b.getIid())" >reopen</a>
+							</td>
+							<td></td> 
+							}
+
+							<td><a class="deletecms_content" href="javascript:;"
+								onclick="deldata('@b.getIid()')"><i class="icon-trash"></i></a>
+							</td>
+						</tr>
+						}
+					</tbody>
+				</table>
+
+			</div>
+		</div>
+
+	</div>
+
+
+	<!-- page start -->
+	<div class="row-fluid">
+		@if(couponRuleList.totalPages>0){
+		<div class="span6">
+			<div>当前第@couponRuleList.pageNo()页|共@couponRuleList.totalPages()页</div>
+		</div>
+		<div class="span6">
+			<div class="dataTables_paginate paging_bootstrap pagination">
+				<ul>
+					@if(1 == couponRuleList.pageNo){
+						<li class="disabled"><a href="javascript:;">«</a></li>
+					 }else{
+						<li><a	href="@controllers.manager.coupon.routes.Rule.getAll(couponRuleList.pageNo-1,10)">«</a></li>
+					} 
+					@for(i <- couponRuleList.pageNo - 5 to couponRuleList.pageNo + 5 if i > 0 ; if i <=couponRuleList.totalPages) {
+						@if(i ==couponRuleList.pageNo){
+							<li class="disabled"><a href="javascript:;">@i</a></li> }else{
+							<li><a	href="@controllers.manager.coupon.routes.Rule.getAll(i,10)">@i</a></li>
+						}
+					 } 
+					@if(couponRuleList.pageNo >= couponRuleList.totalPages){
+						<li class="disabled"><a href="javascript:;">»</a></li> 
+					}else{
+						<li><a	href="@controllers.manager.coupon.routes.Rule.getAll(couponRuleList.pageNo+1,10)">»</a></li>
+					}
+				</ul>
+			</div>
+		</div>
+		}else{
+		<div class="span12" style="text-align: center;">no data</div>
+		}
+	</div>
+	<!-- page end -->
+
+	<!-- sample_editable_1_wrapper  end -->
+
+</div>
+<!-- edit start -->
+@form(controllers.manager.coupon.routes.Rule.edit(), 'id->"editform"){
+<div id="modify-banner-modal" style="width: 900px; margin-left: -450px"
+	class="modal hide fade" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<form class="form-horizontal" id="editForm">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal"
+				aria-hidden="true"></button>
+			<h3 id="myModalLabel">Edit Coupon Rule</h3>
+		</div>
+
+		<div class="modal-body"></div>
+		<div class="modal-footer" style="margin-bottom: -20px;">
+			<button type="button" class="btn btn-default" data-dismiss="modal">
+				Close</button>
+			<div class="btn blue" onclick="editrule()">Save</div>
+		</div>
+		}
+</div>
+<!-- edit end -->
+<!-- edit categoryfilter start -->
+<div id="modify-catefilter-modal"
+	style="width: 900px; height: 600px; margin-left: -450px"
+	class="modal hide fade" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true"></button>
+		<h3 id="myModalLabel">Category Exclusion</h3>
+	</div>
+	<div id="treeCache"></div>
+	<div class="modal-body">
+		<!-- checkbox页面开始 -->
+		<div class="content_wrap">
+			<div class="zTreeDemoBackground left" id="d_tree">
+				<!-- <ul id="categoryTree" class="ztree"></ul> -->
+
+			</div>
+		</div>
+
+		<!-- checkbox页面结束 -->
+
+	</div>
+	<div class="modal-footer" style="margin-bottom: -20px;">
+		<button type="button" id="editCategoryCLose" class="btn btn-default" data-dismiss="modal">
+			Close</button>
+		<button class="btn blue" id="b_tree_save">Save</button>
+	</div>
+</div>
+<!--edit categoryfilter end -->
+<!-- add tail start -->
+@services.base.HtmlUtils.misc().addTailOnce{
+
+<script type="text/javascript">
+$('#modify-banner-modal').on('shown.bs.modal', function (e) {
+	$('#modify-banner-modal .form_datetime').datetimepicker({
+	        language:  'zh-CN',
+	        weekStart: 1,
+	        todayBtn:  1,
+			autoclose: 1,
+			todayHighlight: 1,
+			startView: 2,
+			forceParse: 0,
+	        showMeridian: 1,
+	      	format: 'yyyy-mm-dd hh:ii',
+	      	minuteStep : 1
+	});
+});
+$("#modify-banner-modal").on("hidden", function() {
+    $(this).removeData("modal");
+});
+
+var postids="";
+function edittreefilter(id){
+		$('#catefilterid').val(id);
+		$('#modify-catefilter-modal').modal();
+		$("#d_tree").empty(); 
+		$("#d_tree").append('<ul id="categoryTree" class="ztree"></ul>');
+		treeInit(id);
+}
+
+function statusoff(id){
+	var url = js_routes.controllers.manager.coupon.Rule.ChangeStatusOff(id).url;
+	if (!confirm("Are you sure to disable this rule ?")) {
+		return;
+	}
+	$.ajax({
+		url : url,
+		type : "POST",
+		dataType : "json",
+		async : true,
+		success : function(data) {
+			if (data.result == "success") {
+				location.reload();
+			} else {
+				alert(data.result);
+			}
+		},
+		complete : function() {
+		}
+	});
+}
+
+function statuson(id){
+	var url = js_routes.controllers.manager.coupon.Rule.ChangeStatusOn(id).url;
+	if (!confirm("Rules after enabled will not modify, please careful enabled,are you sure to enable this rule ?")) {
+		return;
+	}
+	$.ajax({
+		url : url,
+		type : "POST",
+		dataType : "json",
+		async : true,
+		success : function(data) {
+			if (data.result == "success") {
+				location.reload();
+			} else {
+				alert(data.result);
+			}
+		},
+		complete : function() {
+		}
+	});
+}
+
+<!-- save start -->	
+function editrule(){
+	var name = $('#edit_name').val();
+	var coupontype=$('#edit_coupontype').val();
+	var par=$('#edit_fcouponamount').val();
+	var discount=$('#edit_fdiscount').val();
+	var limit=$('#edit_forderamountlimit').val();
+	var timtype=$('#edit_timetype').val();
+	var validity=$('#edit_ivalidity').val();
+	var startdate=$('#edit_startdate').val();
+	var enddate=$('#edit_enddate').val();
+	var sku=$('#edit_sku').val();
+	if(!name){
+		alert('name required!');
+		return;
+	}
+	if(coupontype==1&&!par){
+		alert('par required!');
+		return;
+	}
+	if(coupontype==1&&!(par>0)){
+		alert('par should be greater than 0!');
+		return;
+	}
+	if(coupontype==2&&!discount){
+		alert('discount required!');
+		return;
+	}
+	if(coupontype==2&&!(discount>0&&discount<100)){
+		alert('discount should be greater than 0% and less than 100%!');
+		return;
+	}
+	if(!limit||!(limit>0)){
+		alert('Please check lowest Consumption Amount!');
+		return;
+	}
+	if(timtype=="Validity"&&(!validity||!(validity>0))){
+		alert('Please check validity!');
+		return;
+	}
+	if(timtype=="Date"&&!startdate&&!enddate){
+		alert('date required!');
+		return;
+	}
+	if(sku){
+		if(!validatesku(sku)){
+		alert('Please check sku format');
+		return;
+		}
+	}
+	var producttype = [];
+	$('#cproducttype_select_edit').parent().find('span').each(function(){
+		producttype.push($(this).text());
+	});
+	$('#cproducttype_edit').val(producttype.join(',').toString());
+	$('#edit_website').attr("disabled",false);
+	$('#editform').submit();
+}
+
+function saverule(){
+	var name = $('#add_name').val();
+	var coupontype=$('#add_coupontype').val();
+	var par=$('#add_fcouponamount').val();
+	var limit=$('#add_forderamountlimit').val();
+	var discount=$('#add_fdiscount').val();
+	var timtype=$('#add_timetype').val();
+	var validity=$('#add_ivalidity').val();
+	var startdate=$('#add_startdate').val();
+	var enddate=$('#add_enddate').val();
+	var sku=$('#add_sku').val();
+	if(!name){
+		alert('name required!');
+		return;
+	}
+	if(coupontype==1&&!par){
+		alert('par required!');
+		return;
+	}
+	if(coupontype==1&&!(par>0)){
+		alert('par should be greater than 0!');
+		return;
+	}
+	if(coupontype==2&&!discount){
+		alert('discount required!');
+		return;
+	}
+	if(coupontype==2&&!(discount>0&&discount<100)){
+		alert('discount should be greater than 0% and less than 100%!');
+		return;
+	}
+	if(!limit||!(limit>0)){
+		alert('Please check lowest Consumption Amount!');
+		return;
+	}
+	if(timtype=="Validity"&&(!validity||!(validity>0))){
+		alert('Please check validity!');
+		return;
+	}
+	if(timtype=="Date"&&!startdate&&!enddate){
+		alert('date required!');
+		return;
+	}
+	if(sku){
+		if(!validatesku(sku)){
+		alert('Please check sku format');
+		return;
+		}
+	}
+	var producttype = [];
+	$('#cproducttype_select').parent().find('span').each(function(){
+		producttype.push($(this).text());
+	});
+	$('#cproducttype').val(producttype.join(',').toString());
+	$('#add_website').attr("disabled",false);
+	$('#addform').submit();
+}
+
+<!-- save end   -->	
+<!-- 删除开始 -->
+	function deldata(id) {
+		var urldel = js_routes.controllers.manager.coupon.Rule.del(id).url;
+		if (!confirm("Are you sure to delete this row ?")) {
+			return;
+		}
+		$.ajax({
+			url : urldel,
+			type : "POST",
+			data : {
+				id : id
+			},
+			dataType : "json",
+			async : true,
+			success : function(data) {
+				if (data.result == "success") {
+					location.reload();
+				} else {
+					alert(data.result);
+				}
+			},
+			complete : function() {
+			}
+		});
+	}
+	<!-- 删除结束 -->
+	
+	
+	<!-- tree js start-->
+	var setting = {  
+			check:{
+                enable:true,
+                chkboxType: { "Y": "s", "N": "ps" }
+            },
+            data:    {
+                key:{
+                	chileren:"children",
+                	name:"name"
+                }
+            }
+		};  
+		  
+		var zTree;  
+		var treeNodes;  
+	 	  function treeInit(id){  
+	 		  var treeValue=getTreeCache();
+	 		  if(treeValue){
+	 			 $.fn.zTree.init($("#categoryTree"), setting, treeValue);
+	 			 getcheck(id);
+	 		  } 
+	 		  else{
+		    			var geturl=js_routes.controllers.manager.coupon.Rule.getProductCategory(id).url;
+		    		    $.ajax({  
+		    		        type: 'GET',  
+		    		        dataType : "json",  
+		    		        url: geturl,//请求的action路径  
+		    		        error: function () {//请求失败处理函数  
+		    		            alert('加载失败');  
+		    		        },  
+		    		        success:function(data){ //请求成功后处理函数。    
+		    		        	 $.fn.zTree.init($("#categoryTree"), setting, data.data);
+		    		           getcheck(id); 
+		    		           //setTreeCache(data.data);
+		    		        }  
+		    		    });  
+	 		  }
+		    
+			}
+	<!--check start-->
+	function onCheck(){
+		var ruleid=$("#catefilterid").val();
+		var treeObj = $.fn.zTree.getZTreeObj("categoryTree");
+		          		 var nodes=treeObj.getCheckedNodes(true);
+		          		var checkids = "";
+		          			for(var i=0;i<nodes.length;i++){
+			    	        	//获取子节点
+			    	           	var isParent = nodes[i].isParent;
+			    	           	if(!isParent){
+			    	           		checkids+=","+nodes[i].id;
+		    	           		}
+		          			}
+		          			treeadd(checkids,ruleid);
+			}
+	
+     <!--check end-->
+        <!--check save add-->
+        function getTreeCache(){
+        	return $("#treeCache").data("treeValue");
+        }
+        function setTreeCache(data){
+        	$("#treeCache").data("treeValue",data)
+        }
+        function treeadd(ids,ruleid){
+        	var treeJson ={
+	        				"ids":ids,
+			      		    "ruleid":ruleid
+		      		  	 };
+            	  $.ajax({  
+		      		        type: 'POST',  
+		      		        contentType : "application/json", 
+		      		        url: js_routes.controllers.manager.coupon.Rule.addTreeCheck().url,//请求的action路径  
+		      		        data:JSON.stringify(treeJson),
+		      		        error: function () {//请求失败处理函数  
+		      		            alert('请求失败');  
+		      		        },  
+		      		        success:function(data){ //请求成功后处理函数。    
+		      		        	$("#editCategoryCLose").click();
+		      		        	alert("保存成功")
+		      		        	// $.fn.zTree.init($("#categoryTree"), setting, data.data);
+		      		           
+		      		        }  
+      		    	    });    
+        }
+        function getcheck(id){
+        	$.ajax({  
+	      		        type: 'GET',  
+	      		        dataType : "json",  
+	      		        url: js_routes.controllers.manager.coupon.Rule.getTreeCheckByRuleId(id).url,//请求的action路径  
+	      		        error: function () {//请求失败处理函数  
+	      		            alert('请求失败');  
+	      		        },  
+	      		        success:function(data){ //请求成功后处理函数。   
+	      		        	var treeObj = $.fn.zTree.getZTreeObj("categoryTree");
+	      		        	var checkid = data.data;
+	      		        	var node = null;
+	      		        	for( var i=0; i < checkid.length; i ++ ) {
+	      		        		treeObj.checkNode( treeObj.getNodeByParam("id", checkid[i] ),true , false,false );
+	      		        	}
+	      		        }  
+  		   			 });    
+        }
+        
+        <!--check save-->
+     
+        <!--异步请求后台 end-->
+	<!--tree js 结束-->
+	function changesearchtimetype(){
+		var timetype=$('#search-timetype').val();
+		if(timetype=='Validity'){
+			$('#div-search-date').hide();
+			$('#div-search-validity').css("display", "block");
+			$('#div-search-date > div >input').attr('value','');
+		}
+		else if(timetype=='Date'){
+			$('#div-search-date').css("display", "block");
+			$('#div-search-validity').hide();
+			$('#div-search-validity > input').attr('value','');
+		}
+		else{
+			$('#div-search-date').hide();
+			$('#div-search-validity').hide();
+			$('#div-search-date > div >input').attr('value','');
+			$('#div-search-validity > input').attr('value','');
+		}
+	}
+	function reset(){
+		$('#rulesearchForm')[0].reset();
+	}
+
+	$(function() {
+		$('#couponrule_table').find('a[operate=statuson]').click(function(){
+			var id=$(this).attr("rule-id");
+			var currency=$(this).attr("rule-currency");
+			var par=$(this).attr("rule-par");
+			var discount=$(this).attr("rule-discount");
+			var validity=$(this).attr("rule-validity");
+			var startdate=$(this).attr("rule-startdate");
+			var enddate=$(this).attr("rule-enddate");
+			var coupontype=$(this).attr("rule-coupontype");
+			var timetype=$(this).attr("rule-timetype");
+			var websiteid=$(this).attr("rule-website");
+			if(websiteid&&coupontype&&timetype&&coupontype=="Cash Coupon"&&par&&currency&&((timetype=="Validity"&&validity)||(timetype=="Date"&&startdate&&enddate))){
+				statuson(id);
+			}
+			else if(websiteid&&coupontype&&timetype&&coupontype=="Discount Coupon"&&discount&&((timetype=="Validity"&&validity)||(timetype=="Date"&&startdate&&enddate))){
+				statuson(id);
+			} 
+			else{alert("Please complete information");}  
+		});
+		$('#rulesearchreset').click(function(){
+			reset();
+		})
+		$('#search-timetype').change(function(){
+			changesearchtimetype();
+		})
+		$('#b_tree_save').click(function(){
+			onCheck();
+		});
+		$('#cproducttype_select').chosen({
+	       	'width' : '95%',
+	       	'disable_search' : false
+       	});
+	})
+</script>
+}
+<!-- add tail end -->
+}

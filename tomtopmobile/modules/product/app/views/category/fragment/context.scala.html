@@ -1,0 +1,8 @@
+ @(roots: List[dto.product.CategoryWebsiteWithName])
+
+    	@if(roots != null && roots.size() > 0) {
+    	   @roots.map{ r =>												
+               <li class="lineBlock"><a href="@controllers.product.routes.Category.subCategories(r.getCpath())" class="@utils.CategoryUtils.getIconClass(r.getCname)"><i>&nbsp;</i>@r.getCname()</a></li> 
+			}
+    		   		
+    	}

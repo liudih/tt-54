@@ -1,0 +1,105 @@
+@(messages: List[dto.product.ProductAttachmentMessage], languageMap: Map[Integer, String],
+ websiteMap: Map[Integer, String],
+ count: Integer, pageNum: Integer, pageTotal: Integer)
+@import views.html.helper._
+@import services.base.utils._
+<div id="search_file_html" style="padding-bottom: 100px;">
+	<div class="portlet-body">
+				<table class="order_ll_box" width="100%" border="0" cellspacing="1" cellpadding="0" id="attachmentMapper">
+				<thead>
+					  <tr>
+					    <th class="order_ll_Id">
+					    	<p class="inlineBlock">website</p>
+					    	<p class="inlineBlock">language</p>
+					    </th>
+					    <th class="order_ll_dizhi">
+					    	<p class="inlineBlock">sku</p>
+					        <p class="inlineBlock">file title</p>
+					        <p class="inlineBlock">file describe</p>
+					    </th>
+					    <th class="order_ll_zhifu">
+					    	<p class="inlineBlock">create user</p>
+					    	<p class="inlineBlock">create date</p>
+					    </th>
+					    <th class="order_ll_caozuo"><p class="inlineBlock">操作</p></th>
+					  </tr>
+				</thead>
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+				@if(null != messages && messages.size() > 0){
+					   @messages.asScala.map{i=>
+					   <tr class="order_ll_infTR">
+						    <td>
+						    	<p class="order_ll_marT">
+						    		<span class="order_ll_999">Website:</span>
+						    		@if(null != websiteMap && null != i.getProductAttachmentMapper().getIwebsiteid()){
+						    			@websiteMap.get(i.getProductAttachmentMapper().getIwebsiteid())
+						    		}
+						    	</p>
+						    	<p class="order_ll_marT">
+						    		<span class="order_ll_999">language:</span>
+						    		@if(null != languageMap && null != i.getProductAttachmentMapper().getIlanguage()){
+						    			@languageMap.get(i.getProductAttachmentMapper().getIlanguage())
+						    		}
+						    	</p>
+						    </td>
+						    <td>
+						    	<div class="order_ll_marT">
+						        	<p class="order_ll_inline"><span class="order_ll_adds">Sku:</span>  @i.getProductAttachmentMapper().getCsku()</p>
+						            <p class="order_ll_inline"><span class="order_ll_adds">File Title : </span> @i.getAttachmentDesc().getCtitle()</p>
+						            <p class="order_ll_inline"><span class="order_ll_adds">File Describe :</span> @i.getAttachmentDesc().getCdescribe()</p>
+						         </div>
+						    </td>
+						    <td>
+						    	<div class="order_ll_marT">
+						        	<p class="order_ll_inline"><span class="order_ll_adds">Create User:</span>  @i.getProductAttachmentMapper().getCcreateuser()</p>
+						            <p class="order_ll_inline"><span class="order_ll_adds">Create Date: </span> @services.base.utils.DateFormatUtils.getStrFromYYYYMMDDHHMMSS(i.getProductAttachmentMapper().getDcreatedate())</p>
+						         </div>
+						    </td>
+							<td>
+								<a class="delete deleteMapper" href="javascript:;" data-id="@i.getProductAttachmentMapper().getIid()"><i class="icon-trash"></i></a>
+							</td>
+						</tr>
+						}
+					}else{
+						<tr class="order_ll_infTR">
+									<td colspan="6" style="text-align:center;"><h4>暂无信息</h4></td>
+					    </tr>
+					}
+					</tbody>
+				</table>
+				<div class="row-fluid">
+					<div class="span6">
+						<div class="dataTables_info">当前第 <span>@pageNum</span> 页|共 <span>@pageTotal</span> 页| 共 <span>@count</span> 条记录</div>
+					</div>
+					<div class="span6">
+						<div class="dataTables_paginate paging_bootstrap pagination">
+							<input id="pagenum" value="@pageNum" type="hidden"> 
+							<input id="pagetotal" value="@pageTotal" type="hidden"> 
+							
+							@if(pageTotal>1){
+							<ul>
+								@if(1 == pageNum){
+								<li class="disabled"><a href="javascript:;">«</a></li>
+								}else{
+								<li><a href="javascript:;" tag="pageNum" value="1">«</a></li>
+								}
+								@for(i <- pageNum - 6 to pageNum + 6 if i >= 1; if i<= pageTotal) {
+									@if(i == pageNum){
+									<li class="disabled"><a href="javascript:;" tag="pageNum" value="@i">@i</a></li>
+									}else{
+									<li><a href="javascript:;" tag="pageNum" value="@i">@i</a></li>
+									}
+								}
+								@if(pageNum >= pageTotal){
+								<li class="disabled"><a href="javascript:;">»</a></li>
+								}else{
+								<li><a href="javascript:;" tag="pageNum" value="@pageTotal">»</a></li>
+								}
+							</ul>
+							}
+						</div>
+					</div>
+				</div>
+	</div>
+</div>
+

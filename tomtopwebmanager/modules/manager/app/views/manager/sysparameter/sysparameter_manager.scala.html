@@ -1,0 +1,117 @@
+@(
+ sysParamList: List[dto.SystemParameter]
+) 
+
+@import views.html.helper._
+
+@views.html.manager.main {
+
+	@helper.javascriptRouter("js_SystemParameterRoutes")(
+		controllers.manager.routes.javascript.SystemParameter.validateKey,
+		controllers.manager.routes.javascript.SystemParameter.addSysParameter,
+		controllers.manager.routes.javascript.SystemParameter.alterSysParameter,
+		controllers.manager.routes.javascript.SystemParameter.deleteSysParameter,
+		controllers.manager.routes.javascript.SystemParameter.getAlllanguage,
+		controllers.manager.routes.javascript.SystemParameter.getAllWetsite
+		
+	)
+
+	<!-- BEGIN PAGE CONTAINER-->
+	<div class="container-fluid">
+	
+		<!-- BEGIN PAGE HEADER-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+				<h3 class="page-title">
+					系统参数管理 
+				</h3>
+				<ul class="breadcrumb">
+					<li><i class="icon-home"></i> <a href="/sysadmin">Home</a>
+						<i class="icon-angle-right"></i></li>
+					<li><a href="#">系统参数</a> <i class="icon-angle-right"></i>
+					</li>
+					<li><a href="#">系统参数管理 </a></li>
+				</ul>
+				<!-- END PAGE TITLE & BREADCRUMB-->
+			</div>
+		</div>
+		<!-- END PAGE HEADER-->
+		
+		
+		<!-- BEGIN PAGE CONTENT-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN EXAMPLE TABLE PORTLET-->
+				<div class="portlet box blue">
+					<div class="portlet-title">
+						<div class="caption">
+							<i class="icon-edit"></i>系统参数管理
+						</div>
+						<div class="tools">
+							<a href="javascript:;" class="collapse"></a> <a
+								href="#portlet-config" data-toggle="modal" class="config"></a>
+							<a href="javascript:;" class="reload"></a> <a
+								href="javascript:;" class="remove"></a>
+						</div>
+					</div>
+
+					<div class="portlet-body">
+						<div class="clearfix">
+							<div class="btn-group">
+								<button id="sysparameter_manager_table_new" class="btn green">
+									新增系统参数 <i class="icon-plus"></i>
+								</button>
+							</div>
+						</div>
+						<table class="table table-striped table-hover table-bordered"
+							id="sysparameter_manager_table">
+							<thead>
+								<tr>
+									<th>序号</th>
+									<th>站点</th>
+									<th>KEY</th>
+									<th>参数值</th>
+									<th>Edit</th>
+									<th>Delete</th>
+								</tr>
+							</thead>
+							<tbody>
+								 @sysParamList.map{a=>
+									<tr class="" id="@a.getIid()" title="@a.getCparameterkey()">
+										<td >@a.getIid()</td>
+										<td class="center">@a.getWebsitename()</td>
+										<td class="center">@a.getCparameterkey()</td>
+										<td class="center">@a.getCparametervalue()</td>
+										<td><a class="edit" href="javascript:;">Edit</a></td>
+										<td><a class="delete" href="javascript:;">Delete</a></td>
+										
+									</tr>
+								}
+							</tbody>
+
+						</table>
+
+					</div>
+
+				</div>
+
+				<!-- END EXAMPLE TABLE PORTLET-->
+
+			</div>
+
+		</div>
+
+		<!-- END PAGE CONTENT -->
+
+	</div>
+
+			<!-- END PAGE CONTAINER-->
+
+
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/manager/sysparameter/sysparameter_edittable.js")'></script>
+	} 
+
+
+}

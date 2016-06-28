@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.search.KeywordSuggestMapper" >
+  <resultMap id="BaseResultMap" type="dto.search.KeywordSuggest" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="ckeyword" property="ckeyword" jdbcType="VARCHAR" />
+    <result column="irank" property="irank" jdbcType="INTEGER" />
+    <result column="icategoryid" property="icategoryid" jdbcType="INTEGER" />
+    <result column="ilanguageid" property="ilanguageid" jdbcType="INTEGER" />
+    <result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+    <result column="cinfo" property="ckeyword" jdbcType="VARCHAR" />
+    <result column="iresults" property="iresults" jdbcType="INTEGER" />
+    <result column="bmachine" property="bmachine" jdbcType="BOOLEAN" />
+    <result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="DATE" />
+  </resultMap>
+ 
+  <sql id="Base_Column_List" >
+    iid, ckeyword, irank, icategoryid, ilanguageid, iwebsiteid,cinfo,iresults,bmachine,ccreateuser, dcreatedate
+  </sql>
+ 
+  <insert id="insert" parameterType="dto.search.KeywordSuggest" >
+    insert into t_keyword_suggest (ckeyword, irank, icategoryid, ilanguageid, iwebsiteid,cinfo,iresults,bmachine,ccreateuser,dcreatedate)
+    values (#{ckeyword,jdbcType=VARCHAR}, 
+            #{irank,jdbcType=INTEGER},
+            #{icategoryid,jdbcType=INTEGER}, 
+            #{ilanguageid,jdbcType=INTEGER}, 
+            #{iwebsiteid,jdbcType=INTEGER}, 
+            #{cinfo,jdbcType=VARCHAR},
+            #{iresults,jdbcType=INTEGER},
+            #{bmachine,jdbcType=BOOLEAN},
+            #{ccreateuser,jdbcType=VARCHAR}, 
+            #{dcreatedate,jdbcType=DATE})
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="dto.search.KeywordSuggest" >
+    update t_keyword_suggest
+    set ckeyword = #{ckeyword,jdbcType=INTEGER},
+      irank = #{irank,jdbcType=INTEGER},
+      icategoryid = #{icategoryid,jdbcType=INTEGER},
+      ilanguageid = #{ilanguageid,jdbcType=INTEGER},
+      iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      cinfo = #{cinfo,jdbcType=VARCHAR},
+      iresults = #{iresults,jdbcType=INTEGER},
+      bmachine = #{bmachine,jdbcType=BOOLEAN},
+      ccreateuser = #{ccreateuser,jdbcType=VARCHAR}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,98 @@
+@(storageInfoList: List[dto.StorageParent],
+allStorages: List[dto.Storage])
+@import views.html.helper._
+@views.html.manager.main{
+	@helper.javascriptRouter("js_StorageManager")(
+		controllers.manager.storage.routes.javascript.StorageManagerController.storageParentSubList,
+		controllers.manager.storage.routes.javascript.StorageManagerController.deleteStorageRecord,
+		controllers.manager.storage.routes.javascript.StorageManagerController.deleteStorageParentRecord,
+		controllers.manager.storage.routes.javascript.StorageManagerController.addStorageParent
+	)
+<!-- BEGIN PAGE CONTAINER-->
+			<div class="container-fluid">
+				<input style="display:none" id="storageHidder" type="text" value="4" />
+				<!-- BEGIN PAGE HEADER-->
+				<div class="row-fluid">
+					<div class="span12">
+						<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+						<h3 class="page-title">
+							仓库层级
+						</h3>
+						<ul class="breadcrumb">
+							<li><i class="icon-home"></i> <a href="index.html">Home</a>
+								<i class="icon-angle-right"></i></li>
+							<li><a href="#">仓库管理</a> <i class="icon-angle-right"></i>
+							</li>
+							<li><a href="#">仓库层级 </a></li>
+						</ul>
+						<!-- END PAGE TITLE & BREADCRUMB-->
+					</div>
+				</div>
+				<!-- END PAGE HEADER-->
+				
+				
+				<!-- BEGIN PAGE CONTENT-->
+			  
+			    <div class="order_ll_select">
+					<div class="order_ll_col">
+						<div class="order_ll_inline" class="order_ll_txt">
+				        	<p>总仓库</p>
+				        	<select name="limit" id="storageName">
+					        	@if(null != storageInfoList && storageInfoList.size >0){
+									@storageInfoList.map{ n =>
+										<option value="@n.getCstoragename">@n.getCstoragename</option>
+									}
+								}
+							</select>
+				        </div>
+						
+						<div class="order_ll_inline">
+				        	<p>&nbsp;</p>
+				            <input class="order_ll_Search" id="search_storage_submit" type="button" value="查询" />
+				        </div>
+				        <div class="order_ll_inline">
+				        	<p>&nbsp;</p>
+				            
+				            <div class="btn-group">
+								<a data-toggle="modal" data-target="#adddate-parent"
+									name="add-Parent">
+									<button class="btn blue"
+										onClick="showDialog('addParentBtn')"
+										id="addParentBtn">添加</button>
+								</a>
+							</div>
+							
+							 @views.html.manager.storage.add_storage_parent.render(storageInfoList)
+				            <input class="order_ll_Search" id="deleteParentBtn" type="button" value="删除父级仓库" />
+				            <div class="btn-group">
+								<a data-toggle="modal" data-target="#join-parent"
+									name="join-parent">
+									<button class="btn blue"
+										onClick="showDialog('joinParentBtn')"
+										id="joinParentBtn">关联父级仓库</button>
+								</a>
+							</div>
+							@views.html.manager.storage.join_storage_parent.render(storageInfoList,allStorages)
+				        </div>
+						<div class="clear"></div>
+					</div>
+				</div>
+				 
+				<div class="accountBox">
+					<div class="orderBox">
+						<div class="xxkDiv">
+							<div id="storage_arrival_table_list">
+							
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- END PAGE CONTENT -->
+				<!-- END PAGE CONTAINER-->
+			@services.base.HtmlUtils.misc().addTailOnce{
+				<link rel="stylesheet" type="text/css"  href="@controllers.manager.routes.Assets.at("css/manager/ordermanager.css")" />
+				<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/manager/storage/storage_parent.js")'></script>
+			} 
+		</div>
+}

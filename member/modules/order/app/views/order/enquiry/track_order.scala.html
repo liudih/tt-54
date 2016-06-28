@@ -1,0 +1,170 @@
+@(orderPack:dto.order.OrderPack,orderTracking:dto.order.OrderTracking,
+items: List[valueobjects.order_api.OrderItem],
+orderSummaryInfo:valueobjects.order_api.OrderSummaryInfo,
+currency: dto.Currency)
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>TOMTOP</title>
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/skin.css")?@version.BuildVersion.build()" />
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" /> 
+	<script src="@controllers.base.routes.Assets.at("js/lib/less.min.js")?@version.BuildVersion.build()"></script>
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/tomtop.css")?@version.BuildVersion.build()" />
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/login.css")?@version.BuildVersion.build()" />
+	<script src="@controllers.base.routes.Assets.at("lib/jquery/jquery.js")"></script>
+	<script src="@controllers.base.routes.Assets.at("js/lib/jquery.validate.min.js")"></script>
+	<script src="@controllers.base.routes.Assets.at("js/lib/main.js")?@version.BuildVersion.build()"></script>
+	<script language="javascript" type="text/javascript" src="@controllers.order.routes.Assets.at("js/order/tracking_order.js")"></script>
+</head>
+<body>
+	<div class="container accountBox">
+	    <div class="Bread_crumbs_Box">
+	        <ul class="Bread_crumbs">
+	            <li class="Bread_home"><a href="javascript:;"></a></li>
+	            <li>
+	                <p>
+	                    <a class="Bread_link" href="javascript:;">Track order</a>
+	                </p>
+	            </li>
+	            <div class="clear"></div>
+	        </ul>
+	    </div>
+	    <div class="orderBox order_List">
+	        <h6>Order Detail</h6>
+	            <ul class="detailTT">
+	                <li>@Messages("order.number"):<b class="blue">@orderTracking.getOrder().getCordernumber()</b></li>
+	                <li>@Messages("order.statuss"): <b class="blue">@orderTracking.getOrderName()</b></li>
+	                <li class="detailDY"><a href="javascript:;"><em></em>@Messages("commercial.invoice")</a></li>
+	            </ul>
+	            <ul class="orderStatus">
+	                <li class="statusAcc">
+	                    <p>
+	                        <span>@Messages("order.submitted")</span><br>
+	                        12/30/2014 6:40 PM
+	                    </p>
+	                </li>
+	                <li class="statusAcc">
+	                    <ol></ol>
+	                    <p>
+	                        <span>@Messages("payment.declined")</span><br>
+	                        12/30/2014 6:50 PM
+	                    </p>
+	                </li>
+	                <li class="statusAcc">
+	                    <ol></ol>
+	                    <p>
+	                        <span>@Messages("order.processing")</span><br>
+	                        12/30/2014 7:40 PM
+	                    </p>
+	                </li>
+	                <li class="statusAcc">
+	                    <ol></ol>
+	                    <p>
+	                        <span>@Messages("shippied")</span><br>
+	                        12/30/2014 8:40 PM
+	                    </p>
+	                </li>
+	                <li class="statusAcc">
+	                    <ol></ol>
+	                    <p>
+	                        <span>@Messages("completed.orders")</span><br>
+	                        12/30/2014 9:40 PM
+	                    </p>
+	                </li>
+	            </ul>
+	            <table class="orderINFs" width="100%" border="0" cellspacing="0" cellpadding="0">
+	              <tr>
+	                <th>@Messages("order.information")</th>
+	                <th></th>
+	              </tr>
+	              <tr>
+	                <td></td>
+	                <td></td>
+	              </tr>
+	              <tr>
+	                <td>@Messages("customer.name")</td>
+	                <td>@orderTracking.getOrder().getCfirstname()</td>
+	              </tr>
+	              <tr>
+	                <td>@Messages("shipping.address"):</td>
+	                <td>@orderTracking.getOrder().getCstreetaddress()</td>
+	              </tr>
+	              <tr>
+	                <td>@Messages("shipping.method")</td>
+	                <td>@if(null!=orderTracking.getShippingMethodName()){@orderTracking.getShippingMethodName().getCname()}else{}</td>
+	              </tr>
+	              <tr>
+	                <td>@Messages("track.number")</td>
+	                <td><span class="blue">@if(null!=orderTracking.getTrackingnumber()){@orderTracking.getTrackingnumber()}else{}</span></td>
+	              </tr>
+	              <tr>
+	                <td>@Messages("order.placed.date")</td>
+	                <td>@orderTracking.getOrder().getDcreatedate()</td>
+	              </tr>
+	              <tr>
+	                <td>@Messages("shipped.date")</td>
+	                <td>@if(null!=orderPack){@orderPack.getDshippingdate()}else{}</td>
+	              </tr>
+	              <tr>
+	                <td></td>
+	                <td></td>
+	              </tr>
+	            </table>
+	            
+	            <table class="orderINFs" width="100%" border="0" cellspacing="0" cellpadding="0">
+	              <tr>
+	                <th>@Messages("payment.information")</th>
+	                <th></th>
+	              </tr>
+	              <tr>
+	                <td></td>
+	                <td></td>
+	              </tr>
+	              <tr>
+	                <td>@Messages("payment.method")</td>
+	                <td>
+	                	<img src="@controllers.base.routes.Assets.at(orderTracking.getShippingMethodName().getCimageurl()).url" height="25">@orderTracking.getShippingMethodName().getCtitle()
+	                </td>
+	              </tr>
+	              <tr>
+	                <td></td>
+	                <td></td>
+	              </tr>
+	            </table>
+	            
+	           <div class="shoppingCart_con">
+	                <div class="productOrTT">@Messages("product.information")</div>
+	                <table class="detailesTab" width="100%" border="0" cellspacing="0" cellpadding="0">
+	                  <tr>
+	                    <th class="itemTH">Item</th>
+	                    <th class="descriptionTH">Description</th>
+	                    <th class="priceTH">Price</th>
+	                    <th class="quanTH">Quantity</th>
+	                    <th class="totalTH">Total</th>
+	                    <th></th>
+	                  </tr>
+	                  <tr>
+						  <td colspan="6">
+	                  		  @views.html.order.order_view_list(items, currency)
+	                  	  </td>
+	                  	  
+	                   </tr>
+	                </table>
+	                <table class="orderB_table">
+	                    <tr>
+		                    <td class="cart_bottom"></td>
+		                    <td align="right">
+		                     	@views.html.order.summary(orderSummaryInfo,currency)
+		                    </td>
+	                  </tr>
+	                </table>
+	            </div>
+	             <div class="order_listBtt">
+	            	<p>Register an account with TOMTOP and keep track of your order. <a class="blue" href="javascript:;">Register</a> or <a class="blue" href="javascript:;">Sign in</a> Now </p>
+	            </div>
+	      </div>
+	 </div>
+</body>
+
+</html>

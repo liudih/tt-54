@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.ProductTranslateMapper">
+	<resultMap id="BaseResultMap" type="dto.product.ProductTranslate">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+		<result column="ilanguageid" property="ilanguageid" jdbcType="INTEGER" />
+		<result column="csku" property="csku" jdbcType="VARCHAR" />
+		<result column="ctitle" property="ctitle" jdbcType="VARCHAR" />
+		<result column="cdescription" property="cdescription" jdbcType="VARCHAR" />
+		<result column="cshortdescription" property="cshortdescription"
+			jdbcType="VARCHAR" />
+		<result column="ckeyword" property="ckeyword" jdbcType="VARCHAR" />
+		<result column="cmetatitle" property="cmetatitle" jdbcType="VARCHAR" />
+		<result column="cmetakeyword" property="cmetakeyword" jdbcType="VARCHAR" />
+		<result column="ccreateuser" property="createuser" jdbcType="VARCHAR" />
+		<result column="cmetadescription" property="cmetadescription"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, clistingid, ilanguageid, csku, ctitle, cdescription,
+		cshortdescription, ckeyword,
+		cmetatitle, cmetakeyword,
+		cmetadescription,ccreateuser
+	</sql>
+	<select id="getProductTranslateByIid" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_product_translate
+		where iid = #{iid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByIid" parameterType="java.lang.Integer">
+		delete from
+		t_product_translate
+		where iid = #{iid,jdbcType=INTEGER}
+	</delete>
+	<insert id="addProductTranslateList" parameterType="java.util.List">
+		insert into
+		t_product_translate (clistingid, ilanguageid,
+		csku,
+		ctitle,
+		cdescription,
+		cshortdescription, ckeyword, cmetatitle,
+		cmetakeyword,
+		cmetadescription,ccreateuser)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.clistingid,jdbcType=VARCHAR},
+			#{item.ilanguageid,jdbcType=INTEGER},
+			#{item.csku,jdbcType=VARCHAR},
+			#{item.ctitle,jdbcType=VARCHAR},
+			#{item.cdescription,jdbcType=VARCHAR},
+			#{item.cshortdescription,jdbcType=VARCHAR},
+			#{item.ckeyword,jdbcType=VARCHAR},
+			#{item.cmetatitle,jdbcType=VARCHAR},
+			#{item.cmetakeyword,jdbcType=VARCHAR},
+			#{item.cmetadescription,jdbcType=VARCHAR},
+			#{item.ccreateuser,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	<insert id="addProductTranslate" parameterType="dto.product.ProductTranslate">
+		insert into
+		t_product_translate ( clistingid, ilanguageid,
+		csku, ctitle,
+		cdescription,
+		cshortdescription, ckeyword, cmetatitle,
+		cmetakeyword,
+		cmetadescription,ccreateuser)
+		values (
+		#{clistingid,jdbcType=VARCHAR},
+		#{ilanguageid,jdbcType=INTEGER},
+		#{csku,jdbcType=VARCHAR},
+		#{ctitle,jdbcType=VARCHAR},
+		#{cdescription,jdbcType=VARCHAR},
+		#{cshortdescription,jdbcType=VARCHAR}, #{ckeyword,jdbcType=VARCHAR},
+		#{cmetatitle,jdbcType=VARCHAR},
+		#{cmetakeyword,jdbcType=VARCHAR},
+		#{cmetadescription,jdbcType=VARCHAR},
+		#{ccreateuser,jdbcType=VARCHAR})
+
+	</insert>
+	<insert id="addSelectiveProductTranslate" parameterType="dto.product.ProductTranslate">
+		insert into t_product_translate
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				iid,
+			</if>
+			<if test="clistingid != null">
+				clistingid,
+			</if>
+			<if test="ilanguageid != null">
+				ilanguageid,
+			</if>
+			<if test="csku != null">
+				csku,
+			</if>
+			<if test="ctitle != null">
+				ctitle,
+			</if>
+			<if test="cdescription != null">
+				cdescription,
+			</if>
+			<if test="cshortdescription != null">
+				cshortdescription,
+			</if>
+			<if test="ckeyword != null">
+				ckeyword,
+			</if>
+			<if test="cmetatitle != null">
+				cmetatitle,
+			</if>
+			<if test="cmetakeyword != null">
+				cmetakeyword,
+			</if>
+			<if test="cmetadescription != null">
+				cmetadescription,
+			</if>
+			<if test="ccreateuser != null">
+				ccreateuser,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				#{iid,jdbcType=INTEGER},
+			</if>
+			<if test="clistingid != null">
+				#{clistingid,jdbcType=VARCHAR},
+			</if>
+			<if test="ilanguageid != null">
+				#{ilanguageid,jdbcType=INTEGER},
+			</if>
+			<if test="csku != null">
+				#{csku,jdbcType=VARCHAR},
+			</if>
+			<if test="ctitle != null">
+				#{ctitle,jdbcType=VARCHAR},
+			</if>
+			<if test="cdescription != null">
+				#{cdescription,jdbcType=VARCHAR},
+			</if>
+			<if test="cshortdescription != null">
+				#{cshortdescription,jdbcType=VARCHAR},
+			</if>
+			<if test="ckeyword != null">
+				#{ckeyword,jdbcType=VARCHAR},
+			</if>
+			<if test="cmetatitle != null">
+				#{cmetatitle,jdbcType=VARCHAR},
+			</if>
+			<if test="cmetakeyword != null">
+				#{cmetakeyword,jdbcType=VARCHAR},
+			</if>
+			<if test="cmetadescription != null">
+				#{cmetadescription,jdbcType=VARCHAR},
+			</if>
+			<if test="ccreateuser != null">
+				#{ccreateuser,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="alterSelectiveProductTranslate" parameterType="dto.product.ProductTranslate">
+		update t_product_translate
+		<set>
+			<if test="clistingid != null">
+				clistingid = #{clistingid,jdbcType=VARCHAR},
+			</if>
+			<if test="ilanguageid != null">
+				ilanguageid = #{ilanguageid,jdbcType=INTEGER},
+			</if>
+			<if test="csku != null">
+				csku = #{csku,jdbcType=VARCHAR},
+			</if>
+			<if test="ctitle != null">
+				ctitle = #{ctitle,jdbcType=VARCHAR},
+			</if>
+			<if test="cdescription != null">
+				cdescription = #{cdescription,jdbcType=VARCHAR},
+			</if>
+			<if test="cshortdescription != null">
+				cshortdescription =
+				#{cshortdescription,jdbcType=VARCHAR},
+			</if>
+			<if test="ckeyword != null">
+				ckeyword = #{ckeyword,jdbcType=VARCHAR},
+			</if>
+			<if test="cmetatitle != null">
+				cmetatitle = #{cmetatitle,jdbcType=VARCHAR},
+			</if>
+			<if test="cmetakeyword != null">
+				cmetakeyword = #{cmetakeyword,jdbcType=VARCHAR},
+			</if>
+			<if test="cmetadescription != null">
+				cmetadescription = #{cmetadescription,jdbcType=VARCHAR},
+			</if>
+			<if test="ccreateuser != null">
+				ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+	<update id="alterProductTranslate" parameterType="dto.product.ProductTranslate">
+		update
+		t_product_translate
+		set clistingid = #{clistingid,jdbcType=VARCHAR},
+		ilanguageid = #{ilanguageid,jdbcType=INTEGER},
+		csku =
+		#{csku,jdbcType=VARCHAR},
+		ctitle = #{ctitle,jdbcType=VARCHAR},
+		cdescription = #{cdescription,jdbcType=VARCHAR},
+		cshortdescription =
+		#{cshortdescription,jdbcType=VARCHAR},
+		ckeyword =
+		#{ckeyword,jdbcType=VARCHAR},
+		cmetatitle =
+		#{cmetatitle,jdbcType=VARCHAR},
+		cmetakeyword =
+		#{cmetakeyword,jdbcType=VARCHAR},
+		cmetadescription =
+		#{cmetadescription,jdbcType=VARCHAR},
+		ccreateuser =
+		#{ccreateuser,jdbcType=VARCHAR}
+		where iid =
+		#{iid,jdbcType=INTEGER}
+	</update>
+	<update id="alterByListingIdAndLuanguage" parameterType="dto.product.ProductTranslate">
+		update
+		t_product_translate
+		set clistingid = #{clistingid,jdbcType=VARCHAR},
+		ilanguageid = #{ilanguageid,jdbcType=INTEGER},
+		csku =
+		#{csku,jdbcType=VARCHAR},
+		ctitle = #{ctitle,jdbcType=VARCHAR},
+		cdescription = #{cdescription,jdbcType=VARCHAR},
+		cshortdescription =
+		#{cshortdescription,jdbcType=VARCHAR},
+		ckeyword =
+		#{ckeyword,jdbcType=VARCHAR},
+		cmetatitle =
+		#{cmetatitle,jdbcType=VARCHAR},
+		cmetakeyword =
+		#{cmetakeyword,jdbcType=VARCHAR},
+		cmetadescription =
+		#{cmetadescription,jdbcType=VARCHAR},
+		ccreateuser =
+		#{ccreateuser,jdbcType=VARCHAR}
+		where clistingid =
+		#{clistingid,jdbcType=VARCHAR} and ilanguageid =
+		#{ilanguageid,jdbcType=INTEGER}
+	</update>
+	<select id="getTitleByClistings" resultType="dto.product.ProductTranslate">
+		select * from t_product_translate where clistingid in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach>
+	</select>
+	<select id="getTitleByClistingsAndLanguage" resultType="dto.product.ProductTranslate">
+		select * from t_product_translate where ilanguageid=#{0} and
+		clistingid in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach>
+	</select>
+</mapper>

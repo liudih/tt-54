@@ -1,0 +1,21 @@
+@(title:String="",url:String="",twourl:String="")
+<div class="Bread_crumbs_Box">
+    <ul class="Bread_crumbs">
+        <li class="Bread_home"><a href="/"></a></li>
+        <li>
+            <dl>
+                <dt style="border:0 none; background:none">
+                <a href="@url" style="background:none">@title</a></dt>
+            </dl>
+        </li>
+        <li class="curr-category">
+        	@if(twourl!=""){
+        		<a href="@twourl">Customer Reviews</a>
+        	}else{
+        		<a href="javascript:;">Customer Reviews</a>
+        	}
+            
+        </li>
+        <div class="clear"></div>
+    </ul>
+</div>

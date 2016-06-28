@@ -1,0 +1,171 @@
+@(list:valueobjects.base.Page[valueobjects.tracking.CommissionOrderVo],cid:Integer)
+@import services.base._
+@import services.base.utils._
+@views.html.manager.main {
+<div class="container-fluid">
+	@if(flash().get("error")!=null) {
+ 		<div style="background:red;padding:10px;color:#FFF;">@flash().get("error")</div>
+ 	}
+	<!--bof header-->
+	<div class="row-fluid">
+		<div class="span12">
+			<!--bof title-->
+			<h3 class="page-title">
+				<small>Affiliate Commission</small>
+			</h3>
+			<ul class="breadcrumb">
+				<li><i class="icon-home"></i> <a href="javascript:;">Home</a> <i
+					class="icon-angle-right"></i></li>
+				<li><a href="javascript:;">Affiliate</a><i
+					class="icon-angle-right"></i></li>
+				<li><a href="@controllers.manager.routes.Commission.index()">Commission</a><i
+					class="icon-angle-right"></i></li>
+				<li><a href="javascript:;">Order</a></li>
+			</ul>
+			<!--eof title-->
+		</div>
+	</div>
+	<!--eof head-->
+	<div class="row-fluid">
+		<div class="span12" style="text-align:right;">
+			<span class="label label-sm label-danger"><a href="@controllers.manager.routes.Commission.index()" style="color:#FFF;">back</a></span>
+		</div>
+	</div>
+	<!--bof table-->
+	<table class="table table-striped table-hover table-bordered"
+		id="affiltate_table">		
+			<tr>
+				<th>
+					Date<br />
+					Order ID<br />
+					Sale Amount					
+				</th>
+				<th>Sku</th>
+				<th>Order Status </th>
+				<th>Commission(US$)</th>
+				<th>Commision Status</th>
+				<th>Remark</th>				
+				<th>Action</th>			
+			</tr>
+			@if(list.getList().size()>0 ){ 
+				@list.getList().map{ l=>
+			<tr>
+					<td>
+						@DateFormatUtils.getStrFromYYYYMMDDHHMMSS(l.getDcreatedate())
+						<br />
+						@l.getIorderid()
+						<br />
+						@l.getCsymbol() @Utils.money(l.getFgrandtotal())
+					</td>	
+					<td>@l.getCsku()</td>				
+					<td>@l.getStatusName()</td>
+					<td>US$ @Utils.money(l.getFamount())</td>					
+					<td>
+						@l.getIstatus().intValue() match {
+				        	case 10 =>{unpaid}
+				        	case 20 =>{processing}
+				        	case 30 =>{paid}
+				        	case 40 =>{delete}
+				        	case _ =>{unpaid}
+			        	}						
+					</td>
+					<td>@Html(l.getCremark())</td>
+					<td>
+						<!-- 2是暂时写死，订单部分退款状态值为给出 -->
+						@if(l.getOrderStatus() ==2 && l.getIstatus()==10){
+							<span class="label label-sm label-success">
+								<a href="@controllers.manager.routes.Commission.editCommission(l.getIid(),l.getIcommissionid())" data-toggle="modal" data-target="#edit">edit</a>
+							</span>
+							<br>
+						}
+						@if(l.getIstatus() == 10){	
+							<span class="label label-sm label-success">					
+								<a href="@controllers.manager.routes.Commission.changeOrderStatus(l.getIid(),l.getIcommissionid(),20)" onclick="return confirm('sure processing?')">processing</a><br />
+							</span>	
+							<br />
+							<span class="label label-sm label-success">					
+								<a href="@controllers.manager.routes.Commission.changeOrderStatus(l.getIid(),l.getIcommissionid(),40)" onclick="return confirm('sure delete?')">delete</a><br />
+							</span>
+						}
+						@if(l.getIstatus() != 10 ){		
+							<span class="label label-sm label-default">edit</span>
+							<br />
+							<span class="label label-sm label-default">processing</span>
+							<br />
+							<span class="label label-sm label-default">delete</span>
+						}
+					</td>
+				</tr>
+				}
+			}else{
+				no data
+			}
+	</table>
+	<!-- eof table -->
+	
+	<!--bof page-->
+	<div class="row-fluid">
+	@if(list.totalPages>0){
+		<div class="span6">
+			<div class="dataTables_info">Page: @list.pageNo/@list.totalPages</div>
+		</div>
+		<div class="span6">
+			<div class="dataTables_paginate paging_bootstrap pagination">
+
+				<ul>
+      	              @if(1 == list.pageNo){
+      	              	 <li  class="disabled"><a href="javascript:;">«</a></li>
+      	              }else{
+      	                 <li><a href="@controllers.manager.routes.Commission.getOrder(cid,list.pageNo-1,10,-1)">«</a></li>
+      	              }
+	
+                      @for(i <- 1 to list.totalPages) {
+						 @if(i == list.pageNo){
+						      <li  class="disabled"><a href="javascript:;">@i</a></li>
+						 }else{
+						      <li><a href="@controllers.manager.routes.Commission.getOrder(cid,i,10,-1)">@i</a></li>
+						 }
+	                  }
+       	              @if(list.pageNo >= list.totalPages){
+       	                  <li class="disabled" ><a href="javascript:;">»</a></li>
+       	              }else{
+       	                  <li><a href="@controllers.manager.routes.Commission.getOrder(cid,list.pageNo+1,10,-1)">»</a></li>
+       	              }
+				</ul>
+
+			</div>
+		</div>	
+	}
+	</div>
+	<!--eof page-->
+	
+	<!-- bof edit form -->
+	<form action="@controllers.manager.routes.Commission.doEdit" method="post" id="editForm">
+		<div id="edit" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true"></button>
+				<h3 id="myModalLabel">Edit Commission</h3>
+			</div>
+			<div class="modal-body">				
+				
+			</div>
+			<div class="modal-footer" style="margin-bottom: -20px;">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">close</button>
+				<button class="btn blue" id="edit-user-btn" >ok</button>
+			</div>
+		</div>
+	</form>
+	<!-- eof edit form -->
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+	<script>
+		$(function(){
+			$("#edit").on("hidden", function() {
+			    $(this).removeData("modal");
+			})
+		});
+	</script>
+}
+}
+

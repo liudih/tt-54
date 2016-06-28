@@ -1,0 +1,113 @@
+@(base: valueobjects.product.ProductBase, context: valueobjects.product.ProductRenderContext)
+@import services.base._
+@import services.base.utils._
+@price = @{if(base != null){base.getPrice()}else{null}}
+@sstatus = @{context.getAttribute("status")}
+@services.base.HtmlUtils.misc().addHeadOnce{
+<style>
+/*停售和库存 隐藏加入购物车按钮*/
+@if(sstatus!=null && sstatus==1){
+.addto_cart{display:block;}
+#buynow{display:block;}
+#soldout{display:none;}
+}else{
+.addto_cart{display:none;}
+#buynow{display:none;}
+#soldout{display:block;}
+}
+</style> 
+}
+@services.base.HtmlUtils.misc().addHeadOnce{
+	<!-- facebook等分享的一些属性 -->
+	<meta property="fb:app_id" content="284737934897635"/>
+	<meta property="og:title" content="@base.getProductBase().getCtitle()"/>
+	<meta property="og:type" content="website"/>
+	<meta property="og:description" content="@base.getProductBase().getCmetadescription()"/>
+	<meta property="og:site_name" content="tomtop.com" />
+	@if(price!=null){
+		<meta property="og:price:standard_amount" content="@Utils.money(price.getUnitBasePrice())" />
+		<meta property="og:price:currency" content="@price.getCurrency()" />
+	}
+	<meta property="og:availability" content="" />
+	<meta itemprop="name" content="@base.getProductBase().getCtitle()" />
+	<meta itemprop="description" content="@base.getProductBase().getCmetadescription()" />
+}
+@if(base != null) {
+ 		<h1 class="productIntroduce_title" itemprop="name">@base.getProductBase().getCtitle()</h1>
+         <div class="productSKU_box">
+                 <p class="productSKU" >@Messages("sku")<span class="black" itemprop="sku">@base.getProductBase().getCsku()</span>
+                 	
+                 	@if(context.getAttribute("status")==1){
+                <div class="lineBlock green"><b>&nbsp;&nbsp;@Messages("in.stock")</b></div>
+                }
+                <input type="hidden" value="@context.getAttribute("status")" id="status"/>
+                @if(context.getAttribute("status")==2){
+                	<div class="lineBlock red"><b>&nbsp;&nbsp;@Messages("out.sold")</b></div>
+                }
+                @if(context.getAttribute("status")==0){
+                	<div class="lineBlock red"><b>&nbsp;&nbsp;@Messages("out.of.stock")</b></div>
+                }
+                 
+                 <a href="@context.getAttribute("viewCommentUrl")" class="lineBlock">
+	             	 <span> @context.renderFragment("review-count-and-score")</span>  
+	                 (<span class="orange" >@context.getAttribute("reviewCount")</span> @Messages("reviews.lowercase"))
+                 </a>
+                 <div class="clear"></div>
+         </div>
+         @price.getDiscountOption().asScala.map { d =>
+         	<p class="lineBlock">@Messages("regular.price")
+	           <span style="text-decoration:line-through; color:grey;">
+	         	@price.getSymbol() @Utils.money(price.getUnitBasePrice())
+	           </span>
+         	</p>
+         }
+  
+        <div class="productSpecialPrice_box" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+        @price.getDiscountOption().asScala.map { d =>
+            	<div class="productSpecialPrice_title">@Messages("price")</div>
+         }
+                <div class="productSpecialPrice_USD">
+                		<p id="p_current_currency" ><meta itemprop="priceCurrency" content="@price.getCurrency()" />@price.getCurrency()</p>
+                        <ul class="notranslate">
+                            <div class="clear"></div>
+                        </ul>
+                </div>
+                <div class="productSpecialPrice_NUM" >@price.getSymbol() <span itemprop="price">@Utils.money(price.getUnitPrice)</span></div>
+                
+               @price.getDiscountOption().asScala.map { d =>
+                <div class="productSpecialPrice_Days">(@Utils.percent(d)% @Messages("off"))</div>
+                
+            	@price.getValidToOption().asScala.map { validTo =>
+	                <time itemprop="priceValidUntil" datetime="@validTo" />
+	            	<div id="retroclockbox_xs" data="@DateFormatUtils.untilNowInMilliseconds(validTo)"></div>
+	            		<!-- ValidTo: @validTo -->
+	               <!-- <font size="4px"  id="sale-price" class="priceDiscountTimer" tag="@DateFormatUtils.untilNowInSeconds(validTo)" >
+	              			<span class="priceDiscountTimer-day" ></span>
+							<span>DAY</span>
+							<span class='btn btn-default btn-xs disabled priceDiscountTimer-hour'></span>
+				  			<span  class="">:</span>
+				  			<span  class='btn btn-default btn-xs disabled priceDiscountTimer-minute'></span>
+				  			<span  class="">:</span>
+				  			<span class='btn btn-default btn-xs disabled priceDiscountTimer-second'></span>
+				  	</font> -->
+            	}
+           }
+           	<div class="clear"></div>
+       </div>
+       @if(context.getAttribute("isfree")==true && context.getAttribute("hasfreeshipping")==true){
+                <div id="freeshippingdiv" class="green">
+        }else{
+                <div id="freeshippingdiv" style="display:none" class="green">
+        }
+        <b>@Messages("free.shipping")</b></div>
+        <div class="clear"></div>
+	   <div  class="fb-like"  data-share="true"  data-width="450"  data-show-faces="true">
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+	<script>
+	$(function(){
+		 timedownFun("retroclockbox_xs", true,"xs",true);
+	});
+	</script>
+}
+} 

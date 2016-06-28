@@ -1,0 +1,29 @@
+@(vo: valueobjects.order_api.payment.PaymentContext,
+	htmlMap: Map[String, Html])
+@order = @{vo.getOrder().getOrder()}
+@cy = @{vo.getCurrency()}
+@import views.html.helper._
+@import services.base.utils._
+@views.html.order.payment.new_top(3,false){
+	@services.base.HtmlUtils.misc().addHeadOnce{
+ 		<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/payment.css")?@version.BuildVersion.build()" /> 
+	}
+	<div class="container">
+		<div class="shoppingCart_top">
+			<div class="orderD_con">
+				@form(controllers.order.routes.NewOrderProcessing.changePayment(),'id->"payment_form"){
+					<input type="hidden" name="orderId" value="@order.getIid" />
+					<input type="hidden" id="corderId" name="corderId" value="@order.getCordernumber" />
+					<input type="hidden" id="paymentId" name="paymentId" value="" />
+					@htmlMap.get("detail")
+					@htmlMap.get("payment")
+				}
+			</div>
+		</div>
+	</div>
+	@services.base.HtmlUtils.misc().addTailOnce{
+ 		<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/base/country.css")" />
+	  	<script src="@controllers.base.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.product.routes.Assets.at("js/order/mpayorder")" ></script>
+	  	<script src="@controllers.base.routes.Assets.at("js/order/newPayment.js")"></script>
+	}
+}

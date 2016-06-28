@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>TOMTOP</title>
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/skin.css")?@version.BuildVersion.build()" />
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/tomtop.css")?@version.BuildVersion.build()" />
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/login.css")?@version.BuildVersion.build()" />
+<script src="@controllers.base.routes.Assets.at("lib/jquery/jquery.js")"></script>
+<script src="@controllers.base.routes.Assets.at("js/lib/main.js")?@version.BuildVersion.build()"></script>
+<script src="@controllers.base.routes.Assets.at("js/lib/jquery.form.js")"></script>
+<script src="@controllers.base.routes.Assets.at("js/lib/jquery.validate.min.js")"></script>
+<script language="javascript" type="text/javascript" src="@controllers.order.routes.Assets.at("js/order/tracking_order.js")"></script>
+</head>
+<body>
+
+@import views.html.helper._
+@helper.javascriptRouter("order_enquiry")(
+	controllers.order.routes.javascript.OrderEnquiry.orderTrackingQuery,
+	controllers.order.routes.javascript.OrderEnquiry.orderTrackingCheck
+)
+
+<div class="container accountBox">
+    <div class="Bread_crumbs_Box">
+        <ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="javascript:;"></a></li>
+            <li>
+                <p>
+                    <a class="Bread_link" href="javascript:;">Track order</a>
+                </p>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <form id="tracking-form" method="post">
+    <ul class="trackingUl lbBox">
+    
+        <li class="lineBlock">
+            <p class="mar0">If you want to track the status of an order, please enter the information below to track an order</p>
+            <p class="errLeft">
+            	<input class="input_check" type="text" name="cemail" placeholder="Email Address">
+            	<span class="red">*</span>
+            </p>
+            <label style="display: none" class="edit_error" id="email_message"></label>
+            <p class="errLeft">
+              <input class="input_check" type="text" name="cordernumber" placeholder="Order Number">
+         	   <span class="red">*</span>
+       	   </p>
+       	   <label style="display: none" class="edit_error" id="orderId_message"></label>
+            <div class="clear"></div>
+            <input id="tracking_submit" class="hsInputs" type="submit" value="@Messages("submit")">
+            <div class="clear"></div>
+            <p>If you already have a TOMTOP account, please <a href="javascript:;">sign in</a> to view all your orders.</p>
+        </li>
+        <li class="lineBlock">
+            <b>@Messages("email.address")</b>
+            <p>If you checkout as a guest and pay with PayPal, please enter your PayPal Email address.</p>
+            <p>If you checkout as a logged customer and pay with PayPal, please enter your PayPal Email address or your TOMTOP Email address.</p>
+            <p>If you checkout as a logged customer and pay with other payment methods, please enter your TOMTOP Email address.</p>
+            <b>Order Number</b>
+            <p>After your order placed, we have sent you an order confirmation email with order number. Please check your email.</p>
+            <p>If you have not received our order confirmation email, please contact us via Live Help or Email.</p>
+        </li>
+    </ul>
+    </form>
+</div>
+
+  	
+</body>
+</html>

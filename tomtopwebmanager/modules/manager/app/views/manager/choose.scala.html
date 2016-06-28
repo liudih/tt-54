@@ -1,0 +1,26 @@
+@(list: List[valueobjects.manager.ChooseObject], name: String, id: String)
+
+<div class="controls" style="display:inline-block">
+	<div>
+		<select name="@name" id="@name">
+			<option selected="selected"></option>
+			@id match {
+				case "-1" => {
+					@list.map{e =>
+						<option value ="@e.getId()">@e.getName()</option>
+					}
+				}
+				case s : String => {
+					@list.map{e =>
+						<option value ="@e.getId()" @if(e.getId().equals(id)){selected="selected"}>@e.getName()</option>
+					}
+				}
+				case null => {
+					@list.zipWithIndex.map{e =>
+						<option value ="@e._1.getId()" >@e._1.getName()</option>
+					}
+				}			
+			}
+		</select>
+	</div>
+</div>

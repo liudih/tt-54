@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.loyalty.MemberIntegralHistoryMapper">
+	<!-- author lijun -->
+	<select id="getTotal" resultType="java.lang.Integer"
+		parameterType="map">
+		select count(iid) from t_member_integral_history
+		where 1=1
+		<if test="email != null and email != '' ">
+			and cemail=#{email}
+		</if>
+		<if test="siteId != null ">
+			and iwebsiteid=#{siteId}
+		</if>
+		<if test="dotype != null and dotype != '' ">
+			and cdotype=#{dotype}
+		</if>
+		<if test="status != null">
+			and istatus=#{status}
+		</if>
+		<if test="source != null and source != '' ">
+			and csource=#{source}
+		</if>
+	</select>
+	
+	<select id="getValidPointsByEmail" parameterType="map" resultType="entity.loyalty.MemberIntegralHistory">
+		select iid,iwebsiteid,cemail,cdotype,iintegral,cremark,dcreatedate,istatus,csource,
+		to_char(dcreatedate, 'yyyy-MM-dd HH:mm:ss') as createDateStr
+		from t_member_integral_history 
+		where 1=1
+		<if test="siteId != null ">
+			and iwebsiteid=#{siteId}
+		</if>
+		<if test="email != null and email != '' ">
+			and cemail=#{email}
+		</if>
+		<if test="status != null">
+			and istatus=#{status}
+		</if>
+		order by dcreatedate desc 
+		<if test="pageSize != null and pageNum != null">
+			limit #{pageSize} 
+			offset (#{pageSize} * (#{pageNum} - 1))
+		</if>
+	</select>
+
+</mapper>

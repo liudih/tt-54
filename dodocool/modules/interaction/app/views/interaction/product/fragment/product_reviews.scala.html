@@ -1,0 +1,30 @@
+@(fragment: valueobjects.dodocool.interaction.product.InteractionComment)
+@emailAndNameMap = @{if(null != fragment && null != fragment.getEmailAndNamMap && fragment.getEmailAndNamMap.size > 0){fragment.getEmailAndNamMap()}else{null}}
+
+@import views.html.helper._
+@helper.javascriptRouter("reviews")(
+	controllers.interaction.routes.javascript.ProductReviews.getReviews
+)
+
+@if(null != fragment && null != fragment.getReviewsPage()){
+	   <table id="prReview" class="table_review mt16" width="100%">
+	     <tbody id="product_reviews_tbody">
+	   		  @product_reviews_tr(fragment)
+	     </tbody>
+	   </table>
+	   <input type="hidden" id="reviews_listingId" value="@fragment.getListingId">
+	   <input type="hidden" id="reviews_total_page" value="@fragment.getReviewsPage().totalPages">
+	   <input type="hidden" id="reviews_current_page" value="1">
+	   <input type="hidden" id="reviews_page_size" value="10">
+	   <ul id="pagination" class="pagination fr pt20">
+	     <li><a id="reviews_pre_page" class="prev">&lt;&lt;</a></li>
+	     @for( i <- 1 to fragment.getReviewsPage().totalPages){
+			<li id="reviews_page_@i"><a href="javascript:void(0)">@i</a></li>
+		 }
+	     <li><a id="reviews_next_page" class="next">&gt;&gt;</a></li>
+	   </ul>           
+}
+
+@services.dodocool.base.HtmlUtils.misc().addHeadOnce{
+	<script src="@controllers.interaction.routes.Assets.at("js/product_reviews_detail.js")"></script>   
+}

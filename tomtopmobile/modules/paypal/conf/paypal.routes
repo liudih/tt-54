@@ -1,0 +1,8 @@
+GET		/		@controllers.mobile.paypal.PaypalLogin.returnFromPayPal()
+
+GET   /ec   @controllers.mobile.paypal.ExpressCheckoutNvp.setExpressCheckout(ordernum : String)
+GET   /do-ec   @controllers.mobile.paypal.ExpressCheckoutNvp.DoExpressCheckoutPayment(token : String ?= null,PayerID : String ?= null,n : String)
+GET   /:orderNum/success-view   @controllers.mobile.paypal.ExpressCheckoutNvp.successView(orderNum : String)
+GET   /ec-cart   @controllers.mobile.paypal.ExpressCheckoutNvp.setExpressCheckoutForCart()
+GET   /ec-confirm-view   @controllers.mobile.paypal.ExpressCheckoutNvp.confirmOrderView(token : String ?= null,PayerID : String ?= null,n : String)
+POST   /ec-confirm   @controllers.mobile.paypal.ExpressCheckoutNvp.confirmOrder()

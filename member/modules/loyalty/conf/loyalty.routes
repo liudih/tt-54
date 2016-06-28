@@ -1,0 +1,34 @@
+GET   /coupon/add   @controllers.loyalty.Coupon.checkAndAddExtra(couponCode: String ?= null, cartId: String ?= null)
+
+GET   /points/add   @controllers.loyalty.Points.checkAndAddExtra(costPoints: Int ?= 0, cartId: String ?= null)
+
+GET   /points/del   @controllers.loyalty.Points.deleteExtra()
+
+GET   /coupon/del   @controllers.loyalty.Coupon.deleteExtra()
+
+GET  /test			@controllers.loyalty.Points.test()
+
+GET  /subscribe 	@controllers.loyalty.SubscribeEmail.subscribe(email:String ?= "")
+
+POST  /subscribe/sendemail 	@controllers.loyalty.SubscribeEmail.sendEmail()
+
+POST /api/points/push   @controllers.api.Loyalty.pushMemberPoint()
+
+GET /myCoupon/list   	@controllers.loyalty.MyCoupon.list(page : Int?=1 , pageSize : Int?=15)
+
+GET  /points/myPoints    @controllers.loyalty.Points.myPoints(p: Int ?= 1,limit: Int ?= 10, dateType: Int ?= 0, tab: Int ?=0)
+
+
+#POST /points/signin    @controllers.loyalty.Points.signIn()
+
+GET /my-usable-coupon    @controllers.loyalty.MyCoupon.getMyUsableCoupon()
+POST /apply    @controllers.loyalty.MyCoupon.apply(cartId : String,code : String)
+POST /delCartCoupon    @controllers.loyalty.MyCoupon.delCartCoupon()
+
+GET  /customershare    @controllers.collectshare.CollectingCustomerShare.addCustomerShare(email:String,url:String,type:String)
+
+GET  /assets/*file     controllers.loyalty.Assets.at(path="/public",file: String)
+
+#------theme------
+GET  /:title.html   @controllers.loyalty.Theme.view(title : String)
+

@@ -1,0 +1,15 @@
+@(fragment: valueobjects.dodocool.interaction.product.InteractionComment)
+@emailAndNameMap = @{if(null != fragment && null != fragment.getEmailAndNamMap && fragment.getEmailAndNamMap.size > 0){fragment.getEmailAndNamMap()}else{null}}
+@fragment.getReviewsPage().getList().map{ p =>
+    <tr>
+      	<td class="rew-act">
+           <img src="@controllers.member.routes.MemberProfile.getPhoto(p.getEmail)" />
+           <p class="pt10">@if(null != emailAndNameMap){@emailAndNameMap.get(p.getEmail)}</p>
+        </td>
+        <td>
+       	   <p class="rew-title">@p.getTitle</p>
+           <p class="rew-info">@p.getCcomment</p>
+           <div class="rew-date">@p.getDcreatedate</div>
+        </td>
+    </tr>
+ }

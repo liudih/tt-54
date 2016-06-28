@@ -1,0 +1,26 @@
+@(orders: Html, vo: valueobjects.order_api.OrderCount)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+@views.html.member.base.master("dropship-order-list") {
+	@services.base.HtmlUtils.misc().addHeadOnce {
+	  	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" />
+	  	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/simplePagination.css")"> 
+	}
+	<div class="accountRight orderBox">
+		@orders
+		<div class="xxkDiv autoH">
+	          <ul class="blackXXK">
+	              <li class="xxkActi">@Messages("super.deals")</li>
+	              <li>@Messages("you.view.history")</li>
+	              <div class="clear"></div>
+	          </ul>
+			  @tp.get("super-deals-in-member")
+	          <div class="clear"></div>
+	          @tp.get("member-browse-history-in-member-center")
+	          <div class="clear"></div>
+	    </div>
+	</div>
+	@services.base.HtmlUtils.misc().addTailOnce {
+	  	<script src="@controllers.base.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.order.routes.Assets.at("js/order/mdropshippingorder")" ></script>
+	}
+}

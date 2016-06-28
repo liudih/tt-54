@@ -1,0 +1,1674 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd"
+	objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+	<changeSet author="reason" id="t_category_base">
+		<createTable tableName="t_category_base" remarks="品类基础表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iparentid" type="INTEGER" remarks="父编号" />
+			<column name="cpath" type="VARCHAR(255)" remarks="路径" />
+			<column name="ilevel" type="INTEGER" remarks="级别" />
+			<column name="iposition" type="INTEGER" remarks="排序位置" />
+			<column name="ichildrencount" type="INTEGER" remarks="子类数量" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_category_name-create">
+		<createTable tableName="t_category_name" remarks="品类名称表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icategoryid" type="INTEGER" remarks="类别编号 " />
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号" />
+			<column name="cname" type="VARCHAR(300)" remarks="类别名称" />
+			<column name="ctitle" type="VARCHAR(300)" remarks="HTML的标题" />
+			<column name="cdescription" type="VARCHAR(2000)" remarks="HTML的描述栏" />
+			<column name="ckeywords" type="VARCHAR(2000)" remarks="HTML的关键字栏" />
+			<column name="cmetatitle" type="VARCHAR(500)" remarks="meta title" />
+			<column name="cmetakeyword" type="VARCHAR(2000)" remarks="meta keyword" />
+			<column name="cmetadescription" type="VARCHAR(2000)" remarks="meta description" />
+			<column name="ccontent" type="VARCHAR(8000)" remarks="展示介绍" />
+			<column name="cclearanceimages" type="BLOB" remarks="清货图片" />
+			<column name="chotimages" type="BLOB" remarks="热门图片" />
+			<column name="cbackgroundimages" type="BLOB" remarks="背景图片" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_category_website-create">
+		<createTable tableName="t_category_website" remarks="站点品类表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="icategoryid" type="INTEGER" remarks="品类编号" />
+			<column name="iparentid" type="INTEGER" remarks="父编号" />
+			<column name="cpath" type="VARCHAR(255)" remarks="路径" />
+			<column name="ilevel" type="INTEGER" remarks="级别" />
+			<column name="iposition" type="INTEGER" remarks="排序位置" />
+			<column name="bshowindexnew" type="BOOL" remarks="是否首先推荐新品类" />
+			<column name="bhotcategory" type="BOOL" remarks="是否热销品类" />
+			<column name="bedmsubscription" defaultValue="FALSE" type="BOOL"
+				remarks="是否EDM订阅" />
+			<column name="bshow" defaultValue="FALSE" type="BOOL" remarks="是否显示" />
+			<column name="ichildrencount" type="INTEGER" remarks="子类数量" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_product_base-create">
+		<createTable tableName="t_product_base" remarks="产品基础表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(50)" remarks="广告编号" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="csku" type="VARCHAR(40)" remarks="SKU" />
+			<column name="istatus" type="INTEGER" remarks="状态(在售、停售、下架)" />
+			<column name="dnewformdate" type="DATETIME" remarks="新品期开始时间" />
+			<column name="dnewtodate" type="DATETIME" remarks="新品期结束时间" />
+			<column name="bspecial" type="BOOL" remarks="特殊商品" />
+			<column name="cvideoaddress" type="VARCHAR(500)" remarks="特殊商品" />
+			<column name="iqty" type="INTEGER" remarks="数量" />
+			<column name="fprice" type="FLOAT" remarks="网站基础价格" />
+			<column name="fcostprice" type="FLOAT" remarks="商品成本价格" />
+			<column name="fweight" type="FLOAT" remarks="重量" />
+			<column name="bmultiattribute" type="BOOL" remarks="是否多属性" />
+			<column name="cparentsku" type="VARCHAR(40)" remarks="父编号" />
+			<column name="bclearstocks" type="BOOL" defaultValue="FALSE"
+				remarks="是否清货状态" />
+			<column name="bfeatured" type="BOOL" defaultValue="FALSE"
+				remarks="是否特色商品" />
+			<column name="bnew" type="BOOL" defaultValue="TRUE" remarks="是否新品" />
+			<column name="bhot" type="BOOL" defaultValue="FALSE" remarks="是否热卖" />
+			<column name="bvisible" type="BOOL" defaultValue="TRUE"
+				remarks="是否可见" />
+			<column name="bpulish" type="BOOL" remarks="是否发布(待扩展)" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_product_translate-create">
+		<createTable tableName="t_product_translate" remarks="产品翻译信息表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(50)" remarks="广告编号" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号" />
+			<column name="csku" type="VARCHAR(40)" remarks="SKU" />
+			<column name="ctitle" type="VARCHAR(1000)" remarks="标题 " />
+			<column name="cdescription" type="VARCHAR(16000)" remarks="描述" />
+			<column name="cshortdescription" type="VARCHAR(6000)" remarks="短描述" />
+			<column name="ckeyword" type="VARCHAR(2000)" remarks="多语种关键字" />
+			<column name="cmetatitle" type="VARCHAR(500)" remarks="meta title" />
+			<column name="cmetakeyword" type="VARCHAR(2000)" remarks="meta keyword" />
+			<column name="cmetadescription" type="VARCHAR(2000)" remarks="meta description" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_category_label_type-create">
+		<createTable tableName="t_category_label_type" remarks="品类标签类型">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ctype" type="VARCHAR(50)" remarks="标签名称" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_category_label-create">
+		<createTable tableName="t_category_label" remarks="品类标签">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="ctype" type="VARCHAR(50)" remarks="标签名称" />
+			<column name="icategoryid" type="INTEGER" remarks="品类编号" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_category_label_name-create">
+		<createTable tableName="t_category_label_name" remarks="品类标签">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icategorylabelid" type="INTEGER" remarks="labelid" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号" />
+			<column name="cimages" type="BLOB" remarks="图片" />
+			<column name="curl" type="VARCHAR(90)" remarks="链接" />
+			<column name="cprompt" type="VARCHAR(90)" remarks="提示" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_product_label_type-create">
+		<createTable tableName="t_product_label_type" remarks="产品标签类型">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ctype" type="VARCHAR(50)" remarks="标签名称" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_product_label-create">
+		<createTable tableName="t_product_label" remarks="产品标签">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="ctype" type="VARCHAR(50)" remarks="标签名称" />
+			<column name="clistingid" type="VARCHAR(80)" remarks="listing编号" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_all_product_explain-create">
+		<createTable tableName="t_all_product_explain" remarks="整体产品说明">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号" />
+			<column name="cpaymentexplain" type="VARCHAR(50000)" remarks="付款说明" />
+			<column name="creturnexplain" type="VARCHAR(50000)" remarks="退款说明" />
+			<column name="cwarrantyexplain" type="VARCHAR(50000)" remarks="保证说明" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_product_category_mapper-create">
+		<createTable tableName="t_product_category_mapper"
+			remarks="产品品类对应表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号" />
+			<column name="csku" type="VARCHAR(30)" remarks="SKU" />
+			<column name="icategory" type="INTEGER" remarks="品类编号" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_category_filter_attribute_create" author="reason">
+		<createTable tableName="t_category_filter_attribute"
+			remarks="品类属性过滤表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icategoryid" type="INTEGER" remarks="品类编号" />
+			<column name="iattributekeyid" type="INTEGER" remarks="属性编号" />
+			<column name="iattributevalueid" type="INTEGER" remarks="属性值编号" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_product_group_price-create-2014121501">
+		<createTable tableName="t_product_group_price" remarks="产品分段价格表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icustomergroupid" type="INTEGER" remarks="客户组编号" />
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="iqty" type="INTEGER" remarks="数量区间起点" />
+			<column name="fdiscount" type="FLOAT" remarks="折扣" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_product_url-create-2014121501">
+		<createTable tableName="t_product_url" remarks="产品详情页路由表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="csku" type="VARCHAR(30)" remarks="SKU" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号" />
+			<column name="curl" type="VARCHAR(300)" remarks="路由地址" />
+			<column name="ccreateuser" type="VARCHAR(30)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_product_video-create">
+		<createTable tableName="t_product_video" remarks="产品视频表">
+			<column name="iid" type="INTEGER" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="csku" type="VARCHAR(50)" remarks="SKU" />
+			<column name="cemail" type="INTEGER" remarks="客户编号" />
+			<column name="icommentid" type="INTEGER" remarks="评论编号" />
+			<column name="cvideourl" type="VARCHAR(600)" remarks="视频路径" />
+			<column name="clabel" type="VARCHAR(50)" remarks="视频label" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_product_saleprice-creae">
+		<createTable tableName="t_product_saleprice" remarks="产品促销表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="产品主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="csku" type="VARCHAR(30)" remarks="SKU" />
+			<column name="fsaleprice" type="FLOAT" remarks="促销价" />
+			<column name="dbegindate" type="DATETIME" remarks="促销开始时间" />
+			<column name="denddate" type="DATETIME" remarks="促销结束时间" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_product_recommend-create">
+		<createTable tableName="t_product_recommend" remarks="产品推荐表">
+			<column name="iid" type="INTEGER" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="csku" type="VARCHAR(50)" remarks="SKU" />
+			<column name="crecommendlisting" type="VARCHAR(40)" remarks="推荐产品listing" />
+			<column name="crecommendsku" type="VARCHAR(30)" remarks="推荐产品sku" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_product_image-create">
+		<createTable tableName="t_product_image" remarks="产品图片表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="csku" type="VARCHAR(30)" remarks="SKU" />
+			<column name="cimageurl" type="VARCHAR(600)" remarks="图片路径" />
+			<column name="clabel" type="VARCHAR(50)" remarks="图片label" />
+			<column name="iorder" type="INTEGER" remarks="图片排序" />
+			<column name="bthumbnail" type="BOOL" remarks="是否缩略图" />
+			<column name="bsmallimage" type="BOOL" remarks="是否小图" />
+			<column name="bbaseimage" type="BOOL" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_product_storage_map-create-2014121401">
+		<createTable tableName="t_product_storage_map" remarks="产品发货仓库表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(50)" remarks="广告编号" />
+			<column name="csku" type="VARCHAR(40)" remarks="SKU" />
+			<column name="istorageid" type="INTEGER" remarks="仓库编号" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_product_selling_points-create">
+		<createTable tableName="t_product_selling_points" remarks="产品卖点表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(50)" remarks="广告编号" />
+			<column name="csku" type="VARCHAR(40)" remarks="SKU" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号" />
+			<column name="ccontent" type="VARCHAR(2000)" remarks="卖点内容" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_product_bundle_sale-create" author="fcl">
+		<createTable tableName="t_product_bundle_sale" remarks="产品捆绑销售表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="cbundlelistingid" type="VARCHAR(40)" remarks="捆绑的广告编号" />
+			<column name="fdiscount" type="FLOAT" remarks="折扣" />
+			<column name="ipriority" type="INTEGER" remarks="优先级" />
+			<column name="bmachine" type="BOOL" defaultValue="TRUE"
+				remarks="是否机器产生" />
+			<column name="clastupdateuser" type="VARCHAR(20)" remarks="修改人" />
+			<column name="dlastupdatedate" type="DATETIME" remarks="修改时间 " />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间 " />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_attribute_key-create">
+		<createTable tableName="t_attribute_key" remarks="属性键基础表">
+			<column name="ikeyid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ccreateuser" type="VARCHAR(30)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间 " />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_attribute_key_name-create">
+		<createTable tableName="t_attribute_key_name" remarks="属性键名称表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ikeyid" type="INTEGER" remarks="属性值编号" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号" />
+			<column name="ckeyname" type="VARCHAR(30)" remarks="属性名" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_attribute_value-create">
+		<createTable tableName="t_attribute_value" remarks="属性值基础表">
+			<column name="ivalueid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ikeyid" type="INTEGER" remarks="属性键编号" />
+			<column name="ccreateuser" type="VARCHAR(30)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间 " />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_attribute_value_name-create">
+		<createTable tableName="t_attribute_value_name" remarks="属性值名称表">
+			<column name="ikeyid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号" />
+			<column name="ivalueid" type="INTEGER" remarks="属性值编号" />
+			<column name="cvaluename" type="VARCHAR(50)" remarks="属性值名称" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_product_entity_map-create">
+		<createTable tableName="t_product_entity_map" remarks="产品自定义属性表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="csku" type="VARCHAR(30)" remarks="SKU" />
+			<column name="ikey" type="INTEGER" remarks="属性键" />
+			<column name="ivalue" type="INTEGER" remarks="属性值" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点" />
+			<column name="bshow" type="BOOL" remarks="是否产品页显示" />
+			<column name="multiattribute" type="BOOL" remarks="是否多属性" />
+			<column name="ccreateuser" type="VARCHAR(50)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_multiattribute_base-create" author="reason">
+		<createTable tableName="t_product_multiattribute_base"
+			remarks="产品多属性基础表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="cparentsku" type="VARCHAR(40)" remarks="parent sku" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间 " />
+			<column name="clastupdateuser" type="VARCHAR(20)" remarks="修改人" />
+			<column name="dlastupdatedate" type="DATETIME" remarks="修改时间 " />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_product_multiattribute_attribute-create"
+		author="reason">
+		<createTable tableName="t_product_multiattribute_attribute"
+			remarks="多属性产品属性表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="cparentsku" type="VARCHAR(40)" remarks="parent sku" />
+			<column name="ikey" type="INTEGER" remarks="属性键" />
+			<column name="bshowimg" type="BOOL" remarks="是否图片呈现" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_product_multiattribute_sku-create" author="reason">
+		<createTable tableName="t_product_multiattribute_sku"
+			remarks="多属性产品表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cparentsku" type="VARCHAR(40)" remarks="parent sku" />
+			<column name="csku" type="VARCHAR(40)" remarks="SKU" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_product_topic_page-create" author="reason">
+		<createTable tableName="t_product_topic_page" remarks="主题产品宣传页表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号" />
+			<column name="ctype" type="VARCHAR(20)" remarks="类型" />
+			<column name="ctitle" type="VARCHAR(40)" remarks="标题" />
+			<column name="cimage" type="BLOB" remarks="二进制图片" />
+			<column name="chtmlurl" type="VARCHAR(300)" remarks="上传的html的地址" />
+			<column name="bshow" type="BOOL" remarks="是否显示" />
+			<column name="icreateuserid" type="INTEGER" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间 " />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_product_category_rank-create">
+		<createTable tableName="t_product_category_rank" remarks="产品同类排名表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告 编号 " />
+			<column name="csku" type="VARCHAR(30)" remarks="SKU" />
+			<column name="icategoryid" type="INTEGER" remarks="品类编号" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="isales" type="INTEGER" remarks="商品销量" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间 " />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_all_product_explain-test-data"
+		context="test">
+		<loadData tableName="t_all_product_explain" file="samples/t_all_product_explain.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_product_category_rank-test-data"
+		context="test">
+		<loadData tableName="t_product_category_rank" file="samples/t_product_rank.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_product_base_listing-createIndex">
+		<createIndex indexName="idx_productbase_listing"
+			tableName="t_product_base" unique="true">
+			<column name="clistingid" type="VARCHAR(50)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="reason"
+		id="t_product_t_productbundlesale_listing-createIndex">
+		<createIndex indexName="idx_productbundlesale_listing"
+			tableName="t_product_bundle_sale" unique="false">
+			<column name="clistingid" type="VARCHAR(50)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="reason"
+		id="t_producttranslate_listing_language-createIndex">
+		<createIndex indexName="idx_producttranslate_listing_language"
+			tableName="t_product_translate" unique="true">
+			<column name="clistingid" type="VARCHAR(50)" />
+			<column name="ilanguageid" type="INTEGER" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="reason" id="t_productimage_listing-createIndex">
+		<createIndex indexName="idx_productimage_listing"
+			tableName="t_product_image">
+			<column name="clistingid" type="VARCHAR(50)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="reason" id="t_producturl_url-createIndex">
+		<createIndex indexName="idx_producturl_url" tableName="t_product_url"
+			unique="true">
+			<column name="curl" type="VARCHAR(300)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="fcl" id="t_product_bundle_sale-createuniqueIndex">
+		<createIndex indexName="idx_t_product_bundle_sale"
+			tableName="t_product_bundle_sale" unique="true">
+			<column name="clistingid" type="VARCHAR(40)" />
+			<column name="cbundlelistingid" type="VARCHAR(40)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="fcl"
+		id="t_product_bundle_sale-data-for-test-20141215" context="test">
+		<loadData tableName="t_product_bundle_sale" file="samples/t_product_bundle_sale.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="jiang"
+		id="t_product_group_price-data-for-test-20141215" context="test">
+		<loadData tableName="t_product_group_price" file="samples/t_product_group_price.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_product_entity_map-data-for-test"
+		context="test">
+		<loadData tableName="t_product_entity_map" file="samples/t_product_entity_map.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="jiang"
+		id="t_product_selling_points-data-for-test-20141215" context="test">
+		<loadData tableName="t_product_selling_points" file="samples/t_product_selling_points.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="jiang"
+		id="t_product_recommend-data-for-test-20141215" context="test">
+		<loadData tableName="t_product_recommend" file="samples/t_product_recommend.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="jiang"
+		id="t_product_multiattribute_attribute-data-for-test-20141220"
+		context="test">
+		<loadData tableName="t_product_multiattribute_attribute"
+			file="samples/t_product_multiattribute_attribute.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="jiang"
+		id="t_product_multiattribute_sku-data-for-test-20141220" context="test">
+		<loadData tableName="t_product_multiattribute_sku"
+			file="samples/t_product_multiattribute_sku.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xin" id="t_product_video-data-for-test-20141224"
+		context="test">
+		<loadData tableName="t_product_video" file="samples/t_product_video.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh"
+		id="t_category_filter_attribute-data-for-test-20141229" context="test">
+		<loadData tableName="t_category_filter_attribute" file="samples/t_category_filter_attribute.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_product_storage_map-test-data"
+		context="test">
+		<loadData tableName="t_product_storage_map" file="samples/t_product_storage_map.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_attribute_key-data" context="test">
+		<loadData tableName="t_attribute_key" file="samples/t_attribute_key.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_attribute_key_name-data"
+		context="test">
+		<loadData tableName="t_attribute_key_name" file="samples/t_attribute_key_name.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_attribute_value-data"
+		context="test">
+		<loadData tableName="t_attribute_value" file="samples/t_attribute_value.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="t_attribute_value_name-data"
+		context="test">
+		<loadData tableName="t_attribute_value_name" file="samples/t_attribute_value_name.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_product_topic_page-data"
+		context="test">
+		<loadData tableName="t_product_topic_page" file="samples/t_product_topic_page.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason"
+		id="t_category_website_iwebsiteid-icategoryid-createIndex">
+		<createIndex indexName="idx_category_website_iwebsiteid-icategoryid"
+			tableName="t_category_website">
+			<column name="iwebsiteid" type="INTEGER" />
+			<column name="icategoryid" type="INTEGER" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="reason" id="t_category_name-icategoryid-createIndex">
+		<createIndex indexName="idx_category_name-icategoryid"
+			tableName="t_category_name">
+			<column name="icategoryid" type="INTEGER" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="lij" id="renamebycategorylabel-20150320">
+		<renameColumn columnDataType="INTEGER" newColumnName="ctypeid"
+			oldColumnName="ctype" remarks="标签编号" schemaName="public" tableName="t_category_label" />
+	</changeSet>
+
+	<changeSet author="lij" id="modifyDataType-ctypeid-20150320">
+		<modifyDataType columnName="ctypeid" newDataType="INTEGER"
+			schemaName="public" tableName="t_category_label" />
+	</changeSet>
+
+	<changeSet author="lij" id="t_category_label_type-data"
+		context="test">
+		<loadData tableName="t_category_label_type" file="samples/t_category_label_type.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="reason" id="dropColumn-category-20150325">
+		<dropColumn columnName="cclearanceimages" tableName="t_category_name" />
+		<dropColumn columnName="chotimages" tableName="t_category_name" />
+		<dropColumn columnName="bshowindexnew" tableName="t_category_website" />
+		<dropColumn columnName="bhotcategory" tableName="t_category_website" />
+		<dropColumn columnName="bedmsubscription" tableName="t_category_website" />
+	</changeSet>
+
+	<changeSet author="jiang" id="t_category_label-modify-rename-20150326">
+		<renameColumn columnDataType="INTEGER" newColumnName="ctype"
+			oldColumnName="ctypeid" remarks="标签类型" schemaName="public" tableName="t_category_label" />
+	</changeSet>
+
+	<changeSet author="jiang"
+		id="t_category_label-modify-datatype-ctypeid-20150326">
+		<modifyDataType columnName="ctype" newDataType="VARCHAR(50)"
+			schemaName="public" tableName="t_category_label" />
+	</changeSet>
+
+	<changeSet author="reason" id="dropColumn-category-20150326">
+		<dropColumn columnName="cbackgroundimages" tableName="t_category_name" />
+	</changeSet>
+
+	<changeSet author="lij"
+		id="t_category_backgroundimages-create-20150326">
+		<createTable tableName="t_category_backgroundimages"
+			remarks="品类背景图片信息表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icategorynameid" type="INTEGER" remarks="类别名称主键编号 " />
+			<column name="ibottom" type="INTEGER" remarks="bottom" />
+			<column name="iright" type="INTEGER" remarks="right" />
+			<column name="cbackgroundimages" type="BLOB" remarks="背景图片" />
+			<column name="curl" type="VARCHAR(300)" remarks="路由地址" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="jiang"
+		id="t_category_label_type-data-update-2015-3-31" context="test">
+		<loadUpdateData tableName="t_category_label_type"
+			file="samples/t_category_label_type20150331.csv" primaryKey="iid"
+			relativeToChangelogFile="true">
+		</loadUpdateData>
+	</changeSet>
+
+	<changeSet author="lij"
+		id="t_category_label_name-modify-datatype-curl-20150402">
+		<modifyDataType columnName="curl" newDataType="VARCHAR(500)"
+			schemaName="public" tableName="t_category_label_name" />
+	</changeSet>
+
+	<changeSet author="jiang"
+		id="t_category_label_type-data-update-2015-04-2">
+		<loadUpdateData tableName="t_category_label_type"
+			file="init/t_category_label_type20150402.csv" primaryKey="iid"
+			relativeToChangelogFile="true">
+		</loadUpdateData>
+	</changeSet>
+
+	<changeSet author="reason" id="t_produclabel-createIndex">
+		<createIndex indexName="idx_produclabel" tableName="t_product_label">
+			<column name="iwebsiteid" type="INTEGER" />
+			<column name="ctype" type="VARCHAR(50)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="linhl" id="t_category_website-changes-20150403">
+		<addColumn tableName="t_category_website">
+			<column name="bhasbgimage" type="BOOLEAN" defaultValue="false"
+				remarks="是否有背景图片(默认false)" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="reason" id="dropColumn-productbase-20150403">
+		<dropColumn columnName="bclearstocks" tableName="t_product_base" />
+		<dropColumn columnName="bfeatured" tableName="t_product_base" />
+		<dropColumn columnName="bnew" tableName="t_product_base" />
+		<dropColumn columnName="bhot" tableName="t_product_base" />
+	</changeSet>
+
+	<changeSet author="fcl" id="t_product_base-changes-20150409">
+		<addColumn tableName="t_product_base">
+			<column name="ffreight" type="FLOAT" defaultValue="null"
+				remarks="包含的邮费" />
+		</addColumn>
+	</changeSet>
+	<changeSet author="fcl" id="t_product_base-changes-20150416">
+		<addColumn tableName="t_product_base">
+			<column name="bmain" type="BOOL" defaultValue="null" remarks="是否主产品" />
+		</addColumn>
+	</changeSet>
+	<changeSet author="luojh"
+		id="t_product_topic_page-modify-datatype-ctitle-20150404">
+		<modifyDataType columnName="ctitle" newDataType="VARCHAR(500)"
+			tableName="t_product_topic_page" />
+	</changeSet>
+
+	<!-- <changeSet author="liudi" id="t_product_base-add-data-2015040417"> 
+		<loadData tableName="t_product_base" file="init/t_product_base-20150404.csv" 
+		relativeToChangelogFile="true" /> </changeSet> -->
+
+	<changeSet author="liudi" id="t_product_url-add-data-2015040417">
+		<loadData tableName="t_product_url" file="init/t_product_url-20150404.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="liudi" id="t_product_translate-add-data-2015040417">
+		<loadData tableName="t_product_translate" file="init/t_product_translate-20150404.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="fcl" id="t_product_label_type-add-data-20150409">
+		<loadData tableName="t_product_label_type" file="init/t_product_label_type.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="chris" id="t_inventory_history-create-20150413">
+		<createTable tableName="t_inventory_history" remarks="库存流水记录">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点ID" />
+			<column name="clistingid" type="VARCHAR(64)" remarks="商品ListingID" />
+			<column name="ibeforechangeqty" type="INTEGER" remarks="变更前数量" />
+			<column name="iqty" type="INTEGER" remarks="变动的数量（分正负）" />
+			<column name="iafterchangeqty" type="INTEGER" remarks="变更后数量" />
+			<column name="creference" type="VARCHAR(255)" remarks="参考信息" />
+			<column name="benabled" type="BOOL" remarks="是否有效" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_product_viewcount-create-20150418">
+		<createTable tableName="t_product_viewcount" remarks="浏览数量表">
+			<column name="iwebsiteid" type="INTEGER" remarks="站点ID" />
+			<column name="clistingid" type="VARCHAR(64)" remarks="商品ListingID" />
+			<column name="iviewcount" type="INTEGER" remarks="浏览计数" />
+		</createTable>
+		<addUniqueConstraint columnNames="iwebsiteid, clistingid"
+			tableName="t_product_viewcount" />
+		<createIndex tableName="t_product_viewcount"
+			indexName="idx_t_product_viewcount_iwebsiteid_clistingid">
+			<column name="iwebsiteid" type="INTEGER" />
+			<column name="clistingid" type="VARCHAR(64)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="fcl"
+		id="t_product_translate-addUniqueConstraint-20140429">
+		<addUniqueConstraint columnNames="clistingid, ilanguageid"
+			tableName="t_product_translate" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_product_label-add-test-data-2015040421"
+		context="test">
+		<loadData tableName="t_product_label" file="samples/t_product_label.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="Reason" id="t_all_product_explain-addcolumn-20150426">
+		<addColumn tableName="t_all_product_explain">
+			<column name="ctype" type="VARCHAR(100)" remarks="全局说明类型" />
+			<column name="cContent" type="VARCHAR(50000)" remarks="详细说明" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="lij" id="t_product_bundle_sale-addcolumn-20150427">
+		<addColumn tableName="t_product_bundle_sale">
+			<column name="bvisible" type="BOOLEAN" defaultValue="true"
+				remarks="是否可见" />
+			<column name="bavailable" type="BOOLEAN" defaultValue="true"
+				remarks="是否可用" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="Reason"
+		id="t_all_product_explain-changecolumn-20150428">
+		<dropColumn columnName="cContent" tableName="t_all_product_explain" />
+		<addColumn tableName="t_all_product_explain">
+			<column name="ccontent" type="VARCHAR(50000)" remarks="详细说明" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="Reason" id="t_all_product_explain-dropcolumn-20150428">
+		<dropColumn columnName="cpaymentexplain" tableName="t_all_product_explain" />
+		<dropColumn columnName="creturnexplain" tableName="t_all_product_explain" />
+		<dropColumn columnName="cwarrantyexplain" tableName="t_all_product_explain" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_product_activity_relation-create">
+		<createTable tableName="t_product_activity_relation"
+			remarks="参与活动的产品关系表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cparentlistingid" type="VARCHAR(50)" remarks="父级广告编号" />
+			<column name="cparentsku" type="VARCHAR(40)" remarks="父级SKU" />
+			<column name="csublistingid" type="VARCHAR(50)" remarks="子级广告编号" />
+			<column name="csubsku" type="VARCHAR(40)" remarks="子级SKU" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点" />
+			<column name="iactivityid" type="INTEGER" remarks="活动id" />
+			<column name="cactivityname" type="VARCHAR(200)" remarks="活动名称" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="kmtong"
+		id="t_product_multiattribute_attribute-added_constraint_default-20150429">
+		<addNotNullConstraint tableName="t_product_multiattribute_attribute"
+			columnName="bshowimg" columnDataType="BOOL" defaultNullValue="false" />
+	</changeSet>
+
+	<changeSet author="lij" id="t_all_product_explain_type-create">
+		<createTable tableName="t_all_product_explain_type"
+			remarks="整体产品全局说明类型">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ctype" type="VARCHAR(100)" remarks="全局说明类型" />
+			<column name="ccreateuser" type="VARCHAR(100)" remarks="创建人" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="lij" id="t_all_product_explain_type-data-20150429">
+		<loadData tableName="t_all_product_explain_type"
+			file="init/t_all_product_explain_type-20150429.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="Reason" id="t_product_storage_map-addcolumn-20150429">
+		<addColumn tableName="t_product_storage_map">
+			<column name="bavailable" type="BOOLEAN" defaultValue="true"
+				remarks="是否可用" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_inventory_history-addColumn-20150501">
+		<addColumn tableName="t_inventory_history">
+			<column name="ctype" type="VARCHAR(30)" remarks="操作类型" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="Reason" id="t_inventory_history-changecolumn-20150501">
+		<dropColumn columnName="benabled" tableName="t_inventory_history" />
+		<addColumn tableName="t_inventory_history">
+			<column name="benabled" type="BOOL" defaultValue="TRUE"
+				remarks="是否有效" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_producturl_url-unique_url-20150503">
+		<addUniqueConstraint columnNames="curl,ilanguageid"
+			tableName="t_product_url" constraintName="t_producturl_url_curl_ilanguageid_UniqueConstraint" />
+	</changeSet>
+
+	<changeSet author="xcf" id="t_product_parent_url-create-20150503">
+		<createTable tableName="t_product_parent_url" remarks="产品SPU路由表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cparentsku" type="VARCHAR(30)" remarks="SKU" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号" />
+			<column name="curl" type="VARCHAR(300)" remarks="路由地址" />
+			<column name="ccreateuser" type="VARCHAR(30)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+		<addUniqueConstraint columnNames="curl,ilanguageid"
+			tableName="t_product_parent_url" />
+		<createIndex tableName="t_product_parent_url" indexName="idx_t_product_parent_url_curl">
+			<column name="curl" />
+			<column name="ilanguageid" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="Reason" id="t_product_intercept_url-create-20150506">
+		<createTable tableName="t_product_intercept_url" remarks="URL拦截表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="csku" type="VARCHAR(30)" remarks="SKU" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号" />
+			<column name="bavailable" type="BOOLEAN" defaultValue="true"
+				remarks="是否可用" />
+			<column name="curl" type="VARCHAR(300)" remarks="路由地址" />
+			<column name="ccreateuser" type="VARCHAR(30)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+		<addUniqueConstraint columnNames="iwebsiteid,curl,ilanguageid,bavailable"
+			tableName="t_product_intercept_url" />
+		<createIndex tableName="t_product_intercept_url"
+			indexName="idx_t_product_intercept_url_curl">
+			<column name="iwebsiteid" />
+			<column name="curl" />
+			<column name="ilanguageid" />
+			<column name="bavailable" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="xin" id="t_product_bundle_sale-addcolumn-20150507">
+		<addColumn tableName="t_product_bundle_sale">
+			<column name="bactivity" type="BOOLEAN" defaultValue="false"
+				remarks="是否为活动捆绑" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="Reason" id="t_product_translate-alter-column-20150511">
+		<sql>
+			alter table t_product_translate alter column ctitle type
+			VARCHAR(3000)
+		</sql>
+	</changeSet>
+
+	<changeSet author="Reason" id="t_category-test-data-20150511"
+		context="test">
+		<loadData tableName="t_category_base" file="samples/t_category_base20150511.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_category_website" file="samples/t_category_website20150511.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_category_name" file="samples/t_category_name20150511.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_category_label" file="samples/t_category_label20150511.csv"
+			relativeToChangelogFile="true" />
+		<update tableName="t_category_base">
+			<column name="iparentid" type="INTEGER" value="NULL" />
+			<where>iparentid = 0</where>
+		</update>
+		<update tableName="t_category_website">
+			<column name="iparentid" type="INTEGER" value="NULL" />
+			<where>iparentid = 0</where>
+		</update>
+	</changeSet>
+
+	<changeSet author="Reason" id="t_product-test-data-20150511"
+		context="test">
+		<loadData tableName="t_product_base" file="samples/t_product_base20150511.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_product_category_mapper"
+			file="samples/t_product_category_mapper20150511.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_product_url" file="samples/t_product_url20150511.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_product_image" file="samples/t_product_image20150511.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_product_label" file="samples/t_product_label20150511.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_product_translate" file="samples/t_product_translate20150511.csv"
+			relativeToChangelogFile="true" />
+		<loadData tableName="t_product_saleprice" file="samples/t_product_saleprice20150511.csv"
+			relativeToChangelogFile="true" />
+		<update tableName="t_product_category_mapper">
+			<column name="ilanguageid" type="INTEGER" value="NULL" />
+			<where>ilanguageid = 0</where>
+		</update>
+		<sql>
+			update t_product_image set
+			cimageurl='http://www.tomtop.com/imgxy/190/190/'||cimageurl
+		</sql>
+	</changeSet>
+
+	<changeSet author="lij" id="t_daily_deals-create-2015-05-14">
+		<createTable tableName="t_daily_deals" remarks="daily deal表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告 编号 " />
+			<column name="csku" type="VARCHAR(30)" remarks="SKU" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+			<column name="bvalid" type="BOOLEAN" remarks="是否有效" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="xin"
+		id="t_product_activity_relation-addcolumn-20150518">
+		<addColumn tableName="t_product_activity_relation">
+			<column name="fprice" type="FLOAT" remarks="活动价" />
+			<column name="dfromdate" type="DATETIME" remarks="活动开始时间" />
+			<column name="dtodate" type="DATETIME" remarks="活动结束时间" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="xin"
+		id="t_product_activity_relation-addcolumn-20150526">
+		<addColumn tableName="t_product_activity_relation">
+			<column name="iqty" type="INTEGER" remarks="产品数量" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="xin"
+		id="t_product_activity_relation-changecolumn-20150526">
+		<dropColumn columnName="cparentlistingid" tableName="t_product_activity_relation" />
+		<dropColumn columnName="csublistingid" tableName="t_product_activity_relation" />
+		<dropColumn columnName="cparentsku" tableName="t_product_activity_relation" />
+		<dropColumn columnName="csubsku" tableName="t_product_activity_relation" />
+		<dropColumn columnName="fprice" tableName="t_product_activity_relation" />
+		<dropColumn columnName="iqty" tableName="t_product_activity_relation" />
+		<addColumn tableName="t_product_activity_relation">
+			<column name="cparentspu" type="VARCHAR(40)" remarks="主产品spu" />
+			<column name="csubspu" type="VARCHAR(40)" remarks="次产品spu" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="xin" id="t_product_activity_relation_detail-create">
+		<createTable tableName="t_product_activity_relation_detail"
+			remarks="参与活动的产品详情表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iactivityid" type="INTEGER" remarks="活动编号" />
+			<column name="cspu" type="VARCHAR(40)" remarks="spu" />
+			<column name="csku" type="VARCHAR(40)" remarks="sku" />
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="fprice" type="FLOAT" remarks="活动价" />
+			<column name="iqty" type="INTEGER" remarks="产品数量" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="xin"
+		id="t_product_activity_relation-addcolumn-20150528">
+		<addColumn tableName="t_product_activity_relation">
+			<column name="cparentlistingid" type="VARCHAR(40)" remarks="主产品" />
+			<column name="csublistingid" type="VARCHAR(40)" remarks="次产品" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="Reason" id="t_product_label-addcolumn-20150601">
+		<addColumn tableName="t_product_label">
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="jiang" id="t_product_base-add-column-20150529">
+		<addColumn tableName="t_product_base">
+			<column name="bactivity" type="BOOLEAN" defaultValue="false"
+				remarks="是否活动产品" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="xin"
+		id="t_product_activity_relation-drop-column-20150604">
+		<dropColumn columnName="iactivityid" tableName="t_product_activity_relation" />
+		<dropColumn columnName="cactivityname" tableName="t_product_activity_relation" />
+	</changeSet>
+
+	<changeSet author="xin"
+		id="t_product_activity_relation-add-column-20150604">
+		<addColumn tableName="t_product_activity_relation">
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="xin" id="t_product_intercept_url-drop-20150609">
+		<dropTable cascadeConstraints="true" schemaName="public"
+			tableName="t_product_intercept_url" />
+		<createTable tableName="t_product_intercept_url" remarks="URL拦截表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="csku" type="VARCHAR(30)" remarks="SKU" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号" />
+			<column name="bavailable" type="BOOLEAN" defaultValue="true"
+				remarks="是否可用" />
+			<column name="curl" type="VARCHAR(300)" remarks="路由地址" />
+			<column name="ccreateuser" type="VARCHAR(30)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+		<createIndex tableName="t_product_intercept_url"
+			indexName="idx_t_product_intercept_url_curl">
+			<column name="iwebsiteid" />
+			<column name="curl" />
+			<column name="ilanguageid" />
+			<column name="bavailable" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="xin"
+		id="t_product_activity_relation-add-column-20150612">
+		<addColumn tableName="t_product_activity_relation">
+			<column name="bvisible" type="BOOLEAN" defaultValue="true"
+				remarks="是否可见" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="create-t_third_platform_data-20150624" author="lij">
+		<createTable tableName="t_third_platform_data" remarks="第三方平台数据表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cplatform" type="VARCHAR(40)" remarks="平台" />
+			<column name="cwebsite" type="VARCHAR(50)" remarks="平台站点" />
+			<column name="cproductid" type="VARCHAR(50)" remarks="商品id" />
+			<column name="cdomain" type="VARCHAR(50)" remarks="域名" />
+			<column name="csku" type="VARCHAR(40)" remarks="sku" />
+			<column name="iqty" type="INTEGER" remarks="库存" />
+			<column name="istatus" type="INTEGER" remarks="1:在售,2:停售,3:下架" />
+			<column name="isalesvolume" type="INTEGER" remarks="销量" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="lij" id="t_third_platform_data-add-column-20150630">
+		<addColumn tableName="t_third_platform_data">
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+			<column name="dupdatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="更新时间" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="lijun"
+		id="t_product_label_type-add-OffPrice-20150716">
+		<loadData tableName="t_product_label_type"
+			file="init/t_product_label_type-add-OffPrice-20150716.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="fcl"
+		id="t_category_base_unique_constraint_cparameterkey-20150718">
+		<addUniqueConstraint catalogName="key"
+			columnNames="cpath" constraintName="t_category_base_cpath"
+			deferrable="true" disabled="true" initiallyDeferred="true"
+			schemaName="public" tableName="t_category_base" />
+	</changeSet>
+
+	<changeSet author="jiang" id="t_product_parent_url-add-column-20150723">
+		<addColumn tableName="t_product_parent_url">
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="jiang" id="t_product_url-add-column-20150723">
+		<addColumn tableName="t_product_url">
+			<column name="iwebsiteid" type="INTEGER" defaultValue="1"
+				remarks="站点编号" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="jiang" id="t_producturl_url-unique_url-201507231605">
+		<addUniqueConstraint columnNames="curl,ilanguageid,iwebsiteid"
+			tableName="t_product_url"
+			constraintName="t_producturl_url_curl_ilanguageid_iwebsiteid_UniqueConstraint" />
+	</changeSet>
+
+	<changeSet author="jiang" id="t_product_url-drop-index-20150723">
+		<dropIndex indexName="idx_producturl_url" schemaName="public"
+			tableName="t_product_url" />
+	</changeSet>
+
+	<changeSet author="jiang" id="t_producturl_url-createIndex-20150723">
+		<createIndex indexName="idx_producturl_url" tableName="t_product_url"
+			unique="false">
+			<column name="curl" type="VARCHAR(300)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="jiang" id="t_product_label-unique_label-2015081720">
+		<addUniqueConstraint columnNames="iwebsiteid,ctype,clistingid"
+			tableName="t_product_label"
+			constraintName="t_product_label_iwebsiteid_ctype_clistingid_UniqueConstraint" />
+	</changeSet>
+
+	<changeSet id="t_home_page_show_history-create-table-20150817"
+		author="jiang">
+		<createTable tableName="t_home_page_show_history" remarks="首页产品展示历史表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="ctype" type="VARCHAR(40)" remarks="首页产品类型标签(hot,featured,clearstocks)" />
+			<column name="clistingid" type="VARCHAR(40)" remarks="产品广告编号" />
+			<column name="dshowtime" type="DATETIME" remarks="展示时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="jiang"
+		id="t_home_page_show_history-unique_label-2015081820">
+		<addUniqueConstraint columnNames="iwebsiteid,ctype,clistingid"
+			tableName="t_home_page_show_history"
+			constraintName="t_home_page_show_history_iwebsiteid_ctype_clistingid_UniqueConstraint" />
+	</changeSet>
+
+	<changeSet author="xin" id="t_product_translate-add-column-20150827">
+		<addColumn tableName="t_product_translate">
+			<column name="ccreateuser" type="VARCHAR(40)" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="xin" id="t_product_image-add-column-20150827">
+		<addColumn tableName="t_product_image">
+			<column name="ccreateuser" type="VARCHAR(40)" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="create-t_attachment-20150824" author="lij">
+		<createTable tableName="t_attachment" remarks="附件表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cdescribe" type="VARCHAR(200)" remarks="描述" />
+			<column name="ctype" type="VARCHAR(50)" remarks="文件类型" />
+			<column name="cfilename" type="VARCHAR(50)" remarks="文件名" />
+			<column name="cpath" type="VARCHAR(200)" remarks="文件路径" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="create-t_attachment_desc-20150824" author="lij">
+		<createTable tableName="t_attachment_desc" remarks="附件描述表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ilanguage" type="INTEGER" remarks="语言" />
+			<column name="ctitle" type="VARCHAR(200)" remarks="文件title" />
+			<column name="cdescribe" type="VARCHAR(500)" remarks="描述" />
+			<column name="iattachmentid" type="INTEGER" remarks="附件表id" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+			<column name="cupdateuser" type="VARCHAR(20)" remarks="更新人" />
+			<column name="dupdatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="更新时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="create-t_product_attachment_mapper-20150824"
+		author="lij">
+		<createTable tableName="t_product_attachment_mapper"
+			remarks="附件路径映射表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="csku" type="VARCHAR(40)" remarks="sku" />
+			<column name="ilanguage" type="INTEGER" remarks="语言" />
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="iattachmentdescid" type="INTEGER" remarks="下载文件路径映射id" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="renyy"
+		id="t_category_product_recommend-create-20150826">
+		<createTable tableName="t_category_product_recommend"
+			remarks="品类推荐产品表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="categoryid" type="INTEGER" remarks="子类ID" />
+			<column name="categoryname" type="VARCHAR(200)" remarks="子类名称" />
+			<column name="categoryfullname" type="VARCHAR(600)" remarks="类别全称" />
+			<column name="parentid" type="INTEGER" remarks="父类ID" />
+			<column name="parentname" type="VARCHAR(200)" remarks="父类名称" />
+			<column name="level" type="INTEGER" remarks="级别" />
+			<column name="sku" type="VARCHAR(40)" remarks="sku" />
+			<column name="status" type="INTEGER" remarks="状态" />
+			<column name="createdate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="sequence" type="INTEGER" remarks="排序位置" />
+			<column name="createby" type="VARCHAR(40)" remarks="创建的用户" />
+			<column name="updateby" type="VARCHAR(40)" remarks="更新的用户" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="renyy"
+		id="t_category_product_recommend-add-column-20150901">
+		<addColumn tableName="t_category_product_recommend">
+			<column name="clistingid" type="VARCHAR(50)" remarks="listingid" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="renyy"
+		id="t_category_product_recommend-drop-column-20150907">
+		<dropColumn tableName="t_category_product_recommend"
+			columnName="clistingid"></dropColumn>
+	</changeSet>
+
+	<changeSet author="renyy"
+		id="t_category_product_recommend-add-column-20150907">
+		<addColumn tableName="t_category_product_recommend">
+			<column name="iwebsiteid" type="INTEGER" remarks="站点ID" />
+			<column name="cdevice" type="VARCHAR(40)" remarks="设备" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="renyy"
+		id="t_category_backgroundimages-add-column-20150908">
+		<addColumn tableName="t_category_backgroundimages">
+			<column name="iwebsiteid" type="INTEGER" remarks="站点ID"
+				defaultValue="1" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="renyy"
+		id="t_category_product_recommend-add-column-20150910">
+		<addColumn tableName="t_category_product_recommend">
+			<column name="upddate" type="DATETIME" defaultValue="now()"
+				remarks="更新时间" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_product_image-add-column-20150922" author="yinf">
+		<addColumn tableName="t_product_image">
+			<column name="bshowondetails" type="BOOL" remarks="是否显示在产品详情页面"
+				defaultValue="TRUE" />
+		</addColumn>
+	</changeSet>
+	<changeSet author="xin" id="t_google_category_base-create">
+		<createTable tableName="t_google_category_base" remarks="谷歌品类基础表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="品类id主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icategory" type="INTEGER" remarks="品类编号" />
+			<column name="iparentid" type="INTEGER" remarks="父编号" />
+			<column name="cpath" type="VARCHAR(255)" remarks="路径" />
+			<column name="cname" type="VARCHAR(200)" remarks="品类名称" />
+			<column name="ilevel" type="INTEGER" remarks="级别" />
+			<column name="iposition" type="INTEGER" remarks="排序位置" />
+			<column name="ichildrencount" type="INTEGER" remarks="子类数量" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="xin" id="t_google_product_category_mapper-create">
+		<createTable tableName="t_google_product_category_mapper"
+			remarks="谷歌产品品类对应表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="csku" type="VARCHAR(30)" remarks="SKU" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="icategory" type="INTEGER" remarks="品类编号" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+			<column name="cupdateuser" type="VARCHAR(20)" remarks="修改人" />
+			<column name="dupdatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="修改时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="xin" id="t_google_product_detail-create">
+		<createTable tableName="t_google_product_detail" remarks="谷歌产品描述自定义表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="csku" type="VARCHAR(30)" remarks="SKU" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号" />
+			<column name="ctitle" type="VARCHAR(150)" remarks="HTML的标题" />
+			<column name="cdescription" type="VARCHAR(5000)" remarks="feeds自定义描述" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+			<column name="cupdateuser" type="VARCHAR(20)" remarks="修改人" />
+			<column name="dupdatedate" type="DATETIME" remarks="修改时间" />
+		</createTable>
+	</changeSet>
+	<changeSet author="fcl" id="t_google_feeds_base-create">
+		<createTable tableName="t_google_feeds_base" remarks="谷歌feeds配置表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="country" type="VARCHAR(50)" remarks="国家" />
+			<column name="clanguage" type="VARCHAR(50)" remarks="语言名称" />
+			<column name="ccurrency" type="VARCHAR(50)" remarks="币种名称" />
+			<column name="ilanguageid" type="INTEGER" remarks="产品语言编号" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+	<changeSet author="wuzx" id="t_merchants_product-create1-20151015">
+		<createTable tableName="t_merchants_product" remarks="产品刊登记录表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="csku" type="VARCHAR(40)" remarks="sku" />
+			<column name="clistingid" type="VARCHAR(50)" remarks="clistingId" />
+			<column name="ctitle" type="VARCHAR(150)" remarks="名称" />
+			<column name="cdescription" type="VARCHAR(5000)" remarks="描述" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点" />
+			<column name="ctargetcountry" type="VARCHAR(30)" remarks="目标国家" />
+			<column name="clanguage" type="VARCHAR(20)" remarks="刊登国家语言" />
+			<column name="googlecategory" type="VARCHAR(100)" remarks="谷歌品类" />
+			<column name="cpath" type="VARCHAR(150)" remarks="站点品类" />
+			<column name="cname" type="VARCHAR(30)" remarks="当前品类名" />
+			<column name="ilanguage" type="INTEGER" remarks="站点语言" />
+			<column name="cstate" type="VARCHAR(10)" remarks="状态" />
+			<column name="cresult" type="VARCHAR(10)" remarks="操作结果" />
+			<column name="cfaultreason" type="VARCHAR(1000)" remarks="失败原因" />
+			<column name="createuser" type="VARCHAR(30)" remarks="操作人" />
+			<column name="cnodedata" type="VARCHAR(100000)" remarks="刊登元数据" />
+			<column name="cnodeid" type="VARCHAR(100)" remarks="刊登元数据ID" />
+			<column name="icount" type="INTEGER" remarks="数量" />
+			<column name="cchannel" type="VARCHAR(15)" remarks="在线状态" />
+			<column name="productprice" type="VARCHAR(20)" remarks="价格" />
+			<column name="dpulldate" type="DATETIME" remarks="拉取时间" />
+			<column name="dpushdate" type="DATETIME" remarks="更新刊登时间" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="dupdatedate" type="DATETIME" remarks="更新时间" />
+		</createTable>
+	</changeSet>
+	<changeSet author="xin" id="t_google_category_relation-create">
+		<createTable tableName="t_google_category_relation"
+			remarks="谷歌与本站品类关系表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="igooglecategory" type="INTEGER" remarks="谷歌品类编号" />
+			<column name="icategory" type="INTEGER" remarks="网站品类编号" />
+		</createTable>
+	</changeSet>
+	<changeSet author="wuzx" id="t_merchants_product-create1-20151021">
+		<addColumn tableName="t_merchants_product">
+			<column name="ccountrycurrency" type="VARCHAR(15)" remarks="目标国家币种" />
+		</addColumn>
+	</changeSet>
+	<changeSet author="wuzx" id="t_merchants_product-create1-20151022">
+		<createIndex indexName="idx_merchants_product" tableName="t_merchants_product"
+			unique="true">
+			<column name="cnodeid" type="VARCHAR(100)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="xin" id="t_google_filter_attribute-create">
+		<createTable tableName="t_google_filter_attribute"
+			remarks="谷歌品类属性表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icategoryid" type="INTEGER" remarks="谷歌品类编号" />
+			<column name="iattributekeyid" type="INTEGER" remarks="属性键编号" />
+			<column name="iattributevalueid" type="INTEGER" remarks="属性值编号" />
+			<column name="iwebkeyid" type="INTEGER" remarks="网站品类属性id" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="xin" id="t_google_attribute_key-create">
+		<createTable tableName="t_google_attribute_key" remarks="谷歌品类属性表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ckeyname" type="VARCHAR(50)" remarks="谷歌属性名" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="xin" id="t_google_attribute_value-create">
+		<createTable tableName="t_google_attribute_value" remarks="谷歌品类属性值表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cvaluename" type="VARCHAR(50)" remarks="谷歌属性值" />
+		</createTable>
+	</changeSet>
+	<changeSet author="wuzx"
+		id="t_merchants_product-modify-column-20151106">
+		<dropColumn columnName="csku" tableName="t_merchants_product" />
+		<addColumn tableName="t_merchants_product">
+			<column name="csku" type="VARCHAR(100)" remarks="sku" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="wuzx" id="t_merchants_product-create1-20151107">
+		<dropIndex indexName="idx_merchants_product" schemaName="public"
+			tableName="t_merchants_product" />
+		<createIndex indexName="idx_merchants_product" tableName="t_merchants_product">
+			<column name="cnodeid" type="VARCHAR(100)" />
+		</createIndex>
+	</changeSet>
+	<changeSet author="wuzx" id="t_merchants_product-create1-20151029">
+		<createIndex indexName="idx_sku_merchants_product"
+			tableName="t_merchants_product">
+			<column name="csku" type="VARCHAR(40)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet id="t_product_image-add-column-20151231" author="lijun">
+		<addColumn tableName="t_product_image">
+			<column name="coriginalurl" type="VARCHAR(600)"></column>
+			<column name="bfetch" type="BOOLEAN" defaultValueBoolean="false"></column>
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_product_image-add-column-20160107" author="lijun">
+		<addColumn tableName="t_product_image">
+			<column name="ihttpstatuscode" type="INTEGER"
+				defaultValueNumeric="0"></column>
+		</addColumn>
+	</changeSet>
+	<changeSet author="fcl" id="t_product_base-changes-20160308">
+		<addColumn tableName="t_product_base">
+			<column name="flength" type="FLOAT" defaultValue="null"
+				remarks="商品的长" />
+			<column name="fwidth" type="FLOAT" defaultValue="null"
+				remarks="商品的宽" />
+			<column name="fheight" type="FLOAT" defaultValue="null"
+				remarks="商品的高" />
+			<column name="fvolumeweight" type="FLOAT" defaultValue="null"
+				remarks="商品的体积重" />
+		</addColumn>
+	</changeSet>
+	<changeSet id="t_product_storage_map-add-column-20160308"
+		author="fcl">
+		<addColumn tableName="t_product_storage_map">
+			<column name="ilogisticstemplateid" type="INTEGER"
+				defaultValueNumeric="-1" remarks="物流模板id"></column>
+		</addColumn>
+	</changeSet>
+	<changeSet id="t_category_filter_attribute-add-column-20160418"
+		author="xin">
+		<addColumn tableName="t_category_filter_attribute">
+			<column name="isort" type="INTEGER" defaultValueNumeric="0" remarks="排序号"></column>
+			<column name="bisshow" type="BOOLEAN" defaultValueBoolean="true" remarks="是否显示"></column>
+		</addColumn>
+	</changeSet>
+	<changeSet id="t_category_attributekey_relation_create" author="xin">
+		<createTable tableName="t_category_attributekey_relation"
+			remarks="品类属性过滤表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icategoryid" type="INTEGER" remarks="品类编号" />
+			<column name="iattributekeyid" type="INTEGER" remarks="属性编号" />
+			<column name="isort" type="INTEGER" remarks="排序号" />
+		</createTable>
+	</changeSet>
+	<changeSet id="t_category_attributekey_relation-add-column-20160506"
+		author="xin">
+		<addColumn tableName="t_category_attributekey_relation">
+			<column name="bisshow" type="BOOLEAN" defaultValueBoolean="true" remarks="是否显示"></column>
+		</addColumn>
+	</changeSet>
+</databaseChangeLog>

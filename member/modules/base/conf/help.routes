@@ -1,0 +1,7 @@
+GET /customers-points	@controllers.help.Help.points()
+
+GET /drop-shipping		@controllers.help.Help.dropShipping()
+
+GET /affiliates			@controllers.help.Help.affiliates()
+
+GET /viplevels          @controllers.help.Help.viplevels()

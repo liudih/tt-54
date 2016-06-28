@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.ProductExplainMapper">
+	<resultMap id="BaseResultMap" type="dto.product.ProductExplain">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+		<result column="ilanguageid" property="ilanguageid" jdbcType="INTEGER" />
+		<result column="ctype" property="ctype" jdbcType="VARCHAR" />
+		<result column="ccontent" property="ccontent" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, iwebsiteid, ilanguageid, cpaymentexplain,
+		ctype,
+		ccontent
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_all_product_explain
+		where iid = #{iid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByIid" parameterType="java.lang.Integer">
+		delete from
+		t_all_product_explain
+		where iid = #{iid,jdbcType=INTEGER}
+	</delete>
+	<insert id="addProductExplain" parameterType="dto.product.ProductExplain">
+		insert into
+		t_all_product_explain (iwebsiteid, ilanguageid,
+		ctype, ccontent
+		)
+		values
+		(#{iwebsiteid,jdbcType=INTEGER}, #{ilanguageid,jdbcType=INTEGER},
+		#{ctype,jdbcType=VARCHAR}, #{ccontent,jdbcType=VARCHAR}
+		)
+	</insert>
+	<update id="updateProductExplain" parameterType="dto.product.ProductExplain">
+		update
+		t_all_product_explain
+		set iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+		ilanguageid = #{ilanguageid,jdbcType=INTEGER},
+		ctype =
+		#{ctype,jdbcType=VARCHAR},
+		ccontent = #{ccontent,jdbcType=VARCHAR}
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+</mapper>

@@ -1,0 +1,1510 @@
+#管理模块,manager.main.html===========
+tomtop.adminsystem=Tomtop | AdminSystem
+bob.nilson=Bob Nilson
+my.calendar=Mein Kalender
+my.inbox=Mein Inbox
+my.tasks=Meine Aufgaben
+lock.screen=Bildschirm sperren
+searchs=Suche...
+dashboard=Armaturenbrett
+widget.settings=kleine Werkzeuge Einstellungen
+widget.settings.form.goes.here=kleine Werkzeuge Einstellungen Form geht hier
+metronic.by.tomtop=Metronic bei tomtop.
+
+#首页顶部==============index.html===================================
+select.regional.settings=Region Wahl Einstellungen
+ship.to=transportiert zu
+currency=Währung
+language=Sprache
+order.tracking=Bestellformular verfolgen
+help=Hilfe
+faq=FAQ
+contact.us=kontaktieren uns
+live.chat=Live-Chat
+if.you.are.considering.a.purchase=Wenn Sie erwägen, einen Kauf zu machen
+chat.with.online.sales.for.more.information.before.you.purchase=Mehr Informationen zu bekommen,indem online chat, bevor Sie etwas kaufen!
+start.online.chat=Online Chat beginnen
+if.you.already.made.a.purchase=Wenn Sie schon einen Wille haben, etwas zu kaufen
+contact.customer.service.for.order.status.and.other.after-sales.issues.=kontaktieren Sie Kundendienst für Bestellstatus und andere After-Sales-Fragen.
+email=Email
+phone=Phone
+
+#首页头部(logo 一行)=======================================
+club=Verein
+new.arrivals=neue Waren
+freeshipping=Versand kostenfrei
+clearance=Abfertigung
+daily.deals=tägliche Angebote
+deals=Angebote
+under=Under
+community=Gemeinde
+specials=Angebote
+forums=Foren
+reviews.upcase=Bewertungen
+tomtop.blog=TOMTOP Blog
+videos=Video
+drop=Fallen
+shippings=Versand
+shipping=Versand:
+redeem=Einlösen
+points=Punkte
+affiliate=Affiliate
+program=Programm
+welcome=Willkommen
+#首页搜索(一行)=================================================
+hot.search=Hot Suche:
+welcome.to=Willkommen zu
+sign.in=Anmelden
+sign.out=Abmelden
+sign.into.your.account=Ihr Konto anmelden
+sign.in.with.an.existing.account=mit einem bestehenden Konto anmelden
+do.not.have.an.account.yet=Noch kein Konto?
+join.free=Kostenlos Anmelden
+hello=Guten Tag
+your.account=Ihr Konto
+new.customer=Neue Kunden
+my.tomtop=Mein TOMTOP
+my.profile=Meine Profile
+my.orders=Meine Bestellungen
+my.points=Meine Punkte
+my.reviews=Meine Bewertungen
+my.coupons=Meine Gutscheine
+wish.list=Wunsch List	   
+cart=Wagen     
+shop.all.categories=Alle Kategorien kaufen
+special.offer=Sonderangebot
+top.sellers=Top Verkäufer
+#(首页中部)====================================================
+new.arrival=Neue Ankunft
+hot.columns=Hot Spalten
+hot.categories=Hot Kategorien
+more=Mehr
+super.deals=Super Angebote
+hot.sales=Hot Verkäufe
+hot.events=Hot Ereignisse
+clearance.sales=Abverkäufe
+featured.items=Besondere Produkte
+#首页尾部上邮件=========================
+get.updates.discounts=Abonnieren kann ${0} Gutschein bekommen.
+and.special.offers.to.win.free.gift=zuerst wissen neue Aktualisierung,Rabatte, und besondere Angebote!
+
+#首页尾部(关注我们)===============================================
+like.us=liebe uns
+on.facebook=auf Facebook
+follow.us=Folgen uns
+on.twitter=auf Twitter
+pin.us=Pin uns
+on.pinterest=auf Pinterest
+read.us=lesen uns
+on.our.blog=auf unserem Blog
+watch.us=Sehen Sie uns
+on.youtube=auf Youtube
+join.us=Beitreten Sie uns
+on.forum=auf Forum
+on.google=auf Google+
+#首页尾部(链接)==================================================
+company.info=Firma Info            
+about.us=Über uns                
+report.site.bugs=falsche Weibseit berichten        
+tomtop.points=TOMTOP Punkte
+site.map=Baustelle Karte                
+payment.shipping=Zahlung & Versand      
+payment.guide=Zahlungsführung           
+shipping.guide=Versand Führung          
+estimated.delivery.time=Geschätzte Lieferfrist 
+locations.we.ship.to=wir liefern zu    
+policies.service=Politik & Dienst      
+privacy.policy=Datenschutz          
+terms.of.use=Nutzungsbedingungen            
+help.for.order=Hilfe zur Bestellung          
+return.policy=Rücknahmegarantie           
+partner.program=Partner Programm         
+affiliate.program=Schwestergesellschaft Programm       
+wholesale=Großhandel               
+dropship=Dropship                
+see.all=Alle sehen
+copyright.2004.2014.tomtop.wholesale.center.all.rights.reserved=Copyright ©2004- 2015 TOMTOP Großhandel Center. Alle Rechte Vorbehalten.
+#产品详情页================product.html========================================================
+#=====产品详情页(购物车)
+#index.cart.页面======
+view.cart.0.item=Zum Warenkorb ({0}) Artikel
+qty=Anzahl Lizenzen:
+buy.n.and.save=kaufen {0} + und Speichern
+total.price=Gesamtpreis:
+add.to.cart=Einkaufswagen
+item.added.to.cart=Artikel wurde in dem Warenkorb hinzugefügt
+total.item.in.your.cart=Gesamt Artikel in Ihrem Warenkorb 
+add.fail=Entschuldigung, nicht zu schreiben!
+cart.total=Warenkorb Total:
+view.cart=Einkaufswagen
+continue.shopping=Weiter einkaufen
+out.of.stock=Nicht am Lager
+buy.now=Jetzt kaufen
+add.to.wish.list=in Wunschzettel hinzufügen
+payment.methods=Zahlungsmethoden
+your.shopping.cart.is.empty=Ihr Warenkorb ist noch leer.
+if.you.already.have.an.account=Wenn Sie bereits ein Konto haben, 
+#loyalty bulk_price.html=============
+buy.more.lower.prices=Mehr Kaufen ... Bekommen Niedrigere Preise
+order=Bestellen
+enjoy.savings.bulk.prices.shown.shopping.cart=Bestellen mehr und genießen Sie die Einsparungen. Staffelpreise werden im Warenkorb angezeigt.
+qty.unit=Menge (Einheit)
+looking.wholesale.prices.feel.free.to=Wenn Sie nach Großhandelspreisen suchen,fühlen Sie sich frei
+contact.us=kontaktieren Sie uns.
+out.of.stock=Ausverkauft
+
+#======产品详情页(详情)
+regular.price=Regulärer Preis:
+special.price=Sonderpreis:
+color=Farbe:
+size=Größe:
+price.match=Preis Match
+wholesale.inquiry=Großhandelsanfrage
+report.error=Fehler melden    
+watch.video=Video ansehen
+frequently.buy.together=Wird oft zusammen gekauft
+price.for.all.selected=Preis für alle ausgewählten
+customers.who.bought.this.item.also.bought=Kunden, die diesen Artikel gekauft haben, kauften auch
+description=Beschreibung
+shipping.payment=Versand & Bezahlung
+warranty.process=Garantie
+in.stock=Auf Lager
+out.sold=Ausverkauft
+#=======咨询的三个表单页
+new=Neu
+free.shipping=Kostenloser Versand
+lower.price=Niedrigerer Preis:
+source.url=Quelle URL:
+your.e-mail.address=Ihre E-Mail-Adresse:
+notes.details=Notes / Details:
+verification.code=Bestätigungs-Code:
+refresh=Aktualisieren
+if.you.have.any.questions.contact.us=Wenn Sie irgendwelche Fragen haben, kontaktieren Sie uns:
+price.match.description=Bitte senden Sie die URL der besseren Preis, den Sie gesehen haben. Wir werden eine sofortige Untersuchung erhalten und versuchen unser Bestes, um den Preis halten können, wenn er nachweist, dass das gleiche Produkt ist. Wir werden Ihnen das Ergebnis per E-Mail benachrichtigen. Vielen Dank für Ihre Hilfe dabei, wettbewerbsfähigen Preisen zu erhalten.
+name=Name
+mobile.phone=Mobile Phone:
+e-mail.address=E-Mail-Adresse: 
+your.target.price=Ihr Zielpreis: 
+order.quantity=Bestellmenge: 
+country.state=Land / Region:
+company.name=Name des Unternehmens: 
+write.an.inquiry=Schreiben Sie eine Anfrage:
+wholesale.inquiry.description1=Bitte teilen Sie uns so viel wie möglich über Ihre Anfrage, damit wir Ihnen bei Ihren spezifischen Bedürfnissen zu unterstützen. Wir sind immer glücklich zu helfen, wo immer möglich.
+report.error.description1=Wenn Sie alle Informationen  finden,dass dieser Artikel fehlerhaft ist, berichten Sie  uns bitte den Fehler. Alle Berichte sind innerhalb von 2 Werktagen behandelt.
+report.error.description2=Bei einer Abfrage über Bestellung, Lieferung oder andere Kundenservice Fragen, senden Sie bitte ein Ticket / RMA in "Mein Konto" oder kontaktieren Sie uns direkt, Statt Fehlerbericht.
+where.is.error=Wo ist Fehler: 
+product.description=Produktbeschreibung
+product.price=Produktpreis
+product.image=Produktbild
+others=andere
+lack.info=Information fehlen
+wrong.category=Falsche Kategorie
+wrong.weight=Falsches Gewicht
+dimension=Dimension
+wrong.stock.status=Falsche Lagerstatus
+poor.quality=Schlechte Qualität
+#====产品详情页中部
+sku=SKU:
+we.recommend=Related Empfohlen
+buy.it.now=Sofort Kaufen
+foreign.language.keywords=Fremdsprache Schlüsselwörter
+customer.photos=Kunden Fotos
+see.all.photos=Alle Bilder anzeigen
+or=oder
+post.photos=Veröffentlichen Fotos
+share.to.facebook=Teilen auf Facebook
+be.the.first.to.post.photo.of.this.product.and.get.a.massive=Die Erste zu sein, Foto von dieser Produkt zu veröffentlichen und ein groß zu bekommen
+customer.video=Kunden Videos
+customer.reviews=Bewertungen der Kunden
+see.all.videos=Alle Videos sehen
+post.videos=Videos veröffentlichen
+be.the.first.to.post.video.of.this.product.and.get.a.massive=Die Erste zu sein, Video von dieser Produkt zu veröffentlichen und ein groß zu bekommen
+customer.reviews=Bewertungen der Customer
+average.customer.review=Durchschnittliche Bewertungen der Kunden
+reviews.lowercase=Bewertungen
+see.all.lowercase=All ansehen
+stars=Sterne
+write.a.review=Schreiben Sie eine Rezension
+any.customer.writing.a.review.can.get.tomtop.points.the.first.five.get.double.tomtop.points=Jeder Kunde eine Bewertung abgeben können TOMTOP Punkte zu bekommen, die ersten fünf bekommen DOUBLE TOMTOP Punkten.
+usefulness=Nützlichkeit:
+price=Preis:
+quality=Qualität:
+by=Von
+share.this.review=Teilen Sie diese Bewertung
+was.this.review.helpful.to.you=War diese Rezension für Sie hilfreich?
+yes=Ja
+no=Nein
+reviews.are.only.accepted.from.actual.purchases=Bewertungen nur von tatsächlichen Käufe angenommen!
+reviews.require=Bitte stellen Sie die Überprüfung  sicher, die Sie einreichen, ist für das beschriebene Produkt und von uns gekauft. Klicken Sie auf den Zurück-Button Ihres Browsers und suchen Sie erneut.
+#==========FAQ================
+product.q.a=Produkt Q&A 
+questions.and.answers=Fragen und Antworten
+all=Alle
+faqs=Häufig gestellte Fragen
+customer.q.a=Customer Q&A
+my.question.example=Meine Frage (Beispiel:  Ist dieses Produkt in mehreren Farben?):
+more.details.maximum.characters=Mehr Details (Maximum 250 Zeichen):
+tell.us.a.little.about.yourself=Erzähl uns ein wenig über sich selbst:
+code=Kodex 
+type=Typ
+please.choose.question.type=Bitte wählen Sie einen Fragentyp
+product.q.a.guidelines=Produkt Q&A Richtlinien
+you.are.invited.to.ask.questions.and.offer.answers.to.the.questions.posted.here=Sie werden eingeladen, Fragen zu stellen und Antworten auf die Fragen  hier zu bieten. Teilen Sie Ihre Ideen und hilfreiche Lösungen mit unseren customers.Vergessen nicht,wir können Ihre Fragen nicht veröffentlichen und / oder zu beantworten, ob es enthält:
+information.that.changes.such.as.price.and.promotional.details.inappropriate.language.or.tone=Information,dass Änderungen, wie Preise und Angebote unangemessene Sprache oder Ton
+information.about.other.companies.and.web.sites=Informationen über andere Unternehmen und Web-Sites
+personal.or.private.information=persönliche oder geheime Daten
+need.to.get.help.from.our.customer.service.team.contact.us.now=Benötigen Sie Hilfe von unserem Kundenservice-Team zu bekommen? Kontaktieren Sie uns jetzt.
+#============
+shipping.or.payment=Liefer oder Bezahlung
+customer.service.issue=Kundendienst Fragen
+ask.a.question=Stellen Sie eine Frage
+your.recently.history=Ihre Letzte Besuche
+hot.products=Hot Produkte:
+your.recent.history=Ihre Letzte Besuche
+remove.from.your.cart=Aus Ihrem Warenkorb entfernen?
+save.lowcase=Speichern
+ok=OK
+
+#产品详情页中的上传图片页面upload_product_photos.html==================
+please.upload.your.picture=Bitte laden Sie Ihr Bild
+image.2.m.max.200.pixel.jpeg.gif.png.5.images=Bildgröße 2M max, Bereich mehr als 200 Pixel,Unterstützung JPEG GIF PNG, können Sie bis 5 Bilder hochladen
+say.few.words.about.products=Noch ein paar Worte zu den Produkten
+pictures=Bilder
+#产品详情页中的上传視頻页面upload_product_videos.html==================
+upload.video=Hochladen Videos
+get.40.tomtop.points=Bekommen Sie 40 Punkte TOMTOP
+video.titl=Video Titel
+video.url=Video URL
+video.been.uploaded.successfully.patient.review=Video wurde erfolgreich hochgeladen, warten Sie bitte darauf, das überprüft zu werden.
+video.posting.guidelines=VIDEO Veröffentlichungsrichtlinien
+would.like.share.purchases.experiences.video=Wir möchten,Sie Ihre Einkäufe, und Erfahrungen mit, TOMTOP in Videoform zu teilen!
+products.video.must.purchased=Alle Artikel in der Video muss aus TOMTOP erworben werden.
+must.included.video.title.product.added.description="TOMTOP" müssen in Ihrem Videotitel enthalten und ein Produktlink muss in Ihrem Video-Beschreibung hinzugefügt werden.
+youtube.channel.http.youtube.linksempire=Auf unserem YouTube-Kanal Abonnieren: http://www.youtube.com/linksempire
+have.not.uploaded.video.youtube.yet=Können Sie Ihr Video auf YouTube nicht hochladen?
+
+what.is.in.the.video=Was ist in dem Video
+video.subject.product.links.your.description= "TOMTOP" in Ihrem Video Thema und Produkt-Links in Ihrer Beschreibung.
+try.make.creative.useful.informative.possible=Versuchen Sie, Ihre Video kreativ, nützlich und informativ wie möglich zu machen!
+make.original.plagiarized.videos.not.accepted=Stellen Sie sicher, Ihr Video original ist. Plagiate Videos werden nicht akzeptiert.
+length.Video.should.least.minutes=Die Länge eines Video sollte mindestens 1,5 Minuten.
+
+what.you.can.get=Was können Sie bekommen
+once.video.approved.points.every.points=Sobald Ihr Video genehmigt  wird, werden Sie 40 TOMTOP Punkte bekommen. (alle 100 Punkte = $ 1)
+video.official.youtube.channel=Wir werden Ihr Video auf unserem offiziellen YouTube-Kanal gestellt:
+and.send.free.products.review.videos.successful=und senden Sie mehr freie Produkte zu überprüfen, wenn Ihre Videos sehr erfolgreich  sin
+
+where.to.upload.your.video=Wo Sie Ihr Video hochladen
+purchased.items.link.video.appropriate.space=Log in TOMTOP.com und finden Sie die "Post videos" Seite Ihrer gekauften Einzelteile. Fügen Sie den Web-Link des Videos in das entsprechende Feld.
+
+#首页产品logo6个页面=====================================================================
+#首页产品1.New Arrivals页面=========================
+release.date=Veröffentlichungsdatum:
+category=Kategorie:
+most.popular=beliebtest
+discount=Rabatt
+price=Preis
+review=Rezension
+sale=Verkauf
+last.week=Letzte Woche
+last.2.weeks=Letzte 2 Wochen
+last.3.weeks=Letzte 3 Wochen
+last.month=Letzter Monat
+
+#首页产品3.Clearance页面=========================
+clearance=Abstand
+clearance.in.all.categories=Abstand in allen Kategorien
+get.the.latest.discounts.by.email=Bekommen die Rabatte per E-Mail
+
+#首页产品4.Daily Deals页面=====================
+dailydeals=Tägliche Angebote
+todays.deals=Heutige Angebote
+everyday.starting.midnight.we.bring.you.a.new.range.of.deals.at.bargain.prices=Täglich ab Mitternacht, bringen wir Ihnen eine neue Reihe von Angebote zu günstigen Preisen.
+deals.ends.in=Beginnen um 0:00 Uhr (GMT-8) jeden Tag
+tomorrows.deals=Morgen Angebote
+hottest.items=Die hote Produkte
+all=Alle
+#首页产品5.under0.99页面========================
+#0.99页面gadget=======================================================================
+promotional.products.under = Aktionsprodukte unter
+#中部============================================
+0.99.deals=$ 0.99 Angebote
+1.99.deals=$ 1.99 Angebote
+2.99.deals=$ 2.99 Angebote
+3.99.deals=$ 3.99 Angebote
+4.99.deals=$ 4.99 Angebote
+#首页产品6.Community页面======暂无功能========================================
+#首页产品7.8暂无功能==================
+#首页产品9.dropShipping页面==================================================
+dropshipping=Dropshipping
+why.choose.tomtop=Warum wählen TOMTOP?
+no.stock.risk=Keine Lizenzrisiko
+fast.shipping=Schnelle Lieferung
+customization=Anpassung
+extra.discounts=Extra-Rabatte
+items.in=Angebote in
+categories.available.for.drop.shipping=Kategorien für Drop lieferbar
+no.stock.risk.for.no.stock.risk.for.drop.shippers=Kein Aktienrisiko für Drop-Versender
+no.tomtop.logo.on.packing.label.non.logoproduct.pictures.available=Kein TOMTOP Logo auf Verpackungsetikett & kein logo Produktbilder vorhanden
+packages.can.be.customized.with.your.company.or.website.name.and.logo.as.required=Pakte können mit Ihrem Unternehmen oder einer Website Name besonders angefertigt werden und das Logo nach Bedarf angepasst werden
+fast.and.simple.online.operation.for.tomtop.orders=Schnelle und einfache Online-Betrieb für Großaufträge
+how.does.drop.shipping.benefit.you=Was können Sie von Dropshipping mit TOMTOP profitieren?
+drop.shipping.is.an.easy.way.for.you.to.start.earning.profit.by.selling.quality.products.by.listing.our.products.on.your.website.and.taking.advantage.of.drop.shipping.you.will=Drop Versand ist eine einfache Möglichkeit für Sie zu verdienen Gewinn durch den Verkauf hochwertiger Produkte. Durch die Auflistung unserer Produkte auf Ihrer Website und die Nutzung von Drop Shipping, werden Sie
+no.joining.fee=Nicht benötigen Aufnahmegebühr.
+3.15.off.you.get.rewarded.the.more.you.order.as.your.total.order.history.increases.you.automatically.get.better.discount.levels.making.you.even.more.competitive=Genießen 3% -15% Rabatt, werden Sie nach Ihrer Bestellung belohnt. Wie Ihr Gesamtauftrag Geschichte steigt, erhalten Sie automatisch eine bessere Rabattstufen erhalten, so dass Sie noch wettbewerbsfähiger!
+become.a.worldwide.e.commerce.retailer.at.a.low.cost.with.no.risk=Einem weltweiten E-Commerce-Händler werden, niedrigen Kosten ohne Risiko.
+exclusive.drop.shipping.weekly.deals.newsletter=Erhalten Sie Exklusivtropfenverschiffen Wochenangebote Newsletter.
+offer.a.wide.selection.of.products.without.the.need.to.purchase.or.store.inventory=Bieten eine breite Auswahl von Produkten, ohne die Notwendigkeit zum Kauf oder zur Filialbestand.
+select.product.types.on.tomtop.com.and.determine.your.own.retail.prices.and.profit=Wählen Sie Produktarten auf TOMTOP.com und bestimmen Sie Ihre eigenen Einzelhandelspreise und Gewinn.
+have.your.products.packaged.and.shipped.to.your.customers.by.us.at.no.extra.cost=Haben Sie Ihre Produkte verpackt und ohne zusätzliche Kosten geliefert zu Ihren Kunden von uns.
+how.to.do.drop.shipping.with.tomtop=Wie startet man Tropfenverschiffen mit TOMTOP?
+for.single.orders=Für Einzelaufträge:
+sell.tomtop.products.on.your.own.webstore.ebay=Verkaufen TOMTOP Produkte auf Ihrem eigenen Webshop / eBay;
+select.products.on.tomtop.com.and.add.to.shopping.cart=Wählen Produkt (e) auf TOMTOP.com und in den Warenkorb legen;
+click.add.drop.shipping.service.on.shopping.cart.page=Klicken Sie auf "Add Drop Shipping Service" auf Warenkorb-Seite;
+submit.the.order.and.finish.the.payment.remrember.to.set.the.shipping.address.as.your.customers=Einreichen die Bestellung und beenden Sie die Zahlung, vergessen Sie nicht die Lieferadresse als Ihre Kunden's stellen;
+tomtop.will.prepare.your.order.and.ship.out.to.your.customer.directly=TOMTOP wird Ihre Bestellung vorbereiten und versenden zu Ihrem Kunden direkt.
+our.commission.policy=Unsere Kommission Politik:
+you.can.get.extra.discounts.in.tomtop.as.a.drop.shipper=Sie können spezielle Ermäßigungen in TOMTOP als Drop-Versender erhalten.
+grades=Grades
+vip0=VIP0
+vip.1=VIP1
+vip.2=VIP2
+vip.3=VIP3
+vip.4=VIP4
+vip.5=VIP5
+total.order.amount=Gesamtauftragssumme
+service.fee.transaction.fee.monthly=Service Gebühr/Transaktionsgebühr (monatlich)
+free=Frei
+products.you.can.add.update.in.catalog.monthly=Produkte können Sie im Katalog (monatlich) hinzufügen/aktualisieren
+download.product.images=Herunterladen Produktbilder
+enjoy.dropship.price=Genießen Dropship Preis
+not.a.member.yet=Noch nict ein Mitglied?
+just.3.easy.steps=Nur 3 einfachen Schritten:
+#note.dropshippers.and.wholesalers.can.not.enjoy.tomtop.permissions=Hinweis: Dropshippers und Großhändler können nicht TOMTOP Berechtigungen genießen.
+for.any.inquiries.and.price.bargain.contact.dropshipping.tomtop.com=Für jede Anfragen und Preis Schnäppchen, Kontakt
+join.now=Jetzt Mitglied werden
+register.an.account.and.sign.in.your.account=Registrieren Sie ein Konto und melden Sie in Ihrem Konto
+fill.in.the.request.form.online.and.submit=Füllen Sie im Anfrage online und einreichen
+become.a.drop.shipping.client.after.our.approval=Werden Sie ein Drop-Shipping-Client nach unserer Zustimmung bekommen
+you.can.add.update.products.in.catalog=Sie können Produkte im Katalog hinzufügen/aktualisieren
+discount.off=Rabatt (% OFF)
+step=Schritt
+
+#首页产品10.redeemPoints页面TOMTOP Points==========================================
+how.to.get.more.points=Wie kann man mehr Punkte bekommen?
+50.points.for.signs.up=50 Punkte für Signs up
+20.points.for.joining.newsletter=20 Punkte für Joining Newsletter
+40.points.for.uploading.video=40 Punkte für das Hochladen von Videos
+20.points.for.uploading.a.product.photo=20 Punkte für das Hochladen eines Produktfotos
+10.points.for.write.product.review=10 Punkte für Schreiben eines Kommentars
+20.points.for.share.photo.video=20 Punkte für, Foto / Video zu teilen
+10.points.for.product.price.report=10 Punkte für Product Price Bericht
+20.points.for.Confirm.your.email.address=20 Punkte für Bestätigen Ihrer E-Mail-Adresse
+5.points.for.signing.in.1.times.everyday=5 Punkte für die Unterzeichnung in 1 mal jeden Tag
+20.points.for.modify.your.account.picture=20 Punkte für Passen Ihres Konto Bilds
+order.from.us.usd.1.1.point=Auftrag von uns (USD $ 1 = 1 Punkt)
+how.to.spend.my.points=Wie wenden meine Top-Bonuspunkte?
+deduct.a.part.of.order.amount.with.your.points.every.100.points.1=Ziehen Sie einen Teil der Auftragsmenge mit Ihrem Punkte (alle 100 Punkte = $ 1)
+enter.point.number.corresponding.amount.will.deducted=Solange Sie die Anzahl der Punkte, die Sie verwenden möchten eingeben, wird der entsprechende Betrag in Abzug gebracht.
+how.to.redeem.products=Wie man Produkte einlösen?
+choose.your.preferred.product.and.simply.click.on.the.redeem.button.on.the.bottom.of.each.product=Wählen Sie Ihre Produkte und klicken Sie einfach auf das Einlösen Taste auf der Unterseite der einzelnen Produkte.
+then.input.your.shipping.address.information=Dann führen Sie Ihre Versandadresse Information.
+click.on.the.place.order.button.to.finish.the.redemption.no.need.payment=Klicken Sie auf die Schaltfläche Bestellung, um die Rücknahme zu beenden, keine Notwendigkeit zu bezahlen.
+attention=Achtung:
+points.applied.special.products.dodocool.branded.items=Punkte können nicht zu speziellen Produkten angewendet werden und allen dodocool Markenartikeln.
+points.cant.used.together.tomtop.coupon=Punkte können nicht zusammen mit TOMTOP Coupon eingesetzt werden.
+enjoyed.specific.discounts.certain.levels.buying.more.3=VIP-Kunden können ihre Punkte auf Gegenstände, die sie bereits bestimmte Rabatte auf Grund ihrer bestimmten VIP Ebenen oder den Kauf mehr als 3 genossen anzuwenden.
+points.expire.dec.31.each.year=Alle Punkte auf Dec.31 jedes Jahr auslaufen.
+you.can.join.the.point.redemption.activity=Sie können den Punkt Erlösung Aktivität beitreten.
+point.redemption.activities.will.be.held.irregularly.and.shown.on.the.homepage.banner=Punkt Erlösung Aktivitäten werden unregelmäßig stattgefunden und auf der Homepage-Banner angezeigt.
+clickthis=Klicken Sie hier
+view.activities.details=Aktivitäten Details anzeigen
+#首页产品11.affiliateProgram页面================================================
+tomtop.affiliate.program=TOMTOP Partnerprogramm
+welcome.to.tomtop.affiliate.program.page.tomtop.affiliate.program.is.available.shareasale.com.we.offer.all.the.affiliates.attractive.tiered.commission.rates.besides.we.constantly.provide.our.affiliates.with.non.expiring.exclusive.coupon.codes.most.popular.deals.coolest.banners.regularly.updated.datafeed.etc=Willkommen auf TOMTOP Partnerprogramm Seite! TOMTOP Partnerprogramm ist verfügbar ShareASale.com. Wir bieten alle Tochtergesellschaften attraktive tiered Provisionssätze. Außerdem bieten wir ständig unsere Tochtergesellschaften mit nicht ablaufenden exklusive Gutscheincodes, beliebtesten Angebote, coolsten Banner, regelmäßig aktualisierte Datafeed usw.
+its.completely.free.for.you.to.join.us.and.start.the.business.we.pay.commission.to.you.for.every.valid.transaction.via.your.business.or.non.business.channels.want.to.see.what.you.can.make.with.us.join.our.affiliate.program.today=Das ist völlig kostenlos für Sie,mit uns zu verbinden und starten Sie das Geschäft! Wir zahlen Provision an Sie für jede gültige Transaktions über Ihr Unternehmen oder nicht-Business-Kanäle. Möchten Sie sehen, was Sie bei uns machen? Werden Sie Affiliate heute!
+how.to.join.our.affiliate.program=Wie treten unsere Affiliate-Programm bei?
+log.in.shareasale.com.as.an.affiliate.or.a.publisher=Anmelden shareasale.com als Affiliate oder Publisher.
+search.for.our.account.shareasale.id.27868.or.click.the.id.numbers=Suche nach unserem Konto (ShareASale ID: 27868) oder klicken Sie auf die ID-Nummern.
+grab.the.tomtop.link.from.the.site.and.add.it.to.your.own.websites=Besorgen Sie sich die TOMTOP Link von der Website, um sie Ihren eigenen Webseite (n) hinzufügen.
+now.all.you.need.to.do.is.drive.traffic.to.tomtop.and.watch.the.affiliate.commissions.roll.in=Alles, was Sie jetzt tun müssen, ist die Zugriffszahlen auf TOMTOP und beobachten Sie die Affiliate-Provisionen rollen in.
+affiliate.network.shareasale.linkshare.pay.6.12.commission.per.sale=Affiliate Network (ShareASale, Linkshare) zahlen 6% --- 12% Provision pro Verkauf.
+how.does.the.affiliate.program.work=Wie funktioniert das Partnerprogramm?
+why.choose.us=Warum wählen uns?
+huge.product.data.feed=Sehr große Produktdaten-Feed.
+innovative.and.new.products.updated.daily=Innovative und neue Produkte täglich aktualisiert.
+competitive.price.and.discount=Konkurrenzfähiger Preis und Rabatt.
+promotions.launched.regularly=Promotions regelmäßig ins Leben gerufen.
+competitive.commission=Wettbewerbskommission.
+product.updated.frequently=Produkt häufig aktualisiert.
+our.commission.policy=Unsere Kommission Politik:
+level.tomtop=Level TOMTOP
+rate=Rate
+to.reach.this.level.monthly.sales.amount=Um dieses Niveau zu erreichen (monatlichen Verkaufsmenge)
+level=Ebene
+more.than.20000=Mehr als $ 20.000
+what.we.can.provide=Was wir bieten können:
+competitive.commission.30.60.cookie.days=Wettbewerbskommission und 30-60 Cookie Tagen.
+a.weekly.product.feed=Eine wöchentliche Produktzufuhr.
+daily.deal.and.weekly.deal.promotions=Tägliche Transaktion und wöchentliche Transaktion Promotionen.
+regularly.updated.banners.including.store.banners.and.promotional.banners=Regelmäßig aktualisierte Banner, einschließlich Speicher, Banner und Werbe-Banner.
+frequent.newsletters=Häufige Newslettern.
+professional.affiliate.team.support=Berufspartnerteam zu unterstützen.
+
+#登陆注册页面===========login.html=======================================
+sign.in.or.register.a.new.account=Melden Sie sich an oder eröffnen Sie ein Konto
+the.email.you.have.entered.is.invalid.please.check.your.email.and.try.again=die E-Mail Sie eingetragen, ist ungültig. Bitte überprüfen Sie Ihre E-Mail und erneut versuchen.
+the.email.address.or.password.you.entered.is.incorrect=Die E-Mail-Adresse oder eingegebene Passwort ist nicht korrekt.
+forgot.your.password=Passwort vergessen?
+register=Registrieren
+an.account.already.exists.for.this.email.address=Ein Konto ist bereits für diese E-Mail-Adresse.
+low=Niedrig
+medium=MEDIUM
+high=Hoch
+this.should.be.at.least.6.characters.long.and.will.be.case.sensitive=ieser sollte mindestens 6 Zeichen lang sein und achten auf Groß- und Kleinschreibung.
+your.shipping.destination=Ihr Versand Reiseziel:
+i.agree.to.the.tomtop=Ich stimme der TOMTOP
+terms.and.conditions=Allgemeine Geschäftsbedingungen.
+yes.sign.up.our.newsletter.get.a.50.coupon.in.your.first.email=Ja, Melden Sie sich für unseren Newsletter, erhalten Sie einen $ 50 Gutschein in Ihre erste E-Mail!
+register.at.tomtop.com.and.receive.50.points=Bei TOMTOP.com registrieren und erhalten 50 Punkte.
+create.my.account=Mein Konto einrichten
+#注册成功======================
+an.activation.email.has.been.sent.to.your.email=Ein aktivierter E-Mail wurde an Ihre E-Mail gesendet
+please.follow.the.steps.to.activate.your.account=Bitte in Ihre Mailbox anmelden, und folgen Sie den Anweisungen, um die Überprüfung abzuschließen.
+did.not.receive.our.confirmation.email=Nicht empfangen unsere Bestätigungs-E-mail
+resend.an.email=Erneut Senden eine E-Mail
+#忘记密码找回页面==========================================================================================
+forgot.password.back=Passwort vergessen, zurück
+to.retrieve.your.password.please.enter.your.email.address=Geben Sie einfach Ihre E-Mail-Adresse ein und wir werden eine E-Mail mit Ihrem neuen Passwort senden.
+email.address=Email-Adresse:
+sent=Senden
+#忘记密码找回成功页面===================
+please.check.your.e.mail.box=Bitte überprüfen Sie Ihre E-Mail-Box.
+an.e.mail.has.been.sent.to=Eine E-Mail wurde gesendet zu
+please.follow.the.instructions.in.the.e.mail.to.set.your.new.password=Bitte folgen Sie den Anweisungen in der E-Mail, um Ihr neues Passwort festzulegen
+#密码重置页面password_reset.html==============
+password.reset=Passwort rücksetzen
+confirm.new.password=Neues Kennwort bestätigen:
+#重置密码超时页面password_reset_session_timeout.html=========
+retrieve.password=Passwort abfragen
+retrieve.password.link.failed=Wieder Kennwort Link fehlgeschlagen!
+you.can.choose.to=Sie haben folgende Möglichkeiten:
+resend.mail=Erneut senden Mail!
+modified.password.reset.password.link.failure=Sie haben das Passwort, das Passwort zurücksetzen Verbindungsfehler geändert
+#重置密码超次页面password_reset_timesout.html=====
+more.than.three.times.retrieve.password.link.failed=Passwort abfragen mehr als dreimal, abzurufen Kennwort Link fehlgeschlagen!
+three.times.a.day=Nur dreimal am Tag zu finden!
+
+#会员中心6个页面==================
+#会员中心主页==============
+account.dashboard=Benutzerkonto Übersicht
+tomtop.program=TOMTOP Programm
+dropship.program=Dropship Programm
+wholesale.program=Großhandel Programm
+my.earning.report=Meine Earning Bericht
+my.affiliate.level=Meine Partnerstufe
+customer.service=Kunde Service
+product.q.and.a=Produkt Q&A
+newsletter.subscription=Newsletter abonnieren
+contact.customer.support=Kontakten Kundenservice
+start.a.live.chat=Starten Sie ein Live Chat
+account.settings=Kontoeinstellungen
+log.out=Abmelden
+#会员中心主页子菜单=============
+my.tomtop.point=Meine TOMTOP Punkte
+points.details=Punkte-Details
+points.rewards.zone=Punkte Belohnungen Zone
+my.wishlist=Mein Wunschzettel
+price.match=Preis Match
+my.review=Mein Erfahrungsbericht
+address.book=Addresse Buch
+
+#会员中心my wishlist子菜单 interaction.wishlist.html============
+you.have.no.favorite.on.file=Sie haben keine Favoriten auf Datei.
+its.time.to.do.some.shopping=Das ist Zeit zum Einkaufen ...
+create.wish.list.fill.page.items.wishing.brands.like.e-mailed.add.products.list=Die Wunschliste zu erstellen, füllen Sie diese Seite mit allen Elementen, die Sie wollen und alle Marken Sie lieben, die Marken du magst. Bis zu 10 Produkte können per E-Mail, aber Sie können so viele Produkte hinzufügen, wie Sie zu Ihrem Merkzettel wollen.
+yourself.preview.e.mail.address.sign.in.forward.friends.family=Mailen Sie Ihr Wunschzettel und zeigen Sie sie.(Der Merkzettel wird an die E-Mail-Adresse gesendet, die Sie zur Anmeldung in verwendet geschickt werden.) Leitet es dann an Ihre Freunde und Familie.
+categories=Kategorien:
+select=-wählen-
+sort.by=Sortieren nach:
+date.added=Datum hinzufügen
+price.low.to.high=Preis: Niedrig bis hoch
+price.high.to.low=Preis: Hoch bis niedrig
+
+#会员中心price.match子菜单===============
+date=Datum:
+last.3.months=Letzte 3 Monate
+last.6.months=Letzte 6 Monate
+last.year=Letztes Jahr
+all.date=Alle Daten
+statuss= Status:
+status=Status
+pending=Schwebend
+approved=Genehmigt
+failed=Gescheitert 
+of=von
+items=Artikel
+you.have.no.information.on.file=Sie haben keine Informationen über Datei.
+status.explanation=Status Erläuterung:
+request.has.just.been.submitted.and.is.waiting.for.staff.to.process=Anfrage wurde gerade eingereicht und wartet auf Mitarbeiter zu verarbeiten.
+processing=Verarbeitung
+request.has.been.seen.by.staffs.and.is.currently.being.worked.on=Anfrage wurde vom Personal gesehen und ist derzeit in Arbeit.
+fulfilled=Erfüllt
+request.has.been.fulfilled.by.tomtop.i.e.for.price.matches.price.is.lowered.for.product.requests.products.are.listed=Wunsch wurde von TOMTOP erfüllt (dh für die Preisübereinstimmungen, Preis gesenkt; für Produktanfragen, Erzeugnisse aufgeführt).
+request.couldnt.be.processed.due.to.a.number.of.reasons.for.price.matches.tomtop.can.only.accept.retail.online.stores.that.have.the.item.in.stock.ship.worldwide.and.the.target.price.must.include.shipping.and.handling.fees=Wunsch kann nicht verarbeitet werden,aufgrund einer Reihe von Gründen. Für Preisübereinstimmungen können TOMTOP nur Einzelhandel Online-Shops akzeptieren, die die Einheit auf Lager haben, liefern weltweit und das Kursziel muss Verschiffen- und Behandlungsgebühren enthalten.
+
+#会员中心address.book子菜单=============
+michael.zhao=Michael Zhao
+unit.4.victory.trading.estate.kiln.road.portsmouth.hampshire.united.kingdom.po.3.5.lp=Unit 4 Victory Trading Estate Kiln Road, Portsmouth, Hampshire, Großbritannien. PO3 5LP
+default.address=Default-Adresse
+edit=Bearbeiten
+remove=Entfernen
+remove.all=Alle entfernen
+add.a.new.shipping.address=Eine Neue Lieferadresse hinzufügen
+contact.name=Kontakt Name:
+first.name=Vorname
+last.name=Nachname:
+the.field.last.name.is.required=Das Feld Nachname erforderlich ist.
+street=Straße:
+city=Stadt:					
+state.province.region=Staat / Provinz / Region:
+country=Land:
+zip.postal.code=PLZ / Postleitzahl:
+phone.number=Telefonnummer:
+set.as.default=Als Standard festlegen
+set.as.billing.address=Als Rechnungsadresse festlegen
+enter.new.billing.address=Geben Sie neue Rechnungsadresse
+billing.address=Rechnungsadresse
+
+#会员中心1.My Profile  RegisterUpdateForm页面我的资料==========
+only.vip.club.discount.vip.permanently.cumulative.payment.amount.can.exchange.membership.free=nur $ 0.99 für Beitreten des VIP-Clubs für Rabatt permanent von VIP.Kumulative Zahlungsbetrag kann für VIP kostenlosen Mitgliedschaft auszutauschen.
+learn.more=Lernen mehr
+hi.fox=Hallo, fox
+you.not.vip.member=Sie sind jetzt noch nicht ein VIP-Mitglied.
+#only.1.99.vip.club.discount.of.v.1.permanently=Nur 1,99 $ zu VIP CLUB für Rabatt von V1 für immer.
+cumulative.payment.amount.can.exchange.vip.membership.free=Kumulative Zahlungsbetrag kann für VIP kostenlosen Mitgliedschaft auszutauschen.
+personal.profile=Personale Profile:
+change.your.profile=Ändern Sie Ihr Profil
+change.your.password=Ändern Sie Ihr Passwort
+email.unconfirmed=Email Unbestätigte
+
+#会员中心会员个人资料修改三个小页面===
+#个人资料修改页面1Change your Profile================
+picture=Bild:
+gender=Geschlecht:
+male=Männlich
+females=Weiblich
+birthday=Geburtstag:
+month=Monat
+day=Tag
+year=Jahr
+display.date.birth.surprise.birthday.gift.then=wir werden Ihr Geburtsdatum  nicht angezeigen, aber wir werden Ihnen eine Überraschung Geburtstagsgeschenk senden.
+about.me=Über mich:
+save.changes=Änderungen speichern
+
+#个人资料修改页面2Change your password===============
+old.password=Altes Passwort:
+new.password=Neues Passwort:
+confirm.password=Bestätigen Passwort:
+word.verification=Wort Überprüfung:
+#个人资料修改页面3Email Unconfirmed===在激活页面=============
+
+#优惠卷 coupon.html=============
+coupons=Gutscheine
+
+#会员中心my account页面home.index.html===========
+level=Ebene
+
+welcome.to.my.account=Willkommen zu Ihrem Konto
+email.address.confirmation=E-Mail Adresse Bestätigung:
+unconfirmed=unbestätigt
+verified=prüft
+one.more.step.to.get.the.welcome.gifts=Ein weiterer Schritt, um die Willkommensgeschenk zu erhalten
+3.options.coupons.below.select.like.finish.email.process.code.automatically.sent.account.valid.30.days.only.once=Wir haben 4 Möglichkeiten von Coupons für Sie wie unten vorbereitet. Wählen Sie einfach die, die Sie mögen und schliessen Sie den E-Mail-Bestätigungsprozess. Der Code wird automatisch auf Ihr Konto und gültig innerhalb der nächsten 30 Tage geschickt werden. Bitte beachten Sie, dass der Gutschein nur einmal verwendet werden  kann.
+8.off.orders.us.50.00.or.more=8 US $ off Bestellungen von US $ 50.00 oder mehr
+get.the.coupon=Holen Sie sich den Gutschein
+
+#会员中心订单 order.login_pop.html===========
+sign.in.join=anmelden / beitreten
+hi=Guten Tag,
+logout=Abmelden
+payment.success=Erfolgreich Bezahlen
+payment.processing=Zahlung Verarbeitung
+
+#会员中心订单order_count.html=======
+dispatched=Versand
+order.cancelled=Bestellung storniert
+refunded=Erstattet
+#会员中心订单order_stat.html======
+unpaid=Unbezahlt
+
+#支付模块paymentOrderDetail.scala.html====================
+note=Hinweis
+international.transfers.responsible.responsible.transferred=Banken verlangen oft Gebühren für Auslandsüberweisungen. Sie sind für die Gebühren Ihrer Bank verantwortlich. Es ist wichtig, dass Sie Ihre Bank fragen, wie viel sie Sie für die Übertragungsladung, und fügen Sie diesen Betrag dem überwiesen insgesamt. Wenn Sie es nicht hinzufügen, wird die Gebühr von der überwiesene Geld abgezogen werden, und Sie werden nicht genug für Ihre Bestellung bezahlt haben. Der Auftrag wird nicht aus diesem Grund verarbeitet werden.
+payment.hsbc.account.described.allow.paymen.through=Wenn Sie ein Bank Zahlung zu unserem HSBC Konto bereits gemacht haben, wie oben beschrieben, erlauben Sie bitte etwas Zeit für diese Zahlung zu durchlaufen:
+working.banks.complete.transaction.depending.banks== 2-4 Werktagen für die Banken, die Transaktion abzuschließen, abhängig von den Banken;
+working..process.payment.match.order=1 Arbeitstag für Tomtop, um Ihre Zahlung zu verarbeiten und passen Sie es zu einem Auftrag;
+receive.email.confirm.process.order=Sie erhalten eine E-Mail von Tomtop, um zu bestätigen, dass wir Ihre Bestellung bearbeiten.
+beneficiary.bank=Bank des Begünstigten
+beneficiary=Begünstigter
+uswift.code=SWIFT CODE
+bank.address=Bank Addresse
+
+#支付credit_description.scala.html============
+make.billing.address.matches=Stellen Sie sicher, dass die Rechnungsadresse Sie unten den Namen übereinstimmt
+address.credit.card=Adresse auf Ihrer Kreditkarte.
+please.note.shipping.address.must.country.billing.address=Bitte beachten Sie, dass Ihre Verschiffenadresse im selben Land wie Ihre Rechnungsadresse sein  muss.
+consignee.name=Empfänger Name
+address=Adresse
+recipient.country.region=Empfänger Land / Region
+state.province.region=Staat / Provinz / Region
+zip.postal.code=PLZ / Postleitzahl
+unotice=HINWEIS
+debit.card.visa.debit.mastercard.maestro.laser.american.express=Akzeptieren Sie die Kreditkarte oder Debitkarte mit Visa, Visa Debit, Mastercard, Maestro, Laser Card, American Express, JCB und Diners Club.
+go.back=Zurück
+ask.a.new.question=Stellen Sie eine neue Frage
+view.cart=Einkaufswagen
+umy.q=Mein Q
+ua=A
+pending.reply=Pendente Antworten
+replied=Antworten
+of=von
+uitems=Artikel
+content=Inhalt
+requestdate=Anforderungsdatum
+tracking.info=Verfolgen Info
+
+#会员中心订单payment 支付,付款订单细节paymentOrderDetail.html======
+thank.shopping.your.order.received=Danke für den Einkauf mit uns! Ihre Bestellung wurde empfangen
+your.next.step.complete.your=Ihre nächste Schritt ist, machen Sie Ihre
+payment.and.submit.your.payment.details=bezahlen und reichen Sie Ihre Zahlungsinformationen.
+return.to.homepage=Zurück zur Homepage
+account=Konto
+my.order=Meine Bestellung
+payment=Zahlung:
+bank.to.bank.wire.transfer=Bank zu Bank Überweisung
+transferring.information.of.tomtop=Übertragung von Informationen von TOMTOP:
+after.payment.notice.detailed.payment.following.procedures.tomtop.account=Nach Ihrer Zahlung, beachten bitte detaillierte Zahlung info nach folgenden Verfahren über Ihr TOMTOP Ihr Konto.
+login.your.milanoo.my.account=Anmelden Ihre Milanoo mein Konto
+click.order.list.from.my.orders=Klicken Sie auf "Bestellliste" aus "Meine Bestellungen"
+click.pay=Klicken Sie auf "Bezahlen"
+click.complete.payment.fill.related.information.verification=Klicken Sie auf "Complete Payment" und füllen Sie die damit verbundenen Zahlungsinformationen zur Verifizierung
+clicksubmit.finish.procedures=Klicken Sie auf "Senden", um die Verfahren zu beenden.
+order.details=Bestellung Details:
+order.number=Bestellnummer:
+recipient.country.region=Empfänger Land / Region:
+address.line=Addresse Line:
+order.subtotal=Bestellzwischensumme:
+shipping.cost.with.tracking.number=Versandkosten (mit Tracking-Nummer):
+grand.total=Gesamtpreis:
+this.order.earned.xxx.tomtop.points=Die Bestellung verdient xxx TOMTOP Punkte
+
+#会员中心支付失败=payFail.html================
+sorry.the.payment.failed=Entschuldigung, die Zahlung fehlgeschlagen!
+checkout=checkout
+
+#会员中心订单oceanpayment钱海支付 payment oceanpayment.description.html==========
+select.country.your.bank.account=Bitte wählen Sie das Land von Ihrem Bankkonto:
+bank.account=Bankverbindung:
+bank.code=Bankleitzahl:
+beneficiary.tomtop.limited=Begünstigter: TOMTOP LIMITED
+bank.name.hong.kong.office.commercial.service.center=Name der Bank: Hong Kong Büro Gewerbe Service Center
+bank.address.1.queens.road.central.hong.kong=Adresse der Bank: 1 Queen 'Road Central Hong Kong
+swift.code.hsbchkhhhkh=SWIFT Code: HSBCHKHHHKH
+pay.ment.notice.detailed.payment.following.procedures.via.tomtop.account=Nach Ihrer Zahlung, beachten bitte detaillierte Zahlung info nach folgenden Verfahren über Ihr TOMTOP Ihr Konto.
+
+#会员中心描述西联westunion description payment.description.html===========
+pay.for=Bezahlen
+3.discount.choose.payment=Sie erhalten 3% Rabatt, wenn Sie diese Zahlung wählen.
+beneficiary.wei.feng.first.name.wei.last.name.feng=Begünstigter: WEI FENG (Vorname: WEI Nachname: FENG)
+country.china=Land: China
+login.tomtop.account=Anmelden Ihr TOMTOP mein Konto
+click.my.orders=Klicken Sie auf "Meine Bestellungen"
+click.pending=Klicken Sie auf "Ausstehend"
+notice=Hinweis:
+make.sure.information.above.filled.correctly.completely.payment.westunion.custumers.service.identify.payee=Bitte sicherstellen, dass alle die oben aufgeführten Informationen korrekt und vollständig in Ihren Westunion Zahlungsformular ausgefüllt, für die Westunion Custumers Dienst alle Informationen des Zahlungsempfängers,vielen Dank.
+responsible.handling.therefore.total.payment.amount.local.western.union.transfer.money=Sie werden für alle Behandlungsgebühren Western Union verantwortlich sein. Daher bestätigen Sie bitte die Gesamtzahlungsbetrag mit der örtlichen Western Union, bevor Sie das Geld überweisen.
+
+#会员中心描述电汇 wiretransfer description payment.description.html====和支付细节相似=====
+
+#会员中心订单显示 order.member  order.display========
+payment.pending=Zahlung Ausstehend
+payment.confirmed=Bestätigten Zahlung
+recycle.bin=Papierkorb
+export=Export
+order.statuss=Bestellstatus
+product.name=Produktname
+
+#会员中心level页面 loyalty/member/level.html================
+shop.us=Shop US
+more.to.reach.next=mehr zu erreichen nächsten
+bronze=Bronze
+silver=Silver
+gold=Gold
+platinum=Platin
+titanium=Titan
+diamond=Diamond
+
+#会员中心图片编辑member.photo.html=============
+edit.picture=Bild bearbeiten
+create.custom.picture=Benutzerdefinierten Bild erstellen
+upload.picture=Bild hochladen:
+browse=Durchsuchen ..
+select.picture.computer.50.kb.max.jpg.gif.png.bmp.only=Wählen Sie eine Bilddatei auf Ihrem Computer (50KB max, jpg, gif, png, bmp nur)
+advised.pixel.image.best.upload=Bitte beachten Sie,ein Pixelbild 120x120 ist best für den hochladen.
+preview=Vorschau
+
+#会员中心图片 interaction_member_photos.html==============
+by.brockpeter=Von brockpeter
+packed.very.well.bigger.thought.but.great.phone=Packed sehr gut.Das ist größer als ich gedacht habe, aber ein gutes Phone.
+packed.very.well.is.bigger.than.thought=Packed sehr gut.Das ist größer als ich gedacht habe...
+
+#会员中心我的评论my_review_list.html==============
+reviews.list=Bewertungen Liste
+total.reviews=Gesamte Bewertungen:
+approved.reviews=Geprüfte Bewertungen:
+pending.reviews=Bewertungen in Erwartung:
+failed.reviews=Bewertungen fehlgeschlagen:
+submit.review.usually.takes.24.hours.accordance.posting.guidelines.patient.review.waiting.status=Nachdem Sie uns Ihre Bewertung einreichen, es dauert in der Regel 24 Stunden, damit wir die Überprüfung gemäß unseren Beitrag prüfen Richtlinien. So seien Sie bitte geduldig, während die Kritik ist im Wartezustand.
+you.can.gained.from.each.purchased.product=Sie können unterschiedliche Punkte gewinnen, nachdem Sie auf jeden Kauf überprüfen:
+write.a.review=Schreiben eine Bewertung
+post.images=Bilder veröffentlichen
+post.a.video=Ein Video veröffentlichen
+review.caption=Bewertungen / Bildunterschrift
+post.date=Veröffentlichungsdatum
+options=Optionen
+overall.rating=Gesamtbewertung:
+indicates.required.fields=Pflichtfelder
+nickname=Spitznamen:
+nickname.shown.future.reviews.not.real.name=Dieser Spitzname wird auf alle Ihre zukünftigen Bewertungen angezeigt. Verwenden Sie nicht Ihren wirklichen Namen ..
+emails=Email:
+reviews=Bewertungen:
+upload.pictures.or.video=Upload Bilder oder Videos
+5.mb.image.jpeg.jpg.gif.png.bmp.clear.photos.much.appreciated=Max 5 Bilder, 2MB pro Bild, Format: jpeg / jpg / gif / png / bmp Klare Fotos sind herzlich willkommen!
+video=Video:
+share.video.review.make.sure.video.related.product=Teilen ein Video mit einer Bewertung, stellen Sie bitte sicher, dass Ihr Video bezieht sich auf das Produkt
+video.title=Video Titel:
+code=Code:
+#会员中心我的评论my_review.html==============
+view=Ansicht
+
+#会员中心附加订单loyalty order_extras.html===========
+tomtop.points.for.this.order=TOMTOP Punkte zu dieser Bestellung
+you.can.use=Sie können anwenden
+was.applied=aufgetragen.
+apply=Übernehmen
+is.not.valid=ist ungültig.
+
+#会员中心产品属性manamger attribute_list.html==========
+theme.color=Thema Farbe
+layout=Layout
+fluid=Flüssig
+boxed=Boxed
+header=Kopfzeile
+fixed=Fest
+default=Standard
+sidebar=Seitenleiste
+footer=Fußzeile
+home=Startseite
+
+#会员中心品类部分 category_attribute_manager.html==========
+managed.table=Managed Tabelle
+
+#订单购物车cart_grand_total.html 总计=================
+this.order.earned.0.tomtop.points=Die Bestellung verdienten 0 TOMTOP Punkte
+
+#会员中心 取代总结 replace_summary.html===============
+order.summary=Bestellübersicht
+leave.a.message=Nachricht hinterlassen
+write.anything.like.require.more.placed.order.such.shipping.order.related.requirements=alles schreiben, was Sie sich mehr auf Ihre erteilten Auftrag benötigen, wie zum Beispiel der Versand und andere auftragsbezogene Anforderungen.
+shipping.cost.without.tracking.number=Versandkosten (ohne Spurhaltungszahl):
+coupon=Gutschein 
+this.order.earned.11.tomtop.points=Die Bestellung verdient 11 Punkte TOMTOP
+place.your.order=Ihre Bestellung aufgeben
+buyer.protection.by.tomtop=Käuferschutz von TOMTOP
+full.refund.if.you.dont.receive.your.order=Volle Rückerstattung, wenn Sie Ihre Bestellung nicht bekommen
+refund.or.keep.items.not.as.described=Rückerstattung oder Halten Artikel nicht wie beschrieben
+
+#日常交易报价明细 dailydeal_bigbadge.html=================
+was.price=war Preis
+
+#会员中心bage_list.html=========
+product.detail=Produktdetails
+
+#会员中心点points=====================
+#会员中心interaction home super.deals.html====
+recommendations.for.you=Empfehlungen für Sie
+hr=HR
+min=MIN
+sec=SEC
+view.deals=Kaufen jetzt >>
+
+#首页 产品订阅subscribe.html=============
+subscription=Abonnement
+ensure.only.receive.interested.customize.settings=Um sicherzustellen, dass Sie nur die E-Mails erhalten, die Sie interessieren, passen Sie Ihre Einstellungen hier:
+show.hot.deals.these.products=Zeigen Sie mir hote Angebote für die Kategorien:
+congratulations.you.now.tomtop.com.insider=Herzlichen Glückwunsch! Sie sind jetzt ein tomtop.com Insider!
+gift.card.sent.mail.box.soon.check.email=Geschenk Karte wird bald zu Ihrem Briefkasten geschickt werden. Bitte überprüfen Sie Ihre E-Mail.
+subscribing.newsletter.exclusive.periodically.upcoming.promotions.receive.discounts=Mit der Anmeldung zu unserem Newsletter, Sie wird in regelmäßigen Abständen über alle kommenden Events und Promotions in TOMTOP benachrichtigt. Nur durch die Anmeldung können Sie die tiefste Rabatte bieten wir erhalten!
+
+#会员中心产品收集interaction_product_collect.html==================
+successfully=erfolgreich
+successfully.added.item.wishlist=Sie haben diesen Artikel zu Ihrer Wunschliste hinzugefügt.
+
+#会员中心faq interaction_faq_list.html问答详情页==============
+fashion.clothing=Mode & Bekleidung
+expedited.shipping=schnellen Versand
+outdoor.traveling.supplies=Outdoor & Reisen Supplies
+swimming.supplies=Schwimmen Versorgung
+flash.sale=Flash Sale
+mens.outerwear=männliche Oberbekleidung
+back.to.product.page=Zurück zur Produktseite
+sale.price=Kaufpreis:
+product.q.as=Produkt Q> A
+customer.q.amp.a=Kunde Q & amp; A
+product.q.amp.a.guidelines=Produkt Q & amp; A-Richtlinien
+q=Q:
+a=A:
+or=oder
+name=Name:
+
+#会员中心产品评论my_review.html product_review_list.html prodcut_write_review.html============================
+you.have.no.reviews=Sie haben keine Bewertungen
+reiews=Bewertungen
+#会员中心添加品论product_write_review.html==========
+tips.for.writing.reviews=Tipps für das Schreiben von Bewertungen
+specific.features.product.experience.video.reviews.recommend.write.brief.introduction=Ihre Bewertung sollte von Besonderheiten des Produkts abhängen und Ihre Erfahrungen damit zu konzentrieren. Für Videobewertungen , empfehlen wir Ihnen, eine kurze Einführung zu schreiben.
+information.helpful.customers.make.buying.decisions=Wir glauben, dass alle Informationen hilfreich für unsere Kunden sind, um Kaufentscheidungen zu treffen.
+contents.for.whats.not.allowed=Inhaltsverzeichnis für das, was nicht erlaubt ist
+obscene.or.distasteful.content=Obszöne Inhalte oder geschmacklos.
+profanity.or.spiteful.remarks=Obszönität oder boshafte Bemerkungen.
+comments.racial.religious.discrimination=beliebige Kommentare der Rasse oder religiöse Diskriminierung.
+promotion.illegal.immoral.conduct=Förderung der rechts- oder sittenwidrigen Verhaltens.
+phone.numbers.postal.mailing.addresses=Telefonnummern, Postaufgabe-Adressen.
+paste.youtube.video.url=Fügen Sie Ihre YouTube Video-URL
+
+#会员中心购物车order  cart_views.html=============
+shopping.cart=Warenkorb
+remove.all.from.your.cart=Sind Sie sicher, alle zu löschen?
+deleted=gelöscht
+undo.delete=Undo löschen
+item=ITEM
+qualitys=Qualität
+utotal=SUMME
+enable=Aktivieren
+ubulkrate=BULKRATE
+prices=Preise
+bulkrate.applies.only.unit.price.over=BULKRATE gilt nur, wenn auf den Stückpreis vorbei ist
+1.quantity.3.or.more=$ 1 und Menge ist 3 oder mehr
+drop.shipping.order=Drop Shipping Sortieren
+remove.tomtop.logo.from.package=Entfernen TOMTOP Logo aus dem Paket
+save.total=Speichern Total:
+conditions.clicking.agree.tomtop.com.terms.policy.continue.checkout=Bitte überprüfen Sie die tomtop.com Geschäftsbedingungen und durch einen Klick auf "" Ich stimme den tomtop.com Geschäftspolitik '', um Prüfung fortzusetzen.
+secure.checkout=sicheren Checkout
+shopping.always.safe.secure=Einkauf ist immer sicher und geschützt
+login.save=Anmeldung speichern
+items.in.shopping.cart=Artikel im Warenkorb.
+go.to.home=Gehen Sie zu Start
+page.and.select.items=Seite und Elemente auswählen.
+#会员中心购物车订单order top.html===============
+ushopping.cart=WARENKORB
+ushipping.place.order=SHIPPING & BESTELLUNG
+upayment=BEZAHLUNG
+
+#会员中心订购配件order_extras.html===========
+coupon.code=Gutscheincode
+coupon.availablecoupon=Gültige Gutschein
+coupon.cannot.combined.with.discounted.items=Gutschein kann nicht mit ermäßigten Artikel kombiniert werden.
+can.used.normally.original.price.items=Dennoch kann in der Regel für andere Neupreis Produkte verwendet werden.
+
+#会员中心添加地址表单add_new_address_form.html============
+please.select=Bitte wählen
+
+#会员中心paypal desription.html=====
+paypal.account.pay.order.paypal.account=Wenn Sie ein PayPal Konto haben,können Sie Ihre Bestellung durch Ihr  PayPal Konto bezahlen.
+paypal.account.pay.via.paypal.credit.card.bank.debit.card=Wenn Sie kein PayPal-Konto haben, können Sie auch per PayPal oder mit Ihrer Kreditkarte oder EC-Karte bezahlen .
+payment.submitted.currency=Die Zahlung kann in jeder Währung eingereicht werden
+tomtop.paypal.account=TOMTOP.com''s PayPal Konto ist:
+
+#会员中心清理表单wishlist_table.html=================
+added=hinzufügen:
+
+#==========pages上下翻页分页=======================================
+per.page=pro Seite
+page=Seite:
+prev=zurück
+next=Nächste
+show=Zeigen
+showing=Zeigen
+#form表格=================================================
+enter.your.email.address=Geben Sie einfach Ihre E-Mail-Adresse
+enter.your.password=Geben Sie Ihr Passwort
+confirm.your.password=Bestätigen Sie Ihr Passwort
+submit=Einreichen
+search=Suche
+names=NAME
+cancel=Abbrechen
+cancle=Abbrechen
+save=Speichern
+login=Anmelden
+facebook=Facebook
+log.in.with.paypal=Anmelden mit PayPal
+#发邮件=================
+back.to.home=Zurück zur Startseite
+check.it.now=Überprüfen Sie es jetzt
+#注册激活email verifi result.html============
+send.confirm.email=Senden Sie Bestätigungs-E-Mail
+congratulations=Gratulieren!
+e-mail.has.been.successfully.verified=E-mail wurde erfolgreich überprüft.
+e-mail.has.been.faild.verified=E-mail wurde faild verifiziert.															
+registration.clicking.below.button.successful.58.free.tomtop.points.automatically.added.account=Please bestätigen Sie Ihre Anmeldung per E-Mail-Adresse, indem Sie auf den untenstehenden Button. Nach der erfolgreichen E-Mail-Bestätigung, werden 58 kostenlose TOMTOP Punkte Ihrem Konto automatisch hinzugefügt.
+verification.successfully.mailbox.instructions.verification=Ihre E-Mail-Überprüfung wurde erfolgreich versendet, Bitte melden Sie sich bei Ihrer Mailbox an, und folgen Sie den Anweisungen, um die Überprüfung abzuschließen.
+follow.instructions.complete.verification=und folgen Sie den Anweisungen, um die Überprüfung abzuschließen.
+also.send=Heute können Sie auch senden 
+times=Mal
+today.only.send.3.email=Heute sendet nur 3 E-Mail
+send.mail=Email senden
+failure=Ausfall!
+invalid.activate.it=Ungültige aktivieren.
+activation.expired=Aktivierung abgelaufen.
+e-mail.activation.fails=E-Mail-Aktivierung fehlschlägt.
+click.button.sent.confirmation.the.above.email.address=Klicken Sie auf die Schaltfläche "Senden Bestätigen E-Mail" und wir werden eine Bestätigungs-E-Mail an die obige E-Mail-Adresse schicken.
+fail.receive.confirm.email.click.look.help=Fehlschlagen, um Bestätigungs-E-Mail zu erhalten? Klicken Sie hier, um Hilfe zu suchen.
+want.change.register.email.click.here=Möchten Sie Ihr anmeldetes E-Mail wechseln? Klicken Sie hier.
+my.account=Mein Konto
+go.shopping=Einkaufen gehen
+super.deals=Super Angebote
+you.view.history=Mein View History
+is.not.activated=ist nicht aktiviert!
+sorry.account=Entschuldigung, Konto
+activation.failed=Aktivierung fehlgeschlagen
+your.account.been.activated=Ihr Konto wurde bereits aktiviert
+#文件后缀=================
+csv=.csv
+
+#404页面=====================
+error=Fehler
+page.requested.can.not.found=Die von Ihnen angeforderte Seite nicht gefunden werden können.
+but.dont.try.hard=nicht versuchen so schwer!
+to.proceed.you.can=Um fortzufahren, können Sie:
+go.back.to.the=Zurück zum
+last.page=letzte Seite
+you.visited=Sie  besuchen.
+go.to.home.page=zu TOMTOP Homepage gehen
+need.further.help.contact.our=Wenn Sie weitere Hilfe benötigen, kontaktieren Sie bitte unsere
+customer.service.express=Customer Service Express
+
+#产品详情页中的share页面================
+share.your.friends=Teilen Sie es mit Ihren Freunden
+write.comment.here=Schreiben Sie hier Ihren Kommentar ein ...
+pick.one.or.mor.destinations=Wählen Sie ein oder mehrere Ziele:
+do.not.track=Verfolgen Sie nicht
+powered=Angetrieben 
+
+#购物地址shipping_address.html==============
+shipping.address=Versandadresse
+enter.new.shipping.address=Geben Sie eine neue Lieferadresse
+
+#会员中心订单明细order_table.html======================
+orders.details=Bestellung Details
+nprice=Preis
+nqty=Menge
+order.no=Bestell-Nr.
+order.date=Bestelldatu:
+total=Gesamt:
+restore=Wiederherstellen
+delete=Löschen
+place.order=Bestellung aufgeben
+completed=fertiggestellt
+batch.delete=Batch löschen
+sure.permanently.delete.orders=Sind Sie sicher, dass dauerhaft Aufträge löschen?
+batch.restore=Batch wiederherstellen
+shipping.method=Verschiffen-Methode:
+transaction.id=Transaktion ID
+order.id=Bestell-ID
+#订单明细选择物流方法shipping_method_information.html=========
+select.shipping.method=Wählen Sie Verschiffen-Methode:
+tracking.number=Verfolgungsnummer
+chinadhl=ChinaDHL
+dhl.context=DHL CONTEXT
+usd=USD
+chinaems=ChinaEMS
+ems.context=EMS CONTEXT
+chinalandmailtracking=ChinaLandMailTracking
+landmail=LandMail
+product.list=Artikelliste
+udescription=BESCHREIBUNG
+uprice=PREIS
+global=Global
+paypal=PayPal
+western.union=Western Union
+wire.transfer=Banküberweisung
+oceanpayment=OceanPayment
+russia=Russland
+brazil=Brasilien
+#第一次购物one_order.html===============
+order.detail=Auftragsdetails
+order.status=Status der Bestellung
+commercial.invoice=Handelsrechnung
+order.submitted=Bestellung eingereicht
+payment.declined=Zahlung abgelehnt
+order.processing=Auftragsabwicklung
+shippied=Shippied
+completed.orders=Abgeschlossene Aufträge
+order.information=Bestellinformationen
+customer.name=Kunde Name:
+shipping.addresss=Versandadresse:
+order.placed.date=Bestellung platziert Date:
+shipped.date=Versanddatum:
+your.message=Ihre Nachricht:
+payment.information=Zahlungsinformationen
+payment.method=Zahlungs-Methode:
+#订单支付成功页面=paySuccss.html============
+thank.shopping.online.order.been.placed=Vielen Dank für den Einkauf mit uns online, Ihre Bestellung ist platziert.
+email.confirmaton.sent.you=Eine E-Mail confirmaton ist zu Ihnen versandt worden.
+order.noo=Bestellung Nr:
+view.order=Bestellung anzeigen
+#collect_box.html==============
+add.all.wish.list=Alle in den Merkzettel hinzufügen
+add.all.to.wish.list=Alle in den Merkzettel hinzufügen?
+proceed.to.checkout=Zur Kasse gehen
+#summary.html===============
+please.provide.valid.shipping.address=Bitte geben Sie eine gültige Lieferadresse.address.
+shipping.required=Versand ist notwendig.
+
+#help VIPlevels.html===========================
+vip=VIP
+levels=Ebene
+vip.club=VIP Verein
+vip.privileges=VIP Berechtigungen
+know.bronze.easily.read.below=Wussten Sie, dass Sie einfach eine Bronze VIP werden können, nur mit ein paar Bestellungen? Bitte lesen Sie mehr unter.
+which.vip.level.you=Welche VIP-Ebene sind Sie?
+all.privileges.customers.become.vips=All TOMTOP Kunden haben bereits attraktive Vorteile genossen. Top Qualität Gadgets mit vernünftigen Preisen. Allerdings gibt es mehr Privilegien für alle Kunden, wenn Sie sind VIPs geworden.
+what.vips.receive.each.level = Was VIPs erhalten auf jeder Ebene?
+dedicated.customer.support.however.summarizes.benefits.vip.level=All TOMTOP Kunden freuen sich bereits über attraktive Vorteile wie Western Qualität Gadgets gegen China Großhandelspreise, 12 Monate Garantie und Weltklasse gewidmet Kunden-Support. Es besteht jedoch mehr! Die folgende Tabelle fasst alle Vorteile für jeden VIP-Level.
+customer.support=Kundendienst
+data.sharing=Data Sharing
+service=Dienst
+rewards=Belohnungen
+offer=Angebot
+dropship.customers=Dropship Kunden
+warranty.and.return.handling=Garantie-und Rückkehr Handhabung
+benefits=Vorteile
+exclusive.vip.live.channel.helpline=Exklusive VIP Live Chat Channel und Helpline
+professional.customer.support.email.phone=schnelle und professionelle Kundenbetreuung auf E-Mail / Telefon
+7.24.live.customer.support=Live Chat Kunden-Support
+customer.support.email.phone.live.chat=Gewidmete VIP Kundendienst (E-Mail / Telefon)
+access.product.images.without.watermarks=Privilege auf Artikelbilder: einfachen Zugang zu Fotos der Einzelteile ohne Wasserzeichen zu erhalten
+items.month=(Objekte / Monat)
+more.options.shipping.methods.assign=Mehr Optionen der Versandmethoden
+get.online.reseller.feeds=Holen Online-Händler Daten-Feeds
+download.product.images.zip.file=Bequem herunterladen Produktbilder in einer ZIP-Datei
+priority.given.to.order.processing=Priorität der Erstattung Handhabung
+priority.given.to.order.processing = Priorität der Auftragsabwicklung
+tier.pricing.more.discounts.purchases=Tier Pricing: mehr Rabatte auf mehre Käufe geben
+corresponding.lowest.prices.pricing.system=Monats Angebote: Holen Sie sich entsprechende Produkte zu niedrigsten Preisen in der Preissystem
+privilege.section.corresponding.samples.offered=Privilege kostenlosen Produktproben: kann eine entsprechende Anzahl von Proben kostenlos zu bekommen
+receive.attractive.overstock.email=Erhalten attraktive Restposten Angebote per E-Mail
+rebate.bank.transfer.payment=Rebate auf Prepaid-Banküberweisung Zahlung
+priority.warranty.handling=Priorität der Handhabung
+benefits.concierge.program=Vorteile des Concierge-Programms
+customer.service.concierge.program.happen=Alle VIP-Käufer wird von unserem Customer Service Concierge-Programm profitieren. Spezielle Mitglieder unserer Kundendienstteam wird alle VIP Käufer Bestellungen verfolgen, Griff Streitigkeiten und potenzielle Probleme zu lösen, bevor sie geschehen.
+requires.assistanc.contact.concierge.help=Zusätzlich,VIP-Käufer sind garantiert extrem schnellen Service und wenn der VIP-Käufer jede Hilfe erfordert,kann er oder sie um Hilfe an den Concierge-Service Kontakt empfehlen.
+special.discounts.items.exclusive.price=Alle VIP-Käufer werden spezielle Rabatte auf einigen Einzelteilen mit unseren VIP Exclusive Preis erhalten.
+exclusive.buyers.discounts.promotions=Neben dem VIP exklusiven Preis, VIP-Käufer wird natürlich spezielle Ermäßigungen auf TOMTOP Promotionen erhalten.
+
+#modify_ship.html=========
+are.sure.delete.adddress=Sind Sie sicher, diese Addresse zu löschen?
+#help center cms_customer.html=========
+help.center=Hilfezentrum
+
+#common done.html===========
+liquibase.results=Liquibase Ergebnisse
+#common preview.html=======
+liquibase.changes.preview=Liquibase Änderungen Vorschau
+current.context=Aktuelle Context:
+execute.update=Führen aktualisieren!
+#common reset.html=============
+database.reset.results=Ergebnisse der zurückgesetzten Datenbank
+drop.tables=Tropfen Tabellen
+database.changes=Datenbankänderungen
+
+#google share.html===========
+share.on.google.plus=Teilen Sie auf Google Plus
+log.in.with.google=Melden Sie sich mit Google
+
+#interaction attr_icon.html============
+multiple.color=Multiple Farbe
+product.video=Produkt Video
+ships.in.24hrs=Versandfertig in 24 Stunden
+deals.starts.in=Deals beginnen
+deals.ends.in=Deals beenden
+#interaction priceMatch.html==========
+products=Produkte
+details=Details
+links=Links
+
+#interaction twitter.html=======
+share.on.twitter=Teilen Sie auf Twitter
+#interaction activated.html======
+your.account.is.successfully.activated=Ihr Konto wird erfolgreich aktiviert
+show.my.account=zeigen Sie Ihr Konto
+go.Shopping.countdown=Zum Einkaufs Countdown
+
+#order order_product_view.html========
+product.information=Produkt Information
+shipping.cost=Versandkosten
+
+#order payment_wait.html======
+redirecting=Umleiten
+thank.you.shopping.tomtop.com=Danke für den Einkauf auf TOMTOP.com
+processing.complete.order.wait.take.based=Wir verarbeiten jetzt zu Ihren order.Warten Sie bitte.It kann eine längere Zeit dauern und hängt von dem Basis-Konfiguration Ihres Computers.
+encounter.problems.contact.via=Wenn Sie Probleme haben, kontaktieren Sie uns über
+customer.service=Kunden Service.
+
+#paypal paymentover.html==========
+payment.is.ok=Zahlung ist ok!
+
+#product hot.html===
+hot=Hot
+category.attributes=Kategorie Attribute
+#collections.html====
+collection=Sammlung
+less=weniger
+january=Januar
+february=Februar
+march=März
+april=April
+may=Mai
+june=Juni
+july=Juli
+august=August
+september=September
+october=Oktober
+november=November
+december=Dezember
+
+#base cms.html=============
+popular.questions=Häufig gestellte Fragen
+
+shopping=Einkauf
+points.and.coupons=Punkte und Gutscheine
+shopping.faq=Einkauf FAQ
+new.user.guide=Neues Benutzerhandbuch
+ordering=Bestellung
+ordering.faq=Bestellung FAQ
+warehouses=Gewerberäume
+warehouse=Lager
+local.warehouse=lokal Lager
+how.to.pay=wie bezahlen
+tax.and.customs.duties=Steuern & Zollabgaben
+payment.and.price.and.discount=Bezahlung & Preis & günstige Preise
+partnership.programs=Partnerschaft Programm
+tomtop.review=TOMTOP Rezension
+drop.ship.program=Tropfenschiff-Programm
+dropship.faq=Dropship FAQ
+vip.benefits=VIP Vorteile
+shipping.faq=Versand FAQ
+unshipped.orders=Nicht versandte Bestellungen
+shipped.orders=Geliefert Bestellungen
+shipping.and.delivery=Versand & Lieferung
+warranty.and.support=Garantie & Unterstützung
+support.faq=Für FAQ
+tomtop.guarantees=TOMTOP Garantien
+about.tomtop=Über TOMTOP
+terms.and.conditions=Geschäftsbedingungen
+pre-sale=Schlussverkauf
+after-sale=Aftermarket
+phone.service=Phone Service
+
+#==验证码============
+click.on.the.change=Klicken Sie auf den Wandel
+
+#my message
+messaging.myMessage=Meine Nachricht
+messaging.from=Aus
+messaging.subject=Subject
+messaging.date=Datum
+messaging.delete=Löschen
+messaging.inbox=Inbox
+messaging.tomtopTeam=TOMTOP Team
+messaging.markedAsRead=als gelesen markiert
+
+#drop shipping
+member.center =Mitgliederzentrum
+my.dropship.level=Meine dropship Ebene
+dropshipping.product.list=Dropshipping Produktliste
+product.items=Produkt Items:
+put.off=Put-off
+are.you.sure=Sind Sie sicher
+all.status=Alle Status
+normal=Normal
+stop.selling=mit Verkauf aufhören 
+img=IMG
+after.verfication.submit.download.dropship=Nach Verifizierung, einen Antrag auf Download-Produkte
+method.one=Methode eins
+sku.download=SKU herunterladen
+at.least.you.still.can.add=Mindestens kann man noch hinzufügen,
+please.input.sku.and.split.by=Bitte SKU eingeben und durch Komma aufgeteilt
+add.to.my.dropship=In meiner dropship hinzufügen
+dropship.wishlist = Dropship Wunschzettel
+add.to.dropship.list =In dropship Liste hinzufügen
+dropship.list=Dropship Liste
+select.all=Alle auswählen
+batch.add.product=Batch Produkt hinzufügen
+dropship.product.list=Dropship Artikelliste
+product.wishlist = Produkt Wunschzettel
+my.dropship.orders=Meine Dropship Bestellungen
+download.format=Download Format
+execl=Execl
+upload.order=Hochladen Bestellung
+
+#====livechat
+livechat.customer.connent.wait.front.part=Kundendienst ist besetzt, halten Sie bitte
+livechat.customer.connent.wait.behind.part=Personen warten vor Ihnen.
+livechat.exit=Beenden
+livechat.exit.reason = Entschuldigung für unfertige Service! Der Grund, warum beenden Sie?
+livechat.wait.too.long = Zu lange gewartet
+livechat.other.reasons = Andere Gründe
+livechat.email = E-mail:
+livechat.note = Hinweis:
+livechat.you.have = Sie haben
+livechat.characters = Zeichen zu setzen in
+livechat.leave.customer = Entschuldigung,die Kundendienst ist nicht online, lassen Sie uns eine Mitteilung bitte, wenn Sie irgendeine Frage haben.
+livechat.enter.send = "Enter", um Nachricht zu senden, "Ctrl + Enter" für Zeilenvorschub
+livechat.ctrl.enter.send = "Enter", um Nachricht zu senden, "Ctrl + Enter" für Zeilenvorschub
+livechat.conversation = Im Gespräch mit
+livechat.send = Senden
+livechat.leave.message = Entschuldigung,die Kundendienst ist nicht online, lassen Sie uns eine Mitteilung bitte, wenn Sie irgendeine Frage haben.
+livechat.feel.customer = Wie beurteilen Sie den Kundenservice?
+livechat.select.language = Bitte wählen Sie eine Sprache
+livechat.select.question = Bitte wählen Sie einen Fragentyp
+livechat.validate.eamil = Bitte legen Sie in die richtige E-Mail!
+livechat.validate.content = Sie können leeren Inhalt nicht senden, füllen Sie bitte noch einmal!
+livechat.leave.message.success.handle = Nachricht gespeichert! Lassen andere Nachricht?
+livechat.close.confirm = Beenden Sie das Gespräch?
+livechat.close.all.confirm = Beenden Sie alle Gespräche?
+
+#====dropship
+join.dropshipping=Beitreten Dropshipping
+my.full.name=Mein voller Name
+my.phone.number=Meine Telefonnummer
+my.shop.url=Mein Geschäft URL
+paypal.address=Paypal Adresse
+my.skype=Skype/MSN
+get.e.mail.updates.on.new.products.and.special.offers.for.drop.shipping.client=Bekommen E-Mail-Updates zu neuen Artikel und besondere Angebote für Tropfen-Verschiffen-Client.
+your.request.is.pending.approval.when.your.request.is.approved.we.will.send.you.an.email=Ihre Anfrage ist zum Vorbehalt der Genehmigung, wenn Ihr Antrag genehmigt wird,werden wir Ihnen eine E-Mail schicken.
+also.we.always.provide.different.discount.rate.for.different.drop.shipping.member.level.we.calculate.the.total.amounts.of.your.drop.shipping.account.and.classify.levels.according.to.the.table.below=Wir stellen immer verschiedene Diskontsatz für die verschiedenen Drop-Shipping Mitglied Ebene. Wir berechnen die Gesamtmengen an Ihre Drop-Shipping-Konto und zu klassifizieren Stufen nach der folgenden Tabelle.
+although.you.are.not.a.for.drop.shipping.client.yet.you.can.also.place.a.general.order.on.tomtop.com=Auch wenn Sie noch nicht ein Tropfen-Verschiffen Kunde sind, können Sie auch eine allgemeine Ordnung auf tomtop.com stellen.
+no.joining.fee=Kein Aufnahmegebühr.
+off.you.get.rewarded.the.more.you.order.as.your.total.order.history.increases.you.automatically.get.better.discount.levels.making.you.even.more.competitive=1,5% bis 12% Rabatt, Sie erhalten belohnt,wenn Sie mehr bestellen. Wie Ihr Gesamtauftrag Geschichte steigt, erhalten Sie automatisch eine bessere Rabattstufen, so dass Sie noch wettbewerbsfähiger!
+become.a.worldwide.e.commerce.retailer.at.a.low.cost.with.no.risk=Zu einem weltweiten E-Commerce-Händler zwerden,mit niedrigen Kosten und ohne Risiko.
+exclusive.drop.shipping.weekly.deals.newsletter=Exklusive Angebote Newsletter jede Woche.
+offer.a.wide.selection.of.products.without.the.need.to.purchase.or.store.inventory=Bieten eine breite Auswahl von Produkten, ohne die Notwendigkeit zum Kauf oder zur Filialbestand
+select.product.types.on.tomtop.com.and.determine.your.own.retail.prices.and.profit=Wählen Sie Produktarten auf TOMTOP.com und bestimmen Sie Ihre eigenen Einzelhandelspreise und Gewinn.
+have.your.products.packaged.and.shipped.to.your.customers.by.us.at.no.extra.cost=Ihre Produkte ist verpackt worden und ohne zusätzliche Kosten geliefert, und zu Ihren Kunden ausgeliefert.
+successfully.submitted=Erfolgreich eingereicht!
+thank.you.for.your.application.pending.approval.your.request.will.be.verified.within.2.working.days.once.your.request.is.approved.we.will.notify.you.by.email=Vielen Dank für Ihre Bewerbung! Schwebende Genehmigung,Ihre Anfrage werden innerhalb von 2 Werktagen überprüft. Sobald Ihr Antrag genehmigt wird, werden wir Sie per E-Mail benachrichtigen.
+join.dropship=Registrieren Dropship
+join.as.for.drop.shipping.client=Als ein Drop-Shipping-Client beitreten
+required.fields=Pflichtfelder
+go.shopping.as.a.tomtop.client=Als ein TOMTOP Auftraggeber einkaufen gehen
+
+#====wholesale
+join.wholesale=Registrieren Großhandel
+your.request.is.pending.approval.when.your.request.is.approved.we.will.send.you.an.email=Ihre Anfrage wird vorbehaltlich der Zustimmung, wenn Ihr Antrag genehmigt wird,werden wir Ihnen eine E-Mail schicken.
+you.may.click.here.to.contact=Sie können klicken hier zu kontaktieren
+our.wholesale.support.team.directly=unser Großhandel für Team direkt
+wholesale.buyers.requirement=Anforderung der Kunden der Großhandel 
+the.amount.of.one.time.purchase.of.at.least.500=Die Höhe der einmaligen Kauf von mindestens 500 $
+minimum.quantity.5.pcs.per.sku=Mindeste Menge 5 Stück pro SKU	
+the.size.of.your.discount.depends.on.the.individual.total.volume.of.purchases=Die Größe Ihres Rabatts hängt von der individuellen Gesamtvolumen der Einkäufe
+order.amount=Bestellbetrag ($)
+the.price.does.not.include.shipping.costs=Der Preis enthält nicht Versandkosten
+go.shopping=Einkaufen gehen
+self.pickup=Selbst abholen
+wholesale.home=Großhandel Startseite
+welcome.to.wholesale.program.with.tomtop=Willkommen zu Wholesale-Programm mit TOMTOP
+you.wanna.order.a.lot.more.and.enjoy.a.good.discount.please.join.our.wholesale.program.and.become.one.of.our.certified.wholesale=Wenn Sie viel mehr bestellen und einen guten Rabatt genießen wollen, besuchen Sie bitte unser Großhandel Programm und werden Sie einer unserer zertifizierten Großhandel
+customers=Kunden.
+contact.us.directly=kontaktieren Sie uns direkt
+you.can.do.it.by.following.these.easy.steps=Sie können es machen, indem Sie die folgenden einfachen Schritte folgen:
+sign.in.your.account.to.register.and=Melden Sie sich an Ihr Konto zu registrieren und
+create.your.quotation.request=Erstellen Sie Ihr Angebotsanfrage
+name.your.sku.and.quantity=Name Ihrer SKU und Menge.
+sku.is.an.unique.index.number.for.each.product.you.can.find.sku.in.product.page=SKU ist eine einzigartige Indexnummer für jedes Produkt. Sie können SKU # auf Produktseite finden.
+quantity.is.the.quantity.you.want.to.buy.for.this.item.if.items.were.descripted.as.packs.sets.you.better.let.us.know.how.many.packs.or.sets.you.want=Menge - ist die Menge, die Sie für dieses Einzelteil kaufen, wenn Einzelteile als Packungen, sets beschrieben werden, sollten Sie uns besser wissen lassen, wie viele Packungen oder sets Sie wollen.
+we.also.can.help.you.sourcing.the.special.product.you.like.if.we.don.not.have.in.our.website=Wir können Ihnen helfen beim Kauf ihrer Lieblings-Spezialitäten,die es in unserer Website nicht geben.
+make.sure.delivery.places=Stellen Sie Lieferung Orte sicher.
+the.shipping.charge.will.be.different.in.line.with.package.weights.and.delivery.places.please.let.us.know.your.country.and.city.so.we.can.ensure.that.we.get.the.right.shipping.charge.if.you.got.a.forwarder.of.your.own.we.will.contact.them.for.shipping=Die Versandkosten werden im Einklang mit Paket Gewichte & Lieferung Orten unterschiedlich sein. Bitte teilen Sie uns Ihr Land und die Stadt, so können wir sicherstellen, dass wir die richtige Lieferkosten erhalten. Wenn Sie eine Weiterleitung der eigenen Verstanden, werden wir sie für den Versand in Verbindung.
+give.a.deadline=Geben Sie eine Frist
+for.some.orders.there.might.be.a.deadline.like.my.package.should.be.arrived.before.if.your.order.has.this.requirement.please.let.us.know.so.we.can.make.sure.we.will.catch.that.time..all.in.all.if.you.submit.the.necessary.info.as.more.accurate.as.possible.we.will.be.able.to.find.the.right.price.for.you.as.soon.as.possible=Für einige Aufträge könnte es eine Frist geben, wie "mein Paket sollten ankommen,bevor ..... ". Wenn Ihr Auftrag diese Anforderung enthält, lassen Sie es uns bitte wissen, damit wir sicherstellen können, dass wir die Zeit zu fangen. Alles in allem, wenn Sie die notwendigen Informationen übermitteln, da mehr genau, wie möglich, werden wir in der Lage sein, den richtigen Preis zu finden für Sie so schnell wie möglich.
+leave.your.name.and.contact.information.please.include.your.telphone.number.skype.email.address.and.we.will.get.back.to.you.as.soon.as.possible=Lassen Sie Ihren Namen und Ihre Kontaktsinformation (bitte geben Sie Ihre Telephonnummer, Skype, E-Mail-Adresse) und wir werden so schnell wie möglich bei Ihnen melden.
+choose.a.payment.method = Wählen Sie eine Zahlungsmethode
+you.still.have.multiple.choice.of.payment.methods=Sie haben noch mehrere Wahl an Zahlungsmethode
+please.contact.our.wholesale.customer.service.if.you.have.special.needs=Bitte kontaktieren Sie unseren Großhandelskunden Service, wenn Sie besondere Bedürfnisse haben
+the.price.does.not.include.shipping=Der Preis ohne Versand
+create.a.quotation.now=Nun einen Kostenvoranschlag erstellen
+join.as.for.wholesale.client=Beitreten Sie als Kunde für Großhandel
+shop.url.or.company.url.etc=Geschäft URL /URL der Firma usw.
+shipping.address=Versandadresse
+expected.purchase.amount=Erwartete Kaufbeträge (US $)
+your.comments=Ihre Kommentare
+wholesale.categories=Großhandel Kategorien
+i.agree.to.tomtop.com=Ich stimme tomtop.com
+term.of.use=Frist des Gebrauches.
+wholesale.list=Großhandel Liste
+please.search.for.items.on.tomtop.com.and.fill.in.the.following.inquiry.form=Bitte suchen Sie nach Artikel auf Tomtop.com und füllen Sie das folgende Formular
+add=hinzufügen
+remove.all.from.your.wholesale.list=Entfernen all aus Ihrer Groß-Liste?
+remove.this.from.your.wholesale.list=Entfernen das aus Ihrer Groß-Liste?
+off=OFF
+wholesale.order=Großhandel bestellen
+#==============buy one get one free
+buy.one.get.one=Kaufe eins, bekomme eins gratis‬
+attributes.select=Auswahlattribute
+
+
+order.confirm.view.shippingAddress=Versandadresse
+order.confirm.view.summary=Bestellübersicht
+order.confirm.view.subtotal=Zwischensumme
+order.confirm.view.shippingCost=Versandkosten
+order.confirm.view.promo=Sie haben einen Promotion-Code
+order.confirm.view.secure="Tomtop.com = Einkaufen in Tomtop.com ist sicher - garantiert!"
+
+#==========Order_Completed
+ordercompleted.joinnow=Jetzt beitreten
+ordercompleted.continue=Weiter Shopping
+ordercompleted.viewdetail=Sehen Sie Ihre Auftragsdetails nach
+ordercompleted.result=Danken Ihnen für Shopping mit uns, Ihre Bestellung ist schon aufgegeben!
+ordercompleted.yournumber=Ihre Bestellungsnummer:
+ordercompleted.whatisnext=Was ist der Nächste?
+ordercompleted.whatisnext.1=1. Das ist behandelt und Sie werden eine Bestätigungsmail mit allen Bestellungsdetails bekommen.
+ordercompleted.whatisnext.2=2. Wir werden alle Kräfte einsetzen, um sicherzustellen, dass Sie die Bestellung so schnell wie möglich erhalten.
+ordercompleted.whatisnext.3=3. Sie werden eine Versand-Bestätigungsmail bekommen, enthalten die Spurnummer des Pakets, sobald es versendet ist.
+ordercompleted.whatisnext.note=Bitte achten Sie darauf:
+ordercompleted.whatisnext.note.1=Die Spurnummer nur für die über eine nachvollziehbare Versandmethode versendete Bestellung und das dauert in der Regel 24-48 Stunden, um Ihre Verfolgungsinformationen zu aktualisieren.
+ordercompleted.whatisnext.4=4. Wenn Sie irgendeine Frage haben, kontaktieren Sie uns bitte.
+ordercompleted.whatisnext.5=5. Wenn Sie schon ein Mitglied sind, melden Sie sich bitte an, um diese Bestellung mit Ihrem Konto zu assoziieren.
+ordercompleted.joinnow=Noch nicht ein Mitglied? Jetzt beitreten!
+ordercompleted.createaccount=Wie brauchen nur ein wenig mehr Information, um Ihr Konto zu erstellen.
+ordercompleted.privacypolicy=Privatsphäre Politik
+ordercompleted.convenientservices=Wir bieten die folgende bequeme Dienstleistungen für unsere Mitglieder:
+ordercompleted.convenientservices.1=1. Belohnungspunkte
+ordercompleted.convenientservices.1.text=Punkte können durch Kauf, Bewertingen, usw. erworben werden und das kann für Ihre zukünftigen Einkäufe angewendet werden.
+ordercompleted.convenientservices.2=2. Exklusive Kundendienst
+ordercompleted.convenientservices.2.text=Wir haben immer jemanden, Ihre Fragen zu beantworten.
+ordercompleted.convenientservices.3=3. Permanenter Einkaufswagen
+ordercompleted.convenientservices.3.text=Irgendwelches in Ihren Einkaufwagen hinzugefügte Produkt wird vorbehalten, bis Sie es entfernen oder überprüfen.
+ordercompleted.convenientservices.4=4. Bestellhistorie
+ordercompleted.convenientservices.4.text=Leichter den Status Ihrer Bestellung jederzeit zu sehen oder verfolgen.
+ordercompleted.downloadapp=Laden Sie unsere App für bessere Einkaufserlebnisse Online und In-Geschäft herunter.
+
+loyalty.promo.errorMessage.noRule=Verkaufsförderungscode ist nicht richtig.
+loyalty.promo.errorMessage.noMatch=Einkaufswagen von Waren entsprechen den Regeln nicht.
+
+#==========Pay Fail==========
+fail_tip=Entschuldigung. Ein Fehler ist aufgetreten und wir werden es lösen. Bitte versuchen Sie später noch einmal.
+fail.detail=Details
+fail.code=Fehlercode
+fail.message=Fehlermeldung
+nosuccess.1=Wenn das Problem noch besteht, zögern Sie nicht, uns zu kontaktieren:
+nosuccess.2=Live-Chat
+nosuccess.3=Kontaktieren uns
+nosuccess.4=Vielen Dank und Entschuldigung wieder für die Unannehmlichkeiten!
+try_again=Bitte versuchen Sie noch einmal
+
+#========checkout_step1 ============
+checkout_step.title=Geben Sie neue Versand-Adresse ein
+checkout_step.title.1=Versand an mehreren Adressen? Machen Sie keine Sorgen. Sie können weitere Adressen später angeben.
+checkout_step.set_default=Als Standard einstellen
+checkout_step.Policy=Privatsphäre Politik
+checkout_step.save=Speichern & Weiter
+checkout_step.name=Vorname
+checkout_step.name_must=Vorname muss
+checkout_step.LastName=Nachname
+checkout_step.LastName_must=Nachname muss
+checkout_step.country=Land
+checkout_step.country_must=Land muss
+checkout_step.address=Adresse Zeile 1
+checkout_step.address_must=Adresse Zeile 1 muss
+checkout_step.city=Stadt
+checkout_step.city_must=Stadt muss
+checkout_step.state=Staat / Region
+checkout_step.state_must=Staat muss
+checkout_step.postal=Postleitzahl
+checkout_step.postal_must=Postleitzahl muss
+checkout_step.phone=Telefonnummer
+checkout_step.phone_must=Telefonnummer muss
+
+#========checkout_step2 ============
+checkout_step2.liveChat=Live-Chat
+checkout_step2.edit=Bearbeiten
+checkout_step2.Default=Standard
+checkout_step2.shipto=An eine andere Adresse versenden
+checkout_step2.leaveMessage=Eine Nachricht hinterlassen
+checkout_step2.writeAnything=Schreiben Sie alles, was Sie mehr auf Ihren Auftrag erfordern, wie der Versand und andere auftragsbezogene Anforderungen.
+checkout_step2.Discount=Rabatt
+checkout_step2.placeOrder=Ihre Bestellung aufgeben
+checkout_step2.tomtopSafe=Shopping auf Tomtop.com ist sicher und zuverlässig - garantiert!
+checkout_step2.verify=Klicken zu überprüfen - Diese Website hatte ein SSL-Zertifikat gewählt, um Website-Sicherheit zu erhöhen.
+checkout_step2.Cancel=Abschaffen
+checkout_step2.promotionCode=Haben Sie einen Promotion-Code?
+checkout_step2.Apply=Beantragen
+
+#======order common=========
+newshopping.banner.1=EINKAUFSWAGEN
+newshopping.banner.2=VERSAND & BESTELLUNG AUFGEBEN
+newshopping.banner.3=BEZAHLUNG
+
+#==========payment Methods==========
+payment.paypal_1=Paypal, Die sichere, einfachere Weise zu bezahlen.
+payment.paypal_2=Wenn Sie Paypal-Konto haben, können Sie Ihre Bestellung durch Ihr Paypal-Konto bezahlen.
+payment.paypal_3=Wenn Sie kein Paypal-Konto haben, können Sie auch durch Paypal mit Ihrer Kreditkarte oder EC-Karte bezahlen.
+payment.credit_1=Meine Rechnungsadresse ist gleich wie meine Versandadresse.
+payment.credit_2=Stellen Sie sicher, dass der Name und Adresse bei Ihrer Rechnungsadresse mit denen bei Ihrer Kreditkarte übereinstimmen.
+
+#=========Order Detail=========
+order.discount_total=Rabatt Gesamt
+order.more=Mehr
+order.less=Weniger
+
+
+#========new cart==========
+shopprocess.1=EINKAUFSWAGEN
+shopprocess.2=VERSAND & BESTELLUNG AUFGEBEN
+shopprocess.3=BEZAHLUNG
+shoppingcart=Ihr Einkaufswagen
+shipfrom=Versendet aus
+warehouse=Lagerhaus
+cart.item=Artikel
+cart.price=Preis
+cart.qty=Qty
+cart.total=Total
+cartisempty=Ihr Einkaufswagen ist leer.
+gohome=Zu Hause gehen
+selectitem=Seite und wählen Artikel.
+saved_later=Gespeichert für später
+save_later=Gespeichert für später
+cart.remove=Entfernen
+order_summary=Bestellübersicht
+subtotal=Zwischensumme
+checkout=Zur Kasse gehen
+safe_tip=Shopping auf Tomtop.com ist sicher und zuverlässig - garantiert!
+seal_tip=Klicken zu überprüfen - Diese Website hatte ein SSL-Zertifikat gewählt, um Website-Sicherheit zu erhöhen.
+might_like=Sie können lieben
+add_to_cart=In Einkaufswagen hinzufügen
+you_save=Sie Speichern
+move_cart=Bewegen zum Einkaufswagen
+add_wishlist=In Wuschliste hinzufügen
+low_stocks=Niedrige Vorräte
+remove_cart_tip=Aus Ihrem Einkaufswagen entfernen?
+continue_shopping=Weiter kaufen
+cart.apply=Beantragen
+cart.cancel=Abschaffen
+cart.error=Fehler
+coupon_code=Gutscheincode
+promo_code=Verkaufsförderungscode 
+
+tomtop.paymentProcess=Verarbeitung, bitte warten ...

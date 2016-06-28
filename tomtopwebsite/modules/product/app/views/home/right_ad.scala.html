@@ -1,0 +1,8 @@
+@(advertisingList : List[valueobjects.product.AdItem])
+@if(null != advertisingList && advertisingList.size()>0){
+<ul class="sideBanner">
+	@advertisingList.map{ad =>
+			<li><a href="@ad.getUrl()"><p style="bottom: -20px;">@ad.getTitle()</p><img src="@ad.getImgUrl()"></a></li>
+		}
+</ul>
+}

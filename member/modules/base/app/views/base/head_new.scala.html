@@ -1,0 +1,15 @@
+@()
+
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@urlprefix = @{play.Play.application().configuration().getString("member.urlprefix")}
+<header class="contentInside lbBox">
+	<div class="lineBlock headerLogo">
+		<a href="@urlprefix"><img src="@controllers.base.routes.Assets.at("img/Tomtop_logo0603_01.png")" /></a>
+		<img src="@controllers.base.routes.Assets.at("img/Tomtop_logo0603_02.png")" />
+	</div>
+	@tp.get("search-bar")
+	<div class="lineBlock lbBox pu_headerRight">
+		<a class="lineBlock favoritesHeader" href="/interaction/wishlist"><i class="icon-heart"> </i>@Messages("home.favorites")</a>
+		@tp.get("cart-dropdown")
+	</div>
+</header>

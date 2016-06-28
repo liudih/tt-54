@@ -1,0 +1,42 @@
+@import views.html.helper._
+<div id="attachment_mapper_edit"  class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	@form(controllers.manager.attachment.routes.ProductAttachment.addProductAttachmentMapper(), 'onsubmit->"return false", 'id->"attachmentMapperEdit"){
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+		    <h3>添加映射关系</h3>
+		</div>
+		<div class="modal-body">
+			<div class="control-group">
+				<label class="control-label">站点</label>
+				<div class="controls">
+					@services.manager.ChooseService.getInstance().website("iwebsiteid", 1, true)
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">语言</label>
+				<div class="controls">
+					@services.manager.ChooseService.getInstance().language("ilanguage", 1)
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">文件路径</label>
+				<div class="controls">
+					<input type="text" id="title" value="" class="m-wrap medium span6" style="margin-left: 120px;margin-top: -26px;">
+				</div>
+				<input class="btn green" type="button" id="search_title" value="Search">
+				<div id="attachmentDescs">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">sku</label>
+				<div class="controls">
+					<input type="text" name="csku" value="" class="m-wrap medium span6" style="margin-left: 120px;margin-top: -26px;" required>
+				</div>
+			</div>
+		</div>
+	    <div class="modal-footer" style="margin-bottom: -20px;">
+		     <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
+             <button type="submit" class="btn blue">保存</button>
+	    </div>
+	}
+</div>

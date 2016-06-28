@@ -1,0 +1,8 @@
+iwebsiteid,cparameterkey,cparametervalue
+1,Freeshippingweight,100
+1,Freeshippingmoney,2
+1,piwik.url,http://192.168.7.13:81/piwik/
+1,piwik.siteId,2
+1,WholesaleLimit,2
+1,BundListingShowCount,1
+1,AutoBundDiscount,0.9

@@ -1,0 +1,65 @@
+@(allCountrys: List[dto.Country])
+<tr>
+		<td><span class="red">*</span> @Messages("name")</td>
+		<td class="tab_R">
+			<input type="text" name="cfirstname" value="" maxlength="20">
+			<input	type="text" name="clastname" value="" maxlength="20">
+		</td>
+	</tr>
+	<tr>
+		<td><span class="red">*</span>@Messages("street")</td>
+		<td><textarea class="streetTA" name="cstreetaddress" maxlength="180"></textarea> </td>
+	</tr>
+	<tr>
+		<td><span class="red">*</span> @Messages("country")</td>
+		<td class="edit_country">
+			<div class="Countries_box country" >
+				<div class="select_country">
+					<h3 name="flag_current_country" data-target='togger'>
+						<em></em>
+						<span name="current_coutry">@Messages("please.select")</span>
+						<em class="ship_xSJ"></em>
+					</h3>
+					<div class="country_all">
+						<div class="search_country">
+							<input type="text" name="search">
+						</div>
+						<div class="country_list">
+							<ul name="countrylist" class="countrylist_ul">
+								@if(allCountrys != null && allCountrys.size>0){
+                                	@allCountrys.map{p=>
+                                		<li role="item" data-target='select' name="country_li" class="flag_@p.getCshortname"  countryCode="@p.getCshortname" data-code="@p.getCshortname"><em></em><span name='country' value="@p.getIid">@p.getCname</span></li>	
+                                	}
+                                }
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div> 
+			<input type="hidden" class="hidden_icountry_value" name="icountry" value="">
+			<div class="clear"></div>
+		</td>
+	</tr>
+	<tr>
+		<td valign="top"><span class="red">*</span>@Messages("state.province.region")</td>
+		<td>
+			<input class="current_province" type="text"	id="input_current_province" name="cprovince" value=""  maxlength="600">
+			<ul name="province_list" class="province_list" style="display: none;">
+			</ul> 
+		</td>
+	</tr>
+	<tr>
+		<td><span class="red">*</span>@Messages("city")</td>
+		<td><input type="text" name="ccity" maxlength="80">
+		</td>
+	</tr>
+	<tr>
+		<td><span class="red">*</span>@Messages("zip.postal.code")</td>
+		<td><input type="text" name="cpostalcode" value="" maxlength="80"> 
+		</td>
+	</tr>
+	<tr>
+		<td><span class="red">*</span>@Messages("phone.number")</td>
+		<td><input type="text" name="ctelephone" maxlength="40"> </td>
+	</tr>

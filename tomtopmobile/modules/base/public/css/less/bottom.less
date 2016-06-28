@@ -1,0 +1,29 @@
+@import "public.less";
+
+.bottom{
+  width:98%;margin-left:1%;margin-top:30px;
+  .bottom_ul{border-bottom:1px solid #ccc;padding:15px 0px;text-align:center;
+    li{width:25%;
+      a{color:#666666;}
+    }
+  }
+  .bottom_p{
+    text-align:center;padding-top:15px;padding-bottom:50px;color:#999999;
+  }
+}
+
+@media(min-width:50px) and (max-width:590px){
+ .bottom{
+    .bottom_ul{
+      li{width:25%;}
+    }
+  }
+}
+@media (min-width:768px){
+  .bottom{
+    .bottom_ul{padding-bottom:25px;
+      li{width:20%;font-size:16px;}
+    }
+    .bottom_p{font-size:18px;padding-top:25px;}
+  }
+}

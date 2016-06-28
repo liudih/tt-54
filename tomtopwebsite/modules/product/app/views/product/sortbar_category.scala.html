@@ -1,0 +1,41 @@
+@(formExtras: Html = null)(req: Map[String,Array[String]]=null)(implicit sc: valueobjects.search.SearchContext = null)
+@_sc = @{if (sc != null) { sc } else {play.mvc.Http.Context.current().args.get("searchContext").asInstanceOf[valueobjects.search.SearchContext]}}
+
+
+@services.base.HtmlUtils.misc().addTailOnce{
+ <script type="text/javascript" src='@controllers.product.routes.Assets.at("js/product/controller/search.js")' ></script>
+}
+<form id="searchbar">
+<div class="suarchCon">
+    <ul class="sortNA sortMT" id="ul">
+        <li id="popularity-ui" class="sortA">
+			<a data-name='popularity' data-value='desc'>@Messages("most.popular")</a>
+		</li>
+        <li id="discount-ui" class="sortA">
+			<a data-name='discount' data-value='desc'>@Messages("discount")<em class="sortUD"></em></a>
+		</li>
+        <li id="review-ui" class="sortA">
+			<a data-name='review' data-value='desc'>@Messages("review")<em class="sortUD"></em></a>
+		</li>
+        <li id="sale-ui" class="sortA">
+			<a data-name='sale' data-value='desc'>@Messages("sale")<em class="sortUD"></em></a>
+		</li>
+        <li id="price-ui" class="sortA">
+			<a data-name='price' data-value='desc'>@Messages("price")<em class="sortUD"></em></a>
+		</li>
+        @views.html.product.search.pricerange(_sc)
+        @views.html.product.search.pager_category(_sc)
+        <div class="clear"></div>
+    </ul>
+</div>
+@req.keySet.map{i=>
+	@if(i!="p" && i!="q" && i!="st" && i!="category" && i!="limit" &&
+		i!="statPublishDate" && i!="statPublishDateType"){
+		@req.get(i).map{ii=>
+		<input class="sortCls" type="hidden" name="@i" value="@ii" />
+		}
+	}
+}
+<input type="hidden" id="p" name="p" value="@(_sc.getResult().pageNo()+1)" />
+@formExtras
+</form>

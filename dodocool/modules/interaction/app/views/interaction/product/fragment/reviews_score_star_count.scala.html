@@ -1,0 +1,15 @@
+@(comment: valueobjects.interaction.Comment)
+@starsWidth  = @{if(null != comment){comment.getStarsWidth}else{0}}
+@if(null != comment){
+	<ul class="hideElement">
+		<li class="smallReviews">
+	    	<span class="smallStar" style="width: @if(null == comment.getStarsWidth  || starsWidth == 0){0%} else {@comment.getStarsWidth%}"></span>
+	    </li>
+	    <li>Score :<span>@comment.getAverageScore</span> ( <a class="customer" href="#reviews">@comment.getReviewCount Customer Reviews</a> )</li>
+	    <li class="q_infos">
+	        <span><a onclick="fun(this)" href="">Write a review</a></span>
+	        <span>|</span>
+	        <span><a href="">Show Product Infomation</a></span>
+	    </li>
+	</ul>
+}

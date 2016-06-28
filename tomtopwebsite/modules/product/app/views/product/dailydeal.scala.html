@@ -1,0 +1,127 @@
+@(clist0: List[valueobjects.product.ProductBadgeConvert],
+	clist: valueobjects.base.Page[valueobjects.product.ProductBadge],
+	catelist: List[dto.product.CategoryWebsiteWithName],
+	t: Integer,
+	intdiff: Long,
+	sc: valueobjects.search.SearchContext,
+	req: Map[String, Array[String]],
+	subscribeHtmls: List[Html])
+@import services.base._
+@import services.search.criteria._
+@views.html.base.master{
+@helper.javascriptRouter("dailyRoutes")(
+	controllers.product.routes.javascript.Product.dailyDealMore
+)
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/search.css")?@version.BuildVersion.build()" /> 
+}
+<div class="container LevelOne">
+	<div class="Bread_crumbs_Box">
+        <ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="javascript:;"></a></li>
+            <li>
+                <p>
+                    <a class="Bread_link" href="javascript:;">Dailydeals</a>
+                </p>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <ul class="todayDeals">
+    	<li class="dealsLeft dealsActi">
+        	<div class="todays_daily" style="display: @if(t==0){block;}else{none;}">
+                <b class="lineBlock">@Messages("todays.deals")<span>&gt;</span></b>
+                <div class="lineBlock dealsTxt">@Messages("deal.ends.in ")</div>
+                <div id="retroclockbox_md" class="lineBlock" data="@intdiff"></div>
+            </div>
+        	<div class="tommorrow_daily" style="display: @if(t==1){block;}else{none;}">
+                <b class="lineBlock">@Messages("tomorrows.deals")<span>&gt;</span></b>
+                <div class="lineBlock dealsTxt">@Messages("Deals Starts in ")</div>
+                <div id="retroclockbox_tom" class="lineBlock" data="@intdiff"></div>
+            </div>
+        </li>
+    	<li class="dealsRight">
+    		@if(t==0){
+        		<p onclick="location.href='/product/dailydeal?t=1'">@Messages("tomorrows.deals")</p>
+        	}else{
+        		<p onclick="location.href='/product/dailydeal'">Today's Deals</p>
+        	}
+        </li>
+    </ul>
+    <div class="DealsBox">
+        <div class="DealsInf block">
+            <div class="dealsThree @if(t==1){tomoThree}">
+            	@if(clist0!=null && clist0.size()>0){
+	            	@clist0.take(3).zipWithIndex.map{c =>
+	            		@dailydeal_bidbadge_new(c._1,c._2)
+	                }
+                }
+            </div>
+        </div>
+    </div>
+    
+    @views.html.home.cartegory_single_select_bar(catelist)
+    @views.html.product.sortbar{
+	<!-- 选中的品类 -->
+		@if(sc.extractFirst(classOf[services.search.filter.CategorySearchFilter]).isDefined()) {
+			@sc.extractFirst(classOf[services.search.filter.CategorySearchFilter]).asScala.map{k =>
+				@k.getCategories().take(1).map{m => <input type="hidden" id="category" name="category" value="@m" />} 
+			}
+		}else{
+			<input type="hidden" id="category" name="category" value="" />
+		}
+	}(req)(sc)
+    <ul class="arrangeClick arrangeFour block">
+    	<div id="badgeContent">
+		@dailydeal_more(clist.getList())
+        </div>
+        <div class="clear"></div>
+        <div class="bottomMores" id="showloading" style="display:none;"></div>
+        <div class="bottomMore" onclick="moreData()">@Messages("more")<img src="@controllers.base.routes.Assets.at("images/more.png")"></div>
+    </ul>
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+<script>
+	$(function(){
+		timedownFun("retroclockbox_md",true,"md",false);
+		timedownFun("retroclockbox_tom",true,"md",false);
+		tomorrowColor();
+	})
+	function tomorrowColor(){
+		var t =@t;
+		if(t==1){
+			$(".discount").addClass("discountHS");
+		}
+	}
+	function moreData(){
+		var page = parseInt($("#p").val())+1;
+		$("#p").val(page);
+		var formdata = $("#searchbar").serialize();
+		var url = dailyRoutes.controllers.product.Product.dailyDealMore().url;
+		url += url.indexOf("?")<0 ? ("?"+formdata) : formdata;
+		$("#showloading").show();
+		$.ajax({
+			url: url,
+			type: "get",
+			dataType: "json",
+			async: false,
+			data:{
+				"t":@t 
+			},
+			success:function(data){
+				if(data.size>0){
+					$("#badgeContent").append(data.html);
+					$("#p").val(data.page);
+					tomorrowColor();
+				}else{
+					$(".bottomMore").hide();
+				}
+			},
+			complete:function(){
+				$("#showloading").hide();
+			}
+		});
+	}
+</script>
+}
+}

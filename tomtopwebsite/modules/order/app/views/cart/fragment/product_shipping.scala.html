@@ -1,0 +1,15 @@
+@(vo: valueobjects.order_api.ShippingMethodInformations, cy: dto.Currency)
+
+<div class="productSpecialSize_box" id="product_shipping_infos">
+	@if(!vo.getList.isEmpty) {
+		<div class="productShipping_txt lineBlock">@Messages("shipping"): <b class="fon14">@cy.getCsymbol <span id="shipping_price_span">@vo.getList.get(0).getFreight</span></b> @Messages("by")</div>
+		<div class="couponCart lineBlock">
+			<p class="val"><span class="i-country-code">@vo.getList.get(0).getTitle</span></p>
+			<ul class="vals" style="display: none;">
+				@vo.getList.zipWithIndex.map{s =>
+					<li><span class="i-country-code" span-type="shipping-info" span-data="@s._1.getFreight">@s._1.getTitle</span></li>
+				}
+		</div>
+	}
+	<div class="clear"></div>
+</div>

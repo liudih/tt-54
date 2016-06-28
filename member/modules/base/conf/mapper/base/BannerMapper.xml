@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.base.BannerMapper">
+	<resultMap id="BaseResultMap" type="dto.Banner">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+		<result column="ilanguageid" property="ilanguageid" jdbcType="INTEGER" />
+		<result column="ctitle" property="ctitle" jdbcType="VARCHAR" />
+		<result column="bstatus" property="bstatus" jdbcType="BOOLEAN" />
+		<result column="bfile" property="bfile" jdbcType="BINARY" />
+		<result column="bbgimagefile" property="bbgimagefile" jdbcType="BINARY" />
+		<result column="cbgcolor" property="cbgcolor" jdbcType="VARCHAR" />
+		<result column="bhasbgimage" property="bhasbgimage" jdbcType="BOOLEAN" />
+		<result column="bbgimgtile" property="bbgimgtile" jdbcType="BOOLEAN" />
+		<result column="curl" property="curl" jdbcType="VARCHAR" />
+		<result column="iindex" property="iindex" jdbcType="INTEGER" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid,iwebsiteid,ilanguageid,bfile,bbgimagefile,bhasbgimage,cbgcolor,ctitle,bstatus,curl,iindex,bbgimgtile,dcreatedate
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_banner
+		where iid = #{iid,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_banner
+		where iid = #{iid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insertSelective" parameterType="dto.Banner">
+		insert into t_banner
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				iid,
+			</if>
+			<if test="iwebsiteid != null">
+				iwebsiteid,
+			</if>
+			<if test="ilanguageid != null">
+				ilanguageid,
+			</if>
+			<if test="ctitle != null">
+				ctitle,
+			</if>
+			<if test="bfile != null">
+				bfile,
+			</if>
+			<if test="bbgimagefile != null">
+				bbgimagefile,
+			</if>
+			<if test="cbgcolor != null">
+				cbgcolor,
+			</if>
+			<if test="bstatus != null">
+				bstatus,
+			</if>
+			<if test="curl != null">
+				curl,
+			</if>
+			<if test="iindex != null">
+				iindex,
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate,
+			</if>
+			<if test="bhasbgimage != null">
+				bhasbgimage,
+			</if>
+			<if test="bbgimgtile != null">
+				bbgimgtile,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				#{iid,jdbcType=INTEGER},
+			</if>
+			<if test="iwebsiteid != null">
+				#{iwebsiteid,jdbcType=INTEGER},
+			</if>
+			<if test="ilanguageid != null">
+				#{ilanguageid,jdbcType=INTEGER},
+			</if>
+			<if test="ctitle != null">
+				#{ctitle,jdbcType=VARCHAR},
+			</if>
+
+			<if test="bfile != null">
+				#{bfile,jdbcType=BINARY},
+			</if>
+			<if test="bbgimagefile != null">
+				#{bbgimagefile,jdbcType=BINARY},
+			</if>
+			<if test="cbgcolor != null">
+				#{cbgcolor,jdbcType=VARCHAR},
+			</if>
+			<if test="bstatus != null">
+				#{bstatus,jdbcType=BOOLEAN},
+			</if>
+			<if test="curl != null">
+				#{curl,jdbcType=VARCHAR},
+			</if>
+			<if test="iindex != null">
+				#{iindex,jdbcType=INTEGER},
+			</if>
+			<if test="dcreatedate != null">
+				#{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="bhasbgimage != null">
+				#{bhasbgimage,jdbcType=BOOLEAN},
+			</if>
+			<if test="bbgimgtile != null">
+				#{bbgimgtile,jdbcType=BOOLEAN},
+			</if>
+		</trim>
+	</insert>
+
+	<select id="getBannerPageByParamMap" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		iid,iwebsiteid,ilanguageid,bhasbgimage,cbgcolor,ctitle,bstatus,curl,iindex,dcreatedate
+		from t_banner
+
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="ilanguageid != null">
+				and ilanguageid = #{ilanguageid, jdbcType=INTEGER}
+			</if>
+			<if test="websiteids != null">
+				and iwebsiteid in
+				<foreach item="webid" collection="websiteids" open="("
+					separator="," close=")">
+					#{webid}
+				</foreach>
+			</if>
+		</trim>
+		order by iindex desc limit #{pageSzie} offset (#{page}-1)*#{pageSzie}
+	</select>
+
+	<select id="getBannerCountByParamMap" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		select count(iid) from t_banner
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="iwebsiteid != null">
+				and iwebsiteid = #{iwebsiteid, jdbcType=INTEGER}
+			</if>
+			<if test="ilanguageid != null">
+				and ilanguageid = #{ilanguageid, jdbcType=INTEGER}
+			</if>
+		</trim>
+	</select>
+
+	<update id="batchUpdateIndex" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			update t_banner
+			<set>
+				iindex=${item.iindex}
+			</set>
+			where iid = ${item.iid}
+		</foreach>
+	</update>
+
+	<update id="updateByPrimaryKeySelective" parameterType="dto.Banner">
+		update t_banner
+		<set>
+			<if test="iwebsiteid != null">
+				iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+			</if>
+			<if test="ilanguageid != null">
+				ilanguageid = #{ilanguageid,jdbcType=INTEGER},
+			</if>
+			<if test="ctitle != null">
+				ctitle = #{ctitle,jdbcType=VARCHAR},
+			</if>
+			<if test="bstatus != null">
+				bstatus = #{bstatus,jdbcType=BOOLEAN},
+			</if>
+			<if test="bfile != null">
+				bfile = #{bfile,jdbcType=BINARY},
+			</if>
+			<if test="bbgimagefile != null">
+				bbgimagefile = #{bbgimagefile,jdbcType=BINARY},
+			</if>
+			<if test="cbgcolor != null">
+				cbgcolor = #{cbgcolor,jdbcType=VARCHAR},
+			</if>
+			<if test="curl != null">
+				curl = #{curl,jdbcType=VARCHAR},
+			</if>
+			<if test="iindex != null">
+				iindex = #{iindex,jdbcType=INTEGER},
+			</if>
+			<if test="bhasbgimage != null">
+				bhasbgimage = #{bhasbgimage,jdbcType=BOOLEAN},
+			</if>
+			<if test="bbgimgtile != null">
+				bbgimgtile = #{bbgimgtile,jdbcType=BOOLEAN},
+			</if>
+		</set>
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+
+</mapper>

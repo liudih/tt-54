@@ -1,0 +1,66 @@
+@(cmsContent:dto.CmsContent,
+cmsContentlist: List[dto.CmsContentLanguage])
+
+@languagelist = @{services.base.lang.LanguageService.getInstance().getAllSimpleLanguages()}
+	 
+	<div class="control-group">
+		<label class="control-label">语言</label>
+		<div class="controls">
+			@views.html.manager.category.languageChoose("ilanguageid_more_language",languagelist, null)
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label">文章名称</label>
+		<div class="controls">
+			<input type="hidden" value="@cmsContent.getIid()" name="icmscontentid_more_language" />
+			<input type="hidden" value="@cmsContent.getCkey()" name="ckey_more_language" />
+			<input type="text" value="@cmsContent.getCtitle()" name="ctitle_more_language" placeholder="文章标题" class="m-wrap xxlarge span9">
+		</div>
+	</div>
+	
+	<div class="control-group" >
+		<label class="control-label">文章内容</label>
+		<div class="controls">
+			<textarea name="ccontent_more_language" id = "cms_content_morelanguage" class="m-wrap" style="width: 700px; height: 105px; font-size: 24px !important;">@cmsContent.getCcontent()</textarea>
+			<script type="text/javascript"> 
+				CKEDITOR.replace('cms_content_morelanguage', {
+					height : 300,
+					width : 750
+				});
+			</script>
+		</div>
+	</div>
+	
+	<div class="control-group" style="margin-left:180px">
+		<button id="add_cmscontent_more_language_btn" type="button" class="btn blue"><i class="icon-ok"></i> 保存</button>
+	</div>
+	<div class="control-group" style="margin-left:180px">	
+	 	<table class="table table-striped table-hover table-bordered" id="cmscontent_more_language_table">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>文章ID</th>
+					<th>目录名称</th>
+					<th>语言</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+		
+					@cmsContentlist.map{u=>
+					<tr class="" id="@u.getIid()">
+						<td>@u.getIid()</td>
+						<td>@u.getIcmscontentid()</td>
+						<td>@u.getCtitle()</td>
+						<td>@u.getLanguagename()</td>
+						<td><a class="deletecmsmenu" href="javascript:deleteCmsContent_MoreLanguage(@u.getIid());" data-id="@u.getIid()"><i class="icon-trash"></i></a></td>
+					</tr>
+				 }
+				
+			</tbody>
+		</table>
+	</div>
+ 
+ 
+ 

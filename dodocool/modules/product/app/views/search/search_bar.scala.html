@@ -1,0 +1,22 @@
+@import views.html.helper._
+@placeholder=@{services.configuration.ApplicationConfigService._getCurrentWebsiteName() + ".com"}
+
+@form(controllers.search.routes.ProductSearch.search(),
+ 		'class->"topSearch_search", 'role->"search", 'autocomplete->"off") {
+	<div class="input_group">
+		 <input type="text" id="txtSearchN" name="kw" class="form-control" placeholder="@placeholder" />
+	     <span>
+	     	<input class="glass" type="submit" id="search" />
+	     </span>
+	</div>
+}
+
+<script>
+	$(".glass").click(function(){
+ 	   var text = $("#txtSearchN").val();
+ 	   text = text.replace(/(^\s*)|(\s*$)/g,"");
+ 	   if(text == ""){
+ 		   return false;
+ 	   }
+    });
+</script>

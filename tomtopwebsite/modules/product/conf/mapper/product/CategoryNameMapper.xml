@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.CategoryNameMapper">
+	<resultMap id="BaseResultMap" type="dto.product.CategoryName">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+	    <result column="icategoryid" property="icategoryid" jdbcType="INTEGER" />
+	    <result column="ilanguageid" property="ilanguageid" jdbcType="INTEGER" />
+	    <result column="cname" property="cname" jdbcType="VARCHAR" />
+	    <result column="ctitle" property="ctitle" jdbcType="VARCHAR" />
+	    <result column="cdescription" property="cdescription" jdbcType="VARCHAR" />
+	    <result column="ckeywords" property="ckeywords" jdbcType="VARCHAR" />
+	    <result column="cmetatitle" property="cmetatitle" jdbcType="VARCHAR" />
+	    <result column="cmetakeyword" property="cmetakeyword" jdbcType="VARCHAR" />
+	    <result column="cmetadescription" property="cmetadescription" jdbcType="VARCHAR" />
+	    <result column="ccontent" property="ccontent" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, icategoryid, ilanguageid, cname, ctitle, cdescription, ckeywords, cmetatitle, 
+    cmetakeyword, cmetadescription, ccontent
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_category_name
+		where iid = #{iid,jdbcType=INTEGER}
+	</select>
+	<select id="getNameByCategoryId" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_category_name
+		where icategoryid =
+		#{icategoryid,jdbcType=INTEGER}
+	</select>
+	<insert id="insert" parameterType="dto.product.CategoryName">
+		 insert into t_category_name (icategoryid, ilanguageid, 
+	      cname, ctitle, cdescription, 
+	      ckeywords, cmetatitle, cmetakeyword, 
+	      cmetadescription, ccontent
+	      )
+	    values (#{icategoryid,jdbcType=INTEGER}, #{ilanguageid,jdbcType=INTEGER}, 
+	      #{cname,jdbcType=VARCHAR}, #{ctitle,jdbcType=VARCHAR}, #{cdescription,jdbcType=VARCHAR}, 
+	      #{ckeywords,jdbcType=VARCHAR}, #{cmetatitle,jdbcType=VARCHAR}, #{cmetakeyword,jdbcType=VARCHAR}, 
+	      #{cmetadescription,jdbcType=VARCHAR}, #{ccontent,jdbcType=VARCHAR}
+	      )
+	</insert>
+	<insert id="insertSelective" parameterType="dto.product.CategoryName" >
+     insert into t_category_name
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >iid,</if>
+      <if test="icategoryid != null" >icategoryid,</if>
+      <if test="ilanguageid != null" >ilanguageid,</if>
+      <if test="cname != null" >cname,</if>
+      <if test="ctitle != null" >ctitle,</if>
+      <if test="cdescription != null" >cdescription,</if>
+      <if test="ckeywords != null" >ckeywords,</if>
+      <if test="cmetatitle != null" >cmetatitle,</if>
+      <if test="cmetakeyword != null" >cmetakeyword,</if>
+      <if test="cmetadescription != null" >cmetadescription,</if>
+      <if test="ccontent != null" >ccontent,</if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >#{iid,jdbcType=INTEGER},</if>
+       <if test="icategoryid != null" >#{icategoryid,jdbcType=INTEGER},</if>
+      <if test="ilanguageid != null" >#{ilanguageid,jdbcType=INTEGER},</if>
+      <if test="cname != null" >#{cname,jdbcType=VARCHAR},</if>
+      <if test="ctitle != null" >#{ctitle,jdbcType=VARCHAR},</if>
+      <if test="cdescription != null" >#{cdescription,jdbcType=VARCHAR},</if>
+      <if test="ckeywords != null" >#{ckeywords,jdbcType=VARCHAR},</if>
+      <if test="cmetatitle != null" >#{cmetatitle,jdbcType=VARCHAR},</if>
+      <if test="cmetakeyword != null" >#{cmetakeyword,jdbcType=VARCHAR},</if>
+      <if test="cmetadescription != null" >#{cmetadescription,jdbcType=VARCHAR},</if>
+      <if test="ccontent != null" >#{ccontent,jdbcType=VARCHAR},</if>
+    </trim>
+  </insert>
+	<update id="updateByPrimaryKey" parameterType="dto.product.CategoryName">
+		update t_category_name
+	    set icategoryid = #{icategoryid,jdbcType=INTEGER},
+	      ilanguageid = #{ilanguageid,jdbcType=INTEGER},
+	      cname = #{cname,jdbcType=VARCHAR},
+	      ctitle = #{ctitle,jdbcType=VARCHAR},
+	      cdescription = #{cdescription,jdbcType=VARCHAR},
+	      ckeywords = #{ckeywords,jdbcType=VARCHAR},
+	      cmetatitle = #{cmetatitle,jdbcType=VARCHAR},
+	      cmetakeyword = #{cmetakeyword,jdbcType=VARCHAR},
+	      cmetadescription = #{cmetadescription,jdbcType=VARCHAR},
+	      ccontent = #{ccontent,jdbcType=VARCHAR}
+	    where iid = #{iid,jdbcType=INTEGER}
+	</update>
+</mapper>

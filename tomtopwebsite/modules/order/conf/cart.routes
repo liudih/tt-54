@@ -1,0 +1,27 @@
+GET   /cartmanage/save   @controllers.cart.Cart.saveCart(data: String)
+
+GET   /cartjsondata      @controllers.cart.Cart.getCartsJson()
+
+GET   /                  @controllers.cart.Cart.cartview()
+
+GET   /delcart           @controllers.cart.Cart.delCart(lisid: String?="", isall: String?="")
+
+GET   /editnum           @controllers.cart.Cart.editNum(cid: String, num: Integer)
+
+GET   /refreshTotal      @controllers.cart.Cart.refreshTotal()
+
+GET	  /addDropShipping   @controllers.cart.Cart.addDropShipping()
+
+GET   /refreshCartTable	 @controllers.cart.Cart.refreshCartTable()
+
+GET   /deleteItemList    @controllers.cart.Cart.deleteItemList(itemId: String?=null, listingId: String?=null, isMain: Boolean?=false)
+
+GET	  /checkCart		 @controllers.cart.Cart.checkCart()
+
+#------new cart--------
+
+GET		/cartdropdata		@controllers.cart.NewCartController.getCartsJson()
+
+POST	/delcartitem		@controllers.cart.NewCartController.delCartItem()
+
+POST	/savecartitem		@controllers.cart.NewCartController.saveCartItem()

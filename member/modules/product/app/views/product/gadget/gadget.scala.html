@@ -1,0 +1,95 @@
+@(products: valueobjects.base.Page[valueobjects.product.ProductBadge],
+	catelist: List[dto.product.CategoryWebsiteWithName],
+	advertisingList : List[valueobjects.product.AdItem],
+	t: Integer,
+	sc: valueobjects.search.SearchContext,
+	st: Integer)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@views.html.base.master{
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/search.css")?@version.BuildVersion.build()" /> 
+}
+	
+<div class="container LevelOne">
+    <div class="Bread_crumbs_Box">
+        <ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="/"></a></li>
+            <li>
+                <p>
+                <a class="Bread_link" href="@controllers.product.routes.Product.gadget(t)">
+                @Messages("promotional.products.under")
+                @if(t==0){$0.99} 
+                @if(t==1){$1.99} 
+                @if(t==2){$2.99} 
+                @if(t==3){$3.99} 
+                @if(t==4){$4.99} 
+                </a>
+                </p>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+    
+    @if(null !=advertisingList && advertisingList.size()>0){
+    <div class="specialsBanner">
+		@advertisingList.map{a=>
+			@Html(a.getDefaultShow())
+		}
+    </div>
+    }
+    @views.html.home.cartegory_single_select_bar(catelist)
+    <form id="searchbar" >
+    <input type="hidden" name="t" value="@t"/>
+    <input type="hidden" name="st" value="@st"/>
+    <input type="hidden" id="p" name="p" value="@(sc.getResult().pageNo()+1)" />
+    @if(sc.extractFirst(classOf[services.search.filter.CategorySearchFilter]).isDefined()) {
+	  	@sc.extractFirst(classOf[services.search.filter.CategorySearchFilter]).asScala.map{k =>
+	  		@k.getCategories().map{m => <input type="hidden" id="category" name="category" value="@m" />} 
+	  	}
+	}else{
+		<input type="hidden" id="category" name="category" value="" />
+	}
+    <ul class="sortNA lowNa">
+    	<li class="sortA"><a href="@controllers.product.routes.Product.gadget(0)">@Messages("0.99.deals")</a></li>
+    	<li class="sortA"><a href="@controllers.product.routes.Product.gadget(1)">@Messages("1.99.deals")</a></li>
+    	<li class="sortA"><a href="@controllers.product.routes.Product.gadget(2)">@Messages("2.99.deals")</a></li>
+    	<li class="sortA"><a href="@controllers.product.routes.Product.gadget(3)">@Messages("3.99.deals")</a></li>
+    	<li class="sortA"><a href="@controllers.product.routes.Product.gadget(4)">@Messages("4.99.deals")</a></li>
+        @views.html.product.search.pager(sc)
+        <div class="clear"></div>
+    </ul>
+    @if(products.getList().size()>0){
+    <ul class="arrangeClick arrangeLess block" data="0.99">
+    	@products.getList().map{p=>
+			@badge_big(p)
+		}
+        <div class="clear"></div>
+    </ul>
+    
+    <ul class="arrangeList">
+       	@products.getList().map{p=>
+			@badge_list(p)
+		}
+        <div class="clear"></div>
+    </ul>
+    <div class="arrayNEX">
+         @pagination(sc.getResult().pageNo(),sc.getResult().totalPages())
+    </div>
+    }else{
+    <h2 style="text-align:center;color:orange; margin-bottom: 50px;border:1px solid #e8e8e8;padding:150px 0 ;">Sorry, No Products Found!</h2>
+    }
+    </form>
+</div>
+
+@tp.get("member-browse-history")	
+@services.base.HtmlUtils.misc().addTailOnce{
+ 	<script>
+ 	$(function(){
+ 		//0.99导航高亮
+ 		var a = @t;
+ 		$(".sortNA .sortA").eq(a).find(">a").addClass("sortActive");
+ 	})
+ 	</script>
+}
+	
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      

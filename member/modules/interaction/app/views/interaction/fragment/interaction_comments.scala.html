@@ -1,0 +1,56 @@
+@(fragment: valueobjects.interaction.Comment,
+otherLogins: List[Html])
+
+@import views.html.helper._
+@import services.base._
+@import services.base.utils._
+   <div class="customerReviews boxFramework">
+           		<div class="browse_title">@Messages("customer.reviews")</div>
+                   <div class="writeReviews" >                 
+                   	<h6>@Messages("average.customer.review")</h6>
+                   	<span itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+		                   	<div class="leftSTxt">
+							      <meta itemprop="bestRating" content="5"/>
+							      <meta itemprop="worstRating" content="0"/>
+								@views.html.interaction.review.show_review_star.render(fragment.getStarsWidth)
+								 &nbsp;<span itemprop="ratingValue"  itemprop="ratingValue">@fragment.getAverageScore</span>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; (<span class="orange"  itemprop="reviewCount">@fragment.getReviewCount</span> @Messages("reviews.lowercase"))
+							</div>
+		                    <ul class="startPercentage">
+									@fragment.getFoverallratings.map{f => 
+										<li><span class="blue">@f.getType() @Messages("stars")</span>
+										<div class="percentageBox">
+											<div class="percentageFive" style="width:@services.base.utils.Utils.percent(f.getPercentage)%"></div>
+										</div> <span ><span >@f.getNum()</span> (@services.base.utils.Utils.percent(f.getPercentage())%)</span></li>
+									}
+							 </ul>
+					 </span>
+                     <p>@Messages("any.customer.writing.a.review.can.get.tomtop.points.the.first.five.get.double.tomtop.points")</p>
+                       
+                       @form(controllers.interaction.review.routes.ProductReview.addReview(fragment.getListingID())) {
+                       		<input type="hidden" name="orderDetailId" class="orderDetailId" value="" />
+                       		<input type="hidden" name="isVip" class="isVip" value="" />
+                      		@reviewBtn(otherLogins)
+                       }
+                        <!--video-->
+                           <div class="blockPopup_box noPermissions">
+                                   <div class="postPhotos_popBox">
+                                       <div class="customer_popClose"></div>
+                                       <div class="ReviewsN">
+                                       	<em></em>
+                                       	<p class="ReviewsTitle">@Messages("reviews.are.only.accepted.from.actual.purchases")</p>
+                                           <p>@Messages("reviews.require")</p>
+                                       </div>
+                                   </div>
+                                   <div class="blockPopup_black"></div>
+                           </div>
+                         <!--videoOver-->
+                   </div>
+                   @views.html.interaction.review.comment_list_common(fragment.getCommentList())
+                   
+                   <a href="@controllers.interaction.review.routes.ProductReview.showAll(fragment.getListingID())" >                 
+                   <div class="writeReviews_bottom">
+                  	 @fragment.getReviewCount @Messages("customer.reviews")
+                   </div>
+                   </a>
+ </div>
+

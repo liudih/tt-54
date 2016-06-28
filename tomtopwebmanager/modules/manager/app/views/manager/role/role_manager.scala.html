@@ -1,0 +1,119 @@
+@(
+roleList: List[entity.manager.AdminRole]
+) 
+
+@import views.html.helper._
+
+@views.html.manager.main {
+
+	@helper.javascriptRouter("js_AdminRoleRoutes")(
+		controllers.manager.routes.javascript.AdminRole.addAdminRole,
+		controllers.manager.routes.javascript.AdminRole.updateAdminRole,
+		controllers.manager.routes.javascript.AdminRole.deleteAdminRole
+	)
+
+	<!-- BEGIN PAGE CONTAINER-->
+	<div class="container-fluid">
+	
+		<!-- BEGIN PAGE HEADER-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+				<h3 class="page-title">
+					角色管理 
+				</h3>
+				<ul class="breadcrumb">
+					<li><i class="icon-home"></i> <a href="/sysadmin">Home</a>
+						<i class="icon-angle-right"></i></li>
+					<li><a href="#">角色</a> <i class="icon-angle-right"></i>
+					</li>
+					<li><a href="#">角色管理 </a></li>
+				</ul>
+				<!-- END PAGE TITLE & BREADCRUMB-->
+			</div>
+		</div>
+		<!-- END PAGE HEADER-->
+		
+		
+		<!-- BEGIN PAGE CONTENT-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN EXAMPLE TABLE PORTLET-->
+				<div class="portlet box blue">
+					<div class="portlet-title">
+						<div class="caption">
+							<i class="icon-edit"></i>角色管理
+						</div>
+						<div class="tools">
+							<a href="javascript:;" class="collapse"></a> <a
+								href="#portlet-config" data-toggle="modal" class="config"></a>
+							<a href="javascript:;" class="reload"></a> <a
+								href="javascript:;" class="remove"></a>
+						</div>
+					</div>
+
+					<div class="portlet-body">
+						<div class="clearfix">
+							<div class="btn-group">
+								<button id="adminrole_manager_table_new" class="btn green">
+									新增角色 <i class="icon-plus"></i>
+								</button>
+							</div>
+						</div>
+						<table class="table table-striped table-hover table-bordered"
+							id="adminrole_manager_table">
+							<thead>
+								<tr>
+									<th>角色序号</th>
+									<th>角色名称</th>
+									<th>Edit</th>
+									<th>Delete</th>
+								</tr>
+							</thead>
+							<tbody>
+							
+								@roleList.map{a=>
+								<tr class="" id="@a.getIid()" title="@a.getCrolename()">
+									<td >@a.getIid()</td>
+									<td class="center">@a.getCrolename()</td>
+									@if(a.getIid() == 1 || a.getIid() == 2){
+										<td><font color='red' size='4'><i class='icon-lock'></i></font></td>
+										<td><font color='red' size='4'><i class='icon-lock'></i></font></td>
+									}else{
+										<td><a class="edit" href="javascript:;">Edit</a></td>
+										<td><a class="delete" href="javascript:;">Delete</a></td>
+									}
+									
+								</tr>
+								}
+
+							</tbody>
+
+						</table>
+
+					</div>
+
+				</div>
+
+				<!-- END EXAMPLE TABLE PORTLET-->
+
+			</div>
+
+		</div>
+
+		<!-- END PAGE CONTENT -->
+
+	</div>
+
+			<!-- END PAGE CONTAINER-->
+
+
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/manager/adminrole/adminrole_edittable.js")'></script>
+		<script>
+			loadEditTables();
+		</script>
+	} 
+
+
+}

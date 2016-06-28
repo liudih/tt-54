@@ -1,0 +1,5 @@
+@(productList :List[valueobjects.product.ProductBadge])
+
+	@productList.map{ p=>
+		@wish_edit_base(p)
+	}

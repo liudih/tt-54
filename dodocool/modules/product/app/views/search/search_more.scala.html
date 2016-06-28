@@ -1,0 +1,4 @@
+@(products: List[dto.product.ProductMessage])
+@products.map{p=>
+	@views.html.product.fragment.badge.render(p, 190, 190)
+}

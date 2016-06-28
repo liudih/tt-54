@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.interaction.WholesaleInquiryMapper" >
+  <resultMap id="BaseResultMap" type="dto.interaction.WholesaleInquiry" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+    <result column="csku" property="csku" jdbcType="VARCHAR" />
+    <result column="cname" property="cname" jdbcType="VARCHAR" />
+    <result column="cphone" property="cphone" jdbcType="VARCHAR" />
+    <result column="cemail" property="cemail" jdbcType="VARCHAR" />
+    <result column="ftargetprice" property="ftargetprice" jdbcType="DOUBLE" />
+    <result column="iquantity" property="iquantity" jdbcType="INTEGER" />
+    <result column="ccountrystate" property="ccountrystate" jdbcType="VARCHAR" />
+    <result column="ccompany" property="ccompany" jdbcType="VARCHAR" />
+    <result column="cinquiry" property="cinquiry" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, clistingid, csku, cname, cphone, cemail, ftargetprice, iquantity, ccountrystate, 
+    ccompany, cinquiry, dcreatedate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_wholesale_inquiry
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_wholesale_inquiry
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="dto.interaction.WholesaleInquiry" >
+    insert into t_wholesale_inquiry (iid, clistingid, csku, 
+      cname, cphone, cemail, 
+      ftargetprice, iquantity, ccountrystate, 
+      ccompany, cinquiry, dcreatedate
+      )
+    values (#{iid,jdbcType=INTEGER}, #{clistingid,jdbcType=VARCHAR}, #{csku,jdbcType=VARCHAR}, 
+      #{cname,jdbcType=VARCHAR}, #{cphone,jdbcType=VARCHAR}, #{cemail,jdbcType=VARCHAR}, 
+      #{ftargetprice,jdbcType=DOUBLE}, #{iquantity,jdbcType=INTEGER}, #{ccountrystate,jdbcType=VARCHAR}, 
+      #{ccompany,jdbcType=VARCHAR}, #{cinquiry,jdbcType=VARCHAR}, #{dcreatedate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="dto.interaction.WholesaleInquiry" >
+    insert into t_wholesale_inquiry
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="clistingid != null" >
+        clistingid,
+      </if>
+      <if test="csku != null" >
+        csku,
+      </if>
+      <if test="cname != null" >
+        cname,
+      </if>
+      <if test="cphone != null" >
+        cphone,
+      </if>
+      <if test="cemail != null" >
+        cemail,
+      </if>
+      <if test="ftargetprice != null" >
+        ftargetprice,
+      </if>
+      <if test="iquantity != null" >
+        iquantity,
+      </if>
+      <if test="ccountrystate != null" >
+        ccountrystate,
+      </if>
+      <if test="ccompany != null" >
+        ccompany,
+      </if>
+      <if test="cinquiry != null" >
+        cinquiry,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="clistingid != null" >
+        #{clistingid,jdbcType=VARCHAR},
+      </if>
+      <if test="csku != null" >
+        #{csku,jdbcType=VARCHAR},
+      </if>
+      <if test="cname != null" >
+        #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="cphone != null" >
+        #{cphone,jdbcType=VARCHAR},
+      </if>
+      <if test="cemail != null" >
+        #{cemail,jdbcType=VARCHAR},
+      </if>
+      <if test="ftargetprice != null" >
+        #{ftargetprice,jdbcType=DOUBLE},
+      </if>
+      <if test="iquantity != null" >
+        #{iquantity,jdbcType=INTEGER},
+      </if>
+      <if test="ccountrystate != null" >
+        #{ccountrystate,jdbcType=VARCHAR},
+      </if>
+      <if test="ccompany != null" >
+        #{ccompany,jdbcType=VARCHAR},
+      </if>
+      <if test="cinquiry != null" >
+        #{cinquiry,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dto.interaction.WholesaleInquiry" >
+    update t_wholesale_inquiry
+    <set >
+      <if test="clistingid != null" >
+        clistingid = #{clistingid,jdbcType=VARCHAR},
+      </if>
+      <if test="csku != null" >
+        csku = #{csku,jdbcType=VARCHAR},
+      </if>
+      <if test="cname != null" >
+        cname = #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="cphone != null" >
+        cphone = #{cphone,jdbcType=VARCHAR},
+      </if>
+      <if test="cemail != null" >
+        cemail = #{cemail,jdbcType=VARCHAR},
+      </if>
+      <if test="ftargetprice != null" >
+        ftargetprice = #{ftargetprice,jdbcType=DOUBLE},
+      </if>
+      <if test="iquantity != null" >
+        iquantity = #{iquantity,jdbcType=INTEGER},
+      </if>
+      <if test="ccountrystate != null" >
+        ccountrystate = #{ccountrystate,jdbcType=VARCHAR},
+      </if>
+      <if test="ccompany != null" >
+        ccompany = #{ccompany,jdbcType=VARCHAR},
+      </if>
+      <if test="cinquiry != null" >
+        cinquiry = #{cinquiry,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="dto.interaction.WholesaleInquiry" >
+    update t_wholesale_inquiry
+    set clistingid = #{clistingid,jdbcType=VARCHAR},
+      csku = #{csku,jdbcType=VARCHAR},
+      cname = #{cname,jdbcType=VARCHAR},
+      cphone = #{cphone,jdbcType=VARCHAR},
+      cemail = #{cemail,jdbcType=VARCHAR},
+      ftargetprice = #{ftargetprice,jdbcType=DOUBLE},
+      iquantity = #{iquantity,jdbcType=INTEGER},
+      ccountrystate = #{ccountrystate,jdbcType=VARCHAR},
+      ccompany = #{ccompany,jdbcType=VARCHAR},
+      cinquiry = #{cinquiry,jdbcType=VARCHAR},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

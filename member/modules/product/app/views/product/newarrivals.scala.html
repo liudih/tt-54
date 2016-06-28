@@ -1,0 +1,151 @@
+@(products: valueobjects.base.Page[valueobjects.product.ProductBadge],
+	catelist: List[dto.product.CategoryWebsiteWithName],
+	newarrivals: List[valueobjects.product.ProductNewarrivalsCalculateItem],
+	pci: List[valueobjects.product.ProductNewarrivalsCalculateItem],
+	advertisingList : List[valueobjects.product.AdItem],
+  	sc: valueobjects.search.SearchContext,
+  	t: Integer,
+  	st: Integer,
+  	sdate:String,
+  	sdatetype:String, 
+  	req: Map[String,Array[String]])
+@tp = @{template.TemplateService.getInstance().getContents()}
+
+@import services.search.criteria._
+@import services.base._
+@import services.base.utils._
+
+@views.html.base.master{
+@HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/search.css")?@version.BuildVersion.build()" /> 
+}
+	
+<div class="container LevelOne">
+
+    <div class="Bread_crumbs_Box">
+        <ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="/"></a></li>
+            <li>
+                <p>
+                	<a class="Bread_link" href="@controllers.product.routes.Product.newarrivals()">@Messages("new.arrivals")</a>
+                </p>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+   @if(null !=advertisingList && advertisingList.size()>0){
+    <div class="specialsBanner">
+		@advertisingList.map{a=>
+			@Html(a.getDefaultShow())
+		}
+    </div>
+    }
+    <ul class="levelKeywords">
+        <li class="attributeTitle">@Messages("release.date")</li>
+        <li class="newArivals_sp">
+        	@if(null ==newarrivals || newarrivals.size()==0){
+        		0 Item(s)
+        	}else{
+	        	@newarrivals.zipWithIndex.map{ n=>
+		        	@if(sdatetype=="1"&&sdate==DateFormatUtils.getDateTimeYYYYMMDD(n._1.getDateStr())){
+				 		<span class="spanActive">
+					} else {
+						 <span>
+					}
+	                <a href="javascript:void(0);" onclick="getproductnewarrivals(this,1)">
+							 <input type="hidden" name="statPublishDate" value="@DateFormatUtils.getDateTimeYYYYMMDD(n._1.getDateStr())" />
+			                 @DateFormatUtils.getDateTimeYYYYMMDD(n._1.getDateStr())&#40;@n._1.getNumber()&#41; 
+			                 <em></em></a></span>
+	           }
+	             
+	            <br/>
+	            @if(null ==pci || pci.size()==0){
+	            
+	            } else {
+           		@pci.zipWithIndex.map{ p =>
+           			@if(sdatetype=="2"&&sdate==DateFormatUtils.getDateTimeYYYYMMDD(p._1.getDateStr())){
+					   <span class="spanActive"> 
+					} else {
+						<span>
+					}
+        			<a href="javascript:void(0);" onclick="getproductnewarrivals(this,2)">
+					<input type="hidden" name="statPublishDate" value="@DateFormatUtils.getDateTimeYYYYMMDD(p._1.getDateStr())" />
+						@if(p._2 == 0){
+						 	@Messages("last.week") 
+		            	}
+		            	@if(p._2 == 1){
+							@Messages("last.2.weeks")
+		            	}
+		            	@if(p._2 == 2){
+						 	@Messages("last.3.weeks")
+		            	}
+		            	@if(p._2 == 3){
+						   @Messages("last.month")
+		            	}
+	            	(@p._1.getNumber())
+	            	<em></em></a></span>
+	            	
+					}
+				}
+	            <div class="clear"></div>
+           }
+        </li>
+    </ul>
+    @views.html.home.cartegory_single_select_bar(catelist)
+    @views.html.product.sortbar{
+    	<input type="hidden" name="st" value="@st"/>
+  		<input type="hidden" name="statPublishDate" value="@sdate" />
+		<input type="hidden" name="statPublishDateType" value="@sdatetype" />
+		@req.keySet.map{i=>
+			@if(i=="category"){
+				@req.get(i).take(1).map{ aa=>
+					<input type="hidden" id="category" name="category" value="@aa" />
+				}
+			}
+		}
+	}(req)(sc)
+	
+	@if(products.getList().size()>0){
+	 <ul class="arrangeClick arrangeLess block">
+         @products.getList().map{p=>
+			@views.html.product.gadget.badge_big(p)
+		}
+        <div class="clear"></div>
+     </ul>
+    <ul class="arrangeList">
+       	@products.getList().map{p=>
+			@views.html.product.gadget.badge_list(p)
+		}
+        <div class="clear"></div>
+    </ul>
+    <div class="arrayNEX">
+         @views.html.product.gadget.pagination(sc.getResult().pageNo(),sc.getResult().totalPages())
+     </div>
+     }else{
+    <h2 style="text-align:center;color:orange; margin-bottom: 50px;border:1px solid #e8e8e8;padding:150px 0 ;">Sorry, No Products Found!</h2>
+    }
+	
+</div>
+	@tp.get("member-browse-history")	
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<script>
+		   function getproductnewarrivals(t,type){
+			    var node = $(t).parent();
+			    if(!node.hasClass("spanActive")){
+			    	node.addClass("spanActive");
+			    }else{
+			    	node.removeClass("spanActive"); 
+			    }
+			    $("#p").val(1); //默认跳转到第一页
+			    //获取日期的值
+			  	var datestr = $(t).find("input").val();
+			  	$("#searchbar").find("input[name='statPublishDate']").remove();
+			    $("#searchbar").find("input[name='statPublishDateType']").remove();
+			  	$("#searchbar").append('<input type="hidden" name="statPublishDate" value="'+datestr+'" />');
+			  	$("#searchbar").append('<input type="hidden" name="statPublishDateType" value="'+type+'" />');
+				$('#searchbar').submit();
+		   	}
+		</script>
+	}
+}                                          
+                                               

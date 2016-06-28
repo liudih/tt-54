@@ -1,0 +1,66 @@
+@(cmsMenu:dto.CmsMenu,
+cmsMenulist: List[dto.CmsMenuWebsite])
+
+@websitelist = @{services.manager.CategoryManagerService.getInstance().getWebsiteChoose()}
+
+
+<div class="row-fluid" id="cmsmenuedit_modle"
+	style="position: absolute; width: 800px; left: 50%; margin-left: -10%; top: 270px">
+	<input type="hidden" id="addChildren_Or_Menumessage_flag" value="2" />
+
+<fieldset>
+	<input type="hidden" value="@cmsMenu.getIid()" name="iid" />
+	 
+	<div class="control-group">
+		<label class="control-label">站点</label>
+		<div class="controls">
+			@views.html.manager.category.websiteChoose("iwebsiteid_cmsmenu",websitelist, null)
+		</div>
+	</div>
+	
+	<div class="control-group">
+		<label class="control-label">设备</label>
+		@services.manager.ChooseService.getInstance().device("cdevice", null, true)
+	</div>
+	
+	
+ 	<div class="clearfix">
+		<div class="btn-group">
+			<button id="add_cmsmenu_more_website_btn" class="add_cmsmenu_more_website_btn" data-toggle="modal">
+			保存<i class="icon-plus"></i>
+			</button>
+		</div>
+	</div>
+	
+ 	<table class="table table-striped table-hover table-bordered" id="cmsmenu_more_website_table">
+		<thead>
+			<tr>
+				<th>序号</th>
+				<th>目录ID</th>
+				<th>站点名称</th>
+				<th>设备名称</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+	
+			@cmsMenulist.map{u=>
+				<tr class="" id="@u.getIid()">
+					<td>@u.getIid()</td>
+					<td>@u.getImenuid()</td>
+					<td>@u.getWebsiteName()</td>
+					<td>@u.getCdevice()</td>
+					<td><a class="deletecmsmenu" href="javascript:deleteCmsMenu_MoreWebsite(@u.getIid());" data-id="@u.getIid()"><i class="icon-trash"></i></a></td>
+				</tr>
+			}
+			
+		</tbody>
+	</table>
+	
+</fieldset>
+ 
+<div class="control-group">
+</div>
+ 
+ </div>
+ 

@@ -1,0 +1,102 @@
+@(cartItemlist : TreeMap[Integer, Collection[valueobjects.cart.CartItem]],
+	storageMap: Map[Integer, dto.StorageParent],
+	cartStorageids: List[Integer],
+	items: List[valueobjects.cart.CartItem],
+	currency:dto.Currency,
+	isLogin:Boolean,
+	isCart: Boolean = true
+	)
+@import services.base._
+@import services.base.utils._
+@import extensions.order.CampaignUiProviderHelper
+<div class="container">
+
+	
+	<div id="dataContent">
+	@if(cartStorageids!=null){
+	@cartStorageids.map{ k=>
+	<div class="chooseOneBox wareHouseWarp">
+		<label class="chooseOneLabel input_control span95" onclick="touchStorage(this,'@k');">
+			<input type="radio">
+			<div class="radio orgRadio lineBlock" storageid="@k"><span> </span></div>
+			<p class="lineBlock wareHouse">Ships from [@if(storageMap.get(k)!=null){@storageMap.get(k).getCstoragename()}] Warehouse 
+			<span>(@cartItemlist.get(k).size() Item@if(cartItemlist.get(k).size()>1){s})</span></p>
+		</label>
+	</div>
+	<div class="storage_items" >
+	@cartItemlist.get(k).map{ kk=>
+		@kk match {
+			case si : valueobjects.cart.SingleCartItem => { 
+				@single(si,currency,isCart) 
+			}
+			case bi : valueobjects.cart.BundleCartItem => {
+			}
+		}
+	}
+	</div>
+	}
+	}
+	@*购物车进入订单确认页*@
+	
+	@if(items!=null){
+	<div id="orderitemlist">
+		@items.map{ kk=>
+			@kk match {
+				case si : valueobjects.cart.SingleCartItem => { 
+					@single(si,currency,isCart) 
+				}
+				case bi : valueobjects.cart.BundleCartItem => {
+				}
+			}
+		}
+	</div>
+	}
+	</div>
+	<input type="hidden" id="loyalty_cartid" name="cartId" value="">
+	<input type="hidden" id="isLogin" name="isLogin" value="@isLogin">
+	<input type="hidden" id="cart_currency" name="cart_currency" value="@currency.getCcode">
+	@cart_loyalty()
+	<div class="conW98">
+
+		<table class="cart_orderPriceTable" width="100%" cellspacing="0" cellpadding="0" border="0">
+			<tr>
+				<td>Order subtotal:</td>
+				<td>@currency.getCsymbol <span class="subtotalCls" id="cart_subtotal" >0.0</span></td>
+			</tr>
+			<tr>
+				<td>Discount (promo):</td>
+				<td>@currency.getCsymbol <span id="discount_promo" class="subtotalCls">@Utils.money(0.00,currency.getCcode)</span></td>
+			</tr>
+			<tr>
+				<td>Discount (coupon):</td>
+				<td>@currency.getCsymbol <span id="discount_coupon" class="subtotalCls">@Utils.money(0.00,currency.getCcode)</span></td>
+			</tr>
+			<tr>
+				<td>Discount (point):</td>
+				<td>@currency.getCsymbol <span id="discount_point" class="subtotalCls">@Utils.money(0.00,currency.getCcode)</span></td>
+			</tr>
+			@if(isCart == false){
+			<tr>
+				<td>Shipping Cost:</td>
+				<td>@currency.getCsymbol &nbsp;<span id="shipCost">@Utils.money(0.00,currency.getCcode)</span></td>
+			</tr>
+			}
+			<tr>
+				<td class="GrandTotal">Grand Total:</td>
+				<td class="GrandTotalNumber">@currency.getCsymbol <span id="cartGrandTotal" class="GrandTotalCls">0.0</span></td>
+			</tr>
+		</table>
+		
+		@if(isCart){
+		  <div class="nw_paypal_box"><a class="button_orange_s span98 block paypalBut" href="/paypal/ec-cart"><img src="@controllers.base.routes.Assets.at("images/icon/paypal01.png")"></a></div>
+         <p class="font18 textC padd15">OR</p>
+         <div class="nw_place_box">
+         <a class="orangeInput span98 block" href="/cart/fillAddress">Proceed to checkout</a>
+         </div>
+			
+		}else{
+			<a id="paypal-btn" class="orangeInput width100 marT" href="javascript:;" onclick="placeOrderSubmit()"><p class="paypalIcon">PayPal</p></a>
+		}
+	</div>
+</div>
+ 

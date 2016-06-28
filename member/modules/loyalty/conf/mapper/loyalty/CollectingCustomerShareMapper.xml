@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.loyalty.CollectingCustomerShareMapper" >
+  
+  <select id="queryCustomerShareInfo" resultType="dto.CustomerShareDto" >
+    select iid,cemail,curl,ctype,ccountry,dcreatedate
+    from t_collect_customer_share
+    where 1=1
+    <if test="customerShareDto.cemail != null and customerShareDto.cemail!=''" >
+				and cemail =#{customerShareDto.cemail,jdbcType=VARCHAR}
+	 </if>
+	 <if test="customerShareDto.curl != null and customerShareDto.curl!=''" >
+				and curl like '%'||#{customerShareDto.curl,jdbcType=VARCHAR}||'%'
+	 </if>
+	 <if test="customerShareDto.ctype != null and customerShareDto.ctype!=''" >
+				and ctype like '%'||#{customerShareDto.ctype,jdbcType=VARCHAR}||'%'
+	 </if>
+     <if test="customerShareDto.ccountry != null and customerShareDto.ccountry!=''" >
+				and ccountry =#{customerShareDto.ccountry,jdbcType=VARCHAR}
+	 </if>
+	 order by dcreatedate desc limit #{pageSize} offset (#{pageSize} * (#{page} - 1))
+  </select>
+  <select id="exportCustomerShareInfo" resultType="dto.CustomerShareDto" >
+    select iid,cemail,curl,ctype,ccountry,dcreatedate
+    from t_collect_customer_share
+    where 1=1
+    <if test="customerShareDto.cemail != null and customerShareDto.cemail!=''" >
+				and cemail =#{customerShareDto.cemail,jdbcType=VARCHAR}
+	 </if>
+	 <if test="customerShareDto.curl != null and customerShareDto.curl!=''" >
+				and curl like '%'||#{customerShareDto.curl,jdbcType=VARCHAR}||'%'
+	 </if>
+	 <if test="customerShareDto.ctype != null and customerShareDto.ctype!=''" >
+				and ctype like '%'||#{customerShareDto.ctype,jdbcType=VARCHAR}||'%'
+	 </if>
+     <if test="customerShareDto.ccountry != null and customerShareDto.ccountry!=''" >
+				and ccountry =#{customerShareDto.ccountry,jdbcType=VARCHAR}
+	 </if>
+	 order by dcreatedate desc
+  </select>
+  
+  <select id="queryCountCustomerShareInfo" resultType="java.lang.Integer" parameterType="dto.CustomerShareDto">
+    select count(1) from t_collect_customer_share
+    where 1=1
+    <if test="customerShareDto.cemail != null and customerShareDto.cemail!=''" >
+				and cemail =#{customerShareDto.cemail,jdbcType=VARCHAR}
+	 </if>
+	 <if test="customerShareDto.curl != null and customerShareDto.curl!=''" >
+				and curl like '%'||#{customerShareDto.curl,jdbcType=VARCHAR}||'%'
+	 </if>
+	 <if test="customerShareDto.ctype != null and customerShareDto.ctype!=''" >
+				and ctype like '%'||#{customerShareDto.ctype,jdbcType=VARCHAR}||'%'
+	 </if>
+     <if test="customerShareDto.ccountry != null and customerShareDto.ccountry!=''" >
+				and ccountry = #{customerShareDto.ccountry,jdbcType=VARCHAR}
+	 </if>
+  </select>
+</mapper>

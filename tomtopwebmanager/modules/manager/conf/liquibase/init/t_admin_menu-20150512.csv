@@ -1,0 +1,4 @@
+﻿"iid","cname","iparentid","ilevel","cclass","curl","ccreateuser","cenname"
+"61","客服管理","0","1","61","","luojh","CustomerServiceManagement"
+"62","客服技能配置","61","2","62","/sysadmin/customerservice/manage","luojh","CustomerServiceSkillDeploy"
+"63","业务技能管理","61","2","63","/sysadmin/customerservice/skillmanage","luojh","BusinessSkillManage"

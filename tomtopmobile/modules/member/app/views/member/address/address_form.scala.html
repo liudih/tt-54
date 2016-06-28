@@ -1,0 +1,114 @@
+@(ad_type :Int)
+@import views.html.helper._ 
+
+			<div class="publicePop_Box popBoxNone">
+				<div class="publicePop_con">
+				@form(controllers.member.routes.AddressController.addOrUpdateAddress, 'method->"POST", 'id->"addAddressForm"){
+					<input type="hidden" name="type" value="@ad_type"/>
+					<input type="hidden" id="isDefault" name="isDefault" value="false"/>
+					<div class="input_control">
+						<input name="firstName" class="txtInput addPop_input" type="text" placeholder="Enter your first name" />
+    					<i class="sClean"> </i>
+					</div>
+					<div class="input_control">
+						<input name="lastName" class="txtInput addPop_input" type="text" placeholder="Enter your last name" />
+    					<i class="sClean"> </i>
+					</div>
+					<div class="input_control">
+						<input name="street" class="txtInput addPop_input" type="text" placeholder="Street" />
+    					<i class="sClean"> </i>
+					</div>
+					<div id="member_address_country"></div>
+					
+					<div class="input_control">
+						<input name="state" class="txtInput addPop_input" type="text" placeholder="State / Province / Region" />
+    					<i class="sClean"> </i>
+					</div>
+					<div class="span45 input_control lineBlock">
+						<input name="city" class="txtInput addPop_input" type="text" placeholder="City" />
+					</div>
+					<div class="span45 input_control lineBlock floatR">
+						<input name="postalCode" class="txtInput addPop_input" type="text" placeholder="Zip / Postal Code" />
+					</div>
+					<div class="input_control">
+						<input name="phoneNumber" class="txtInput addPop_input" type="text" placeholder="Phone Number" />
+					</div>
+					
+					<label class="input_control defaultAddressChoose"> 
+						
+						<div id="address_add_isdefault" class="checkbox chooseClick lineBlock"><span></span></div>Default Address
+					</label>
+					}
+					<div class="filter_popBottom">
+						<a href="javascript:;" class="wihteInput lineBlock closePop">Cancel</a>
+						<a id="address_ok" href="javascript:;" class="orangeInput lineBlock ">Save</a>
+					</div>
+				</div>
+				<div class="blackPop"> </div>
+			</div>
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+@controllers.base.routes.Assets.at("js/jquery.country.js")
+}			
+@services.base.HtmlUtils.misc().addTail{
+<script type="text/javascript">
+	$(function() {
+		
+		// 表单验证
+		$("input").blur(function() {
+			var v = $(this).val();
+			if (!v) {
+				$(this).addClass('input_error');
+			} else {
+				$(this).removeClass('input_error');
+			}
+		});
+		var ii = $('#member_address_country').country();
+		// 提交验证
+		$('#address_ok').click(function() {
+			var isSubmit = true;
+			$('#addAddressForm').find('input[name]').each(function() {
+				var form_input = $(this).val().trim();
+				if (!form_input) {
+					$(this).addClass('input_error');
+					isSubmit = false;
+				} else {
+					$(this).removeClass('input_error');
+				}
+			});
+			if (isSubmit) {
+				// 表单默认地址选择
+				var isCheck = $('#addAddressForm').find('#address_add_isdefault').hasClass('aciCss')
+				if(isCheck){
+					$('#addAddressForm').find('#isDefault').val(true);
+				}else{
+					$('#addAddressForm').find('#isDefault').val(false);
+				}
+				
+				$.ajax({
+					url: '@controllers.member.routes.AddressController.addOrUpdateAddress()', 
+					type: 'post', 
+					timeout: 5000, 
+					data: $('#addAddressForm').serialize(),
+					error: function(){
+						var show="save failed";
+						ttmErrorAlert(show);
+					}, 
+					success: function(result){
+						if(result.result=="success"){
+							var show="save successfully";
+							ttmSucceedAlert(show);
+							location.reload();
+						}
+						else{
+							var show="save failed";
+							ttmErrorAlert(show);
+						}
+							
+					}
+				});
+			}
+
+		});
+	});
+</script>
+}

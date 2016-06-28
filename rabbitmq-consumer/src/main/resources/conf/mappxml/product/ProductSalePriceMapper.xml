@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rabbit.conf.mapper.product.ProductSalePriceMapper">
+	<resultMap id="BaseResultMap" type="com.rabbit.dto.product.ProductSalePrice">
+		<id column="iid" jdbcType="INTEGER" property="iid" />
+		<result column="clistingid" jdbcType="VARCHAR" property="clistingid" />
+		<result column="csku" jdbcType="VARCHAR" property="csku" />
+		<result column="fsaleprice" jdbcType="DOUBLE" property="fsaleprice" />
+		<result column="dbegindate" jdbcType="TIMESTAMP" property="dbegindate" />
+		<result column="denddate" jdbcType="TIMESTAMP" property="denddate" />
+		<result column="ccreateuser" jdbcType="VARCHAR" property="ccreateuser" />
+		<result column="dcreatedate" jdbcType="TIMESTAMP" property="dcreatedate" />
+	</resultMap>
+	<resultMap id="BaseResultMapLite" type="com.rabbit.dto.ProductSalePriceLite">
+		<result column="clistingid" jdbcType="VARCHAR" property="listingId" />
+		<result column="fsaleprice" jdbcType="DOUBLE" property="salePrice" />
+		<result column="fprice" jdbcType="DOUBLE" property="price" />
+		<result column="dbegindate" jdbcType="TIMESTAMP" property="beginDate" />
+		<result column="denddate" jdbcType="TIMESTAMP" property="endDate" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, clistingid, csku, fsaleprice, dbegindate, denddate,
+		ccreateuser,
+		dcreatedate
+	</sql>
+	<select id="getProductSalePrice" resultType="com.rabbit.dto.product.ProductSalePrice">
+		select
+		<include refid="Base_Column_List" />
+		from t_product_saleprice
+		where clistingid in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach>
+		and #{0} BETWEEN dbegindate AND denddate
+	</select>
+	<insert id="addProductSalePrice" parameterType="com.rabbit.dto.product.ProductSalePrice">
+		insert into
+		t_product_saleprice (cListingid, csku,
+		fsaleprice, dbegindate,
+		denddate,
+		ccreateuser, dcreatedate)
+		values (
+		#{clistingid,jdbcType=VARCHAR},
+		#{csku,jdbcType=VARCHAR},
+		#{fsaleprice,jdbcType=DOUBLE}, #{dbegindate,jdbcType=TIMESTAMP},
+		#{denddate,jdbcType=TIMESTAMP},
+		#{ccreateuser,jdbcType=VARCHAR},
+		#{dcreatedate,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="addBatch" parameterType="java.util.List">
+		insert into t_product_saleprice (cListingid, csku,
+		fsaleprice,
+		dbegindate, denddate,
+		ccreateuser, dcreatedate)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.clistingid,jdbcType=VARCHAR},
+			#{item.csku,jdbcType=VARCHAR},#{item.fsaleprice,jdbcType=DOUBLE}, #{item.dbegindate,jdbcType=TIMESTAMP},
+			#{item.denddate,jdbcType=TIMESTAMP},#{item.ccreateuser,jdbcType=VARCHAR},
+			#{item.dcreatedate,jdbcType=TIMESTAMP})
+		</foreach>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.rabbit.dto.product.ProductSalePrice">
+		update t_product_saleprice
+		<set>
+			<if test="clistingid != null">
+				cListingId = #{clistingid,jdbcType=VARCHAR},
+			</if>
+			<if test="csku != null">
+				csku = #{csku,jdbcType=VARCHAR},
+			</if>
+			<if test="fsaleprice != null">
+				fsaleprice = #{fsaleprice,jdbcType=DOUBLE},
+			</if>
+			<if test="dbegindate != null">
+				dbegindate = #{dbegindate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="denddate != null">
+				denddate = #{denddate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="ccreateuser != null">
+				ccreateuser = #{ccreateuser,jdbcType=VARCHAR},
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+
+	<!-- add by lijun -->
+	<select id="getProductSalePriceAfterCurrentDate" parameterType="map" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from t_product_saleprice
+		where clistingid = #{listingId,jdbcType=VARCHAR}
+		and denddate &gt;= #{currentDate,jdbcType=TIMESTAMP}
+	</select>
+
+</mapper>

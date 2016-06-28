@@ -1,0 +1,62 @@
+@(products: valueobjects.base.Page[valueobjects.product.ProductBadge],
+	node:valueobjects.product.category.CategoryReverseComposite,
+	st: Integer,
+	req: Map[String, Array[String]],
+	advertisingList : List[valueobjects.product.AdItem],
+	storageList : List[dto.Storage],
+	hotlist: List[valueobjects.product.ProductBadge],
+	sc: valueobjects.search.SearchContext,
+	catogeryCount : Map[Integer,Long])
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/directories.css")?@version.BuildVersion.build()" /> 
+}
+@services.base.HtmlUtils.misc().addTail{
+	<script src="@controllers.product.routes.Assets.at("js/product/page_filter.js")" ></script>
+}
+@views.html.base.master {
+
+<div class="container LevelOne">
+    <div class="Bread_crumbs_Box">
+		<ul class="Bread_crumbs">
+      		 <li class="Bread_home"><a href="/"></a></li>
+				@category.category_breadcrumb_inc(node)
+			<div class="clear"></div>
+		</ul>
+	</div>
+    <div class="dirLeft lineBlock">
+   		<div class="dirFirstBox">
+   			@category_product_menu(node,catogeryCount)
+        </div>
+        <div class="firBoxP">
+        	@freeship_or_newarrivals_filter(0)
+        </div>
+        @*<div class="firBoxP">
+        	<p class="dirTitle">WareHouse Options</p>
+            <ul class="firThisBox">
+            	@storageList.map{s=>
+            		<li>
+            		<a class="rightThis thisAci" data-name="storageid" data-value="@s.getIid()" href="javascript:;"><span></span></a>
+            		@s.getCstoragename()
+            		</li>
+            	}
+            </ul>
+        </div>*@
+        <div class="firBoxP border0">
+        	<p class="dirTitle">Hot Products</p>
+            <ul class="pirListProduct">
+            	@hotlist.map{h=>
+            		@category_badge_hot(h)
+                }
+            </ul>
+        </div>
+    </div>
+    
+    @product_right_temp(products,req,advertisingList,sc)
+
+</div>
+
+@tp.get("member-browse-history")
+    	
+}

@@ -1,0 +1,94 @@
+@(orders: List[dto.order.Order],pageCount: Int, pageNum: Int, pageTotal: Int)
+@import services.base.utils._
+
+<div id="search_orders_html" style="padding-bottom: 100px;">
+		<div class="portlet-body">
+			<table class="order_ll_box" width="100%" border="0" cellspacing="1" cellpadding="0" id="oderlist">
+				<thead>
+					  <tr>
+					    <th class="order_ll_Id">
+					        <p class="inlineBlock">订单编号</p>
+					    </th>
+					    <th class="order_ll_dizhi">
+					        <p class="inlineBlock">用户邮箱</p>
+					    </th>
+					    <th class="order_ll_zhifu">
+					    	<p class="inlineBlock">支付方式</p>
+					    </th>
+					    <th class="order_ll_haoma">
+					    	<p class="inlineBlock">订单日期</p>
+					    </th>
+					    <th class="order_ll_zhuangtai">
+					    	<p class="inlineBlock">订单状态</p>
+					    </th>
+					    <th class="order_ll_caozuo">
+					  	    <p class="inlineBlock">操作</p>
+					    </th>
+					  </tr>
+				</thead>
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+				@if(orders != null) {
+					@orders.map{i=>
+						<tr class="order_ll_infTR">
+						    <td class="order_ll_center">
+						    	<p class="order_ll_marT">@i.getCordernumber()</p>
+						    </td>
+						    <td class="order_ll_center">
+								<p class="order_ll_marT">@i.getCmemberemail()</p>
+						    </td>
+						    <td class="order_ll_center">
+						    	<p class="order_ll_marT">@i.getCpaymentid()</p>
+						    </td>
+						    <td class="order_ll_center">
+						 	   <p class="order_ll_marT">@i.getCreateDateStr()</p>
+						    </td>
+						    <td>
+						    	<p class="order_ll_center">
+						    		未支付
+						    	</p>
+						    </td>
+						    <td class="order_ll_center">
+						    	<div class="order_ll_stateBox">
+						    	<a class="editCmsContent" data-toggle="modal" data-target="#edit-action-modal"><button class="btn green" onclick="editTransaction('@i.getIid','@i.getCordernumber')">Action</button></a>
+						        </div>
+						    </td>
+						  </tr> 
+						  }
+					}
+				</tbody>
+			</table>
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="dataTables_info">当前第 <span>@pageNum</span> 页|共 <span>@pageTotal</span> 页| 共 <span>@pageCount</span> 条记录</div>
+				</div>
+				<div class="span6">
+					<div class="dataTables_paginate paging_bootstrap pagination">
+						<input id="pagenum" value="@pageNum" type="hidden"> 
+						<input id="pagetotal" value="@pageTotal" type="hidden"> 
+						
+						@if(pageTotal>1){
+						<ul>
+							@if(1 == pageNum){
+								<li class="disabled"><a href="javascript:;">«</a></li>
+							}else{
+								<li><a href="javascript:;" tag="pageNum" value="1">«</a></li>
+							}
+							@for(i <- pageNum - 6 to pageNum + 6 if i >= 1; if i<= pageTotal) {
+								@if(i == pageNum){
+									<li class="disabled"><a href="javascript:;" tag="pageNum" value="@i">@i</a></li>
+								}else{
+									<li><a href="javascript:;" tag="pageNum" value="@i">@i</a></li>
+								}
+							}
+							@if(pageNum >= pageTotal){
+								<li class="disabled"><a href="javascript:;">»</a></li>
+							}else{
+								<li><a href="javascript:;" tag="pageNum" value="@pageTotal">»</a></li>
+							}
+						</ul>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

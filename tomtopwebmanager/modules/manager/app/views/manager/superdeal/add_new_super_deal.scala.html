@@ -1,0 +1,28 @@
+@(totalPage: Integer,pageNo: Integer, pageSize: Integer)
+<div id="add-new-superdeal"  class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="width:900px;" >
+	<form id="add_new_super_deal" action="@controllers.manager.routes.SuperDeal.addSuperDeals()"  class="form-horizontal" method="post">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+		    <h3>添加super deal</h3>
+		</div>
+		<div class="modal-body">
+		  		<div class="control-group" >
+		  			站点选择  @services.manager.ChooseService.getInstance().website("iwebsiteid", null, true)
+					添加SKU<span style="color:red">*</span>:
+					<input class="input-xxlarge" type="text" name="csku" id="input_sku" value="">
+					<input type="hidden" id="hidden_sku" value="">
+					<input type="hidden" name="clistingid" value="">
+					<input type="hidden" name="icategoryrootid" value="">
+					<input type="hidden" name="pageNo" value="@pageNo">
+					<input type="hidden" name="totalPage" value="@totalPage">
+					<input type="hidden" name="pageSize" value="@pageSize">
+					
+					<input class="btn btn-default" type="button" value="查看该SKU信息" id="show_product_information">
+				</div>
+		</div>
+	    <div class="modal-footer" style="margin-bottom: -20px;">
+		     <button type="button" class="btn btn-default" data-dismiss="modal">关闭 </button>
+             <button type="submit" class="btn blue" id="add-super-deal-content-btn">保存</button>
+	    </div>
+	</form>
+</div>

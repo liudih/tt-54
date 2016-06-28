@@ -1,0 +1,3 @@
+﻿"iid","cname","iparentid","ilevel","cclass","curl","ccreateuser","dcreatedate","cenname"
+"42","FAQ","0","1","42","","linhl","2015-04-10 20:06:39.199119","FAQMgr"
+"43","商品FAQ","42","2","43","/sysadmin/product-faq","linhl","2015-04-10 20:06:39.199119","ProductFAQMgr"

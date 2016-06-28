@@ -1,0 +1,105 @@
+@(addresses: valueobjects.order_api.Address,da : dto.member.MemberAddress,
+cm : Map[Integer, dto.Country],
+allCountry : List[dto.Country])
+@import views.html.helper._
+
+<div class="address_con_W">
+
+<input id="ttm-shipping-addressId" type="text" name="addressId" style="display:none;" value="@if(da != null){@da.getIid}">
+
+		<h5>Shipping Address</h5>
+		
+		<ul class="lbBox marT">
+			<li id="ttm-asa" class="lineBlock address_infCon">
+				@if(da != null){
+					<input type="hidden" id="theAddresssId" value="@da.getIid()" /> 
+					<b class="address_name">@da.getClastname @da.getCfirstname</b>
+					<p class="address_txt">@da.getCstreetaddress @da.getCcity @da.getCprovince @if(cm.get(da.getIcountry) != null){@cm.get(da.getIcountry).getCname} (@da.getCpostalcode)</p>
+					<p class="address_phone">Phone: @da.getCtelephone</p>
+				}else{
+					<input type="hidden" id="theAddresssId" value="" />
+					<b class="address_name"></b>
+					<p class="address_txt"></p>
+					<p class="address_phone"></p>
+				}
+			</li>
+			<li class="lineBlock address_choose">
+				<span class="address_chooseIcon popBoxFilter"> </span>
+				<div class="publicePop_Box popBoxNone">
+					<div id="ttm-sa-select" class="publicePop_con">
+						@if(addresses != null && addresses.getMemberAddresses != null){
+							@for(d <- addresses.getMemberAddresses){
+								@if(d != null){
+								<ul onclick="" addressId="@d.getIid" class="popAddress_box lbBox chooseOneBox closePop">
+									<label class="chooseOneLabel">
+										<li class="lineBlock input_control">
+											@if(addresses.getDefaultAddress != null && d.getIid == da.getIid){
+												<input type="radio"  />
+												<div class="radio aciCss"><span> </span></div>
+											}else{
+												<input type="radio" />
+												<div class="radio"><span> </span></div>
+											}
+											
+										</li>
+										<li class="lineBlock">
+											<b class="address_name">@d.getClastname @d.getCfirstname</b>
+											<p class="address_txt">@d.getCstreetaddress @d.getCcity @d.getCprovince @if(cm.get(d.getIcountry) != null){@cm.get(d.getIcountry).getCname} (@d.getCpostalcode)</p>
+											<p class="address_phone">Phone: @d.getCtelephone</p>
+										</li>
+									</label>
+								</ul>
+								}
+							}
+						}
+					</div>
+					<div class="blackPop"> </div>
+				</div>
+			</li>
+		</ul>
+		<div id="add-shipping-address-form" action="">
+		<input name="type" type="text" value=1 style="display:none">
+		<div class="add_address">
+			<label class="popBoxFilter block"><span class="add_addressIco"> </span><p class="add_addressTxt">Add a shipping address</p></label>
+			<div class="publicePop_Box popBoxNone">
+				<div class="publicePop_con">
+					<div class="input_control">
+						<input name="firstName" class="txtInput addPop_input " type="text" placeholder="Enter your first name" />
+    					<i class="sClean"> </i>
+						<label><p class="red errorRed"></p></label>
+					</div>
+					<div class="input_control">
+						<input name="lastName" class="txtInput addPop_input " type="text" placeholder="Enter your last name" />
+    					<i class="sClean"> </i>
+						<label><p class="red errorRed"></p></label>
+					</div>
+					<div class="input_control">
+						<input name="street" class="txtInput addPop_input" type="text" placeholder="Street" />
+    					<i class="sClean"> </i>
+					</div>
+					<div id="ttm-sd-country">
+							
+					</div>
+					<div class="input_control">
+						<input name="state" class="txtInput addPop_input" type="text" placeholder="State / Province / Region" />
+    					<i class="sClean"> </i>
+					</div>
+					<div class="span45 input_control lineBlock">
+						<input name="city" class="txtInput addPop_input" type="text" placeholder="City" />
+					</div>
+					<div class="span45 input_control lineBlock floatR">
+						<input name="postalCode" class="txtInput addPop_input" type="text" placeholder="Zip / Postal Code" />
+					</div>
+					<div class="input_control">
+						<input name="phoneNumber" class="txtInput addPop_input" type="text" placeholder="Phone Number" />
+					</div>
+				
+					<div class="filter_popBottom">
+						<a href="javascript:;" class="wihteInput lineBlock closePop">Cancel</a>
+						<a id="AddSABtn" href="javascript:;" class="orangeInput lineBlock">Save</a>
+					</div>
+				</div>
+				<div class="blackPop"> </div>
+			</div>
+		</div>
+		</div>

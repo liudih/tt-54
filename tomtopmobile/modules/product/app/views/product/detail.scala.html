@@ -1,0 +1,81 @@
+@(vo: valueobjects.product.ProductComposite, renderer: services.product.ProductCompositeRenderer, ctitle:String, csku:String)
+
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@baseUrl = @{play.Play.application().configuration().getString("image_request_base_url")}
+@views.html.base.sub_master("Product Detail"){
+	@services.base.HtmlUtils.misc().addHeadCssOnce{
+	 	@controllers.base.routes.Assets.at("css/product_page.css")
+	}
+	@services.base.HtmlUtils.misc().addHeadScriptOnce{
+ 		@controllers.base.routes.Assets.at("js/hhSwipe.js")
+	}
+ 
+<div class="container">
+	<!-- 
+	<ul class="breadCrumbs">
+		<li class="lineBlock"><a href="/">Home</a></li>
+		<li class="lineBlock"><a href="javascript:;">Tablet PC &amp; Cellphone</a></li>
+		<li class="lineBlock">Xiaomi</li>
+	</ul> -->
+	@renderer.renderFragment(vo, "images")
+	@renderer.renderFragment(vo, "base")
+	
+	
+	<hr class="grayHR">
+	
+	<div class="product_buttonBox">
+		 <input type="hidden" name="csku" value="@csku">
+         <a class="txtBut_R popBoxFilter" href="javascript:;" onclick="popDiv(this);">
+          <span>Color、Size</span>
+         </a>
+       @renderer.renderFragment(vo, "product_colorsize_options")
+</div>
+
+	<hr class="grayHR">
+	
+	<div id="proPayBut" class="productButtonBottom lbBox">
+	   <div class="product_buttonBox span45 lineBlock">
+	         <a class="addToCart popBoxFilter" href="javascript:;" onclick="popDiv(this);"><span>Add to Cart</span></a>
+	         @renderer.renderFragment(vo, "product_options")
+	   </div>
+	   <div class="product_buttonBox span45 lineBlock">
+	         <a class="BuyNow popBoxFilter" href="javascript:;" onclick="popDiv(this);"><span>Buy Now</span></a>
+	         @renderer.renderFragment(vo, "product_options")
+	        
+	   </div>
+	</div>
+	
+	<a class="txtBut_R" href="@controllers.product.routes.Product.productDescription(ctitle)" id="desclocation">Product Description</a>
+
+	    
+	<hr class="grayHR">
+	@renderer.renderFragment(vo, "comment")
+ 
+</div>
+
+<div class="container">
+	   @renderer.renderFragment(vo, "product_recommend")
+</div>
+
+
+<a id="addcart_success" href="javascript:;" class="successfulPop_click" style="display:none"></a>
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/jquery.json.min.js")'></script>
+<script>
+var attrurl = "@controllers.product.routes.Product.getMultiatributeProduct()";
+var imgurl = "@baseUrl";
+$(function(){
+	$(".popBoxFilter").click(function(){
+		if($(this).hasClass("BuyNow")){
+			$(this).parent("div:first").find("a.buyContinue").attr("type","buynow");
+		}
+	})
+})
+</script>
+<script type="text/javascript" src='@controllers.product.routes.Assets.at("js/attr.js")'></script>
+<script type="text/javascript" src='@controllers.product.routes.Assets.at("js/addcart.js")'></script>
+}
+
+ 
+
+}

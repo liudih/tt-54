@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet author="lij" id="t_wholesale_base-create-20150604">
+		<createTable tableName="t_wholesale_base" remarks="wholesale基础表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cfullname" type="VARCHAR(100)" remarks="全名" />
+			<column name="cemail" type="VARCHAR(100)" remarks="邮箱" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点 ID" />
+			<column name="ctelephone" type="VARCHAR(40)" remarks="联系电话" />
+			<column name="ccountrysn" type="VARCHAR(30)" remarks="国家简写" />
+			<column name="cshipurl" type="VARCHAR(100)" remarks="商铺链接" />
+			<column name="cskype" type="VARCHAR(100)" remarks="skype帐号" />
+			<column name="ccomment" type="VARCHAR(5000)" remarks="comments" />
+			<column name="cshippingaddress" type="VARCHAR(100)" remarks="shipping地址" />
+			<column name="fpurchaseamount" type="DOUBLE"
+				remarks="Expected Purchase Amount(US$)" />
+			<column name="istatus" type="INTEGER" remarks="审核状态" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="lij" id="t_wholesale_category-create-20150604">
+		<createTable tableName="t_wholesale_category" remarks="wholesale期望批发品类表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwholesaleid" type="INTEGER" remarks="whosaleid" />
+			<column name="icategoryid" type="INTEGER" remarks="品类 ID" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh"
+		id="t_wholesale_discount_level-create-20150610">
+		<createTable tableName="t_wholesale_discount_level"
+			remarks="wholesale折扣等级表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点ID" />
+			<column name="fstartprice" type="DOUBLE" remarks="开始价格" />
+			<column name="fendprice" type="DOUBLE" remarks="结束价格" />
+			<column name="fmindiscount" type="DOUBLE" remarks="最小折扣(%)" />
+			<column name="fmaxdiscount" type="DOUBLE" remarks="最大折扣(%)" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_wholesale_discount_level-init_data-20150610"
+		author="luojh">
+		<loadData tableName="t_wholesale_discount_level"
+			file="init/wholesale_discount_level-init_data-20150610.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="lij" id="t_wholesale_product-create-20150604">
+		<createTable tableName="t_wholesale_product" remarks="wholesale商品表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点ID" />
+			<column name="cemail" type="VARCHAR(100)" remarks="邮箱" />
+			<column name="csku" type="VARCHAR(40)" remarks="SKU" />
+			<column name="iqty" type="INTEGER" remarks="qty" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="lij" id="t_wholesale_base-add-column-20150617">
+		<addColumn tableName="t_wholesale_base">
+			<column name="ilanguageid" type="INTEGER" remarks="语言ID" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_wholesale_order_product-create-20150618">
+		<createTable tableName="t_wholesale_order_product"
+			remarks="wholesale订单商品表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iorderid" type="INTEGER" remarks="订单ID" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点ID" />
+			<column name="cemail" type="VARCHAR(100)" remarks="邮箱" />
+			<column name="csku" type="VARCHAR(40)" remarks="SKU" />
+			<column name="iqty" type="INTEGER" remarks="qty" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+</databaseChangeLog>

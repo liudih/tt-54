@@ -1,0 +1,8 @@
+@(cart: facades.cart.Cart,
+ currency: dto.Currency)
+
+@import services.base.utils._
+<div class="tr" id="cart_grand_total">
+	<strong class="text-uppercase">total : <span
+		style="color: #D8412E" id="totalPrice">@currency.getCsymbol @Utils.money(cart.getGrandTotal())</span></strong>
+</div>

@@ -1,0 +1,8 @@
+GET    /assets/*file          controllers.base.Assets.at(path="/public", file)
+
+GET    /                      @controllers.base.Home.home()
+
+POST  /regionalset			  @controllers.base.Regional.regionalSettings()
+
+GET    /cms/detail/:imenuid   @controllers.base.Cms.getCmsContentByMenuId(imenuid:Integer)
+GET    /getAllCountry   		@controllers.base.CountryController.getAllCountry()

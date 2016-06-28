@@ -1,0 +1,66 @@
+<div class="wholeListBox" id="wholesaleListBox">
+	<a id="wholesale_a_add" class="wholeList_l" href="javascript:; " onclick="wholesaleCollect();">
+		<span class="wishN">Add to My Wholesale</span>
+	</a>
+</div>
+<div class="pu_pop popNone_s" style="display:none;top:0px;left:0px;">
+	<div class="pu_popBox">
+    	<div class="empty"></div>
+    	<div class="pu_popCon">
+                <p class="pu_popTxt message"></p>
+                <a href="javascript:;" class="hsInputd lineBlock cancel">@Messages("ok")</a>
+        </div>
+    </div>
+	<div class="blockPopup_black"></div>
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+<script>
+	$(".cancel").click(function() {
+		$('.pu_pop').hide();
+	});
+	var listingid = $("input[name='clistingid']:eq(0)").val();
+	var csku = $("input[name='csku']:eq(0)").val();
+	var qty = $("#cart-button-qty").val();
+	var addwholesaleCollectUrl = "@controllers.wholesale.routes.WholeSale.addWholesaleProduct()";
+	function wholesaleCollect(){
+		if($("#wholesale_a_add").hasClass("bluewholeList")){
+			return;
+		}
+		var dataJson =JSON.stringify({"listingid":listingid,"csku":csku,"qty":qty});
+		$.ajax({
+			url : addwholesaleCollectUrl,
+			type : "POST",
+			data : dataJson,
+			contentType : "application/json",
+			success : function(data) {
+				if(data == "success"){
+					$("#wholesale_a_add").addClass("bluewholeList");
+					var message = "add success";
+				} else {
+					var message = "add failure";
+				}
+				$('.message').html(message);
+				$('.pu_pop').show();
+			}
+		});
+	}
+	var validateUrl = "@controllers.wholesale.routes.WholeSale.wholesaleValidate()";
+	$.ajax({
+		url : validateUrl,
+		type : "POST",
+		data :  JSON.stringify({"csku":csku}),
+		contentType : "application/json",
+		success : function(data) {
+			if(data=="show"){
+				$("#wholesaleListBox").css("display","block");
+			} else if(data=="showAndYes"){
+				$("#wholesaleListBox").css("display","block");
+				$("#wholesale_a_add").addClass("bluewholeList");
+			}else{
+				$("#wholesaleListBox").css("display","none");
+			}
+		}
+	});
+ 
+</script>
+}

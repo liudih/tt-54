@@ -1,0 +1,91 @@
+@(cart: facades.cart.Cart,
+ currency: dto.Currency,
+ isLogin : Boolean
+ )
+
+<table class="detailesTab" width="100%" border="0" cellspacing="0" cellpadding="0" id="cart_view_table">
+	<tr>
+		<th class="rightAll">
+			<!-- <span></span> -->
+		</th>
+		<th class="itemTH">@Messages("item")</th>
+		<th class="descriptionTH">@Messages("description")</th>
+		<th class="priceTH">@Messages("price")</th>
+		<th class="quanTH">@Messages("qualitys")</th>
+		<th class="totalTH">@Messages("utotal")</th>
+		<th class="optionTH">@Messages("options")</th>
+	</tr>
+	<tr>
+		<td colspan="7">
+		@views.html.cart.cart_view_list(cart.getAllItems(),true,currency)
+		</td>
+	</tr>
+
+	<tr class="cart_bottomTR">
+		<td></td>
+		<td colspan="3">
+		@if(isLogin){
+			<div class="bulkrate bulkHover dropOrder">
+				<span></span>@Messages("drop.shipping.order")<em></em>
+				<p class="bulk_hover">
+					<em></em>@Messages("remove.tomtop.logo.from.package")
+				</p>
+			</div>
+		}
+		</td>
+		<td colspan="3"><p class="cart_total">
+				@Messages("save.total") @currency.getCsymbol<span id="saveTotal" currency="@currency.getCcode" style="margin-left:10px;">0.00</span>
+			</p></td>
+	</tr>
+	<tr>
+		<td></td>
+		
+		<td colspan="2" class="cart_bottom">
+			@if(isLogin){
+				@cart.renderExtrasInput().map { xtra => @xtra }
+			}
+		</td>
+		
+		<td colspan="4" align="right">
+			@views.html.cart.cart_grand_total(cart,currency)
+		</td>
+	</tr>
+	<tr class="Continue">
+		<td></td>
+		<td colspan="2" valign="top"><a href="/"><input
+				class="ContinueS" type="submit" value="@Messages("continue.shopping")"></a>
+		</td>
+		<td colspan="4" class="continusRe">
+			<p class="ContinueSpay">
+			@if(true){
+				<!-- <a class="spayPp" href="javascript:;"></a> --> 
+				<input type="hidden" id="spayOut" value="@controllers.order.routes.OrderProcessing.confirm()"/>
+				<input class="spayOut" type="button" value="@Messages("proceed.to.checkout")" onclick="skiporder();" style="float:right;">
+			}else{
+				<div id="expressCheckoutForGuest" style="text-align: right;">
+				<img id="ec_redirect" src="@controllers.base.routes.Assets.at("img/paypal.png")" alt="Paypal" style="float:right;margin-top:9px;"/>
+				</div>
+				<script type="text/javascript">
+					$(function(){
+						$('#expressCheckoutForGuest').click(function(){
+							$(this).unbind('click');
+							var html = '<p class="loading"><i>@Messages("redirecting")</i><img src="@controllers.base.routes.Assets.at("images/payment_wait.gif")"></p>';
+						
+							$(this).empty();
+							$(this).append(html);
+							
+							window.location.href = '/paypal/ec-cart';
+						});
+					});
+				</script>
+			}	
+			</p>
+			<label>
+				<input class="agreeTT" type="checkbox" checked="checked">
+				@Messages("i.agree.to.the.tomtop")
+				<a href="@controllers.base.routes.Cms.getCmsContentByMenuId(33)" target="_blank">@Messages("terms.and.conditions")</a>
+			</label>
+			<p class="checkouts">@Messages("conditions.clicking.agree.tomtop.com.terms.policy.continue.checkout")</p>
+		</td>
+	</tr>
+</table>

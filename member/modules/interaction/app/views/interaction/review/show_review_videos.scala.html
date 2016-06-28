@@ -1,0 +1,66 @@
+@(reviewInMemberCenters: valueobjects.base.Page[valueobjects.interaction.ReviewsInMemberCenter],tab: Integer,reviewInMemberCentersIsNull: Boolean)
+	<div class="xxkBOX boxRa @if(tab == 2){ block}">
+			@if(reviewInMemberCentersIsNull == false){
+                <table class="myRevi myVio" width="100%" border="1" cellspacing="0" cellpadding="0">
+                  <tr class="werThTT">
+                    <th class="capItems">Items</th>
+                    <th class="capTh">Review / Caption</th>
+                    <th class="myDate">Post Date</th>
+                    <th class="pointTh">Points</th>
+                    <th class="myUnapproved">@Messages("status")</th>
+                    <th class="myView">Options</th>
+                  </tr>
+                  @reviewInMemberCenters.getList.map{ i =>
+	               <tr>
+	                   <td class="firImg"><a href="@controllers.product.routes.Product.view(i.getProductUrl())">
+							@if(null != i.getProductSmallImageUrl && (i.getProductSmallImageUrl.startsWith("http://") ||
+							i.getProductSmallImageUrl.startsWith("https://"))) { 
+								<img src="@i.getProductSmallImageUrl"> 
+							} else { 
+								<img src="@controllers.image.routes.Image.view(i.getProductSmallImageUrl)" />
+							}</a>
+						</td>
+	                    <td class="capTd">
+	                        <p>@i.getCcomment</p>
+	                        <ul class="writePic">
+                        		@if(null != i.getCommentVideoUrl){
+		                            <li class="writeVideo"><img src="@i.getCommentVideoUrl"></li>
+                        		}
+	                        </ul>
+	                        <!--addPic-->
+	                        <div class="blockPopup_box">
+	                             <div class="customer_popBox scrollWZ">
+	                             	<input value="0" type="hidden" name="nowIndex" class="nowIndex" />
+	                                <div class="customer_popClose"></div>
+                                    <div class="customer_leftClick cursor"></div>
+                                    <div class="customer_rightClick cursor"></div>
+                                    <ul class="customer_bigPic">
+                                      <!--  <li><img src="images/delete/bigPic01.jpg" /></li>  -->
+                                    </ul>
+	                                <div class="clear"></div>
+	                            </div>
+	                            <div class="blockPopup_black"></div>
+	                        </div>
+	                         <!--addPicOver-->
+	                        <div class="clear"></div>
+	                    </td>
+	                    <td class="myDate">@i.getDcreatedate</td>
+	                    <td class="myPoints">12</td>
+	                    <td class="myUnapproved">@i.getIstate</td>
+	                    <td class="myView">
+	                    	<span class="editor"></span>
+	                    	<a class="removeX" href="javascript:;">Remove</a>
+	                    </td>
+	                  </tr>
+                  }
+                </table>
+                @views.html.interaction.member.photoandvideo.upload_review_video.render()
+                
+              } else {
+		            <div style="margin:0 auto;height:34px;width:270px;">
+						<p style="font: bold 18px georgia;">@Messages("You have no reviews")</p>
+					</div>
+					<div class="clear"></div>
+              }
+       </div>
+      

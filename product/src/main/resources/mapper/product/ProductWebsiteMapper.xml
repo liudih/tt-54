@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tomtop.product.mappers.product.ProductWebsiteMapper">
+	<resultMap id="BaseResultMap" type="com.tomtop.product.models.dto.ProductBadge">
+	   <!--  <id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+		<result column="csku" property="csku" jdbcType="VARCHAR" />
+		<result column="istatus" property="istatus" jdbcType="INTEGER" />
+		<result column="dnewformdate" property="dnewformdate" jdbcType="TIMESTAMP" />
+		<result column="dnewtodate" property="dnewtodate" jdbcType="TIMESTAMP" />
+		<result column="bspecial" property="bspecial" jdbcType="BIT" />
+		<result column="cvideoaddress" property="cvideoaddress" jdbcType="VARCHAR" />
+		<result column="iqty" property="iqty" jdbcType="INTEGER" />
+		<result column="fprice" property="fprice" jdbcType="DOUBLE" />
+		<result column="fcostprice" property="fcostprice" jdbcType="DOUBLE" />
+		<result column="ffreight" property="ffreight" jdbcType="DOUBLE" />
+		<result column="fweight" property="fweight" jdbcType="DOUBLE" />
+		<result column="bmultiattribute" property="bmultiattribute" jdbcType="BIT" />
+		<result column="cparentsku" property="cparentsku" jdbcType="VARCHAR" />
+		<result column="bvisible" property="bvisible" jdbcType="BIT" />
+		<result column="bpulish" property="bpulish" jdbcType="BIT" />
+		<result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+		<result column="bmain" property="bmain" jdbcType="BIT" />
+		<result column="bactivity" property="bactivity" jdbcType="BIT" /> -->
+	</resultMap>
+	
+</mapper>

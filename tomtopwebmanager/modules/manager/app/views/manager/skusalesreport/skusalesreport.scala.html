@@ -1,0 +1,210 @@
+@(vo:valueobjects.base.Page[valueobjects.order_api.SkuSalesReportQuery],
+orderstatus:List[dto.order.OrderStatus],
+searchObj:valueobjects.order_api.SkuSalesReportQuery,
+statusmap:Map[Integer,Integer],
+vhosts:List[String])
+@import views.html.helper._ 
+@import services.base.utils.DateFormatUtils
+
+
+@views.html.manager.main {
+<div class="container-fluid">
+		<!-- BEGIN PAGE HEADER-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN STYLE CUSTOMIZER -->
+				<div class="color-panel hidden-phone">
+					<div class="color-mode-icons icon-color"></div>
+					<div class="color-mode-icons icon-color-close"></div>
+					<div class="color-mode">
+						<p>THEME COLOR</p>
+						<ul class="inline">
+							<li class="color-black current color-default" data-style="default"></li>
+							<li class="color-blue" data-style="blue"></li>
+							<li class="color-brown" data-style="brown"></li>
+							<li class="color-purple" data-style="purple"></li>
+							<li class="color-grey" data-style="grey"></li>
+							<li class="color-white color-light" data-style="light"></li>
+						</ul>
+						<label> <span>Layout</span> <select
+							class="layout-option m-wrap small">
+								<option value="fluid" selected="">Fluid</option>
+								<option value="boxed">Boxed</option>
+						</select>
+						</label> <label> <span>Header</span> <select
+							class="header-option m-wrap small">
+								<option value="fixed" selected="">Fixed</option>
+								<option value="default">Default</option>
+						</select>
+						</label> <label> <span>Sidebar</span> <select
+							class="sidebar-option m-wrap small">
+								<option value="fixed">Fixed</option>
+								<option value="default" selected="">Default</option>
+						</select>
+						</label> <label> <span>Footer</span> <select
+							class="footer-option m-wrap small">
+								<option value="fixed">Fixed</option>
+								<option value="default" selected="">Default</option>
+						</select>
+						</label>
+					</div>
+				</div>
+				<!-- END BEGIN STYLE CUSTOMIZER -->
+				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+	
+				<h3 class="page-title">
+					Report <small>SKU Sales Report</small>
+				</h3>
+				<ul class="breadcrumb">
+					<li><i class="icon-home"></i> <a href="/sysadmin">Home</a> <i
+						class="icon-angle-right"></i></li>
+					<li><a href="javascript:void">Report</a> <i class="icon-angle-right"></i></li>
+					<li><a href="@controllers.manager.skusalesreport.routes.SkuSalesReportAction.manage(vo.pageNo())">SKU Sales Report</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- END PAGE HEADER-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN EXAMPLE TABLE PORTLET-->
+				<div class="portlet box light-grey">
+					<div class="portlet-title">
+						<div class="caption">
+							<i class="icon-edit"></i>SKU Sales Report
+						</div>
+					</div>
+					<div class="portlet-body">
+						<div class="span12">
+							@form(controllers.manager.skusalesreport.routes.SkuSalesReportAction.manage(), 'id->"searchForm",'method->"post"){
+							<input type="hidden" name="p" value="@vo.pageNo">
+							<input type="hidden" id='search' name="search" value="">
+							<table>
+								<tr>
+									<td>sku(多个以,隔开):</td>
+									<td><div><textarea name="csku" rows="20" cols="50" style="height:70px;width: 200px;">@searchObj.getCsku</textarea></div></td>
+									@*<td>category:</td>
+									<td><input type="text" name="category" value="@searchObj.getCategory"></td>*@
+									<td>订单状态:</td>
+									<td><select name='status' id="chosen-select" multiple="multiple" style="display: none;">
+								    if(orderstatus != null){								    
+									    @orderstatus.map{c => 
+									    	 <option value="@c.getIid" @if(statusmap != null && statusmap.get(c.getIid) != null){selected="selected"}>@c.getCname</option>
+									    }
+									 }
+								</select></td>
+								<td>来源站点:</td>
+									<td>@services.manager.ChooseService.getInstance().vhost("vhosts", "vhosts")</td>
+								</tr>
+							</table>
+								付款时间<input id='dpaymentstartdate' name='dpaymentstartdate' value="@if(searchObj != null && searchObj.getDpaymentstartdate != null){@DateFormatUtils.getDateTimeYYYYMMDD(searchObj.getDpaymentstartdate)}">
+										 -<input id='dpaymentenddate' name='dpaymentenddate'  value="@if(searchObj != null && searchObj.getDpaymentenddate != null){@DateFormatUtils.getDateTimeYYYYMMDD(searchObj.getDpaymentenddate)}">
+								下单时间<input id='createStartDate' name='createStartDate' value="@if(searchObj != null && searchObj.getCreateStartDate != null){@DateFormatUtils.getDateTimeYYYYMMDD(searchObj.getCreateStartDate)}">
+										 -<input id='createEndDate' name='createEndDate'  value="@if(searchObj != null && searchObj.getCreateEndDate != null){@DateFormatUtils.getDateTimeYYYYMMDD(searchObj.getCreateEndDate)}">
+								<input class="btn green" type="submit" value="Search" onclick="javascript:$('#search').val('1');$('input[name=p]').val('1')">
+								<input class="btn green" type="button" id="download" value="Export Excel">
+							}
+						</div>
+						<div id="sample_editable_1_wrapper"
+							class="dataTables_wrapper form-inline" role="grid">
+							<table class="table table-striped table-hover table-bordered"
+								id="user_table">
+								<thead>
+									<tr>
+										<th>sku</th>
+										<th>一级类目</th>
+										<th>二级类目</th>
+										<th>三级类目</th>
+										<th>标题</th>
+										<th>成交价</th>
+										<th>销售数量</th>
+										<th>销售金额</th>
+										<th>上架时间</th>
+									</tr>
+								</thead>
+								<tbody>
+									@vo.getList().map{s=>
+									<tr>
+										<td>@s.getCsku()</td>
+										<td>@s.getAcategory</td>
+										<td>@s.getBcategory</td>
+										<td>@s.getCcategory</td>
+										<td>@s.getCtitle</td>
+										<td>@s.getFprice</td>
+										<td>@s.getIqty</td>
+										<td>@s.getSalesamount</td>
+										<td>@DateFormatUtils.getDateTimeYYYYMMDD(s.getDcreatedate)</td>
+									</tr>
+									}
+								</tbody>
+							</table>
+							<div class="row-fluid">
+								@if(vo != null) {
+									<div class="span6">
+										<div class="dataTables_info" id="sample_editable_1_info">当前第@vo.pageNo()页|共@vo.totalPages()页</div>
+									</div>
+									<div class="span6">
+										<div class="dataTables_paginate paging_bootstrap pagination">
+											@if(vo.totalPages()>=1){
+												<ul>
+													@if(1 >= vo.pageNo()){
+														<li class="disabled"><a href="javascript:;">«</a></li>
+													}else{
+														<li><a  onclick="javascript:$('#searchForm').find('input[name=p]').val(@vo.pageNo()-1);searchForm.submit();" value="@vo.pageNo()" tag="pageNum">«</a></li>
+													}
+													@for(i <- vo.pageNo - 5 to vo.pageNo + 5 if i > 0 ; if i <= vo.totalPages) {
+														@if(i == vo.pageNo){
+															<li class="disabled"><a href="javascript:;">@i</a></li>
+														}else{
+															<li><a  onclick="javascript:$('#searchForm').find('input[name=p]').val(@i);searchForm.submit();"  value="@i" tag="pageNum">@i</a></li>
+														}
+													}
+													@if(vo.pageNo >= vo.totalPages){
+														<li class="disabled"><a href="javascript:;">»</a></li>
+													}else{
+														<li><a  onclick="javascript:$('#searchForm').find('input[name=p]').val(@vo.pageNo()+1);searchForm.submit();" value="@vo.pageNo()" tag="pageNum">»</a></li>
+													}
+												</ul>
+											}
+										</div>
+									</div>
+								}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	@services.base.HtmlUtils.misc().addHeadCssOnce{
+		@controllers.manager.routes.Assets.at("css/manager/chosen.css")
+	}
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<script src="@controllers.manager.routes.Assets.at("js/bootstrap-datetimepicker.js")" ></script>
+		<script src="@controllers.manager.routes.Assets.at("js/chosen.jquery.min.js")" ></script>
+		<script src="@controllers.manager.routes.Assets.at("js/jquery.multi-select.js")" ></script>
+		
+		<script type="text/javascript">
+			document.getElementById('vhosts').multiple = 'multiple';
+			@if(vhosts != null){
+				@vhosts.map{ e=>
+					@if(e != null && e != ""){
+						$("#vhosts option[value='@e']").attr('selected','selected');
+					}					
+				}
+			}
+			$("#chosen-select").chosen();
+			$('#vhosts').chosen();
+			var param = {minView: "month",maxView: "year",format : "yyyy-mm-dd",autoclose : true};
+			$('#dpaymentstartdate').datetimepicker(param);
+			$('#dpaymentenddate').datetimepicker(param);
+			$('#createStartDate').datetimepicker(param);
+			$('#createEndDate').datetimepicker(param);
+			
+			$('#download').click(function(){
+				open('@controllers.manager.skusalesreport.routes.SkuSalesReportAction.exportexcel()?'+$('#searchForm').serialize());
+			});
+			
+		</script>
+	}
+}
+

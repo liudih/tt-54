@@ -1,0 +1,26 @@
+@(menuShow:Boolean=false)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+<div class="topSearch_box container @if(menuShow){p}">
+	@tp.get("category")
+	@tp.get("search-bar")
+	@tp.get("cart-dropdown")  
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript">
+	$(function() {
+		//获取登录部分html
+		$.ajax({
+	   		url: "/member/getLoginSectionHtmlkkkkkkkkkkk",
+			type : "get",
+			data: null, 
+			dataType: 'jsonp', 
+            jsonp: 'jsoncallback', 
+			success : function(data) {
+				$(".topSearch_search").after(data.html);
+			},
+			error: function (jqXHR, textStatus, errorThrown) { 
+            } 
+		});
+	});
+</script>
+}

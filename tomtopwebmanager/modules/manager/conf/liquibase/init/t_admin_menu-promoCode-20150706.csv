@@ -1,0 +1,2 @@
+"iid","cname","iparentid","ilevel","cclass","curl","ccreateuser","dcreatedate"
+113,Promo Code,84,2,1,/sysadmin/promocode/view,lijun,now()

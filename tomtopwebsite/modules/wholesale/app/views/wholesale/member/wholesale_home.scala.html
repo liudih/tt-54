@@ -1,0 +1,51 @@
+@(mail: String, skype: String) @import views.html.helper._
+@views.html.member.base.master("joinwholesale") {
+<div class="accountRight wholeS_home">
+	<h6>@Messages("wholesale.home")</h6>
+	<b class="fon14">@Messages("welcome.to.wholesale.program.with.tomtop")</b>
+	<p class="marT">
+		@Messages("you.wanna.order.a.lot.more.and.enjoy.a.good.discount.please.join.our.wholesale.program.and.become.one.of.our.certified.wholesale") <br>
+		@Messages("customers")
+		(<a href="@controllers.base.routes.Cms.getCmsContentByMenuId(37)"
+			class="blue">@Messages("contact.us.directly")</a>)
+	</p>
+	<p class="marT">@Messages("you.can.do.it.by.following.these.easy.steps")</p>
+	<h4 class="stepWhole">@Messages("step") 1</h4>
+	<p>
+		@Messages("sign.in.your.account.to.register.and") (<a
+			href="@controllers.wholesale.routes.WholeSale.applyWholeSale()"
+			class="blue">@Messages("create.your.quotation.request")</a>).
+	</p>
+	<h4 class="stepWhole">@Messages("step") 2</h4>
+	<p>
+		@Messages("name.your.sku.and.quantity") <br> 
+		@Messages("sku.is.an.unique.index.number.for.each.product.you.can.find.sku.in.product.page")<br>
+		@Messages("quantity.is.the.quantity.you.want.to.buy.for.this.item.if.items.were.descripted.as.packs.sets.you.better.let.us.know.how.many.packs.or.sets.you.want") <br> 
+		@Messages("we.also.can.help.you.sourcing.the.special.product.you.like.if.we.don.not.have.in.our.website")
+	</p>
+	<h4 class="stepWhole">@Messages("step") 3</h4>
+	<p>
+		@Messages("make.sure.delivery.places") <br> @Messages("the.shipping.charge.will.be.different.in.line.with.package.weights.and.delivery.places.please.let.us.know.your.country.and.city.so.we.can.ensure.that.we.get.the.right.shipping.charge.if.you.got.a.forwarder.of.your.own.we.will.contact.them.for.shipping")
+	</p>
+	<h4 class="stepWhole">@Messages("step") 4</h4>
+	<p>
+		@Messages("give.a.deadline")<br>
+		@Messages("for.some.orders.there.might.be.a.deadline.like.my.package.should.be.arrived.before.if.your.order.has.this.requirement.please.let.us.know.so.we.can.make.sure.we.will.catch.that.time..all.in.all.if.you.submit.the.necessary.info.as.more.accurate.as.possible.we.will.be.able.to.find.the.right.price.for.you.as.soon.as.possible")
+	</p>
+	<h4 class="stepWhole">@Messages("step") 5</h4>
+	<p>@Messages("leave.your.name.and.contact.information.please.include.your.telphone.number.skype.email.address.and.we.will.get.back.to.you.as.soon.as.possible")</p>
+	<h4 class="stepWhole">@Messages("step") 6</h4>
+	<p>
+		@Messages("choose.a.payment.method")<br> 
+		@Messages("you.still.have.multiple.choice.of.payment.methods")
+	</p>
+	<h4 class="stepWhole">@Messages("step") 7</h4>
+	<p>@Messages("please.contact.our.wholesale.customer.service.if.you.have.special.needs")</p>
+	<div class="wholSkMa">
+		@Messages("skype"): @skype <br> @Messages("mail"): @mail
+	</div>
+	<div class="noticeRed">* @Messages("notice") @Messages("the.price.does.not.include.shipping")</div>
+	<a class="hsInputs"
+		href="@controllers.wholesale.routes.WholeSale.applyWholeSale()">@Messages("create.a.quotation.now")</a>
+</div>
+}

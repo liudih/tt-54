@@ -1,0 +1,18 @@
+@(
+message : entity.messaging.Broadcast
+)
+@import views.html.helper._	
+
+@views.html.base.sub_master("My Message"){
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+	 	@controllers.base.routes.Assets.at("css/accountMessage_page.css")
+	}
+
+<div class="container">
+	<h5 class="emailMessageTitle span98">@Html(message.getSubject)</h5>
+	<div class="emailMessageCon span98">
+       @Html(message.getContent.replaceAll("\n", "<br/>"))		
+	</div>
+</div>
+
+}

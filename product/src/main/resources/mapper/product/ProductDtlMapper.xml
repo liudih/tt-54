@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tomtop.product.mappers.product.ProductDtlMapper">
+	<select id="getProductBaseByParentSku" resultType="com.tomtop.product.models.dto.ProductBase">
+		select tbase.clistingid,iwebsiteid,ilanguageid,tbase.csku,istatus,dnewformdate,dnewtodate,bspecial,
+		cvideoaddress,iqty,fprice,fcostprice,ctitle,cdescription,cshortdescription,ckeyword ,
+		cmetatitle,cmetakeyword,cmetadescription,bmultiattribute,cparentsku,bvisible,bpulish,bmain 
+		FROM t_product_base tbase inner join t_product_translate ptra on tbase.clistingid=ptra.clistingid 
+		where tbase.clistingid!=#{0} and ilanguageid=#{1} and cparentsku=#{2} and tbase.iwebsiteid=#{3}
+	</select>
+</mapper>

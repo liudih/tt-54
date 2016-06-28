@@ -1,0 +1,45 @@
+@()
+@helper.javascriptRouter("routes")(
+	controllers.cart.routes.javascript.Cart.getCartsJson,
+	controllers.cart.routes.javascript.Cart.delCart
+)
+
+<div class="lineBlock pu_cartHeader" id="topSearch_cart">
+	<div class="pu_navHover">
+		<span class="icon-cart"><p id="cartdropnum">0</p></span>@Messages("cart")<i class="icon-arr"> </i>
+	</div>
+	<div class="pu_blockWarp" id="topSearch_Hidebox">
+		<div class="noneProduct" style="display:none;">
+           	@Messages("your.shopping.cart.is.empty")
+        </div>
+        <!-- loading加载图 --> 
+		<div id="loadingimg" style="display:none;width:100%;height:60px;padding:auto;margin:auto;text-align:center;">
+				<div style="width:16px;height:16px;margin:auto;margin-top:30px;"><img src="@controllers.base.routes.Assets.at("img/loading.gif")" width="16" height="16" /></div>
+		</div>
+		<ul class="cartWarp" id="cartsCon">
+			 
+		</ul>
+		<div class="viewCart">
+			<input type="hidden" class="btn btn-orange" id="cartdropbtn" value="@Messages("common.viewCartAndCheckOut")" />
+			<input type="button" class="btn btn-orange" id="shoppingbtn" value="@Messages("common.continueShopping")" />
+		</div>
+	</div>
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+	<script>
+	$("#cartdropbtn").click(function(){location.href='@controllers.cart.routes.Cart.cartview()'});
+	$("#shoppingbtn").click(function(){location.href='/'});
+	</script>
+  	<script src="@controllers.order.routes.Assets.at("js/cart/cartDropDown_new_2.js")" ></script>
+}
+
+
+
+
+
+
+
+
+
+
+

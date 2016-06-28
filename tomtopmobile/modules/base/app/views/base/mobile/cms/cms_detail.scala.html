@@ -1,0 +1,18 @@
+@(
+cmsContentList: List[dto.CmsContent]
+)
+ 
+
+@views.html.base.sub_master(){
+	@services.base.HtmlUtils.misc().addHeadCssOnce{
+	 	 @controllers.base.routes.Assets.at("css/termsOf.css")
+	}
+	
+   @cmsContentList.map{u=>
+   	 	 @Html(u.getCcontent())  
+   	 	 
+   }
+       
+ 
+}                                          
+                                               

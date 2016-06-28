@@ -1,0 +1,244 @@
+@(vo:valueobjects.base.Page[forms.loyalty.theme.template.ThemeSkuRelationForm],
+searchObj:forms.loyalty.theme.template.ThemeSkuRelationForm,
+themes:List[entity.loyalty.Theme])
+@import views.html.helper._ 
+@import services.base.utils.DateFormatUtils
+
+@views.html.manager.main {
+<div class="container-fluid">
+		<!-- BEGIN PAGE HEADER-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN STYLE CUSTOMIZER -->
+				<div class="color-panel hidden-phone">
+					<div class="color-mode-icons icon-color"></div>
+					<div class="color-mode-icons icon-color-close"></div>
+					<div class="color-mode">
+						<p>THEME COLOR</p>
+						<ul class="inline">
+							<li class="color-black current color-default" data-style="default"></li>
+							<li class="color-blue" data-style="blue"></li>
+							<li class="color-brown" data-style="brown"></li>
+							<li class="color-purple" data-style="purple"></li>
+							<li class="color-grey" data-style="grey"></li>
+							<li class="color-white color-light" data-style="light"></li>
+						</ul>
+						<label> <span>Layout</span> <select
+							class="layout-option m-wrap small">
+								<option value="fluid" selected="">Fluid</option>
+								<option value="boxed">Boxed</option>
+						</select>
+						</label> <label> <span>Header</span> <select
+							class="header-option m-wrap small">
+								<option value="fixed" selected="">Fixed</option>
+								<option value="default">Default</option>
+						</select>
+						</label> <label> <span>Sidebar</span> <select
+							class="sidebar-option m-wrap small">
+								<option value="fixed">Fixed</option>
+								<option value="default" selected="">Default</option>
+						</select>
+						</label> <label> <span>Footer</span> <select
+							class="footer-option m-wrap small">
+								<option value="fixed">Fixed</option>
+								<option value="default" selected="">Default</option>
+						</select>
+						</label>
+					</div>
+				</div>
+				<!-- END BEGIN STYLE CUSTOMIZER -->
+				<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+	
+				<h3 class="page-title">
+					Marketing <small>Theme Sku Manange</small>
+				</h3>
+				<ul class="breadcrumb">
+					<li><i class="icon-home"></i> <a href="/sysadmin">Home</a> <i
+						class="icon-angle-right"></i></li>
+					<li><a href="javascript:void">Marketing</a> <i class="icon-angle-right"></i></li>
+					<li><a href="@controllers.manager.routes.ThemeSkuAction.manage(vo.pageNo())">Theme Sku Manange</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- END PAGE HEADER-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN EXAMPLE TABLE PORTLET-->
+				<div class="portlet box light-grey">
+					<div class="portlet-title">
+						<div class="caption">
+							<i class="icon-edit"></i>Teme Sku Manange
+						</div>
+					</div>
+					<div class="portlet-body">
+						<div class="span12">
+							@form(controllers.manager.routes.ThemeSkuAction.manage(), 'id->"searchForm",'method->"get"){
+								<input type="hidden" name="p" value="@vo.pageNo">
+								sku<input type="text" name="csku" value="@searchObj.getCsku">
+								<input class="btn green" type="submit" value="Search">
+							}
+						</div>
+						<div class="clearfix">
+							<div class="btn-group">
+								<button id="add_themesku_btn" class="btn green" data-toggle="modal" data-target="#add-theme-modal">
+								添加主题 sku<i class="icon-plus"></i>
+								</button>
+							</div>
+						</div>
+						<div id="sample_editable_1_wrapper"
+							class="dataTables_wrapper form-inline" role="grid">
+							<table class="table table-striped table-hover table-bordered"
+								id="user_table">
+								<thead>
+									<tr>
+										<th>id</th>
+										<th>sku</th>
+										<th>theme url</th>
+										<th>group</th>
+										<th>sort</th>
+										<th>enable</th>
+										<th>Edit</th>
+										<th>Delete</th>
+									</tr>
+								</thead>
+								<tbody>
+									@vo.getList().map{s=>
+									<tr class="" id="@s.getIid()">
+										<td>@s.getIid()</td>
+										<td>@s.getCsku</td>
+										<td>@s.getThemeurl</td>
+										<td>@s.getGroupname</td>
+										<td>@s.getIsort</td>
+										<th>@if(s.getIenable ==1){Yes}else{No} </th>
+										<td>
+											@if(s.getIenable==0){
+												<a class="edit" name="edit_themesku_a" data-toggle="modal"
+												data-target="#edit-theme-modal"
+												href="@controllers.manager.routes.ThemeSkuAction.getThemeSku(s.getIid())"><i
+													class="icon-pencil"></i></a>
+											}
+										</td>
+										<td>
+											@if(s.getIenable==0){
+												<a class="delete" href="@controllers.manager.routes.ThemeSkuAction.deleteThemeSku(s.getIid())"><i class="icon-trash"></i></a>
+											}
+										</td>
+									</tr>
+									}
+								</tbody>
+							</table>
+							<div class="row-fluid">
+								@if(vo != null) {
+									<div class="span6">
+										<div class="dataTables_info" id="sample_editable_1_info">当前第@vo.pageNo()页|共@vo.totalPages()页</div>
+									</div>
+									<div class="span6">
+										<div class="dataTables_paginate paging_bootstrap pagination">
+											@if(vo.totalPages()>=1){
+												<ul>
+													@if(1 >= vo.pageNo()){
+														<li class="disabled"><a href="javascript:;">«</a></li>
+													}else{
+														<li><a href="@controllers.manager.routes.ThemeSkuAction.manage(vo.pageNo()-1)" value="@vo.pageNo()" tag="pageNum">«</a></li>
+													}
+													@for(i <- vo.pageNo - 15 to vo.pageNo + 15 if i > 0 ; if i <= vo.totalPages) {
+														@if(i == vo.pageNo){
+															<li class="disabled"><a href="javascript:;">@i</a></li>
+														}else{
+															<li><a href="@controllers.manager.routes.ThemeSkuAction.manage(i)" value="@i" tag="pageNum">@i</a></li>
+														}
+													}
+													@if(vo.pageNo >= vo.totalPages){
+														<li class="disabled"><a href="javascript:;">»</a></li>
+													}else{
+														<li><a href="@controllers.manager.routes.ThemeSkuAction.manage(vo.pageNo()+1)" value="@vo.pageNo()" tag="pageNum">»</a></li>
+													}
+												</ul>
+											}
+										</div>
+									</div>
+								}
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- END EXAMPLE TABLE PORTLET-->
+				<div id="edit-theme-modal" class="modal hide fade" tabindex="-1"
+					role="dialog" aria-labelledby="myThemeLabel" aria-hidden="true"
+					style="width: 640px">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true"></button>
+						<h3 id="myThemeLabel">编辑sku</h3>
+					</div>
+					@form(controllers.manager.routes.ThemeSkuAction.saveThemeSku(), 'class->"form-horizontal",'id->"editeForm"){
+						<input type="hidden" name="p" value="@vo.pageNo">
+						<div class="modal-body"></div>
+						<div class="modal-footer" style="margin-bottom: -20px;">
+							<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+							<button id="edit_theme_save" class="btn blue save">保存</button>
+						</div>
+					}
+				</div>
+				<div id="add-theme-modal" class="modal hide fade" tabindex="-1"
+					role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+					style="width: 640px">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true"></button>
+						<h3 id="myModalLabel">添加sku</h3>
+					</div>
+					@form(controllers.manager.routes.ThemeSkuAction.addThemeSku(), 'class->"form-horizontal",'id->"addform"){
+						<input type="hidden" name="p" value="@vo.pageNo">
+						<div class="modal-body">
+							<div class="control-group">
+								<label class="control-label">sku<span class="required">*</span></label>
+								<div class="controls">
+									<input type="text" name="csku">
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">theme url<span class="required">*</span>
+								</label>
+								<div class="controls" >
+									@if(themes != null && themes.size() > 0){<input type="hidden" value="@themes(0).getIwebsiteid" name="iwebsiteid" >}
+									<select name="ithemeid" class="themeurl">
+										<option value=""></option>
+										@themes.map{ e =>
+											<option value="@e.getIid">@e.getCurl</option>
+										}										
+									</select>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">group<span class="required">*</span></label>
+								<div class="controls">
+									<select name="igroupid" class="groupname">
+									</select>									
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label">sort<span class="required">*</span></label>
+								<div class="controls">
+									<input type="text" name="isort">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer" style="margin-bottom: -20px;">
+							<button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+							<button id="add_theme_save" class="btn blue save">保存</button>
+						</div>
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+	@helper.javascriptRouter("jsThemeSku")(
+		controllers.manager.routes.javascript.ThemeSkuAction.getThemeGroup,	
+		controllers.manager.routes.javascript.ThemeSkuAction.validate	
+	) 
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<script src="@controllers.manager.routes.Assets.at("lib/requirejs/require.js")"></script>
+		<script src="@controllers.manager.routes.Assets.at("js/manager/theme_sku.js")" ></script>
+	}
+}

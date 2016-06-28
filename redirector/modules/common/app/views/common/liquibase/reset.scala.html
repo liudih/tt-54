@@ -1,0 +1,25 @@
+@(drop: Map[String, play.libs.F.Option[Exception]],
+  update: Map[String, play.libs.F.Option[Exception]]
+)
+
+<h1>@Messages("database.reset.results")</h1>
+
+<h2>@Messages("drop.tables")</h2>
+@drop.map{ e =>
+
+<h2>@e._1</h2>
+<pre>
+@e._2
+</pre>
+
+}
+
+<h2>@Messages("database.changes")</h2>
+@update.map{ e =>
+
+<h2>@e._1</h2>
+<pre>
+@e._2
+</pre>
+
+}

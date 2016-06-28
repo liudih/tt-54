@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rabbit.conf.mapper.product.ProductMultiattributeSkuMapper" >
+  <resultMap id="BaseResultMap" type="com.rabbit.dto.product.ProductMultiattributeSku" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="cparentsku" property="cparentsku" jdbcType="VARCHAR" />
+    <result column="csku" property="csku" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, cparentsku, csku
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_product_multiattribute_sku
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+    <select id="getMultiattributeProductList" resultType="com.rabbit.dto.ProductMultiattributeItem">
+		select m.clistingid listingId, m.cparentsku parentSku from  t_product_base m where
+		exists( select l.clistingid  from t_product_base l where m.cparentsku=l.cparentsku and m.iwebsiteid=l.iwebsiteid and l.clistingid in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">#{item}</foreach> )
+  </select>
+  <insert id="insert" parameterType="com.rabbit.dto.product.ProductMultiattributeSku" >
+    insert into t_product_multiattribute_sku (iid, cparentsku, csku
+      )
+    values (#{iid,jdbcType=INTEGER}, #{cparentsku,jdbcType=VARCHAR}, #{csku,jdbcType=VARCHAR}
+      )
+  </insert>
+  	<insert id="batchInsert" parameterType="java.util.List">
+		insert into t_product_multiattribute_sku (cparentsku, csku)values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.cparentsku,jdbcType=VARCHAR}, #{item.csku,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+  <insert id="insertSelective" parameterType="com.rabbit.dto.product.ProductMultiattributeSku" >
+    insert into t_product_multiattribute_sku
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="cparentsku != null" >
+        cparentsku,
+      </if>
+      <if test="csku != null" >
+        csku,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="cparentsku != null" >
+        #{cparentsku,jdbcType=VARCHAR},
+      </if>
+      <if test="csku != null" >
+        #{csku,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.rabbit.dto.product.ProductMultiattributeSku" >
+    update t_product_multiattribute_sku
+    <set >
+      <if test="cparentsku != null" >
+        cparentsku = #{cparentsku,jdbcType=VARCHAR},
+      </if>
+      <if test="csku != null" >
+        csku = #{csku,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.rabbit.dto.product.ProductMultiattributeSku" >
+    update t_product_multiattribute_sku
+    set cparentsku = #{cparentsku,jdbcType=VARCHAR},
+      csku = #{csku,jdbcType=VARCHAR}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

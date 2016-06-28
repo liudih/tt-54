@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.attribute.AttributeKeyNameMapper" >
+  <resultMap id="BaseResultMap" type="entity.attribute.AttributeKeyName" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="ikeyid" property="ikeyid" jdbcType="INTEGER" />
+    <result column="ilanguageid" property="ilanguageid" jdbcType="INTEGER" />
+    <result column="ckeyname" property="ckeyname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, ikeyid, ilanguageid, ckeyname
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_attribute_key_name
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_attribute_key_name
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.attribute.AttributeKeyName" >
+    insert into t_attribute_key_name (ikeyid, ilanguageid, 
+      ckeyname)
+    values (#{ikeyid,jdbcType=INTEGER}, #{ilanguageid,jdbcType=INTEGER}, 
+      #{ckeyname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.attribute.AttributeKeyName" >
+    insert into t_attribute_key_name
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ikeyid != null" >
+        ikeyid,
+      </if>
+      <if test="ilanguageid != null" >
+        ilanguageid,
+      </if>
+      <if test="ckeyname != null" >
+        ckeyname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ikeyid != null" >
+        #{ikeyid,jdbcType=INTEGER},
+      </if>
+      <if test="ilanguageid != null" >
+        #{ilanguageid,jdbcType=INTEGER},
+      </if>
+      <if test="ckeyname != null" >
+        #{ckeyname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.attribute.AttributeKeyName" >
+    update t_attribute_key_name
+    <set >
+      <if test="ikeyid != null" >
+        ikeyid = #{ikeyid,jdbcType=INTEGER},
+      </if>
+      <if test="ilanguageid != null" >
+        ilanguageid = #{ilanguageid,jdbcType=INTEGER},
+      </if>
+      <if test="ckeyname != null" >
+        ckeyname = #{ckeyname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.attribute.AttributeKeyName" >
+    update t_attribute_key_name
+    set ikeyid = #{ikeyid,jdbcType=INTEGER},
+      ilanguageid = #{ilanguageid,jdbcType=INTEGER},
+      ckeyname = #{ckeyname,jdbcType=VARCHAR}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,38 @@
+@()
+@urlprefix = @{play.Play.application().configuration().getString("member.urlprefix")}
+@helper.javascriptRouter("routes")(
+	controllers.cart.routes.javascript.Cart.getCartsJson,
+	controllers.cart.routes.javascript.Cart.delCart
+)
+<input type="hidden" class="urlprefixCls" value="@urlprefix" />
+<div class="lineBlock pu_cartHeader" id="topSearch_cart">
+	<div class="pu_navHover">
+		<span class="icon-cart"><p id="cartdropnum">0</p></span>@Messages("cart")<i class="icon-arr"> </i>
+	</div>
+	<div class="pu_blockWarp" id="topSearch_Hidebox">
+		<div class="miniScroll" style="background-color:transparent;" >
+		<div class="noneProduct" style="display:none;">
+           	@Messages("your.shopping.cart.is.empty")
+        </div>
+        <!-- loading加载图 --> 
+		<div id="loadingimg" style="display:none;width:100%;height:100px;padding:auto;margin:auto;text-align:center;">
+				<div style="width:16px;height:16px;margin:auto;margin-top:30px;"><!-- <img src="@controllers.base.routes.Assets.at("img/loading.gif")" width="16" height="16" /> --></div>
+		</div>
+		<ul class="cartWarp" id="cartsCon">
+			 
+		</ul>
+		</div>
+		<div class="viewCart">
+			<input type="button" class="btn btn-orange" id="cartdropbtn" value="@Messages("common.viewCartAndCheckOut")" />
+			<input style="display:none;" type="button" class="btn btn-orange" id="shoppingbtn" value="@Messages("common.continueShopping")" />
+		</div>
+		
+	</div>
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+	<script>
+	$("#cartdropbtn").click(function(){location.href='http://cart.tomtop.com'});
+	$("#shoppingbtn").click(function(){location.href='http://www.tomtop.com'});
+	</script>
+  	<script src="@controllers.order.routes.Assets.at("js/cart/cartDropDown_new_2.js")" ></script>
+}

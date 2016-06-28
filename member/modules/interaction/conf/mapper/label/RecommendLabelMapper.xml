@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.label.RecommendLabelMapper" >
+
+  <insert id="insertRecommendLabel" parameterType="dto.label.RecommendLabelBase" >
+    insert into t_recommend_label 
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="icategoryid != null" >
+        icategoryid,
+      </if>
+      <if test="itype != null" >
+        itype,
+      </if>
+      <if test="iwebsiteid != null" >
+        iwebsiteid,
+      </if>
+      <if test="cdevice != null" >
+        cdevice,
+      </if>
+      <if test="ipriority != null" >
+        ipriority,
+      </if>
+      <if test="bshow != null" >
+        bshow,
+      </if>
+        <if test="ccreateuser != null" >
+        ccreateuser,
+      </if>
+      dcreatedate
+    </trim>
+       <trim prefix="values (" suffix=")" suffixOverrides="," >
+         <if test="iid != null" >
+         #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="icategoryid != null" >
+        #{icategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="itype != null" >
+        #{itype,jdbcType=INTEGER},
+      </if>
+      <if test="iwebsiteid != null" >
+        #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="cdevice != null" >
+        #{cdevice,jdbcType=VARCHAR},
+      </if>
+      <if test="ipriority != null" >
+        #{ipriority,jdbcType=INTEGER},
+      </if>
+       <if test="bshow != null" >
+        #{bshow,jdbcType=BOOLEAN},
+      </if>
+      <if test="ccreateuser != null" >
+        #{ccreateuser,jdbcType=VARCHAR},
+      </if>
+      now()
+    </trim>
+  </insert>
+   <update id="updateRecommendLabelByPrimaryKeySelective" parameterType="dto.label.RecommendLabelBase" >
+    update t_recommend_label
+    <set >
+      <if test="icategoryid != null" >
+        icategoryid = #{icategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="itype != null" >
+        itype = #{itype,jdbcType=INTEGER},
+      </if>
+      <if test="iwebsiteid != null" >
+        iwebsiteid = #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="cdevice != null" >
+        cdevice = #{cdevice,jdbcType=VARCHAR},
+      </if>
+     <if test="ipriority != null" >
+       ipriority = #{ipriority,jdbcType=INTEGER},
+      </if>
+       <if test="bshow != null" >
+       bshow =  #{bshow,jdbcType=BOOLEAN},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER} 
+  </update>
+  
+   <insert id="insertRecommendLabelName" parameterType="dto.label.RecommendLabelName" >
+    insert into t_recommend_label_name
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ilabelid != null" >
+        ilabelid,
+      </if>
+      <if test="ilanguageid != null" >
+        ilanguageid,
+      </if>
+      <if test="clabelname != null" >
+        clabelname,
+      </if>
+      <if test="cvalue != null" >
+        cvalue,
+      </if>
+       <if test="cimageurl != null">
+     	 cimageurl,
+      </if>
+      <if test="cimages != null" >
+        cimages,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ilabelid != null" >
+        #{ilabelid,jdbcType=INTEGER},
+      </if>
+      <if test="ilanguageid != null" >
+        #{ilanguageid,jdbcType=INTEGER},
+      </if>
+      <if test="clabelname != null" >
+        #{clabelname,jdbcType=VARCHAR},
+      </if>
+      <if test="cvalue != null" >
+        #{cvalue,jdbcType=VARCHAR},
+      </if>
+       <if test="cimageurl != null">
+       #{cimageurl,jdbcType=BINARY},
+      </if>
+      <if test="cimages != null" >
+        #{cimages,jdbcType=BINARY},
+      </if>
+    </trim>
+  </insert>
+  
+    <update id="updateRecommendLabelNameByPrimaryKeySelective" parameterType="dto.label.RecommendLabelName" >
+    update t_recommend_label_name
+    <set >
+      <if test="clabelname != null" >
+        clabelname = #{clabelname,jdbcType=VARCHAR},
+      </if>
+      <if test="cvalue != null" >
+        cvalue = #{cvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="cimageurl != null">
+     	 cimageurl = #{cimageurl,jdbcType=VARCHAR},
+      </if>
+       <if test="cimages != null" >
+       cimages =  #{cimages,jdbcType=BINARY},
+      </if>
+    </set>
+    where ilabelid = #{ilabelid,jdbcType=INTEGER} and ilanguageid = #{ilanguageid,jdbcType=INTEGER}
+  </update>
+</mapper>

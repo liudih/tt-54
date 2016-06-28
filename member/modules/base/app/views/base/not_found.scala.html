@@ -1,0 +1,37 @@
+@(lasturl: String)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@master{
+
+@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/styles.css")?@version.BuildVersion.build()" /> 
+ }
+
+<div class="container error404">
+    <div class="Bread_crumbs_Box">
+        <ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="/"></a></li>
+            <li>
+                <p>
+                    <a class="Bread_link" href="javascript:;">404 @Messages("error")</a>
+                </p>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+    <div class="errorPage">
+    	<div class="errorTxt">
+        	<img src="@controllers.base.routes.Assets.at("/images/404.jpg")">
+            <b>@Messages("page.requested.can.not.found")</b>
+            <span>@Messages("but.dont.try.hard")</span>
+            <div>
+                <b>@Messages("to.proceed.you.can")</b>
+                <hr>
+                @Messages("go.back.to.the") <a href="@lasturl">@Messages("last.page")</a>@Messages("you.visited")<br>
+               <a href="http://www.tomtop.com">@Messages("go.to.home.page")</a><br>
+                @Messages("need.further.help.contact.our") <a href="javascript:;">@Messages("customer.service.express")</a>.
+            </div>
+        </div>
+    </div>
+</div>
+@tp.get("member-browse-history")
+}

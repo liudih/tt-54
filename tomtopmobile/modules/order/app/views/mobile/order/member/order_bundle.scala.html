@@ -1,0 +1,36 @@
+@(bi : valueobjects.order_api.OrderItem,
+	symbol:String="",
+	isReview: Boolean
+	)
+@import services.base._
+@import services.base.utils._
+@import views.html.home.img
+@if(bi!=null){
+<div class="shoppingCart_OrderlistBox">
+	<div class="shoppingCart_imgBox lineBlock">
+		<!-- <div class="discount_icon">14</div> -->
+		<a href="@if(bi.getCurl()!=null){@controllers.product.routes.Product.view(bi.getCurl())}" >
+		@img(bi.getCimageurl(),bi.getCtitle(),377,377,null,'alt->bi.getCtitle())
+		</a>
+	</div>
+	<div class="shoppingAdd_TxtBox lineBlock">
+		<a href="@if(bi.getCurl()!=null){@controllers.product.routes.Product.view(bi.getCurl())}" >
+			<h5>@bi.getCtitle()</h5>
+		</a>
+		<div class="product_price lineBlock">@symbol @Utils.money(bi.getUnitPrice())</div>
+		<!-- <div class="product_priceGR lineBlock">US$25.77</div> -->
+		@if(null !=bi.getAttributeMap){
+			<ul class="product_attribute">
+       		@bi.getAttributeMap.map{ j=>
+       		    <li class="lineBlock">@j._1 : @j._2 </li>
+       		}
+       		</ul>
+       	}
+		
+		<p class="qtyAddres">QTY:<span>@bi.getIqty()</span></p>
+	</div>
+	@if(isReview){
+		<a class="blue writeReviewButton" href="/interaction/product/@bi.getClistingid()/write?orderDetailId=@bi.getCid">Write a Review</a>
+	}
+</div>
+}

@@ -1,0 +1,22 @@
+@(storageIdAndNameMap: Map[Integer,String])
+    <li class="sidelist">
+         <h4>
+       		 <a>@Messages("local.warehouse")</a>
+		</h4>
+         <div class="submenu width1 lbBox">
+			<div class="subDt lineBlock" name="second_subDt">
+			@if(null != storageIdAndNameMap){
+			  @storageIdAndNameMap.map{ i=>
+			  	<div class="subDtNat">
+					<a href="@controllers.product.routes.Product.storage(i._1)">@i._2 @Messages("warehouse")</a>
+				</div>
+			  }
+			}
+				<div class="clear"></div>	
+		   </div>
+           <dl>
+               <dd class="offer3">
+               </dd>
+           </dl>
+       </div>
+    </li>

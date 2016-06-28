@@ -1,0 +1,246 @@
+@(
+token : String,
+PayerID : String,
+orderNum : String,
+address : dto.member.MemberAddress,
+shipToCountry : String,
+shipToCountryCode : String,
+oc : valueobjects.order_api.ExistingOrderComposite,
+renderHelper : services.order.OrderCompositeRenderer,
+order : dto.order.Order,
+countrys : List[dto.Country],
+isMember : Boolean,
+currency : dto.Currency)
+
+@import services.base.utils._
+
+@views.html.cart.v2.checkout_new_member(3){
+		
+<!--头部结.p束-->
+
+<div class="newshopping_box">
+    <div class="newshopping_box_left">
+<!--新购物车流程内容-->
+        <div class="newshopping_address">
+            <h2>@Messages("order.confirm.view.shippingAddress")</h2>
+            <ul class="ns_address_list" id="ship_address_ul">
+                <li class="sel default">
+                	<input id="theCountryCode" type="hidden" name="countryCode" value="@shipToCountryCode" />
+                	<span id="shipToCountryCode" name="countryCode" style="display:none;">@shipToCountryCode</span>
+                    <h5>
+	                    <span id="shipToFirstName" name="firstName">@address.getCfirstname</span>&nbsp;
+	                    <span id="shipToLastName" name="lastName">@address.getClastname</span>
+                     </h5>
+                    <p>
+	                    <span id="shipToStreet1" name="address1" >@address.getCstreetaddress</span>
+	                    <!-- <span id="shipToStreet2"></span> -->
+                    </p>
+                    <p>
+	                    <span id="shipToCity" name="city">@address.getCcity</span>
+	                    <span id="shipToState" name="province">@address.getCprovince</span>
+	                    <span id="shipToZipCode" name="zipCode">@address.getCpostalcode</span>  
+                    </p>
+                    <p id="shipToCountry">@shipToCountry</p>
+                    <p><span name="telephone" id="shipToTel">@address.getCtelephone</span></p>
+                   <div class="address_default_edit"><a id="shipAddressEdit" class="a_edit" style="display: inline-block;">Edit</a></div>
+
+                </li>
+                @if(isMember){
+                <li id="ship_to_new_address" class="add_item">
+                    <div>
+                        <p><span></span></p>
+                        <p>@Messages("checkout_step2.shipto")</p>
+                    </div>
+
+                </li>
+                }
+                
+            </ul>
+        </div>
+        <!-- <div id="shipMethod" class="newshopping_address orderD_con">
+            
+        </div> -->
+        <div id="shipMethod" class="newshopping_address orderD_con">
+       		<h2>Shipping Method</h2>
+       		<table cellpadding="0" class="method_table">
+               <thead>
+               <tr><td width="27%">Options</td>
+                   <td width="25%">Est. Shipping Time</td>
+                   <td width="28%">Est. Shipping Cost</td>
+               </tr></thead>
+               <tbody id="shipping_method">
+               
+               </tbody>
+
+           	</table>
+       </div>
+        
+        
+        @renderHelper.renderFragment(oc, "cart-product")
+      
+        
+        
+       
+        <div class="newshopping_message">
+            <p>@Messages("checkout_step2.leaveMessage")</p>
+            <textarea id="leaveMessage" placeholder="@Messages("checkout_step2.writeAnything")"></textarea>
+        </div>
+    </div>
+    <div class="newshopping_box_right">
+        <dl>
+            <dt>@Messages("order.confirm.view.summary")</dt>
+            <dd>@Messages("order.confirm.view.subtotal"):<span id="subtotal">@Utils.money(order.getFordersubtotal,currency.getCcode)</span> <span> @currency.getCsymbol &nbsp;</span></dd>
+            <dd>@Messages("order.confirm.view.shippingCost"):<span id="shipCost">@Utils.money(0.00,currency.getCcode)</span><span> @currency.getCsymbol &nbsp;</span></dd>
+            <dd>@Messages("checkout_step2.Discount"):<span> @currency.getCsymbol <span id="discount_total">@Utils.money(order.getFextra,currency.getCcode)</span></span></dd>
+            <dd>@Messages("total")<span class="total"><span> @currency.getCsymbol &nbsp;</span><span id="grandTotal" total="@Utils.money(order.getFgrandtotal,currency.getCcode)">@Utils.money(order.getFgrandtotal,currency.getCcode)</span></span></dd>
+        </dl>
+        @*
+        <div class="have_code">
+            <p>@Messages("order.confirm.view.promo")?</p>
+            <div class="have_code_input"><input type="text"/><input type="submit" value="@Messages("checkout_step2.Apply")"/></div>
+        </div>
+        *@
+        <div class="nw_place_box"><input id="placeYourOrder" type="button" value="@Messages("place.your.order")" class="nw_btn_place"/></div>
+        <div class="nw_guaranteed">
+            <p>@Messages("order.confirm.view.secure")</p>
+            <p>
+            <a href="javascript:vrsn_splash()" tabindex="-1">
+	       		<img name="seal" border="true" src="@controllers.base.routes.Assets.at("nortonseal/nortonseal3.gif")" oncontextmenu="return false;" alt="@Messages("checkout_step2.verify")">
+	       	</a>
+        </div>
+    </div>
+</div>
+
+<!--地址弹出层-->
+<form id="ship_to_new_address_form" action="">
+<div class="blockPopup_box" id="pop_address" style="display: none;">
+    <div class="newshopping_address_pop">
+        <h2>@Messages("checkout_step.title")</h2>
+        <ul class="newshopping_address_input">
+            <li>
+                <div class="address_input_item left">
+                    <h5>@Messages("checkout_step.name")<i>*</i></h5>
+                    <input name="firstName" type="text"/>
+                    <label style="display:none;"><p style="color:red;">Please input your first name.</p></label>
+                </div>
+                <div class="address_input_item right">
+                    <h5>@Messages("checkout_step.LastName")<i>*</i></h5>
+                    <input name="lastName" type="text"/>
+                    <label style="display:none;"><p style="color:red;">Please input your last name.</p></label>
+                </div>
+            </li>
+            <li>
+                <div class="address_input_item">
+                	<input type="text" id="country" name="countryCode" style="display:none;"/>
+                    <h5>@Messages("checkout_step.country")<i>*</i></h5>
+                    <div class="newshopping_address_country">
+                        <div  class="address_country">
+                        	<div id="country_text"></div>
+                       		<span><i></i></span>
+                        </div>
+                        <label id="country_label" style="display:none;"><p style="color:red;">Please select your country.</p></label>
+                        <div id="country_select" class="country_all" style="display: none;">
+                            <div class="search_country">
+                            <input id="search_country" type="text" value="" />
+                            </div>
+                            <div  class="country_list">
+                                <ul>
+                                @countrys.map{c => 
+                                	<li cid="@c.getIid" code="@c.getCshortname" name="country_li">@c.getCname</li>
+                                }
+                                   
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </li>
+            <li>
+                <div class="address_input_item">
+                    <h5>@Messages("checkout_step.address")<i>*</i></h5>
+                    <input name="address1" type="text"/>
+                    <label style="display:none;"><p style="color:red;">Please input your address.</p></label>
+                </div>
+            </li>
+            <!-- <li>
+                <div class="address_input_item">
+                    <h5>Address Line 2</h5>
+                    <input name="address2" type="text"/>
+                </div>
+            </li> -->
+            <li>
+                <div class="address_input_item left">
+                    <h5>@Messages("checkout_step.city")<i>*</i></h5>
+                    <input name="city" type="text"/>
+                    <label style="display:none;"><p style="color:red;">Please input your city.</p></label>
+                </div>
+                <div class="address_input_item right">
+                    <h5>@Messages("checkout_step.state")<i>*</i></h5>
+                    <input name="province" type="text" class="current_province" />
+                    <ul id="province_list_id" name="province_list" class="province_list" style="display: none;width:auto;">
+					</ul> 
+                    <label style="display:none;"><p style="color:red;">Please input your state.</p></label>
+                </div>
+            </li>
+            <li>
+                <div class="address_input_item left">
+                    <h5>@Messages("checkout_step.postal")<i>*</i></h5>
+                    <input name="zipCode" type="text"/>
+                    <label style="display:none;"><p style="color:red;">Please input your post code.</p></label>
+                </div>
+                <div class="address_input_item right">
+                    <h5>@Messages("checkout_step.phone")<i>*</i><div class="hint_phone_num"><p>For shipping and delivery purposes only.</p></div></h5>
+                    <input name="telephone" type="text"/>
+                     <label style="display:none;"><p style="color:red;">Please input your phone number.</p></label>
+                </div>
+            </li>
+        </ul>
+        <div class="newshopping_address_submit">
+            <a href="/base/cms/detail/59" target="_blank">@Messages("checkout_step.Policy")</a>
+            <div class="address_submit">
+                <input id="cancel_btn" type="button" value="@Messages("checkout_step2.Cancel")" class="cancel"/>
+                <input id="ok_btn" type="button" value="@Messages("checkout_step.save") >>" class="save"/>
+            </div>
+        </div>
+    </div>
+    <div class="blockPopup_black"></div>
+</div>
+</form>
+
+
+<form id="confirmOrderForm" action="@controllers.paypal.routes.ExpressCheckoutNvp.confirmOrder()" method="post" style="display:none;">
+<input name="token" type="hidden" value="@token"/>
+<input name="PayerID" type="hidden" value="@PayerID"/>
+<input id="orderNum" name="orderNum" type="hidden" value="@orderNum"/>
+<input name="firstName" type="hidden"/>
+<input name="lastName" type="hidden"/>
+<input name="lastName" type="hidden"/>
+<input name="countryCode" type="hidden"/>
+<input name="address1" type="hidden"/>
+<input name="address2" type="hidden"/>
+<input name="city" type="hidden"/>
+<input name="province" type="hidden"/>
+<input name="zipCode" type="hidden"/>
+<input name="telephone" type="hidden"/>
+<input name="shipMethodCode" id="shipMethodCode" type="hidden" />
+<input type="hidden" name="shipMethodId" id="shipMethodId" value="" />
+
+<textarea name="leaveMessage"></textarea>
+<input type="hidden" name="country" value="" />
+<input type="hidden" name="countrysn" value="" />
+</form>
+
+<div id="ns_loading_box" class="ns_loading_box" style="display: none;">
+    <div class="ns_loading">
+        <p><img src="@controllers.base.routes.Assets.at("images/newshopping_loading.gif")" alt=""/></p>
+        <p>Loading...</p>
+    </div>
+    <div class="blockPopup_black"></div>
+</div>
+
+<script src="@controllers.base.routes.Assets.at("js/lib/confirm_order.js")"></script>
+<script src="@controllers.base.routes.Assets.at("js/base/country/country_rel.js")"></script>
+<script src="@controllers.base.routes.Assets.at("nortonseal/nortonseal.js")"></script>
+
+}

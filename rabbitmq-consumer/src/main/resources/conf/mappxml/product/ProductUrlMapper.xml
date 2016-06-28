@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rabbit.conf.mapper.product.ProductUrlMapper">
+	<resultMap id="BaseResultMap" type="com.rabbit.dto.product.ProductUrl">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+		<result column="csku" property="csku" jdbcType="VARCHAR" />
+		<result column="ilanguageid" property="ilanguageid" jdbcType="INTEGER" />
+		<result column="curl" property="curl" jdbcType="VARCHAR" />
+		<result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="DATE" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, clistingid, csku, ilanguageid, curl, ccreateuser,
+		dcreatedate
+	</sql>
+
+	<!-- Batch select product URL by clistingids -->
+	<select id="getProductUrlsByListingIds" resultType="com.rabbit.dto.product.ProductUrlWithSmallImage">
+		SELECT u.*, t.cimageurl FROM (select
+		iid,clistingid,csku,ilanguageid,curl,ccreateuser,dcreatedate from
+		t_product_url
+		where clistingid in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach>
+		and ilanguageid = #{language}
+		union all
+		select iid,clistingid,csku,ilanguageid,curl,ccreateuser,dcreatedate from
+		t_product_intercept_url
+		where clistingid in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach>
+		and ilanguageid = #{language}
+		) u
+		LEFT OUTER JOIN
+		t_product_image t ON t.clistingid = u.clistingid AND
+		t.bsmallimage =
+		true
+		WHERE u.clistingid IN
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach>
+		and u.ilanguageid = #{language}
+	</select>
+
+	<insert id="addProductUrlList" parameterType="java.util.List">
+		insert into t_product_url (clistingid, csku,
+		ilanguageid, curl,
+		ccreateuser,
+		dcreatedate,iwebsiteid)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.clistingid,jdbcType=VARCHAR},
+			#{item.csku,jdbcType=VARCHAR},
+			#{item.ilanguageid,jdbcType=INTEGER},
+			#{item.curl,jdbcType=VARCHAR},
+			#{item.ccreateuser,jdbcType=VARCHAR},
+			#{item.dcreatedate,jdbcType=DATE},
+			#{item.iwebsiteid,jdbcType=INTEGER})
+		</foreach>
+	</insert>
+
+	<insert id="addProductUrl" parameterType="com.rabbit.dto.product.ProductUrl"
+		useGeneratedKeys="true" keyProperty="iid">
+		insert into t_product_url
+		(clistingid, csku,
+		ilanguageid, curl,
+		ccreateuser,
+		dcreatedate,iwebsiteid)
+		values
+		(#{clistingid,jdbcType=VARCHAR},
+		#{csku,jdbcType=VARCHAR},
+		#{ilanguageid,jdbcType=INTEGER},
+		#{curl,jdbcType=VARCHAR},
+		#{ccreateuser,jdbcType=VARCHAR},
+		#{dcreatedate,jdbcType=DATE},
+		#{iwebsiteid,jdbcType=INTEGER})
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="com.rabbit.dto.product.ProductUrl">
+		update
+		t_product_url
+		set clistingid = #{clistingid,jdbcType=VARCHAR},
+		csku =
+		#{csku,jdbcType=VARCHAR},
+		ilanguageid =
+		#{ilanguageid,jdbcType=INTEGER},
+		curl = #{curl,jdbcType=VARCHAR},
+		ccreateuser =
+		#{ccreateuser,jdbcType=VARCHAR},
+		dcreatedate =
+		#{dcreatedate,jdbcType=DATE}
+		where iid
+		= #{iid,jdbcType=INTEGER}
+	</update>
+	<select id="getProductUrlByClistingids" resultType="com.rabbit.dto.product.ProductUrl">
+		SELECT * FROM t_product_url
+		WHERE clistingid IN
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">#{item}</foreach>
+	</select>
+</mapper>

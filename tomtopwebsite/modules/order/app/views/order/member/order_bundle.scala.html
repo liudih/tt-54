@@ -1,0 +1,63 @@
+@(bi : valueobjects.order_api.OrderItem,
+	symbol:String="",code:String="")
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+<ul class="orderInfUl">
+	<input type="hidden" class="listingId" value="@bi.getClistingid()"/>
+	<li class="orderImg">
+	<a href="@if(bi.getCurl()!=null){@controllers.product.routes.Product.view(bi.getCurl())}">
+    	@img(bi.getCimageurl(), bi.getCtitle(), 120, 120, null, 'alt->bi.getCtitle())
+    </a>
+	</li>
+	<li class="orderInf">
+	<a class="blue" href="@if(bi.getCurl()!=null){@controllers.product.routes.Product.view(bi.getCurl())}">
+    @bi.getCtitle()
+    </a>
+	<p class="marT"><span>@Messages("sku") @bi.getSku()</span><!-- <span>Color:White</span><span>Power:3W</span> -->
+	   <span>
+            	@if(null !=bi.getAttributeMap){
+            		@bi.getAttributeMap.map{ j=>
+            		    @if(null != j._1 && j._1.length>0){@j._1.substring(0,1).toUpperCase@j._1.substring(1)}
+            		    : @j._2 &nbsp;
+            		}
+            	}
+       </span>
+	</p>
+    </li>
+	<li class="pro_price">
+		 <span class="middle"></span>
+         <p class="newPrice">@symbol <span>@Utils.money(bi.getTotalPrice(),code)</span></p>
+    </li>
+	<li class="pro_Nb">@bi.getIqty()</li>
+</ul>
+@if(bi.getChildList().size()>0){
+<ul class="cartListToge">
+	<p class="listTogeTitle">@Messages("frequently.buy.together")<i></i></p>
+	@bi.getChildList().map{ k =>
+	<input type="hidden" class="listingId" value="@k.getClistingid()"/>
+    <ol>
+	<a class="inBlock pro_img" href="@if(k.getCurl()!=null){@controllers.product.routes.Product.view(k.getCurl())}">
+	@img(k.getCimageurl(), null, 120, 120, null)</a>
+	<div class="inBlock pro_info">
+	    <a class="blue" href="@if(k.getCurl()!=null){@controllers.product.routes.Product.view(k.getCurl())}">@k.getCtitle()</a>
+	    <p class="parameter marT"><span>@Messages("sku") @k.getSku()</span><!-- <span>Color:White</span><span>Power:3W</span> -->
+   	        <span>
+            	@if(null !=k.getAttributeMap){
+            		@k.getAttributeMap.map{ j=>
+            		    @if(null != j._1 && j._1.length>0){@j._1.substring(0,1).toUpperCase@j._1.substring(1)}
+            		     : @j._2 &nbsp;
+            		}
+            	}
+            </span>
+	    </p>
+	</div>
+	<div class="inBlock pro_price">
+	     <p class="newPrice">@symbol <span>@Utils.money(k.getTotalPrice(),code)</span></p>
+	</div>
+	<span class="inBlock">@k.getIqty()</span>
+     </ol>
+     }
+</ul>
+}
+<div class="LRborder"></div>

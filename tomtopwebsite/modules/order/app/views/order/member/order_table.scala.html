@@ -1,0 +1,117 @@
+@(items:List[valueobjects.order_api.OrderList], 
+	isShow: Int, 
+	pageCount: Int, 
+	pageNum: Int, 
+	notEmpty: Boolean,
+	collectList:List[extensions.order.collect.ICollectProvider],
+	packMap: Map[Integer, List[dto.order.OrderPack]],
+	payments: Map[String, extensions.payment.IPaymentProvider],
+	idMap: Map[Integer, dto.order.OrderStatus],
+	orderType: String)
+
+<div class="xxkBOX boxRa block" id="search_orders_html" >
+	@if(notEmpty){
+		<ul class="accOrdeTT">
+			<li class="details1">@Messages("orders.details")</li>
+			<li class="price2">@Messages("nprice")</li>
+			<li class="qty3">@Messages("nqty")</li>
+			<li class="method4">@Messages("order.statuss")</li>
+			<li class="status5">@Messages("tracking.info")</li>
+			<li class="options6">@Messages("options")</li>
+		</ul>
+		
+		@items.asScala.map{i=>
+			<table cellspacing="0" cellpadding="0" border="1" width="100%" class="orderTab">
+				<tbody>
+					<tr>
+						<td class="orderTabTT" colspan="4">
+							<p>@Messages("order.no") <b class="blue">@i.getOrder().getCordernumber()</b></p>
+							<p>@Messages("order.date") @services.base.utils.DateFormatUtils.getDateTimeDDMMYYYY(i.getOrder().getDcreatedate())</p>
+							<p>@Messages("total") <b class="orange">@i.getSymbol() @services.base.utils.Utils.money(i.getOrder().getFgrandtotal(),i.getCurrency.getCcode)</b></p> 
+						</td>
+					</tr>
+					<tr>
+					    <td class="orderInfTD">
+							@i.getOrderItems().map{ ii => 
+								@order_bundle(ii,i.getSymbol(),i.getOrder().getCcurrency())
+							}
+						</td>
+					    <td class="orderLogo">@idMap.get(i.getOrder().getIstatus()).getCname()</td>
+					    <td class="orderPro" valign="middle">
+					    	@packMap.get(i.getOrder.getIid).map{p=>
+					    		<a target="_blank" href="http://www.17track.net/en/result/post.shtml?nums=@p.getCtrackingnumber" class="orderMiddle">@Messages("untracked")<br>@p.getCtrackingnumber</a>
+					    	}
+					    </td>
+					    <td class="orderView">
+					    	@if(isShow == 2){
+					    		<a class="blue" href="@controllers.order.member.routes.MemberOrder.orderDetail(i.getOrder().getCordernumber)">@Messages("view")</a>
+								<a class="blue" href="javascript:;" value="@i.getOrder().getIid()" name="restore_order">@Messages("restore")</a>
+								<a class="blue" href="javascript:;" value="@i.getOrder().getIid()" name="delete_order">@Messages("delete")</a>
+					    	} else {
+								<a href="@controllers.order.member.routes.MemberOrder.orderDetail(i.getOrder().getCordernumber)" class="blue">@Messages("view")</a>
+								@if(idMap.get(i.getOrder().getIstatus()).getCname().equals(services.order.IOrderStatusService.PAYMENT_PENDING)){
+									<a href="@controllers.order.routes.OrderProcessing.replaceOrder(i.getOrder().getCordernumber)" class="orderCheckout"><em></em>@Messages("pay.now")</a>
+								}
+								@if(idMap.get(i.getOrder().getIstatus()).getCname().equals(services.order.IOrderStatusService.DISPATCHED)){
+									<a class="hsA" href="@controllers.order.member.routes.MemberOrder.completed(i.getOrder().getIid())">@Messages("completed")</a><br>
+								}
+								@if(i.getOrder().getCpaymentid()!=null && payments.get(i.getOrder().getCpaymentid())!=null){
+									<img src="@payments.get(i.getOrder().getCpaymentid()).iconUrl()" style="height:20px;width:70px;">
+								}
+								@if("dropshipping" != orderType){
+					    			<a href="javascript:;" class="rubbish" value="@i.getOrder().getIid()" name="remove_order"></a>
+					    		}
+					    	}
+					    </td>
+					</tr>
+				</tbody>
+			</table>
+		}
+		@if("dropshipping" != orderType){
+		@if(isShow == 2) {
+			<ul class="orderAll_bot">
+				<li>
+					<a class="delete" href="javascript:;">@Messages("batch.delete")
+						<p class="deletePop">
+							<i></i>@Messages("sure.permanently.delete.orders")<br>
+							<input type="button" id="delete_all_order" value="@Messages("yes")"><input type="button" value="@Messages("no")">
+						</p>
+					</a>
+				</li>
+				<li>
+					<a class="heart" href="javascript:;" id="restore_all_order">@Messages("batch.restore") </a>
+				</li>
+			</ul>
+		} else {
+			<ul class="orderAll_bot">
+				<li>
+					<a class="delete" href="javascript:;"><p class="reMAll">@Messages("remove.all")</p>
+					<p class="deletePop">
+						<i></i>@Messages("remove.all.from.your.cart")<br>
+						<input type="button" id="remove_all_order" value="@Messages("yes")"><input type="button" value="@Messages("no")">
+					</p>
+					</a>
+				</li>
+				@collectList.map{c=>
+					@c.getHtml()
+				}
+				<!-- <li>
+					<a class="heart" href="javascript:;">
+						<em></em>Add all to wish list
+						<p class="deletePop">
+							<i></i>Add all to wish list?<br>
+							<input type="button" value="Yes"><input type="button" value="No">
+						</p>
+					</a>
+				</li> -->
+			</ul>
+		}
+		}
+		<div class="pagination-holder clearfix" >
+			<div id="light-pagination" class="pagination"></div>
+		</div>
+		
+		<input type="hidden" name="page_count_value" value="@pageCount">
+		<input type="hidden" name="page_number_value" value="@pageNum">
+	}
+</div>

@@ -1,0 +1,11 @@
+clistingid, csku, ctitle, cquestion, canswer, cmemberemail, dcreatedate, crecoveryuser, drecoverydate,istate,itypeid
+12340,H000_TEST,what is the color?,what is the color?,it is green!,test@test.com,2014/12/10 19:55,TOMTOP,2014/12/11 19:55,0,2
+12340,H000_TEST,what is the color?,what is the color?,it is green!,test@test.com,2014/12/11 19:55,TOMTOP,2014/12/12 19:55,0,2
+12340,H000_TEST,what is the color?,what is the color?,it is green!,test@test.com,2014/12/12 19:55,TOMTOP,2014/12/13 19:55,0,1
+12341,H001_TEST,what is the color?,what is the color?,it is green!,test@test.com,2014/12/13 19:55,TOMTOP,2014/12/14 19:55,0,2
+12341,H001_TEST,what is the color?,what is the color?,it is green!,test@test.com,2014/12/14 19:55,TOMTOP,2014/12/15 19:55,0,1
+12341,H001_TEST,what is the color?,what is the color?,it is green!,test@test.com,2014/12/15 19:55,TOMTOP,2014/12/16 19:55,0,1
+12342,H002_TEST,what is the color?,what is the color?,it is green!,test@test.com,2014/12/16 19:55,TOMTOP,2014/12/17 19:55,0,2
+12342,H002_TEST,what is the color?,what is the color?,it is green!,test@test.com,2014/12/17 19:55,TOMTOP,2014/12/18 19:55,0,1
+12343,H003_TEST,what is the color?,what is the color?,it is green!,test@test.com,2014/12/18 19:55,TOMTOP,2014/12/19 19:55,0,2
+12343,H003_TEST,what is the color?,what is the color?,it is green!,test@test.com,2014/12/19 19:55,TOMTOP,2014/12/20 19:55,0,1

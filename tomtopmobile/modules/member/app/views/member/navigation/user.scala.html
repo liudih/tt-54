@@ -1,0 +1,45 @@
+@import extensions.member.account.Position
+@import services.base._
+@import services.base.utils._
+
+@(mis: valueobjects.member.MemberInSession,
+	htmls :  List[extensions.member.account.IMemberAccountHomeFragmentProvider],
+	email: String
+	)
+
+	<a class="cneterClick clickNone" href="javascript:;">&nbsp;</a>
+	<div class="publicePop_Box popBoxNone" style="display: none;">
+   		<div class="leftHead_PopBox publicePop_con">
+   			<div class="topLeft_headImg">
+   				<p class="topLeft_myName">@mis.getUsername()</p>
+   				<div class="topLeft_myHead"><img src=""></div>
+   			</div>
+			<ul class="topLeft_Messages lbBox">
+				@htmls.map{ h =>
+		        	@if(h.getPosition().contains(Position.PROFILE)) {
+		        		@h.getFragment(email,Position.PROFILE)
+		        	}
+		        }
+			</ul>
+			<ul class="lbBox topLeft_messagesOrder">
+				@htmls.map{ h =>
+		        	@if(h.getPosition().contains(Position.STATISTICS)) {
+		        		@h.getFragment(email,Position.STATISTICS)
+		        	}
+		        }
+			</ul>
+     		 
+			@htmls.map{ h =>
+	        	@if(h.getPosition().contains(Position.BODY_SIMPLE)) {
+	        		@h.getFragment(email, Position.BODY_SIMPLE)
+	        	}
+	        }
+     	
+     	
+			
+	</div>
+	<div class="cneterNonoClick"> </div>
+</div>
+    		
+	
+	

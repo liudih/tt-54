@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mappers.tracking.CommissionStatusLogMapper" >
+  <resultMap id="BaseResultMap" type="entity.tracking.CommissionStatusLog" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="ibeforestatus" property="ibeforestatus" jdbcType="INTEGER" />
+    <result column="iafterstatus" property="iafterstatus" jdbcType="INTEGER" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, ibeforestatus, iafterstatus, dcreatedate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_commission_status_log
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_commission_status_log
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.tracking.CommissionStatusLog" >
+    insert into t_commission_status_log (iid, ibeforestatus, iafterstatus, 
+      dcreatedate)
+    values (#{iid,jdbcType=INTEGER}, #{ibeforestatus,jdbcType=INTEGER}, #{iafterstatus,jdbcType=INTEGER}, 
+      #{dcreatedate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.tracking.CommissionStatusLog" >
+    insert into t_commission_status_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="ibeforestatus != null" >
+        ibeforestatus,
+      </if>
+      <if test="iafterstatus != null" >
+        iafterstatus,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="ibeforestatus != null" >
+        #{ibeforestatus,jdbcType=INTEGER},
+      </if>
+      <if test="iafterstatus != null" >
+        #{iafterstatus,jdbcType=INTEGER},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.tracking.CommissionStatusLog" >
+    update t_commission_status_log
+    <set >
+      <if test="ibeforestatus != null" >
+        ibeforestatus = #{ibeforestatus,jdbcType=INTEGER},
+      </if>
+      <if test="iafterstatus != null" >
+        iafterstatus = #{iafterstatus,jdbcType=INTEGER},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.tracking.CommissionStatusLog" >
+    update t_commission_status_log
+    set ibeforestatus = #{ibeforestatus,jdbcType=INTEGER},
+      iafterstatus = #{iafterstatus,jdbcType=INTEGER},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

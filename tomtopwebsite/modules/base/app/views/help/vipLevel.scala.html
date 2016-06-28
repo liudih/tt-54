@@ -1,0 +1,216 @@
+@views.html.base.master{
+	@services.base.HtmlUtils.misc().addHeadOnce{
+		<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/styles.css")?@version.BuildVersion.build()" />
+	}
+<div class="container vipBox">
+    <div class="Bread_crumbs_Box">
+        <ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="/"></a></li>
+            <li>
+                <p>
+                    <a class="Bread_link" href="javascript:;">@Messages("vip.club")</a>
+                </p>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+	<div class="vipBanner"><img src="@controllers.base.routes.Assets.at("/images/vipBanner.jpg")"></div>
+  <h5>@Messages("vip.privileges")</h5>
+  <p class="marP">@Messages("know.bronze.easily.read.below")</p>
+    <b>@Messages("which.vip.level.you")</b>
+  <p>@Messages("all.privileges.customers.become.vips")</p>
+    <div class="VIPlevel"><img src="@controllers.base.routes.Assets.at("/images/VIPlevel.png")"></div>
+    <b>@Messages("what.vips.receive.each.level")</b>
+  <p>@Messages("dedicated.customer.support.however.summarizes.benefits.vip.level")</p>
+
+	<table class="vipTableL" width="163" border="0" cellspacing="1" cellpadding="0">
+      <tr>
+        <th class="titleTh">&nbsp;</th>
+      </tr>
+      <tr>
+        <td height="135">@Messages("customer.support")</td>
+      </tr>
+      <tr>
+        <td height="67">@Messages("wholesale") &amp; @Messages("dropship")</td>
+      </tr>
+      <tr>
+        <td height="67">@Messages("data.sharing")</td>
+      </tr>
+      <tr>
+        <td height="101">@Messages("order.processing") &amp; @Messages("service")</td>
+      </tr>
+      <tr>
+        <td height="101">@Messages("rewards") &amp; @Messages("offer")</td>
+      </tr>
+      <tr>
+        <td height="33">@Messages("dropship.customers")</td>
+      </tr>
+      <tr>
+        <td height="33">@Messages("warranty.and.return.handling")</td>
+      </tr>
+    </table>
+	<table class="vipTable" border="0" cellspacing="1" cellpadding="0">
+      <tr>
+        <th class="benefitsTh"><em></em>@Messages("benefits")</th>
+        <th class="VIPTh">VIP0</th>
+        <th class="VIPTh VIP1Th">VIP1</th>
+        <th class="VIPTh">VIP2</th>
+        <th class="VIPTh">VIP3</th>
+        <th class="VIPTh">VIP4</th>
+        <th class="VIPTh">VIP5</th>
+      </tr>
+      <tr>
+        <td class="bkTab">@Messages("exclusive.vip.live.channel.helpline")</td>
+        <td class="bkTab vipTdHover">&nbsp;</td>
+        <td class="bkTab vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>@Messages("professional.customer.support.email.phone")</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="bkTab">@Messages("7.24.live.customer.support")</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>@Messages("customer.support.email.phone.live.chat")</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="bkTab">@Messages("access.product.images.without.watermarks")</td>
+        <td class="bkTab TabTxt vipTdHover">&nbsp;</td>
+        <td class="bkTab TabTxt vipTdHover">100<br><span>@Messages("items.month")</span></td>
+        <td class="bkTab TabTxt vipTdHover">200<br><span>@Messages("items.month")</span></td>
+        <td class="bkTab TabTxt vipTdHover">500<br><span>@Messages("items.month")</span></td>
+        <td class="bkTab TabTxt vipTdHover">1000<br><span>@Messages("items.month")</span></td>
+        <td class="bkTab TabTxt vipTdHover">2000<br><span>@Messages("items.month")</span></td>
+      </tr>
+      <tr>
+        <td>@Messages("more.options.shipping.methods.assign")</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="bkTab">@Messages("get.online.reseller.feeds")</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+      </tr>
+        <td>@Messages("download.product.images.zip.file")</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+      <tr>
+        <td>@Messages("priority.refund.handling")</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="bkTab">@Messages("priority.given.to.order.processing")</td>
+        <td class="bkTab vipTdHover">&nbsp;</td>
+        <td class="bkTab vipTdHover">&nbsp;</td>
+        <td class="bkTab vipTdHover">&nbsp;</td>
+        <td class="bkTab vipTdHover">&nbsp;</td>
+        <td class="bkTab vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>@Messages("tier.pricing.more.discounts.purchases")</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="bkTab">@Messages("corresponding.lowest.prices.pricing.system")</td>
+        <td class="bkTab vipTdHover">&nbsp;</td>
+        <td class="bkTab TabTxt vipTdHover">10<br><span>@Messages("items.month")</span></td>
+        <td class="bkTab TabTxt vipTdHover">20<br><span>@Messages("items.month")</span></td>
+        <td class="bkTab TabTxt vipTdHover">30<br><span>@Messages("items.month")</span></td>
+        <td class="bkTab TabTxt vipTdHover">40<br><span>@Messages("items.month")</span></td>
+        <td class="bkTab TabTxt vipTdHover">50<br><span>@Messages("items.month")</span></td>
+      </tr>
+      <tr>
+        <td>@Messages("privilege.section.corresponding.samples.offered")</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="TabTxt vipTdHover">3</td>
+        <td class="TabTxt vipTdHover">5</td>
+        <td class="TabTxt vipTdHover">10</td>
+      </tr>
+      <tr>
+        <td class="bkTab">@Messages("receive.attractive.overstock.email")</td>
+        <td class="bkTab vipTdHover">&nbsp;</td>
+        <td class="bkTab vipTdHover">&nbsp;</td>
+        <td class="bkTab vipTdHover">&nbsp;</td>
+        <td class="bkTab vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>@Messages("rebate.bank.transfer.payment")</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+        <td class="bkRight vipTdHover">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="bkTab">@Messages("priority.warranty.handling")</td>
+        <td class="bkTab vipTdHover">&nbsp;</td>
+        <td class="bkTab vipTdHover">&nbsp;</td>
+        <td class="bkTab vipTdHover">&nbsp;</td>
+        <td class="bkTab vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+        <td class="bkTab bkRight vipTdHover">&nbsp;</td>
+      </tr>
+    </table>
+    <div class="clear"></div>
+    <div class="vipBTxt">
+    <b>@Messages("benefits.concierge.program")</b>
+    <p class="marP">@Messages("customer.service.concierge.program.happen")</p>
+	<p>@Messages("requires.assistanc.contact.concierge.help")</p>
+   <p> @Messages("special.discounts.items.exclusive.price")</p>
+    <p>@Messages("exclusive.buyers.discounts.promotions")</p>
+    
+    </div>
+
+</div>
+}

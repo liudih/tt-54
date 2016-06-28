@@ -1,0 +1,23 @@
+@(product :valueobjects.product.ProductBadge,
+index :Integer=0)
+@import services.base._
+@import services.base.utils._
+
+@if(null !=product){
+
+<div class="lineBlock @if(index==0){DailyDeals_R_Left}else{DailyDeals_R_Right}">
+	<a class="product_img" href="@controllers.product.routes.Product.view(product.getUrl)">
+		@img(product.getImageUrl(),product.getTitle(),377,377,null) 
+	</a>
+	@if(product.getPrice!=null){
+	<div class="product_price">@product.getPrice.getSymbol
+		@Utils.money(product.getPrice.getUnitPrice)</div>
+	@if(product.getPrice().isDiscounted()){
+	<div class="product_priceGR">@product.getPrice.getSymbol
+		@Utils.money(product.getPrice.getUnitBasePrice)</div>
+	} }
+
+</div>
+}
+
+

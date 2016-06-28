@@ -1,0 +1,29 @@
+@(orderNum :String,
+orderStr : String,
+orderDetailStr : String
+)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+
+@views.html.base.sub_master("Payment Success"){
+
+	@services.base.HtmlUtils.misc().addHeadCssOnce{
+		@controllers.base.routes.Assets.at("css/paySuccess.css")
+	}
+		
+	<div class="container bg_color_gray marT_6">
+		<div class="paySuccessBox">
+			<span class="success lineBlock"> </span><h5 class="lineBlock">Pay Success</h5>
+			<p>Thank you for shopping with us online, you order has been placed.</p>
+		</div>
+		<div class="statusNo">
+			<p class="lineBlock">Order No: <span>@orderNum</span></p>
+		<a class="span98 button_blue marT" href="/order/orderdetail/@orderNum">View Order</a>
+		</div>
+	</div>
+	
+	 @tp.get("recent-history")
+<script type="text/javascript">
+	 var order = @Html(orderStr);
+	 var details = @Html(orderDetailStr);
+</script>
+}

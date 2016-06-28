@@ -1,0 +1,8 @@
+@(form: java.util.LinkedHashMap[String, String], isSandbox: Boolean)
+
+
+<form
+	action="@if(isSandbox){https://secure.oceanpayment.com/gateway/service/test}else{https://secure.oceanpayment.com/gateway/service/pay}"
+	method="post">
+	@form.map{ p => <input type="hidden" name="@p._1" value="@p._2" /> }
+</form>

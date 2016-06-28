@@ -1,0 +1,110 @@
+@(
+messages : valueobjects.base.Page[entity.messaging.Broadcast]
+)
+
+@views.html.base.sub_master("My Message"){
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+	 	@controllers.base.routes.Assets.at("css/accountMessage_page.css")
+	}
+
+<div class="container">
+	<div class="bg_color_gray marT_6">
+		<ul class="span98 lbBox messageOperation">
+			<li class="lineBlock">Inbox</li>
+			<li class="textR floatR lineBlock">
+				<a class="lineBlock " href="javascript:;" id="markedAsReadMessage">Marked as read</a>
+				<a class="lineBlock" href="javascript:;" id="messageRemove">Delete</a>
+			</li>
+		</ul>
+		<ul class="accountMessage_ul chooseMoreBox span98" id="badgeContent">
+			<li class="lbBox">
+				<div class="lineBlock span15">
+					<label class="input_control lineBlock"> 
+						<input type="checkbox">
+						<div class="checkbox chooseMoreClick"><span></span></div>
+					</label>
+				</div>
+				<p class="lineBlock span65">Subject</p>
+				<p class="lineBlock span2 textC">Date</p>
+			</li>
+			    
+			      @messaging_badge(messages)
+		</ul>
+	</div>
+</div>
+
+    @services.base.HtmlUtils.misc().addTailOnce{
+      <script type="text/javascript">
+      $(function(){
+    	  var detailurl='@controllers.messaging.routes.MessageController.getMessageDetail()';
+    		$('a.readClick').click(function(){
+				var id = $(this).attr('messageId');
+				var t = $(this).attr('t');
+				window.location.href = detailurl + '?id=' + id + '&t=' + t;
+			});
+    		
+    		
+    		//标记为已读
+			$('#markedAsReadMessage').click(function(){
+				//防止用户多次点击
+				//$(this).unbind('click');
+				var container = $('#badgeContent');
+				var url = '@controllers.messaging.routes.MessageController.messagedAsRead()';
+				//获取checked
+				var checked = container.find('li>div>label>div.aciCss').not($(".chooseMoreClick"));
+				
+				var messageIds = [];
+				$.each(checked,function(){
+				//debugger;
+				var id = $(this).attr('messageId');
+				var t = $(this).attr('t');
+				var para = {'id' : id,'t' : t};
+						messageIds.push(para);
+				});
+					
+				if(messageIds.length > 0){
+				
+					var ids = $.toJSON(messageIds);
+					window.location.href = url + '?ids=' + ids;
+				}
+			});
+    		
+    		//删除消息
+    		$('#messageRemove').click(function(){
+    			 Dialog(
+    				    function (){
+    				    var container = $('#badgeContent');
+    					var url = '@controllers.messaging.routes.MessageController.messageDelete()';
+    							//获取checked
+    					var checked = container.find('li>div>label>div.aciCss').not($(".chooseMoreClick"));
+    							
+    					var messageIds = [];
+    					$.each(checked,function(){
+    							//debugger;
+    					var id = $(this).attr('messageId');
+    					var t = $(this).attr('t');
+    					var para = {'id' : id,'t' : t};
+    						messageIds.push(para);
+    						});
+    					if(messageIds.length > 0){
+    					var ids = $.toJSON(messageIds);
+    					window.location.href = url + '?ids=' + ids;
+    					}
+    				}
+    					 ,"Are you sure you want to delete it?");
+    	    });
+    		
+      });
+      //
+    
+      </script>
+      
+    <script type="text/javascript">
+	var moreurl = "@controllers.messaging.routes.MessageController.messageMore()";
+	moreurl = moreurl + "?" + $("#searchbar").serialize();
+	</script>
+	<script type="text/javascript" src='@controllers.product.routes.Assets.at("js/scroll_load.js")'></script>
+    <script type="text/javascript" src='@controllers.base.routes.Assets.at("js/jquery.json.min.js")'></script>
+    }
+
+} 

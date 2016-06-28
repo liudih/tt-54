@@ -1,0 +1,203 @@
+GET      /assets/*file               controllers.mobile.Assets.at(path="/public", file)
+
+GET     /handshake                    @controllers.mobile.Handshake.doHandshake()
+
+GET     /member/login                 @controllers.mobile.member.Login.login(email:String,pwd:String,code:String?=null)
+
+GET     /member/loginout              @controllers.mobile.member.Login.loginOut()
+
+GET     /member/photo                 @controllers.mobile.member.Photo.at(email:String)
+
+GET     /member/photo2                @controllers.mobile.member.Photo.at2(iid:Integer)
+
+GET     /interaction/product-photos/at     @controllers.mobile.member.Photo.at3(iid:Integer)
+
+GET     /member/findpwd               @controllers.mobile.member.Password.find(email:String)
+
+POST     /member/alterpwd             @controllers.mobile.member.Password.alter()
+
+POST     /member/resetpwd             @controllers.mobile.member.Password.reset()
+
+POST    /member/register              @controllers.mobile.member.Register.register()
+
+POST    /member/uploaduserimg        @controllers.mobile.member.UserController.uploadUserImg()
+
+GET     /member/userdtl               @controllers.mobile.member.UserController.userMsg()
+
+GET     /member/coupon                @controllers.mobile.member.UserController.coupon(p: Int ?= 1, size: Int ?=5,type: Int ?=0)
+
+GET     /member/peron                 @controllers.mobile.member.UserController.peronInfo()
+
+POST    /member/updperon              @controllers.mobile.member.UserController.updatePeronInfo()
+
+GET     /member/points                @controllers.mobile.member.UserController.points(p: Int ?= 1, size: Int ?=5)
+
+GET     /member/msglist               @controllers.mobile.member.UserController.msgList(p: Int ?= 1, size: Int ?=5)
+
+GET     /member/msgdtl                @controllers.mobile.member.UserController.msgDtl(mid: String, table: String)
+
+GET		/member/wish				  @controllers.mobile.personal.MyWishController.getMyWishProducts(p: Int ?= 1, size: Int ?=5)
+
+GET		/member/addwish				  @controllers.mobile.personal.MyWishController.addWish(gid : String)
+
+GET 	/member/delwish				  @controllers.mobile.personal.MyWishController.delWish(gids : String)
+
+GET     /captcha                      @controllers.mobile.Captcha.generate()
+
+GET     /getcountry                   @controllers.mobile.BaseApi.getCountry(max_id:Int?=0)
+
+GET     /getlanguage                  @controllers.mobile.BaseApi.getLanguage(max_id:Int?=0)
+
+GET     /getemailsuffix               @controllers.mobile.BaseApi.getEmailSuffix(max_id:Int?=0)
+
+GET     /getcurrency                  @controllers.mobile.BaseApi.getCurrency(max_id:Int?=0) 
+
+POST    /error/pushlog                @controllers.mobile.ClientErrorLog.pushErrorLog()
+
+GET		/category/root       		  @controllers.mobile.product.CategoryController.getRootCategorys(max:Int?=0)
+
+GET		/category/children   	  	  @controllers.mobile.product.CategoryController.getCategorysByParentId(cid:Int?=0,max:Int?=0,depth:Int?=1)
+
+GET  	/category/product			  @controllers.mobile.product.CategoryController.showCategoryProduct(cid: Int ?= 1, p: Int ?= 1, size: Int ?=5)
+
+GET     /product/view				 @controllers.mobile.product.ProductController.view(gid:String)
+
+GET     /product/simple				 @controllers.mobile.product.ProductController.simpleProduct(gid:String)
+
+GET		/product/reviews			 @controllers.mobile.product.ProductController.showInteractionComments(gid:String,p: Int ?= 1, size: Int ?=5)
+
+GET		/product/keyword			 @controllers.mobile.product.ProductController.getProductByKeword(key:String,p: Int ?= 1, size: Int ?=5)
+
+GET		/product/recommend			 @controllers.mobile.product.ProductController.getSimilarProducts(gid:String,p: Int ?= 1, size: Int ?=5)
+
+GET		/product/suggestion			 @controllers.mobile.product.ProductController.getSuggestion(q:String)
+
+GET		/product/top				 @controllers.mobile.product.ProductController.getHotProducts(p: Int ?= 1, size: Int ?=5)
+
+GET		/product/new				 @controllers.mobile.product.ProductController.getNewProducts(p: Int ?= 1, size: Int ?=5)
+
+GET		/product/free				 @controllers.mobile.product.ProductController.getFreeProduct(p: Int ?= 1, size: Int ?=5)
+
+GET		/product/featured			 @controllers.mobile.product.ProductController.getFeaturedProduct(p: Int ?= 1, size: Int ?=5)
+
+GET  	/product/superdeal			 @controllers.mobile.product.ProductController.getSuperDealProducts(p: Int ?= 1, size: Int ?=5)
+
+POST   /product/addreview            @controllers.mobile.product.ProductReviewController.addReview()
+
+GET    /image                        @controllers.mobile.product.image.Image.view(filename: String, width: Int, height: Int)
+
+GET    /cart/show					 @controllers.mobile.order.CartController.showCart()
+
+GET    /cart/simple					 @controllers.mobile.order.CartController.simpleCart()
+
+GET    /cart/ships					 @controllers.mobile.order.CartController.shippingMethods(aid : Int)
+
+GET    /cart/delete					 @controllers.mobile.order.CartController.deleteItemList(iid : String, gid : String)
+
+GET    /cart/update			         @controllers.mobile.order.CartController.updateItemQty(iid : String, qty : Int ?= 1)
+	
+GET    /cart/add					 @controllers.mobile.order.CartController.addCartItem(gid :String, qty : Int ?= 1)
+
+POST   /address/save				 @controllers.mobile.personal.AddressController.addOrUpdateMemberAddress()
+
+GET    /address/show				 @controllers.mobile.personal.AddressController.findAddress(aid : Int)
+
+GET    /address/showdefault			 @controllers.mobile.personal.AddressController.findDefaultAddress(type : Int)
+
+GET    /address/daddress			 @controllers.mobile.personal.AddressController.setDefaultShipAddress(aid : Int,type : Int)
+
+GET    /address/delete			 	 @controllers.mobile.personal.AddressController.delAddress(aid : Int)
+
+GET    /address/all			 	 	 @controllers.mobile.personal.AddressController.getMemberAddress(type : Int)
+
+GET    /index				 	 	 @controllers.mobile.HomeController.index()
+
+GET    /index/dailyDeal				 @controllers.mobile.HomeController.dailyDeal(day : Int, size : Int)
+
+GET   /order/oitemlist               @controllers.mobile.order.OrderController.getOrdersList(status : Int ?= 0,p: Int ?= 1, size: Int ?=10)
+
+GET   /order/odtl                    @controllers.mobile.order.OrderController.getOrderDetail(oid : String)
+
+POST   /order/addod                  @controllers.mobile.order.OrderController.addOrder()
+
+GET   /order/delod                   @controllers.mobile.order.OrderController.delteOrder(iids : String)
+
+GET   /order/removeod                @controllers.mobile.order.OrderController.removeOrder(iids : String)
+
+GET   /order/restoreod               @controllers.mobile.order.OrderController.restoreOrder(iids : String)
+
+GET   /order/comfirod                @controllers.mobile.order.OrderController.comfirOrder(id : Int)
+
+GET   /check/point					 @controllers.mobile.validate.ValidController.checkUsePoint(pot : Int , cartid : String)
+
+GET   /check/delpoint                @controllers.mobile.validate.ValidController.deleteUsePoint()
+
+GET   /check/spcode     			 @controllers.mobile.validate.ValidController.checkSpCode(cartid : String ,code : String)
+
+GET   /check/allcp 					 @controllers.mobile.validate.ValidController.getUserOrderCoupon(cartid : String)
+
+GET   /check/usecp    			     @controllers.mobile.validate.ValidController.useCoupon(cartid : String ,code : String)
+
+GET   /check/delcp    			     @controllers.mobile.validate.ValidController.deleteUseCoupon(cartid : String ,code : String)
+
+GET   /setting/modify        		 @controllers.mobile.personal.SettingController.updateSetting(type : Int, val : String)
+
+GET   /contact		        		 @controllers.mobile.personal.ContactController.saveContact(title : String, content : String,email : String)
+
+GET	  /appvs 						 @controllers.mobile.personal.AppVersionController.getMaxAppVersion(vs : String)
+
+GET   /h5/desc                    @controllers.mobile.about.ProductViewController.productDescription(gid : String)
+
+GET   /h5/cms                     @controllers.mobile.about.ProductViewController.cmsDetail(menid : Integer)
+
+GET   /h5/explain                 @controllers.mobile.about.ProductViewController.productExplain(type : Integer)
+
+GET   /h5/payod                   @controllers.mobile.about.OrderPayController.payOrder(oid : String)
+
+GET   /h5/fpay                    @controllers.mobile.about.OrderPayController.finishPay(oid : String, code : String, info : String)
+
+GET   /h5/ec-cart   			@controllers.mobile.about.OrderPayController.quickPayment()
+
+GET   /h5/confirm-View 			    @controllers.mobile.about.OrderPayController.orderViewConfirm(token : String ?= null,PayerID : String ?= null,n : String)
+
+POST   /h5/ecpay					@controllers.mobile.about.OrderPayController.orderQuickPayConfirm()
+
+GET	  /paypal/dopay				  @controllers.mobile.about.OrderPayController.DoOrderPayment(token : String, palpayid : String, oid : String)
+
+GET	  /paypal/newpay			  @controllers.mobile.about.OrderPayController.newPayOrder(oid : String)
+
+GET   /auths                         @controllers.mobile.third.ThirdAuthController.getAuthInfo()
+                                     
+GET  /auth/facebook				     @controllers.mobile.third.ThirdAuthController.formFacebook()
+                                     
+GET  /auth/google				     @controllers.mobile.third.ThirdAuthController.formGoogle()
+                                     
+GET  /auth/paypal				     @controllers.mobile.third.ThirdAuthController.formPaypal()
+
+GET  /auth/googleLogin				     @controllers.mobile.third.ThirdAuthController.googleLogin(authtoken:String)
+                                     
+GET  /auth/userinfo				     @controllers.mobile.third.ThirdAuthController.getAuthLoginInfo()
+                                     
+GET  /interest/tags				     @controllers.mobile.personal.InterestTagController.getTagTypes()
+
+GET  /interest/addtag			     @controllers.mobile.personal.InterestTagController.addInterestTag()
+
+GET  /refresh-ship-method         @controllers.mobile.personal.ShippAddressController.refreshShipMethodForGuest(orderNum : String?="", shipToCountryCode : String?="")
+
+
+
+POST /cart/simple2					@controllers.mobile.order.Cart2Controller.simpleCart2()
+
+POST /cart/show2					@controllers.mobile.order.Cart2Controller.showCart2()
+
+POST /cart/coupons					@controllers.mobile.order.Cart2Controller.getMyUsableCoupon()
+
+POST /cart/points					@controllers.mobile.order.Cart2Controller.applyPoints()
+
+POST /cart/coupon					@controllers.mobile.order.Cart2Controller.applyCoupon()
+
+POST /cart/promo					@controllers.mobile.order.Cart2Controller.applyPromo()
+
+POST /cart/checkout					@controllers.mobile.order.Cart2Controller.checkout()
+
+POST  /cart/ec-cart 					@controllers.mobile.order.Cart2Controller.quickPayment()

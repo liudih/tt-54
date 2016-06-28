@@ -1,0 +1,57 @@
+@(body: Html)
+@meta = @{services.base.utils.MetaUtils.currentMetaBuilder().build()}
+@country = @{services.base.FoundationService._getCountryObj()}
+@currency = @{services.base.FoundationService._getCurrencyObj()}
+@language = @{services.base.FoundationService._getLanguageObj}
+@url = @{services.base.FoundationService._getCurrencyUri}
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@cssurlprefix = @{play.Play.application().configuration().getString("cssurlprefix")}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" xmlns="http://www.w3.org/1999/xhtml"> <!--<![endif]-->
+<head>
+<meta name="viewport" content="width=1200">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>@meta.getTitle() - TOMTOP</title>
+<meta name="description" content="@meta.getDescription()">
+<meta name="keywords" content="@meta.getKeywords()">
+<link rel="icon" href="@controllers.base.routes.Assets.at("favicon.ico")" type="image/x-icon">
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/main.css")">
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/index.css")?@version.BuildVersion.build()" /> 
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/common_"+language.getCname()+".css")?@version.BuildVersion.build()" />
+<link href="@controllers.base.routes.Assets.at("css/tomtop.css")" rel="stylesheet" media="screen"> 
+<link href="@cssurlprefix/css/newTop.css" rel="stylesheet" media="screen"> 
+<script src="@controllers.base.routes.Assets.at("lib/jquery/jquery.min.js")"></script>
+<script src="@controllers.base.routes.Assets.at("js/lib/public.js")?@version.BuildVersion.build()"></script>
+<script src="@controllers.base.routes.Assets.at("js/lib/main.js")?@version.BuildVersion.build()"></script>
+<script src="@controllers.base.routes.Assets.at("js/lib/jquery.json.min.js")"></script>
+<script src="@cssurlprefix/js/public.js"></script>
+<script src="@cssurlprefix/js/jquery.lazyload.min.js"></script>
+<script src="@controllers.base.routes.Assets.at("js/base/compatible_ie.js")"></script>
+<script src="@controllers.base.routes.Assets.at("js/lib/common.js")"></script>
+@services.base.HtmlUtils.misc().getHead().map { h =>
+	@h
+}
+</head>
+<body>
+
+
+@views.html.base.topbar_new(country,currency,language,url)
+
+@tp.get("advert-home-head")
+ 
+<div class="topNavCon">
+  @views.html.base.head_new()
+  @views.html.base.nav_new()
+ </div>
+@body
+@views.html.base.footer()
+
+@services.base.HtmlUtils.misc().getTail().map { h =>
+	@h
+}
+</body>
+</html>

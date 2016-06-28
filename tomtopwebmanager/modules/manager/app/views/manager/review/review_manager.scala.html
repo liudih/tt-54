@@ -1,0 +1,800 @@
+@(reviewPage: valueobjects.base.Page[dto.interaction.InteractionComment],
+  sku: String,
+  status: Integer,
+  email: String,
+  startDate: String,
+  endDate: String,
+  content: String,
+  websiteid: Integer
+)
+
+@import views.html.helper._
+
+@views.html.manager.main{ 
+	@helper.javascriptRouter("reviews")(
+		controllers.manager.routes.javascript.Review.reviewVerify,
+		controllers.manager.routes.javascript.Review.batchVerify
+   )
+	<h3 class="page-title">
+		Review management <small></small>
+	</h3>
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-home"></i>
+			<a href="/sysadmin">@Messages("home")</a> 
+			<i class="icon-angle-right"></i>
+		</li>
+		<li>
+			<a href="@controllers.manager.routes.Review.reviewsManagement()">Review management</a>
+		</li>
+	</ul>
+	<div class="clearfix">
+		<div class="btn-group">
+			<button id="add_btn" class="btn green" data-toggle="modal" data-target="#add-reviews-modal">
+					Add <i class="icon-plus"></i>
+			</button>
+			<button id="add_batch_btn" class="btn green" data-toggle="modal" data-target="#batch-add-reviews-modal" style=" margin-left: 20px;">
+					BatchAdd <i class="icon-plus"></i>
+			</button>
+		</div>
+	</div>
+		<br/>
+	<div class="clearfix">
+		过滤筛选:
+	 	<select class="span1" name="select_status" class="form-control" style="width: 110px;">
+	 		<option value="3" @if(status == 3){selected="selected"}>All</option>
+	 		<option value="0" @if(status == 0){selected="selected"}>未审核</option>
+	 		<option value="1" @if(status == 1){selected="selected"}>审核通过</option>
+	 		<option value="2" @if(status == 2){selected="selected"}>审核不通过</option>
+		</select>
+		站点:
+		@services.manager.ChooseService.getInstance().website("websiteid", null, true)
+		
+		sku:<input type="text" class="form-control span1" id="search_sku"  value="@sku">
+		email:<input type="text" class="form-control span2" id="search_email" value="@email">
+		开始日期:<input type="text" class="form-control span2" id="search_startDate"   value="@startDate" class="m-wrap medium span6">
+		结束日期:<input type="text" class="form-control span2" id="search_endDate"  value="@endDate" class="m-wrap medium span6" >
+		内容:<input type="text" class="form-control span2" id="search_content" value="@content">
+		<button id="search" type="button" class="btn green">search</button>
+	</div>
+	<table class="table table-striped table-hover table-bordered">
+		<thead>
+			<tr>
+				<th>批量</th>
+				<th>编号</th>
+				<th>sku</th>
+				<th>价格评分</th>
+				<th>外观评分</th>
+				<th>质量评分</th>
+				<th>物流评分</th>
+				<th>平均分</th>
+				<th>评论标题</th>
+				<th>评论内容</th>
+				<th>评论邮箱</th>
+				<th>评论时间</th>
+				<th>评论来源</th>
+				<th>审核状态</th>
+				<th>审核时间</th>
+				<th>审核操作</th>
+				<th>编辑操作</th>
+			</tr>
+		</thead>
+		<tbody>
+		@if(null != reviewPage && reviewPage.getList.size>0){
+			@reviewPage.getList.map{i=>
+				<tr>
+					<td>
+						@if(i.getIstate == 0){
+					   	<input type="checkbox"  value="@i.getIid">
+					   	}
+					</td>
+					<td>@i.getIid</td>
+					<td>@i.getCsku</td>
+					<td>@i.getIprice</td>
+					<td>@i.getIusefulness</td>
+					<td>@i.getIquality</td>
+					<td>@i.getIshipping</td>
+					<td>@i.getFoverallrating</td>
+					<td>@i.getCtitle</td>
+					<td>@i.getCcomment</td>
+					<td>@i.getCmemberemail</td>
+					<td>@i.getDcommentDate2</td>
+					<td>@i.getCplatform()</td>
+					<td id="state_@i.getIid">
+						@if(i.getIstate == 0){未审核} 
+						@if(i.getIstate == 1){通过}
+						@if(i.getIstate == 2){不通过}
+					</td>
+					<td id="auditdate_@i.getIid">@i.getDauditdate2</td>
+					
+					@if(i.getIstate == 0){
+					<td>
+					<a class="editCmsContent" data-toggle="modal" data-target="#edit-cms-content-modal"><button class="btn green" onclick="checkReivew('@i.getIid','@i.getCmemberemail','@i.getIwebsiteid','@i.getCplatform')">审核</button></a>
+					</td>
+					<td>
+					<a class="editCmsContent" data-toggle="modal" data-target="#update-reviews-modal"><button class="btn green" onclick="editReivew('@i.getIid','@i.getCsku','@i.getIusefulness','@i.getIshipping','@i.getIprice','@i.getIquality','@i.getCcomment','@i.getCmemberemail','@i.getDcommentDate2')">Edit</button></a>
+					</td>
+					}else{
+						<td></td>
+						<td></td>
+					}
+					
+				</tr>
+			}
+		}
+		</tbody>
+	</table>
+	<a id="checkAll">全选</a> &nbsp; 
+	<a id="checkNone">全不选</a> &nbsp;
+	<a id="checkRevise">反选</a>
+	<select class="span2" id="review_batch_vertify"  class="form-control" onchange="batchChange(this);">
+		<option value="0" selected="selected">批量操作</option>
+		<option value="1">通过</option>
+		<option value="2">不通过</option>
+	</select>
+	<span id="batch_points" style="display:none;">积分：<input type="text" id="allpoints" value="5"/></span>
+	<input type="hidden" id="batch_type" value="0">
+	<button id="batch_submit" type="button" class="btn btn-default">提交</button>	
+	    
+	<div class="row-fluid">
+		@if(reviewPage != null) {
+			<div class="span">
+				<div class="dataTables_info">当前第@reviewPage.pageNo()页|共@reviewPage.totalPages()页  总记录数@reviewPage.totalCount() 条</div>
+			</div>
+			<div class="span6">
+				<div class="dataTables_paginate paging_bootstrap pagination">
+					@if(reviewPage.totalPages>=1){
+						<ul>
+							@if(1 >= reviewPage.pageNo){
+								<li class="disabled"><a href="javascript:;">«</a></li>
+							}else{
+								<li><a id="prePage" href="javascript:;" value="@reviewPage.pageNo()" tag="@reviewPage.pageNo()">«</a></li>
+							}
+							@for(i <- reviewPage.pageNo - 5 to reviewPage.pageNo + 5 if i > 0 ; if i <= reviewPage.totalPages) {
+								@if(i == reviewPage.pageNo){
+									<li class="disabled"><a href="javascript:;">@i</a></li>
+								}else{
+									<li><a name="pa" href="javascript:;" value="@i" tag="@i">@i</a></li>
+								}
+							}
+							@if(reviewPage.pageNo >= reviewPage.totalPages){
+								<li class="disabled"><a href="javascript:;">»</a></li>
+							}else{
+								<li><a id="nextPage" href="javascript:;" value="@reviewPage.pageNo()" tag="@reviewPage.pageNo()">»</a></li>
+							}
+						</ul>
+					}
+				</div>
+			</div>
+		}
+	</div>
+	
+	<form id="reviews_manger_form" style="height:1px">
+	        <input type="hidden" id="review_status_hidden_value" name="status" value="@status"/> 
+	        <input type="hidden" id="page_hidden_value" name="p" value="@reviewPage.pageNo()"/> 
+	        <input type="hidden" id="search_hidden_sku" name="sku" value="@sku"/>
+	        <input type="hidden" id="search_hidden_email" name="email" value="@email"/>
+	        <input type="hidden" id="search_hidden_startDate" name="startDate" value="@startDate"/>
+	        <input type="hidden" id="search_hidden_endDate" name="endDate" value="@endDate"/>
+	        <input type="hidden" id="search_hidden_content" name="content" value="@content"/>
+	        <input type="hidden" id="search_hidden_siteId" name="websiteid" value="@websiteid"/>
+   </form>
+
+   <div id="edit-cms-content-modal" style="width:900px;margin-left:-450px" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<form class="form-horizontal" id="theform"  onSubmit="return false;">
+		  <div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+			<h3 id="myModalLabel">审核</h3>
+		  </div>
+		  <div class="modal-body">
+		    <input type="hidden" id="checkid" name="iid" value="" />
+			<input type="hidden" id="checkemail" name="email" value="" />
+			<input type="hidden" id="checksiteid" name="siteid" value="" />
+			<input type="hidden" id="checkisvip" name="isvip" value="" />
+			<div class="control-group">
+				<label class="control-label">状态：</label>
+				<div class="controls">
+					<select id="istate" name="istate">
+						<option value="0" >未审核</option>
+						<option value="1" >审核通过</option>
+						<option value="2" >审核不通过</option>
+					</select>
+				</div>
+			</div>
+			<div class="control-group" id="showpoint" style="display:none;">
+				<label class="control-label">输入积分<span class="required">*</span></label>
+				<div class="controls">
+					<input value="5" style="padding:0 !important;" type="text" id="points" name="points" placeholder="input points" class="m-wrap medium span6">
+				</div>
+			</div>
+		  </div>
+		  <div class="modal-footer" style="margin-bottom: -20px;">
+			<button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+			<button class="btn blue" onclick="submitShenhe()" >提交</button>
+		  </div>
+		  </form>
+	</div>
+<!-- 添加模块 -->
+@form(controllers.manager.routes.Review.saveReviewManger(), 'id->"addForm"){
+<div id="add-reviews-modal" style="width: 600px; top:10%" class="modal hide fade"
+	tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
+
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true"></button>
+		<h3 id="myModalLabel">Add Reviews</h3>
+	</div>
+	<div class="modal-body">
+		<table>
+			<tr>
+				<td>站点</td>
+				<td>
+		         @services.manager.ChooseService.getInstance().website("websiteid", null, true)
+				</td>
+			</tr>
+			<tr>
+				<td>SKU</td>
+				<td id="skumsg" style="position: relative;">
+						<input type="text" autocomplete="off" id="csku" name="csku" oninput="searchSku()" onblur="removehoure()"  value="" >
+						<ul id="skuul" class="search_list">
+						</ul>
+				</td>
+			</tr>
+			<tr>
+				<td>Usefulness</td>
+				<td>
+				<div class="star_box" id="stage1">
+					<em></em><em></em><em></em><em></em><em></em>
+					<input type="hidden" id="usefulness" name="usefulness" value="5" >
+				</div>
+				</td>
+			</tr>
+			<tr>
+				<td>Shipping</td>
+				<td>
+					<div class="star_box" id="stage2">
+						<em></em><em></em><em></em><em></em><em></em>
+						<input type="hidden" id="shipping" name="shipping" value="5" >
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>Price</td>
+				<td>	
+				<div class="star_box" id="stage3">
+					<em></em><em></em><em></em><em></em><em></em>
+					<input type="hidden" id="price" name="price" value="5" >
+				</div>
+				</td>
+			</tr>
+			<tr>
+				<td>Quality</td>
+				<td>	
+				<div class="star_box" id="stage4">
+					<em></em><em></em><em></em><em></em><em></em>
+					<input type="hidden" id="quality" name="quality" value="5" >
+				</div>
+				</td>
+			</tr>
+			<tr>
+				<td>Details</td><td id="dtlmsg"><textarea rows="10" cols="10" id="cdtl" name="cdtl" style="height: 80px;"></textarea></td>
+			</tr>
+			<tr>
+				<td>Email</td><td id="emailmsg"><input type="text" id="cemail" name="cemail" ></td>
+			</tr>
+			<tr>
+				<td>Date</td><td id="datemsg"><input type="text" autocomplete="off" id="ddate" name="ddate" value="@endDate" ></td>
+			</tr>
+		</table>
+	</div>
+
+	<div id="modal-footer" class="modal-footer" style="margin-bottom: -20px;">
+		<div class="btn blue" onclick="valid()">save</div>
+		<button id="close" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+	</div>
+</div>
+}
+<!-- 更新模块 -->
+@form(controllers.manager.routes.Review.updateReviewManger(), 'id->"updateForm"){
+<div id="update-reviews-modal" style="width: 600px; top:10%" class="modal hide fade"
+	tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
+	<input type="hidden" name="iwebsiteid" id="iwebsiteid" value=""/>
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true"></button>
+		<h3 id="myModalLabel">update Reviews</h3>
+	</div>
+	<div class="modal-body">
+		<table>
+			<tr>
+				<td>SKU</td>
+				<td>
+					<input type="text" id="updsku" name="csku"  readOnly="true">
+					<input type="hidden" id="updid" name="iid">
+				</td>
+			</tr>
+			<tr>
+				<td>Usefulness</td>
+				<td>
+				<div class="star_box" id="upd_sta1">
+					<em></em><em></em><em></em><em></em><em></em>
+					<input type="hidden" id="updusefulness" name="usefulness" value="5" >
+				</div>
+				</td>
+			</tr>
+			<tr>
+				<td>Shipping</td>
+				<td>
+					<div class="star_box" id="upd_sta2">
+						<em></em><em></em><em></em><em></em><em></em>
+						<input type="hidden" id="updshipping" name="shipping" value="5" >
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td>Price</td>
+				<td>	
+				<div class="star_box" id="upd_sta3">
+					<em></em><em></em><em></em><em></em><em></em>
+					<input type="hidden" id="updprice" name="price" value="5" >
+				</div>
+				</td>
+			</tr>
+			<tr>
+				<td>Quality</td>
+				<td>	
+				<div class="star_box" id="upd_sta4">
+					<em></em><em></em><em></em><em></em><em></em>
+					<input type="hidden" id="updquality" name="quality" value="5" >
+				</div>
+				</td>
+			</tr>
+			<tr>
+				<td>Details</td><td  id="upddtlmsg"><textarea rows="10" cols="10" id="updcdtl" name="cdtl" style="height: 80px;"></textarea></td>
+			</tr>
+			<tr>
+				<td>Email</td><td  id="updemailmsg"><input type="text" id="updcemail" name="cemail" ></td>
+			</tr>
+			<tr>
+				<td>Date</td><td  id="upddatemsg"><input type="text" id="upddate" name="ddate" value="@endDate"></td>
+			</tr>
+		</table>
+	</div>
+
+	<div id="modal-footer" class="modal-footer" style="margin-bottom: -20px;">
+		<div class="btn blue" onclick="validupdate()">update</div>
+		<button id="clo" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+	</div>
+</div>
+}
+
+<div id="batch-add-reviews-modal" style="width: 800px; top:25%" class="modal hide fade"
+	tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+	aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true"></button>
+		<h3 id="myModalLabel">Batch Add</h3>
+	</div>
+	<div class="modal-body">
+		@form(controllers.manager.routes.Review.downloadTemplate(), 'id->"downloadForm",'enctype->"multipart/form-data"){
+			Download template   <div class="btn blue" onclick="downloadTemplate()">Download</div>
+		}
+		@form(controllers.manager.routes.Review.upload(), 'id->"uploadForm",'enctype->"multipart/form-data"){
+		<div id="showfilename">	Upload your file     <a class="a_file btn blue" > Upload <input type="file" id="uploadfile" name="uploadfile" onchange="getfilename()"/></a>
+		     &nbsp;&nbsp;
+		</div>
+	</div>
+	<div id="modal-footer" class="modal-footer" style="margin-bottom: -20px;">
+		<div class="btn blue" onclick="saveFile()">Save</div>
+		<button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+	</div>
+		}
+</div>
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+	@controllers.base.routes.Assets.at("css/manager/starge.css")
+}
+
+@services.base.HtmlUtils.misc().addTailOnce{
+		<link href="@controllers.manager.routes.Assets.at("css/manager/bootstrap-datetimepicker.css")" rel="stylesheet" type="text/css" media="screen"/>
+		<script src="@controllers.manager.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.manager.routes.Assets.at("js/manager/Review")" ></script>
+		<script type="text/javascript">
+		$("#edit-cms-content-modal").on("hidden", function() {
+			$("#theform #showpoint").hide();
+			$("#istate").val("0");
+		    // $(this).removeData("modal");
+		});
+		
+		$(document).on("change","#istate",function(){
+			var val = this.value;
+			var isvip = $("#theform #checkisvip").val();
+			if(val==1){
+				if(isvip != "webvip"){
+					$("#points").val('5');
+					$("#theform #showpoint").show();
+				}else{
+					$("#points").val('0');
+				}
+			}else{
+				$("#theform #showpoint").hide();
+			}
+		});
+		function batchChange(node){
+			  var val = parseInt(node.value);
+			  if(val==1){
+				  $("#batch_points").show();
+			  }else{
+				  $("#batch_points").hide();
+			  }
+		  }
+		//审核提交
+		function submitShenhe(){
+			var state = $("#istate").val();
+			if(state==0){
+				return false;
+			}
+			var id = $("#theform input[name='iid']:eq(0)").val();
+			var email = $("#theform input[name='email']:eq(0)").val();
+			var siteid = $("#theform input[name='siteid']:eq(0)").val();
+			var points = $("#points").val();
+			if(parseInt(points)>10){
+				alert("Too many points!");
+				return false;
+			}
+			
+			var url = reviews.controllers.manager.Review.reviewVerify().url;
+			var data = JSON.stringify({"id":id,
+				"status":state,
+				"points":points,
+				"email":email,
+				"siteid":siteid
+			});
+			$.ajax({
+				url : url,
+				type : "POST",
+				data : data,
+				contentType : "application/json",
+				success : function(data) {
+					if(data.errorCode == 0){
+						var time = data.dauditdate;
+						var stateValue = data.state;
+						var state = "通过";
+						if(stateValue == 2){
+							 state = "不通过";
+						}
+						$("#auditdate_" + id).text(time);
+						$("#state_" + id).text(state);
+						alert("审核成功");
+						location.reload();
+					} else {
+						alert("审核失败 (可能评论时间 大于现在时间)");
+					}
+				}
+			});
+		}
+		  $(function(){
+	            $(".star_box em").mouseover(function(){
+	                var i=$(this).index();
+	                for(var j=0;j<i+1;j++){
+	                    $(this).parent().find("em").eq(j).addClass("foc");
+	                }
+	            }).mouseout(function(){
+	                $(this).parent().find("em").removeClass("foc");
+	            }).click(function(){
+	                var b=$(this).index();
+	                //alert(b+1);
+	                $(this).parent().find("input[type='hidden']").val(b+1);
+	                $(this).parent().find("em").removeClass("foc1");
+	                for(var j=0;j<b+1;j++){
+	                    $(this).parent().find("em").eq(j).addClass("foc1");
+	                }
+	            })
+	        });
+
+		function searchSku(){
+			var sku = $("#csku").val();
+			var url =  '@controllers.manager.routes.Review.searchforSku(null)';
+			url += sku;
+			$.ajax({url: url, 
+				type: 'get', 
+				dataType: 'json', 
+				timeout: 1000, 
+				error: function(){alert('Error publish');}, 
+				success: function(res){
+					$("#skuul li").remove();
+					if(res.length > 0){
+					  $("#msgspan").remove();
+				      for(var i=0; i<res.length; i++){
+				    	 $("#skuul").css('display','inline-block'); 
+				    	 $("#skuul").append("<li onClick=searchClick('" + res[i] + "')>"+ res[i] +"</li>");
+				       }
+					}else{
+						 $("#msgspan").remove();
+						 $("#skumsg").append("<span id='msgspan' style='color: red;font-size: 16px;'>找不到sku</span>");
+					}
+				}
+			})
+		}
+		function searchClick(resli){
+			 $("#csku").val(resli);
+			 this.removeli();
+		}
+		function removehoure(){
+			window.setTimeout("javascript:removeli()",200);
+		}
+		function removeli(){
+			$("#skuul").css('display','none'); 
+		}
+		
+		function valid(){
+			var sku = $("#csku").val();
+			var cdtl = $('#cdtl').val();
+			var email = $('#cemail').val();
+			var ddate = $('#ddate').val();
+			var usef = $('#stage1');
+			var ship = $('#stage2');
+			var price = $('#stage3');
+			var quality = $('#stage4');
+			var websiteid = $("input[name='websiteid']").val();
+			this.removemsg();
+			if($.trim(sku) == ""){
+				 $("#skumsg").append("<span id='skuspan' style='color: red;font-size: 16px;'>请输入sku</span>");
+				 return false;
+			}
+			if(!usef.find("em").hasClass("foc1")){
+				usef.append("<span id='usefspan' style='color: red;font-size: 16px;'>请选择Usefulness</span>");
+				 return false;
+			}
+			if(!ship.find("em").hasClass("foc1")){
+				ship.append("<span id='shipspan' style='color: red;font-size: 16px;'>请选择Shipping</span>");
+				 return false;
+			}
+			if(!price.find("em").hasClass("foc1")){
+				price.append("<span id='pricespan' style='color: red;font-size: 16px;'>请选择Price</span>");
+				 return false;
+			}
+			if(!quality.find("em").hasClass("foc1")){
+				 quality.append("<span id='qualityspan' style='color: red;font-size: 16px;'>请选择Quality</span>");
+				 return false;
+			}
+			if($.trim(cdtl) == ""){
+				 $("#dtlmsg").append("<span id='dtlspan' style='color: red;font-size: 16px;'>请输入Details</span>");
+				 return false;
+			}
+			if($.trim(cdtl).length > 1000){
+				 $("#dtlmsg").append("<span id='dtlspan' style='color: red;font-size: 16px;'>Details长度不得超过1000字符</span>");
+				 return false;
+			}
+			if($.trim(email) == ""){
+				 $("#emailmsg").append("<span id='emailspan' style='color: red;font-size: 16px;'>请输入Email</span>");
+				 return false;
+			}
+			if($.trim(ddate) == ""){
+				 $("#datemsg").append("<span id='datespan' style='color: red;font-size: 16px;'>请输入Date</span>");
+				 return false;
+			}
+			var isSumbit = "true";
+			//sku check
+			var surl = '@controllers.manager.routes.Review.vaildSku()';
+			var param = param || {};
+			param['sku'] = sku;
+			param['websiteid'] = websiteid;
+			$.ajax({url: surl, 
+				type: 'get', 
+				data:param,
+				dataType: 'text', 
+				timeout: 1000, 
+				async : false,
+				error: function(){alert('Error publish');}, 
+				success: function(res){
+					if($.trim(res) == ""){
+						 $("#skumsg").append("<span id='skuspan' style='color: red;font-size: 16px;'>输入的sku不正确</span>");
+						 isSumbit = "false";
+					}
+				}
+			})
+			//email check
+			var eurl = '@controllers.manager.routes.Review.vaildEmail(null)';
+			eurl += email;
+			$.ajax({url: eurl, 
+				type: 'get', 
+				dataType: 'text', 
+				timeout: 1000, 
+				async : false,
+				error: function(){alert('Error publish');}, 
+				success: function(res){
+					if($.trim(res) == ""){
+						 $("#emailmsg").append("<span id='emailspan' style='color: red;font-size: 16px;'>输入的email格式不正确</span>");
+						 isSumbit = "false";
+					}
+				}
+			})
+			//date check
+			var durl = '@controllers.manager.routes.Review.vaildDate(null)';
+			durl += ddate;
+			$.ajax({url: durl, 
+				type: 'get', 
+				dataType: 'text', 
+				timeout: 1000, 
+				async : false,
+				error: function(){alert('Error publish');}, 
+				success: function(res){
+					if($.trim(res) == ""){
+						 $("#datemsg").append("<span id='datespan' style='color: red;font-size: 16px;'>输入的时间格式不正确</span>");
+						 isSumbit = "false";
+					}
+				}
+			})
+			
+			if(isSumbit == "true"){
+				$.ajax({
+		    		url : "@controllers.manager.routes.Review.saveReviewManger()",
+		    		type: "post",
+		    		data: $("#addForm").serialize(),
+		    		dataType: "json",
+		    		async : false,
+		    		success : function (data){
+		    			if(data){
+		    				alert('添加成功！');
+		    				$("#close").click();
+		    				$("#reviews_manger_form").submit();
+		    			}
+		    		}
+		    	});
+			}
+		}
+		
+		function removemsg(){
+			$("#skuspan").remove();
+			$("#usefspan").remove();
+			$("#shipspan").remove();
+			$("#pricespan").remove();
+			$("#qualityspan").remove();
+			$("#dtlspan").remove();
+			$("#emailspan").remove();
+			$("#datespan").remove();
+		}
+		
+		function validupdate(){
+			var cdtl = $('#updcdtl').val();
+			var email = $('#updcemail').val();
+			var ddate = $('#upddate').val();
+			$("#upddtlspan").remove();
+			$("#updemailspan").remove();
+			$("#upddatespan").remove();
+			if($.trim(cdtl) == ""){
+				 $("#upddtlmsg").append("<span id='upddtlspan' style='color: red;font-size: 16px;'>请输入Details</span>");
+				 return false;
+			}
+			if($.trim(cdtl).length > 1000){
+				 $("#upddtlmsg").append("<span id='upddtlspan' style='color: red;font-size: 16px;'>Details长度不得超过1000字符</span>");
+				 return false;
+			}
+			if($.trim(email) == ""){
+				 $("#updemailmsg").append("<span id='updemailspan' style='color: red;font-size: 16px;'>请输入Email</span>");
+				 return false;
+			}
+			if($.trim(ddate) == ""){
+				 $("#upddatemsg").append("<span id='upddatespan' style='color: red;font-size: 16px;'>请输入Date</span>");
+				 return false;
+			}
+			var isSumbit = "true";
+			//email check
+			var eurl = '@controllers.manager.routes.Review.vaildEmail(null)';
+			eurl += email;
+			$.ajax({url: eurl, 
+				type: 'get', 
+				dataType: 'text', 
+				timeout: 1000, 
+				async : false,
+				error: function(){alert('Error publish');}, 
+				success: function(res){
+					if($.trim(res) == ""){
+						 $("#updemailmsg").append("<span id='updemailspan' style='color: red;font-size: 16px;'>输入的email格式不正确</span>");
+						 isSumbit = "false";
+					}
+				}
+			})
+			//date check
+			var durl = '@controllers.manager.routes.Review.vaildDate(null)';
+			durl += ddate;
+			$.ajax({url: durl, 
+				type: 'get', 
+				dataType: 'text', 
+				timeout: 1000, 
+				async : false,
+				error: function(){alert('Error publish');}, 
+				success: function(res){
+					if($.trim(res) == ""){
+						 $("#upddatemsg").append("<span id='upddatespan' style='color: red;font-size: 16px;'>输入的时间格式不正确</span>");
+						 isSumbit = "false";
+					}
+				}
+			})
+			
+			if(isSumbit == "true"){
+				 $.ajax({
+			    		url : "@controllers.manager.routes.Review.updateReviewManger()",
+			    		type: "post",
+			    		data: $("#updateForm").serialize(),
+			    		dataType: "json",
+			    		async : false,
+			    		success : function (data){
+			    			if(data){
+			    				alert('修改成功！');
+			    				$("#clo").click();
+			    				$("#reviews_manger_form").submit();
+			    			}
+			    		}
+			    	});
+			}
+		}
+		
+		function editReivew(iid,csku,usef,ship,price,quality,dtl,email,date){
+			$("#upd_sta1").find("em").removeClass("foc1");
+			$("#upd_sta2").find("em").removeClass("foc1");
+			$("#upd_sta3").find("em").removeClass("foc1");
+			$("#upd_sta4").find("em").removeClass("foc1");
+			$("#updid").val(iid);
+			$("#updsku").val(csku);
+			$("#updcdtl").val(dtl);
+			$("#updcemail").val(email);
+			$("#upddate").val(date);
+			 for(var j=0;j<usef;j++){
+				$("#upd_sta1").find("em").eq(j).addClass("foc1");
+			 }
+			 for(var j=0;j<ship;j++){
+				$("#upd_sta2").find("em").eq(j).addClass("foc1");
+			 }
+			 for(var j=0;j<price;j++){
+				$("#upd_sta3").find("em").eq(j).addClass("foc1");
+			 }
+			 for(var j=0;j<quality;j++){
+				$("#upd_sta4").find("em").eq(j).addClass("foc1");
+			 }
+		}
+		
+		function downloadTemplate(){
+			 $('#downloadForm').submit();
+		}
+		function saveFile(){
+			var filename = $('#uploadfile').val();
+			if(filename == ""){
+				alert("请选择上传文件");
+				return false;
+			}
+			var name = this.getFileName(filename);
+			var ss = new Array();
+			ss = name.split('.');
+			var len = ss.length - 1;
+			if(ss[len] != "xls"){
+				alert("必须为.xls格式文件");
+				return false;
+			}
+			$('#uploadForm').submit();
+
+		}
+		function getfilename(){
+			 $("#filename").remove();
+			var filename = $('#uploadfile').val();
+			var name = this.getFileName(filename);
+			 $("#showfilename").append("<span id='filename' style='color: blue;font-size: 14px;'>"+ name +"</span>");
+		}
+		function getFileName(o){
+		    var pos=o.lastIndexOf("\\");
+		    return o.substring(pos+1);  
+		}
+		
+		function checkReivew(iid,email,siteid,platform){
+			 $("#checkid").val(iid);
+			 $("#checkemail").val(email);
+			 $("#checksiteid").val(siteid);
+			 $("#checkisvip").val(platform);
+			 
+		}
+		</script>
+	
+	}
+}

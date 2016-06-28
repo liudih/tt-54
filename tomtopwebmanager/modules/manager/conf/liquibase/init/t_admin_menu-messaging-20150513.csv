@@ -1,0 +1,3 @@
+"iid","cname","iparentid","ilevel","cclass","curl","ccreateuser","dcreatedate"
+64,CRM,0,1,21,,lijun,42136.125
+65,Message Manage,64,2,1,/sysadmin/crm/message-list,lijun,42136.125

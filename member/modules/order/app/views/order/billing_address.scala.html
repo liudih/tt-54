@@ -1,0 +1,32 @@
+@(addresses: valueobjects.order_api.Address,
+	theurl: String,
+	theurl2: String)
+@import views.html.helper._
+@helper.javascriptRouter("js_ShippingAddressRoutes")(
+	controllers.member.routes.javascript.Address.getAllCountry,
+	controllers.member.routes.javascript.Address.getAllProvinceByCountryId,
+	controllers.member.routes.javascript.Address.deleteMemberAddressById,
+	controllers.member.routes.javascript.Address.setDefaultShippingaddress,
+	controllers.order.routes.javascript.ShippingAddress.addNewShippingAddress,
+	controllers.order.routes.javascript.ShippingAddress.modifyShippingAddress,
+	controllers.order.routes.javascript.ShippingAddress.refreshShippingMethod,
+	controllers.order.routes.javascript.ShippingAddress.refreshByOrder
+)
+<h6>@Messages("billing.address")</h6>
+   <table class="shippingAs" width="100%" border="0" cellspacing="0" cellpadding="0" id="billing_address_table">
+	@if(null != addresses && addresses.getMemberAddresses.size() > 0) {  
+		@addresses.getMemberAddresses.map { i => 
+		      @views.html.member.address.billing_address_table_tr(i,addresses.getCountryMap,addresses.getAllCountries,theurl)
+		}
+	}
+    <tr id="new_order_address_tr">
+       <td colspan="6" class="newAdds">
+       	<a class="addsClick" href="javascript:;">+ @Messages("enter.new.billing.address")</a>
+           <div class="edit_box">
+           	<p>+ @Messages("enter.new.billing.address")</p>
+               <div class="clear"></div>
+          	   @views.html.member.address.add_new_billing_address_form.render(addresses.getAllCountries,theurl2) 
+           </div>
+       </td>
+     </tr>
+</table>

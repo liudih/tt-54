@@ -1,0 +1,35 @@
+[Unit]
+Description=TomTop Website Redis
+
+# Requirements
+Requires=etcd.service
+Requires=docker.service
+
+# Dependency ordering
+After=etcd.service
+After=docker.service
+
+[Service]
+
+TimeoutStartSec=0
+
+# Change killmode from "control-group" to "none" to let Docker remove
+# work correctly.
+KillMode=none
+
+# Pre-start and Start
+## Directives with "=-" are allowed to fail without consequence
+ExecStartPre=-/usr/bin/docker kill tomtopwebsite-elasticsearch
+ExecStartPre=-/usr/bin/docker rm tomtopwebsite-elasticsearch
+#ExecStartPre=-/bin/bash -c "/usr/bin/docker pull 192.168.7.15:5000/dockerfile/elasticsearch"
+ExecStart=/bin/bash -c "/usr/bin/docker run --name tomtopwebsite-elasticsearch \
+		-p 9200:9200 \
+		-p 9300:9300 \
+		-v /data/tomtopwebsite-elasticsearch:/data \
+		192.168.7.15:5000/dockerfile/elasticsearch \
+		/elasticsearch/bin/elasticsearch -Des.script.disable_dynamic=false -Des.script.groovy.sandbox.enabled=true"
+
+# Stop
+ExecStop=/usr/bin/docker stop tomtopwebsite-elasticsearch
+
+Restart=always

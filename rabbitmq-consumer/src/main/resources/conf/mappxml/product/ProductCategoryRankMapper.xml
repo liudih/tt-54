@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rabbit.conf.mapper.product.ProductCategoryRankMapper" >
+  <resultMap id="BaseResultMap" type="com.rabbit.dto.product.ProductCategoryRank" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+    <result column="csku" property="csku" jdbcType="VARCHAR" />
+    <result column="icategoryid" property="icategoryid" jdbcType="INTEGER" />
+    <result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+    <result column="isales" property="isales" jdbcType="INTEGER" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, clistingid, csku, icategoryid, iwebsiteid, isales, dcreatedate
+  </sql>
+
+  <insert id="insertSelective" parameterType="com.rabbit.dto.product.ProductCategoryRank" >
+    insert into t_product_category_rank
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="clistingid != null" >
+        clistingid,
+      </if>
+      <if test="csku != null" >
+        csku,
+      </if>
+      <if test="icategoryid != null" >
+        icategoryid,
+      </if>
+      <if test="iwebsiteid != null" >
+        iwebsiteid,
+      </if>
+      <if test="isales != null" >
+        isales,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="clistingid != null" >
+        #{clistingid,jdbcType=VARCHAR},
+      </if>
+      <if test="csku != null" >
+        #{csku,jdbcType=VARCHAR},
+      </if>
+      <if test="icategoryid != null" >
+        #{icategoryid,jdbcType=INTEGER},
+      </if>
+      <if test="iwebsiteid != null" >
+        #{iwebsiteid,jdbcType=INTEGER},
+      </if>
+      <if test="isales != null" >
+        #{isales,jdbcType=INTEGER},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

@@ -1,0 +1,43 @@
+
+GET    	/assets/*file        controllers.cart.Assets.at(path="/public", file)
+
+GET   	/cartmanage/save   	@controllers.cart.CartController.saveCart(data: String)
+
+GET   	/fillAddress   		@controllers.cart.NewCartController.fillAddressBeforeOrder()
+
+GET   	/                  	@controllers.cart.NewCartController.cartview(storageid: String?="")
+
+GET   	/editnum          	@controllers.cart.CartController.editNum(cid: String?="", num: Integer?=null)
+
+GET   	/delcart           	@controllers.cart.CartController.delCart(itemid: String?="", isall: String?="")
+
+GET		/getcartsize		@controllers.cart.NewCartController.showCartSize()
+POST		/use-point		@controllers.cart.PointController.usePoint()
+POST		/cancel-used-point		@controllers.cart.PointController.cancelUsedPoint()
+
+#------new cart--------
+
+POST	/delcartitem		@controllers.cart.NewCartController.delCartItem()
+
+POST	/savecartitem		@controllers.cart.NewCartController.saveCartItem()
+
+POST	/updatecartitem		@controllers.cart.NewCartController.updateCartItem()
+
+POST	/storageid/set		@controllers.cart.NewCartController.setStorageid(storageid: String?="")
+
+#-----------loyalty -------------------
+GET    /coupon/apply                           @controllers.cart.LoyaltyController.applyCoupon(code :String?=null)
+
+GET    /coupon/usablecoupon/get                @controllers.cart.LoyaltyController.getUsableCoupon()
+
+POST   /points/apply                           @controllers.cart.LoyaltyController.applyPoints(costpoints :Integer)
+
+GET    /promo/apply                            @controllers.cart.LoyaltyController.applyPromo(code :String?=null)
+
+GET    /prefer/all                             @controllers.cart.LoyaltyController.getAllCurrentPrefer()
+
+POST   /prefer/undo                            @controllers.cart.LoyaltyController.undoCurrentPrefer()
+
+POST   /prefer/point/undo                      @controllers.cart.LoyaltyController.undoCurrentPoint()
+
+GET    /points/get                             @controllers.cart.LoyaltyController.getMyUsablePoint()

@@ -1,0 +1,116 @@
+#member模块 
+member.sign.in=Sign in
+member.sign.out=Sign Out
+member.email.address=Enter your Email address
+member.login=Login
+member.register=Register
+member.your.password=Forgot your password
+member.code=Code
+member.mypoints=My Points
+member.pointsreward=Points Reward
+member.points=Points
+member.default.address=Default Address
+member.cancel=Cancel
+member.save=Save
+member.default=Default
+member.phone=Phone
+member.billing=Billing Address
+member.billing.address=Add a Billing address
+member.shopping.address=Add a Shipping address
+member.join.free=Join Free
+member.male=Male
+member.females=Females
+member.save.change=Save Change
+member.change.pasword=Change Pasword
+member.mytomtop=My TOMTOP
+member.myprofile =My Profile 
+
+#base模块
+base.Currency=Currency
+base.Currency.Current=Current Currency
+
+#product模块
+product.DailyDeals=Daily Deals
+product.NewArrivals=New Arrivals
+product.categories=All Categories
+product.daily.deals=Daily Deals
+product.more=More
+product.deal.expires=Deal Expires
+product.free.shipping=Free Shipping
+product.buy=Buy
+product.hotsales=Hot Sales
+product.new.arrivals=New Arrivals
+product.recommend=Recommend
+product.tomorrow.deals=Tomorrow’s Deals
+product.ends=Deals ends in
+product.start=Deals start in
+product.colorsize=Color、Size
+product.addcart=Add to Cart
+product.buynow=Buy Now
+product.=Product Description
+product.continue=Continue
+product.product=Product Options
+product.ass=All
+product.sortby=Sort by
+product.discount=Discount
+product.sale=Sale
+product.review=Review
+product.price=Price
+product.filter=Filter
+product.arrivlas=New Arrivlas
+product.reset=Reset
+product.apply=Apply
+product.share=Share
+product.searches=Hot Searches
+
+
+
+#messaging模块
+message.marked.read=Marked as read
+message.delete=Delete
+message.inbox=Inbox
+message.subject=Subject
+message.date=Date
+message.messages=Messages
+
+#interaction模块
+interaction.wishlist=Wishlist  
+interaction.history=Your Recent History
+interaction.shopping.cart=Shopping Cart
+interaction.categories=Categories
+interaction.mywishlist=My Wishlist
+interaction.editor=Editor
+interaction.cancel=Cancel
+interaction.remove=Remove
+interaction.facebook=Facebook
+interaction.google=Google
+interaction.twitter=Twitter
+
+#order 模块
+order.subtotal=Order subtotal
+order.grand.total=Grand Total
+order.proceed.checkout=Proceed to checkout
+order.paypal=PayPal
+order.shopping.cartempty=Your shopping cart is empty
+order.homepage=Go to HomePage
+order.select.items=and select items
+order.orderno=Order No
+order.total=Total
+order.global=Global
+order.paynow=Pay Now
+order.shipping.address=Shipping Address
+order.select.method=Select Shipping Method
+order.date=Order date
+order.track.number=Track Number
+order.status=Order status
+order.Place=Place Order
+order.completed=Completed
+order.customer.name=Customer Name
+order.shipping.method=Shipping Method
+order.placed.date=Order Placed Date
+order.shipped.date=Shipped Date
+order.subtotal=Order subtotal
+order.myorder=My order
+order.payment.pending=Payment pending
+order.dispatched=Dispatched
+order.refunded=Refunded

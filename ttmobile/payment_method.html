@@ -1,0 +1,401 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no,maximum-scale=1.0">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<title>tomtop</title>
+<link type="text/css" rel="stylesheet" href="css/css/style.css" />
+<link type="text/css" rel="stylesheet" href="css/css/mobile.css" />
+<link type="text/css" rel="stylesheet" href="css/css/top.css" />
+<link type="text/css" rel="stylesheet" href="css/css/bottom.css" />
+<link type="text/css" rel="stylesheet" href="css/paymentMethod.css" />
+<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+<script type="text/javascript" src="js/scroll.js"></script>
+</head>
+
+<body>
+<div class="TT_absLB">
+	<a class="TT_center quickNavClick" href="javascript:;"> </a>
+	<div class="csstransforms quickNavBox">
+		<div class="quickNavCon">
+			<div class="cn-wrapper" id="cn-wrapper">
+				<a class="quickNav_centerHome" href="index.html"><span><em class="home_Icon_big"> </em></span></a>
+			    <ul>
+			      <li><a href="login.html"><span class="login_Icon"> </span></a></li>
+			      <li><a href="search.html"><span class="search_Icon"> </span></a></li>
+			      <li><a href="cart.html"><span class="shoppingCart_Icon"> </span></a></li>
+			      <li><a href="javascript:;"><span class="heart_Icon"> </span></a></li>
+			      <li><a href="javascript:;"><span class="more_Icon"> </span></a></li>
+			     </ul>
+			</div>
+		</div>
+		<div class="quickNavBlockPop"> </div>
+	</div>
+</div>
+<a class="TT_top" href="#header">&nbsp;</a>
+
+<div class="container">
+	<div class="header" id="header">
+		<div class="headerFixed">
+	    	<div class="header_cat lineBlock"><a href="index.html">&nbsp;</a></div>
+    		<h3 class="header_title lineBlock">Payment Method</h3>
+	        <ul class="header_login lineBlock">
+	        	<li class="header_loginL lineBlock"><a href="search.html"> </a></li>
+	        	<li class="header_loginD lineBlock"></li>
+	        	<li class="header_loginC lineBlock"><a class="cartNumber" href="cart.html">22</a></li>
+	        </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+	<div class="statusNo">
+		<p class="lineBlock">Order No: <span>CN-060369479115-030906</span></p>
+		<p class="lineBlock fz_orange">Total: <span>US$256.00</span></p>
+	</div>
+	<p class="PaymentMethod_title">Payment Method:</p>
+	<div class="bg_color_gray PaymentMethod_Con">
+		<p class="paymentBT">Global</p>
+		<div class="chooseOneBox payment_choose">
+			<label class="chooseOneLabel input_control">
+				<input type="radio">
+				<div class="radio lineBlock aciCss"><span> </span></div>
+				<div class="paymentImg lineBlock"><img src="images/PayPal.jpg" /></div>
+				<p class="payment_txt lineBlock">PayPal</p>
+			</label>
+		</div>
+		<div class="chooseOneBox payment_choose">
+			<label class="chooseOneLabel input_control popBoxFilter">
+				<input type="radio">
+				<div class="radio lineBlock"><span> </span></div>
+				<div class="paymentImg lineBlock"><img src="images/CreditCard.jpg" /></div>
+				<p class="payment_txt lineBlock">Credit Card</p>
+			</label>
+			<div class="publicePop_Box popBoxNone">
+				<div class="publicePop_con">
+					<i class="sClean iconClose"> </i>
+					<b class="fz_size14">Billing Address:</b>
+					<p class="paymentTxtExplain">Make sure that the billing address you enter below matches the name & address on your credit card.<br>
+						Please note that your shipping address MUST be in the same country as your billing address.
+					</p>
+					<div class="input_control">
+						<input type="text" placeholder="Enter your full name" class="txtInput">
+				    	<i class="sClean"> </i>
+					</div>
+					<div class="input_control">
+						<input type="text" placeholder="Street" class="txtInput">
+				    	<i class="sClean"> </i>
+					</div>
+					<div class="countriesSelect input_control">
+						<input type="text" class="txtInput placeholder_country placeholder_countryClick" placeholder="Country">
+				        <div class="select_country select_countryNone">
+				              <ul class="country_list">
+				              	<li>mexico</li>
+				              	<li>China</li>
+				              	<li>United States</li>
+				              	<li>Congo</li>
+				              	<li>MICRONESIA</li>
+				              	<li>Andorra</li>
+				              	<li>United Arab Emirates</li>
+				              </ul>
+				         </div>
+					</div>
+					<div class="input_control">
+						<input type="text" placeholder="State / Province / Region" class="txtInput">
+				    	<i class="sClean"> </i>
+					</div>
+					<div class="input_control span48 lineBlock">
+						<input type="text" placeholder="City" class="txtInput">
+				    	<i class="sClean"> </i>
+					</div>
+					<div class="input_control span48 floatR lineBlock">
+						<input type="text" placeholder="Zip / Postal Code" class="txtInput">
+				    	<i class="sClean"> </i>
+					</div>
+					<div class="input_control">
+						<input type="number" placeholder="Phone Number" class="txtInput">
+				    	<i class="sClean"> </i>
+					</div>
+					<div class="payment_popButton">
+						<a class="span48 button_cancel lineBlock closePop" href="javascript:;">Cancel</a>
+						<a class="span48 button_orange lineBlock floatR closePop" href="javascript:;">Save</a>
+					</div>
+					<p><b>NOTICE:</b> Accept the credit card or debit card with Visa, Visa Debit, MasterCard, Maestro, Laser Card, American Express, JCB or Diners Club. </p>
+				</div>
+				<div class="blackPop"> </div>
+			</div>
+		</div>
+		<div class="chooseOneBox payment_choose">
+			<label class="chooseOneLabel input_control">
+				<input type="radio">
+				<div class="radio lineBlock"><span> </span></div>
+				<div class="paymentImg lineBlock"><img src="images/WireTransfer.jpg" /></div>
+				<p class="payment_txt lineBlock">Bank to Bank Wire Transfer</p>
+			</label>
+		</div>
+		<p class="paymentBT">Russia</p>
+		<div class="chooseOneBox payment_choose">
+			<label class="chooseOneLabel input_control popBoxFilter">
+				<input type="radio">
+				<div class="radio lineBlock"><span> </span></div>
+				<div class="paymentImg lineBlock"><img src="images/QIWI.jpg" /></div>
+				<p class="payment_txt lineBlock">QIWI Кошелек</p>
+			</label>
+			<div class="publicePop_Box popBoxNone">
+				<div class="publicePop_con">
+					<i class="sClean iconClose"> </i>
+					<p>Пожалуйста, введите Ваш QIWI аккаунт! Номер телефона обязательно нужно указать для оплаты.</p>
+					Номер телефона: 
+					<div class="i-input-group lineBlock">
+                        <div data-selected="ru" id="j-country-code-trigger" class="i-select i-input-addon">
+                          <i class="qiwi-flag qiwi-flag-ru"></i>
+                          <strong class="i-country-code">+7</strong>
+                        </div>
+                        <input type="number" data-errormessage="Введите действительный номер телефона, прикреплённый к QIWI Wallet." maxlength="20" class="i-input" name="qiwiAccount" data-widget-cid="widget-17" seed="iInputGroup-qiwiAccount" smartracker="on">
+                        <div id="j-country-code-list" class="i-country-code-list" data-widget-cid="widget-15">
+                          <ul>
+                              <li class="fn-hide">
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-link" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-ru"></i>
+                                  Россия
+                                  <strong class="i-country-code fn-right">+7</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT1" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-kz"></i>
+                                  Казахстан
+                                  <strong class="i-country-code fn-right">+77</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT2" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-ua"></i>
+                                  Украина
+                                  <strong class="i-country-code fn-right">+380</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT3" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-ge"></i>
+                                  Грузия
+                                  <strong class="i-country-code fn-right">+995</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT4" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-pa"></i>
+                                  Панама
+                                  <strong class="i-country-code fn-right">+507</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT5" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-gb"></i>
+                                  Великобритания
+                                  <strong class="i-country-code fn-right">+44</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT6" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-tj"></i>
+                                  Таджикистан
+                                  <strong class="i-country-code fn-right">+992</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT7" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-lt"></i>
+                                  Литва
+                                  <strong class="i-country-code fn-right">+370</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT8" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-il"></i>
+                                  Израиль
+                                  <strong class="i-country-code fn-right">+972</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT9" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-kg"></i>
+                                  Кыргызстан
+                                  <strong class="i-country-code fn-right">+996</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT10" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-tr"></i>
+                                  Турция
+                                  <strong class="i-country-code fn-right">+90</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT11" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-vn"></i>
+                                  Вьетнам
+                                  <strong class="i-country-code fn-right">+84</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT12" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-az"></i>
+                                  Азербайджан
+                                  <strong class="i-country-code fn-right">+994</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT13" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-am"></i>
+                                  Армения
+                                  <strong class="i-country-code fn-right">+374</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT14" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-lv"></i>
+                                  Латвия
+                                  <strong class="i-country-code fn-right">+371</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT15" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-in"></i>
+                                  Индия
+                                  <strong class="i-country-code fn-right">+91</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT16" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-th"></i>
+                                  Таиланд
+                                  <strong class="i-country-code fn-right">+66</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT17" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-md"></i>
+                                  Молдавия
+                                  <strong class="i-country-code fn-right">+373</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT18" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-ee"></i>
+                                  Эстония
+                                  <strong class="i-country-code fn-right">+372</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT19" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-jp"></i>
+                                  Япония
+                                  <strong class="i-country-code fn-right">+81</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT20" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-uz"></i>
+                                  Узбекистан
+                                  <strong class="i-country-code fn-right">+998</strong>
+                                </a>
+                              </li>
+                              <li>
+                                <a tabindex="-1" href="javascript:;" seed="jCountryCodeList-linkT21" smartracker="on">
+                                  <i class="qiwi-flag qiwi-flag-kr"></i>
+                                  Южная Корея
+                                  <strong class="i-country-code fn-right">+82</strong>
+                                </a>
+                              </li>
+                            </ul>
+                        </div>
+                        <input type="hidden" value="+7" name="qiwiCountry">
+                      </div>
+					<p class="margin_b40">Вы будете перенаправлены на сайт QIWI, чтобы произвести оплату с вашего QIWI Wallet.<br>
+						Внимание: ваша личная информация находится в безопасности.<br>
+						TOMTOP не хранит какую-либо информацию о вашей учетной записи. </p>
+					<a href="javascript:;" class="button_orange span10 closePop">Sure</a>
+				</div>
+				<div class="blackPop"> </div>
+			</div>
+		</div>
+		<div class="chooseOneBox payment_choose">
+			<label class="chooseOneLabel input_control">
+				<input type="radio">
+				<div class="radio lineBlock"><span> </span></div>
+				<div class="paymentImg lineBlock"><img src="images/Yandex.jpg" /></div>
+				<p class="payment_txt lineBlock">Yandex.Money</p>
+			</label>
+		</div>
+		<p class="paymentBT">Brazil</p>
+		<div class="chooseOneBox payment_choose">
+			<label class="chooseOneLabel input_control popBoxFilter">
+				<input type="radio">
+				<div class="radio lineBlock"><span> </span></div>
+				<div class="paymentImg lineBlock"><img src="images/Boleto.jpg" /></div>
+				<p class="payment_txt lineBlock">Boleto</p>
+			</label>
+			<div class="publicePop_Box popBoxNone">
+				<div class="publicePop_con">
+					<i class="sClean iconClose"> </i>
+					<div class="boletoSelect chooseOneBox lineBlock">
+						<label class="chooseOneLabels input_control closePop">
+							<input type="radio">
+							<div class="radio lineBlock aciCss_s"><span> </span></div>
+							Boleto
+						</label>
+					</div>
+					<div class="boletoSelect chooseOneBox lineBlock">
+						<label class="chooseOneLabels input_control closePop">
+							<input type="radio">
+							<div class="radio lineBlock"><span> </span></div>
+							Transferências Bancária
+						</label>
+					</div>
+				</div>
+				<div class="blackPop"> </div>
+			</div>
+		</div>
+	</div>
+	<a href="paySuccess.html" class="button_orange span98 marT">Pay Now</a>
+	<div class="safetBox">
+		<div class="safet_R">
+			<img class="lineBlock" src="images/icon/Safety.png">
+			<p class="lineBlock">
+				<b>Buyer Protection by TOMTOP</b><br>
+				Full Refund if you don't receive your order<br>
+				Refund or Keep items not as described
+			</p>
+		</div>
+		<ul class="lbBox safet_R">
+			<li class="lineBlock">
+				<img class="lineBlock" src="images/icon/Safety01.png" />
+				<p class="lineBlock">
+					<b>Secure Checkout</b><br>
+					Shopping is always safe and Secure
+				</p>
+			</li>
+			<li class="lineBlock"><img src="images/icon/Safety02.png" /></li>
+		</ul>
+	</div>
+</div>
+
+
+<div class="container">
+	<div class="bottom">
+		<ul class="bottom_ul lbBox">
+			<li class="lineBlock"><a href="privacy_Policy.html">Privacy Policy</a></li>
+			<li class="lineBlock"><a href="return_policy.html">Return Policy</a></li>
+			<li class="lineBlock"><a href="terms_of_use.html">Terms of Use</a></li>
+			<li class="lineBlock"><a href="about_us.html">About US</a></li>
+		</ul>
+		<p class="bottom_p">© 2004 - 2015 TOMTOP All rights reserved</p>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.interaction.review.InteractionCommentHelpQtyMapper" >
+  <resultMap id="BaseResultMap" type="dto.interaction.InteractionCommentHelpQty" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+     <result column="commentid" property="commentid" jdbcType="INTEGER" />
+    <result column="helpfulqty" property="helpfulqty" jdbcType="INTEGER" />
+    <result column="nothelpfulqty" property="nothelpfulqty" jdbcType="INTEGER" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, commentid, helpfulqty,nothelpfulqty,dcreatedate
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_interaction_comment_help_qty
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_interaction_comment_help_qty
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="dto.interaction.InteractionCommentHelpQty" >
+    insert into t_interaction_comment_help_qty (commentid)
+    values ( #{commentid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="dto.interaction.InteractionCommentHelpQty" >
+    insert into t_interaction_comment_help_qty
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+       
+      <if test="commentid != null" >
+       commentid,
+      </if>
+     
+      <if test="helpfulqty != null" >
+        helpfulqty,
+      </if>
+       <if test="nothelpfulqty != null" >
+        nothelpfulqty,
+      </if>
+       <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+     
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+     
+      <if test="commentid != null" >
+        #{commentid,jdbcType=INTEGER},
+      </if>
+      <if test="helpfulqty != null" >
+        #{helpfulqty,jdbcType=INTEGER},
+      </if>
+      <if test="nothelpfulqty != null" >
+        #{nothelpfulqty,jdbcType=INTEGER},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="dto.interaction.InteractionCommentHelpQty" >
+    update t_interaction_comment_help_qty
+    <set >
+      <if test="commentid != null" >
+        commentid = #{commentid,jdbcType=INTEGER},
+      </if>
+      
+      
+       <if test="helpfulqty != null" >
+        commentid = #{commentid,jdbcType=INTEGER},
+      </if>
+       <if test="nothelpfulqty != null" >
+        commentid = #{commentid,jdbcType=INTEGER},
+      </if>
+      
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+     
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="dto.interaction.InteractionCommentHelpQty" >
+    update t_interaction_comment_help_qty
+    set commentid = #{commentid,jdbcType=INTEGER},
+    helpfulqty = #{helpfulqty,jdbcType=INTEGER},
+    nothelpfulqty = #{nothelpfulqty,jdbcType=INTEGER},
+    dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>  
+</mapper>

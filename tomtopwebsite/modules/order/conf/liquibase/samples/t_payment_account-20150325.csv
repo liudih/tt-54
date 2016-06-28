@@ -1,0 +1,4 @@
+cpaymentid,iwebsiteid,fbeginprice,fendprice,cbusiness
+oceanpayment_credit,1,0,500,"{""account"":""140105"",""terminal"":""14010501"",""secureCode"":""12345678""}"
+oceanpayment_yandex,1,0,500,"{""account"":""140105"",""terminal"":""14010508"",""secureCode"":""12345678""}"
+oceanpayment_qiwi,1,0,500,"{""account"":""140105"",""terminal"":""14010508"",""secureCode"":""12345678"",""userName"":""9671460332"",""countryCode"":""+7""}"

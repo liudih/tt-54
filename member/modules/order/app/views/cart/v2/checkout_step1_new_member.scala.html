@@ -1,0 +1,37 @@
+
+@(
+countrys : List[dto.Country],
+nextStepUrl : String
+)
+
+@checkout_new_member(1){
+<!--头部结.p束-->
+<form id="addShipAddressForm" action="@controllers.order.routes.ShippingAddress.addShipAddress()" method="post" nextStepUrl="@nextStepUrl">
+<div class="newshopping_address_box">
+<div class="newshopping_address_pop">
+<h2>@Messages("checkout_step.title")</h2>
+<p>@Messages("checkout_step.title.1")</p>
+@ship_address_form(countrys)
+
+<div class="newshopping_address_submit">
+	<div class="newshopping_address_default"><span></span>@Messages("checkout_step.set_default")</div>
+    <a href="/base/cms/detail/59" target="_blank">@Messages("checkout_step.Policy")</a>
+    <div class="address_submit">
+        <input class="save" id="add-address-btn" type="button" value="@Messages("checkout_step.save") >>" >
+    </div>
+</div>
+
+</div>
+</div>
+</form>
+
+
+
+<script type="text/javascript">
+$(function(){
+	$('.country_list').country();
+});
+</script>
+<script src="@controllers.base.routes.Assets.at("js/base/country/country_rel.js")"></script>
+}
+

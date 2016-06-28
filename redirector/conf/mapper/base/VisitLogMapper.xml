@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.base.VisitLogMapper" >
+  <resultMap id="BaseResultMap" type="entity.base.VisitLog" >
+    <result column="curl" property="curl" jdbcType="VARCHAR" />
+    <result column="cshorturlcode" property="cshorturlcode" jdbcType="VARCHAR" />
+    <result column="caid" property="caid" jdbcType="VARCHAR" />
+    <result column="ctaskid" property="ctaskid" jdbcType="VARCHAR" />
+    <result column="itasktype" property="itasktype" jdbcType="INTEGER" />
+    <result column="csource" property="csource" jdbcType="VARCHAR" />
+    <result column="cip" property="cip" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="entity.base.VisitLog" >
+    insert into t_visit_log (curl, cshorturlcode, caid, 
+      csource, cip, dcreatedate,ctaskid,itasktype
+      )
+    values (#{curl,jdbcType=VARCHAR}, #{cshorturlcode,jdbcType=VARCHAR}, #{caid,jdbcType=VARCHAR}, 
+      #{csource,jdbcType=VARCHAR}, #{cip,jdbcType=VARCHAR}, #{dcreatedate,jdbcType=TIMESTAMP}
+      , #{ctaskid,jdbcType=VARCHAR},#{itasktype,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="entity.base.VisitLog" >
+    insert into t_visit_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="curl != null" >
+        curl,
+      </if>
+      <if test="cshorturlcode != null" >
+        cshorturlcode,
+      </if>
+      <if test="caid != null" >
+        caid,
+      </if>
+      <if test="ctaskid != null" >
+        ctaskid,
+      </if>
+      <if test="csource != null" >
+        csource,
+      </if>
+      <if test="cip != null" >
+        cip,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+      <if test="itasktype != null" >
+        itasktype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="curl != null" >
+        #{curl,jdbcType=VARCHAR},
+      </if>
+      <if test="cshorturlcode != null" >
+        #{cshorturlcode,jdbcType=VARCHAR},
+      </if>
+      <if test="caid != null" >
+        #{caid,jdbcType=VARCHAR},
+      </if>
+      <if test="ctaskid != null" >
+        #{ctaskid,jdbcType=VARCHAR},
+      </if>
+      <if test="csource != null" >
+        #{csource,jdbcType=VARCHAR},
+      </if>
+      <if test="cip != null" >
+        #{cip,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itasktype != null" >
+        #{itasktype,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

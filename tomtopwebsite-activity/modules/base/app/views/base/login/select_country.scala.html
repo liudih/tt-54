@@ -1,0 +1,34 @@
+@** CSS defined in tomtop.css, should be defined here **@
+@(country : dto.Country)
+@mainsite = @{play.Play.application().configuration().getString("main_website")}
+<div class="select_country">
+@if(country != null) {
+	<h3 class="flag_@country.getCshortname">
+		<em></em><span>@country.getCname</span><em class="ship_xSJ"></em>
+		<input id="current_country" type="hidden" class="required:true" name="country" value="@country.getCshortname" countryName="@country.getCname"/>
+	</h3>
+}
+	<div class="country_all">
+		<div class="search_country">
+			<input type="text" name="country_filter" />
+		</div>
+		<div class="country_list">
+			<ul>
+			</ul>
+		</div>
+	</div>
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/base/country/Country.js")'></script>
+}
+@services.base.HtmlUtils.misc().addTailOnce{
+<script>
+	var country = new Country();
+	country.init("@controllers.base.routes.Country.getAllCountries()");
+	$("input[name=country_filter]").keyup(function() {
+		country.search(this);
+	});
+</script>
+}
+
+

@@ -1,0 +1,190 @@
+2015-01-03 Michael Arnold <github@razorsedge.org> - 3.3.1
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (4):
+  * Enable rocommunity/rwcommunity in snmpd.conf.
+  * Update metadata.json.
+  * Manage .puppet-lint.rc with modulesync.
+  * Update versions for 3.3.1 release.
+ 
+
+2014-12-28 Michael Arnold <github@razorsedge.org> - 3.3.0
+=========================================================
+
+ Erinn Looney-Triggs <erinn.looneytriggs@gmail.com> (14):
+  * Add in basic IPv6 support.
+  * Typo of variable.
+  * Add com2sec6.
+  * Fix tests to pass for IPv6.
+  * Add in the ability to quiet logging for SNMP service.
+  * Fix typo in template.
+  * Add tests for the disable logging option.
+  * Additional test for when do_not_log_tcpwrappers is set to yes.
+  * Added openmanage directives.
+  * Add tests for openmanage snmpd.conf additions.
+  * Validate openmanage boolean.
+  * Add documentation and change com2sec6 to use public string by default.
+  * Add additional IPv6 tests.
+  * Update tested on list.
+ 
+ Michael Arnold <github@razorsedge.org> (6):
+  * Deprecate the use of ro_community and friends.
+  * Fix typo 'paramter' in README.md.
+  * Fix license and unbounded ranges in metadata.json.
+  * Add metadata-json-lint support to Gemfile and Rakefile.
+  * Manage common files with modulesync.
+  * Update versions for 3.3.0 release.
+ 
+
+2014-10-06 Michael Arnold <github@razorsedge.org> - 3.2.0
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (12):
+  * Update Geppetto .project to version 4.
+  * Allow tracking of metadata.json.
+  * Expand Puppet versions tested in Travis-CI.
+  * Fix lint indentation warnings.
+  * Switch to using metadata.json vs Modulefile.
+  * Add missing dependency values to metadata.json.
+  * Change the order of the tags in metadata.json.
+  * Rename install_client param to manage_client.
+  * Remove rspec test for deprecation warning.
+  * Allow for setting sysName.
+  * Update to newer Gemfile, Rakefile, and spec_helper.
+  * Update versions for 3.2.0 release.
+ 
+ Sebastian Brückner <sebbrueckner@gmail.com> (1):
+  * Fix variable names to be lowercase for future parser compatibility.
+ 
+
+2014-05-25 Michael Arnold <github@razorsedge.org> - 3.1.0
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (7):
+  * Add contribution instructions to README.md.
+  * Convert fixtures repositories to use https.
+  * Expand Puppet versions tested in Travis-CI.
+  * Add compatibility data to the module.
+  * Update README.md with details about issue #9.
+  * Update Modulefile source to use https.
+  * Update versions for 3.1.0 release.
+ 
+ Hunter Satterwhite <hsatterwhite@webassign.net> (6):
+  * Added FreeBSD support
+  * Fixed service config path
+  * Added variable for group ownership for snmpd.conf/snmptrapd.conf
+  * Added spec test for FreeBSD
+  * Updated README.md
+  * snmp client test for FreeBSD
+ 
+ Clint Miller <clintmiller@mac.com> (1):
+  * Create 'services' parameter to snmp class
+ 
+ Steve Maddison <steve@cosam.org> (1):
+  * Support for custom VACM com2sec and group mappings.
+ 
+
+2013-07-13 Michael Arnold <github@razorsedge.org> - 3.0.0
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (31):
+  * Clarify that this module installs the Net-SNMP software.
+  * Fix README.md title.
+  * Remove the dependency on LSB facts.
+  * Major refactor of server/trap/client classes.
+  * Templatize config files.
+  * Update example config files.
+  * Convert the remaining parameters to support ENC.
+  * Fix README.md markdown.
+  * Squash bugs via live testing.
+  * Fix trapd service on Debian.
+  * Add more Puppet tests.
+  * Add more rspec tests.
+  * Added Suse osfamily support.
+  * Renamed files directory to be samples.
+  * Fix arrow alignment to make lint happy.
+  * Add support for sysservices.
+  * Rake validate to also check ERB for syntax errors.
+  * Add support for dlmod.
+  * Implement configuration safety valves.
+  * Add agentaddress and snmptrapdaddr parameters.
+  * Refactor SNMP configs.
+  * Enhanced snmpv3_user to also create snmptrapd users.
+  * Expand Puppet versions tested in Travis-CI.
+  * Fix an Rspec error seen on Ruby 1.9.3+.
+  * Fix wyrie-trapd_extended additions to support ENC.
+  * Rename snmp_trap_addr to snmptrapdaddr.
+  * Make agentaddress an array like snmptrapdaddr.
+  * Standardize parameter->template results.
+  * Remove git-log-to-changelog from Modulefile.
+  * Update README.md with new changes.
+  * Update versions for 3.0.0 release.
+ 
+ Scott Barr <scott@barr.co.za> (3):
+  * * Extend functionality by adding class parameters:   snmp_trap_addr  
+    disable_authorization   do_not_log_traps
+  * The trap_handlers class parameter accepts any values and is directly
+    outputted to the template, essentially allowing any value to be written
+    to file. Prefix each value in trap_handler with 'traphandle' for a more
+    expected/sane result.
+  * Added forwards for notification processing.
+ 
+
+2013-06-22 Michael Arnold <github@razorsedge.org> - 2.0.0
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (20):
+  * Fix Ubuntu support to pass lint
+  * Update Travis-CI config file to test 2.7.18
+  * Update rspec tests for new rspec version.
+  * Initial Ubuntu support rspec tests
+  * Converted to puppetlabs_spec_helper.
+  * Updated .travis.yml and .gemfile.
+  * Add CHANGELOG generation during module build.
+  * Lint: fix variable not enclosed in {}.
+  * Fix Ubuntu support to pass lint
+  * Initial Ubuntu support rspec tests
+  * Do not install File['snmptrapd.sysconfig'] on Debian.
+  * Add files/snmpd.sysconfig-Debian-12.
+  * Initial Debian support rspec tests.
+  * Clean up Notes section of README.md.
+  * Use ::osfamily instead of ::operatingsystem.
+  * Convert template variables to be local.
+  * Added deprecation warnings in README.md.
+  * Fix support for snmptrapd on Debian.
+  * Update README.md.
+  * Update versions for 2.0.0 release.
+ 
+ Endre Karlson <endre.karlson@gmail.com> (2):
+  * Add Ubuntu support and fix indent
+  * Add Ubuntu support and fix indent
+ 
+ Jonathan Owens <jonathan@newrelic.com> (2):
+  * Allow overriding the list of views and accesses.
+  * Allow specifying traphandlers for trapd.
+ 
+ Santiago Piccinini <spiccinini@codigosur.org> (1):
+  * Added initial support for Debian
+ 
+
+2012-07-15 Michael Arnold <github@razorsedge.org> - 1.0.2
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (1):
+  * Bump module version for Puppet Forge release
+ 
+ Steve Huff <shuff@vecna.org> (1):
+  * modified templates to dereference class parameters
+ 
+
+2012-05-26 Michael Arnold <github@razorsedge.org> - 1.0.1
+=========================================================
+
+ Michael Arnold <github@razorsedge.org> (1):
+  * Change github account to razorsedge
+ 
+
+2012-05-06 Michael Arnold <github@razorsedge.org> - 1.0.0
+=========================================================
+
+

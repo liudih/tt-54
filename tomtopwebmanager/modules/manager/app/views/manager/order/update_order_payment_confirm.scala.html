@@ -1,0 +1,14 @@
+@(orderId:Integer,
+orderStatus:Integer,
+orderTransactionid:String
+)
+<div class="control-group">
+	<label class="control-label">交易号：</label>
+	<div class="controls">
+		<input type="hidden" id="orderstatus_id@orderId"  name="statusid" value="@orderStatus">
+		<input type="hidden"  name="orderid" id="order_Id@orderId" value="@orderId">
+		<input type="text"  name="ctransactionid" id="orderTransaction_Id@orderId" value="@orderTransactionid">
+		
+	</div>
+</div>
+

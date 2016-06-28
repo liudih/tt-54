@@ -1,0 +1,34 @@
+@(oneCategoryList: List[dto.Category],
+categoryMap: Map[Integer,Collection[dto.Category]])
+@import services.base._
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+@oneCategoryList.map{r=>
+@if(null != r.getCpath() && !r.getCpath().isEmpty){
+  <url>
+  	<loc>@controllers.product.routes.CategoryProduct.showCategoryProduct(r.getCpath()).absoluteURL(request())</loc>
+  	<changefreq>daily</changefreq>
+  </url>
+  @categoryMap(r.getIid()).map{m=>
+  @if(null != m.getCpath() && !m.getCpath().isEmpty){
+  <url>
+  	<loc>@controllers.product.routes.CategoryProduct.showCategoryProduct(m.getCpath()).absoluteURL(request())</loc>
+  	<changefreq>daily</changefreq>
+  </url>
+  }
+  }
+}
+}
+  <url>
+  	<loc>@controllers.product.routes.Product.newarrivals().absoluteURL(request())</loc>
+  	<changefreq>daily</changefreq>
+  </url>
+  <url>
+  	<loc>@controllers.product.routes.Product.freeShipping().absoluteURL(request())</loc>
+  	<changefreq>daily</changefreq>
+  </url>
+  <url>
+  	<loc>@controllers.product.routes.Product.clearance().absoluteURL(request())</loc>
+  	<changefreq>daily</changefreq>
+  </url>
+</urlset>

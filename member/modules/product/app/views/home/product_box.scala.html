@@ -1,0 +1,15 @@
+@(badges: List[valueobjects.product.ProductBadge],
+  header: Html,
+  footer: Html,
+  startLabel: Html,
+  endLabel: Html
+  )
+@header
+@if(null !=badges &&  badges.size>0){
+	@badges.map{ b =>
+		@startLabel
+			@views.html.product.badge_home(b,null,null)
+	  	@endLabel
+	}
+}
+@footer

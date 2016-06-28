@@ -1,0 +1,19 @@
+@(fragment: valueobjects.loyalty.PointFragment)
+@import views.html.helper._
+@import services.base._
+@import services.base.utils._
+
+@if(fragment.getCostPoints() == null) {
+<div class="bulkrate bulkBott_H ttPoints">
+	<p class="bulkClick"><span></span>@Messages("tomtop.points")<em></em></p>
+	<p class="bulk_hover"><em></em>@fragment.getRulePoints() Points = $@Utils.money(fragment.getRuleMoney())<br>@Messages("you.can.use") <strong>@fragment.getMemberPoints</strong>@Messages("tomtop.points.for.this.order") </p>
+	<div class="bulk_Pop" style="display: none;">
+			@form(controllers.loyalty.routes.Points.checkAndAddExtra(), 'class->"cart_apply", 'style->"display: block;", 'onsubmit->"return false") {
+				<input type="hidden" name="cartId" value="@fragment.getCartId()">
+				<input type="text" class="digital" name="costPoints"><input class="bulkApp" name="cart_submit_extra" type="button" value="@Messages("apply")">
+				<p class="red" style="display: none;">@Messages("tomtop.points") <strong></strong>@Messages("is.not.valid")</p>
+			}
+	
+	</div>
+</div>
+}

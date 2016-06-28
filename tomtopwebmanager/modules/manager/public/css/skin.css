@@ -1,0 +1,87 @@
+.topNavCon {
+  background-color: #ffffff;
+}
+.topNavCon .topNavigation_txt .topBrd > li dl dt {
+  border-color: #ffffff;
+}
+.Bread_crumbs .Bread_home a:after {
+  background-image: url("../images/breadcrumb_f2cf864133423ac9.png");
+  background-position: -21px 4px !important;
+  content: "";
+  position: absolute;
+  right: -8px;
+  top: 2px;
+  width: 15px;
+  height: 27px;
+}
+.Bread_crumbs > li dl dt a:after {
+  background-image: url("../images/breadcrumb_f2cf864133423ac9.png");
+  background-position: -21px 4px !important;
+  content: "";
+  position: absolute;
+  right: -8px;
+  top: 2px;
+  width: 15px;
+  height: 27px;
+}
+.Bread_crumbs .curr-category a:after {
+  background-image: url("../images/breadcrumb_f2cf864133423ac9.png");
+  background-position: -18px -37px !important;
+  content: "";
+  position: absolute;
+  right: -8px;
+  top: 2px;
+  width: 15px;
+  height: 27px;
+}
+.Bread_crumbs .curr-category a:before {
+  background-image: url("../images/breadcrumb_f2cf864133423ac9.png");
+  background-position: -29px 3px !important;
+  content: "";
+  position: absolute;
+  left: 0px;
+  top: 2px;
+  width: 9px;
+  height: 27px;
+}
+.accountBox .accountRight {
+  background-color: #ffffff;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.accountBox .accountRight .autoH {
+  background-color: #f3f3f3;
+}
+.accountBox .accountRight .autoH .accH_box {
+  background-color: #f3f3f3;
+}
+.accountBox .accountRight .autoH .accH_box .accMovebox {
+  background-color: #f3f3f3;
+}
+.accountBox .accountRight .autoH .accH_box .accMovebox li {
+  background-color: #ffffff;
+}
+.accountBox .accountRight.accountRequests {
+  padding-bottom: 10px;
+}
+.helpRight {
+  background-color: #ffffff;
+  padding: 10px;
+}
+.videoXXK_box {
+  background-color: #ffffff;
+  padding: 10px;
+}
+.xxkDiv .accH_box {
+  background-color: #f3f3f3 !important;
+}
+.xxkDiv .accH_box .accMovebox {
+  background-color: #f3f3f3 !important;
+}
+.xxkDiv .accH_box .accMovebox li {
+  background-color: #ffffff;
+}
+.videos_Box .videoList > li {
+  background-color: #ffffff;
+}
+/*# sourceMappingURL=skin.css.map */

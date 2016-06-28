@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<!-- advertising Store -->
+	<changeSet author="fcl" id="t_advertising_base-20141229">
+		<createTable tableName="t_advertising_base" remarks="广告信息">
+			<column name="iid" type="BIGINT" autoIncrement="true" remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cimageurl" type="VARCHAR(500)" remarks="图片路径" />
+			<column name="iposition" type="INTEGER" remarks="方位，如：1代表right 2代表left" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()" remarks="创建时间" />
+			<column name="clastupdateduser" type="VARCHAR(20)" remarks="修改人" />
+			<column name="dlastupdateddate" type="DATETIME" remarks="修改时间" />
+		</createTable>
+	</changeSet>
+	<changeSet author="fcl" id="t_advertising_base-test-data" context="test">
+		<loadData tableName="t_advertising_base" file="samples/t_advertising_base.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="fcl" id="t_advertising_distribution-20141229">
+		<createTable tableName="t_advertising_distribution" remarks="广告信息分配">
+			<column name="iid" type="BIGINT" autoIncrement="true" remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iadvertisingid" type="BIGINT" remarks="广告id" />
+			<column name="itype" type="INTEGER" remarks="广告属于哪个类型，如果:product，专场" />
+			<column name="cbusinessid" type="VARCHAR(300)" remarks="产品id或SKU，能唯一指示对应数据" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点id" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()" remarks="创建时间" />
+			<column name="clastupdateduser" type="VARCHAR(20)" remarks="修改人" />
+			<column name="dlastupdateddate" type="DATETIME" remarks="修改时间" />
+		</createTable>
+	</changeSet>
+	<changeSet author="fcl" id="t_advertising_distribution-test-data" context="test">
+		<loadData tableName="t_advertising_distribution" file="samples/t_advertising_distribution.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	
+	
+	<changeSet author="xcf" id="t_advertising_type-20150203">
+		<createTable tableName="t_advertising_type" remarks="广告类型表">
+			<column name="iid" type="BIGINT" autoIncrement="true" remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iadvertisingid" type="BIGINT" remarks="类型id" />
+			<column name="cadvertisingname" type="VARCHAR(100)" remarks="广告类型名称" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()" remarks="创建时间" />
+			<column name="clastupdateduser" type="VARCHAR(20)" remarks="修改人" />
+			<column name="dlastupdateddate" type="DATETIME" remarks="修改时间" />
+		</createTable>
+	</changeSet>
+	<changeSet author="xcf" id="t_advertising_type-test-data" context="test">
+		<loadData tableName="t_advertising_type" file="samples/t_advertising_type.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="xcf" id="t_advertising_positon-20150203">
+		<createTable tableName="t_advertising_positon" remarks="广告图片方位表">
+			<column name="iid" type="BIGINT" autoIncrement="true" remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ipositonid" type="BIGINT" remarks="方位id" />
+			<column name="cpositonname" type="VARCHAR(100)" remarks="广告类型名称" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()" remarks="创建时间" />
+			<column name="clastupdateduser" type="VARCHAR(20)" remarks="修改人" />
+			<column name="dlastupdateddate" type="DATETIME" remarks="修改时间" />
+		</createTable>
+	</changeSet>
+	<changeSet author="xcf" id="t_advertising_positon-data">
+		<loadData tableName="t_advertising_positon" file="init/t_advertising_positon.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	
+	<changeSet author="fcl" id="t_advertising_content-20150227">
+		<createTable tableName="t_advertising_content" remarks="广告内容">
+			<column name="iid" type="BIGINT" autoIncrement="true" remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iadvertisingid" type="BIGINT" remarks="广告id" />
+			<column name="ctitle" type="varchar(300)" remarks="标题" />
+			<column name="chrefurl" type="VARCHAR(500)" remarks="广告链接地址" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言ID" />
+
+		</createTable>
+	</changeSet>
+	<changeSet author="fcl" id="t_advertising_content-test-data" context="test">
+		<loadData tableName="t_advertising_content" file="samples/t_advertising_content.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="liudi" id="t_advertising_type-add_data-20150417" >
+		<loadData tableName="t_advertising_type" file="init/t_advertising_type-20150417.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	
+	<changeSet author="xcf" id="t_advertising_content-add-column-20150623">
+		<addColumn tableName="t_advertising_content">
+			<column name="bbgimgtile" type="BOOLEAN" defaultValue="false"
+				remarks="背景图片是否x轴平铺" />
+			<column name="iindex" type="INTEGER" remarks="排序编号" />
+			<column name="cbgimageurl" type="VARCHAR(500)" remarks="背景图片url" />
+			<column name="cbgcolor" type="VARCHAR(7)" remarks="背景颜色" />
+			<column name="bstatus" type="BOOLEAN" remarks="是否启用 " defaultValue="true"/>
+			<column name="bhasbgimage" type="BOOLEAN" defaultValue="false"
+				remarks="是否有背景图片(默认false)" />
+		</addColumn>
+	</changeSet>
+	
+	<changeSet author="xcf" id="t_advertising_distribution-add-column-20150626">
+		<addColumn tableName="t_advertising_distribution">
+			<column name="cdevice" type="VARCHAR(50)" defaultValue="web" remarks="设备：如web/mobile/app" />
+		</addColumn>
+	</changeSet>
+</databaseChangeLog>

@@ -1,0 +1,34 @@
+[Unit]
+Description=Magento DB for Data Migration
+
+# Requirements
+Requires=docker.service
+
+# Dependency ordering
+After=docker.service
+
+[Service]
+
+TimeoutStartSec=0
+
+# Change killmode from "control-group" to "none" to let Docker remove
+# work correctly.
+KillMode=none
+
+# Pre-start and Start
+## Directives with "=-" are allowed to fail without consequence
+ExecStartPre=-/bin/bash -c "/usr/bin/docker kill magento"
+ExecStartPre=-/bin/bash -c "/usr/bin/docker rm magento"
+ExecStartPre=-/bin/bash -c "/usr/bin/docker pull 192.168.7.15:5000/mysql"
+ExecStart=/bin/bash -c "/usr/bin/docker run --name=magento -p 3306:3306 \
+		-e MYSQL_ROOT_PASSWORD=password \
+		-e MYSQL_USER=magento \
+		-e MYSQL_PASSWORD=magento \
+		-e MYSQL_DATABASE=magento \
+		-v /data/magento:/var/lib/mysql \
+		192.168.7.15:5000/mysql"
+
+# Stop
+ExecStop=/usr/bin/docker stop magento
+
+Restart=always

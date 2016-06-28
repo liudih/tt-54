@@ -1,0 +1,3 @@
+﻿"iid","cname","iparentid","ilevel","cclass","curl","ccreateuser","cenname"
+"77","评分类型管理","61","2","77","/sysadmin/customerservice/scoretype","luojh","ScoreType"
+"78","客服评分管理","61","2","78","/sysadmin/customerservice/scoremanage","luojh","ScoreManage"

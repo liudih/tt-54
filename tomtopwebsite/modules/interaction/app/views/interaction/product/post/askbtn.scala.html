@@ -1,0 +1,44 @@
+@()
+@helper.javascriptRouter("js_routes")(
+
+    controllers.member.routes.javascript.Login.login,
+    controllers.member.routes.javascript.Login.checkSign
+)
+<input id="faq_button" class=" blackInput" type="submit" value='@Messages("ask.a.question")' />
+@services.base.HtmlUtils.misc().addTailOnce{
+ <script type="text/javascript">
+ function showFaqDlg(){
+		$(this).siblings(".blockPopup_box").fadeIn();
+		mH = $(this).siblings(".blockPopup_box").find(".scrollWZ").height();
+		mY = $(this).siblings(".blockPopup_box").find(".scrollY").height();
+		$(".scrollWZ").css({"margin-top":-mH/2})
+		if(mY>mH)
+		{
+			$(this).siblings(".blockPopup_box").find(".scrollBox").css({"overflow-y":"scroll"})
+		}
+		else{
+			$(this).siblings(".blockPopup_box").find(".scrollBox").css({"overflow-y":"auto"})
+		}
+}
+ 
+ $('#faq_button').on('click',function(e){
+ 	var self=this;
+ 	var s =s || {};
+ 	s.url=js_routes.controllers.member.Login.checkSign().url
+ 	s.type='get';
+ 	async:false;
+ 	s.data={};
+ 	s.success=function(data){
+ 		if(data!=undefined && data){
+ 			showFaqDlg.call(self);
+ 			return;
+ 		}
+ 		location.href=js_routes.controllers.member.Login.login(location.href).url
+ 		
+ 	}
+ 	$.ajax(s);
+ 	
+ })
+ 
+ </script>
+ }

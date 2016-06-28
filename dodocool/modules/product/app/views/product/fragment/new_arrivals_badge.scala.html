@@ -1,0 +1,20 @@
+@(product: dto.product.ProductMessage, myClass: String)
+@import views.html.product.image
+<div class="same @myClass">
+	<div class="pic-con">
+    	@image(product.getImageurl(), product.getTitle(), 600, 400, "showAttributePic")
+    </div>
+    <div class="txt-con pt50">
+        <h3></h3>
+        <p>@product.getTitle()</p>
+    	<p>
+        	<a class="fl learn_more" rel="nofollow" href="@controllers.product.routes.Product.view(product.getUrl())">@Messages("learn.more")</a>
+        	<!-- <a class="fl buyamazon" id="buynow" rel="nofollow" 
+        		href="@services.dodocool.product.ProductMessageService.getInstance().getDefaultThirdPlatUrl(product.getListingid())" onclick="turn_url(this)">Buy at Amazon
+        	</a> -->
+        </p>
+    </div>
+</div>
+
+
+ 

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.rabbit.conf.mapper.product.CategoryBaseMapper" >
+  <resultMap id="BaseResultMap" type="com.rabbit.dto.product.CategoryBase" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="iparentid" property="iparentid" jdbcType="INTEGER" />
+    <result column="cpath" property="cpath" jdbcType="VARCHAR" />
+    <result column="ilevel" property="ilevel" jdbcType="INTEGER" />
+    <result column="iposition" property="iposition" jdbcType="INTEGER" />
+    <result column="ichildrencount" property="ichildrencount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, iparentid, cpath, ilevel, iposition, ichildrencount
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_category_base
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.rabbit.dto.product.CategoryBase" >
+    insert into t_category_base (iid, iparentid, cpath, 
+      ilevel, iposition, ichildrencount
+      )
+    values (#{iid,jdbcType=INTEGER}, #{iparentid,jdbcType=INTEGER}, #{cpath,jdbcType=VARCHAR}, 
+      #{ilevel,jdbcType=INTEGER}, #{iposition,jdbcType=INTEGER}, #{ichildrencount,jdbcType=INTEGER}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.rabbit.dto.product.CategoryBase" >
+      insert into t_category_base
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >iid,</if>
+      <if test="iparentid != null" >iparentid,</if>
+      <if test="cpath != null" >cpath,</if>
+      <if test="ilevel != null" >ilevel,</if>
+      <if test="iposition != null" >iposition,</if>
+      <if test="ichildrencount != null" >ichildrencount,</if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >#{iid,jdbcType=INTEGER},</if>
+      <if test="iparentid != null" >#{iparentid,jdbcType=INTEGER},</if>
+      <if test="cpath != null" >#{cpath,jdbcType=VARCHAR},</if>
+      <if test="ilevel != null" >#{ilevel,jdbcType=INTEGER},</if>
+      <if test="iposition != null" >#{iposition,jdbcType=INTEGER},</if>
+      <if test="ichildrencount != null" >#{ichildrencount,jdbcType=INTEGER},</if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.rabbit.dto.product.CategoryBase" >
+    update t_category_base
+    set iparentid = #{iparentid,jdbcType=INTEGER},
+      cpath = #{cpath,jdbcType=VARCHAR},
+      ilevel = #{ilevel,jdbcType=INTEGER},
+      iposition = #{iposition,jdbcType=INTEGER},
+      ichildrencount = #{ichildrencount,jdbcType=INTEGER}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

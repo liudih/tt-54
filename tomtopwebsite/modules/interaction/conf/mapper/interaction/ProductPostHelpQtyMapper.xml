@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.interaction.ProductPostHelpQtyMapper">
+	<resultMap id="BaseResultMap" type="dto.interaction.ProductPostHelpQty">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="ipostid" property="ipostid" jdbcType="INTEGER" />
+		<result column="ihelpfulqty" property="ihelpfulqty" jdbcType="INTEGER" />
+		<result column="inothelpfulqty" property="inothelpfulqty"
+			jdbcType="INTEGER" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, ipostid, ihelpfulqty,inothelpfulqty,dcreatedate
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_interaction_product_post_help_qty
+		where iid = #{iid,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from t_interaction_product_post_help_qty
+		where iid = #{iid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="dto.interaction.ProductPostHelpQty">
+		insert into t_interaction_product_post_help_qty
+		(ipostid,ihelpfulqty,inothelpfulqty)
+		values ( #{ipostid,jdbcType=INTEGER}, #{ihelpfulqty,jdbcType=INTEGER},
+		#{inothelpfulqty,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="dto.interaction.ProductPostHelpQty">
+		insert into t_interaction_product_post_help_qty
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+
+			<if test="ipostid != null">
+				ipostid,
+			</if>
+
+			<if test="ihelpfulqty != null">
+				ihelpfulqty,
+			</if>
+			<if test="inothelpfulqty != null">
+				inothelpfulqty,
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate,
+			</if>
+
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+
+			<if test="ipostid != null">
+				#{ipostid,jdbcType=INTEGER},
+			</if>
+			<if test="ihelpfulqty != null">
+				#{ihelpfulqty,jdbcType=INTEGER},
+			</if>
+			<if test="inothelpfulqty != null">
+				#{inothelpfulqty,jdbcType=INTEGER},
+			</if>
+			<if test="dcreatedate != null">
+				#{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="dto.interaction.ProductPostHelpQty">
+		update t_interaction_product_post_help_qty
+		<set>
+			<if test="ipostid != null">
+				ipostid = #{ipostid,jdbcType=INTEGER},
+			</if>
+
+
+			<if test="ihelpfulqty != null">
+				ihelpfulqty = #{ihelpfulqty,jdbcType=INTEGER},
+			</if>
+			<if test="inothelpfulqty != null">
+				inothelpfulqty = #{inothelpfulqty,jdbcType=INTEGER},
+			</if>
+
+			<if test="dcreatedate != null">
+				dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+
+		</set>
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="dto.interaction.ProductPostHelpQty">
+		update t_interaction_product_post_help_qty
+		set ipostid = #{ipostid,jdbcType=INTEGER},
+		ihelpfulqty = #{ihelpfulqty,jdbcType=INTEGER},
+		inothelpfulqty = #{inothelpfulqty,jdbcType=INTEGER},
+		dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP}
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+</mapper>

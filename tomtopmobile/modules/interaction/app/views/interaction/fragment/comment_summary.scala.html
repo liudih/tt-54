@@ -1,0 +1,30 @@
+@(getStarsWidth: Integer,
+	getAverageScore: Double,
+	getReviewCount: Integer,
+	getFoverallratings: List[dto.interaction.Foverallrating]	
+	)
+<div class="product_page_w">
+	<h5>Customer Review</h5>
+	<ul class="review_Rating">
+		<li class="lineBlock">Average Rating:</li>
+		<li class="lineBlock">
+			<div class="product_Reviews">
+			    <div style="width: @if(getStarsWidth == null || getStarsWidth == 0){0%} else {@getStarsWidth%}" class="product_StarsW">
+			    	<div class="product_Stars"></div>
+			    </div> 
+			</div>
+		</li>
+		<li class="lineBlock reviews_TS"><span class="orange">@getAverageScore</span> (@getReviewCount Reviews)</li>
+	</ul>
+	<ul class="startPercentage">
+			@getFoverallratings.map{f => 
+				<li>
+				<span class="color333">@f.getType() stars</span>
+				<div class="percentageBox">
+                   <div class="percentageFive" style="width:@services.base.utils.Utils.percent(f.getPercentage)%"></div>
+               	</div>
+				<span>@f.getNum() (@services.base.utils.Utils.percent(f.getPercentage())%)</span>
+				</li>
+			}
+     </ul>
+</div>

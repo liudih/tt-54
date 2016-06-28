@@ -1,0 +1,129 @@
+@(bi : valueobjects.order_api.cart.NonExistenceBundleCartItem,
+	isCart: Boolean = true,
+	currency:dto.Currency,
+	isReview:Boolean = false)
+@urlprefix = @{play.Play.application().configuration().getString("member.urlprefix")}
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+<ul class="cartListUL oneS" id="cart_item_num@bi.getCid()" flag="@bi.getCid()_@bi.getClistingid">
+	<input type="hidden" class="listingId" value="@bi.getClistingid()"/>
+	@*if(bi.isExist){<li class="gilterGray_topBox"></li>}*@
+    <li class="cartListLI">
+        <a class="rightThis" href="javascript:;"><!-- <span></span> --></a>
+        <a class="inBlock pro_img @if(!bi.isExist){filterGray}" href="@if(bi.getCurl()!=null){@urlprefix@controllers.product.routes.Product.view(bi.getCurl())}">
+        	@img(bi.getCimageurl(), null, 120, 120, null)
+        </a>
+        <div class="inBlock pro_info">
+            <a href="@if(bi.getCurl()!=null){@controllers.product.routes.Product.view(bi.getCurl())}">
+            @bi.getCtitle()
+            </a>
+            <p class="parameter"><span>@Messages("sku") @bi.getSku()</span><!-- <span>Color:White</span><span>Power:3W</span> --></p>
+        </div>
+        <div class="inBlock pro_price">
+        @if(bi.getPrice()!=null){
+        	@if(bi.getPrice().getDiscount()!=null&&bi.getPrice().getDiscount()>0){
+            	<p class="oldPrice">@currency.getCsymbol @Utils.money(bi.getPrice().getUnitBasePrice())</p>
+            }
+            <p class="newPrice">@currency.getCsymbol <span>@Utils.money(bi.getPrice().getUnitPrice())</span></p>
+            @if(bi.getPrice().getDiscount()!=null&&bi.getPrice().getDiscount()>0){
+				<p class="priceTxt">Save @currency.getCsymbol<span class="mainsaveprice">@Utils.money(bi.getPrice().getUnitBasePrice()-bi.getPrice().getUnitPrice())</span></p>
+				<p class="priceOff">
+					<em></em><span>@Utils.percent(bi.getPrice().getDiscount())</span>% OFF
+				</p>
+			}
+		}
+        </div>
+       	@if(isCart){
+       	<ul class="qty_num inBlock">
+            <li class="qty_num_Reduction" clstag="@bi.getCid()"></li>
+			<li class="qty_nums"><input type="text" value="@bi.getIqty()" class="quantity-text" style="width:40px;height:30px;text-align:center;outline:medium;border:none;background:no-repeat 0 0 scroll #fff;" /></li>
+			<li class="qty_num_add" clstag="@bi.getCid()"></li>
+		</ul>
+		}else{
+		<ul class="qty_num inBlock" style="text-align:center;">
+			<li class="qty_nums">@bi.getIqty()</li>
+		</ul>
+		}
+        <span class="pro_total inBlock" data="@bi.getClistingid">@currency.getCsymbol <span>@if(bi.getPrice()!=null){@Utils.money(bi.getPrice().getPrice())}</span></span>
+        @if(isCart==true){
+        <div class="pro_options inBlock">
+            <a href="javascript:;" class="delete">
+                <em class="sCloss"></em>
+                <p class="deletePop">
+                    <i></i>@Messages("remove.from.your.cart")<br>
+                    <input onclick="deleteItemList('@bi.getCid()','@bi.getClistingid()', true)" type="button" value="@Messages("yes")">
+					<input onclick="hideTip(this)" type="button" value="@Messages("no")">
+                </p>
+            </a>
+            <a href="javascript:;" onclick="collect('@bi.getClistingid()',this)" class="heart"><em class="showcollect" data="@bi.getClistingid()"></em></a>
+        </div>
+        	@if(bi.getAddition!=null && bi.getAddition!=""){
+	        	<div class="discountInformation">@bi.getAddition</div>
+	        }
+        }
+        @if(isReview){
+        	<a class="orderReview" href="/review/product/@bi.getClistingid()/write">@Messages("review")</a>
+        }
+    </li>
+	@if(bi.getChildList().size()>1){
+    <li class="cartListToge">
+    	<p class="listTogeTitle">@Messages("frequently.buy.together")<i></i></p>
+    	@bi.getChildList().filter(!_.getBismain()).map{ k =>
+    	<input type="hidden" class="listingId" value="@k.getClistingid()"/>
+    	<ol class="list01_bd" flag="@k.getCid()_@k.getClistingid">
+    		@*if(k.isInstanceOf[valueobjects.cart.NonExistenceCartItem]){<div class="gilterGray_topBox"></div>}*@
+            <a class="inBlock pro_img @if(k.isInstanceOf[valueobjects.order_api.cart.NonExistenceCartItem]){filterGray}" href="@if(k.getCurl()!=null){@urlprefix@controllers.product.routes.Product.view(k.getCurl())}">
+            @img(k.getCimageurl(), null, 120, 120, null)</a>
+            <div class="inBlock pro_info">
+                <a href="@if(k.getCurl()!=null){@controllers.product.routes.Product.view(k.getCurl())}">@k.getCtitle()</a>
+                <p class="parameter"><span>@Messages("sku") @k.getSku()</span><!-- <span>Color:White</span><span>Power:3W</span> --></p>
+            </div>
+            <div class="inBlock pro_price">
+            @if(k.getPrice()!=null){
+            	@if(k.getPrice()!=null){
+            		@if(k.getPrice().getDiscount()!=null&&k.getPrice().getDiscount()>0){
+	            		<p class="oldPrice">@currency.getCsymbol @Utils.money(k.getPrice().getUnitBasePrice())</p>
+	            	}
+		            <p class="newPrice">@currency.getCsymbol <span>@Utils.money(k.getPrice().getUnitPrice())</span></p>
+		            @if(k.getPrice().getDiscount()!=null&&k.getPrice().getDiscount()>0){
+						<p class="priceTxt">@Messages("save") @currency.getCsymbol@Utils.money(k.getPrice().getUnitBasePrice()-k.getPrice().getUnitPrice())</p>
+						<p class="priceOff">
+							<em></em><span>@Utils.percent(k.getPrice().getDiscount())</span>% OFF
+						</p>
+					}
+				}
+			}
+            </div>
+            <ul class="qty_num inBlock">
+                <li class="qty_nums">@(k.getIqty()*bi.getIqty())</li>
+            </ul>
+            @if(k.getPrice()!=null){
+            <span class="pro_total inBlock" data="@k.getClistingid">@currency.getCsymbol <span>@Utils.money(k.getPrice().getPrice()*bi.getIqty())</span></span>
+            }else{
+            <span class="pro_total inBlock"></span></span>
+            }
+            @if(isCart==true){
+            <div class="pro_options inBlock">
+                <a href="javascript:;" class="delete">
+                    <em class="sCloss"></em>
+                    <p class="deletePop">
+                        <i></i>@Messages("remove.from.your.cart")<br>
+                        <input onclick="deleteItemList('@k.getCid()','@k.getClistingid()', false)" type="button" value="@Messages("yes")">
+						<input onclick="hideTip(this)" type="button" value="@Messages("no")">
+                    </p>
+                </a>
+                <a href="javascript:;" onclick="collect('@k.getClistingid()',this)" class="heart"><em class="showcollect" data="@k.getClistingid()"></em></a>
+            </div>
+            	@if(k.getAddition!=null && k.getAddition!=""){
+		        	<div class="discountInformation">@k.getAddition</div>
+		        }
+            }
+            @if(isReview){
+	        	<a class="orderReview" href="/review/product/@k.getClistingid()/write">@Messages("review")</a>
+	        }
+        </ol>
+        }
+    </li>
+    }
+</ul>

@@ -1,0 +1,62 @@
+@(categoryname: String,
+data: HashMap[dto.product.CategoryWebsiteWithName, List[dto.product.ProductMessage]])
+@tp = @{services.dodocool.base.template.TemplateService.getInstance().getContents()}
+
+@import views.html.helper._
+@helper.javascriptRouter("category_product")(
+	  controllers.product.routes.javascript.CategoryProduct.getNextPageCategoryProductData
+)
+
+@views.html.base.master{
+	<!-- breadcrumb -->
+    <div class="breadcrumb">
+    	<ol class="clearfix">
+        	<li class="mr15">@Messages("your.position")</li>
+            <li><a href="/">@Messages("home")</a><span>&gt;</span></li>
+            <li class="active">@categoryname</li>
+        </ol>
+    </div>
+    
+	<article class="pro_wrapper_item">
+    	<section class="pro_wrapper clearfix">
+        	<div class="main">
+            	<div class="main_inner">
+            		@if(null != data){
+	                    <div class="pro_nav" id="nav_side">
+	                		<ul class="list">
+	                			@data.map{p=>
+	                				<li><a href="#@p._1.getCname()">@p._1.getCname()</a></li>
+	                			}
+	                    	</ul>
+	                    </div>
+	                    @data.map{p=>
+		                    <div class="pro_main_list" id="@p._1.getCname()">
+		                    	<div class="pro_none"></div>
+		                    	<h3 class="hd">
+		                        	<strong>@p._1.getCname()</strong>
+		                            <span>@p._1.getCmetatitle()</span>
+		                        </h3>
+		                        <div class="bd">
+			                        @p._2.map{pro=>
+							         	@views.html.product.fragment.badge.render(pro, 190, 190)
+							        }
+							        @if(p._2.size()>=8){
+								        <div class="load-more">
+								        	<a name="next_page" tag="@p._1.getIcategoryid" p="1" style="cursor:pointer">loading more...</a>
+								        </div>
+							        }
+						        </div>
+		                    </div>
+	                    }
+                    }
+                    <!-- pro_main_list end  -->
+                </div>
+            </div>
+        @tp.get("hot-product-sale")
+        </section>
+    </article>
+    
+   @services.dodocool.base.HtmlUtils.misc().addHeadOnce{
+		<script src="@controllers.product.routes.Assets.at("js/product_category_search.js")"></script>
+   }
+}

@@ -1,0 +1,56 @@
+@(product: valueobjects.product.ProductBadge)
+@import services.base._
+@import services.base.utils._
+@baseUrl = @{play.Play.application().configuration().getString("image_request_base_url")}
+
+@if(product!=null){
+<div class="product_box lineBlock">
+	<div class="product_con">
+		@product.getPrice().getDiscountOption().asScala.map{ d =>
+			@if(product.getPrice().isDiscounted()){
+				<div class="discount_icon">@Utils.percent(d)</div>
+			}
+		}
+		<a class="product_img" href="@if(product.getUrl!=null){@controllers.product.routes.Product.view(product.getUrl)}">
+			@views.html.home.img(product.getImageUrl(),product.getTitle(),377,377,null)
+		</a>
+		<a class="product_title" href="@if(product.getUrl!=null){@controllers.product.routes.Product.view(product.getUrl)}" >
+		@if(product.getTitle()!=null && product.getTitle().length>100){
+	    	@product.getTitle.substring(0,100)...
+	    }else{
+	    	@product.getTitle
+	    }
+		</a>
+		@if(product.getPrice().isDiscounted()){
+			<div class="price_GR">@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitBasePrice)</div>
+		}else{
+			<div class="price_GR"> </div>
+		}
+		<div class="product_price">@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitPrice)</div>
+		<!-- 评论 -->
+		@if(null!=product.getHtmlmap()){
+		@product.getHtmlmap().get("review"+product.getListingId)
+		}
+		 
+		<div class="product_bottom">
+		@if(null!=product.getExtended()){
+				@product.getExtended().map{ i=>
+					@i
+				}
+			}
+			<div class="product_buy popBoxFilter" onclick="popDiv(this);" ><i>&nbsp;</i>Buy</div>
+			@product_options(product)
+		</div>
+	</div>
+</div>
+}
+
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/jquery.json.min.js")'></script>
+<script>
+var attrurl = "@controllers.product.routes.Product.getMultiatributeProduct()";
+var imgurl = "@baseUrl";
+</script>
+<script type="text/javascript" src='@controllers.product.routes.Assets.at("js/attr.js")'></script>
+<script type="text/javascript" src='@controllers.product.routes.Assets.at("js/addcart.js")'></script>
+}

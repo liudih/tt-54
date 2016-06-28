@@ -1,0 +1,4 @@
+"iid","cname","iparentid","ilevel","cclass","curl","ccreateuser","cenname"
+"154","Activity Report","149","2","154","/sysadmin/activity/activityreport","guozy","ActivityReport"
+"155","Lottery Result","149","2","155","/sysadmin/activity/lotteryresult","guozy","LotteryResult"
+

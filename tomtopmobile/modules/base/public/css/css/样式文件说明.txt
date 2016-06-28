@@ -1,0 +1,31 @@
+mobile.css
+style.css      每个页面必须引用
+
+
+不用管的样式 只需要在对应页面引用
+
+index_page.css     单独页面加载
+
+
+
+模块管理 找到相应模块调用
+
+top.css       首页最顶部导航条
+
+bottom.css    首页最底部导航条
+
+banner.css    首页banner样式
+
+icon.css      首页banner下面的Icon图标样式
+
+categories.css  Categories页面样式
+
+search.css      搜索模块样式
+
+module_breadCrumbs.css  产品页面的面包屑
+
+countdown.css           产品页面倒计时模块
+
+ProductOptions.css      产品页面颜色选择
+
+list_product.css        产品列表公用css  例：new_Arrivals等详情页

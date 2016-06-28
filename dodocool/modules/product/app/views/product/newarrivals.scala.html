@@ -1,0 +1,27 @@
+@(products: List[dto.product.ProductMessage])
+
+@views.html.base.master{
+	<!-- breadcrumb -->
+    <div class="breadcrumb">
+    	<ol class="clearfix">
+        	<li class="mr15">@Messages("your.position")</li>
+            <li><a href="/">@Messages("home")</a><span>&gt;</span></li>
+            <li class="active">@Messages("new.arrivals")</li>
+        </ol>
+    </div>
+	<!--  主体内容开始  -->
+	<article class="pro_wrapper_item">
+    	<section class="pro_wrapper">
+    		@if(products!=null && products.size()!=0){
+		      	@products.zipWithIndex.map{case (p, index)=>
+		      		@if(index%2==0){
+		      			@views.html.product.fragment.new_arrivals_badge.render(p, "")
+		      		}else{
+		      			@views.html.product.fragment.new_arrivals_badge.render(p, "other_same")
+		      		}
+           	 	}
+           	 }
+        </section>
+    </article>
+	<!--  主体内容结束  -->
+}

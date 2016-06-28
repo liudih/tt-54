@@ -1,0 +1,293 @@
+@(
+	ordernumber: String,
+	advertisingList : List[valueobjects.product.AdItem],
+	isLogin : Boolean,
+	plugIns: List[extensions.payment.IPaymentHTMLPlugIn],
+	succorder: dto.order.Order,
+	loyaltys : String
+)
+@import services.base.utils._
+@import services.member._
+@country = @{services.base.FoundationService._getCountryObj()}
+
+@views.html.base.minimal(true,true,false){
+@helper.javascriptRouter("cartRoutes")(
+	controllers.member.routes.javascript.Login.checkSign,
+	controllers.member.routes.javascript.Login.login
+)
+@services.base.HtmlUtils.misc().addHeadOnce{
+	 <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/product.css")?@version.BuildVersion.build()" />
+	   <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/newshopping2.css")?@version.BuildVersion.build()" /> 
+}
+<div class="newshopping_success">
+    <span class="icon_smile"></span>
+    <div class="newshopping_success_con">
+        <h3>@Messages("ordercompleted.result")</h3>
+        @if(ordernumber != null){
+        <p>@Messages("ordercompleted.yournumber") 
+        @if(isLogin){
+        	<a href="@controllers.order.member.routes.MemberOrder.orderDetail(ordernumber)">@ordernumber</a>
+        }else{
+        	<a href="@controllers.order.routes.OrderProcessing.noLoginOrderDetail(ordernumber)">@ordernumber</a>
+        }
+        </p>
+        }
+    </div>
+</div>
+<div class="ns_success_login">
+    <div class="left_advertisement">
+    	@if(null !=advertisingList && advertisingList.size()>0){
+			@advertisingList.map{a=>
+				@Html(a.getDefaultShow())
+			}
+	    }
+    </div>
+    <div class="right_login">
+        <dl>
+            <dt>@Messages("ordercompleted.whatisnext")</dt>
+            <dd>@Messages("ordercompleted.whatisnext.1")</dd>
+            <dd>@Messages("ordercompleted.whatisnext.2")</dd>
+            <dd>@Messages("ordercompleted.whatisnext.3")</dd>
+            <dd class="please_note"><span>@Messages("ordercompleted.whatisnext.note")</span>@Messages("ordercompleted.whatisnext.note.1")</dd>
+            <dd>@Messages("ordercompleted.whatisnext.4")</dd>
+            <dd>@Messages("ordercompleted.whatisnext.5")</dd>
+        </dl>
+        @if(!isLogin){
+        
+        <div class="ns_login_box">
+            <div class="ns_login_left">
+                <h3>@Messages("ordercompleted.joinnow")</h3>
+                <p>@Messages("ordercompleted.createaccount")</p>
+                <form id="regForm" >
+                <input id="current_country" type="hidden" name="country" value="US" countryname="United States Of America">
+                <div>
+                	<input type="text" name="email" placeholder="@Messages("enter.your.email.address")" class="ns_email text_input" />
+                </div>
+                <div>
+                	<input name="passwd" id="regpassword" type="password" placeholder="@Messages("enter.your.password")" class="ns_suo text_input"/>
+                </div>
+                <div>
+                	<input name="confirm_password" type="password" placeholder="@Messages("confirm.your.password")" class="ns_suo text_input" />
+				</div>
+				<div class="clear"></div>
+                <div class="ns_login_submit">
+                    <input type="submit" value="@Messages("ordercompleted.joinnow")">
+                    <a href="/base/cms/detail/59">@Messages("ordercompleted.privacypolicy")</a>
+                </div>
+                </form>
+            </div>
+            <dl class="ns_login_right">
+                <dt>@Messages("ordercompleted.convenientservices")</dt>
+                <dd>
+                    <h5>@Messages("ordercompleted.convenientservices.1")</h5>
+                    <p>@Messages("ordercompleted.convenientservices.1.text")</p>
+                </dd>
+                <dd>
+                   <h5>@Messages("ordercompleted.convenientservices.2")</h5>
+                    <p>@Messages("ordercompleted.convenientservices.2.text")</p>
+                </dd>
+                <dd>
+                    <h5>@Messages("ordercompleted.convenientservices.3")</h5>
+                    <p>@Messages("ordercompleted.convenientservices.3.text")</p>
+                </dd>
+                <dd>
+                    <h5>@Messages("ordercompleted.convenientservices.4")</h5>
+                    <p>@Messages("ordercompleted.convenientservices.4.text")</p>
+                </dd>
+            </dl>
+        </div>
+        }
+        <div class="app_twonum_box">
+            <h3>@Messages("ordercompleted.downloadapp")</h3>
+            <div class="app_twonum">
+                <a href="javascript:;"><img alt="" src="@controllers.base.routes.Assets.at("images/codeAndroidApp.jpg")"><p>Android APP</p></a>
+                <a href="javascript:;"><img alt="" src="@controllers.base.routes.Assets.at("images/codeIOSAPP.jpg")"><p>IOS APP</p></a>
+                <span>or</span>
+                <div class="app_twonum_img">
+                    <a class="a_android" href="javascript:;"></a><br>
+                    <a class="a_ios" href="javascript:;"></a>
+                </div>
+            </div>
+            <div class="app_twonum_input">
+                <a href="/"><input type="button" value="@Messages("ordercompleted.continue")" /></a> 
+                @if(ordernumber != null){
+                 or  
+                <a href="@controllers.order.member.routes.MemberOrder.orderDetail(ordernumber)">@Messages("ordercompleted.viewdetail")</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+@if(succorder!=null){
+	@plugIns.map{p=>@p.getHtml(succorder)}
+}
+<script>
+function errorTip(tip){
+	var errorBox = $('#errorBox');
+	if(errorBox.length == 0){
+		var ele = [];
+		ele.push('<div id="errorBox" style="display: block" class="pu_pop popNone_s">');
+		ele.push('<div class="ns_pop_box">');
+		ele.push('<div class="btn_pop_close"></div>');
+		ele.push('<div class="pop_title">');
+		ele.push('<h3>@Messages("tomtop.sendcoupon.title")</h3>');
+		ele.push('</div>');
+		
+		ele.push('<div class="pop_con">');
+		ele.push('<p id="errorBoxTxt"></p>');
+		ele.push('</div>');
+		ele.push('<div class="pop_input_box">');
+		//ele.push('<input type="button" class="pop_input_close" value="CLOSE">');
+		ele.push('<input id="errorBoxOkBtn" type="button" class="pop_input_confirm" value="OK">');
+		ele.push('</div>');
+		ele.push('</div>');
+		ele.push('<div class="blockPopup_black"></div>');
+		ele.push('</div>');
+		$('body').append(ele.join(''));
+		$('#errorBoxOkBtn').click(function() {
+			$('#errorBox').hide();
+		});
+		$('#errorBox').find('.btn_pop_close').click(function() {
+			$('#errorBox').hide();
+		});
+	}
+	
+	$('#errorBox').show();
+	$('#errorBoxTxt').text((tip || ''));
+	
+}
+$(function(){
+	var url = "/loyalty/coupon/checkordernum?ordernumber=@ordernumber";
+	$.ajax({
+		url: url, 
+		type: 'GET',
+		dataType: 'json',
+		success: function(data){
+			if(data.result=="success"){
+				errorTip('@Messages("tomtop.sendcoupon")');
+			}
+		} 
+	});
+})
+
+	var loyalty=@Html(loyaltys);
+	
+</script>
+@if(!isLogin){
+@services.base.HtmlUtils.misc().addTailOnce{
+<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+<script>
+$(document).ready(function() {
+	//reg---------------
+	$("#regForm").validate({
+		submitHandler: function(form) {
+			$.ajax({
+		        type:"post",
+		        cache:false,
+		        url:"@controllers.member.routes.Register.registerAjax()",
+		        data:$(form).serialize(),
+		        dataType:"json",
+		        success: function(data) {
+		        	if(data.result=="success"){
+		        		location.href = data.sendmail;
+		        	}
+	        	}
+		      });
+			return false;
+		},
+		//错误提示
+	    errorClass : "lable_error",
+		errorElement : "label",
+	  	highlight: function (element,errorClass) { 
+	    },
+	    unhighlight: function (element) { 
+	    },
+		errorPlacement: function(error, element) {
+			if($(element).attr("name")=="agree"){
+				$(element).next().after(error);
+			}else{
+				$(element).after(error);
+			}
+		},
+		rules: {
+			email: {
+				required:true,
+				email:true,
+				noexist:true,
+				maxlength:50
+			},
+			passwd: {
+				required: true,
+				minlength: 6,
+				maxlength: 20,
+				rangelength:[6,20]
+			},
+			confirm_password: {
+				required: true,
+				minlength: 6,
+				maxlength: 20,
+				equalTo: "#regpassword"
+			}
+	  	},
+		messages: {
+			email: {
+				required: "This field is required!",
+				noexist:'An account already exists for this email address!',
+				maxlength:"Please enter a valid email address!"
+			},
+			passwd: {
+				required: "Provide a password!",
+				minlength: jQuery.validator.format("Please enter at least {0} characters!"),
+				maxlength: jQuery.validator.format("Please enter no more than {0} characters!"),
+				rangelength: $.validator.format("Please enter a value between {6} and {20} characters long!"),
+				nosame:"Your password and account information too coincidence, stolen risk, please change a password!"
+			},
+			confirm_password: {
+				required: "Repeat your password!",
+				minlength: jQuery.validator.format("Please enter at least {0} characters!"),
+				maxlength: jQuery.validator.format("Please enter no more than {0} characters!"),
+				equalTo: "Enter the same password as above!"
+			},
+			agree:{
+				required: "Please make sure you agree to our Terms and Conditions!"
+			},
+			captcha:{
+				required: "Please enter the verification code!"
+			}
+		},
+	  	/*showErrors:function(errorMap,errorList) {
+	        console.log(errorMap);
+	        console.log(errorList);
+		},*/
+		success: function (e,element) {
+			e.removeClass('edit_error').addClass('suceess');
+		}
+	});
+	//ajax获取邮箱是否注册
+	jQuery.validator.addMethod("noexist", function(value, element) { 
+		var s= s || {};
+		var flag=null;
+		s.url= "@controllers.member.routes.Register.checkEmail().url"+"?email="+value;
+		s.data={};
+		s.type='get';
+		s.async=false;
+		s.success=function(data){
+			if(data){
+				if(data.errorCode===1){
+					flag=false;
+				}else if(data.errorCode===0){
+					flag=true;
+				}
+			}
+		}
+		$.ajax(s);
+	    var result=this.optional(element) || flag; 
+	    return result;
+	});
+});	 
+</script>
+
+}
+}
+}

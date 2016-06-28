@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.member.MemberEmailVerifyMapper" >
+  <resultMap id="BaseResultMap" type="dto.member.MemberEmailVerify" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="cemail" property="cemail" jdbcType="VARCHAR" />
+    <result column="bisending" property="bisending" jdbcType="BOOLEAN" />
+    <result column="cmark" property="cmark" jdbcType="VARCHAR" />
+    <result column="cactivationcode" property="cactivationcode" jdbcType="VARCHAR" />
+    <result column="idaynumber" property="idaynumber" jdbcType="INTEGER" />
+    <result column="dvaliddate" property="dvaliddate" jdbcType="TIMESTAMP" />
+    <result column="dsenddate" property="dsenddate" jdbcType="TIMESTAMP" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+    <result column="iresendcount" property="iresendcount" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, cemail, bisending,cactivationcode,cmark,idaynumber, idaynumber,dvaliddate,dsenddate, dcreatedate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List"  />
+    from t_member_email_verify
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_member_email_verify
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="dto.member.MemberEmailVerify" >
+    insert into t_member_email_verify (cemail,cmark, bisending,cactivationcode,idaynumber,dvaliddate,dsenddate)
+    values (    #{cemail,jdbcType=VARCHAR},  #{cmark,jdbcType=VARCHAR},#{bisending,jdbcType=BOOLEAN}, #{cactivationcode,jdbcType=VARCHAR},
+                #{idaynumber,jdbcType=INTEGER}, #{dvaliddate,jdbcType=TIMESTAMP}, #{dsenddate,jdbcType=TIMESTAMP}
+            )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="dto.member.MemberEmailVerify" >
+    insert into t_member_email_verify
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="cemail != null" >
+        cemail,
+      </if>
+      <if test="cmark != null" >
+        cmark,
+      </if>
+      <if test="bisending != null" >
+        bisending,
+      </if>
+      <if test="cactivationcode != null" >
+        cactivationcode,
+      </if>
+      <if test="idaynumber != null" >
+        idaynumber,
+      </if>
+       <if test="dvaliddate != null" >
+        dvaliddate,
+      </if>
+       <if test="dsenddate != null" >
+        dsenddate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="cemail != null" >
+        #{cemail,jdbcType=VARCHAR},
+      </if>
+      <if test="cmark != null" >
+        #{cmark,jdbcType=VARCHAR},
+      </if>
+      
+       <if test="bisending != null" >
+        #{bisending,jdbcType=BOOLEAN},
+      </if>
+      <if test="idaynumber != null" >
+        #{idaynumber,jdbcType=INTEGER},
+      </if>
+      <if test="cactivationcode != null" >
+        #{cactivationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="dvaliddate != null" >
+        #{dvaliddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dsenddate != null" >
+        #{dsenddate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="dto.member.MemberEmailVerify" >
+    update t_member_email_verify
+    <set >
+      <if test="cemail != null and cemail!=''" >
+        cemail = #{cemail,jdbcType=VARCHAR},
+      </if>
+      <if test="bisending != null" >
+        bisending = #{bisending,jdbcType=BOOLEAN},
+      </if>
+      
+      <if test="idaynumber != null" >
+        idaynumber = #{idaynumber,jdbcType=INTEGER},
+      </if>
+       <if test="cmark != null and cmark!=''" >
+        cmark = #{cmark,jdbcType=VARCHAR},
+      </if>
+      <if test="cactivationcode != null  and cactivationcode !=''" >
+        cactivationcode = #{cactivationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="dvaliddate != null" >
+        dvaliddate = #{dvaliddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dsenddate != null" >
+        dsenddate = #{dsenddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="iresendcount != null" >
+        iresendcount = #{iresendcount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="dto.member.MemberEmailVerify" >
+    update t_member_email_verify
+    set cemail = #{cemail,jdbcType=VARCHAR},
+        bisending = #{bisending,jdbcType=BOOLEAN},
+        idaynumber = #{idaynumber,jdbcType=INTEGER},
+        cactivationcode = #{cactivationcode,jdbcType=VARCHAR},
+        cmark = #{cmark,jdbcType=VARCHAR},
+        dvaliddate = #{dvaliddate,jdbcType=TIMESTAMP},
+        dsenddate = #{dsenddate,jdbcType=TIMESTAMP},
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+        iresendcount = #{iresendcount,jdbcType=INTEGER}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  
+  <delete id="deleteByEmail" parameterType="java.lang.String" >
+    delete from t_member_email_verify
+    where cemail = #{email,jdbcType=VARCHAR}
+  </delete>
+</mapper>

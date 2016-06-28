@@ -1,0 +1,33 @@
+@(clist: List[valueobjects.product.category.CategoryClearance],page:Integer)
+
+@clist.zipWithIndex.map{c=>
+<h6>@c._1.getCategoryName().getCname()</h6>
+<div class="cleBigBox" id="cateBox_@c._1.getCategoryName().getIid()">
+	@if(c._1.getCategoryLabelBase()!=null){
+		<a class="clearanceBanner @if((c._2%2!=0&&page%2!=0)||(c._2%2==0&&page%2==0)){fRight}" href="@c._1.getCategoryLabelBase().getCurl()">
+			<img src="@controllers.product.routes.CategoryAPI.getCategoryImage(c._1.getCategoryLabelBase().getIlabelid(),"categorylabelType")" alt="@c._1.getCategoryLabelBase().getCprompt()" 
+			 title="@c._1.getCategoryLabelBase().getCprompt()" />
+		</a>
+	}else{
+		<a class="clearanceBanner @if((c._2%2!=0&&page%2!=0)||(c._2%2==0&&page%2==0)){fRight}" href="javascript:;">
+			<img src="" />
+		</a>
+	}
+	
+    <div class="clearHideBox" id="clearHideBox_@c._1.getCategoryName().getIcategoryid()">
+    	<input type="hidden" value="1" class="pagenum"/>
+    	<input type="hidden" value="" class="totalpage"/>
+    	<input type="hidden" value="@c._1.getCategoryName().getIcategoryid()" class="categoryid"/>
+        <a class="browseLeft_click" href="javascript:;"></a>
+        <a class="browseRight_click" href="javascript:;"></a>
+    	<div class="clearMoveBox">
+            <ul class="clearPic">
+            	@c._1.getProductList().map{b =>
+            		@views.html.product.gadget.badge_big(b)
+            	}
+            </ul>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+}

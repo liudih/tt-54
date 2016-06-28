@@ -1,0 +1,138 @@
+@(member:dto.member.MemberBase, 
+  countries: List[dto.Country],
+  frm:Form[forms.dodocool.member.MemberBaseForm])
+  
+@import views.html.helper._	
+@tp = @{services.dodocool.base.template.TemplateService.getInstance().getContents()}
+@helper.javascriptRouter("updatepasswd")(
+	controllers.member.routes.javascript.Login.login
+)
+@views.html.member.base.master("edit", member) {
+    	<div class="user_main_in">
+        	<h3 class="profile_h3">Edit User Profile</h3>
+        	<p style="margin-left: 60px;">
+       			<label>Profile photo:&nbsp;&nbsp;</label> &nbsp;&nbsp;
+       			 @upload_user_image(member,frm)
+       		</p>
+			@form(controllers.member.routes.Edits.updateMember ,'id->"profile-form"){
+	            <div class="main_in_box pd_0">
+	            	<div class="info">
+	            		<input type="hidden" name="iid" value="@frm("iid").value">
+		            		<p><label>@Messages("email.address"):</label>@frm("cemail").value</p>
+		            		<p>
+			            		<label>@Messages("nickname"):</label>
+			            		<input type="text" id="caccount" name="caccount" value="@member.getCaccount()">
+			            		<span style="color:red;" class="" ></span>
+		            		</p>
+		            		<p>
+		            			<label>@Messages("first.name"):</label>
+		            			<input type="text" id="cfirstname" name="cfirstname" value="@frm("cfirstname").value">
+		            			<span style="color:red;" class="" ></span>
+		            		</p>
+		            		<p>
+		            			<label>@Messages("last.name"):</label>
+		            			<input type="text" id="clastname" name="clastname" value="@frm("clastname").value">
+		            			<span style="color:red;" class="" ></span>
+		            		</p>
+		            </div>
+		                
+		            <div class="info">
+		                    <p><label>@Messages("password"):</label><a class="pass_btn" href="javascript:;">Change Password</a></p>
+		                	<p>
+		                		<label>@Messages("gender"):</label>
+			                	 <input type="radio"  value="1" name="igender" id="igender"  checked="checked"  @if(frm("igender").value=="1"){checked="checked"  }>@Messages("male")</label>
+			                     <label class="femaleLab"><input type="radio" value="2"  name="igender" id="igender"  @if(frm("igender").value=="2"){ checked="checked"} >@Messages("females")</label>
+		                   		 <span style="color:red;" class="" ></span>
+		                     </p>
+		                	<div><label>@Messages("birthday"):</label>
+			                   	<div id="calendar" style="margin-bottom:20px; display:inline-block">
+			                    	<select id="idMonth" name="month" @if(frm("month").value!=null){data="@frm("month").value}">
+			                        	@Messages("month")
+			                        </select>
+			                    	<select id="idDay" name="day" @if(frm("day").value!=null){data="@frm("day").value}">
+			                        	@Messages("day")
+			                        </select>
+			                    	<select id="idYear" name="year" @if(frm("year").value!=null){data="@frm("year").value}">
+			                        	@Messages("year")
+			                        </select>
+			                    </div>
+		                    </div>
+		                    
+		                    <div class="country_div"><label>@Messages("country"):</label>               
+				                 <div class="alert_sel_box sel_country icon_flag">
+				                         <h3 id="current_selected_country"  class="flag_@member.getCcountry()"><em></em>
+				                     
+				                         <span>@frm("countryName").value</span></h3>
+				                         <div class="allcountry">
+				                             <div class="seach_countru"><input type="text" name="country_filter" class="country_search">
+					                             <ul class="allcountry_list">
+					                                @if(null != countries && countries.size() >0){
+						                    			@countries.map{ i =>
+						                    			 	<li class="flag_@i.getCshortname()" data-flag="flag_@i.getCshortname()"><em></em>
+						                    			 	<span >@i.getCname <input type="hidden" name="ccountry" value="@i.getCshortname"></span></li>
+						                    			}
+						                    		}
+					                             </ul>
+				                            </div>
+				                      </div>
+		                       </div>
+		                    </div>
+		                   <p style="margin-left:128px"><input class="btn" type="submit" value="@Messages("save.changes")" id="profile_submit"></p>
+		            </div>
+	       		 </div>
+       		}
+        
+       @form(controllers.member.routes.Edits.updatePasswords ,'id->"password-form" ,'method->"POST", 'onsubmit->"return false"){
+        <div class="modal-backdrop" style="z-index:1"></div>
+    	<div class="modal change_modal" id="boxModal" style="width:480px; height:255px;z-index:2">
+	        <div class="modal-content">
+	        	<button type="button" class="close"> × </button>
+	            <div class="main_in_box">
+	                <p class="frm_cont" >
+	                <label for="password">@Messages("old.password")</label>		                
+	                    <input type="password" style="display:none"/>
+	                    <input type="password" name="cpassword" id="cpassword"/>
+	                     <span class="qaListER form-element" style="color:red;">
+		                    <span  id="cpassword-error"  ></span>
+						    <span class="rightUse"></span>
+					    </span>
+					     <span class="qaListER form-element">
+		                    <span style="color:red;" id="result_message"></span>
+					    </span>
+	                </p>
+	                <p class="frm_cont">
+		                <label>@Messages("new.password")</label>
+		                    <input  type="password" id="cnewpassword" name="cnewpassword">
+		                     <span class="qaListER form-element" style="color:red;">
+			                     <span  id="cnewpassword-error"  ></span>
+							    <span class="rightUse"></span>
+		                     </span>
+	                </p>
+	                <p class="frm_cont">
+		                <label>@Messages("confirm.password")</label>
+		                <input  type="password" id="cpasswd"  name="cpasswd" >
+		                 <span class="qaListER form-element" style="color:red;">
+		                    <span id="ccpasswd-error"  ></span>
+						    <span class="rightUse"></span>
+	                    </span>
+	                </p>
+	               
+	                <p class="pt10 tc"><input class="btn" type="submit" value="@Messages("save.changes")" id="psubmits"></p>
+	            </div>
+	        </div>
+   		  </div> 
+   		 
+		   }    
+	   	</div>
+   	  
+	@services.dodocool.base.HtmlUtils.misc().addTailOnce{
+	 		 <script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/main.js")'></script>
+	        <script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/calendar.js")'></script>
+	        <script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/member.js")'></script>
+     	    <script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/jquery.form.js")'></script>
+	   		<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/jquery.validate.min.js")'></script>
+	    	<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/jquery.metadata.js")'></script>
+     }
+ }
+
+

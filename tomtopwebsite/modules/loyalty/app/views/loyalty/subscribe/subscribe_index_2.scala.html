@@ -1,0 +1,14 @@
+@(ctx: play.mvc.Http.Context)
+<div class="hotProduct_search">
+       <div class="hotProduct_pic"></div>
+       <div class="hotProduct_txt">
+           <p>@Messages("get.updates.discounts",50)</p>
+           <p>@Messages("and.special.offers.to.win.free.gift")</p>
+       </div>
+       <div class="clear"></div>
+       <form onSubmit="return false;">
+       <input type="text" placeholder="@Messages("enter.your.email.address")" class="subscribeBox"/> 
+       <input class="blackInput" type="button" value="@Messages("submit")" onclick="sendEmail(this);"/>
+       </form>
+</div>
+@subscribe_js_common(ctx)

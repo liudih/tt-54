@@ -1,0 +1,13 @@
+
+          <div id="div_coupon" class="promo_code coupon_code">
+          <form id="undo_coupon" method="post" action="@controllers.cart.routes.LoyaltyController.undoCurrentPrefer()"></form>
+                    <p ><label><input id="loyalty_coupon" type="radio" value="" />@Messages("coupon_code")</label> </p>
+                    
+                     <span id="coupon_insert"></span>
+                    <input id="coupon_input_show" type="text" disabled="disabled"></input>
+                     <input  type="submit" value="@Messages("cart.apply")" id="coupon_button_apply"/>
+                     <input type="submit" class="cancel" value="@Messages("cart.cancel")" id="coupon_button_cancel" style="display:none;">
+                   
+           </div>
+          
+

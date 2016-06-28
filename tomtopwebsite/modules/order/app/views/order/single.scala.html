@@ -1,0 +1,36 @@
+@(si: valueobjects.order_api.OrderItem,
+	currency: dto.Currency)
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+<ul class="cartListUL oneS">
+	<input type="hidden" class="listingId" value="@si.getClistingid()"/>
+	<input type="hidden" class="csku" value="@si.getSku()"/>
+    <li class="cartListLI">
+        <a class="inBlock pro_img" href="@if(si.getCurl()!=null){@controllers.product.routes.Product.view(si.getCurl())}">
+        	@img(si.getCimageurl(), si.getCtitle(), 120, 120, null)
+        </a>
+        <div class="inBlock pro_info">
+            <a href="@if(si.getCurl()!=null){@controllers.product.routes.Product.view(si.getCurl())}">
+            	@si.getCtitle()
+            </a>
+            <p class="parameter"><span>@Messages("sku") @si.getSku()</span>
+	            <span>
+	            	@if(null !=si.getAttributeMap){
+	            		@si.getAttributeMap.map{ j=>
+	            		    @if(null != j._1 && j._1.length>0){@j._1.substring(0,1).toUpperCase@j._1.substring(1)}
+	            		     : @j._2 &nbsp;
+	            		}
+	            	}
+	            </span>
+            </p>
+        </div>
+        <div class="inBlock pro_price">
+			<p class="newPrice">@currency.getCsymbol <span>@Utils.money(si.getUnitPrice())</span></p>
+		</div>
+		<ul class="qty_num inBlock">
+			<li class="qty_nums">@si.getIqty()</li>
+		</ul>
+		<span class="pro_total inBlock" data="@si.getClistingid">@currency.getCsymbol <span>@Utils.money(si.getTotalPrice)</span></span>
+	</li>
+</ul>

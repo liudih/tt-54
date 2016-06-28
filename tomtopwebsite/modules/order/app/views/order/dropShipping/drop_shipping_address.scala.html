@@ -1,0 +1,149 @@
+@(allCountrys : List[dto.Country])
+<div class="newAddressBox wholesaleAC_Box">
+	<table width="85%" cellspacing="0" cellpadding="0" border="0" id="address_table">
+		<tbody>
+			<tr>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>
+					<span class="red">*</span>
+					Contact Name:
+				</td>
+				<td>
+					<input type="text" tag="address_field" name="name">
+					<p class="edit_error" style="display:none">
+						<em></em>
+						<i></i>
+						The field Contact Name is required.
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="red">*</span>
+					Country:
+				</td>
+				<td>
+					<input type="hidden" name="countrysn" tag="address_field" value="US">
+					<div class="Countries_box countriesBox_ly">
+						<div class="select_country">
+							<h3>
+								<em class="usa"></em>
+									<span>United States</span>
+								<em class="ship_xSJ"></em>
+							</h3>
+							<div class="country_all">
+								<div class="search_country">
+									<input type="text" name="search">
+								</div>
+								<div class="country_list">
+									<ul name="countrylist" class="countrylist_ul" id="countrylist_ul">
+										@if(allCountrys != null && allCountrys.size > 0){
+		                                	@allCountrys.map{p=>
+		                                		<li cid="@p.getIid" code="@p.getCshortname" role="item" data-target='select' name="country_li" class="flag_@p.getCshortname"  countryCode="@p.getCshortname" data-code="@p.getCshortname"><em></em><span name='country' value="@p.getIid">@p.getCname</span></li>	
+		                                	}
+		                                }
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<p class="edit_error" style="display:none">
+						<em></em>
+						<i></i>
+						The field Country is required.
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="red">*</span>
+					Street:
+				</td>
+				<td>
+					<input type="text" tag="address_field" name="address">
+					<p class="edit_error" style="display:none">
+						<em></em>
+						<i></i>
+						The field Street is required.
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="red">*</span>
+					City:
+				</td>
+				<td>
+					<input type="text" tag="address_field" name="city">
+					<p class="edit_error" style="display:none">
+						<em></em>
+						<i></i>
+						The field City is required.
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="red">*</span>
+					State/Province/Region:
+				</td>
+				<td>
+					<input class="current_province" type="text"	id="input_current_province" tag="address_field" name="state">
+					<ul id="province_list_id" name="province_list" class="province_list" style="display: none;width:auto;">
+					</ul> 
+					<p class="edit_error" style="display:none">
+						<em></em>
+						<i></i>
+						The field State/Province/Region is required.
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="red">*</span>
+					Zip/Postal code:
+				</td>
+				<td>
+					<input type="text" tag="address_field" name="zipCode">
+					<p class="edit_error" style="display:none">
+						<em></em>
+						<i></i>
+						The field Zip/Postal code is required.
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="red">*</span>
+					Phone number:
+				</td>
+				<td>
+					<input type="text" tag="address_field" name="phone">
+					<p class="edit_error" style="display:none">
+						<em></em>
+						<i></i>
+						The field Phone number is required.
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<input class="orangeInput shipSub" id="save_order_button" type="submit" value="Submit">
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+@services.base.HtmlUtils.misc().addTailOnce {
+  	<script src="@controllers.base.routes.Assets.at("lib/requirejs/require.js")" data-main="@controllers.order.routes.Assets.at("js/order/mdropshipping")" ></script>
+  	<script>
+		$(".select_country").on("click",function(){
+			$("#countrylist_ul").find(".country_item").remove();
+		});
+  	</script>
+  	<script src="@controllers.base.routes.Assets.at("js/base/country/country_rel.js")"></script>
+}

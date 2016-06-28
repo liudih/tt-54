@@ -1,0 +1,56 @@
+@(vo: valueobjects.order_api.OrderCount,
+	status: Integer,
+	items:List[valueobjects.order_api.OrderList],
+	idMap: Map[Integer, dto.order.OrderStatus],
+	packMap: Map[Integer, List[dto.order.OrderPack]]
+)
+
+@views.html.base.sub_master("Order List"){
+
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+ 	@controllers.base.routes.Assets.at("css/accountOrder.css")
+}
+
+<div class="container bg_color_gray marTop_10">
+	
+	<div class="TAB_Nav scrollTAB_Box">
+		<ul class="publicTAB_css scrollTAB scrollTAB25 lbBox">
+			<li class="lineBlock @if(status == 1){aciCss}"><p class="usedCoupons_mess">My order<span class="messagesNumber">@vo.getAll()</span></p></li>
+			<li class="lineBlock @if(status == 2){aciCss}"><p class="usedCoupons_mess">Payment pending<span class="messagesNumber">@vo.getPending()</span></p></li>
+			<li class="lineBlock @if(status == 3){aciCss}"><p class="usedCoupons_mess">Dispatched<span class="messagesNumber">@vo.getDispatched()</span></p></li>
+			<li class="lineBlock @if(status == 4){aciCss}"><p class="usedCoupons_mess">Refunded<span class="messagesNumber">@vo.getRefunded()</span></p></li>
+		</ul>
+	</div>
+	<div class="TAB_Con @if(status == 1){aciCssblock}" style="display: @if(status == 1){block}else{none};">
+	@if(status == 1){
+		@items.asScala.map{i=>
+			@order_badge(i,idMap,packMap)
+		}
+	}
+	</div>
+	<div class="TAB_Con @if(status == 2){aciCssblock}" style="display: @if(status == 2){block}else{none};">
+	@if(status == 2){
+		@items.asScala.map{i=>
+			@order_badge(i,idMap,packMap)
+		}
+	}
+	</div>
+	<div class="TAB_Con @if(status == 3){aciCssblock}" style="display: @if(status == 3){block}else{none};">
+	@if(status == 3){
+		@items.asScala.map{i=>
+			@order_badge(i,idMap,packMap)
+		}
+	}
+	</div>
+	<div class="TAB_Con @if(status == 4){aciCssblock}" style="display: @if(status == 4){block}else{none};">
+	@if(status == 4){
+		@items.asScala.map{i=>
+			@order_badge(i,idMap,packMap)
+		}
+	}
+	</div>
+</div>
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript" src='@controllers.order.routes.Assets.at("js/order_list.js")'></script>
+}
+}

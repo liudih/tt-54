@@ -1,0 +1,25 @@
+@(count: Integer)
+@import views.html.helper._
+@views.html.member.base.master(extensions.interaction.member.DropshipProductBatchAddMenuProvider.ID) {
+	@helper.javascriptRouter("add_dropship")(
+		controllers.interaction.routes.javascript.Dropship.batchAddDropshipProduct,
+		controllers.interaction.routes.javascript.Dropship.dropshipWishlist		
+    )
+	@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" /> 
+	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/simplePagination.css")">
+	}
+    <div class="accountRight accouDownloadD">
+    	<h6>@Messages("after.verfication.submit.download.dropship")</h6>
+ 		<!--     <p class="accSkuDown"><span class="blue">Method One:</span>@Messages("sku.download")</p>  -->
+        <p>* @Messages("at.least.you.still.can.add")  @count skus</p>
+        <textarea id="textarea_skus" class="accDownTxtarea"></textarea>
+        <p class="color999">@Messages("please.input.sku.and.split.by")  " , "  </p>
+        <div class="DownloadExecl_wish"><input id="batch_add_dropship_product" type="button" value="Sumbit" class="orangeInput shipSub"></div>
+        <input type="hidden" id="dropship_left_count" value="@count">
+    </div>
+    
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<script  language="javascript" type="text/javascript" src='@controllers.interaction.routes.Assets.at("js/interaction/dropship.js")'></script>
+	}
+}

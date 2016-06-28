@@ -1,0 +1,35 @@
+@(status : String,msg : String)
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no,maximum-scale=1.0"></meta>
+<script type="text/javascript" src="@controllers.mobile.routes.Assets.at("js/jquery-1.9.1.js")"></script>
+
+<script type="text/javascript">
+$(function() {
+	var s="@status";
+    var msg ="@msg";
+    if(s =="fail"){
+    	location.href="tomtop://com.tomtop.shop/close?error="+msg;
+    }else{
+    	location.href="tomtop://com.tomtop.shop/gohome?email="+msg;
+    }
+});
+</script>
+<body>
+<!--  
+	<a href="tomtop://com.tomtop.shop/gohome"><button>gohome</button></a><br/><br/><br/>
+	<a href="tomtop://com.tomtop.shop/close"><button>close</button></a><br/><br/><br/>
+	<a href="tomtop://com.tomtop.shop/gocate"><button>gocate</button></a><br/><br/><br/>
+	<a href="tomtop://com.tomtop.shop/golist?cid=221"><button>golist</button></a><br/><br/><br/>
+	<a href="tomtop://com.tomtop.shop/godetail?gid=009b3dc6-d914-1004-874c-d371c9ab96c0"><button>godetail</button></a><br/><br/><br/>
+	<a href="tomtop://com.tomtop.shop/gocart"><button>gocart</button></a><br/><br/><br/>
+	<a href="tomtop://com.tomtop.shop/goorder"><button>goorder</button></a><br/><br/><br/>
+	<a href="tomtop://com.tomtop.shop/gouser"><button>gouser</button></a><br/><br/><br/>
+	<a href="tomtop://com.tomtop.shop/gologin"><button>gologin</button></a><br/><br/><br/>
+	<a href="tomtop://com.tomtop.shop/payfinish?orderId=RE-101320015-041318"><button>payfinish</button></a><br/><br/><br/>
+-->
+</body>
+</head>
+</html>                      

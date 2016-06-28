@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.8"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.8 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.8.xsd">
+
+
+	<changeSet author="test" id="create_table_test_2015112601">
+		<createTable tableName="test">
+			<column name="user_id" type="VARCHAR(36)">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="user_login" type="VARCHAR(36)" />
+			<column name="user_name" type="VARCHAR(36)" />
+			<column name="user_password" type="VARCHAR(12)" />
+			<column name="user_createID" type="VARCHAR(36)" />
+			<column name="user_createTime" type="DATETIME" />
+			<column name="user_updateID" type="VARCHAR(36)" />
+			<column name="user_updateTime" type="DATETIME" />
+		</createTable>
+		
+		<insert tableName="user">
+            <column name="user_id" valueNumeric="00001" />
+            <column name="user_login" value="admin" />
+            <column name="user_name" value="管理员" />
+            <column name="user_password" value="admin" />
+        </insert>
+	</changeSet>
+</databaseChangeLog>

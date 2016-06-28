@@ -1,0 +1,1071 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.order.OrderMapper">
+	<select id="searchOrders" resultType="dto.order.Order">
+		select distinct o.iid, o.cordernumber, o.cpaymentid, o.iwebsiteid,
+		o.fgrandtotal, o.ccartid, o.istatus, o.ccurrency,o.cmessage, o.dcreatedate from
+		t_order o
+		<if test="name != null">
+			inner join t_order_detail d on d.iorderid = o.iid
+		</if>
+		where
+		<if test="orderNumber != null">
+			o.cordernumber = #{orderNumber} and
+		</if>
+		<if test="email != null">
+			o.cmemberemail = #{email} and
+		</if>
+		<if test="siteId != null">
+			o.iwebsiteid = #{siteId} and
+		</if>
+		<if test="status != null">
+			o.istatus = #{status} and
+		</if>
+		<if test="start != null">
+			o.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			o.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			o.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="name != null">
+			d.ctitle like '%${name}%' and
+		</if>
+		<if test="transactionId != null">
+			o.ctransactionid = #{transactionId} and
+		</if>
+		<if test="firstName != null">
+			o.cfirstname like '%${firstName}%' and
+		</if>
+		<if test="isNormal == true">
+			not exists (select iorderid from t_order_tag where o.iid =
+			iorderid) and
+		</if>
+		o.ishow = #{show} and o.istatus IS NOT NULL
+		order by dcreatedate desc
+		limit #{pageSize} offset (#{pageSize} * (#{pageNum} - 1))
+	</select>
+ 
+	<select id="searchOrdersByTag" resultType="dto.order.Order">
+		select distinct o.iid, o.cordernumber, o.cpaymentid, o.iwebsiteid,
+		o.fgrandtotal, o.ccartid, o.istatus, o.ccurrency, o.dcreatedate from
+		t_order o
+		<if test="name != null">
+			inner join t_order_detail d on d.iorderid = o.iid
+		</if>
+		<if test="tag != null">
+			inner join t_order_tag t on t.iorderid = o.iid
+		</if>
+		where
+		<if test="orderNumber != null">
+			o.cordernumber = #{orderNumber} and
+		</if>
+		<if test="email != null">
+			o.cmemberemail = #{email} and
+		</if>
+		<if test="siteId != null">
+			o.iwebsiteid = #{siteId} and
+		</if>
+		<if test="status != null">
+			o.istatus = #{status} and
+		</if>
+		<if test="start != null">
+			o.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			o.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			o.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="name != null">
+			d.ctitle like '%${name}%' and
+		</if>
+		<if test="transactionId != null">
+			o.ctransactionid = #{transactionId} and
+		</if>
+		<if test="firstName != null">
+			o.cfirstname like '%${firstName}%' and
+		</if>
+		<if test="tag != null">
+			t.ctag = #{tag} and
+		</if>
+		o.ishow = #{show} and o.istatus IS NOT NULL
+		order by dcreatedate desc
+		limit #{pageSize} offset (#{pageSize} * (#{pageNum} - 1))
+	</select>
+
+	<select id="searchOrderCount" resultType="Integer">
+		select count(distinct o.iid) from t_order o
+		<if test="name != null">
+			inner join t_order_detail d on d.iorderid = o.iid
+		</if>
+		where
+		<if test="orderNumber != null">
+			o.cordernumber = #{orderNumber} and
+		</if>
+		<if test="email != null">
+			o.cmemberemail = #{email} and
+		</if>
+		<if test="siteId != null">
+			o.iwebsiteid = #{siteId} and
+		</if>
+		<if test="status != null">
+			o.istatus = #{status} and
+		</if>
+		<if test="start != null">
+			o.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			o.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			o.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="name != null">
+			d.ctitle like '%${name}%' and
+		</if>
+		<if test="paymentId != null">
+			o.cpaymentid = #{paymentId} and
+		</if>
+		<if test="transactionId != null">
+			o.ctransactionid = #{transactionId} and
+		</if>
+		<if test="firstName != null">
+			o.cfirstname like '%${firstName}%' and
+		</if>
+		<if test="isNormal == true">
+			not exists (select iorderid from t_order_tag where o.iid =
+			iorderid) and
+		</if>
+		o.ishow = #{show}
+	</select>
+
+	<select id="searchOrderCountByTag" resultType="Integer">
+		select count(distinct o.iid) from t_order o
+		<if test="name != null">
+			inner join t_order_detail d on d.iorderid = o.iid
+		</if>
+		<if test="tag != null">
+			inner join t_order_tag t on t.iorderid = o.iid
+		</if>
+		where
+		<if test="orderNumber != null">
+			o.cordernumber = #{orderNumber} and
+		</if>
+		<if test="email != null">
+			o.cmemberemail = #{email} and
+		</if>
+		<if test="siteId != null">
+			o.iwebsiteid = #{siteId} and
+		</if>
+		<if test="status != null">
+			o.istatus = #{status} and
+		</if>
+		<if test="start != null">
+			o.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			o.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			o.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="name != null">
+			d.ctitle like '%${name}%' and
+		</if>
+		<if test="paymentId != null">
+			o.cpaymentid = #{paymentId} and
+		</if>
+		<if test="transactionId != null">
+			o.ctransactionid = #{transactionId} and
+		</if>
+		<if test="firstName != null">
+			o.cfirstname like '%${firstName}%' and
+		</if>
+		<if test="tag != null">
+			t.ctag = #{tag} and
+		</if>
+		o.ishow = #{show}
+	</select>
+
+	<update id="updateShow">
+		update t_order set ishow = #{type} where iid in
+		<foreach collection="ids" item="item" index="index" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="email != null">
+			and cmemberemail = #{email}
+		</if>
+	</update>
+
+	<select id="searchOrdersFullMessage" resultType="dto.order.Order">
+		select * from t_order o
+		<if test="code != null and code != ''">
+			left join t_order_discount d on o.cordernumber=d.order_number
+		</if>
+		where
+		<if test="siteId != null">
+			o.iwebsiteid = #{siteId} and
+		</if>
+		<if test="status != null">
+			o.istatus in 
+			<foreach collection="status" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			 and 
+		</if>
+		<if test="start != null">
+			o.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			o.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			o.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="orderNum != null and orderNum != ''">
+			o.cordernumber = #{orderNum} and
+		</if>
+		<if test="paymentId != null and paymentId != '' and paymentId != 'paypal-ec' ">
+			o.cpaymentid = #{paymentId} and
+		</if>
+		<if test="paymentId != null and paymentId == 'paypal-ec' ">
+			o.cpaymenttype = #{paymentId} and
+		</if>
+		<if test="email != null and email != ''">
+			o.cmemberemail = #{email} and
+		</if>
+		<if test="transactionId != null and transactionId != ''">
+			o.ctransactionid = #{transactionId} and
+		</if>
+		<if test="vhost != null and vhost != ''">
+			o.cvhost = #{vhost} and
+		</if>
+		<if test="code != null and code != ''">
+			d.code like '%${code}%' and
+		</if>
+		<if test="paymentStart != null or paymentEnd != null">
+			o.dpaymentdate is not null and
+		</if>
+		<if test="paymentStart != null">
+		    o.dpaymentdate &gt;= #{paymentStart} and
+		</if>
+		<if test="paymentEnd != null">
+			 o.dpaymentdate &lt;= #{paymentEnd} and
+		</if>
+		1 = 1
+		order by dcreatedate desc limit #{pageSize} offset (#{pageSize} *
+		(#{pageNum} - 1))
+	</select>
+	
+	<select id="searchOrdersFullMessageByExcludeUser" resultType="dto.order.Order">
+		select * from t_order o 
+		<if test="code != null and code != ''">
+			left join t_order_discount d on o.cordernumber=d.order_number
+		</if>
+		where
+		<if test="siteId != null">
+			o.iwebsiteid = #{siteId} and
+		</if>
+		<if test="status != null">
+			o.istatus in 
+			<foreach collection="status" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			 and 
+		</if>
+		<if test="start != null">
+			o.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			o.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			o.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="orderNum != null and orderNum != ''">
+			o.cordernumber = #{orderNum} and
+		</if>
+		<if test="paymentId != null and paymentId != '' and paymentId != 'paypal-ec' ">
+			o.cpaymentid = #{paymentId} and
+		</if>
+		<if test="paymentId != null and paymentId == 'paypal-ec' ">
+			o.cpaymenttype = #{paymentId} and
+		</if>
+		<if test="email != null and email != ''">
+			o.cmemberemail = #{email} and 
+		</if>
+		<if test="transactionId != null and transactionId != ''">
+			o.ctransactionid = #{transactionId} and
+		</if>
+		<if test="code != null and code != ''">
+			d.code like '%${code}%' and
+		</if>
+		<if test="vhost != null and vhost != ''">
+			o.cvhost = #{vhost} and
+		</if>
+		<if test="paymentStart != null">
+			o.dpaymentdate &gt;= #{paymentStart} and
+		</if>
+		<if test="paymentEnd != null">
+			o.dpaymentdate &lt;= #{paymentEnd} and
+		</if>
+		<if test="excUser != null">
+			(o.cemail not in 
+			<foreach collection="excUser" item="excitem" index="index" open="(" separator="," close=")">
+				#{excitem}
+			</foreach>
+			or o.cemail ='' or o.cemail is null
+			)
+			 and 
+		</if>
+		1 = 1
+		order by dcreatedate desc limit #{pageSize} offset (#{pageSize} *
+		(#{pageNum} - 1))
+	</select>
+	
+	<select id="searchOrdersTransaction" resultType="dto.order.Order">
+		select * from t_order o
+		where
+		<if test="siteId != null">
+			o.iwebsiteid = #{siteId} and
+		</if>
+		<if test="status != null">
+			o.istatus = #{status} and
+		</if>
+		<if test="start != null">
+			o.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			o.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			o.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="orderNum != null and orderNum != ''">
+			o.cordernumber = #{orderNum} and
+		</if>
+		<if test="paymentId != null and paymentId != ''">
+			o.cpaymentid = #{paymentId} and
+		</if>
+		<if test="email != null and email != ''">
+			o.cmemberemail = #{email} and
+		</if>
+		<if test="transactionId != null and transactionId != ''">
+			o.ctransactionid = #{transactionId} and
+		</if>
+		<if test="vhost != null and vhost != ''">
+			o.cvhost = #{vhost} and
+		</if>
+		1 = 1
+		order by dcreatedate desc limit #{pageSize} offset (#{pageSize} *
+		(#{pageNum} - 1))
+	</select>
+	
+	<select id="searchOrderMessageCount" resultType="Integer">
+		select count(distinct o.iid) from t_order o
+		where
+		<if test="email != null">
+			o.cmemberemail = #{email} and
+		</if>
+		<if test="siteId != null">
+			o.iwebsiteid = #{siteId} and
+		</if>
+		<if test="status != null">
+			o.istatus = #{status} and
+		</if>
+		<if test="start != null">
+			o.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			o.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			o.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="orderNum != null">
+			o.cordernumber = #{orderNum} and
+		</if>
+		<if test="paymentId != null">
+			o.cpaymentid = #{paymentId} and
+		</if>
+		<if test="transactionId != null">
+			o.ctransactionid = #{transactionId} and
+		</if>
+		<if test="vhost != null">
+			o.cvhost = #{vhost} and
+		</if>
+		1 =1
+	</select>
+
+	<update id="updatePaymentAndMessage">
+		update t_order set cpaymentid = #{paymentId}, cpaymenttype = #{paymentId}
+		<if test="message != null">
+			, cmessage = #{message}
+		</if>
+		where iid = #{id} and cmemberemail = #{email} and istatus = #{status}
+	</update>
+	<insert id="insertBatch" parameterType="List">
+		INSERT INTO t_order (iid,cemail, ccountrysn, ccountry, cstreetaddress,
+		ccity, cprovince, cpostalcode, ctelephone,
+		istorageid,
+		ishippingmethodid, fshippingprice, fordersubtotal, fextra,
+		fgrandtotal, ccartid, istatus,
+		ccurrency, cfirstname, cmiddlename,
+		clastname, cpaymentid, iwebsiteid, corigin,
+		cmemberemail, cmessage,
+		cordernumber)
+		VALUES
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.iid},#{item.cemail}, #{item.ccountrysn},
+			#{item.ccountry}, #{item.cstreetaddress},
+			#{item.ccity},
+			#{item.cprovince}, #{item.cpostalcode},
+			#{item.ctelephone},
+			#{item.istorageid}, #{item.ishippingmethodid},
+			#{item.fshippingprice}, #{item.fordersubtotal},
+			#{item.fextra},
+			#{item.fgrandtotal}, #{item.ccartid}, #{item.istatus},
+			#{item.ccurrency}, #{item.cfirstname}, #{item.cmiddlename},
+			#{item.clastname},
+			#{item.cpaymentid}, #{item.iwebsiteid},
+			#{item.corigin}, #{item.cmemberemail},
+			#{item.cmessage},
+			#{item.cordernumber})
+		</foreach>
+	</insert>
+
+	<select id="searchDropShipOrders" resultType="valueobjects.order_api.DropShipOrderMessage">
+		select d.cdropshippingid,d.cordernumber,d.cuseremail as useremail, dorder.cuserorderid as userorderid, dorder.cdropshippingid,
+		o.* from t_dropshipping_map d inner join t_order o on d.cordernumber =
+		o.cordernumber
+		inner join t_dropshipping_order dorder on d.iorderid =
+		dorder.iid
+		where
+		<if test="useremail != null and useremail != ''">
+			d.cuseremail = #{useremail} and
+		</if>
+		<if test="siteId != null">
+			o.iwebsiteid = #{siteId} and
+		</if>
+		<if test="status != null">
+			o.istatus in 
+			<foreach collection="status" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			 and 
+		</if>
+		<if test="start != null">
+			o.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			o.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			o.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="orderNum != null and orderNum != ''">
+			o.cordernumber = #{orderNum} and
+		</if>
+		<if test="cdropshippingid != null and cdropshippingid != ''">
+			d.cdropshippingid = #{cdropshippingid} and
+		</if>
+		<if test="paymentId != null and paymentId != ''">
+			o.cpaymentid = #{paymentId} and
+		</if>
+		<if test="email != null and email != ''">
+			o.cmemberemail = #{email} and
+		</if>
+		<if test="transactionId != null and transactionId != ''">
+			o.ctransactionid = #{transactionId} and
+		</if>
+		<if test="vhost != null and vhost != ''">
+			o.cvhost = #{vhost} and
+		</if>
+		<if test="paymentStart != null">
+			o.dpaymentdate &gt;= #{paymentStart} and
+		</if>
+		<if test="paymentEnd != null">
+			o.dpaymentdate &lt;= #{paymentEnd} and
+		</if>
+		dorder.cerrorlog is null
+		order by dcreatedate desc limit #{pageSize}
+		offset (#{pageSize} * (#{pageNum} - 1))
+	</select>
+
+	<select id="searchDropShipOrderCount" resultType="Integer">
+		select count(distinct dorder.cdropshippingid) from t_dropshipping_map d inner join
+		t_order o on d.cordernumber = o.cordernumber
+		inner join
+		t_dropshipping_order dorder on d.iorderid = dorder.iid
+		where
+		<if test="useremail != null and useremail != ''">
+			d.cuseremail = #{useremail} and
+		</if>
+		<if test="siteId != null">
+			o.iwebsiteid = #{siteId} and
+		</if>
+		<if test="status != null">
+			o.istatus in 
+			<foreach collection="status" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			 and 
+		</if>
+		<if test="start != null">
+			o.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			o.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			o.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="orderNum != null and orderNum != ''">
+			o.cordernumber = #{orderNum} and
+		</if>
+		<if test="cdropshippingid != null and cdropshippingid != ''">
+			d.cdropshippingid = #{cdropshippingid} and
+		</if>
+		<if test="paymentId != null and paymentId != ''">
+			o.cpaymentid = #{paymentId} and
+		</if>
+		<if test="email != null and email != ''">
+			o.cmemberemail = #{email} and
+		</if>
+		<if test="transactionId != null and transactionId != ''">
+			o.ctransactionid = #{transactionId} and
+		</if>
+		<if test="vhost != null and vhost != ''">
+			o.cvhost = #{vhost} and
+		</if>
+		<if test="paymentStart != null">
+			o.dpaymentdate &gt;= #{paymentStart} and
+		</if>
+		<if test="paymentEnd != null">
+			o.dpaymentdate &lt;= #{paymentEnd} and
+		</if>
+		dorder.cerrorlog is null 
+	</select>
+
+	<select id="searchOrdersByLabel" resultType="dto.order.Order">
+		select distinct * from
+		t_order o
+		inner join t_order_tag t on
+		t.iorderid = o.iid
+		where
+		<if test="orderNumber != null and orderNumber != ''">
+			o.cordernumber = #{orderNumber} and
+		</if>
+		<if test="email != null and email != ''">
+			o.cmemberemail = #{email} and
+		</if>
+		<if test="siteId != null">
+			o.iwebsiteid = #{siteId} and
+		</if>
+		<if test="status != null">
+			o.istatus in 
+			<foreach collection="status" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			 and 
+		</if>
+		<if test="start != null">
+			o.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			o.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			o.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="paymentId != null and paymentId != ''">
+			o.cpaymentid = #{paymentId} and
+		</if>
+		<if test="transactionId != null and transactionId != ''">
+			o.ctransactionid = #{transactionId} and
+		</if>
+		<if test="vhost != null and vhost != ''">
+			o.cvhost = #{vhost} and
+		</if>
+		<if test="paymentStart != null">
+			o.dpaymentdate &gt;= #{paymentStart} and
+		</if>
+		<if test="paymentEnd != null">
+			o.dpaymentdate &lt;= #{paymentEnd} and
+		</if>
+		t.ctag = #{labelType}
+		order by dcreatedate desc limit #{pageSize}
+		offset (#{pageSize} *
+		(#{pageNum} - 1))
+	</select>
+
+	<select id="searchCountByLabel" resultType="Integer">
+		select distinct count(o.iid) from
+		t_order o
+		inner join t_order_tag t
+		on t.iorderid = o.iid
+		where
+		<if test="orderNumber != null and orderNumber != ''">
+			o.cordernumber = #{orderNumber} and
+		</if>
+		<if test="email != null and email != ''">
+			o.cmemberemail = #{email} and
+		</if>
+		<if test="siteId != null">
+			o.iwebsiteid = #{siteId} and
+		</if>
+		<if test="status != null">
+			o.istatus in 
+			<foreach collection="status" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			 and 
+		</if>
+		<if test="start != null">
+			o.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			o.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			o.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="paymentId != null and paymentId != ''">
+			o.cpaymentid = #{paymentId} and
+		</if>
+		<if test="transactionId != null and transactionId != ''">
+			o.ctransactionid = #{transactionId} and
+		</if>
+		<if test="vhost != null and vhost != ''">
+			o.cvhost = #{vhost} and
+		</if>
+		<if test="paymentStart != null">
+			o.dpaymentdate &gt;= #{paymentStart} and
+		</if>
+		<if test="paymentEnd != null">
+			o.dpaymentdate &lt;= #{paymentEnd} and
+		</if>
+		t.ctag = #{labelType}
+	</select>
+	
+	<select id="searchDropShipOrderList" resultType="valueobjects.order_api.DropShipOrderMessage">
+		select d.cuseremail as useremail, dorder.cuserorderid as userorderid,
+		o.* from t_dropshipping_map d inner join t_order o on d.cordernumber =
+		o.cordernumber
+		inner join t_dropshipping_order dorder on d.iorderid =
+		dorder.iid
+		where
+		<if test="useremail != null and useremail != ''">
+			d.cuseremail = #{useremail} and
+		</if>
+		<if test="siteId != null">
+			o.iwebsiteid = #{siteId} and
+		</if>
+		<if test="status != null">
+			o.istatus in 
+			<foreach collection="status" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			 and 
+		</if>
+		<if test="start != null">
+			o.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			o.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			o.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="orderNum != null and orderNum != ''">
+			o.cordernumber = #{orderNum} and
+		</if>
+		<if test="paymentId != null and paymentId != ''">
+			o.cpaymentid = #{paymentId} and
+		</if>
+		<if test="email != null and email != ''">
+			o.cmemberemail = #{email} and
+		</if>
+		<if test="transactionId != null and transactionId != ''">
+			o.ctransactionid = #{transactionId} and
+		</if>
+		<if test="vhost != null and vhost != ''">
+			o.cvhost = #{vhost} and
+		</if>
+		<if test="paymentStart != null">
+			o.dpaymentdate &gt;= #{paymentStart} and
+		</if>
+		<if test="paymentEnd != null">
+			o.dpaymentdate &lt;= #{paymentEnd} and
+		</if>
+		dorder.cerrorlog is null
+	</select>
+	
+	<select id="searchOrderListByLabel" resultType="dto.order.Order">
+		select distinct * from
+		t_order o
+		inner join t_order_tag t on
+		t.iorderid = o.iid
+		where
+		<if test="orderNumber != null and orderNumber != ''">
+			o.cordernumber = #{orderNumber} and
+		</if>
+		<if test="email != null and email != ''">
+			o.cmemberemail = #{email} and
+		</if>
+		<if test="siteId != null">
+			o.iwebsiteid = #{siteId} and
+		</if>
+		<if test="status != null">
+			o.istatus in 
+			<foreach collection="status" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			 and 
+		</if>
+		<if test="start != null">
+			o.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			o.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			o.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="paymentId != null and paymentId != ''">
+			o.cpaymentid = #{paymentId} and
+		</if>
+		<if test="transactionId != null and transactionId != ''">
+			o.ctransactionid = #{transactionId} and
+		</if>
+		<if test="vhost != null and vhost != ''">
+			o.cvhost = #{vhost} and
+		</if>
+		<if test="paymentStart != null">
+			o.dpaymentdate &gt;= #{paymentStart} and
+		</if>
+		<if test="paymentEnd != null">
+			o.dpaymentdate &lt;= #{paymentEnd} and
+		</if>
+		t.ctag = #{labelType}
+	</select>
+	
+	<update id="changeOrdeStatusAndTransactionInfo" parameterType="map">
+		update t_order
+		<!-- set istatus=#{status} //modify by lijun 订单支付成功只能在ipn中修改-->
+		set ctransactionid=#{transactionId}
+		,creceiveraccount=#{receiverAccount}
+		,cpaymentid=#{paymentId}
+		,dpaymentdate=now()
+		where iid=#{id}
+	</update>
+	
+	<update id="update" parameterType="map">
+		update t_order 
+		<trim prefix="SET" suffixOverrides=",">
+			<if test="paymentId != null">
+				cpaymentid = #{paymentId},
+			</if>
+			<if test="message != null">
+				cmessage = #{message},
+			</if>
+			<if test="email != null">
+				cemail = #{email},
+			</if>
+			<if test="memberEmail != null">
+				cmemberemail = #{memberEmail},
+			</if>
+			<if test="countryCode != null">
+				ccountrysn = #{countryCode},
+			</if>
+			<if test="country != null">
+				ccountry = #{country},
+			</if>
+			<if test="street != null">
+				cstreetaddress = #{street},
+			</if>
+			<if test="city != null">
+				ccity = #{city},
+			</if>
+			<if test="province != null">
+				cprovince = #{province},
+			</if>
+			<if test="zipCode != null">
+				cpostalcode = #{zipCode},
+			</if>
+			<if test="firstName != null">
+				cfirstname = #{firstName},
+			</if>
+			<if test="middleName != null">
+				cmiddlename = #{middleName},
+			</if>
+			<if test="lastName != null">
+				clastname = #{lastName},
+			</if>
+			<if test="storageId != null">
+				istorageid = #{storageId},
+			</if>
+			<if test="telephone != null">
+				ctelephone = #{telephone},
+			</if>
+			<if test="shippingMethodId != null">
+				ishippingmethodid = #{shippingMethodId},
+			</if>
+			<if test="shippingPrice != null">
+				fshippingprice = #{shippingPrice},
+			</if>
+			<if test="grandtotal != null">
+				fgrandtotal = #{grandtotal},
+			</if>
+			<if test="cshippingcode != null">
+				cshippingcode = #{cshippingcode},
+			</if>
+		</trim>
+		<choose>
+			<when test="orderNum != null and orderNum != '' ">
+				where cordernumber=#{orderNum}
+			</when>
+			<otherwise>
+				where iid=#{id}
+			</otherwise>
+		</choose>
+		
+	</update>
+	
+	<select id="getOrderTotalCount" resultType="Integer">
+		select count(*) from t_order o
+		<if test="code != null and code != ''">
+			left join t_order_discount d on o.cordernumber=d.order_number
+		</if>
+		where
+		<if test="siteId != null">
+			o.iwebsiteid = #{siteId} and
+		</if>
+		<if test="status != null">
+			o.istatus in 
+			<foreach collection="status" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			 and 
+		</if>
+		<if test="start != null">
+			o.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			o.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			o.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="orderNum != null and orderNum != ''">
+			o.cordernumber = #{orderNum} and
+		</if>
+		<if test="paymentId != null and paymentId != '' and paymentId != 'paypal-ec' ">
+			o.cpaymentid = #{paymentId} and
+		</if>
+		<if test="paymentId != null and paymentId == 'paypal-ec' ">
+			o.cpaymenttype = #{paymentId} and
+		</if>
+		<if test="email != null and email != ''">
+			o.cmemberemail = #{email} and
+		</if>
+		<if test="transactionId != null and transactionId != ''">
+			o.ctransactionid = #{transactionId} and
+		</if>
+		<if test="vhost != null and vhost != ''">
+			o.cvhost = #{vhost} and
+		</if>
+		<if test="code != null and code != ''">
+			d.code like '%${code}%' and
+		</if>
+		<if test="paymentStart != null">
+			o.dpaymentdate &gt;= #{paymentStart} and
+		</if>
+		<if test="paymentEnd != null">
+			o.dpaymentdate &lt;= #{paymentEnd} and
+		</if>
+		1 = 1
+	</select>
+	<select id="getOrdersTransactionTotalCount" resultType="Integer">
+		select count(*) from t_order o
+		where
+		<if test="siteId != null">
+			o.iwebsiteid = #{siteId} and
+		</if>
+		<if test="status != null">
+			o.istatus = #{status} and
+		</if>
+		<if test="start != null">
+			o.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			o.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			o.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="orderNum != null and orderNum != ''">
+			o.cordernumber = #{orderNum} and
+		</if>
+		<if test="paymentId != null and paymentId != ''">
+			o.cpaymentid = #{paymentId} and
+		</if>
+		<if test="email != null and email != ''">
+			o.cmemberemail = #{email} and
+		</if>
+		<if test="transactionId != null and transactionId != ''">
+			o.ctransactionid = #{transactionId} and
+		</if>
+		<if test="vhost != null and vhost != ''">
+			o.cvhost = #{vhost} and
+		</if>
+		1 = 1
+	</select>
+	
+	<select id="getOrders" resultType="dto.order.Order">
+		select * from t_order o
+		<if test="code != null and code != ''">
+			left join t_order_discount d on o.cordernumber=d.order_number
+		</if>
+		where
+		<if test="siteId != null">
+			o.iwebsiteid = #{siteId} and
+		</if>
+		<if test="status != null">
+			o.istatus in 
+			<foreach collection="status" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			 and 
+		</if>
+		<if test="start != null">
+			o.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			o.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			o.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="orderNum != null and orderNum != ''">
+			o.cordernumber = #{orderNum} and
+		</if>
+		<if test="paymentId != null and paymentId != ''">
+			o.cpaymentid = #{paymentId} and
+		</if>
+		<if test="email != null and email != ''">
+			o.cmemberemail = #{email} and 
+		</if>
+		<if test="transactionId != null and transactionId != ''">
+			o.ctransactionid = #{transactionId} and
+		</if>
+		<if test="vhost != null and vhost != ''">
+			o.cvhost = #{vhost} and
+		</if>
+		<if test="code != null and code != ''">
+			d.code like '%${code}%' and
+		</if>
+		<if test="paymentStart != null">
+			o.dpaymentdate &gt;= #{paymentStart} and
+		</if>
+		<if test="paymentEnd != null">
+			o.dpaymentdate &lt;= #{paymentEnd} and
+		</if>
+		1 = 1
+	</select>
+	
+	<select id="getOrdersExcludeUser" resultType="dto.order.Order">
+		select * from t_order o
+		<if test="code != null and code != ''">
+			left join t_order_discount d on o.cordernumber=d.order_number
+		</if>
+		where
+		<if test="siteId != null">
+			o.iwebsiteid = #{siteId} and
+		</if>
+		<if test="status != null">
+			o.istatus in 
+			<foreach collection="status" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			 and 
+		</if>
+		<if test="start != null">
+			o.dcreatedate &gt;= #{start} and
+		</if>
+		<if test="end == null">
+			o.dcreatedate &lt;= now() and
+		</if>
+		<if test="end != null">
+			o.dcreatedate &lt;= #{end} and
+		</if>
+		<if test="orderNum != null and orderNum != ''">
+			o.cordernumber = #{orderNum} and
+		</if>
+		<if test="paymentId != null and paymentId != ''">
+			o.cpaymentid = #{paymentId} and
+		</if>
+		<if test="email != null and email != ''">
+			o.cmemberemail = #{email} and 
+		</if>
+		<if test="transactionId != null and transactionId != ''">
+			o.ctransactionid = #{transactionId} and
+		</if>
+		<if test="code != null and code != ''">
+			d.code like '%${code}%' and
+		</if>
+		<if test="vhost != null and vhost != ''">
+			o.cvhost = #{vhost} and
+		</if>
+		<if test="paymentStart != null">
+			o.dpaymentdate &gt;= #{paymentStart} and
+		</if>
+		<if test="paymentEnd != null">
+			o.dpaymentdate &lt;= #{paymentEnd} and
+		</if>
+		<if test="excUser != null">
+			o.cemail not in 
+			<foreach collection="excUser" item="excitem" index="index" open="(" separator="," close=")">
+				#{excitem}
+			</foreach>
+			 and 
+		</if>
+		1 = 1
+	</select>
+	
+	<!-- add by lijun -->
+	<update id="updateStatus">
+		update t_order set istatus = #{status}  
+		
+		<choose>
+			<when test="status == 8">
+				,ipaymentstatus=4
+			</when>
+			<when test="status == 2">
+				,ipaymentstatus=1
+			</when>
+			<when test="status == 9">
+				,ipaymentstatus=2
+			</when>
+			<when test="status == 1">
+				,ipaymentstatus=0
+			</when>
+		
+		</choose>
+		
+		where iid = #{orderId} 
+		<if test="email != null">
+			and cmemberemail = #{email}
+		</if>
+		<if test="srcStatus != null">
+			and istatus = #{srcStatus} 
+		</if>
+		
+	</update>
+</mapper>

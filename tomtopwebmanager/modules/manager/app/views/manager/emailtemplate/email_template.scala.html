@@ -1,0 +1,136 @@
+@(templates:valueobjects.base.Page[dto.EmailTemplate],
+	emailTypes: List[dto.EmailType],
+	websiteMap: Map[Integer,String],
+	languageMap: Map[Integer,String],
+	ctype: String,
+	languageId: Integer,
+	websiteid: Integer
+)
+@import views.html.helper._
+@views.html.manager.main{
+	@helper.javascriptRouter("email_template")(
+		controllers.manager.routes.javascript.EmailTemplate.deleteEmailTemplate,
+		controllers.manager.routes.javascript.EmailTemplateVariable.getEmailTemplateVariable,
+		controllers.manager.routes.javascript.EmailTemplate.manageEmailTemplate
+    )
+	<h3 class="page-title">
+		邮件模板管理 <small></small>
+	</h3>
+	<ul class="breadcrumb">
+		<li>
+			<i class="icon-home"></i>
+			<a href="/sysadmin">@Messages("home")</a> 
+			<i class="icon-angle-right"></i>
+		</li>
+		<li>
+			<a href="@controllers.manager.routes.EmailTemplate.manageEmailTemplate()">邮件模板管理</a>
+			<!-- <i class="icon-angle-right"></i>  -->
+		</li>
+	</ul>
+	<div class="clearfix">
+		<div class="btn-group">
+			<a data-toggle="modal" data-target="#add-new-email-template">
+				<button id="add_new_email_template" class="btn green">
+					新增邮件模板 <i class="icon-plus"></i>
+				</button>
+			</a>
+		</div>
+		语言：   
+	 	<select class="span1" name="select_language">
+	 		<option value="0"  @if(0 == languageId ){selected="selected"} >all</option>
+	 		@languageMap.keySet().map{k=>
+	 			<option value="@k" @if(k == languageId ){selected="selected"}>@languageMap.get(k)</option>
+	 		}
+		</select>
+	 	站点：   
+	 	<select class="span2" name="select_website">
+	 		@websiteMap.keySet().map{i=>
+	 			<option value="@i" @if(i == websiteid){selected="selected"}>@websiteMap.get(i)</option>
+	 		}
+		</select>
+	 	邮件模板类型：
+	 	<select class="span2" name="select_ctype">
+	 		<option>@ctype</option>
+	 		@if(ctype != "all"){
+	 		<option>all</option>
+	 		}
+	 		@emailTypes.map{j=>
+				<option>@j.getCname</option>
+	 		}
+		</select>
+		<form id="email_template_form" style="height:1px">
+	        <input type="hidden" id="website_hidden_value" name="websiteid" value="@websiteid"/> 
+	        <input type="hidden" id="type_hidden_value" name="ctype" value="@ctype" /> 
+	        <input type="hidden" id="language_hidden_value" name="language" value="@languageId"/> 
+    	</form>
+	</div>
+	<table class="table table-striped table-hover table-bordered">
+		<thead>
+			<tr>
+				<th>编号</th>
+				<th>站点</th>
+				<th>语言</th>
+				<th>类型</th>
+				<th>名称</th>
+				<th>创建人/修改人</th>
+				<th>创建时间</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if(null != templates && templates.getList().size()>0){
+				@templates.getList.map{a=>
+					<tr class="" id="tr_@a.getIid()">
+						<td>@a.getIid()</td>
+						<td class="center">@websiteMap.get(a.getIwebsiteid)</td>
+						<td class="center">@languageMap.get(a.getIlanguage)</td>
+						<td>@a.getCtype()</td>
+						<td class="center" title="email_template_title">@a.getCtitle()</td>
+						<td class="center">@a.getCcreateuser()</td>
+						<td class="center">@a.getDate()</td>
+						<td><a data-toggle="modal" data-target="#edit-email-template@a.getIid" name="edit_email_template@a.getIid()" tag="@a.getIid()">Edit</a></td>
+						<td><a class="delete" href="javascript:;" name="delete_email_template" tag="@a.getIid()">Delete</a></td>
+						@email_template_edit_box.render(a,emailTypes,websiteMap,templates.pageNo(),languageMap)
+					</tr>
+				}
+			}
+		</tbody>
+		@new_email_template_edit_box.render(emailTypes,websiteMap,templates.totalPages(),languageMap)
+	</table>
+	
+	<div class="row-fluid">
+		<div class="span">
+			<div class="dataTables_info">当前第@templates.pageNo()页|共@templates.totalPages()页</div>
+		</div>
+		<div class="span">
+			<div class="dataTables_paginate paging_bootstrap pagination">
+			     @if(templates.totalPages>1){ 
+				<ul>
+      	              @if(1 == templates.pageNo){
+      	              	 <li  class="disabled"><a href="javascript:;" style="cursor:pointer;">«</a></li>
+      	              }else{
+      	                 <li ><a name="page_a" value="@(templates.pageNo-1)" style="cursor:pointer;">«</a></li>
+      	              }
+	
+                      @for(i <- 1 to templates.totalPages) {
+						 @if(i == templates.pageNo){
+						      <li  class="disabled"><a href="javascript:;" style="cursor:pointer;">@i</a></li>
+						 }else{
+						      <li ><a name="page_a" value="@i" style="cursor:pointer;" >@i</a></li>
+						 }
+	                  }
+       	              @if(templates.pageNo >= templates.totalPages){
+       	                  <li class="disabled" ><a href="javascript:;" style="cursor:pointer;">»</a></li>
+       	              }else{
+       	                  <li><a  name="page_a" value="@(templates.pageNo+1)" style="cursor:pointer;">»</a></li>
+       	              }
+				</ul>
+			}
+			</div>
+		</div>
+	</div>
+	@services.base.HtmlUtils.misc().addTailOnce{
+	  <script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/manager/emailtemplate.js")'></script>
+	}
+}

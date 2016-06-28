@@ -1,0 +1,43 @@
+@(storageParentList :List[dto.StorageParent],
+allCountries:List[dto.Country])
+@import views.html.helper._
+<div  id="adddate-arrrival" tabindex="-1" class="modal hide fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	@form(controllers.manager.storage.routes.StorageManagerController.addStorageArrival()){
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+		    <h3>添加仓库可送达地区</h3>
+		</div>
+		<div class="modal-body">
+			<div class="control-group">
+				<label class="control-label" style="display:inline-block;vertical-align:middle;">仓库</label>
+				<div class="controls">
+					<select name="istorageid"  style="display:inline-block;vertical-align:middle;margin-top: -35px;margin-left: 120px;" >
+						@if(null != storageParentList && storageParentList.size >0){
+									@storageParentList.map{ n =>
+										<option value="@n.getIid()">@n.getCstoragename()</option>
+									}
+								}
+					</select>
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label" style="display:inline-block;vertical-align:middle;">可送达国家</label>
+				<div class="controls">
+					<select name="ccarrivalcountry"  style="display:inline-block;vertical-align:middle;margin-top: -35px;margin-left: 120px;" >
+						@if(null != allCountries && allCountries.size >0){
+									@allCountries.map{ n =>
+										<option value="@n.getCshortname()">@n.getCname()</option>
+									}
+								}
+					</select>
+				</div>
+			</div>
+		</div>
+	    <div class="modal-footer" style="margin-bottom: -20px;">
+		     <!-- <button type="button" class="btn closeArrival" onClick="closeStorageArrival()" data-dismiss="modal">关闭 </button>
+             <button type="submit" id="addArrival" onClick="addStorageArrival()" class="btn saveArrival">保存</button> -->
+             <button type="button" class="btn closeArrival" onClick="closeStorageArrival()" data-dismiss="modal">关闭 </button>
+             <button type="submit" id="addArrival"  class="btn saveArrival">保存</button>
+	    </div>
+	    }
+</div>

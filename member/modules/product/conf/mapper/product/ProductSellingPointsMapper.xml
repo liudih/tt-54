@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.ProductSellingPointsMapper" >
+  <resultMap id="BaseResultMap" type="dto.product.ProductSellingPoints" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="clistingid" property="clistingid" jdbcType="VARCHAR" />
+    <result column="csku" property="csku" jdbcType="VARCHAR" />
+    <result column="ilanguageid" property="ilanguageid" jdbcType="INTEGER" />
+    <result column="ccontent" property="ccontent" jdbcType="VARCHAR" />
+    <result column="ccreateuser" property="ccreateuser" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, clistingid, csku, ilanguageid, ccontent, ccreateuser, dcreatedate
+  </sql>
+
+  <insert id="addBatch" parameterType="java.util.List">
+  	insert into t_product_selling_points (clistingid, csku, 
+      ilanguageid, ccontent, ccreateuser, 
+      dcreatedate)
+  	values
+  	<foreach collection="list" item="item" index="index" separator=",">
+  		(#{item.clistingid,jdbcType=VARCHAR}, #{item.csku,jdbcType=VARCHAR}, 
+      #{item.ilanguageid,jdbcType=INTEGER}, #{item.ccontent,jdbcType=VARCHAR}, #{item.ccreateuser,jdbcType=VARCHAR}, 
+      #{item.dcreatedate,jdbcType=TIMESTAMP})
+  	</foreach>
+  </insert>
+  <select id="getProductSellingPointsByListingIds" resultType="dto.product.ProductSellingPoints">
+		SELECT * FROM t_product_selling_points WHERE ilanguageid = #{1}
+			and clistingid IN
+			<foreach item="item" index="index" collection="list" open="("
+				separator="," close=")">#{item}</foreach>
+   </select>
+</mapper>

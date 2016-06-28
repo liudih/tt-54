@@ -1,0 +1,164 @@
+POST   /placeorder                               @controllers.order.OrderProcessing.placeOrder()
+
+GET    /onepage                                  @controllers.order.OrderProcessing.confirm()	
+
+GET    /:orderId/payment                         @controllers.order.OrderProcessing.paymentToGo(orderId: String)	
+
+GET    /:orderId/payment-confirmed               @controllers.order.OrderProcessing.paymentConfirmed(orderId: String)
+
+GET    /:orderId/payment-fail                    @controllers.order.OrderProcessing.paymentFail(orderId: String, errorMessage: String?="", errorCode: String?="")	
+GET    /:orderId/payment-failed                  @controllers.order.OrderProcessing.paymentFailed(orderId: String, errorMessage: String?="", errorCode: String?="",retryUrl : String)	
+
+POST   /addnewshippingaddress                    @controllers.order.ShippingAddress.addNewShippingAddress()
+POST   /add-ship-address                    	@controllers.order.ShippingAddress.addShipAddress()
+
+POST   /modifyshippingaddress                    @controllers.order.ShippingAddress.modifyShippingAddress()
+
+GET    /refreshshippingmethod                    @controllers.order.ShippingAddress.refreshShippingMethod(cartId: String, addressId: Int)
+
+GET    /refreshPreparaoryShipping                @controllers.order.ShippingAddress.refreshPreparaoryShipping(orderID: Int, addressId: Int)
+
+GET    /refreshbyorder		                     @controllers.order.ShippingAddress.refreshByOrder(orderNumber: String, addressId: Int)
+
+GET    /:orderId/payOrder                        @controllers.order.OrderProcessing.replaceOrder(orderId: String, billID: Integer ?= null)
+
+POST   /checkpayment                             @controllers.order.OrderProcessing.changePayment()
+
+GET    /getshipping/:country/:listing            @controllers.order.ShippingController.getShipping(country: String,listing: String)
+
+GET    /selectorder						         @controllers.order.OrderProcessing.selectOrder(orderNumber: String, isSelect: Boolean)
+
+POST   /submitorder						         @controllers.order.OrderProcessing.submitOrder()
+
+GET    /checkaddress						     @controllers.order.OrderProcessing.checkAddress(addressID: Integer, billID: Integer ?= null)
+
+POST   /submitorderinfo					         @controllers.order.NewOrderProcessing.submitOrderInfo()
+
+GET    /:totalCID/replacetotal					 @controllers.order.NewOrderProcessing.replaceOrder(totalCID: String, billID: Integer ?= null)
+
+POST   /changepayment                            @controllers.order.NewOrderProcessing.changePayment()
+
+GET    /refreshinproduct/:storageID/:listingID/:qty           @controllers.order.ShippingController.refreshInProduct(storageID: Integer, listingID: String, qty: Integer)
+
+GET		/nologinorderdetail						@controllers.order.OrderProcessing.noLoginOrderDetail(id: String)
+
+
+# 会员中心部分
+GET    /history                                  @controllers.order.member.MemberOrder.index()
+
+POST   /search                                   @controllers.order.member.MemberOrder.search()
+
+POST   /remove                                   @controllers.order.member.MemberOrder.remove(ids: String ?= null)
+
+POST   /delete                                   @controllers.order.member.MemberOrder.delete(ids: String ?= null)
+
+POST   /restore                                  @controllers.order.member.MemberOrder.restore(ids: String ?= null)
+
+GET    /completed                                @controllers.order.member.MemberOrder.completed(id: Int)
+
+GET    /:id/detail                               @controllers.order.member.MemberOrder.orderDetail(id: String)
+
+GET    /dropshipping/history                     @controllers.order.dropshipping.MemberDropShippingOrder.index()
+
+GET    /dropshipping/download                    @controllers.order.dropshipping.MemberDropShippingOrder.download(interval: String, status: String, orderNumber: String, productName: String, transactionId: String, firstName: String)
+
+POST   /dropshipping/search                     @controllers.order.dropshipping.MemberDropShippingOrder.search()
+
+POST   /searchwithtag                            @controllers.order.member.MemberOrder.searchByTag()
+
+#shipping method api
+POST   /api/shippingmethod/push                  @controllers.api.ShippingMethod.push()
+
+POST   /api/order/push                           @controllers.api.Order.push()
+
+POST   /api/shippingmethod/updaterule            @controllers.api.ShippingMethod.updateRule()
+
+
+#order method api	
+POST   /pull                                     @controllers.api.Order.getOrder()
+			
+POST   /getOrderCount                            @controllers.api.Order.getOrderAllTotal()
+
+GET    /:orderNumber/getOrder                    @controllers.api.Order.getOrderByOrderId(orderNumber: String)
+
+POST   /changeOrderStatusToProcessing            @controllers.api.Order.changeOrderStatusToProcessing()
+
+POST   /changeOrderStatusToDispatched            @controllers.api.Order.changeOrderStatusToDispatched()
+
+POST   /changeOrderStatusToCompleted             @controllers.api.Order.changeOrderStatusToCompleted()
+
+POST   /changeOrderStatusToOnHold                @controllers.api.Order.changeOrderStatusToOnHold()
+
+POST   /changeOrderStatusToRefunded              @controllers.api.Order.changeOrderStatusToRefunded()
+
+POST   /updateOrderRemark                        @controllers.api.Order.updateOrderRemark()
+
+GET    /assets/*file                             controllers.order.Assets.at(path="/public", file)
+
+GET    /order/selectHot                          @controllers.order.Statistics.selectHot()
+
+GET    /order/bundProductByOrder				 @controllers.order.Statistics.bundProductByOrder()
+
+GET    /order/initListingid                      @controllers.order.Statistics.initListingid()
+
+POST   /api/order/updateTrackNumberFromERP              @controllers.api.UpdateTrackNumber.updateTrackNumberFromERP()
+
+
+#drop shipping order
+POST	/dropshipping/upload						@controllers.order.DropShipping.uploadOrder()
+
+GET		/dropshipping								@controllers.order.DropShipping.dropShipping()
+
+GET		/dropshipping/confirm						@controllers.order.DropShipping.confirmOrder(dropShippingID: String?=null)
+
+POST	/dropshipping/submit						@controllers.order.DropShipping.submitOrder()
+
+POST	/dropshipping/place							@controllers.order.DropShipping.placeOrder()
+
+GET		/dropshipping/:dropShippingID/choose		@controllers.order.DropShipping.choosePayment(dropShippingID: String)
+
+GET		/dropshipping/:dropShippingID/payment		@controllers.order.DropShipping.payment(dropShippingID: String)
+
+GET		/checkproductstatus  						@controllers.order.DropShipping.checkStockAndStatus(sku: String, qty: Int)
+
+POST     /api/order/noordermember                    @controllers.api.MemberForERP.getNoOrderMembers()
+
+POST    /api/order/ordermember                      @controllers.api.MemberForERP.getOrderMembers()
+
+GET    /order/tracking               			    @controllers.order.OrderEnquiry.orderEnquiry()
+
+POST    /order/trackingcheck                  		@controllers.order.OrderEnquiry.orderTrackingCheck()
+
+POST    /order/trackingenquiry                  	@controllers.order.OrderEnquiry.orderTrackingQuery()
+
+GET    /refresh-sm-guest	                     	@controllers.order.ShippingAddress.refreshShipMethodForGuest(orderNum : String, shipToCountryCode : String)
+GET    /test/crate-order-num	                    @controllers.order.test.CreateOrderNum.create()
+GET    /for-member                     				@controllers.order.OrderController.checkoutForMemberStep1(storageid: Int?=1)
+GET    /for-member-step2                    		@controllers.order.OrderController.checkoutForMemberStep2(storageid: Int?=1)
+POST    /for-member-step3                    		@controllers.order.OrderController.placeOrder()
+
+GET    /get-sm                  @controllers.order.ShippingAddress.getShipMethod(shipToCountryCode : String,storageid: Int?=1)
+GET		/ship-method			@controllers.order.ShippingAddress.getNewShipMethod(country: String, totalPrice: Double, storageid: Int?=1, orderNumber:String?="")
+
+
+GET		/order-completed		@controllers.order.OrderProcessing.orderCompleted(ordernumber:String?="")
+		
+POST	/sendordercomleted		@controllers.order.OrderProcessing.sendOrderCompleteEvent()
+
+#-----------loyalty -------------------
+GET    /coupon/apply                           @controllers.order.LoyaltyController.applyCoupon(code :String?=null)
+
+GET    /coupon/usablecoupon/get                @controllers.order.LoyaltyController.getUsableCoupon()
+
+POST   /points/apply                           @controllers.order.LoyaltyController.applyPoints(costpoints :Integer)
+
+GET    /promo/apply                            @controllers.order.LoyaltyController.applyPromo(code :String?=null)
+
+GET    /prefer/all                             @controllers.order.LoyaltyController.getAllCurrentPrefer()
+
+POST   /prefer/undo                            @controllers.order.LoyaltyController.undoCurrentPrefer()
+
+POST   /prefer/point/undo                      @controllers.order.LoyaltyController.undoCurrentPoint()
+
+GET    /points/get                             @controllers.order.LoyaltyController.getMyUsablePoint()
+

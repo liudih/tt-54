@@ -1,0 +1,175 @@
+@(country: dto.Country,currency : dto.Currency,language: dto.Language, url: String)
+@urlprefix = @{play.Play.application().configuration().getString("member.urlprefix")}
+@memberprefix = @{play.Play.application().configuration().getString("member.defaultdomain")}
+@views.html.base.nav_live_chat()
+<nav class="contentOut pu_topNav">
+	<div class="contentInside lbBox">
+		<a class="lineBlock pu_mobileNav" href="http://www.tomtop.com/activity/TOMTOP_App.html">
+			<i class="icon-mobile"> </i>@Messages("common.mobile")
+		</a>
+		 
+		<div class="lineBlock">
+			<div class="pu_langWarp pu_navHover">
+				@language.getCfullname<i class="icon-arr"> </i>
+			</div>
+			<div class="pu_blockWarp">
+				<a href="javascript:void(0);"   id="http://www.tomtop.com@url" lang='en' tabIndex='1'>English</a>
+				<a href="javascript:void(0);"   id="http://ru.tomtop.com@url" lang='ru' tabIndex='3'>Русский</a></li>
+				<a href="javascript:void(0)"    id="http://es.tomtop.com@url" lang='es' tabIndex='2'>Español</a>
+				<a href="javascript:void(0);"   id="http://de.tomtop.com@url" lang='de' tabIndex='4'>Deutsch</a>
+				<a href="javascript:void(0);"   id="http://fr.tomtop.com@url" lang='fr' tabIndex='5'>Français</a>
+				<a href="javascript:void(0);"   id="http://it.tomtop.com@url" lang='it' tabIndex='6'>Italiano</a>
+				<a href="javascript:void(0);"   id="http://jp.tomtop.com@url" lang='jp' tabIndex='7'>日本语</a>
+				<a href="javascript:void(0);"   id="http://pt.tomtop.com@url" lang='pt' tabIndex='8'>português</a>
+			</div>
+		</div>
+		
+		@select_country_new(country)
+		@select_currency_new(currency)
+		<form style="margin:0px;" action="/member/login" method="POST" class="form-signin" role="form" id="loginFormHead" >
+		<ul class="topNav_right">
+			
+			<li class="lineBlock rightHover" id="topbar_my_user_li">
+				<div class="pu_navHover">
+					<a href="@memberprefix/member/home">@Messages("my.account")</a>
+					<i class="icon-arr"> </i>
+				</div>
+				<div class="account_nav pu_blockWarp" style="display: none;">
+					<a href="@memberprefix/checkout/history">@Messages("my.orders")</a>
+					<a href="@memberprefix/loyalty/myCoupon/list">@Messages("my.coupons")</a>
+					<a href="@memberprefix/loyalty/points/myPoints">@Messages("my.points")</a>
+					<a href="@memberprefix/interaction/wishlist">@Messages("my.wishlist")</a>
+					<a href="@memberprefix/member/registerupdate">@Messages("account.settings")</a>
+				</div>
+			</li>
+ 			<li class="lineBlock"><a class="lineBlock" href="/checkout/order/tracking">@Messages("order.tracking")</a></li>
+			<li class="lineBlock rightHover">
+				<div class="pu_navHover">
+					@Messages("common.needHelp")
+					<i class="icon-arr"> </i>
+				</div>
+				<ul class="help_nav pu_blockWarp">
+					<li class="lbBox">
+						<i class="icon-pre lineBlock"> </i>
+						<p class="lineBlock">
+							<b>@Messages("common.preSales")</b><br>
+							@Messages("common.preSalesDesc")
+							<a href="http://tb.53kf.com/webCompany.php?arg=10045862&style=1">@Messages("common.startOnlineChat")</a>
+						</p>
+					</li>
+					<li class="lbBox">
+						<i class="icon-after lineBlock"> </i>
+						<p class="lineBlock">
+							<b>@Messages("common.afterSales")</b><br>
+							@Messages("common.afterSalesDesc") 
+							<a href="@urlprefix/base/cms/detail/37">@Messages("common.submitRequest")</a>
+						</p>
+					</li>
+					<li class="lbBox">
+						<i class="icon-asked lineBlock"> </i>
+						<p class="lineBlock">
+							<a href="@urlprefix/base/cms">@Messages("common.frequentlyAskedQuestions")</a>
+						</p>
+					</li>
+				</ul>
+			</li>
+		</ul>
+		</form>
+		
+	</div>
+</nav>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+	@helper.javascriptRouter("js_set_regional")(
+		controllers.base.routes.javascript.Regional.regionalSettings,
+		controllers.base.routes.javascript.Regional.switchCurrency,
+		controllers.base.routes.javascript.Regional.switchCountry,
+		controllers.base.routes.javascript.Regional.regionalDefaultSetting
+	) 
+	<script type="text/javascript">
+	$(function() {
+		//获取登录部分html
+		$.ajax({
+	   		url: "/member/getLoginSectionHtml",
+			type : "get",
+			data: null, 
+			dataType: 'jsonp', 
+            jsonp: 'jsoncallback', 
+			success : function(data) {
+				$("#topbar_my_user_li").before(data.html);
+				$(".rightHover").hover(function(){
+					$(this).find(".signJoin").show();
+				},function(){$(this).find(".signJoin").hide();})
+				
+				$(document).ready(function() {
+					
+					$('#signin').click(function(){
+							
+							var email = $('#sign_email').val();
+							var pw = $('#sign_password').val();
+							
+							var eErrHtml = $("#sign_email").next(".help-block");
+							var eErrCss = $("#sign_email").parents(".controls");
+							var pErrHtml = $("#sign_password").next(".help-block");
+							var pErrCss = $("#sign_password").parents(".controls");
+							
+							
+							
+							if (email != "") {
+								var reg = /^\w+((-\w+)|(\.\w+))*\@@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/;
+								isok= reg.test(email );
+								if (!isok) {
+									eErrHtml.html("You've entered the wrong email format!");//您输入的邮箱格式不正确
+									eErrCss.addClass("error");
+									return false;
+								}else{
+									eErrCss.removeClass("error");
+									eErrHtml.html("");
+								}
+							}else{
+								eErrHtml.html("Please enter your email address.");//请输入您的邮箱
+								eErrCss.addClass("error");
+								return false;
+							}
+							if(pw == ""){
+								pErrHtml.html("Please enter your password.");//请输入您的密码 
+								pErrCss.addClass("error");
+								return false;
+							}else{
+								pErrCss.removeClass("error");
+								pErrHtml.html("");
+							}
+							 
+						 
+									$.ajax({
+								        type:"post",
+								        cache:false,
+								        url:"/member/loginajax",
+								        data:$("#loginFormHead").serialize(),
+								        dataType:"json",
+								        success: function(data) {
+								        	if(data.result=="success"){
+								        		$('.signJoin .controls').addClass('success');
+								        		location.reload();
+												pErrHtml.html("");
+												eErrHtml.html("");
+								        		
+								        	}
+								        	if(data.result=="accountwrong"){
+								        		pophtml("Error","Email or password is wrong!");
+								        	}
+							        	}
+								      });
+									 
+						})
+				});	 
+			},
+			error: function (jqXHR, textStatus, errorThrown) { 
+            } 
+		});
+	});
+	</script>
+	<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/base/topbar/topbar.js")'></script>
+	<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/base/country.css")" />
+
+}

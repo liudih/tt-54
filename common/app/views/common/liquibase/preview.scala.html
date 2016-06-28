@@ -1,0 +1,22 @@
+@(context: String, update: Boolean, pv: Map[String, java.io.StringWriter])
+
+<h1>@Messages("liquibase.changes.preview")</h1>
+<h2>@Messages("current.context") @context</h2>
+
+Switch Context:
+@Seq("production", "test").filter( c => c != context ).map{ ctx =>
+	[<a href="@controllers.common.routes.LiquibaseController.update(false, false, ctx)">@ctx</a>]
+}
+
+
+@pv.map{ e =>
+
+<h2>@e._1</h2>
+<pre>
+@e._2
+</pre>
+
+}
+@if(update) {
+<a href="@controllers.common.routes.LiquibaseController.update(true, false, context)">@Messages("execute.update")</a>
+}

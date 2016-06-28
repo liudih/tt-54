@@ -1,0 +1,64 @@
+@(oneCmsMenuList: List[dto.CmsMenu],
+cmsMenuMap: Map[Integer,List[dto.CmsMenu]],
+menuName: String,
+cmsContentList: List[dto.CmsContent]
+)
+ 
+@import services.base._
+
+@views.html.base.master{
+@HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/search.css")?@version.BuildVersion.build()" /> 
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/help.css")?@version.BuildVersion.build()" /> 
+}
+	
+     
+<div class="container accountBox">
+    <div class="Bread_crumbs_Box">
+        <ul class="Bread_crumbs">
+            <li class="Bread_home"><a href="#"></a></li>
+            <li>
+                <p><a class="Bread_link" href="#">@Messages("help.center")</a></p>
+            </li>
+         
+            <div class="clear"></div>
+        </ul>
+    </div>
+    @views.html.base.cms_left_catalog(oneCmsMenuList, cmsMenuMap)
+  
+     
+     <div class="helpRight">
+    	<div class="hCenter_listTop">
+        	<h6>@menuName</h6>
+            <ul>
+            	 @cmsContentList.map{u=>
+            	 	<li><a href="#@u.getIid()">@u.getCtitle() </a></li>
+            	 }
+ 
+            	<div class="clear"></div>
+            </ul>
+        </div>
+        
+        
+        @cmsContentList.map{u=>
+			 <div class="QA_Ud">
+			 
+			 <a name="@u.getIid()"></a>
+			 <a href="javascript:;"><em></em>@u.getCtitle()</a>
+	   	 	 <div class="QA_txt"> @Html(u.getCcontent()) </div>
+	   	 	</div>
+        }
+       
+    </div>
+</div>
+ 
+ 
+	 
+	 
+	@services.base.HtmlUtils.misc().addTailOnce{
+	
+   
+		 
+	}
+}                                          
+                                               

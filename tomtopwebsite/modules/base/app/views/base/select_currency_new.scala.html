@@ -1,0 +1,25 @@
+@(currencty: dto.Currency)
+ 
+
+<div class="lineBlock">
+	<div class="pu_navHover" id="top_nav_currency_1">
+		@currencty.getCsymbol
+		<i class="icon-arr"> </i>
+	</div>
+	<div class="pu_notranslate pu_blockWarp">
+		 
+	</div>
+</div>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+@helper.javascriptRouter("jsCurrency")(
+	controllers.base.routes.javascript.Currency.getAllCurrencies
+)
+<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/base/topbar/Currency_new.js")'></script>
+}
+@services.base.HtmlUtils.misc().addTailOnce{
+<script>
+	var currency = new Currency();
+	currency.init(jsCurrency.controllers.base.Currency.getAllCurrencies().url);
+</script>
+}

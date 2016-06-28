@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="t_page-create" author="liulj">
+		<createTable tableName="t_page" remarks="页面表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="curl" type="VARCHAR(255)" remarks="页面地址url">
+				<constraints nullable="false" unique="true" />
+			</column>
+			<column name="itype" type="INTEGER" remarks="页面类型,0产品投票，1类目投票，2活动投票，3喜好投票，4活动"
+				defaultValue="0"></column>
+			<column name="cbannerurl" type="VARCHAR(255)" remarks="广告url"></column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点id"></column>
+			<column name="crecommendvalues" type="VARCHAR(200)" remarks="推荐的值，以，区分多个"></column>
+			<column name="ccreateuser" type="VARCHAR(30)" remarks="创建人"
+				defaultValue="-"></column>
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间"></column>
+			<column name="cupdateuser" type="VARCHAR(30)" remarks="修改人"
+				defaultValue="-"></column>
+			<column name="dupdatedate" type="DATETIME" defaultValue="now()"
+				remarks="修改时间"></column>
+			<column name="ienable" type="INTEGER" defaultValue="0"
+				remarks="是否启用,0为不启动，1为启动"></column>
+			<column name="denablestartdate" type="DATETIME" defaultValue="now()"
+				remarks="启用起始时间"></column>
+			<column name="denableenddate" type="DATETIME" defaultValue="now()"
+				remarks="启用结束时间"></column>
+		</createTable>
+	</changeSet>
+	<changeSet id="t_page_title-create" author="liulj">
+		<createTable tableName="t_page_title" remarks="页面标题(支持国际化)">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ipageid" type="INTEGER" remarks="页面的id">
+				<constraints nullable="false" foreignKeyName="T_PAGE_TITLE_IPAGEID_FK"
+					referencedTableName="t_page" referencedColumnNames="iid"
+					deleteCascade="true" />
+			</column>
+			<column name="ctitle" type="VARCHAR(200)" remarks="标题值"
+				defaultValue=" "></column>
+			<column name="ilanguageid" type="INTEGER" remarks="语言id"
+				defaultValue="1"></column>
+		</createTable>
+	</changeSet>
+	<changeSet id="t_page_item-create" author="liulj">
+		<createTable tableName="t_page_item" remarks="页面子项表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ipageid" type="INTEGER" remarks="页面id">
+				<constraints nullable="false" foreignKeyName="T_PAGE_ITEM_IPAGEID_FK"
+					referencedTableName="t_page" referencedColumnNames="iid"
+					deleteCascade="true" />
+			</column>
+			<column name="cvalue" type="VARCHAR(30)" remarks="页面子项的值"></column>
+			<column name="cimgurl" type="VARCHAR(255)" remarks="页面子项图片的url"></column>
+			<column name="cimgtargeturl" type="VARCHAR(255)" remarks="页面子项图片跳转目标url"></column>
+		</createTable>
+	</changeSet>
+	<changeSet id="t_page_item_name-create" author="liulj">
+		<createTable tableName="t_page_item_name" remarks="页面子项名称(支持国际化)">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ipageitemid" type="INTEGER" remarks="页面子项的id">
+				<constraints nullable="false" foreignKeyName="T_PAGE_ITEM_NAME_IPAGEITEMID_FK"
+					referencedTableName="t_page_item" referencedColumnNames="iid"
+					deleteCascade="true" />
+			</column>
+			<column name="cname" type="VARCHAR(200)" remarks="名称"
+				defaultValue=" "></column>
+			<column name="ilanguageid" type="INTEGER" remarks="语言id"
+				defaultValue="1"></column>
+		</createTable>
+	</changeSet>
+	<changeSet id="t_vote_record-create" author="liulj">
+		<createTable tableName="t_vote_record" remarks="投票记录">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cmemberemail" type="VARCHAR(100)" remarks="会员email"></column>
+			<column name="ipageitemid" type="INTEGER" remarks="页面子项的id"></column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点id" />
+			<column name="cvhost" type="VARCHAR(255)" remarks="子站点"></column>
+			<column name="dvotedate" type="DATETIME" defaultValue="now()"
+				remarks="投票时间"></column>
+		</createTable>
+	</changeSet>
+	<changeSet author="fcl"
+		id="t_page_item_name-unique_ipageitemid_ilanguageid-20151022">
+		<addUniqueConstraint columnNames="ipageitemid,ilanguageid"
+			tableName="t_page_item_name" constraintName="t_page_item_name_ipageitemid_ilanguageid_UniqueConstraint" />
+	</changeSet>
+	<changeSet id="t_page_item-addcolumn-20151023" author="fcl">
+		<addColumn tableName="t_page_item">
+			<column name="ipriority" type="INTEGER" remarks="优先级" />
+		</addColumn>
+	</changeSet>
+	<changeSet id="t_page_qualification-create-201511031725" author="liulj">
+		<createTable tableName="t_page_qualification" remarks="页面访问规则表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ipageid" type="INTEGER" remarks="页面(t_page)的id"></column>
+			<column name="crule" type="VARCHAR(250)" remarks="访问规则"></column>
+			<column name="cruleparam" type="VARCHAR(250)" remarks="访问规则的参数"></column>
+			<column name="ccreateuser" type="VARCHAR(30)" remarks="创建人"
+				defaultValue="-"></column>
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间"></column>
+			<column name="ienable" type="INTEGER" defaultValue="0"
+				remarks="是否启用,0为不启动，1为启动"></column>
+		</createTable>
+	</changeSet>
+	<changeSet id="t_page_rule-create-201511031725" author="liulj">
+		<createTable tableName="t_page_rule" remarks="页面抽奖规则表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ipageid" type="INTEGER" remarks="页面(t_page)的id"></column>
+			<column name="crule" type="VARCHAR(250)" remarks="奖品规则"></column>
+			<column name="cruleparam" type="VARCHAR(250)" remarks="奖品规则的参数"></column>
+			<column name="ccreateuser" type="VARCHAR(30)" remarks="创建人"
+				defaultValue="-"></column>
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间"></column>
+			<column name="ienable" type="INTEGER" defaultValue="0"
+				remarks="是否启用,0为不启动，1为启动"></column>
+		</createTable>
+	</changeSet>
+	<changeSet id="t_page_prize-create-201511031725" author="liulj">
+		<createTable tableName="t_page_prize" remarks="页面抽奖奖品表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ipageid" type="INTEGER" remarks="页面(t_page)的id"></column>
+			<column name="cname" type="VARCHAR(50)" remarks="奖品名称"></column>
+			<column name="ctype" type="VARCHAR(250)" remarks="奖品类型"></column>
+			<column name="ctypeparam" type="VARCHAR(250)" remarks="奖品类型参数"></column>
+			<column name="ccreateuser" type="VARCHAR(30)" remarks="创建人"
+				defaultValue="-"></column>
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间"></column>
+			<column name="ienable" type="INTEGER" defaultValue="0"
+				remarks="是否启用,0为不启动，1为启动"></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="t_page_prize_result-create-2015110401" author="guozy">
+		<createTable tableName="t_page_prize_result" remarks="页面奖品统计报表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ipageid" type="INTEGER" remarks="页面(t_page)的id"></column>
+			<column name="cemail" type="VARCHAR(100)" remarks="用户email"></column>
+			<column name="iprizeid" type="INTEGER" remarks="奖品编号Id"></column>
+			<column name="cprizevalue" type="VARCHAR(255)" remarks="奖品的值"></column>
+			<column name="ccountry" type="VARCHAR(250)" remarks="国家地区"></column>
+			<column name="iwebsiteid" type="INTEGER" remarks="站点id" />
+			<column name="cvhost" type="VARCHAR(255)" remarks="子站点"></column>
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间"></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="t_page_prize|qualification-add-column-201511031725" author="liulj">
+		<addColumn tableName="t_page_prize">
+			<column name="isort" type="INTEGER" defaultValue="1" remarks="排序"></column>
+			<column name="cextraparam" type="VARCHAR(250)" remarks="额外参数"></column>
+		</addColumn>
+		<addColumn tableName="t_page_qualification">
+			<column name="isort" type="INTEGER" defaultValue="1"  remarks="排序"></column>
+		</addColumn>
+		<addForeignKeyConstraint constraintName="T_PAGE_PRIZE_FK_IPAGEID" referencedTableName="t_page" baseColumnNames="ipageid" baseTableName="t_page_prize" referencedColumnNames="iid" onDelete="CASCADE"/>
+		<addForeignKeyConstraint constraintName="T_PAGE_QUALIFICATION_FK_IPAGEID" referencedTableName="t_page" baseColumnNames="ipageid" baseTableName="t_page_qualification" referencedColumnNames="iid"  onDelete="CASCADE"/>
+		<addForeignKeyConstraint constraintName="T_PAGE_RULE_FK_IPAGEID" referencedTableName="t_page" baseColumnNames="ipageid" baseTableName="t_page_rule" referencedColumnNames="iid"/>
+	</changeSet>
+	
+	<changeSet id="t_page_prize|qualification-add-column-201511060925" author="guozy">
+		<addForeignKeyConstraint constraintName="T_PAGE_PRIZE_RESULT_FK_IPAGEID" referencedTableName="t_page" baseColumnNames="ipageid" baseTableName="t_page_prize_result" referencedColumnNames="iid"/>
+	</changeSet>
+	
+	<changeSet id="t_activity_join-create-201511051525" author="fcl">
+		<createTable tableName="t_page_join" remarks="活动参与记录表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ipageid" type="INTEGER" remarks="页面(t_page)的id"></column>
+			<column name="cjoiner" type="VARCHAR(100)" remarks="参与者"></column>
+			<column name="cjoinparam" type="VARCHAR(250)" remarks="參與信息可以(json)"></column>
+			<column name="iwebsiteid" type="VARCHAR(250)" remarks="站点"></column>
+			<column name="cvhost" type="VARCHAR(50)" remarks="子站点"></column>
+			<column name="ccountry" type="VARCHAR(50)" remarks="国家"></column>
+			<column name="cresult" type="VARCHAR(250)" remarks="活动结果"></column>
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间"></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="t_page_addcolumn-201511051650" author="guozy">
+		<addColumn tableName="t_page">
+			<column name="itemplateid" type="INTEGER" defaultValue="0" remarks="活动模板编号"></column>
+		</addColumn>
+	</changeSet>
+	
+	<changeSet id="t_page_prize-add-column-2015110500" author="liulj">
+		<addColumn tableName="t_page_prize">
+			<column name="iruleid" type="INTEGER">
+				<constraints foreignKeyName="T_PAGE_PRIZE_FK_IRULEID" referencedTableName="t_page_rule" referencedColumnNames="iid" deleteCascade="true"/>
+			</column>
+		</addColumn>
+	</changeSet>
+	
+</databaseChangeLog>

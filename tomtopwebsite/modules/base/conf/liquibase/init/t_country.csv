@@ -1,0 +1,230 @@
+cshortname,cname,ccurrency,cweightunit,cmeasureunit,ccreateuser
+US,United States Of America,USD,LB,IN,Reason
+AD,Andorra,EUR,KG,CM,Reason
+AE,United Arab Emirates,AED,KG,CM,Reason
+AF,Afghanistan,AFN,KG,CM,Reason
+AG,Antigua,XCD,KG,CM,Reason
+AI,Anguilla,XCD,KG,CM,Reason
+AL,Albania,EUR,KG,CM,Reason
+AM,Armenia,AMD,KG,CM,Reason
+AN,Netherlands Antilles,ANG,KG,CM,Reason
+AO,Angola,AOA,KG,CM,Reason
+AR,Argentina,ARS,KG,CM,Reason
+AS,American Samoa,USD,LB,IN,Reason
+AT,Austria,EUR,KG,CM,Reason
+AU,Australia,AUD,KG,CM,Reason
+AW,Aruba,AWG,KG,CM,Reason
+AZ,Azerbaijan,AZM,KG,CM,Reason
+BA,Bosnia and Herzegovina,BAM,KG,CM,Reason
+BB,Barbados,BBD,KG,CM,Reason
+BD,Bangladesh,BDT,KG,CM,Reason
+BE,Belgium,EUR,KG,CM,Reason
+BF,Burkina Faso,XOF,KG,CM,Reason
+BG,Bulgaria,BGN,KG,CM,Reason
+BH,Bahrain,BHD,KG,CM,Reason
+BI,Burundi,BIF,KG,CM,Reason
+BJ,Benin,XOF,KG,CM,Reason
+BM,Bermuda,BMD,KG,CM,Reason
+BN,Brunei,BND,KG,CM,Reason
+BO,Bolivia,BOB,KG,CM,Reason
+BR,Brazil,BRL,KG,CM,Reason
+BS,Bahamas,BSD,KG,CM,Reason
+BT,Bhutan,BTN,KG,CM,Reason
+BW,Botswana,BWP,KG,CM,Reason
+BY,Belarus,BYR,KG,CM,Reason
+BZ,Belize,BZD,KG,CM,Reason
+CA,Canada,CAD,KG,CM,Reason
+CD,Congo, The Democratic Republic of,CDF,KG,CM,Reason
+CF,Central African Republic,XAF,KG,CM,Reason
+CG,Congo,XAF,KG,CM,Reason
+CH,Switzerland,CHF,KG,CM,Reason
+CI,Cote d'Ivoire,XOF,KG,CM,Reason
+CK,Cook Islands,NZD,KG,CM,Reason
+CL,Chile,CLP,KG,CM,Reason
+CM,Cameroon,XAF,KG,CM,Reason
+CN,China, People's Republic,CNY,KG,CM,Reason
+CO,Colombia,COP,KG,CM,Reason
+CR,Costa Rica,CRC,KG,CM,Reason
+CU,Cuba,CUP,KG,CM,Reason
+CV,Cape Verde,CVE,KG,CM,Reason
+CY,Cyprus,EUR,KG,CM,Reason
+CZ,Czech Republic, The,CZK,KG,CM,Reason
+DE,Germany,EUR,KG,CM,Reason
+DJ,Djibouti,DJF,KG,CM,Reason
+DK,Denmark,DKK,KG,CM,Reason
+DM,Dominica,XCD,KG,CM,Reason
+DO,Dominican Rep.,DOP,KG,CM,Reason
+DZ,Algeria,DZD,KG,CM,Reason
+EC,Ecuador,USD,KG,CM,Reason
+EE,Estonia,EEK,KG,CM,Reason
+EG,Egypt,EGP,KG,CM,Reason
+ER,Eritrea,ERN,KG,CM,Reason
+ES,Spain,EUR,KG,CM,Reason
+ET,Ethiopia,ETB,KG,CM,Reason
+FI,Finland,EUR,KG,CM,Reason
+FJ,Fiji,FJD,KG,CM,Reason
+FK,Falkland Islands,FKP,KG,CM,Reason
+FM,MICRONESIA, FEDERATED STATES OF,USD,LB,IN,Reason
+FO,Faroe Islands,DKK,KG,CM,Reason
+FR,France,EUR,KG,CM,Reason
+GA,Gabon,XAF,KG,CM,Reason
+GB,United Kingdom,GBP,KG,CM,Reason
+GD,Grenada,XCD,KG,CM,Reason
+GE,Georgia,GEL,KG,CM,Reason
+GF,French Guyana,EUR,KG,CM,Reason
+GG,Guernsey,GBP,KG,CM,Reason
+GH,Ghana,GHS,KG,CM,Reason
+GI,Gibraltar,GIP,KG,CM,Reason
+GL,Greenland,DKK,KG,CM,Reason
+GM,Gambia,GMD,KG,CM,Reason
+GN,Guinea Republic,GNF,KG,CM,Reason
+GP,Guadeloupe,EUR,KG,CM,Reason
+GQ,Guinea-Equatorial,XAF,KG,CM,Reason
+GR,Greece,EUR,KG,CM,Reason
+GT,Guatemala,GTQ,KG,CM,Reason
+GU,Guam,USD,LB,IN,Reason
+GW,Guinea-Bissau,GWP,KG,CM,Reason
+GY,Guyana (British),GYD,KG,CM,Reason
+HK,Hong Kong,HKD,KG,CM,Reason
+HN,Honduras,HNL,KG,CM,Reason
+HR,Croatia,HRK,KG,CM,Reason
+HT,Haiti,HTG,KG,CM,Reason
+HU,Hungary,HUF,KG,CM,Reason
+IC,Canary Islands, The,EUR,KG,CM,Reason
+ID,Indonesia,IDR,KG,CM,Reason
+IE,Ireland, Republic Of,EUR,KG,CM,Reason
+IL,Israel,ILS,KG,CM,Reason
+IN,India,INR,KG,CM,Reason
+IQ,Iraq,IQD,KG,CM,Reason
+IR,Iran (Islamic Republic of),IRR,KG,CM,Reason
+IS,Iceland,ISK,KG,CM,Reason
+IT,Italy,EUR,KG,CM,Reason
+JE,Jersey,GBP,KG,CM,Reason
+JM,Jamaica,JMD,KG,CM,Reason
+JO,Jordan,JOD,KG,CM,Reason
+JP,Japan,JPY,KG,CM,Reason
+KG,Kyrgyzstan,KGS,KG,CM,Reason
+KH,Cambodia,KHR,KG,CM,Reason
+KI,Kiribati,AUD,KG,CM,Reason
+KM,Comoros,KMF,KG,CM,Reason
+KN,St. Kitts,XCD,KG,CM,Reason
+KP,Korea, The D.P.R of,KPW,KG,CM,Reason
+KR,Korea, Republic Of,KRW,KG,CM,Reason
+KV,Kosovo,EUR,KG,CM,Reason
+KW,Kuwait,KWD,KG,CM,Reason
+KY,Cayman Islands,KYD,KG,CM,Reason
+KZ,Kazakhstan,KZT,KG,CM,Reason
+LA,Lao People's Democratic Republic,LAK,KG,CM,Reason
+LB,Lebanon,USD,KG,CM,Reason
+LC,St. Lucia,XCD,KG,CM,Reason
+LI,Liechtenstein,CHF,KG,CM,Reason
+LK,Sri Lanka,LKR,KG,CM,Reason
+LR,Liberia,LRD,KG,CM,Reason
+LS,Lesotho,LSL,KG,CM,Reason
+LT,Lithuania,LTL,KG,CM,Reason
+LU,Luxembourg,EUR,KG,CM,Reason
+LV,Latvia,LVL,KG,CM,Reason
+LY,Libya,LYD,KG,CM,Reason
+MA,Morocco,MAD,KG,CM,Reason
+MC,Monaco,EUR,KG,CM,Reason
+MD,Moldova, Republic Of,MDL,KG,CM,Reason
+ME,Montenegro, Republic of,EUR,KG,CM,Reason
+MG,Madagascar,MGA,KG,CM,Reason
+MH,Marshall Islands,USD,LB,IN,Reason
+MK,Macedonia, Rep. of (FYROM),MKD,KG,CM,Reason
+ML,Mali,XOF,KG,CM,Reason
+MM,Myanmar,USD,KG,CM,Reason
+MN,Mongolia,MNT,KG,CM,Reason
+MO,Macau,MOP,KG,CM,Reason
+MP,Saipan,USD,LB,IN,Reason
+MQ,Martinique,EUR,KG,CM,Reason
+MR,Mauritania,MRO,KG,CM,Reason
+MS,Montserrat,XCD,KG,CM,Reason
+MT,Malta,EUR,KG,CM,Reason
+MU,Mauritius,MUR,KG,CM,Reason
+MV,Maldives,MVR,KG,CM,Reason
+MW,Malawi,MWK,KG,CM,Reason
+MY,Malaysia,MYR,KG,CM,Reason
+MZ,Mozambique,MZN,KG,CM,Reason
+NA,Namibia,ZAR,KG,CM,Reason
+NC,New Caledonia,XPF,KG,CM,Reason
+NE,Niger,XOF,KG,CM,Reason
+NG,Nigeria,NGN,KG,CM,Reason
+NI,Nicaragua,NIO,KG,CM,Reason
+NL,Netherlands, The,EUR,KG,CM,Reason
+NO,Norway,NOK,KG,CM,Reason
+NP,Nepal,NPR,KG,CM,Reason
+NR,Nauru, Republic Of,AUD,KG,CM,Reason
+NU,Niue,NZD,KG,CM,Reason
+NZ,New Zealand,NZD,KG,CM,Reason
+OM,Oman,OMR,KG,CM,Reason
+PA,Panama,PAB,KG,CM,Reason
+PE,Peru,PEN,KG,CM,Reason
+PF,Tahiti,XPF,KG,CM,Reason
+PG,Papua New Guinea,PGK,KG,CM,Reason
+PH,Philippines, The,PHP,KG,CM,Reason
+PK,Pakistan,PKR,KG,CM,Reason
+PL,Poland,PLN,KG,CM,Reason
+PR,Puerto Rico,USD,LB,IN,Reason
+PT,Portugal,EUR,KG,CM,Reason
+PW,Palau,USD,KG,CM,Reason
+PY,Paraguay,PYG,KG,CM,Reason
+QA,Qatar,QAR,KG,CM,Reason
+RE,Reunion, Island Of,EUR,KG,CM,Reason
+RO,Romania,RON,KG,CM,Reason
+RS,Serbia, Republic of,RSD,KG,CM,Reason
+RU,Russian Federation, The,RUB,KG,CM,Reason
+RW,Rwanda,RWF,KG,CM,Reason
+SA,Saudi Arabia,SAR,KG,CM,Reason
+SB,Solomon Islands,SBD,KG,CM,Reason
+SC,Seychelles,SCR,KG,CM,Reason
+SD,Sudan,SDG,KG,CM,Reason
+SE,Sweden,SEK,KG,CM,Reason
+SG,Singapore,SGD,KG,CM,Reason
+SI,Slovenia,EUR,KG,CM,Reason
+SK,Slovakia,EUR,KG,CM,Reason
+SL,Sierra Leone,SLL,KG,CM,Reason
+SM,San Marino,EUR,KG,CM,Reason
+SN,Senegal,XOF,KG,CM,Reason
+SO,Somalia,SOS,KG,CM,Reason
+SR,Suriname,SRD,KG,CM,Reason
+ST,Sao Tome and Principe,STD,KG,CM,Reason
+SV,El Salvador,USD,KG,CM,Reason
+SY,Syria,SYP,KG,CM,Reason
+SZ,Swaziland,SZL,KG,CM,Reason
+TC,Turks and Caicos Islands,USD,KG,CM,Reason
+TD,Chad,XAF,KG,CM,Reason
+TG,Togo,XOF,KG,CM,Reason
+TH,Thailand,THB,KG,CM,Reason
+TJ,Tajikistan,TJS,KG,CM,Reason
+TL,East Timor,USD,KG,CM,Reason
+TN,Tunisia,TND,KG,CM,Reason
+TO,Tonga,TOP,KG,CM,Reason
+TR,Turkey,TRY,KG,CM,Reason
+TT,Trinidad and Tobago,TTD,KG,CM,Reason
+TV,Tuvalu,AUD,KG,CM,Reason
+TW,Taiwan,TWD,KG,CM,Reason
+TZ,Tanzania,TZS,KG,CM,Reason
+UA,Ukraine,UAH,KG,CM,Reason
+UG,Uganda,UGX,KG,CM,Reason
+UY,Uruguay,UYU,KG,CM,Reason
+UZ,Uzbekistan,UZS,KG,CM,Reason
+VC,St. Vincent,XCD,KG,CM,Reason
+VE,Venezuela,VEF,KG,CM,Reason
+VG,Virgin Islands (British),USD,KG,CM,Reason
+VI,Virgin Islands (US),USD,LB,IN,Reason
+VN,Vietnam,VND,KG,CM,Reason
+VU,Vanuatu,VUV,KG,CM,Reason
+WS,Samoa,WST,KG,CM,Reason
+XB,Bonaire,EUR,KG,CM,Reason
+XC,Curacao,EUR,KG,CM,Reason
+XE,St. Eustatius,ANG,KG,CM,Reason
+XM,St. Maarten,EUR,KG,CM,Reason
+XN,Nevis,XCD,KG,CM,Reason
+XS,Somaliland, Rep of (North Somalia),SIS,KG,CM,Reason
+XY,St. Barthelemy,ANG,KG,CM,Reason
+YE,Yemen, Republic of,YER,KG,CM,Reason
+YT,Mayotte,EUR,KG,CM,Reason
+ZA,South Africa,ZAR,KG,CM,Reason
+ZM,Zambia,ZMK,KG,CM,Reason
+ZW,Zimbabwe,ZWD,KG,CM,Reason

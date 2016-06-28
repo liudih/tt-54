@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="base_layout-create-2015112500" author="liulj">
+		<createTable tableName="base_layout" remarks="布局(就是一个页面)">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="code" type="VARCHAR(30)" remarks="布局的标识"></column>
+			<column name="name" type="VARCHAR(50)" remarks="布局的名称"></column>
+			<column name="client_id" type="INTEGER" remarks="客户端id，1 TOMTOP-PC,2 TOMTOP-Mobile,3 TOMTOP-APP-IOS,4 TOMTOP-APP-Android"></column>
+			<column name="language_id" type="INTEGER" remarks="语言id,1 en英语"></column>
+			<column name="url" type="VARCHAR(256)" remarks="路由Url"></column>
+			<column name="is_enabled" type="INTEGER" remarks="有两种状态(1 Enabled,0 Disabled), 1可被；0不可用"></column>
+			<column name="keyword" type="VARCHAR(500)" remarks="布局搜索关键字"></column>
+			<column name="description" type="VARCHAR(500)" remarks="布局描述"></column>
+			<column name="title" type="VARCHAR(500)" remarks="标题"></column>
+			<column name="remark" type="VARCHAR(500)" remarks="备注"></column>
+			<column name="created_by" type="VARCHAR(50)" remarks="创建人"></column>
+			<column name="created_on" type="DATETIME" remarks="创建时间" ></column>
+			<column name="last_updated_by" type="VARCHAR(50)" remarks="更新人"></column>
+			<column name="last_updated_on" type="DATETIME" remarks="更新时间" ></column>
+			<column name="is_deleted" type="INTEGER" defaultValue="0" remarks="1:是 0:否 默认:0"></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="base_layout_module-create-2015112500" author="liulj">
+		<createTable tableName="base_layout_module" remarks="布局模块">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="code" type="VARCHAR(30)" remarks="模块的标识"></column>
+			<column name="name" type="VARCHAR(50)" remarks="模块的名称"></column>
+			<column name="layout_code" type="VARCHAR(30)" remarks="布局的标识"></column>
+			<column name="layout_id" type="INTEGER" remarks="布局id"></column>
+			<column name="client_id" type="INTEGER" remarks="客户端id，1 TOMTOP-PC,2 TOMTOP-Mobile,3 TOMTOP-APP-IOS,4 TOMTOP-APP-Android"></column>
+			<column name="language_id" type="INTEGER" remarks="语言id,1 en英语"></column>
+			<column name="position_id" type="INTEGER" remarks="位置参数id,1左边，2右边，3顶部，4底部"></column>
+			<column name="url" type="VARCHAR(256)" remarks="路由Url"></column>
+			<column name="number" type="INTEGER" remarks="模块显示sku的数量"></column>
+			<column name="sort" type="INTEGER" remarks="模块的排序号"></column>
+			<column name="is_enabled" type="INTEGER" remarks="有两种状态(1 Enabled,0 Disabled), 1可被；0不可用"></column>
+			<column name="created_by" type="VARCHAR(50)" remarks="创建人"></column>
+			<column name="created_on" type="DATETIME" remarks="创建时间" ></column>
+			<column name="last_updated_by" type="VARCHAR(50)" remarks="更新人"></column>
+			<column name="last_updated_on" type="DATETIME" remarks="更新时间" ></column>
+			<column name="is_deleted" type="INTEGER" defaultValue="0" remarks="1:是 0:否 默认:0"></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="base_layout_module_content-create-2015112500" author="liulj">
+		<createTable tableName="base_layout_module_content" remarks="布局模块内容">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="layout_code" type="VARCHAR(30)" remarks="布局的标识"></column>
+			<column name="layout_id" type="INTEGER" remarks="布局id"></column>
+			<column name="layout_module_code" type="VARCHAR(30)" remarks="模块的的标识"></column>
+			<column name="layout_module_id" type="INTEGER" remarks="模块id"></column>
+			<column name="client_id" type="INTEGER" remarks="客户端id，1 TOMTOP-PC,2 TOMTOP-Mobile,3 TOMTOP-APP-IOS,4 TOMTOP-APP-Android"></column>
+			<column name="language_id" type="INTEGER" remarks="语言id,1 en英语"></column>
+			<column name="category_id" type="INTEGER" remarks="类目id"></column>
+			<column name="is_show" type="INTEGER" remarks="是否显示在页面布局的模块中,1显示，0不显示"></column>
+			<column name="listing_id" type="VARCHAR(50)" remarks="产品id"></column>
+			<column name="sku" type="VARCHAR(50)" remarks="产品sku"></column>
+			<column name="sort" type="INTEGER" remarks="模块的排序号"></column>
+			<column name="is_enabled" type="INTEGER" remarks="有两种状态(1 Enabled,0 Disabled), 1可被；0不可用"></column>
+			<column name="created_by" type="VARCHAR(50)" remarks="创建人"></column>
+			<column name="created_on" type="DATETIME" remarks="创建时间" ></column>
+			<column name="last_updated_by" type="VARCHAR(50)" remarks="更新人"></column>
+			<column name="last_updated_on" type="DATETIME" remarks="更新时间" ></column>
+			<column name="is_deleted" type="INTEGER" defaultValue="0" remarks="1:是 0:否 默认:0"></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="home_featured_category-create-2015112700" author="liulj">
+		<createTable tableName="home_featured_category" remarks="首页特色类目">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="img_url" type="VARCHAR(256)" remarks="图片Url"></column>
+			<column name="number" type="INTEGER" remarks="类目下的产品数量"></column>
+			<column name="client_id" type="INTEGER" remarks="客户端id，1 TOMTOP-PC,2 TOMTOP-Mobile,3 TOMTOP-APP-IOS,4 TOMTOP-APP-Android"></column>
+			<column name="language_id" type="INTEGER" remarks="语言id,1 en英语"></column>
+			<column name="category_id" type="INTEGER" remarks="类目id"></column>
+			<column name="sort" type="INTEGER" remarks="排序号"></column>
+			<column name="is_enabled" type="INTEGER" remarks="有两种状态(1 Enabled,0 Disabled), 1可被；0不可用"></column>
+			<column name="created_by" type="VARCHAR(50)" remarks="创建人"></column>
+			<column name="created_on" type="DATETIME" remarks="创建时间" ></column>
+			<column name="last_updated_by" type="VARCHAR(50)" remarks="更新人"></column>
+			<column name="last_updated_on" type="DATETIME" remarks="更新时间" ></column>
+			<column name="is_deleted" type="INTEGER" defaultValue="0" remarks="1:是 0:否 默认:0"></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="home_featured_category_sku-create-2015112700" author="liulj">
+		<createTable tableName="home_featured_category_sku" remarks="首页特色类目的产品">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="client_id" type="INTEGER" remarks="客户端id，1 TOMTOP-PC,2 TOMTOP-Mobile,3 TOMTOP-APP-IOS,4 TOMTOP-APP-Android"></column>
+			<column name="language_id" type="INTEGER" remarks="语言id,1 en英语"></column>
+			<column name="featured_category_id" type="INTEGER" remarks="首页特色类目id"></column>
+			<column name="listing_id" type="VARCHAR(50)" remarks="产品id"></column>
+			<column name="sku" type="VARCHAR(50)" remarks="产品sku"></column>
+			<column name="sort" type="INTEGER" remarks="排序号"></column>
+			<column name="is_enabled" type="INTEGER" remarks="有两种状态(1 Enabled,0 Disabled), 1可被；0不可用"></column>
+			<column name="created_by" type="VARCHAR(50)" remarks="创建人"></column>
+			<column name="created_on" type="DATETIME" remarks="创建时间" ></column>
+			<column name="last_updated_by" type="VARCHAR(50)" remarks="更新人"></column>
+			<column name="last_updated_on" type="DATETIME" remarks="更新时间" ></column>
+			<column name="is_deleted" type="INTEGER" defaultValue="0" remarks="1:是 0:否 默认:0"></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="home_featured_category_banner-create-2015112700" author="liulj">
+		<createTable tableName="home_featured_category_banner" remarks="首页特色类目的广告">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="client_id" type="INTEGER" remarks="客户端id，1 TOMTOP-PC,2 TOMTOP-Mobile,3 TOMTOP-APP-IOS,4 TOMTOP-APP-Android"></column>
+			<column name="language_id" type="INTEGER" remarks="语言id,1 en英语"></column>
+			<column name="featured_category_id" type="INTEGER" remarks="首页特色类目id"></column>
+			<column name="position_id" type="INTEGER" remarks="位置参数id,1左边，2右边，3顶部，4底部"></column>
+			<column name="url" type="VARCHAR(256)" remarks="Url"></column>
+			<column name="img_url" type="VARCHAR(256)" remarks="图片Url"></column>
+			<column name="title" type="VARCHAR(500)" remarks="标题"></column>
+			<column name="sort" type="INTEGER" remarks="排序号"></column>
+			<column name="is_enabled" type="INTEGER" remarks="有两种状态(1 Enabled,0 Disabled), 1可被；0不可用"></column>
+			<column name="created_by" type="VARCHAR(50)" remarks="创建人"></column>
+			<column name="created_on" type="DATETIME" remarks="创建时间" ></column>
+			<column name="last_updated_by" type="VARCHAR(50)" remarks="更新人"></column>
+			<column name="last_updated_on" type="DATETIME" remarks="更新时间" ></column>
+			<column name="is_deleted" type="INTEGER" defaultValue="0" remarks="1:是 0:否 默认:0"></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="home_featured_category_key-create-2015112700" author="liulj">
+		<createTable tableName="home_featured_category_key" remarks="首页特色类目的搜索关键字">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="client_id" type="INTEGER" remarks="客户端id，1 TOMTOP-PC,2 TOMTOP-Mobile,3 TOMTOP-APP-IOS,4 TOMTOP-APP-Android"></column>
+			<column name="language_id" type="INTEGER" remarks="语言id,1 en英语"></column>
+			<column name="featured_category_id" type="INTEGER" remarks="首页特色类目id"></column>
+			<column name="is_enabled" type="INTEGER" remarks="有两种状态(1 Enabled,0 Disabled), 1可被；0不可用"></column>
+			<column name="sort" type="INTEGER" remarks="排序号"></column>
+			<column name="keyword" type="VARCHAR(50)" remarks="关键字内容"></column>
+			<column name="created_by" type="VARCHAR(50)" remarks="创建人"></column>
+			<column name="created_on" type="DATETIME" remarks="创建时间" ></column>
+			<column name="last_updated_by" type="VARCHAR(50)" remarks="更新人"></column>
+			<column name="last_updated_on" type="DATETIME" remarks="更新时间" ></column>
+			<column name="is_deleted" type="INTEGER" defaultValue="0" remarks="1:是 0:否 默认:0"></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="home_search_keyword-create-2015120200" author="liulj">
+		<createTable tableName="home_search_keyword" remarks="首页搜索关键字">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="client_id" type="INTEGER" remarks="客户端id，1 TOMTOP-PC,2 TOMTOP-Mobile,3 TOMTOP-APP-IOS,4 TOMTOP-APP-Android"></column>
+			<column name="language_id" type="INTEGER" remarks="语言id,1 en英语"></column>
+			<column name="category_id" type="INTEGER" remarks="类目id,0:表示默认"></column>
+			<column name="sort" type="INTEGER" remarks="排序号"></column>
+			<column name="keyword" type="VARCHAR(50)" remarks="关键字内容"></column>
+			<column name="is_enabled" type="INTEGER" remarks="有两种状态(1 Enabled,0 Disabled), 1可被；0不可用"></column>
+			<column name="is_deleted" type="INTEGER" defaultValue="0" remarks="1:是 0:否 默认:0"></column>
+			<column name="created_by" type="VARCHAR(50)" remarks="创建人"></column>
+			<column name="created_on" type="DATETIME" remarks="创建时间" ></column>
+			<column name="last_updated_by" type="VARCHAR(50)" remarks="更新人"></column>
+			<column name="last_updated_on" type="DATETIME" remarks="更新时间" ></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="home_search_autocomplete-create-2015120200" author="liulj">
+		<createTable tableName="home_search_autocomplete" remarks="搜索自动补全管理">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="client_id" type="INTEGER" remarks="客户端id，1 TOMTOP-PC,2 TOMTOP-Mobile,3 TOMTOP-APP-IOS,4 TOMTOP-APP-Android"></column>
+			<column name="language_id" type="INTEGER" remarks="语言id,1 en英语"></column>
+			<column name="keyword" type="VARCHAR(50)" remarks="关键字内容"></column>
+			<column name="is_enabled" type="INTEGER" remarks="有两种状态(1 Enabled,0 Disabled), 1可被；0不可用"></column>
+			<column name="is_deleted" type="INTEGER" defaultValue="0" remarks="1:是 0:否 默认:0"></column>
+			<column name="created_by" type="VARCHAR(50)" remarks="创建人"></column>
+			<column name="created_on" type="DATETIME" remarks="创建时间" ></column>
+			<column name="last_updated_by" type="VARCHAR(50)" remarks="更新人"></column>
+			<column name="last_updated_on" type="DATETIME" remarks="更新时间" ></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="home_daily_deal-create-2015120200" author="liulj">
+		<createTable tableName="home_daily_deal" remarks="首页每日促销">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="client_id" type="INTEGER" remarks="客户端id，1 TOMTOP-PC,2 TOMTOP-Mobile,3 TOMTOP-APP-IOS,4 TOMTOP-APP-Android"></column>
+			<column name="language_id" type="INTEGER" remarks="语言id,1 en英语"></column>
+			<column name="listing_id" type="VARCHAR(50)" remarks="产品id"></column>
+			<column name="sku" type="VARCHAR(50)" remarks="商品sku"></column>
+			<column name="start_date" type="DATE" remarks="开始时间"></column>
+			<column name="discount" type="DECIMAL(4,2)" remarks="折扣价"></column>
+			<column name="is_enabled" type="INTEGER" remarks="有两种状态(1 Enabled,0 Disabled), 1可被；0不可用"></column>
+			<column name="is_deleted" type="INTEGER" defaultValue="0" remarks="1:是 0:否 默认:0"></column>
+			<column name="created_by" type="VARCHAR(50)" remarks="创建人"></column>
+			<column name="created_on" type="DATETIME" remarks="创建时间" ></column>
+			<column name="last_updated_by" type="VARCHAR(50)" remarks="更新人"></column>
+			<column name="last_updated_on" type="DATETIME" remarks="更新时间" ></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="home_newest_image-create-2015120300" author="liulj">
+		<createTable tableName="home_newest_image" remarks="最新晒图片">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="client_id" type="INTEGER" remarks="客户端id，1 TOMTOP-PC,2 TOMTOP-Mobile,3 TOMTOP-APP-IOS,4 TOMTOP-APP-Android"></column>
+			<column name="language_id" type="INTEGER" remarks="语言id,1 en英语"></column>
+			<column name="title" type="VARCHAR(200)" remarks="标题"></column>
+			<column name="img_url" type="VARCHAR(256)" remarks="图片url"></column>
+			<column name="img_by" type="VARCHAR(50)" remarks="晒图人"></column>
+			<column name="country" type="VARCHAR(50)" remarks="国家"></column>
+			<column name="is_enabled" type="INTEGER" remarks="有两种状态(1 Enabled,0 Disabled), 1可被；0不可用"></column>
+			<column name="is_deleted" type="INTEGER" defaultValue="0" remarks="1:是 0:否 默认:0"></column>
+			<column name="created_by" type="VARCHAR(50)" remarks="创建人"></column>
+			<column name="created_on" type="DATETIME" remarks="创建时间" ></column>
+			<column name="last_updated_by" type="VARCHAR(50)" remarks="更新人"></column>
+			<column name="last_updated_on" type="DATETIME" remarks="更新时间" ></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="home_newest_review-create-2015120300" author="liulj">
+		<createTable tableName="home_newest_review" remarks="最新评论">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="client_id" type="INTEGER" remarks="客户端id，1 TOMTOP-PC,2 TOMTOP-Mobile,3 TOMTOP-APP-IOS,4 TOMTOP-APP-Android"></column>
+			<column name="language_id" type="INTEGER" remarks="语言id,1 en英语"></column>
+			<column name="review_content" type="VARCHAR(500)" remarks="评论内容"></column>
+			<column name="review_by" type="VARCHAR(50)" remarks="评论人"></column>			
+			<column name="title" type="VARCHAR(200)" remarks="标题"></column>
+			<column name="country" type="VARCHAR(50)" remarks="国家"></column>
+			<column name="is_enabled" type="INTEGER" remarks="有两种状态(1 Enabled,0 Disabled), 1可被；0不可用"></column>
+			<column name="is_deleted" type="INTEGER" defaultValue="0" remarks="1:是 0:否 默认:0"></column>
+			<column name="created_by" type="VARCHAR(50)" remarks="创建人"></column>
+			<column name="created_on" type="DATETIME" remarks="创建时间" ></column>
+			<column name="last_updated_by" type="VARCHAR(50)" remarks="更新人"></column>
+			<column name="last_updated_on" type="DATETIME" remarks="更新时间" ></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="home_newest_video-create-2015120300" author="liulj">
+		<createTable tableName="home_newest_video" remarks="最新评论">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="client_id" type="INTEGER" remarks="客户端id，1 TOMTOP-PC,2 TOMTOP-Mobile,3 TOMTOP-APP-IOS,4 TOMTOP-APP-Android"></column>
+			<column name="language_id" type="INTEGER" remarks="语言id,1 en英语"></column>
+			<column name="video_url" type="VARCHAR(256)" remarks="视频url"></column>
+			<column name="title" type="VARCHAR(200)" remarks="标题"></column>
+			<column name="video_by" type="VARCHAR(50)" remarks="视频分享人"></column>
+			<column name="country" type="VARCHAR(50)" remarks="国家"></column>
+			<column name="is_enabled" type="INTEGER" remarks="有两种状态(1 Enabled,0 Disabled), 1可被；0不可用"></column>
+			<column name="is_deleted" type="INTEGER" defaultValue="0" remarks="1:是 0:否 默认:0"></column>
+			<column name="created_by" type="VARCHAR(50)" remarks="创建人"></column>
+			<column name="created_on" type="DATETIME" remarks="创建时间" ></column>
+			<column name="last_updated_by" type="VARCHAR(50)" remarks="更新人"></column>
+			<column name="last_updated_on" type="DATETIME" remarks="更新时间" ></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="home_recent_orders_country-create-2015120400" author="liulj">
+		<createTable tableName="home_recent_orders_country" remarks="最新订单国家">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="client_id" type="INTEGER" remarks="客户端id，1 TOMTOP-PC,2 TOMTOP-Mobile,3 TOMTOP-APP-IOS,4 TOMTOP-APP-Android"></column>
+			<column name="language_id" type="INTEGER" remarks="语言id,1 en英语"></column>
+			<column name="country_id" type="VARCHAR(256)" remarks="视频url"></column>
+			<column name="is_enabled" type="INTEGER" remarks="有两种状态(1 Enabled,0 Disabled), 1可被；0不可用"></column>
+			<column name="is_deleted" type="INTEGER" defaultValue="0" remarks="1:是 0:否 默认:0"></column>
+			<column name="created_by" type="VARCHAR(50)" remarks="创建人"></column>
+			<column name="created_on" type="DATETIME" remarks="创建时间" ></column>
+			<column name="last_updated_by" type="VARCHAR(50)" remarks="更新人"></column>
+			<column name="last_updated_on" type="DATETIME" remarks="更新时间" ></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="home_recent_orders_sku-create-2015120400" author="liulj">
+		<createTable tableName="home_recent_orders_sku" remarks="最新订单国家">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="client_id" type="INTEGER" remarks="客户端id，1 TOMTOP-PC,2 TOMTOP-Mobile,3 TOMTOP-APP-IOS,4 TOMTOP-APP-Android"></column>
+			<column name="language_id" type="INTEGER" remarks="语言id,1 en英语"></column>
+			<column name="listing_id" type="VARCHAR(50)" remarks="产品id"></column>
+			<column name="sku" type="VARCHAR(50)" remarks="产品sku"></column>
+			<column name="is_enabled" type="INTEGER" remarks="有两种状态(1 Enabled,0 Disabled), 1可被；0不可用"></column>
+			<column name="is_deleted" type="INTEGER" defaultValue="0" remarks="1:是 0:否 默认:0"></column>
+			<column name="created_by" type="VARCHAR(50)" remarks="创建人"></column>
+			<column name="created_on" type="DATETIME" remarks="创建时间" ></column>
+			<column name="last_updated_by" type="VARCHAR(50)" remarks="更新人"></column>
+			<column name="last_updated_on" type="DATETIME" remarks="更新时间" ></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="home_brand-create-2015120400" author="liulj">
+		<createTable tableName="home_brand" remarks="首页品牌管理">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="name" type="VARCHAR(50)" remarks="名称"></column>
+			<column name="code" type="VARCHAR(30)" remarks="标识"></column>
+			<column name="url" type="VARCHAR(256)" remarks="url"></column>
+			<column name="logo_url" type="VARCHAR(256)" remarks="log url"></column>
+			<column name="client_id" type="INTEGER" remarks="客户端id，1 TOMTOP-PC,2 TOMTOP-Mobile,3 TOMTOP-APP-IOS,4 TOMTOP-APP-Android"></column>
+			<column name="language_id" type="INTEGER" remarks="语言id,1 en英语"></column>
+			<column name="is_enabled" type="INTEGER" remarks="有两种状态(1 Enabled,0 Disabled), 1可被；0不可用"></column>
+			<column name="is_deleted" type="INTEGER" defaultValue="0" remarks="1:是 0:否 默认:0"></column>
+			<column name="created_by" type="VARCHAR(50)" remarks="创建人"></column>
+			<column name="created_on" type="DATETIME" remarks="创建时间" ></column>
+			<column name="last_updated_by" type="VARCHAR(50)" remarks="更新人"></column>
+			<column name="last_updated_on" type="DATETIME" remarks="更新时间" ></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="add-column-2015120700" author="liulj">
+		<addColumn tableName="home_newest_video">
+			<column name="listing_id" type="VARCHAR(50)" remarks="商品id"></column>
+			<column name="sku" type="VARCHAR(50)" remarks="sku"></column>
+		</addColumn>
+		<addColumn tableName="home_newest_review">
+			<column name="listing_id" type="VARCHAR(50)" remarks="商品id"></column>
+			<column name="sku" type="VARCHAR(50)" remarks="sku"></column>
+		</addColumn>
+		<addColumn tableName="home_newest_image">
+			<column name="listing_id" type="VARCHAR(50)" remarks="商品id"></column>
+			<column name="sku" type="VARCHAR(50)" remarks="sku"></column>
+		</addColumn>
+	</changeSet>
+	
+	<changeSet id="home_search_autocomplete-add-column-2015122400" author="liulj">
+		<modifyDataType tableName="home_search_autocomplete" columnName="keyword" newDataType="VARCHAR(500)"/>
+	</changeSet>
+	
+	<changeSet id="home_brand-add-column-2015122400" author="liulj">
+		<addColumn tableName="home_brand">
+			<column name="description" type="VARCHAR(500)" remarks="描述"></column>
+		</addColumn>
+	</changeSet>
+</databaseChangeLog>

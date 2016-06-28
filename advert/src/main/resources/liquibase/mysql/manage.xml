@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet id="base_banners-create-2015120300" author="liulj">
+		<createTable tableName="base_banners" remarks="广告管理">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="name" type="VARCHAR(30)" remarks="名称"></column>
+			<column name="code" type="VARCHAR(30)" remarks="标识代码(大写命名)"></column>
+			<column name="client_id" type="INTEGER" remarks="客户端id，1 TOMTOP-PC,2 TOMTOP-Mobile,3 TOMTOP-APP-IOS,4 TOMTOP-APP-Android"></column>
+			<column name="language_id" type="INTEGER" remarks="语言id,1 en英语"></column>
+			<column name="layout_code" type="VARCHAR(30)" remarks="布局标识"></column>
+			<column name="position_id" type="INTEGER" remarks="位置"></column>
+			<column name="is_enabled" type="INTEGER" remarks="有两种状态(1 Enabled,0 Disabled), 1可被；0不可用"></column>
+			<column name="is_deleted" type="INTEGER" defaultValue="0" remarks="1:是 0:否 默认:0"></column>
+			<column name="created_by" type="VARCHAR(50)" remarks="创建人"></column>
+			<column name="created_on" type="DATETIME" remarks="创建时间" ></column>
+			<column name="last_updated_by" type="VARCHAR(50)" remarks="更新人"></column>
+			<column name="last_updated_on" type="DATETIME" remarks="更新时间" ></column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="base_banners_content-create-2015120300" author="liulj">
+		<createTable tableName="base_banners_content" remarks="广告组内容">
+			<column name="id" type="INTEGER" autoIncrement="true" remarks="主键id">
+				<constraints nullable="false" primaryKey="true"/>
+			</column>
+			<column name="name" type="VARCHAR(30)" remarks="名称"></column>
+			<column name="url" type="VARCHAR(256)" remarks="广告url"></column>
+			<column name="img_url" type="VARCHAR(256)" remarks="图片url"></column>
+			<column name="title" type="VARCHAR(200)" remarks="标题"></column>
+			<column name="sort" type="INTEGER" remarks="排序"></column>
+			<column name="layout_code" type="VARCHAR(30)" remarks="布局标识"></column>
+			<column name="banner_code" type="VARCHAR(30)" remarks="广告管理标识"></column>
+			<column name="client_id" type="INTEGER" remarks="客户端id"></column>
+			<column name="language_id" type="INTEGER" remarks="语言id"></column>
+			<column name="is_enabled" type="INTEGER" remarks="有两种状态(1 Enabled,0 Disabled), 1可被；0不可用"></column>
+			<column name="is_deleted" type="INTEGER" defaultValue="0" remarks="1:是 0:否 默认:0"></column>
+			<column name="created_by" type="VARCHAR(50)" remarks="创建人"></column>
+			<column name="created_on" type="DATETIME" remarks="创建时间" ></column>
+			<column name="last_updated_by" type="VARCHAR(50)" remarks="更新人"></column>
+			<column name="last_updated_on" type="DATETIME" remarks="更新时间" ></column>
+		</createTable>
+	</changeSet>
+	
+	<changeSet id="base_banners_content-add-column-2015122300" author="liulj">
+		<addColumn tableName="base_banners_content">
+			<column name="category_id" type="INTEGER" remarks="类目id"></column>
+		</addColumn>
+	</changeSet>
+</databaseChangeLog>

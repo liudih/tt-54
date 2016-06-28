@@ -1,0 +1,11 @@
+@(
+	vo : valueobjects.loyalty.ThemeComposite, 
+	renderer : services.loyalty.theme.ThemeCompositeRenderer,
+	tc : entity.loyalty.ThemeCss,
+	tt : entity.loyalty.ThemeTitle,
+	theme : entity.loyalty.Theme
+)
+
+@views.html.loyalty.theme.theme_minimal(tc,tt,theme){
+	@renderer.renderFragment(vo,"theme-group")
+}

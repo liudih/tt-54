@@ -1,0 +1,8 @@
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+<ul class="chartTableTxt">
+	@tp.get("click-total-tag")
+	@tp.get("unique-clicks-total-tag")
+	@tp.get("sales-amoun-total-tag")
+	@tp.get("trasaction-total-tag")
+	@tp.get("commission-total-tag")
+</ul>

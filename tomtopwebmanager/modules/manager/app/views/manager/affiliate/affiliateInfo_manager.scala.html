@@ -1,0 +1,488 @@
+@(webSites:List[dto.Website],
+    usrs:valueobjects.base.Page[dto.AffiliateInfo],
+	affiliateInfoForm:forms.AffiliateInfoForm
+)
+
+@views.html.manager.main {
+@helper.javascriptRouter("js_routes")(
+controllers.manager.routes.javascript.Affiliate.checkCaid,
+controllers.manager.routes.javascript.Affiliate.checkEmail
+)
+
+<!-- bof your content -->
+<div class="container-fluid">
+	@if(flash().get("error")!=null) {
+ 		<div style="background:red;padding:10px;color:#FFF;">@flash().get("error")</div>
+ 	}
+	<!--bof header-->
+	<div class="row-fluid">
+		<div class="span12">
+			<!--bof title-->
+			<h3 class="page-title">
+				<small>Affiliate User List</small>
+			</h3>
+			<ul class="breadcrumb">
+				<li><i class="icon-home"></i> <a href="/sysadmin">Home</a> <i
+					class="icon-angle-right"></i></li>
+				<li><a href="#">Affiliate</a> <i class="icon-angle-right"></i></li>
+				<li><a href="#">User Manager</a></li>
+			</ul>
+			<!--eof title-->
+
+		</div>
+	</div>
+	<!--eof head-->
+	<div class="row-fluid">
+		<form action="@controllers.manager.routes.Affiliate.search()" method="post">
+			<input type="hidden" name="page" value="1" />
+			<div>
+				<div class="span3">
+					<p>User</p>
+					<input type="text" name="saler" value="@affiliateInfoForm.getSaler()">
+				</div>
+				<div class="span3">
+					<p>AID</p>
+					<input type="text" name="aid" value="@affiliateInfoForm.getAid()">
+				</div>
+				<div class="span3">
+					<p>PayPal</p>
+					<input type="text" name="paypalemail" value="@affiliateInfoForm.getPaypalemail()">
+				</div>
+			</div>
+			<div class="span12" style="margin:0;">
+				<div class="span3">
+					<p>WebSite</p>
+						<select name="web" >
+							<option value=""></option>
+							@if(webSites!=null && webSites.size()>0){
+								@webSites.map{e=>
+									@if(e.getIid()==affiliateInfoForm.getWeb()){
+					    				<option value="@affiliateInfoForm.getWeb()" selected="selected"  style="display:none;">@e.getCcode()</option>		
+					    				<option value="@e.getIid()">@e.getCcode()</option>		
+									}else{
+				    					<option value="@e.getIid()">@e.getCcode()</option>		
+									}
+								}
+							}
+						</select>
+				</div>
+				<div class="span3">
+					<p>E-mail Notice</p>
+							<select name="notice" >
+								<option value="-1"></option>
+								<option value="1" @if(affiliateInfoForm.getNotice()== 1){selected}>yes</option>
+								<option value="0" @if(affiliateInfoForm.getNotice()== 0){selected}>no</option>
+							</select>
+				</div>
+				<div class="span3">
+					<p>Active Status</p>
+						<select name="status" >
+							<option value="-1"></option>
+							<option value="1" @if(affiliateInfoForm.getStatus()== 1){selected}>yes</option>
+							<option value="0" @if(affiliateInfoForm.getStatus() == 0){selected}>no</option>
+						</select>
+				</div>
+				<div class="span3">
+					<input type="submit" value="Search" class="btn blue button-next">
+				</div>
+			</div>
+		</form>	
+	</div>
+	
+	
+	<form action="@controllers.manager.routes.Affiliate.search()" method="post" id="theform" style="display:none;">
+			<input type="hidden" name="page" id="p" value="@usrs.pageNo()" />
+			<input type="hidden" id="totalPages" value="@usrs.totalPages()"/>				
+			<div>
+				<div class="span3">
+					<p>User</p>
+					<input type="text" name="cemail" value="@affiliateInfoForm.getSaler()">
+				</div>
+				<div class="span3">
+					<p>AID</p>
+					<input type="text" name="aid" value="@affiliateInfoForm.getAid()">
+				</div>
+				<div class="span3">
+					<p>PayPal</p>
+					<input type="text" name="paypalemail" value="@affiliateInfoForm.getPaypalemail()">
+				</div>
+			</div>
+			<div class="span12" style="margin:0;">
+				<div class="span3">
+					<p>WebSite</p>
+					@services.manager.ChooseService.getInstance().website("web", affiliateInfoForm.getWeb(), true)
+				</div>
+				<div class="span3">
+					<p>E-mail Notice</p>
+							<select name="notice" >
+								<option value="-1"></option>
+								<option value="1" @if(affiliateInfoForm.getNotice() == 1){selected}>yes</option>
+								<option value="0" @if(affiliateInfoForm.getNotice() == 0){selected}>no</option>
+							</select>
+				</div>
+				<div class="span3">
+					<p>Active Status</p>
+						<select name="status" >
+							<option value="-1"></option>
+							<option value="1" @if(affiliateInfoForm.getStatus == 1){selected}>yes</option>
+							<option value="0" @if(affiliateInfoForm.getStatus == 0){selected}>no</option>
+						</select>
+				</div>
+				<div class="span3">
+					<input type="submit" value=" Search " class="btn blue button-next">
+				</div>
+			</div>
+		</form>	
+	
+	
+	<!--bof add-->
+	<div class="row-fluid" style="margin: 20px 0px;">
+		<div class="span12">
+			<div class="btn-group">
+				<button id="add_user_btn" class="btn green" data-toggle="modal"
+					data-target="#add-affiltate-modal">
+					Add <i class="icon-plus"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+	<!--eof add-->
+
+	<!--bof table-->
+	<table class="table table-striped table-hover table-bordered"
+		id="affiltate_table">
+		<thead>
+			<tr>
+				<th>Saler</th>
+				<th>User</th>
+				<th>WebSite</th>
+				<th>AID</th>
+				<th>PayPal</th>
+				<th>E-mail Notice</th>
+				<th>Active Status</th>
+				<th>I/O</th>				
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			@if(usrs.getList().size()>0 ){ 
+				@usrs.getList().map{ u=>
+				<tr>
+					<td>@u.getSalername()</td>
+					<td>@u.getCemail()</td>
+					<td>@u.getWebsitename()</td>
+					<td>@u.getCaid()</td>
+					<td>@u.getCpaypalemail()	</td>
+					<td>
+					@if(u.getBreceivenotification){ 
+						yes
+					}
+					@if(!u.getBreceivenotification){
+						no
+					}		
+					</td>
+					<td>
+					@if(u.getBstatus){ 
+						yes
+					}
+					@if(!u.getBstatus){
+						no
+					}						
+					</td>
+					<td>
+					@if(u.getBexternal){ 
+						inside
+					}
+					@if(!u.getBexternal){
+						outside
+					}	
+					</td>					
+					<td><a href="@controllers.manager.routes.Affiliate.editForm(u.getCaid())" data-toggle="modal"
+					data-target="#edit-affiltate-modal">edit</a> / <a href="@controllers.manager.routes.Affiliate.delUser(u.getCaid())" onclick="return confirm('sure')">delete</a></td>
+				</tr>
+				} 
+			}
+
+		</tbody>
+	</table>
+	<!--eof table-->
+
+	<!--bof page-->
+	<div class="row-fluid">
+	@if(usrs.totalPages>0){
+		<div class="span6">
+			<div class="dataTables_info" style="margin-top:27px;">Page: @usrs.pageNo()/@usrs.totalPages()  Record：@usrs.totalCount()</div>
+		</div>
+		<div class="span6">
+			<div id="advertising-paginator"></div>
+		</div>
+	}else{
+		<div class="span12" style="text-align:center;">no data</div>
+	}
+	</div>
+	<!--eof page-->	
+	
+	<!--bof add form-->
+	<style>
+		.error {
+			color: red;
+		}
+	</style>
+	<form action="@controllers.manager.routes.Affiliate.doUser"
+		method="post" id="form">
+		<div id="add-affiltate-modal" class="modal hide fade" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+			style="width: 940px; margin-left: -471px;">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true"></button>
+				<h3 id="myModalLabel">Add User</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+						<div class="control-group">
+							<label class="control-label" for="iwebsiteid">WebSite</label>
+							<div class="controls">
+
+								<select name="iwebsiteid" >
+									@if(webSites!=null && webSites.size()>0){
+										@webSites.map{e=>									
+					    					<option value="@e.getIid()">@e.getCcode()</option>	
+										}
+									}
+								</select>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">AID</label>
+							<div class="controls">
+								<input type="text" name="caid" id="caid" />
+							</div>
+						</div>			
+						
+						<div class="control-group">
+							<label class="control-label">Active Status</label>
+							<div class="controls">
+								<label class="radio"> <input type="radio" name="bstatus"
+									value="true" checked="checked"> yes
+								</label> <label class="radio"> <input type="radio"
+									name="bstatus" value="false"> no
+								</label>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">Inside Or Outside</label>
+							<div class="controls">
+								<label class="radio"> <input type="radio"
+									name="bexternal" value="true" checked="checked"> Inside
+								</label> <label class="radio"> <input type="radio"
+									name="bexternal" value="false">  Outside
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="span6">
+						<div class="control-group">
+							<label class="control-label">User</label>
+							<div class="controls">
+								<input type="text" name="cemail" id="cemail"/>
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">PayPal</label>
+							<div class="controls">
+								<input type="text" name="cpaypalemail" />
+							</div>
+						</div>
+						<div class="control-group">
+							<label class="control-label">E-mail Notice</label>
+							<div class="controls">
+								<label class="radio"> <input type="radio"
+									name="breceivenotification" value="true" checked="checked">
+									yes
+								</label> <label class="radio"> <input type="radio"
+									name="breceivenotification" value="false"> no
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="modal-footer" style="margin-bottom: -20px;">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">close</button>
+				<button class="btn blue" id="add-user-btn">ok</button>
+				<a class="btn" style="display:none;" id="dis-add-user-btn">ok</a>
+			</div>
+			</div>
+	</form>
+	<!--eof add form-->	
+	
+	
+	
+	<!--bof edit form-->
+	<form action="@controllers.manager.routes.Affiliate.doEdit" method="post" id="editForm">
+		<div id="edit-affiltate-modal" class="modal hide fade" tabindex="-1"
+			role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+			style="width: 940px; margin-left: -471px;">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true"></button>
+				<h3 id="myModalLabel">Edit User</h3>
+			</div>
+			<div class="modal-body">				
+				
+			</div>
+			<div class="modal-footer" style="margin-bottom: -20px;">
+				<button class="btn" data-dismiss="modal" aria-hidden="true">close</button>
+				<button class="btn blue" id="edit-user-btn" >ok</button>
+			</div>
+		</div>
+	</form>
+	<!--eof edit form-->	
+	
+	
+</div>
+
+<!-- eof your content -->
+
+<!-- bof your js -->
+@services.base.HtmlUtils.misc().addTailOnce{
+<script   type="text/javascript" src='@controllers.manager.routes.Assets.at("js/jquery.form.js")'></script>
+<script   type="text/javascript" src='@controllers.manager.routes.Assets.at("js/jquery.validate.min.js")'></script>
+<script   type="text/javascript" src='@controllers.manager.routes.Assets.at("js/jquery.metadata.js")'></script>
+<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/bootstrap-paginator.js")'></script>
+<script type="text/javascript">
+$(function() {
+	//字母数字
+	jQuery.validator.addMethod("alnum", function(value, element) {
+		return this.optional(element) || /^[a-zA-Z0-9]+$/.test(value);
+	}, "You can use numbers and letters");
+	
+	$("#form").validate({
+		submitHandler : function(form) {
+			form.submit();
+			$("#add-user-btn").hide();
+			$("#dis-add-user-btn").show();
+		},
+		debug:true,
+		rules : {
+			caid : {
+				required : true,
+				alnum:true,
+				remote : {
+					type : "POST",
+					url : js_routes.controllers.manager.Affiliate
+							.checkCaid().url, 
+					data : {
+						caid : function() {
+							return $("#caid").val();
+						},
+						website : function() {
+							return $("[name='iwebsiteid']").val();
+						}
+					}
+				}				
+			},
+			cemail:{
+				required : true,
+				email : true,
+				remote : {
+					type : "GET",
+					url : js_routes.controllers.manager.Affiliate.checkEmail().url, 
+					data : {
+						email : function() {
+							return $("#cemail").val();
+						},
+						website : function() {
+							return $("[name='iwebsiteid']").val();
+						}
+					}
+				}		
+			},
+			cpaypalemail : {
+				required : true,
+				email : true
+			},
+			iwebsiteid : {
+				required : true
+			}			
+		},
+		messages : {
+			caid : {
+				required : "ID is required",
+				remote : "Someone already has that ID. Try another"
+			},
+			cemail:{
+				required : "User is required",
+				email : 'User is a valid email address',
+				remote : "User is exist"
+			},
+			cpaypalemail : {
+				required : 'paypalemail is required',
+				email : 'paypalemail is a valid email address'
+			},
+			iwebsiteid : {
+				required : "website is required"
+			}
+		},
+	});
+});
+	
+$("#edit-affiltate-modal").on("hidden", function() {
+    $(this).removeData("modal");
+})
+$(function(){
+	var pageNo = $("#p").val();
+	var totalPages = $("#totalPages").val();
+    //初始化所需数据
+    var options = {
+        bootstrapMajorVersion:3,//版本号。3代表的是第三版本
+        currentPage: pageNo, //当前页数
+        numberOfPages: 10, //显示页码数标个数
+        totalPages:totalPages, //总共的数据所需要的总页数
+        itemTexts: function (type, page, current) {  
+        //图标的更改显示可以在这里修改。
+        switch (type) {  
+                case "first":  
+                    return "first";  
+                case "prev":  
+                    return "prev";  
+                case "next":  
+                    return "next";  
+                case "last":  
+                    return "last";  
+                case "page":  
+                    return  page;  
+            }                 
+        }, 
+        tooltipTitles: function (type, page, current) {
+			//如果想要去掉页码数字上面的预览功能，则在此操作。例如：可以直接return。
+            switch (type) {
+	            case "first":
+	                return "Go to first page";
+	            case "prev":
+	                return "Go to previous page";
+	            case "next":
+	                return "Go to next page";
+	            case "last":
+	                return "Go to last page";
+	            case "page":
+	                return (page === current) ? "Current page is " + page : "Go to page " + page;
+	        }
+        },
+        onPageClicked: function (e, originalEvent, type, page) {
+        	$("#p").val(page);
+        	$("#theform")[0].submit();
+        }
+    };
+    var element = $('#advertising-paginator');//获得数据装配的位置
+    element.bootstrapPaginator(options);	//进行初始化
+});
+</script>
+}
+<!-- eof your js -->
+
+
+}

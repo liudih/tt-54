@@ -1,0 +1,62 @@
+@views.html.base.master{
+	@services.base.HtmlUtils.misc().addHeadOnce{
+		<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/styles.css")?@version.BuildVersion.build()" />
+	}
+	<div class="container pointsBox">
+		<div class="Bread_crumbs_Box">
+			<ul class="Bread_crumbs">
+				<li class="Bread_home"><a href="@controllers.base.routes.Home.home()"></a></li>
+				<li>
+					<p>
+						<a class="Bread_link" href="javascript:;">@Messages("tomtop.points")</a>
+					</p>
+				</li>
+				<div class="clear"></div>
+			</ul>
+		</div>
+		<h6>@Messages("how.to.get.more.points")</h6>
+		<img src="@controllers.base.routes.Assets.at("/images/points.jpg")">
+		<ul class="pointsList">
+			<li><em></em>@Messages("50.points.for.signs.up")</li>
+			<li><em></em>@Messages("20.points.for.joining.newsletter")</li>
+			<li class="listT"><em></em>@Messages("40.points.for.uploading.video")</li>
+			<li class="listT"><em></em>@Messages("20.points.for.uploading.a.product.photo")</li>
+			<li><em></em>@Messages("10.points.for.write.product.review")</li>
+			<li><em></em>@Messages("20.points.for.share.photo.video")</li>
+			<li class="listT"><em></em>@Messages("10.points.for.product.price.report")</li>
+			<li class="listT"><em></em>@Messages("20.points.for.Confirm.your.email.address")</li>
+			<li><em></em>@Messages("5.points.for.signing.in.1.times.everyday")</li>
+			<li><em></em>@Messages("20.points.for.modify.your.account.picture")</li>
+			<li class="listT"><em></em>@Messages("order.from.us.usd.1.1.point")</li>
+			<div class="clear"></div>
+		</ul>
+		<h6>@Messages("how.to.spend.my.points")</h6>
+		<b>@Messages("deduct.a.part.of.order.amount.with.your.points.every.100.points.1")</b>
+		<p>@Messages("enter.point.number.corresponding.amount.will.deducted")</p>
+		<img src="@controllers.base.routes.Assets.at("/images/spendPoints.jpg")">
+		<h6>@Messages("how.to.redeem.products")</h6>
+		<ul class="redeemList">
+			<li><em></em><span>01-</span>@Messages("choose.your.preferred.product.and.simply.click.on.the.redeem.button.on.the.bottom.of.each.product")</li>
+			<li><em></em><span>02-</span>@Messages("then.input.your.shipping.address.information")</li>
+			<li><em></em><span>03-</span>@Messages("click.on.the.place.order.button.to.finish.the.redemption.no.need.payment")</li>
+		</ul>
+		<p class="notePoints">
+			1. @Messages("attention")
+			<br> 
+			2. @Messages("points.applied.special.products.dodocool.branded.items")
+			<br> 
+			3. @Messages("points.cant.used.together.tomtop.coupon")
+			<br>
+			4. @Messages("enjoyed.specific.discounts.certain.levels.buying.more.3")
+			<br>
+			5. @Messages("points.expire.dec.31.each.year")
+		</p>
+		<b>@Messages("you.can.join.the.point.redemption.activity") </b>
+		<p class="pointsDetails">
+			@Messages("point.redemption.activities.will.be.held.irregularly.and.shown.on.the.homepage.banner")
+			<br>
+			 <a class="blue" href="javascript:;"> @Messages("clickthis")</a>
+			 @Messages("view.activities.details")
+		</p>
+	</div>
+}

@@ -1,0 +1,61 @@
+@(langbar: Boolean = true, bottom: Boolean = false, needskinless: Boolean = true)(body: Html)
+@services.base.HtmlUtils.beforeRender()
+@meta = @{services.base.utils.MetaUtils.currentMetaBuilder().build()}
+@country = @{services.base.FoundationService._getCountryObj()}
+@currency = @{services.base.FoundationService._getCurrencyObj()}
+@language = @{services.base.FoundationService._getLanguageObj}
+@url = @{services.base.FoundationService._getCurrencyUri}
+@tp = @{services.base.activity.template.TemplateService.getInstance().getContents()}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" xmlns="http://www.w3.org/1999/xhtml"> <!--<![endif]-->
+    <head>
+        <html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densitydpi=device-dpi" />
+		<link type="image/x-icon" rel="icon" href="@controllers.base.routes.Assets.at("favicon.ico")" >
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/tomtop.css")" media="screen">
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/search.css")?@version.BuildVersion.build()" />
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/main.css")">
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/index.css")?@version.BuildVersion.build()" /> 
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/base/country.css")" />
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" />
+		<script type="text/javascript" src="@controllers.base.routes.Assets.at("lib/jquery/jquery.min.js")"></script>
+		<script type="text/javascript" src="@controllers.base.routes.Assets.at("js/lib/public.js")?@version.BuildVersion.build()"></script>
+		<script type="text/javascript" src="@controllers.base.routes.Assets.at("js/lib/main.js")?@version.BuildVersion.build()"></script>
+		<script type="text/javascript" src="@controllers.base.routes.Assets.at("js/lib/jquery.json.min.js")"></script>
+		<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+		<script  language="javascript" type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+		<link type="text/css" rel="stylesheet" href="@controllers.base.routes.Assets.at("css/style.css")" />
+@services.base.HtmlUtils.misc().getHead().map { h =>
+	@h
+}		
+	</head>
+    <body>
+    	<div class="topNavCon">
+		<header class="contentOut contentBG">
+			<div class="headerNav contentNavWarp">
+				<a class="logo" href="http://www.tomtop.com" target="_blank"><img src="@controllers.base.routes.Assets.at("img/Tomtop_logo.png")"></a>
+				<div class="loginWarp">
+					@views.html.base.login.login_pop()
+				</div>
+			</div>
+		</header>
+	    </div>
+		@body
+		<div class="hotProduct_box boxFramework">
+			   <div class="clear"></div>
+		</div>
+	
+	    
+	   
+		@services.base.HtmlUtils.misc().getTail().map { h =>
+			@h
+		}
+	</body>
+</html>

@@ -1,0 +1,29 @@
+@views.html.base.master{
+	<!-- breadcrumb -->
+    <div class="breadcrumb">
+    	<ol class="clearfix">
+        	<li class="mr15">@Messages("your.position")</li>
+            <li><a href="">@Messages("home")</a><span>&gt;</span></li>
+            <li class="active">@Messages("support")</li>
+        </ol>
+    </div>
+    
+    
+	<!--  主体内容开始  -->
+	<article class="sup_wrapper_con">
+    	<section class="sup_wrapper">
+        	<h2>@Messages("start.here")!</h2>
+            <div class="account_box">
+            	<p class="sup_p">@Messages("search.for.products.downloads.faqs")</p>
+       
+        	<ul class="sup_pic clearfix">
+            	<!-- <li><a href="download.html"><img src="images/s_btn_01.png" alt=""><p>Download Center</p></a></li> -->
+                <li><a href="/interaction/faq"><img src="@controllers.base.routes.Assets.at("images/s_btn_02.png")" alt=""><p>@Messages("frequently.asked.questions")</p></a></li>
+                <li><a href="/interaction/contact"><img src="@controllers.base.routes.Assets.at("images/s_btn_04.png")" alt=""><p>@Messages("contact.technical.support")</p></a></li>   
+            </ul>
+
+            </div>
+        </section>
+    </article>
+	<!--  主体内容结束  -->
+}

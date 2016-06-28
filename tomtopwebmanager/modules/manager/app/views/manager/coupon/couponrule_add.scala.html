@@ -1,0 +1,249 @@
+@(currencyList : List[dto.Currency],
+couponTypeList : List[entity.loyalty.CouponType],
+timeTypeList : List[enums.loyalty.coupon.manager.CouponRuleSelect.TimeType],
+productTypesList : List[dto.product.ProductLabelType],
+terminalList :List[enums.loyalty.coupon.manager.CouponRuleBack.UseTerminal])
+@websiteList = @{services.manager.ChooseService.getInstance().website()}
+
+@import views.html.helper._
+
+
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+	@controllers.manager.routes.Assets.at("js/datetimepicker/bootstrap-datetimepicker.min.js")
+}
+
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+	@controllers.manager.routes.Assets.at("js/datetimepicker/bootstrap-datetimepicker.zh-CN.js")
+}
+
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+	@controllers.manager.routes.Assets.at("js/jquery.multi-select.js")
+}
+@services.base.HtmlUtils.misc().addTailScriptOnce{
+	@controllers.manager.routes.Assets.at("js/chosen.jquery.min.js")
+}
+
+
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+	@controllers.manager.routes.Assets.at("css/manager/bootstrap-datetimepicker.min.css")
+}
+@services.base.HtmlUtils.misc().addHeadCssOnce{
+	@controllers.manager.routes.Assets.at("css/manager/chosen.css")
+}
+
+<input type="hidden" name="languageid" value="@language" />
+<div id="add-banner-modal" class="modal hide fade" tabindex="-1"
+	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+	style="width: 940px; margin-left: -471px;">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true"></button>
+		<h3 id="myModalLabel">Add couponRule</h3>
+	</div>
+	<div class="modal-body">
+		<div class="row-fluid">
+			<div class="span6">
+				
+				<div class="control-group">
+				<label class="control-label">WebSite</label>
+				@if(null!=websiteList&&websiteList.size()>0){
+					<!-- @if(websiteList.size()==1){
+					@websiteList.get(0).getCcode<input id="add_website" type="checkbox" checked value="@websiteList.get(0).getIid()" name="cwebsiteid" disabled="true"/> 
+					}else{ -->
+					<select name="cwebsiteid">
+						@for( i<- websiteList){ 
+							<!-- @i.getCcode<input type="checkbox" value="@i.getIid()" name="cwebsiteid"/>  -->
+							<option value="@i.getIid()">@i.getCcode()</option>
+							
+						}
+					</select>
+					<!-- } -->
+					}
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label">Coupon Type</label>
+					<div class="controls">
+						<select name="itype" id="add_coupontype">
+						@couponTypeList.map{c=>
+							<option value="@c.getIid()">@c.getCtype()</option>}
+						</select>
+					</div>
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label">Name<span class="required">*</span></label>
+					<div class="controls">
+						<input type="text" name="cname" id="add_name"/>
+					</div>
+				</div>
+				
+				<div class="control-group" id="div_add_currency">
+					<label class="control-label">Currency</label>
+					<div class="controls">
+						<select name="ccurrency">
+						@currencyList.map{b=>
+							<option value="@b.getIid()">@b.getCcode()</option>}
+						</select>
+					</div>
+				</div>
+				
+				<div class="control-group" id="div_add_par">
+					<label class="control-label">Value<span class="required">*</span></label>
+					<div class="controls">
+						<input type="text" name="fcouponamount" id="add_fcouponamount"/>
+					</div>
+				</div>
+				
+				<div class="control-group" id="div_add_discount" style="display:none;">
+					<label class="control-label">Discount<span class="required">*</span></label>
+					<div class="controls">
+						<input type="text" name="fdiscount" id="add_fdiscount"/>%
+					</div>
+				</div>
+				
+				<div class="control-group" id ="div-desa">
+					<label class="control-label">Lowest Consumption Amount<span class="required">*</span></label>
+					<div class="controls">
+						<input type="text" name="forderamountlimit" id="add_forderamountlimit"/>
+					</div>
+				</div>
+				
+			</div>
+			<div class="span6">
+				<div class="control-group">
+					<input id="cproducttype" type="text" style="display:none;" name="cproducttype">
+					<label class="control-label">label of product you want to eliminate</label>
+					<div class="controls" style="width:100%;">
+						<select id="cproducttype_select" style="" class="chosen-select" multiple="multiple">
+					    @productTypesList.map{c => 
+					    	 <option value="@c.getType">@c.getType</option>
+					    }
+						</select>
+					</div>
+				</div>
+				
+				<div class="control-group">
+				<label class="control-label">Use Terminal</label>
+					@for( i<- terminalList){ 
+					@i.getTerminalEN()<input type="checkbox" checked value="@i.getTerminalId()" name="cuseterminal"/> 
+					}
+				</div>
+				
+				<div class="control-group">
+					<label class="control-label">Time Type</label>
+					<div class="controls">
+						<select name="ctimetype" id="add_timetype">
+						@timeTypeList.map{c=>
+							<option value="@c.getTypeid">@c.getTypeid</option>}
+						</select>
+					</div>
+				</div>
+				
+				<div class="control-group" id="div_add_validity">
+					<label class="control-label">Validity<span class="required">*</span></label>
+					<div class="controls">
+						<input type="text" name="ivalidity" id="add_ivalidity"/>Day
+					</div>
+				</div>
+				<div id="div_add_date" style="display:none;">
+				<!-- add by lijun -->
+				 <div class="form-group">
+				 	<label for="dtp_input1" class="col-md-2 control-label">Start Date<span class="required">*</span></label>
+	                <div class="input-group date form_datetime col-md-5" data-date="" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input_startDate">
+	                    <input name="startdateStr" id="add_startdate" class="form-control" size="16" type="text" value="" readonly>
+	                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+						<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+	                </div>
+					<input type="hidden" id="dtp_input_startDate" value="" /><br/>
+				 </div>
+				 
+				 <div class="form-group">
+				 	<label for="dtp_input1" class="col-md-2 control-label">End Date<span class="required">*</span></label>
+	                <div class="input-group date form_datetime col-md-5" data-date="" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input_endDate">
+	                    <input name="enddateStr" id="add_endtate" class="form-control" size="16" type="text" value="" readonly>
+	                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+						<span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+	                </div>
+					<input type="hidden" id="dtp_input_endDate" value="" /><br/>
+				 </div>
+				 </div>
+				 
+				 <div class="control-group">
+					<label class="control-label">Sku</label>
+					<div class="controls" >
+						<textarea id="add_sku" name="csku" style="height:60px" placeholder="Please use a comma to separate each sku"></textarea>
+					</div>
+				</div>
+				 
+				 <div class="control-group">
+					<label class="control-label">Description</label>
+					<div class="controls" >
+						<textarea name="cdescription" style="height:60px"></textarea>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer" style="margin-bottom: -20px;">
+		<button type="button" class="btn btn-default" data-dismiss="modal">
+			Close</button>
+		<div class="btn blue" onclick="saverule()">Save</div>
+	</div>
+
+	@services.base.HtmlUtils.misc().addTailOnce{
+	<script type="text/javascript">
+		function validatesku(sku) {
+			var pattern = /^(\S+,)*\S+$/;  
+			return pattern.test(sku);
+		}
+		function changecoupontype() {
+			var type = $("#add_coupontype").val();
+			if (type == 1) {
+				$("#div_add_discount").hide();
+				$("#div_add_par").css("display", "block");
+				$("#div_add_currency").css("display", "block");
+			} else {
+				$("#div_add_par").hide();
+				$("#div_add_discount").css("display", "block");
+				$("#div_add_currency").hide();
+			}
+		}
+		function changetimetype() {
+			var type = $("#add_timetype").val();
+			if (type == "Validity") {
+				$("#div_add_date").hide();
+				$("#div_add_validity").css("display", "block");
+				
+			} else {
+				$("#div_add_validity").hide();
+				$("#div_add_date").css("display", "block");
+			}
+		}
+		
+		
+		$(function() {
+			$("#add_coupontype").change(function () {
+				changecoupontype();
+			});
+			$("#add_timetype").change(function () {
+				changetimetype();
+			});
+			$('.form_datetime').datetimepicker({
+				language : 'zh-CN',
+				weekStart : 1,
+				todayBtn : 1,
+				autoclose : 1,
+				todayHighlight : 1,
+				startView : 2,
+				forceParse : 0,
+				showMeridian : 1,
+				format : 'yyyy-mm-dd hh:ii',
+				minuteStep : 1
+			});
+		});
+	</script>
+	}
+    
+	

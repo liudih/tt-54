@@ -1,0 +1,7 @@
+@(request: play.mvc.Http.RequestHeader, t: Throwable, errorcode: String)
+@tp = @{services.base.template.TemplateService.getInstance().getContents()}
+@master{
+
+ 404 @errorcode
+ @tp.get("recent-history")
+}

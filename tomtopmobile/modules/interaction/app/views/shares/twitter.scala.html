@@ -1,0 +1,15 @@
+@(url:String="")
+<span class="twitter lineBlock"> </span>
+<span class="lineBlock shareText" onclick="affShareOnTwitter('@url')" title="@Messages("share.on.twitter")">Twitter</span>
+
+@services.base.HtmlUtils.misc().addTailOnce{
+<script type="text/javascript">
+	function affShareOnTwitter(url) {
+	    var shareUrl = 'https://twitter.com/intent/tweet?original_referer=';
+	    shareUrl += encodeURIComponent(window.location.href) + '&text=&url=';
+	    shareUrl += encodeURIComponent(url);
+	    popWin(shareUrl,'twitter',getPopupPosition(480,320)+',resizable=yes,scrollbars=yes');
+	}
+</script>
+}
+

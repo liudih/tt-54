@@ -1,0 +1,38 @@
+[Unit]
+Description=Piwik
+
+# Requirements
+Requires=docker.service
+Requires=piwikdb.service
+
+# Dependency ordering
+After=docker.service
+After=piwikdb.service
+
+[Service]
+
+TimeoutStartSec=0
+
+# Change killmode from "control-group" to "none" to let Docker remove
+# work correctly.
+KillMode=none
+
+# Pre-start and Start
+## Directives with "=-" are allowed to fail without consequence
+ExecStartPre=-/bin/bash -c "/usr/bin/docker kill piwik"
+ExecStartPre=-/bin/bash -c "/usr/bin/docker rm piwik"
+ExecStartPre=-/bin/bash -c "/usr/bin/docker pull 192.168.7.15:5000/marvambass/piwik"
+ExecStart=/bin/bash -c "/usr/bin/docker run -p 81:80 -p 444:443 \
+		--link piwikdb:mysql --name piwik \
+		-e PIWIK_MYSQL_USER=piwik \
+		-e PIWIK_MYSQL_PASSWORD=piwik \
+		-e PIWIK_ADMIN_PASSWORD=password \
+		-e SITE_URL=http://192.168.7.13:81 \
+		-e SITE_TIMEZONE=Asia/Hong_Kong \
+		-e SITE_ECOMMERCE=1 \
+		192.168.7.15:5000/marvambass/piwik"
+
+# Stop
+ExecStop=/usr/bin/docker stop piwik
+
+Restart=always

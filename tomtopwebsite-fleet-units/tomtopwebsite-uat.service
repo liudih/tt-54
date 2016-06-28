@@ -1,0 +1,44 @@
+[Unit]
+Description=TomTop Website UAT Environment
+
+# Requirements
+Requires=docker.service
+Requires=tomtopwebsite-postgresql.service
+Requires=tomtopwebsite-redis.service
+Requires=tomtopwebsite-elasticsearch.service
+
+# Dependency ordering
+After=docker.service
+After=tomtopwebsite-postgresql.service
+After=tomtopwebsite-redis.service
+After=tomtopwebsite-elasticsearch.service
+
+[Service]
+
+TimeoutStartSec=0
+
+# Change killmode from "control-group" to "none" to let Docker remove
+# work correctly.
+KillMode=none
+
+# Pre-start and Start
+## Directives with "=-" are allowed to fail without consequence
+ExecStartPre=-/usr/bin/docker kill tomtopwebsite-uat
+ExecStartPre=-/usr/bin/docker rm tomtopwebsite-uat
+#ExecStartPre=-/bin/bash -c "/usr/bin/docker pull 192.168.7.15:5000/tomtop/centos-ssh-java"
+ExecStart=/bin/bash -c "/usr/bin/docker run --name tomtopwebsite-uat \
+	--privileged \
+	-p 1022:22 -p 80:80 -p 443:443 \
+    	-v /sys/fs/cgroup:/sys/fs/cgroup:ro \
+    	-v /data/uat/.ssh:/root/.ssh \
+    	-v /data/uat/www:/var/www \
+	--link tomtopwebsite-postgresql:tomtopwebsite-postgresql \
+	--link tomtopwebsite-redis:tomtopwebsite-redis \
+	--link tomtopwebsite-elasticsearch:tomtopwebsite-elasticsearch \
+    	192.168.7.15:5000/tomtop/centos-ssh-java"
+
+
+# Stop
+ExecStop=/usr/bin/docker stop tomtopwebsite-uat
+
+Restart=always

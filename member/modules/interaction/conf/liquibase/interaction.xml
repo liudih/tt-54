@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd"
+	objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+
+	<changeSet author="reason" id="t_interaction_faq_type-create">
+		<createTable tableName="t_interaction_faq_type" remarks="产品FAQ表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ccode" type="VARCHAR(40)" remarks="类型名称" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_interaction_faq-create">
+		<createTable tableName="t_interaction_faq" remarks="产品FAQ表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(50)" remarks="广告编号" />
+			<column name="itypeid" type="INTEGER" remarks="类型编号" />
+			<column name="csku" type="VARCHAR(40)" remarks="SKU" />
+			<column name="ctitle" type="VARCHAR(150)" remarks="标题" />
+			<column name="cquestion" type="VARCHAR(600)" remarks="问题" />
+			<column name="canswer" type="VARCHAR(600)" remarks="答案" />
+			<column name="cmemberemail" type="VARCHAR(100)" remarks="客户邮箱" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="crecoveryuser" type="VARCHAR(20)" remarks="回复人" />
+			<column name="drecoverydate" type="DATETIME" remarks="回复时间" />
+			<column name="istate" type="INTEGER" defaultValue="0"
+				remarks="审核状态(0未审、1通过、2未通过)" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_interaction_comment-create">
+		<createTable tableName="t_interaction_comment" remarks="产品评论表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告 编号 " />
+			<column name="csku" type="VARCHAR(30)" remarks="SKU" />
+			<column name="cmemberemail" type="VARCHAR(100)" remarks="客户邮箱 " />
+			<column name="ccomment" type="VARCHAR(2000)" remarks="评论 " />
+			<column name="iprice" type="INTEGER" remarks="价格评级 " />
+			<column name="iquality" type="INTEGER" remarks="质量评级 " />
+			<column name="ishipping" type="INTEGER" remarks="物流评级 " />
+			<column name="iusefulness" type="INTEGER" remarks="有用评级 " />
+			<column name="foverallrating" type="FLOAT" remarks="综合评级 " />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="dauditdate" type="DATETIME" remarks="审核时间" />
+			<column name="istate" type="INTEGER" defaultValue="0"
+				remarks="审核状态(0未审、1通过、2未通过)" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luoys"
+		id="t_interaction_comment_help_evaluate-create">
+		<createTable tableName="t_interaction_comment_help_evaluate"
+			remarks="产品评论帮助表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icommentid" type="INTEGER" remarks="产品评论帮助评价编号" />
+			<column name="helpfulcode" type="INTEGER" remarks="是否有帮助(0:没有帮助1:有帮助)" />
+			<column name="cmemberemail" type="VARCHAR(100)" remarks="用户邮箱" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luoys" id="t_interaction_comment_help_qty-create">
+		<createTable tableName="t_interaction_comment_help_qty"
+			remarks="产品评论帮助评价记录表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="commentid" type="INTEGER" remarks="评论帮助记录编号" />
+			<column name="helpfulqty" type="INTEGER" defaultValue="0"
+				remarks="有用帮助数量" />
+			<column name="nothelpfulqty" type="INTEGER" defaultValue="0"
+				remarks="没有用帮助数量" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="luojh" id="t_interaction_faq_evaluate-create">
+		<createTable tableName="t_interaction_faq_evaluate"
+			remarks="产品FAQ评价表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ifaqid" type="INTEGER" remarks="FAQ编号" />
+			<column name="ihelpfulcode" type="INTEGER" remarks="是否有帮助(0:没有帮助1:有帮助)" />
+			<column name="cmemberemail" type="VARCHAR(100)" remarks="用户邮箱" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="linhl" id="t_interaction_faq_help_qty-create">
+		<createTable tableName="t_interaction_faq_help_qty"
+			remarks="产品FAQ帮助评价表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="ifaqid" type="INTEGER" remarks="FAQ编号" />
+			<column name="ihelpfulqty" type="INTEGER" defaultValue="0"
+				remarks="有用帮助数量" />
+			<column name="inothelpfulqty" type="INTEGER" defaultValue="0"
+				remarks="没有用帮助数量" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="kmtong" id="t_interaction_product_browse-create">
+		<createTable tableName="t_interaction_product_browse"
+			remarks="会员浏览产品历史表">
+			<column name="iid" type="BIGINT" autoIncrement="true" remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="iplatformid" type="INTEGER" remarks="平台编号" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="imemberid" type="INTEGER" remarks="用户编号" />
+			<column name="cltc" type="VARCHAR(40)" remarks="长期跟踪Cookie: TT_LTC" />
+			<column name="cstc" type="VARCHAR(40)" remarks="短期跟踪Cookie: TT_STC" />
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="csku" type="VARCHAR(50)" remarks="SKU" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason"
+		id="t_interaction_product_member_photos-create">
+		<createTable tableName="t_interaction_product_member_photos"
+			remarks="产品客户上传图片表">
+			<column name="iid" type="INTEGER" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="csku" type="VARCHAR(50)" remarks="SKU" />
+			<column name="cmemberemail" type="VARCHAR(100)" remarks="客户邮箱" />
+			<column name="icommentid" type="INTEGER" remarks="评论编号" />
+			<column name="cimageurl" type="VARCHAR(600)" remarks="图片路径" />
+			<column name="clabel" type="VARCHAR(50)" remarks="图片label" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="cauditoruser" type="VARCHAR(20)" remarks="审核人" />
+			<column name="dauditordate" type="DATETIME" remarks="审核时间" />
+			<column name="iauditorstatus" type="INTEGER" defaultValue="0"
+				remarks="审核状态(0未审、1通过、2未通过)" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_interaction_product_member_video-create">
+		<createTable tableName="t_interaction_product_member_video"
+			remarks="产品客户上传视频表">
+			<column name="iid" type="INTEGER" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="csku" type="VARCHAR(50)" remarks="SKU" />
+			<column name="cmemberemail" type="VARCHAR(100)" remarks="用户邮箱" />
+			<column name="icomment" type="INTEGER" remarks="评论编号" />
+			<column name="cvideourl" type="VARCHAR(600)" remarks="视频路径" />
+			<column name="clabel" type="VARCHAR(50)" remarks="视频label" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+			<column name="cauditoruser" type="VARCHAR(20)" remarks="审核人" />
+			<column name="dauditordate" type="DATETIME" remarks="审核时间" />
+			<column name="iauditorstatus" type="INTEGER" defaultValue="0"
+				remarks="审核状态(0未审、1通过、2未通过)" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_wholesale_inquiry-create" author="reason">
+		<createTable tableName="t_wholesale_inquiry" remarks="客户批发讯盘记录表">
+			<column name="iid" type="INTEGER" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="csku" type="VARCHAR(50)" remarks="SKU" />
+			<column name="cname" type="VARCHAR(50)" remarks="姓名" />
+			<column name="cphone" type="VARCHAR(60)" remarks="联系电话" />
+			<column name="cemail" type="VARCHAR(100)" remarks="email" />
+			<column name="ftargetprice" type="FLOAT" remarks="目标价格" />
+			<column name="iquantity" type="INTEGER" remarks="数量" />
+			<column name="ccountrystate" type="VARCHAR(100)" remarks="国家" />
+			<column name="ccompany" type="VARCHAR(60)" remarks="公司" />
+			<column name="cinquiry" type="VARCHAR(2000)" remarks="备注" />
+			<column name="dcreatedate" type="DATETIME" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_price_match-create" author="liudi">
+		<createTable tableName="t_price_match" remarks="价格比较记录表">
+			<column name="iid" type="INTEGER" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="csku" type="VARCHAR(50)" remarks="SKU" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="csourceurl" type="VARCHAR(200)" remarks="目标地址" />
+			<column name="cemail" type="VARCHAR(100)" remarks="email" />
+			<column name="flowerprice" type="FLOAT" remarks="低价格" />
+			<column name="cinquiry" type="VARCHAR(2000)" remarks="备注" />
+			<column name="cstatic" type="VARCHAR(40)" defaultValue="Pending"
+				remarks="状态" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_report_error-create" author="liudi">
+		<createTable tableName="t_report_error" remarks="错误报告记录表">
+			<column name="iid" type="INTEGER" autoIncrement="true">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告编号" />
+			<column name="csku" type="VARCHAR(50)" remarks="SKU" />
+			<column name="cerrortype" type="VARCHAR(100)" remarks="错误类型" />
+			<column name="cemail" type="VARCHAR(100)" remarks="email" />
+			<column name="cinquiry" type="VARCHAR(2000)" remarks="备注" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="reason" id="t_product_collect-create">
+		<createTable tableName="t_product_collect" remarks="产品收藏表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cemail" type="VARCHAR(100)" remarks="用户Email " />
+			<column name="clistingid" type="VARCHAR(500)" remarks=" 广告编号 集合" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间 " />
+		</createTable>
+	</changeSet>
+
+	<changeSet author="jiang"
+		id="t_interaction_comment-data-for-test-20141220" context="test">
+		<loadData tableName="t_interaction_comment" file="samples/t_interaction_comment.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luoys"
+		id="t_interaction_comment_help_evaluate-data-for-test-20150124"
+		context="test">
+		<loadData tableName="t_interaction_comment_help_evaluate"
+			file="samples/t_interaction_comment_help_evaluate.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luoys"
+		id="t_interaction_comment_help_qty-data-for-test-20150124" context="test">
+		<loadData tableName="t_interaction_comment_help_qty"
+			file="samples/t_interaction_comment_help_qty.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh" id="t_interaction_faq-data-for-test-20141222"
+		context="test">
+		<loadData tableName="t_interaction_faq" file="samples/t_interaction_faq.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="luojh"
+		id="t_interaction_faq_evaluate-data-for-test-20141224" context="test">
+		<loadData tableName="t_interaction_faq_evaluate" file="samples/t_interaction_faq_evaluate.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet author="xin"
+		id="t_interaction_product_member_photos-data-for-test-20141224"
+		context="test">
+		<loadData tableName="t_interaction_product_member_photos"
+			file="samples/t_interaction_product_member_photos.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="xin"
+		id="t_interaction_faq_type-data-for-test-2015-01-23" context="test">
+		<loadData tableName="t_interaction_faq_type" file="samples/t_interaction_faq_type.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="xin"
+		id="t_interaction_product_member_video-data-for-test-20141224"
+		context="test">
+		<loadData tableName="t_interaction_product_member_video"
+			file="samples/t_interaction_product_member_video.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+	<changeSet author="xin" id="t_price_match-data-for-test-20141224"
+		context="test">
+		<loadData tableName="t_price_match" file="samples/t_price_match.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet id="t_interaction_comment-add-orderid-column"
+		author="liudi">
+		<addColumn tableName="t_interaction_comment">
+			<column name="iorderid" type="Integer" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_interaction_product_member_photos-add-column-20150324"
+		author="xin">
+		<addColumn tableName="t_interaction_product_member_photos">
+			<column name="ccontenttype" type="VARCHAR(40)" remarks="图片文件类型" />
+			<column name="bfile" type="BLOB" remarks="图片文件" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_interaction_faq-add-column-20150407" author="linhl">
+		<addColumn tableName="t_interaction_faq">
+			<column name="breplay" type="BOOLEAN" defaultValue="false"
+				remarks="是否以回复" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="Reason"
+		id="t_interaction_product_browse-clistingid-createIndex">
+		<createIndex indexName="idx_show_history-clistingid"
+			tableName="t_interaction_product_browse">
+			<column name="clistingid" type="VARCHAR(40)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="Reason"
+		id="t_interaction_product_browse-cltc-createIndex">
+		<createIndex indexName="idx_show_history-cltc" tableName="t_interaction_product_browse">
+			<column name="cltc" type="VARCHAR(40)" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet id="t_interaction_faq-change-columnname-2015-04-21"
+		author="linhl">
+		<renameColumn tableName="t_interaction_faq"
+			oldColumnName="breplay" newColumnName="breply" />
+	</changeSet>
+
+	<changeSet id="t_interaction_faq-rename-2015-04-21" author="linhl">
+		<renameTable newTableName="t_interaction_product_post"
+			oldTableName="t_interaction_faq" />
+	</changeSet>
+
+
+
+	<changeSet id="t_interaction_faq_help_qty-change-columnname-2015-04-21"
+		author="linhl">
+		<renameColumn tableName="t_interaction_faq_help_qty"
+			oldColumnName="ifaqid" newColumnName="ipostid" />
+	</changeSet>
+
+	<changeSet id="t_interaction_faq_evaluate-change-columnname-2015-04-21"
+		author="linhl">
+		<renameColumn tableName="t_interaction_faq_evaluate"
+			oldColumnName="ifaqid" newColumnName="ipostid" />
+	</changeSet>
+
+	<changeSet id="t_interaction_faq_evaluate-rename-2015-04-21"
+		author="linhl">
+		<renameTable newTableName="t_interaction_product_post_evaluate"
+			oldTableName="t_interaction_faq_evaluate" />
+	</changeSet>
+
+	<changeSet id="t_interaction_faq_help_qty-rename-2015-04-21"
+		author="linhl">
+		<renameTable newTableName="t_interaction_product_post_help_qty"
+			oldTableName="t_interaction_faq_help_qty" />
+	</changeSet>
+
+	<changeSet id="t_interaction_faq_type-rename-2015-04-21"
+		author="linhl">
+		<renameTable newTableName="t_interaction_product_post_type"
+			oldTableName="t_interaction_faq_type" />
+	</changeSet>
+
+	<changeSet author="jiang" id="t_super_deals-create-2015-05-08">
+		<createTable tableName="t_super_deals" remarks="super deal表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="clistingid" type="VARCHAR(40)" remarks="广告 编号 " />
+			<column name="icategoryrootid" type="INTEGER" remarks="顶级品类编号 " />
+			<column name="csku" type="VARCHAR(30)" remarks="SKU" />
+			<column name="ccreateuser" type="VARCHAR(20)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_interaction_comment-add-country-column-20150508"
+		author="chris">
+		<addColumn tableName="t_interaction_comment">
+			<column name="ccountry" type="VARCHAR(100)" remarks="评论人国家" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_super_deals-add-column-2015051209" author="jiang">
+		<addColumn tableName="t_super_deals">
+			<column name="bshow" type="BOOLEAN" remarks="是否显示" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="jiang" id="t_interaction_comment_listing-createIndex">
+		<createIndex indexName="idx_interactioncomment_listingid_istate"
+			tableName="t_interaction_comment" unique="false">
+			<column name="clistingid" type="VARCHAR(40)" />
+			<column name="istate" type="INTEGER" />
+		</createIndex>
+	</changeSet>
+
+	<changeSet author="jiang" id="t_dropship_product-create-20150522">
+		<createTable tableName="t_dropship_product" remarks="dropship产品表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="cemail" type="VARCHAR(100)" remarks="用户Email " />
+			<column name="csku" type="VARCHAR(50)" remarks="sku" />
+			<column name="bstate" type="BOOLEAN" defaultValue="false"
+				remarks="是否为dropship产品" />
+			<column name="dcreatedate" type="DATETIME"
+				defaultValueComputed="now()" remarks="创建时间" />
+			<column name="dupdatestatedate" type="DATETIME" remarks="状态更改时间" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="t_dropship_product-add-column-2015060410"
+		author="jiang">
+		<addColumn tableName="t_dropship_product">
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_interaction_comment-add-column-20150610"
+		author="liudi">
+		<addColumn tableName="t_interaction_comment">
+			<column name="cplatform" type="VARCHAR(40)" remarks="评论来源" />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="liudi"
+		id="t_interaction_product_member_video-add-column-20150611">
+		<addColumn tableName="t_interaction_product_member_video">
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="liudi"
+		id="t_interaction_product_member_photos-add-column-20150611">
+		<addColumn tableName="t_interaction_product_member_photos">
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_super_deals-add-column-20150721" author="lij">
+		<addColumn tableName="t_super_deals">
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_interaction_comment-add-column-20150727"
+		author="jiang">
+		<addColumn tableName="t_interaction_comment">
+			<column name="ctitle" type="VARCHAR(200)" remarks="评论标题" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="t_interaction_product_post-add-column-20150731"
+		author="jiang">
+		<addColumn tableName="t_interaction_product_post">
+			<column name="iwebsiteid" type="INTEGER" remarks="站点编号" />
+			<column name="ilanguageid" type="INTEGER" remarks="语言编号" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet author="jiang" id="t_dropship_product-unique-20150804">
+		<addUniqueConstraint columnNames="cemail,csku,iwebsiteid"
+			tableName="t_dropship_product"
+			constraintName="t_dropship_product_cemail_csku_iwebsiteid_UniqueConstraint" />
+	</changeSet>
+
+	<changeSet id="t_interaction_faq_type-init_data-20150817"
+		author="lij">
+		<loadData tableName="t_interaction_product_post_type"
+			file="init/t_interaction_faq_type-20150817.csv"
+			relativeToChangelogFile="true" />
+	</changeSet>
+
+	<changeSet id="t_price_match-add-column-20150924" author="xin">
+		<addColumn tableName="t_price_match">
+			<column name="cuseremail" type="VARCHAR(40)" remarks="用户email" />
+		</addColumn>
+	</changeSet>
+	
+	<changeSet author="renyy" id="t_recommend_label-create-2015-10-16">
+		<createTable tableName="t_recommend_label" remarks="客户喜爱推荐标签表">
+			<column name="iid" type="INTEGER" autoIncrement="true"
+				remarks="主键">
+				<constraints nullable="false" primaryKey="true" />
+			</column>
+			<column name="icategoryid" type="INTEGER" remarks="品类ID" />
+			<column name="itype" type="INTEGER" defaultValue="1" remarks="标签类型"  />
+			<column name="iwebsiteid" type="INTEGER" remarks="站点ID" />
+			<column name="cdevice" type="VARCHAR(40)" remarks="设备" />
+			<column name="ipriority" type="INTEGER" defaultValue="1" remarks="优先级(数字越低,优先级越高.从1开始)" />
+			<column name="bshow" type="BOOL" defaultValue="FALSE"  remarks="是否显示" />
+			<column name="ccreateuser" type="VARCHAR(30)" remarks="创建人" />
+			<column name="dcreatedate" type="DATETIME" defaultValue="now()"
+				remarks="创建时间" />
+		</createTable>
+	</changeSet>
+	<changeSet author="renyy" id="t_recommend_label_name-create-2015-10-16">
+		<createTable tableName="t_recommend_label_name" remarks="客户喜爱推荐标签名字对应表">
+			<column name="ilabelid" type="INTEGER" remarks="标签ID" />
+			<column name="ilanguageid" type="INTEGER"  remarks="语言ID" />
+			<column name="clabelname" type="VARCHAR(100)" remarks="标签名称" />
+			<column name="cvalue" type="VARCHAR(300)" defaultValue="" remarks="内容" />
+			<column name="cimageurl" type="VARCHAR(600)" remarks="图片路径" />
+			<column name="cimages" type="BLOB" remarks="图片" />
+		</createTable>
+	</changeSet>
+</databaseChangeLog>

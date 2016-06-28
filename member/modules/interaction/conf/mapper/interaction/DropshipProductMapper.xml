@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.interaction.DropshipProductMapper">
+	<resultMap id="BaseResultMap" type="dto.interaction.DropshipProduct">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="cemail" property="cemail" jdbcType="VARCHAR" />
+		<result column="csku" property="csku" jdbcType="VARCHAR" />
+		<result column="bstate" property="bstate" jdbcType="BIT" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+		<result column="dupdatestatedate" property="dupdatestatedate"
+			jdbcType="TIMESTAMP" />
+		<result column="iwebsiteid" property="iwebsiteid" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, cemail, csku, bstate, dcreatedate,
+		dupdatestatedate,iwebsiteid
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_dropship_product
+		where iid = #{iid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_dropship_product
+		where iid = #{iid,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="dto.interaction.DropshipProduct">
+		insert into t_dropship_product
+		(cemail, csku,
+		bstate, dupdatestatedate,iwebsiteid
+		)
+		values (
+		#{cemail,jdbcType=VARCHAR}, #{csku,jdbcType=VARCHAR},
+		#{bstate,jdbcType=BIT},#{dupdatestatedate,jdbcType=TIMESTAMP},
+		#{iwebsiteid,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="dto.interaction.DropshipProduct">
+		insert into t_dropship_product
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				iid,
+			</if>
+			<if test="cemail != null">
+				cemail,
+			</if>
+			<if test="csku != null">
+				csku,
+			</if>
+			<if test="bstate != null">
+				bstate,
+			</if>
+			<if test="dupdatestatedate != null">
+				dupdatestatedate,
+			</if>
+			<if test="iwebsiteid != null">
+				iwebsiteid,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="iid != null">
+				#{iid,jdbcType=INTEGER},
+			</if>
+			<if test="cemail != null">
+				#{cemail,jdbcType=VARCHAR},
+			</if>
+			<if test="csku != null">
+				#{csku,jdbcType=VARCHAR},
+			</if>
+			<if test="bstate != null">
+				#{bstate,jdbcType=BIT},
+			</if>
+			<if test="dupdatestatedate != null">
+				#{dupdatestatedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="iwebsiteid != null">
+				#{iwebsiteid,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="dto.interaction.DropshipProduct">
+		update t_dropship_product
+		<set>
+			<if test="cemail != null">
+				cemail = #{cemail,jdbcType=VARCHAR},
+			</if>
+			<if test="csku != null">
+				csku = #{csku,jdbcType=VARCHAR},
+			</if>
+			<if test="bstate != null">
+				bstate = #{bstate,jdbcType=BIT},
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="dupdatestatedate != null">
+				dupdatestatedate =
+				#{dupdatestatedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="iwebsiteid != null">
+				iwebsiteid =
+				#{iwebsiteid,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="dto.interaction.DropshipProduct">
+		update
+		t_dropship_product
+		set cemail = #{cemail,jdbcType=VARCHAR},
+		csku =
+		#{csku,jdbcType=VARCHAR},
+		bstate = #{bstate,jdbcType=BIT},
+		dcreatedate =
+		#{dcreatedate,jdbcType=TIMESTAMP},
+		dupdatestatedate =
+		#{dupdatestatedate,jdbcType=TIMESTAMP},
+		iwebsiteid =
+		#{iwebsiteid,jdbcType=TIMESTAMP},
+		where iid =
+		#{iid,jdbcType=INTEGER}
+	</update>
+
+</mapper>

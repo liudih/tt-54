@@ -1,0 +1,103 @@
+@(pBadge:valueobjects.interaction.PriceBadge,
+  filter:String,da:Int)
+
+@views.html.member.base.master(extensions.interaction.member.PriceMatchMenuProvider.ID) {
+<link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/simplePagination.css")">
+<div class="accountRight accouMatchBox">
+    	<h6>@Messages("price.match")</h6>
+    	@if(pBadge.getImageUrl()!=null){
+        <p class="marT">&nbsp;</p>
+        <form id="tform">
+        <input type="hidden" name="p" id="p" value="@pBadge.getPriceMatch().pageNo"/> 
+        <input type="hidden" name="limit" id="limit" value="@pBadge.getPriceMatch().pageSize"/> 
+        <ul class="reviewTT_ul rightPage ">
+            <li>
+                @Messages("date")
+                <select onchange="changeFilter(this);" name="da" id="da">
+                    <option value="3" @if(da==3){selected="selected"}>@Messages("last.3.months")</option>
+                    <option value="6" @if(da==6){selected="selected"}>@Messages("last.6.months")</option>
+                    <option value="12" @if(da==12){selected="selected"}>@Messages("last.year")</option>
+                    <option value="0" @if(da==0){selected="selected"}>@Messages("all.date")</option>
+                </select>
+            </li>
+            <li>
+               @Messages("statuss")
+                <select onchange="changeFilter(this);" name="filter" id="filter">
+                    <option value="pe" @if(filter=="pe"){selected="selected"}>@Messages("pending")</option>
+                    <option value="ap" @if(filter=="ap"){selected="selected"}>@Messages("approved")</option>
+                    <option value="fa" @if(filter=="fa"){selected="selected"}>@Messages("failed")</option>
+                </select>
+            </li>
+            <li class="wisItems">@Messages("showing")<span>1</span> - <span>10</span>@Messages("of")<span>@pBadge.getPriceMatch().totalCount()</span> @Messages("items")</li>
+            <li class="showNub">@Messages("show")<a href="javascript:;" class="showAc">10</a>  <a href="javascript:;">20</a>  <a href="javascript:;">40</a></li>
+            <div class="clear"></div>
+        </ul>
+        </form>
+        @priceMatch_table(pBadge)
+        <div class="pagination-holder clearfix">
+			<div id="light-pagination" class="pagination"></div>
+		</div>
+		<div class="clear"></div>
+		}else{
+			<ul class="choWishlist" style="margin:100px 0px;">
+			<div style="margin:0 auto;height:34px;width:300px;">
+				<p style="font: bold 18px georgia;">@Messages("you.have.no.information.on.file")</p>
+			</div>
+		    <div class="clear"></div>
+		</ul>
+		}
+    	<h6>@Messages("status.explanation")</h6>
+        <p class="marT">
+        <b>@Messages("pending")</b>
+         - 
+        @Messages("request.has.just.been.submitted.and.is.waiting.for.staff.to.process")
+        <br>
+        <b>@Messages("processing")</b>
+         - 
+         @Messages("request.has.been.seen.by.staffs.and.is.currently.being.worked.on")
+         <br>
+        <b>@Messages("fulfilled")</b> 
+        -
+         @Messages("request.has.been.fulfilled.by.tomtop.i.e.for.price.matches.price.is.lowered.for.product.requests.products.are.listed")
+         <br>
+        <b>Failed</b>
+         - 
+         @Messages("request.couldnt.be.processed.due.to.a.number.of.reasons.for.price.matches.tomtop.can.only.accept.retail.online.stores.that.have.the.item.in.stock.ship.worldwide.and.the.target.price.must.include.shipping.and.handling.fees")
+        </p>
+    </div>
+    
+    @services.base.HtmlUtils.misc().addTailOnce{
+	  	<script src="@controllers.base.routes.Assets.at("js/lib/jquery.simplePagination.js")" ></script>
+	  	<script>
+		$('#light-pagination').pagination({
+			pages: @pBadge.getPriceMatch().totalPages,
+			currentPage: @(pBadge.getPriceMatch().pageNo),
+			hrefTextPrefix: 'javascript:void(',
+			hrefTextSuffix: ')',
+			cssStyle: 'light-theme',
+			selectOnClick: true,
+			onPageClick: function(pageNumber, event) {
+				$("#p").val(pageNumber);
+				$("#tform").submit();
+			}
+		});
+		
+		function changeFilter(node){
+			$("#p").val(1);
+			$("#tform").submit();
+		}
+		
+		$(".showNub a").each(function(i,e){
+			$(this).click(function(){
+				var num = $(this).text();
+				$("#limit").val(num);
+				$("#tform").submit();
+			});
+			
+		});
+		</script>
+	}
+    
+    
+    
+    }

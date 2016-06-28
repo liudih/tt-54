@@ -1,0 +1,2 @@
+﻿"iid","cname","iparentid","ilevel","cclass","curl","ccreateuser","dcreatedate","cenname"
+"48",系统参数管理,2,2,49,/sysadmin/sysparameter/list,xcf,"2015-04-24","SystemParameterMgr"

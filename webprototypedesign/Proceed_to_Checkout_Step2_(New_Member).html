@@ -1,0 +1,738 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/html">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>model</title>
+<link href="css/style.css" rel="stylesheet" media="screen"> 
+<link rel="stylesheet/less" type="text/css" href="js/model.less" />
+<link rel="stylesheet/less" type="text/css" href="js/shopping.less" />
+<link rel="stylesheet/less" type="text/css" href="js/newshopping.less" />
+<script type="text/javascript" src="js/less-1.3.3.min.js"></script>
+<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="js/public.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/newshopping.js"></script>
+</head>
+<body>
+
+<div class="nav_ljh">
+   <div class="nav_ljhFix">
+      <div id="top"><a href="#top_s"></a></div>
+      <div class="right_floor f1">
+        <a href="#f1">1F</a>
+        <div class="livechat01">Super Deals</div>
+        <div class="livechat02"></div>
+      </div>
+      <div class="right_floor f2">
+        <a href="#f2">2F</a>
+        <div class="livechat01">New Arrivals</div>
+        <div class="livechat02"></div>
+      </div>
+      <div class="right_floor f3">
+        <a href="#f3">3F</a>
+        <div class="livechat01">Featured Items</div>
+        <div class="livechat02"></div>
+      </div>
+      <div class="right_floor f4">
+        <a href="#f4">4F</a>
+        <div class="livechat01">Hot Categories</div>
+        <div class="livechat02"></div>
+      </div>
+      <div class="right_floor f5">
+        <a href="#f5">5F</a>
+        <div class="livechat01">Hot Events</div>
+        <div class="livechat02"></div>
+      </div>
+      <div class="livechat_ljh">
+        <a href="javascript:;" onClick="window.open('liveChat.html','LiveChat','toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=yes,width=750,height=470,left=80,top=40');"></a>
+        <div class="livechat01">Live Chat</div>
+        <div class="livechat02"></div>
+      </div>
+  </div>
+</div>
+<div class="shoppingCart_top" style="width: 1200px; margin: 0 auto 20px">
+    <div class="topNavigation_logo lineBlock">
+        <div class="topNav_logoT"><a href="http://www.tomtop.com"><img src="images/Tomtop_logo0603_01.png"></a></div>
+        <div class="topNav_logoB"><img src="images/Tomtop_logo0603_02.png"></div>
+    </div>
+    <ul class="shop_process">
+        <li class="current_state"><span>1</span>SHOPPING CART</li>
+        <!--当到第二步的页面时，第二个li标签添加多个样式名为“current_state1”-->
+        <li class="nocurrent_state current_state1"><span>2</span>SHIPPING &amp; PLACE ORDER</li>
+        <li class="normal_state"><span>3</span>PAYMENT</li>
+    </ul>
+</div>
+<!--头部结.p束-->
+
+<div class="newshopping_box">
+    <div class="newshopping_box_left">
+<!--新购物车流程内容-->
+        <div class="newshopping_address">
+            <h2>Shipping Address</h2>
+            <ul class="ns_address_list">
+                <li class="sel default">
+                    <h5><span>Justin</span> <span>Li</span></h5>
+                    <p>356 Belshaw Dr</p>
+                    <p><span>Milpitas,</span> <span>CA,</span> <span>95035-5469</span></p>
+                    <p>United States</p>
+                    <p>4087824819</p>
+                    <div class="address_default_edit"><a class="a_edit">Edit</a><a class="a_address_default">Default</a></div>
+                </li>
+                <li class=" sel2">
+                    <h5><span>Justin</span> <span>Li</span></h5>
+                    <p>356 Belshaw Dr</p>
+                    <p><span>Milpitas,</span> <span>CA,</span> <span>95035-5469</span></p>
+                    <p>United States</p>
+                    <p>4087824819</p>
+                    <div class="address_default_edit"><a class="a_edit">Edit</a><a class="a_address_default">Default</a></div>
+                </li>
+                <li>
+                    <h5><span>Justin</span> <span>Li</span></h5>
+                    <p>356 Belshaw Dr</p>
+                    <p><span>Milpitas,</span> <span>CA,</span> <span>95035-5469</span></p>
+                    <p>United States</p>
+                    <p>4087824819</p>
+                    <div class="address_default_edit"><a class="a_edit">Edit</a><a class="a_address_default">Default</a></div>
+                </li>
+                <li class="add_item">
+                    <div>
+                        <p><span></span></p>
+                        <p>Ship to Another Address</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="newshopping_address orderD_con">
+            <h2>Shipping Method</h2>
+            <table cellpadding="0" class="method_table">
+                <thead>
+                <tr><td width="27%">Options</td>
+                    <td width="20%">Trackable</td>
+                    <td width="25%">Est. Shipping Time</td>
+                    <td width="28%">Est. Shipping Cost</td>
+                </tr></thead>
+                <tbody>
+                <tr class="sel">
+                    <td><span><i></i></span> Super Saver</td>
+                    <td>No</td>
+                    <td>10 - 20 business days</td>
+                    <td>Free Shipping</td>
+                </tr>
+                <tr>
+                    <td><span><i></i></span> Super Saver</td>
+                    <td>Yes</td>
+                    <td>7 - 10 business days</td>
+                    <td>US$ 1.70</td>
+                </tr>
+                <tr>
+                    <td><span><i></i></span> Super Saver</td>
+                    <td>Yes</td>
+                    <td>7 - 10 business days</td>
+                    <td>US$ 1.70</td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+        <div class="newshopping_address">
+            <h2 class="h2_product">Payment Method</h2>
+            <div class="ns_payment_method clearfix">
+                <ul class="payment_method_tab">
+                    <li class="sel"><div class="payment_item"><span><i></i></span></div></li>
+                    <li><div class="payment_item visa"><span><i></i></span></div></li>
+                    <li ><div class="payment_item qiwi"><span><i></i></span></div></li>
+                    <li><div class="payment_item ekc"><span><i></i></span></div></li>
+                    <li><div class="payment_item boleto"><span><i></i></span></div></li>
+                    <li><div class="payment_item wire"><span><i></i></span></div></li>
+                </ul>
+                <ul class="payment_method_con">
+                    <li class="method_con_pp" style="display: block" >
+                        <p>Paypal, The safer, easier way to pay.</p>
+                        <p>If you have Paypal account, you can pay your order by your Paypal account.</p>
+                        <p>If you don't have a Paypal account. You can also pay via Paypal with your credit card or bank debit card.</p>
+                        <div class="con_pp_img"></div>
+                        <div><a href="#" class="ver_pp"></a></div>
+                    </li>
+                    <li class="method_con_visa" >
+                        <h5>Pay for <img src="images/payment_Credit.jpg" alt=""/></h5>
+                        <p class="con_wire_title">Billing Address:</p>
+                        <p class="billing_address"><span class="sel"></span> My billing address is the same as my shipping address</p>
+                        <p class="make_sure">Make sure that the billing address you enter below matches the name & address on your credit card.</p>
+                        <p class="ship_address"><a>Ship to Another Address</a></p>
+                        <ul class="ns_address_list">
+                            <li class="default">
+                                <h5><span>Justin</span> <span>Li</span></h5>
+                                <p>356 Belshaw Dr</p>
+                                <p><span>Milpitas,</span> <span>CA,</span> <span>95035-5469</span></p>
+                                <p>United States</p>
+                                <p>4087824819</p>
+                                <div class="address_default_edit"><a class="a_edit">Edit</a><a class="a_address_default">Default</a></div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="method_con_qiwi" >
+                        <h5>Оплатить с QIWI: <span></span></h5>
+                        <p>Пожалуйста, введите Ваш QIWI аккаунт! Номер телефона обязательно нужно указать для оплаты.</p>
+                        <div class="con_qiwi_account">
+                            Номер телефона:
+                            <div class="method_qiwi_account">
+                                <span class="span_qiwi_account"><i class="qiwi_flag qiwi_flag_kz"></i></span>
+                                <div class="qiwi_account_input">
+                                    <strong>+77</strong><input type="text"/>
+                                </div>
+                                <ul class="qiwi_account_list" style="display: none">
+                                    <li><i class="qiwi_flag qiwi_flag_kz"></i><span>Казахстан</span><strong>+77</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_ua"></i><span>Украина</span><strong>+380</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_ge"></i><span>Грузия</span><strong>+995</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_pa"></i><span>Панама</span><strong>+507</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_gb"></i><span>Великобритания</span><strong>+44</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_tj"></i><span>Таджикистан</span><strong>+992</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_lt"></i><span>Литва</span><strong>+370</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_il"></i><span>Израиль</span><strong>+972</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_kg"></i><span>Кыргызстан</span><strong>+996</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_tr"></i><span>Турция</span><strong>+90</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_vn"></i><span>Вьетнам</span><strong>+84</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_az"></i><span>Азербайджан</span><strong>+994</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_am"></i><span>Армения</span><strong>+374</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_lv"></i><span>Латвия</span><strong>+371</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_in"></i><span>Индия</span><strong>+91</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_th"></i><span>Таиланд</span><strong>+66</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_md"></i><span>Молдавия</span><strong>+373</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_ee"></i><span>Эстония</span><strong>+372</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_jp"></i><span>Япония</span><strong>+81</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_uz"></i><span>Узбекистан</span><strong>+998</strong></li>
+                                    <li><i class="qiwi_flag qiwi_flag_kr"></i><span>Южная Корея</span><strong>+82</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p>Внимание: ваша личная информация находится в безопасности.</br>TOMTOP не хранит какую-либо информацию о вашей учетной записи.</p>
+                    </li>
+                    <li class="method_con_ekc" >
+                        <h5>Заплатить Яндекс.Деньгами</h5>
+                        <div class="ekc_img"></div>
+                        <p>Яндекс.Деньги</br>Вы можете заплатить из кошелька в Яндекс.Деньгах или с привязанной к нему карты. Комиссии нет. </p>
+                    </li>
+                    <li class="method_con_boleto" >
+                        <div class="boleto_img"></div>
+                        <div class="boleto_con">
+                            Type<div class="boleto_input">
+                                    <h5>Directboleto<span></span></h5>
+                                    <ul>
+                                        <li>Boleto</li>
+                                        <li>Directboleto</li>
+                                    </ul>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="method_con_wire" >
+                        <dl class="bank_account">
+                            <dt>Please select the country of your bank account:</dt>
+                            <dd>Beneficiary Bank: HSBC HongKong</dd>
+                            <dd>Bank Account: 808 402 127 838</dd>
+                            <dd>Beneficiary: HONGKONG TOMTOP LIMITED</dd>
+                            <dd>SWIFT CODE: HSBCHKHH</dd>
+                            <dd>Bank Address: 6F, HSBC Main Building 1# queen's Road Central, Hong Kong</dd>
+                        </dl>
+                        <dl class="note_text">
+                            <dt>Note:</dt>
+                            <dd>1. Banks often charge fees for international transfers. You are responsible for your banks fees. It is important that you ask
+                                your bank exactly how much they will charge you for the transfer, and add this amount to the remitted total. If you do not
+                                add it, the fee will be deducted from the transferred money, and you wont have paid enough for your order. The order will
+                                be not be processed because of this.</dd>
+                            <dd>2. If you have already made a bank payment to our HSBC account as described above, please allow some time for this payment to go through:</dd>
+                            <dd>1) 2-4 working days for the banks to complete the transaction, depending on the banks;</dd>
+                            <dd>2) 1 working day for Tomtop to process your payment and match it to an order;</dd>
+                            <dd>3) You will receive an email from Tomtop to confirm that we have process your order.</dd>
+                        </dl>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="newshopping_address">
+            <h2 class="h2_product">Product List</h2>
+            <dl class="product_list">
+                <dt>
+                    <span class="item">Item</span>
+                    <span class="price">Price</span>
+                    <span class="qty">Qty</span>
+                    <span class="total">Total</span>
+                </dt>
+                <dd class="nobor">
+                    <div class="ns_item_img">
+                        <a href=""><img src="images/img01.jpg" alt=""/></a>
+                        <div class="ns_item_con">
+                            <h3>HS01003A E27 3W 6500K 235lm White 3-LED Light
+                                Bulb - Silver (85~265V)</h3>
+                            <p>SKU: <i>P1314</i></p>
+                            <p>Plug: <span>US</span>Color: <span>White</span></p>
+                        </div>
+                    </div>
+                    <div class="ns_item_price">
+                      <p>US$ 199.99</p>
+                    </div>
+                    <div class="ns_item_qty">
+                        <span>1</span>
+                    </div>
+                    <div class="ns_item_total">
+                        <span>US$ 199.99</span>
+                    </div>
+                </dd>
+                <dd >
+                    <div class="ns_item_img">
+                        <a href=""><img src="images/img01.jpg" alt=""/></a>
+                        <div class="ns_item_con">
+                            <h3>HS01003A E27 3W 6500K 235lm White 3-LED Light
+                                Bulb - Silver (85~265V)</h3>
+                            <p>SKU: <i>P1314</i></p>
+                            <p>Plug: <span>US</span>Color: <span>White</span></p>
+                        </div>
+                    </div>
+                    <div class="ns_item_price">
+                        <p>US$ 199.99</p>
+                    </div>
+                    <div class="ns_item_qty">
+                        <span>1</span>
+                    </div>
+                    <div class="ns_item_total">
+                        <span>US$ 199.99</span>
+                    </div>
+                </dd>
+                <dd >
+                    <div class="ns_item_img">
+                        <a href=""><img src="images/img01.jpg" alt=""/></a>
+                        <div class="ns_item_con">
+                            <h3>HS01003A E27 3W 6500K 235lm White 3-LED Light
+                                Bulb - Silver (85~265V)</h3>
+                            <p>SKU: <i>P1314</i></p>
+                            <p>Plug: <span>US</span>Color: <span>White</span></p>
+                        </div>
+                    </div>
+                    <div class="ns_item_price">
+                        <p>US$ 199.99</p>
+                    </div>
+                    <div class="ns_item_qty">
+                        <span>1</span>
+                    </div>
+                    <div class="ns_item_total">
+                        <span>US$ 199.99</span>
+                    </div>
+                </dd>
+                <dd >
+                    <div class="ns_item_img">
+                        <a href=""><img src="images/img01.jpg" alt=""/></a>
+                        <div class="ns_item_con">
+                            <h3>HS01003A E27 3W 6500K 235lm White 3-LED Light
+                                Bulb - Silver (85~265V)</h3>
+                            <p>SKU: <i>P1314</i></p>
+                            <p>Plug: <span>US</span>Color: <span>White</span></p>
+                        </div>
+                    </div>
+                    <div class="ns_item_price">
+                        <p>US$ 199.99</p>
+                    </div>
+                    <div class="ns_item_qty">
+                        <span>1</span>
+                    </div>
+                    <div class="ns_item_total">
+                        <span>US$ 199.99</span>
+                    </div>
+                </dd>
+                <dd >
+                    <div class="ns_item_img">
+                        <a href=""><img src="images/img01.jpg" alt=""/></a>
+                        <div class="ns_item_con">
+                            <h3>HS01003A E27 3W 6500K 235lm White 3-LED Light
+                                Bulb - Silver (85~265V)</h3>
+                            <p>SKU: <i>P1314</i></p>
+                            <p>Plug: <span>US</span>Color: <span>White</span></p>
+                        </div>
+                    </div>
+                    <div class="ns_item_price">
+                        <p>US$ 199.99</p>
+                    </div>
+                    <div class="ns_item_qty">
+                        <span>1</span>
+                    </div>
+                    <div class="ns_item_total">
+                        <span>US$ 199.99</span>
+                    </div>
+                </dd>
+            </dl>
+        </div>
+        <div class="newshopping_message">
+            <p>Leave a Message</p>
+            <textarea placeholder="Write anything you like to require more on your placed order, such as the shipping and other order related requirements."></textarea>
+        </div>
+    </div>
+    <div class="newshopping_box_right">
+        <dl>
+            <dt>Order Summary</dt>
+            <dd>Subtotal:<span>US$ 199.99</span></dd>
+            <dd>Shipping Cost:<span>US$ 199.99</span></dd>
+            <dd>Discount:<span>- US$ 25.22</span></dd>
+            <dd>Total:<span class="total">US$ 199.99</span></dd>
+        </dl>
+        <div class="have_code">
+            <p>+ Have a Promotion Code?</p>
+            <div class="have_code_input"><input type="text"/><input type="submit" value="Apply"/></div>
+        </div>
+        <!--购买失败页面为Payment_Failed.html-->
+        <div class="nw_place_box"><input type="submit" value="Place Your Order" class="nw_btn_place" onClick="window.location.href='Order_Completed(Guest).html'"/></div>
+        <div class="nw_guaranteed">
+            <p>Shopping on Tomtop.com is safe and secure - guaranteed!</p>
+            <p><img src="images/img02.jpg" class="left" alt="" /><img src="images/img03.jpg" alt="" class="right"/></p>
+        </div>
+    </div>
+</div>
+
+<!--地址弹出层-->
+<div class="blockPopup_box" id="pop_address" style="display: none;">
+    <div class="newshopping_address_pop">
+        <h2>Enter New Shipping Address</h2>
+        <ul class="newshopping_address_input">
+            <li>
+                <div class="address_input_item left">
+                    <h5>Firtst Name<i>*</i></h5>
+                    <input type="text"/>
+                </div>
+                <div class="address_input_item right">
+                    <h5>Last Name<i>*</i></h5>
+                    <input type="text"/>
+                </div>
+            </li>
+            <li>
+                <div class="address_input_item">
+                    <h5>Country<i>*</i></h5>
+                    <div class="newshopping_address_country">
+                        <div class="address_country">United States<span><i></i></span></div>
+                        <div class="country_all" style="display: none;">
+                            <div class="search_country"><input type="text" name=""></div>
+                            <div class="country_list">
+                                <ul>
+                                    <li><span>United States</span></li>
+                                    <li class="cur_AUD"><span>Australia</span></li>
+                                    <li class="cur_RUB"><span>Russia</span></li>
+                                    <li class="cur_can"><span>Canada</span></li>
+                                    <li class="cur_uk"><span>United Kingdom</span></li>
+                                    <li class="cur_BRL"><span>Brazil</span></li>
+                                    <li class="cur_ILS"><span>Israel</span></li>
+                                    <li class="cur_NL"><span>Netherlands</span></li>
+                                    <li class="cur_ES"><span>Spain</span></li>
+                                    <li class="cur_FR"><span>France</span></li>
+                                    <li class="cur_HU"><span>Hungary</span></li>
+                                </ul>
+                                <ul><li style="height:1px; border-bottom:1px solid #efefef; margin-bottom:6px;"></li></ul>
+                                <ul>
+                                    <li class="cur_AF"><span>Afghanistan</span></li>
+                                    <li class="cur_AX"><span>Åland Islands</span></li>
+                                    <li class="cur_AL"><span>Albania</span></li>
+                                    <li class="cur_DZ"><span>Algeria</span></li>
+                                    <li class="cur_AS"><span>American Samoa</span></li>
+                                    <li class="cur_AD"><span>Andorra</span></li>
+                                    <li class="cur_AO"><span>Angola</span></li>
+                                    <li class="cur_AI"><span>Anguilla</span></li>
+                                    <li class="cur_AG"><span>Antigua and Barbuda</span></li>
+                                    <li class="cur_AR"><span>Argentina</span></li>
+                                    <li class="cur_AM"><span>Armenia</span></li>
+                                    <li class="cur_AW"><span>Aruba</span></li>
+                                    <li class="cur_AU"><span>Australia</span></li>
+                                    <li class="cur_AT"><span>Austria</span></li>
+                                    <li class="cur_AZ"><span>Azerbaijan</span></li>
+                                    <li class="cur_BS"><span>Bahamas</span></li>
+                                    <li class="cur_BH"><span>Bahrain</span></li>
+                                    <li class="cur_BD"><span>Bangladesh</span></li>
+                                    <li class="cur_BB"><span>Barbados</span></li>
+                                    <li class="cur_BY"><span>Belarus</span></li>
+                                    <li class="cur_BE"><span>Belgium</span></li>
+                                    <li class="cur_BZ"><span>Belize</span></li>
+                                    <li class="cur_BJ"><span>Benin</span></li>
+                                    <li class="cur_BM"><span>Bermuda</span></li>
+                                    <li class="cur_BT"><span>Bhutan</span></li>
+                                    <li class="cur_BO"><span>Bolivia</span></li>
+                                    <li class="cur_BA"><span>Bosnia and Herzegovina</span></li>
+                                    <li class="cur_BW"><span>Botswana</span></li>
+                                    <li class="cur_BV"><span>Bouvet Island--</span></li>
+                                    <li class="cur_BR"><span>Brazil</span></li>
+                                    <li class="cur_BN"><span>Brunei</span></li>
+                                    <li class="cur_IO"><span>British Indian Ocean Territory</span></li>
+                                    <li class="cur_VG"><span>British Virgin Islands</span></li>
+                                    <li class="cur_BG"><span>Bulgaria</span></li>
+                                    <li class="cur_BF"><span>Burkina Faso</span></li>
+                                    <li class="cur_BI"><span>Burundi</span></li>
+                                    <li class="cur_KH"><span>Cambodia</span></li>
+                                    <li class="cur_CM"><span>Cameroon</span></li>
+                                    <li class="cur_CA"><span>Canada</span></li>
+                                    <li class="cur_IC"><span>Canary Islands</span></li>
+                                    <li class="cur_CV"><span>Cape Verde</span></li>
+                                    <li class="cur_KY"><span>Cayman Islands</span></li>
+                                    <li class="cur_CF"><span>Central African Republic</span></li>
+                                    <li class="cur_TD"><span>Chad</span></li>
+                                    <li class="cur_CL"><span>Chile</span></li>
+                                    <li class="cur_CN"><span>China</span></li>
+                                    <li class="cur_CX"><span>Christmas Island</span></li>
+                                    <li class="cur_CC"><span>Cocos [Keeling] Islands</span></li>
+                                    <li class="cur_CO"><span>Colombia</span></li>
+                                    <li class="cur_KM"><span>Comoros</span></li>
+                                    <li class="cur_CG"><span>Congo - Brazzaville</span></li>
+                                    <!--找不到国旗<li class="cur_CD"><em></em><span>Congo - Kinshasa</span></li>-->
+                                    <li class="cur_CK"><span>Cook Islands</span></li>
+                                    <li class="cur_CR"><span>Costa Rica</span></li>
+                                    <li class="cur_CI"><span>Côte d'Ivoire</span></li>
+                                    <li class="cur_HR"><span>Croatia</span></li>
+                                    <li class="cur_CU"><span>Cuba</span></li>
+                                    <li class="cur_XC"><span>Curacao</span></li>
+                                    <li class="cur_CY"><span>Cyprus</span></li>
+                                    <li class="cur_CZ"><span>Czech Republic</span></li>
+                                    <li class="cur_DK"><span>Denmark</span></li>
+                                    <li class="cur_DJ"><span>Djibouti</span></li>
+                                    <li class="cur_DM"><span>Dominica</span></li>
+                                    <li class="cur_DO"><span>Dominican Republic</span></li>
+                                    <li class="cur_EC"><span>Ecuador</span></li>
+                                    <li class="cur_EG"><span>Egypt</span></li>
+                                    <li class="cur_SV"><span>El Salvador</span></li>
+                                    <li class="cur_GQ"><span>Equatorial Guinea</span></li>
+                                    <li class="cur_ER"><span>Eritrea</span></li>
+                                    <li class="cur_EE"><span>Estonia</span></li>
+                                    <li class="cur_ET"><span>Ethiopia</span></li>
+                                    <li class="cur_FK"><span>Falkland Islands</span></li>
+                                    <li class="cur_FO"><span>Faroe Islands</span></li>
+                                    <li class="cur_FJ"><span>Fiji</span></li>
+                                    <li class="cur_FI"><span>Finland</span></li>
+                                    <li class="cur_FR"><span>France</span></li>
+                                    <li class="cur_GF"><span>French Guiana</span></li>
+                                    <li class="cur_PF"><span>French Polynesia</span></li>
+                                    <li class="cur_TF"><span>French Southern Territories</span></li>
+                                    <li class="cur_GA"><span>Gabon</span></li>
+                                    <li class="cur_GM"><span>Gambia</span></li>
+                                    <li class="cur_GE"><span>Georgia</span></li>
+                                    <li class="cur_DE"><span>Germany</span></li>
+                                    <li class="cur_GH"><span>Ghana</span></li>
+                                    <li class="cur_GI"><span>Gibraltar</span></li>
+                                    <li class="cur_GR"><span>Greece</span></li>
+                                    <li class="cur_GL"><span>Greenland</span></li>
+                                    <li class="cur_GD"><span>Grenada</span></li>
+                                    <li class="cur_GP"><span>Guadeloupe</span></li>
+                                    <li class="cur_GU"><span>Guam</span></li>
+                                    <li class="cur_GT"><span>Guatemala</span></li>
+                                    <li class="cur_GG"><span>Guernsey</span></li>
+                                    <li class="cur_GN"><span>Guinea</span></li>
+                                    <li class="cur_GW"><span>Guinea-Bissau</span></li>
+                                    <li class="cur_GY"><span>Guyana</span></li>
+                                    <li class="cur_HT"><span>Haiti</span></li>
+                                    <li class="cur_HM"><span>Heard Island and McDonald Islands--</span></li>
+                                    <li class="cur_HN"><span>Honduras</span></li>
+                                    <li class="cur_HK"><span>Hong Kong SAR China</span></li>
+                                    <li class="cur_HU"><span>Hungary</span></li>
+                                    <li class="cur_IS"><span>Iceland</span></li>
+                                    <li class="cur_IN"><span>India</span></li>
+                                    <li class="cur_ID"><span>Indonesia</span></li>
+                                    <li class="cur_IR"><span>Iran</span></li>
+                                    <li class="cur_IQ"><span>Iraq</span></li>
+                                    <li class="cur_IE"><span>Ireland</span></li>
+                                    <li class="cur_IM"><span>Isle of Man--</span></li>
+                                    <li class="cur_IL"><span>Israel</span></li>
+                                    <li class="cur_IT"><span>Italy</span></li>
+                                    <li class="cur_JM"><span>Jamaica</span></li>
+                                    <li class="cur_JP"><span>Japan</span></li>
+                                    <li class="cur_JE"><span>Jersey--</span></li>
+                                    <li class="cur_JO"><span>Jordan</span></li>
+                                    <li class="cur_KZ"><span>Kazakhstan</span></li>
+                                    <li class="cur_KE"><span>Kenya</span></li>
+                                    <li class="cur_KI"><span>Kiribati</span></li>
+                                    <li class="cur_KR"><span>Korea</span></li>
+                                    <li class="cur_KW"><span>Kuwait</span></li>
+                                    <li class="cur_KG"><span>Kyrgyzstan</span></li>
+                                    <li class="cur_LA"><span>Laos</span></li>
+                                    <li class="cur_LV"><span>Latvia</span></li>
+                                    <li class="cur_LB"><span>Lebanon</span></li>
+                                    <li class="cur_LS"><span>Lesotho</span></li>
+                                    <li class="cur_LR"><span>Liberia</span></li>
+                                    <li class="cur_LY"><span>Libya</span></li>
+                                    <li class="cur_LI"><span>Liechtenstein</span></li>
+                                    <li class="cur_LT"><span>Lithuania</span></li>
+                                    <li class="cur_LU"><span>Luxembourg</span></li>
+                                    <li class="cur_MO"><span>Macau SAR China</span></li>
+                                    <li class="cur_MK"><span>Macedonia</span></li>
+                                    <li class="cur_MG"><span>Madagascar</span></li>
+                                    <li class="cur_MW"><span>Malawi</span></li>
+                                    <li class="cur_MY"><span>Malaysia</span></li>
+                                    <li class="cur_MV"><span>Maldives</span></li>
+                                    <li class="cur_ML"><span>Mali</span></li>
+                                    <li class="cur_MT"><span>Malta</span></li>
+                                    <li class="cur_MH"><span>Marshall Islands</span></li>
+                                    <li class="cur_MR"><span>Mauritania</span></li>
+                                    <li class="cur_MU"><span>Mauritius</span></li>
+                                    <li class="cur_YT"><span>Mayotte</span></li>
+                                    <li class="cur_MX"><span>Mexico</span></li>
+                                    <li class="cur_FM"><span>Micronesia</span></li>
+                                    <li class="cur_MD"><span>Moldova</span></li>
+                                    <li class="cur_MC"><span>Monaco</span></li>
+                                    <li class="cur_MN"><span>Mongolia</span></li>
+                                    <li class="cur_ME"><span>Montenegro</span></li>
+                                    <li class="cur_MS"><span>Montserrat</span></li>
+                                    <li class="cur_MA"><span>Morocco</span></li>
+                                    <li class="cur_MZ"><span>Mozambique</span></li>
+                                    <li class="cur_MM"><span>Myanmar [Burma]</span></li>
+                                    <li class="cur_NA"><span>Namibia</span></li>
+                                    <li class="cur_NR"><span>Nauru</span></li>
+                                    <li class="cur_NP"><span>Nepal</span></li>
+                                    <li class="cur_XN"><span>Nevis</span></li>
+                                    <li class="cur_NL"><span>Netherlands</span></li>
+                                    <li class="cur_AN"><span>Netherlands Antilles</span></li>
+                                    <li class="cur_NC"><span>New Caledonia</span></li>
+                                    <li class="cur_NZ"><span>New Zealand</span></li>
+                                    <li class="cur_NI"><span>Nicaragua</span></li>
+                                    <li class="cur_NE"><span>Niger</span></li>
+                                    <li class="cur_NG"><span>Nigeria</span></li>
+                                    <li class="cur_NU"><span>Niue</span></li>
+                                    <li class="cur_NF"><span>Norfolk Island</span></li>
+                                    <li class="cur_MP"><span>Northern Mariana Islands</span></li>
+                                    <li class="cur_KP"><span>North Korea</span></li>
+                                    <li class="cur_NO"><span>Norway</span></li>
+                                    <li class="cur_OM"><span>Oman</span></li>
+                                    <li class="cur_PK"><span>Pakistan</span></li>
+                                    <li class="cur_PW"><span>Palau</span></li>
+                                    <li class="cur_PA"><span>Panama</span></li>
+                                    <li class="cur_PG"><span>Papua New Guinea</span></li>
+                                    <li class="cur_PY"><span>Paraguay</span></li>
+                                    <li class="cur_PE"><span>Peru</span></li>
+                                    <li class="cur_PH"><span>Philippines</span></li>
+                                    <li class="cur_PN"><span>Pitcairn Islands</span></li>
+                                    <li class="cur_PL"><span>Poland</span></li>
+                                    <li class="cur_PT"><span>Portugal</span></li>
+                                    <li class="cur_PR"><span>Puerto Rico</span></li>
+                                    <li class="cur_QA"><span>Qatar</span></li>
+                                    <li class="cur_RE"><span>Réunion</span></li>
+                                    <li class="cur_RO"><span>Romania</span></li>
+                                    <li class="cur_RU"><span>Russia</span></li>
+                                    <li class="cur_RW"><span>Rwanda</span></li>
+                                    <li class="cur_KN"><span>Saint Kitts and Nevis</span></li>
+                                    <li class="cur_LC"><span>Saint Lucia</span></li>
+                                    <li class="cur_VC"><span>Saint Vincent and the Grenadines</span></li>
+                                    <li class="cur_WS"><span>Samoa</span></li>
+                                    <li class="cur_SM"><span>San Marino</span></li>
+                                    <li class="cur_ST"><span>São Tomé and Príncipe</span></li>
+                                    <li class="cur_SA"><span>Saudi Arabia</span></li>
+                                    <li class="cur_SN"><span>Senegal</span></li>
+                                    <li class="cur_RS"><span>Serbia</span></li>
+                                    <li class="cur_SC"><span>Seychelles</span></li>
+                                    <li class="cur_SL"><span>Sierra Leone</span></li>
+                                    <li class="cur_SG"><span>Singapore</span></li>
+                                    <li class="cur_SK"><span>Slovakia</span></li>
+                                    <li class="cur_SI"><span>Slovenia</span></li>
+                                    <li class="cur_SB"><span>Solomon Islands</span></li>
+                                    <li class="cur_SO"><span>Somalia</span></li>
+                                    <li class="cur_XS"><span>Somaliland</span></li>
+                                    <li class="cur_ZA"><span>South Africa</span></li>
+                                    <li class="cur_ES"><span>Spain</span></li>
+                                    <li class="cur_LK"><span>Sri Lanka</span></li>
+                                    <li class="cur_SD"><span>Sudan</span></li>
+                                    <li class="cur_SR"><span>Suriname</span></li>
+                                    <li class="cur_SJ"><span>Svalbard and Jan Mayen</span></li>
+                                    <li class="cur_SZ"><span>Swaziland</span></li>
+                                    <li class="cur_SE"><span>Sweden</span></li>
+                                    <li class="cur_CH"><span>Switzerland</span></li>
+                                    <li class="cur_SY"><span>Syria</span></li>
+                                    <li class="cur_TW"><span>Taiwan</span></li>
+                                    <li class="cur_TJ"><span>Tajikistan</span></li>
+                                    <li class="cur_TZ"><span>Tanzania</span></li>
+                                    <li class="cur_TH"><span>Thailand</span></li>
+                                    <li class="cur_TG"><span>Togo</span></li>
+                                    <li class="cur_TK"><span>Tokelau</span></li>
+                                    <li class="cur_TO"><span>Tonga</span></li>
+                                    <li class="cur_TT"><span>Trinidad and Tobago</span></li>
+                                    <li class="cur_TN"><span>Tunisia</span></li>
+                                    <li class="cur_TR"><span>Turkey</span></li>
+                                    <li class="cur_TM"><span>Turkmenistan</span></li>
+                                    <li class="cur_TC"><span>Turks and Caicos Islands</span></li>
+                                    <li class="cur_TV"><span>Tuvalu</span></li>
+                                    <li class="cur_UG"><span>Uganda</span></li>
+                                    <li class="cur_UA"><span>Ukraine</span></li>
+                                    <li class="cur_AE"><span>United Arab Emirates</span></li>
+                                    <li class="cur_GB"><span>United Kingdom</span></li>
+                                    <li class="cur_US"><span>United States</span></li>
+                                    <li class="cur_UY"><span>Uruguay</span></li>
+                                    <li class="cur_US"><span>U.S. Minor Outlying Islands</span></li>
+                                    <li class="cur_US"><span>U.S. Virgin Islands</span></li>
+                                    <li class="cur_UZ"><span>Uzbekistan</span></li>
+                                    <li class="cur_VU"><span>Vanuatu</span></li>
+                                    <li class="cur_VA"><span>Vatican City</span></li>
+                                    <li class="cur_VE"><span>Venezuela</span></li>
+                                    <li class="cur_VN"><span>Vietnam</span></li>
+                                    <li class="cur_WF"><span>Wallis and Futuna</span></li>
+                                    <li class="cur_EH"><span>Western Sahara</span></li>
+                                    <li class="cur_YE"><span>Yemen</span></li>
+                                    <li class="cur_ZM"><span>Zambia</span></li>
+                                    <li class="cur_ZW"><span>Zimbabwe</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </li>
+            <li>
+                <div class="address_input_item">
+                    <h5>Address Line 1<i>*</i></h5>
+                    <input type="text"/>
+                </div>
+            </li>
+            <li>
+                <div class="address_input_item left">
+                    <h5>City<i>*</i></h5>
+                    <input type="text"/>
+                </div>
+                <div class="address_input_item right">
+                    <h5>State / Region<i>*</i></h5>
+                    <input type="text"/>
+                </div>
+            </li>
+            <li>
+                <div class="address_input_item left">
+                    <h5>Postal Code<i>*</i></h5>
+                    <input type="text"/>
+                </div>
+                <div class="address_input_item right">
+                    <h5>Phone Number<i>*</i><div class="hint_phone_num"><p>For shipping and delivery purposes only.</p></div></h5>
+                    <input type="text"/>
+                </div>
+            </li>
+        </ul>
+
+        <div class="newshopping_address_submit">
+            <div class="newshopping_address_default"><span></span>Set as default</div>
+            <a href="#">Privacy Policy</a>
+            <div class="address_submit">
+                <input type="submit" value="Cancel" class="cancel"/>
+                <input type="submit" value="Save & Continue >>" class="save"/>
+            </div>
+        </div>
+    </div>
+    <div class="blockPopup_black"></div>
+</div>
+
+<!--购物车底部-->
+    <div class="shopping_bottom">
+        <div>
+            <a  class="icon_paypal"></a>
+            <a  class="icon_visa"></a>
+            <a  class="icon_qiwi"></a>
+            <a class="icon_ehb"></a>
+            <a  class="icon_boleto"></a>
+            <a  class="icon_wiae"></a>
+            <a  class="icon_norton"></a>
+            <a  class="icon_money"></a>
+        </div>
+        <div>
+            <a  class="icon_china"></a>
+            <a  class="icon_ems"></a>
+            <a  class="icon_dhl"></a>
+            <a  class="icon_ups"></a>
+        </div>
+        <p>Copyright © 2004- 2015 TOMTOP Inc. All Rights Reserved. </p>
+    </div>
+
+</body>
+
+</html>

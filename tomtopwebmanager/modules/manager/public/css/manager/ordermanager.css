@@ -1,0 +1,541 @@
+.cartListToge {
+	position: relative;
+	margin-left: 128px;
+	background-color: #f5f8fa;
+	border: 1px solid #e3e3e3;
+	margin-top: 30px;
+	width: 650px;
+	margin-right: 0px;
+}
+
+.border0 {
+	border: 0px
+}
+
+.listTogeTitle {
+	position: absolute;
+	left: -1px;
+	top: -29px;
+	min-width: 175px;
+	height: 30px;
+	background-color: #f5f8fa;
+	border: 1px solid #e3e3e3;
+	border-bottom: 1px solid #f5f8fa;
+	text-align: center;
+	line-height: 30px;
+	padding: 0 15px;
+	cursor: pointer;
+	border-radius: 5px; .
+	border-right-top-radius: 0px; .
+	border-left-top-radius: 0px;
+}
+
+.cartListToge i {
+	position: absolute;
+	right: 8px;
+	top: 10px;
+	width: 10px;
+	height: 10px;
+}
+
+.cartListToge .titleAC {
+	border-radius: 3px;
+	border: 1px solid #e3e3e3;
+}
+
+.cartListToge ol {
+	padding: 0;
+	padding-left: 20px;
+	border-top: 1px solid #e3e3e3;
+	margin-top: -1px;
+}
+
+.cartListToge .ListToge_first {
+	border-top: 1px solid #e3e3e3;
+}
+
+.cartListToge .qty_num {
+	margin-left: 32px;
+	margin-right: 75px;
+}
+
+.cartListToge .qty_nums {
+	background-color: #efefef;
+}
+
+.cartListToge .pro_img {
+	width: 80px;
+	padding-right: 0px;
+	float: left;
+}
+
+.cartListToge .pro_info {
+	padding-left: 10px;
+}
+
+.cartListToge .pro_info {
+	width: 370px;
+}
+
+.showNub {
+	float: left;
+}
+
+.showNub a {
+	color: blue;
+	text-decoration: underline;
+	margin-left: 5px;
+}
+
+.showNub .showAc {
+	text-decoration: none;
+	color: #666;
+	cursor: auto;
+}
+
+.order_ll_box {
+	background-color: #ccc;
+	font-size: 12px;
+	font-family: Arial, Helvetica, sans-serif;
+	margin-bottom: 150px;
+	border-spacing: 1px;
+	border-collapse: separate;
+}
+
+.order_ll_box ul {
+	list-style-type: none;
+	padding: 0px;
+	margin: 0px;
+}
+
+.order_ll_box .order_ll_999 {
+	color: #999;
+	margin-left: 5px;
+}
+
+.order_ll_box .order_ll_adds {
+	width: 70px;
+	text-align: right;
+	color: #999;
+	display: inline-block;
+}
+
+.order_ll_box td {
+	padding: 5px 2px;
+	background-color: #fff;
+	line-height: 14px;
+}
+
+.order_ll_box th {
+	padding: 5px;
+	background-color: #f7f7f7;
+	color: #333;
+	word-break: break-all;
+	line-height: 14px;
+}
+
+.order_ll_box th .inlineBlock {
+	margin: 0px;
+	padding: 5px 0;
+	padding-right: 15px;
+	cursor: pointer;
+}
+
+.order_ll_box th .inlineBlock:hover {
+	background-color: #fff;
+}
+
+.order_ll_box .inlineBlock img {
+	vertical-align: middle;
+}
+
+.order_ll_box .order_ll_infTR .order_ll_marT {
+	margin: 10px;
+}
+
+.order_ll_box .order_ll_Id {
+	width: 15%;
+	min-width: 130px;
+}
+
+.order_ll_box .order_ll_dizhi {
+	min-width: 200px;
+}
+
+.order_ll_box .order_ll_zhifu {
+	width: 10%;
+	min-width: 130px;
+}
+
+.order_ll_box .order_ll_haoma {
+	width: 10%;
+	min-width: 125px;
+}
+
+.order_ll_box .order_ll_zhuangtai {
+	width: 10%;
+	min-width: 125px;
+}
+
+.order_ll_box .order_ll_caozuo {
+	width: 10%;
+	min-width: 125px;
+}
+
+.order_ll_box .order_ll_marT .order_ll_product {
+	float: left;
+	width: 50px;
+	height: 50px;
+	margin-right: 5px;
+}
+
+.order_ll_box .order_ll_pay {
+	width: 80px;
+	vertical-align: middle;
+}
+
+.order_ll_box .order_ll_marT .order_ll_inline {
+	margin: 2px 0;
+}
+
+.order_ll_box .order_ll_state, .order_ll_box  .order_ll_price {
+	display: inline-block;
+	padding: 5px 10px;
+	color: white;
+	text-decoration: none;
+	margin: 5px 0;
+}
+
+.order_ll_box .order_ll_state {
+	background-color: #d84a38;
+}
+
+.order_ll_box .order_ll_state:after {
+	content: "∨";
+	float: right;
+	width: 10px;
+	height: 10px;
+	font-size: 10px;
+	margin-left: 5px;
+}
+
+.order_ll_box .order_ll_price {
+	background-color: #4d90fe;
+}
+
+.order_ll_box .order_ll_stateBox {
+	position: relative;
+}
+
+.order_ll_box .order_ll_stateBox:hover .dropdown-menu {
+	display: block;
+	z-index: 1;
+}
+
+.order_ll_box .dropdown-menu {
+	position: absolute;
+	top: 29px;
+	left: 0px;
+	list-style-type: none;
+	padding: 0px;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	display: none;
+}
+
+.order_ll_box .dropdown-menu li {
+	padding: 2px;
+	cursor: pointer;
+}
+
+.order_ll_box .dropdown-menu li:hover {
+	background-color: #ccc;
+}
+
+.order_ll_box .order_ll_TT {
+	display: inline-block;
+	padding: 5px;
+	background-color: #FC0;
+	color: #000;
+	text-decoration: none;
+}
+
+.order_ll_box .order_ll_TTBox {
+	position: relative;
+	display: inline-block;
+}
+
+.order_ll_box .order_ll_TxT {
+	position: absolute;
+	top: 24px;
+	left: 0px;
+	width: 600px;
+	background-color: #fff;
+	z-index: 1;
+	display: none;
+	padding: 0px 10px;
+	border: 1px solid #e8e8e8;
+	min-height: 50px;
+	box-shadow: 5px 5px 5px #999;
+}
+
+.order_ll_box .order_ll_TxT .inlineBlock {
+	display: inline-block;
+}
+
+.order_ll_box .order_ll_TxT li {
+	min-height: 50px;
+	margin: 3px 0px;
+}
+
+.order_ll_box .order_ll_TxT .order_ll_bangding {
+	width: 570px;
+	margin-left: 20px;
+	background-color: #f5f5f5;
+	padding: 5px;
+}
+
+.order_ll_box .order_ll_TTBox:hover .order_ll_TxT {
+	display: block;
+}
+
+.order_ll_box .order_ll_red {
+	color: red;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.order_ll_box .order_ll_center {
+	text-align: center;
+}
+
+.order_ll_box .order_ll_dates {
+	display: inline-block;
+	width: 80px;
+	vertical-align: middle;
+	margin-left: 5px;
+}
+
+.order_ll_select {
+	width: 100%;
+	min-width: 930px;
+	font-size: 12px;
+	background-color: #fff;
+    padding: 30px;
+}
+
+.order_ll_select select {
+	width: 200px;
+	height: 27px;
+	line-height: 27px;
+	border: 1px solid #ccc;
+	padding: 2px 8px;
+	background-color: #f5f5f5;
+}
+
+.order_ll_select .order_ll_txt {
+	width: 200px;
+	height: 27px;
+	line-height: 25px;
+	border: 1px solid #ccc;
+	padding: 2px 8px;
+	background-color: #f5f5f5;
+}
+
+.order_ll_select .order_ll_date {
+	width: 152px;
+	height: 27px;
+	line-height: 25px;
+	border: 1px solid #ccc;
+	padding: 2px 8px;
+	background-color: #f5f5f5;
+}
+
+.order_ll_select .order_ll_Search {
+	padding:6px 12px;
+	background-color:#3b73af;
+    border-radius: 4px !important;
+	border: 0px;
+	color: #fff;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.order_ll_select .order_ll_show {
+	padding: 0px;
+}
+
+.order_ll_select .order_ll_show li {
+	display: inline-block;
+}
+
+.order_ll_select .order_ll_show li a {
+	display: block;
+	width: 30px;
+	height: 20px;
+	background-color: #666;
+	color: #fff;
+	text-align: center;
+	line-height: 20px;
+	text-decoration: none;
+}
+
+.order_ll_select .order_ll_show li .order_ll_aActi {
+	background-color: #205081;
+}
+
+.order_ll_select .order_ll_Search:hover {
+	background-color: #3b73af;
+	color: #ffffff;
+	cursor: pointer;
+}
+
+.order_ll_select .order_ll_dateBox {
+	width: 200px;
+	padding: 0px;
+}
+
+.order_ll_select .order_ll_dateBox li {
+	display: inline-block;
+	width: 95px;
+}
+
+.order_ll_select p {
+	margin-top: 8px;
+	margin-bottom: 5px;
+	padding: 0px;
+	color: #777;
+}
+
+.order_ll_select .order_ll_col {
+	width: 100%;
+}
+
+.order_ll_select .order_ll_inline {
+	display: inline-block;
+	width: 33%;
+	margin-left: -8px;
+}
+
+.order_ll_select .order_ll_inline:first-child {
+	margin-left: 0px;
+}
+
+.order_ll_box .order_ll_bangding .order_ll_tishis {
+	width: 510px;
+	background-color: #ccc;
+}
+
+.order_ll_box .order_ll_tishis {
+	width: 545px;
+	background-color: #ccc;
+	border-spacing: 1px;
+	border-collapse: separate;
+}
+
+.order_ll_box .order_ll_tishis td {
+	background-color: #fff;
+	padding: 2px 3px;
+	text-align: center;
+	font-size: 12px;
+}
+
+.order_ll_box .order_ll_tishis th {
+	font-size: 12px;
+	font-weight: normal;
+}
+
+.order_ll_box .order_ll_center {
+	text-align: center;
+}
+
+.order_ll_box .order_ll_center .order_ll_dates {
+	width: auto;
+	margin-left: 0px;
+}
+
+.order_ll_box .order_ll_TxT .ewai_ll {
+	margin: 0;
+	margin-left: -4px;
+	padding: 0px 10px;
+	text-align: center;
+	height: 100%;
+}
+
+.order_ll_box .order_ll_TxT .ewai_ll p:first-child {
+	color: #999;
+}
+
+.order_ll_box .order_ll_TxT .ewai_ll:nth-child(odd) {
+	background-color: #e7e7e7;
+}
+
+.order_ll_box .order_ll_TxT .ewai_ll:nth-child(even) {
+	background-color: #f6f6f6;
+}
+
+.order_ll_box .pay_ll_TxT {
+	width: auto;
+	white-space: nowrap;
+	margin: 0px;
+	height: 100%
+}
+
+.order_ll_box .font12 {
+	font-size: 12px;
+}
+
+.order_ll_box .order_ll_TTBoxAll .order_ll_TxT .ewai_ll {
+	border: 1px solid #ccc;
+	padding: 0px;
+	vertical-align: top;
+}
+
+.order_ll_box .order_ll_TTBoxAll .order_ll_TxT p {
+	margin: 0px;
+	padding: 2px 5px;
+	border-top: 1px solid #ccc;
+}
+
+.order_ll_box .order_ll_TTBoxAll .order_ll_TxT p:first-child {
+	border-top: 0px;
+}
+
+.order_ll_box .order_ll_TTBoxAll .order_ll_TxT {
+	padding: 5px;
+	width: auto;
+	white-space: nowrap;
+}
+
+.order_ll_box .order_ll_TTBoxAll .order_ll_tishis {
+	width: auto;
+	white-space: nowrap;
+}
+
+.order_ll_box .order_ll_TTBoxAll .order_ll_tishis a {
+	color: #666;
+}
+
+.order_ll_box .order_ll_TTBoxAll .order_ll_tishis .bangding td {
+	background-color: #f6f6f6;
+}
+
+.order_ll_box .lineBlock {
+	display: inline-block;
+	vertical-align: top;
+}
+
+.waiting_ll {
+	position: fixed;
+	width: 300px;
+	height: 160px;
+	top: 50%;
+	margin-top: -80px;
+	left: 50%;
+	margin-left: -150px;
+	background-color: rgba(240, 190, 90, 0.5);
+	border: 3px solid #f7ba6c;
+	background-position: center 58px;
+	background-repeat: no-repeat;
+	background-image: url("../image/loading.gif");
+}

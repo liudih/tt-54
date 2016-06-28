@@ -1,0 +1,56 @@
+@(product: valueobjects.product.ProductBadge
+	)
+@import services.base._
+@import services.base.utils._
+@import views.html.product.img
+@if(product != null){
+<li class="product_item">
+    @product.getPrice().getDiscountOption().asScala.map{ d =>
+		@if(product.getPrice().isDiscounted()){
+			<span class="discount">@Utils.percent(d)</span>
+		}
+	}
+	<input type="hidden" class="plistingid" value="@product.getListingId()"/>
+	<input type="hidden" class="pricehtml" @if(product.getPrice()!=null){value="@product.getPrice.getSymbol @Utils.money(product.getPrice.getUnitPrice)"} />
+    <a class="publiceImg" href="@if(product.getUrl!=null){@controllers.product.routes.Product.view(product.getUrl)}">
+		@img(product.getImageUrl(),product.getTitle(),265,265,null)				   
+	</a>
+    <div class="listIM">
+        <a class="publicTitle" title="@product.getTitle" href="@if(product.getUrl!=null){@controllers.product.routes.Product.view(product.getUrl)}">
+	    @if(product.getTitle()!=null && product.getTitle().length>100){
+	    	@product.getTitle.substring(0,100)...
+	    }else{
+	    	@product.getTitle
+	    }
+	    </a>
+        <!-- <p class="descriTT">Description:<span>USB Charger data Cable For iPhone iPod Nano Touch</span></p> -->
+        <!-- <p class="green">Free Shipping</p> -->
+        @if(product.getHtmlmap().get("freeship")!=null){
+        	<p class="green">FREE Shipping</p>
+        }
+        @product.getExtended().map{ i=>
+			@i
+		} 
+		@product.getHtmlmap().get("collect")
+   		@*@product.getHtmlmap().get("storage")*@
+    	<!-- <p class="product_hart lineBlock">(126)</p> -->
+    
+    <a class="proDet" href="@if(product.getUrl!=null){@controllers.product.routes.Product.view(product.getUrl)}">Product Detail»</a>
+    </div>
+    
+    <p class="publicPrice">
+    <span class="presentPrice">
+	    <span class="currency">@product.getPrice.getSymbol</span>
+	    @Utils.money(product.getPrice.getUnitPrice)
+    </span>
+    @if(product.getPrice().isDiscounted()){
+		/ <span class="originalPrice">
+			<span class="currency">@product.getPrice.getSymbol</span>
+			@Utils.money(product.getPrice.getUnitBasePrice)
+		</span>
+	}
+	</p>
+    @*@views.html.product.cart_add_button()*@
+</li>
+}
+@views.html.product.gadget.addcart_js()

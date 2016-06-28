@@ -1,0 +1,36 @@
+@(id:String,begin:String,end:String)
+<form action="@controllers.affiliate.routes.Report.TrafficDetail" id='traffic_table_form'  method="POST">
+<ul class="chartSearch">
+<ul class="selectDate">
+   <li class="lineBlock">From <input value="@begin" name="begindate" style="color: rgb(204, 204, 204);" placeholder="" class="chartRili datepicker" type="text"></li>
+   <li class="lineBlock">To <input value="@end" name="enddate" style="color: rgb(204, 204, 204);" placeholder="" class="chartRili datepicker" type="text"></li>
+</ul>
+    <li class="lineBlock">
+	    <input class="chartRili" name="word" type="text" placeholder="www.google.com" >
+	    <input  type="hidden"  name="orderStatus"   value="0" />
+	    <input  type="hidden"  name="target"        value='#@(id+"_table")' />
+	    <input  type="hidden"  name="id"            value='@id' />
+	    <input type="hidden"   name="page"          value="1"/>
+	    <input type="hidden"   name="pageSize"          value="10"/>
+	    <input class="hsInputs" type="submit" value="Search">	   
+    </li>
+    @page_num_tag(id)
+</ul>
+</form>
+<table  id="traffic_table" class="chartTables" width="100%" border="1" cellspacing="0" cellpadding="0">
+<thead>
+  <tr>
+    <th class="chartTables_ID">Traffic Source</th>
+
+    <th class="chartTables_Sale">Landing Page</th>
+  </tr>
+  </thead>
+  <tbody>
+  </tbody>
+
+</table>
+<ul class="chartTotal">
+	<li class="lineBlock">Total</li>
+	<li class="lineBlock"> <span id='@(id+"_clicks")'></span><span>(Clicks)</span></li>
+	<li class="lineBlock"> <span id='@(id+"_unique_clicks")'></span><span>(Unique Clicks)</span></li>
+</ul>

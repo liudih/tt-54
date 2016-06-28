@@ -1,0 +1,197 @@
+
+//商品展示插件样式
+.cloud-zoom-lens{cursor:move;background: url("../images/tile._V211468426_.gif") repeat;}
+.cloud-zoom-big{width: 535px !important;height: 535px !important; top: 0px !important; left: 380px !important;}
+.cloud-zoom-loading {color:white;background:#222;padding:3px;border:1px solid #000;}
+.pop_img .cloud-zoom img{max-width: 100%; max-height: 100%;display: inline-block!important;}
+.pop_img{
+  .cloud-zoom{display: inline !important;}
+  .cloud-zoom-big{ width: 100% !important; height: 100% !important; top:0 !important;left: 0 !important}
+}
+
+
+.goods_info_left{
+  width: 55px;height: 360px; float: left;position: relative;
+  &>a{display: block;height: 10px;cursor:pointer;}
+  .a_up{.po_bgsmall(-455px,-87px)}
+  .a_down{.po_bgsmall(-455px,-102px)}
+}
+.goods_smallimg_box{ height: 330px !important;position: relative;overflow: hidden;  margin-bottom: 5px;
+  li{
+    .border(@C: #f0f0f0); border-radius: 3px;cursor: pointer;color: #333; margin: 6px 0;padding: 1px;height: 54px;float: left;
+    &:hover{  border: 2px solid #0992ec;padding: 0px;}
+    img{ width: 50px; height: 50px;}
+
+  }
+  .sel_img{ border: 2px solid #0992ec;padding: 0px;}
+}
+.goods_smallimg_list{position: relative;}
+.goods_info_img{
+  float: left; width: 377px;height: 377px; .border(@C: #f0f0f0);margin-left: 10px; position: relative;
+}
+.goods_info_right{
+  width: 508px; float: left; margin-left: 20px;
+  h2{font-size: 14px;font-weight: bold; color: #333333;line-height:18px;}
+  .goods_suk{
+    padding: 5px 0;margin: 15px 0;border-bottom: 1px solid #efefef;
+    span:first-child{min-width: 110px;display: inline-block}
+    i{color: #333;}
+    a{
+      &:hover{color: #127ed9;};
+      em{color: #F60; margin: 0 2px;}
+      span{ position: relative; left: 5px; top: -2px;}
+    }
+  }
+  .goods_regular_price{
+    span{text-decoration:line-through; color:grey;}
+  }
+}
+.goods_now_price{
+  &>span{font-size: 14px;font-weight: bold;display: inline-block; margin-right: 10px}
+  .xdsoft{position: relative;top: 5px;}
+  .goods_price_span{font-size: 26px;color: #ff6000;margin: 0 5px; vertical-align: middle;}
+  .goods_sale_span{font-size: 15px;color: #C20000; margin: 0px 10px;font-weight: normal;}
+}
+.goods_now_currency{
+  position: relative;min-width: 46px;display: inline-block;margin:10px 0 0 0;
+
+  &>em{padding: 5px 13px 2px 5px;.border(@C:transparent);font-weight: bold;font-size: 14px;}
+  &:hover{
+    &>em{
+      background-color: #fff;position: relative;z-index: 50;
+      border-radius: 5px;.border();border-bottom-left-radius: 0;border-bottom-right-radius: 0; border-bottom: 0;
+      cursor: pointer;
+      color: #333;}
+    .goods_currency_list{display:block}
+  }
+  &:after{
+    content: "";.po_bgsmall(-483px,-73px) ;position: absolute;left: auto;top: 7px; width: 15px;height: 10px;z-index: 99;right: -3px;
+  }
+
+}
+.goods_currency_list{
+  position: absolute;left: 0px;top: 20px;width: 110px;height: auto;z-index: 10;right: auto;.border();background-color: #fff;box-shadow: 0 0 3px #ccc;
+  border-radius: 5px; padding: 5px 0;display: none;
+  font-size: 12px;border-top-left-radius: 0;
+  font-weight: normal;
+  li{
+    em{float: left}
+    span{float: right;font-style: italic; margin-right: 10px;}
+  }
+
+  a{
+   height: 32px; line-height: 32px; padding: 0 15px;display: block;
+   &:hover{background-color: #f9f9f9;color: #127ed9;}
+  }
+}
+.goods_style{clear: both;padding-top: 15px;
+  dt{ width: 60px;float: left;display: inline-block;}
+  dd{float: left;.border();padding: 1px;margin-right: 15px;cursor: pointer;color: #333;position: relative;
+    &:hover{ border: 2px solid #ff7c00; padding: 0px;}
+  }
+  .sel_goods_style{
+    border: 2px solid #ff7c00; padding: 0px;
+    &:after{
+      content: "";
+     .po_bgsmall(-104px,-118px);
+      position: absolute;
+      left: auto;
+      bottom: -1px;
+      width: 13px;
+      height: 13px;
+      z-index: 9;
+      right: -1px;
+    }
+  }
+}
+.goods_style_color{
+  dt{height: 39px;line-height: 39px;}
+}
+.goods_style_size{
+
+  dt{height: 20px;line-height: 20px;}
+  dd{
+    width:39px; height: 20px;text-align: center;line-height: 20px;
+    a{display: block;line-height: 18px;}
+  }
+}
+.goods_attention{color: #999;clear: both;padding-top: 12px;
+  em{
+    width: 22px;height: 22px; display: inline-block;vertical-align:-4px;margin-right: 3px;
+  }
+  li{float: left;margin-right: 20px}
+  .pricematch{.po_bgsmall(-5px,-66px);}
+  .wholesale{.po_bgsmall(-29px,-66px);}
+  .report{.po_bgsmall(-52px,-66px);}
+}
+/**图片弹出层**/
+.pop_img_box{
+  position: absolute;
+  width: 80%;
+  height: 90%;
+  right: auto;
+  background-color: #fff;
+  .border();
+  border-radius: 5px;
+  cursor: auto;
+  padding: 20px 10px;
+  padding-left: 25px;
+  min-width: 675px;
+  min-height: 440px;
+  max-width: 1000px;
+  max-height: 700px;
+  left: 50%;
+  top: 5%;
+  z-index: 1;
+  margin-left: auto;
+  margin-top: auto;
+  h3{
+    padding-left: 15px;text-align: left;border-bottom: 1px solid #ccc;background-color: #ffffff; font-size: 14px;
+    font-weight: bold;margin-top: -15px;line-height: 15px;padding-bottom: 13px; padding-top: 10px;width: 100%;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;
+  }
+}
+.pop_close{
+  position: absolute;left: auto;top: -10px;width: 25px;height: 25px;z-index: 100;right: -10px;.po_bgsmall(-219px,-74px);cursor: pointer;
+}
+.pop_img{
+  width: 725px;position: relative;height: 90%;margin-top: 25px;float: left;
+  &>span{
+    width: 30px;position: absolute;display: inline-block;height: 50px;z-index:99999;top: 45%;cursor: pointer;
+  }
+  .a_pop_left{
+    left: 0px;
+    .po_bgsmall(-210px,-177px);
+  }
+  .a_pop_right{
+     right:-3px;
+    .po_bgsmall(-265px,-177px);
+  }
+  .pop_img_a{ width: 100%; height: 100%;position:relative;}
+}
+#pop_img{display: none}
+.pop_imglist_box{
+  background-color:#f6f6f6;
+  padding-left: 15px;
+  height: 90%;
+  overflow: hidden;
+  position: absolute;
+  top: 44px; right: 0px;
+  width: 240px;
+}
+.pop_img_list{
+   background-color: #fff; height: 100%;overflow-y: scroll;
+  li{
+    padding: 1px;
+    .border(@C:#f0f0f0);
+    border-radius: 3px;
+    margin: 6px;
+    cursor: pointer;
+    height: 54px;
+    float: left;
+    &:hover{border: 2px solid #0992ec;padding: 0;}
+    img{ width: 50px; height: 50px;padding: 4px;}
+  }
+  .sel_pop_img{border: 2px solid #0992ec;padding: 0;}
+}
+
+

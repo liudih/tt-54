@@ -1,0 +1,25 @@
+@(fragment: valueobjects.product.ProductGroupPrice)
+<div id="group-price" style="float:left; border:1px solid green; color:green;width:300px;heigth:500px;overflow:hidden;">
+
+	<!--  暂时不显示  2014-12-15
+		ProductGroupPrices		<br>
+		<table border="1px">
+			<tr>
+				<td>icustomergroupid</td>
+				<td>iqty</td>
+				<td>fprice</td>
+			</tr>
+			@fragment.getProductGroupPrices().map{i =>
+				<tr>
+						@if(i.getIcustomergroupid() == 1){
+							<td>GOLD　VIP</td>
+						} else {
+							<td>SILVER VIP</td>
+						}
+					<td>@i.getIqty()</td>
+					<td>@i.getFprice()</td>
+				</tr>
+			}
+		</table>
+	-->
+</div>

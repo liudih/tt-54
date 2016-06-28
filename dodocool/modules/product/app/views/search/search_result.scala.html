@@ -1,0 +1,80 @@
+@(q: String, t: Integer, products: List[dto.product.ProductMessage])
+@helper.javascriptRouter("searchRoutes")(
+	controllers.search.routes.javascript.ProductSearch.search,
+	controllers.search.routes.javascript.ProductSearch.searchMore
+)
+@views.html.base.master{
+	<body>
+    <!-- breadcrumb -->
+    <div class="breadcrumb">
+    	<ol class="clearfix">
+        	<li class="mr15">@Messages("your.position")</li>
+            <li><a href="/">@Messages("home")</a><span>&gt;</span></li>
+            <li class="active">@q</li>
+            <input type="hidden" id="kw" value="@q"/>
+        </ol>
+    </div>
+    
+	<!-- 主体内容开始  -->
+	<article class="pro_wrapper_item">
+    	<section class="pro_wrapper clearfix">
+		@if(products.size()!=0){
+	         <div class="search_pro_list">
+		         @products.map{p=>
+		         	@views.html.product.fragment.badge.render(p, 190, 190)
+		         }
+	         </div><!-- search_pro_list end  -->
+	         <div id="badgeContent">
+				
+		     </div>
+		     <input type="hidden" id="p" value="@t"/>
+		     <input type="hidden" id="loading" value="true"/>
+		     <div id="loadingbox" style="display:none;"><img width="16" height="16" src="@controllers.base.routes.Assets.at("images/loading.gif")"/>@Messages("loading")</div>
+	    }else{
+	          <div class="search_wrong">
+	          	<h3>@Messages("your.search") - "<font color="red">@q</font>" - @Messages("did.not.return.any.results")</h3>
+	              <h3>@Messages("suggestions")</h3>
+	          	<p>
+					1. @Messages("make.sure.all.words.are.spelled.correctly")<br>
+					2. @Messages("try.different.keywords")<br>
+					3. @Messages("try.more.general.keywords")<br>
+					4. @Messages("try.fewer.keywords")<br>
+				</p>
+	          </div>  
+	          <!--  search_wrong end  -->
+	    }
+        </section>
+    </article>
+    <!--  主体内容结束 -->
+</body>
+
+<script>
+	$(window).scroll(function () {
+		var loading = $('#loading').val();
+		if (($(window).scrollTop() >= $(document).height() - $(window).height() - 400) && "true" == loading) {
+			var page = parseInt($("#p").val())+1;
+			$("#p").val(page);
+			var kw = $("#kw").val();
+			var url = searchRoutes.controllers.search.ProductSearch.searchMore(kw, page).url;
+			$("#loadingbox").show();
+			$.ajax({
+				url: url,
+				type: "get",
+				async: false,
+				success:function(data){
+					if(data.size>0){
+						$("#badgeContent").append(data.html);
+						$("#p").val(data.page);
+					}else{
+						$("#loadingbox").hide();
+						$('#loading').val('false');
+					}
+				},
+				complete:function(){
+					$("#loadingbox").hide();
+				}
+			});
+		}
+		});
+</script>
+}  

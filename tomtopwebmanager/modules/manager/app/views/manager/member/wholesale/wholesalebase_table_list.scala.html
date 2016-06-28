@@ -1,0 +1,122 @@
+@(wholesaleBases: List[entity.wholesale.WholeSaleBase], statusMap: HashMap[Integer, String],
+pageCount: Int, pageNum: Int, pageTotal: Int)
+@import views.html.helper._
+@helper.javascriptRouter("wholesaleRoutes")(
+	controllers.manager.wholesale.routes.javascript.WholeSale.updateStatus
+)
+	<div id="search_wholesale_html" style="padding-bottom: 100px;">
+		<div class="portlet-body">
+			<table class="order_ll_box" width="100%" border="0" cellspacing="1" cellpadding="0" id="oderlist">
+				<thead>
+					  <tr>
+					    <th class="order_ll_Id">
+					    	<p class="inlineBlock">mail</p>
+					    	<p class="inlineBlock">full name</p>
+					        <p class="inlineBlock">tel</p>
+					    </th>
+					    <th class="order_ll_dizhi">
+					    	<p class="inlineBlock">country</p>
+					        <p class="inlineBlock">skype/msn</p>
+					        <p class="inlineBlock">note</p>
+					    </th>
+					    <th class="order_ll_dizhi">
+					        <p class="inlineBlock">shop Url</p>
+					    	<p class="inlineBlock">paypal address</p>
+					    </th>
+					    <th class="order_ll_haoma">
+					    	<p class="inlineBlock">expected purchase</p>
+					    	<p class="inlineBlock">status</p>
+					    </th>
+					    <th class="order_ll_caozuo"><p class="inlineBlock">操作</p></th>
+					  </tr>
+				</thead>
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
+				@if(wholesaleBases != null && wholesaleBases.size() > 0) {
+					@wholesaleBases.map{i=>
+						<tr class="order_ll_infTR">
+						    <td>
+						    	<p class="order_ll_marT"><span class="order_ll_999">Mail:</span>@i.getCemail()</p>
+						    	<p class="order_ll_marT"><span class="order_ll_999">Na:</span>@i.getCfullname()</p>
+						    	<p class="order_ll_marT"><span class="order_ll_999">Tel:</span>@i.getCtelephone()</p>
+						    </td>
+						    <td>
+						    	<div class="order_ll_marT">
+						        	<p class="order_ll_inline"><span class="order_ll_adds">Country :</span> @i.getCcountrysn()</p>
+						            <p class="order_ll_inline"><span class="order_ll_adds">Skype/MSN : </span> @i.getCskype()</p>
+						            <p class="order_ll_inline"><span class="order_ll_adds">Comment :</span> @i.getCcomment()</p>
+						        </div>
+						    </td>
+						    <td>
+						    	<div class="order_ll_marT">
+							    	<p class="order_ll_marT"><span class="order_ll_999">Shop:</span>
+							    		<a href="@i.getCshipurl()" target="_blank"><span class="order_ll_red">@i.getCshipurl()</span></a>
+							    	</p>
+							    	<p class="order_ll_marT">
+							    		<span class="order_ll_999">Shipping Address:</span>@i.getCshippingaddress()
+									</p>
+								</div>
+						    </td>
+						    <td class="order_ll_center">
+						    	<p class="order_ll_marT">
+						    		<span class="order_ll_999">Amount(US$)：</span>@i.getFpurchaseamount()
+								</p>
+								<p class="order_ll_marT">
+						    		<span class="order_ll_999">Status:</span>@statusMap.get(i.getIstatus())
+								</p>
+						    </td>
+						    <td>
+						    	@if(i.getIstatus() == 0) {
+							    	<div class="order_ll_stateBox">
+							            <a class="order_ll_state" href="javascript:">审核</a>
+							            <ul class="dropdown-menu" id="updatestatus">
+											@statusMap.map{e =>
+												<li value="@e._1" data-wholesaleid="@i.getIid()" data-email="@i.getCemail()">@e._2</li>
+											}
+							            </ul>
+							        </div>
+						        }
+						    </td>
+						  </tr>
+					}
+				} else {
+					 <tr class="order_ll_infTR">
+							<td colspan="5" style="text-align:center;"><h4>暂无WholeSale信息</h4></td>
+					 </tr>
+				}
+				</tbody>
+			</table>
+			<div class="row-fluid">
+				<div class="span6">
+					<div class="dataTables_info">当前第 <span>@pageNum</span> 页|共 <span>@pageTotal</span> 页| 共 <span>@pageCount</span> 条记录</div>
+				</div>
+				<div class="span6">
+					<div class="dataTables_paginate paging_bootstrap pagination">
+						<input id="pagenum" value="@pageNum" type="hidden"> 
+						<input id="pagetotal" value="@pageTotal" type="hidden"> 
+						
+						@if(pageTotal>1){
+						<ul>
+							@if(1 == pageNum){
+							<li class="disabled"><a href="javascript:;">«</a></li>
+							}else{
+							<li><a href="javascript:;" tag="pageNum" value="1">«</a></li>
+							}
+							@for(i <- pageNum - 6 to pageNum + 6 if i >= 1; if i<= pageTotal) {
+								@if(i == pageNum){
+								<li class="disabled"><a href="javascript:;" tag="pageNum" value="@i">@i</a></li>
+								}else{
+								<li><a href="javascript:;" tag="pageNum" value="@i">@i</a></li>
+								}
+							}
+							@if(pageNum >= pageTotal){
+							<li class="disabled"><a href="javascript:;">»</a></li>
+							}else{
+							<li><a href="javascript:;" tag="pageNum" value="@pageTotal">»</a></li>
+							}
+						</ul>
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

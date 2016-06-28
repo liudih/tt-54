@@ -1,0 +1,55 @@
+@(sites: List[dto.Website],
+	glist: List[dto.member.MemberGroup],
+	bulk:entity.loyalty.Bulk)
+@if(bulk!=null){
+<input type="hidden" name="iid" value="@bulk.getIid()" />
+<div class="control-group">
+	<label class="control-label">站点<span class="required">*</span></label>
+	<div class="controls">
+		<select name="iwebsiteid" onchange="changeGroup(this)" >
+			@sites.map{s=>
+				<option value="@s.getIid()" 
+				@if(bulk.getIwebsiteid()==s.getIid()){selected="selected"}
+				>@s.getCurl()</option>
+			}
+		</select>
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">用户分组<span class="required">*</span></label>
+	<div class="controls">
+		<select name="igroupid" >
+			@glist.map{g=>
+				<option value="@g.getIid()"
+				@if(bulk.getIgroupid()==g.getIid()){selected="selected"}
+				>@g.getCgroupname()</option>
+			}
+		</select>
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">结束时间</label>
+	<div class="controls">
+		@if(bulk.getDenddate()!=null){
+		<input id="datestart2" value="@services.base.utils.DateFormatUtils.getStrFromYYYYMMDDHHMMSS(bulk.getDenddate())" style="padding:0 !important;" name="denddate" type="text" data-date-format="dd-mm-yyyy" class="order_ll_date" placeholder="">
+		}else{
+		<input id="datestart2" style="padding:0 !important;" name="denddate" type="text" data-date-format="dd-mm-yyyy" class="order_ll_date" placeholder="">
+		}
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">状态：</label>
+	<div class="controls">
+		<select name="istatus" >
+			<option value="1" >生效</option>
+			<option value="0" @if(bulk.getIstatus()==0){selected="selected"}>不生效</option>
+		</select>
+	</div>
+</div>
+<div class="control-group">
+	<label class="control-label">备注<span class="required">*</span></label>
+	<div class="controls">
+		<input style="padding:0 !important;" value="@bulk.getCremark()" type="text" name="cremark" placeholder="备注" class="m-wrap medium span6">
+	</div>
+</div>
+}

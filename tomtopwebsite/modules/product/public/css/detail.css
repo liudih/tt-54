@@ -1,0 +1,18 @@
+ 	.divborder {
+ 		border: 1px solid red;
+ 	}
+ 	
+ 	#product_custom_attributes div {
+ 		width:30px;
+ 		height:30px;
+ 		margin-left:5px;
+ 		margin-top:5px;
+ 	}
+ 	
+ 	#product_custom_attributes div a{
+ 		text-decoration:none;
+ 	}
+ 	
+ 	#product_custom_attributes div:hover {
+ 		border: 1px solid red;
+ 	}

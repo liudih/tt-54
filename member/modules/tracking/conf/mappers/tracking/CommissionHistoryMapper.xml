@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mappers.tracking.CommissionHistoryMapper" >
+  <resultMap id="BaseResultMap" type="entity.tracking.CommissionHistory" >
+    <id column="iid" property="iid" jdbcType="INTEGER" />
+    <result column="caid" property="caid" jdbcType="VARCHAR" />
+    <result column="famount" property="famount" jdbcType="DOUBLE" />
+    <result column="ctransactionid" property="ctransactionid" jdbcType="VARCHAR" />
+    <result column="icommissionstatus" property="icommissionstatus" jdbcType="INTEGER" />
+    <result column="cremark" property="cremark" jdbcType="VARCHAR" />
+    <result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+    <result column="cwithdrawlid" property="cwithdrawlid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    iid, caid, famount, ctransactionid, icommissionstatus, cremark, dcreatedate,cwithdrawlid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_commission_history
+    where iid = #{iid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_commission_history
+    where iid = #{iid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="entity.tracking.CommissionHistory" >
+    insert into t_commission_history (iid, caid, famount, 
+      ctransactionid, icommissionstatus, cremark, 
+      dcreatedate)
+    values (#{iid,jdbcType=INTEGER}, #{caid,jdbcType=VARCHAR}, #{famount,jdbcType=DOUBLE}, 
+      #{ctransactionid,jdbcType=VARCHAR}, #{icommissionstatus,jdbcType=INTEGER}, #{cremark,jdbcType=VARCHAR}, 
+      #{dcreatedate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="entity.tracking.CommissionHistory"  useGeneratedKeys="true" keyProperty="iid"  >
+    insert into t_commission_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        iid,
+      </if>
+      <if test="caid != null" >
+        caid,
+      </if>
+      <if test="famount != null" >
+        famount,
+      </if>
+      <if test="ctransactionid != null" >
+        ctransactionid,
+      </if>
+      <if test="icommissionstatus != null" >
+        icommissionstatus,
+      </if>
+      <if test="cremark != null" >
+        cremark,
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate,
+      </if>
+      <if test="cwithdrawlid != null" >
+        cwithdrawlid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="iid != null" >
+        #{iid,jdbcType=INTEGER},
+      </if>
+      <if test="caid != null" >
+        #{caid,jdbcType=VARCHAR},
+      </if>
+      <if test="famount != null" >
+        #{famount,jdbcType=DOUBLE},
+      </if>
+      <if test="ctransactionid != null" >
+        #{ctransactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="icommissionstatus != null" >
+        #{icommissionstatus,jdbcType=INTEGER},
+      </if>
+      <if test="cremark != null" >
+        #{cremark,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cwithdrawlid != null" >
+        #{cwithdrawlid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="entity.tracking.CommissionHistory" >
+    update t_commission_history
+    <set >
+      <if test="caid != null" >
+        caid = #{caid,jdbcType=VARCHAR},
+      </if>
+      <if test="famount != null" >
+        famount = #{famount,jdbcType=DOUBLE},
+      </if>
+      <if test="ctransactionid != null" >
+        ctransactionid = #{ctransactionid,jdbcType=VARCHAR},
+      </if>
+      <if test="icommissionstatus != null" >
+        icommissionstatus = #{icommissionstatus,jdbcType=INTEGER},
+      </if>
+      <if test="cremark != null" >
+        cremark = #{cremark,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatedate != null" >
+        dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="entity.tracking.CommissionHistory" >
+    update t_commission_history
+    set caid = #{caid,jdbcType=VARCHAR},
+      famount = #{famount,jdbcType=DOUBLE},
+      ctransactionid = #{ctransactionid,jdbcType=VARCHAR},
+      icommissionstatus = #{icommissionstatus,jdbcType=INTEGER},
+      cremark = #{cremark,jdbcType=VARCHAR},
+      dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP}
+    where iid = #{iid,jdbcType=INTEGER}
+  </update>
+</mapper>

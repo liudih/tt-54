@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mapper.product.ThirdPlatformDataMapper">
+	<resultMap id="BaseResultMap" type="dto.product.ThirdPlatformData">
+		<id column="iid" property="iid" jdbcType="INTEGER" />
+		<result column="cplatform" property="cplatform" jdbcType="INTEGER" />
+		<result column="cwebsite" property="cwebsite" jdbcType="VARCHAR" />
+		<result column="cproductid" property="cproductid" jdbcType="VARCHAR" />
+		<result column="cdomain" property="cdomain" jdbcType="VARCHAR" />
+		<result column="csku" property="csku" jdbcType="VARCHAR" />
+		<result column="iqty" property="iqty" jdbcType="INTEGER" />
+		<result column="istatus" property="istatus" jdbcType="INTEGER" />
+		<result column="isalesvolume" property="isalesvolume" jdbcType="INTEGER" />
+		<result column="dcreatedate" property="dcreatedate" jdbcType="TIMESTAMP" />
+		<result column="dupdatedate" property="dupdatedate" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		iid, cplatform, cwebsite, cproductid, cdomain, csku, iqty,
+		istatus,
+		isalesvolume, dcreatedate, dupdatedate
+	</sql>
+	<select id="getThirdPlatformDataByIid" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_third_platform_data
+		where iid = #{iid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteThirdPlatformDataByIid" parameterType="java.lang.Integer">
+		delete
+		from t_third_platform_data
+		where iid = #{iid,jdbcType=INTEGER}
+	</delete>
+	<insert id="addThirdPlatformData" parameterType="dto.product.ThirdPlatformData">
+		insert into t_third_platform_data
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cplatform != null">
+				cplatform,
+			</if>
+			<if test="cwebsite != null">
+				cwebsite,
+			</if>
+			<if test="cproductid != null">
+				cproductid,
+			</if>
+			<if test="cdomain != null">
+				cdomain,
+			</if>
+			<if test="csku != null">
+				csku,
+			</if>
+			<if test="iqty != null">
+				iqty,
+			</if>
+			<if test="istatus != null">
+				istatus,
+			</if>
+			<if test="isalesvolume != null">
+				isalesvolume,
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate,
+			</if>
+			<if test="dupdatedate != null">
+				dupdatedate,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cplatform != null">
+				#{cplatform,jdbcType=INTEGER},
+			</if>
+			<if test="cwebsite != null">
+				#{cwebsite,jdbcType=VARCHAR},
+			</if>
+			<if test="cproductid != null">
+				#{cproductid,jdbcType=VARCHAR},
+			</if>
+			<if test="cdomain != null">
+				#{cdomain,jdbcType=VARCHAR},
+			</if>
+			<if test="csku != null">
+				#{csku,jdbcType=VARCHAR},
+			</if>
+			<if test="iqty != null">
+				#{iqty,jdbcType=INTEGER},
+			</if>
+			<if test="istatus != null">
+				#{istatus,jdbcType=INTEGER},
+			</if>
+			<if test="isalesvolume != null">
+				#{isalesvolume,jdbcType=INTEGER},
+			</if>
+			<if test="dcreatedate != null">
+				#{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="dupdatedate != null">
+				#{dupdatedate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<insert id="batchAddThirdPlatformData" parameterType="List">
+		insert into t_third_platform_data (iid, cplatform, cwebsite,
+		cproductid, cdomain, csku,
+		iqty, istatus, isalesvolume
+		)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{iid,jdbcType=INTEGER}, #{cplatform,jdbcType=INTEGER},
+			#{cwebsite,jdbcType=VARCHAR},
+			#{cproductid,jdbcType=VARCHAR},
+			#{cdomain,jdbcType=VARCHAR}, #{csku,jdbcType=VARCHAR},
+			#{iqty,jdbcType=INTEGER}, #{istatus,jdbcType=INTEGER},
+			#{isalesvolume,jdbcType=INTEGER}, #{dcreatedate,jdbcType=TIMESTAMP}
+			#{dupdatedate,jdbcType=TIMESTAMP}
+			)
+		</foreach>
+	</insert>
+	<update id="updateThirdPlatformDataByIid" parameterType="dto.product.ThirdPlatformData">
+		update t_third_platform_data
+		<set>
+			<if test="cplatform != null">
+				cplatform = #{cplatform,jdbcType=INTEGER},
+			</if>
+			<if test="cwebsite != null">
+				cwebsite = #{cwebsite,jdbcType=VARCHAR},
+			</if>
+			<if test="cproductid != null">
+				cproductid = #{cproductid,jdbcType=VARCHAR},
+			</if>
+			<if test="cdomain != null">
+				cdomain = #{cdomain,jdbcType=VARCHAR},
+			</if>
+			<if test="csku != null">
+				csku = #{csku,jdbcType=VARCHAR},
+			</if>
+			<if test="iqty != null">
+				iqty = #{iqty,jdbcType=INTEGER},
+			</if>
+			<if test="istatus != null">
+				istatus = #{istatus,jdbcType=INTEGER},
+			</if>
+			<if test="isalesvolume != null">
+				isalesvolume = #{isalesvolume,jdbcType=INTEGER},
+			</if>
+			<if test="dcreatedate != null">
+				dcreatedate = #{dcreatedate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="dupdatedate != null">
+				dupdatedate = #{dupdatedate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where iid = #{iid,jdbcType=INTEGER}
+	</update>
+</mapper>

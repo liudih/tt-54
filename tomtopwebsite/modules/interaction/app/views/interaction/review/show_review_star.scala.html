@@ -1,0 +1,5 @@
+@(starsWidth: Integer)
+
+	<div class="product_Reviews" style="float:left;">
+	    <div class="product_Start" style="width: @if(starsWidth == null || starsWidth == 0){0%} else {@starsWidth%}"></div> 
+	</div>

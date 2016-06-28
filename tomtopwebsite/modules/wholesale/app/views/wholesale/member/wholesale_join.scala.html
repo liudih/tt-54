@@ -1,0 +1,124 @@
+@(wholeSaleBaseForm: Form[form.wholesale.WholeSaleBaseForm], 
+categoryMap: Map[Integer, String],
+categorySelect: List[Integer])
+@import views.html.helper._
+@views.html.member.base.master("joinwholesale") {
+	@services.base.HtmlUtils.misc().addHeadOnce{
+ 	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/shopping.css")?@version.BuildVersion.build()" /> 
+	  <link rel="stylesheet" href="@controllers.base.routes.Assets.at("css/simplePagination.css")">
+	}
+	
+	<div class="accountRight dropshipBox addressBookBox">
+    	<h6>@Messages("join.wholesale")</h6>
+        <div class="shipBlock">
+        	<p>Join as for Wholesale Client  <span class="orange">*@Messages("required.fields") </span></p>
+            <div class="newAddressBox wholesaleAC_Box">
+                 @form(controllers.wholesale.routes.WholeSale.updateWholeSaleBase, 'id->"wholesaleform", 'autocomplete->"off"){
+                 	<input type="hidden" name="iid" value="@wholeSaleBaseForm("iid").value">
+                    <input type="hidden" name="cemail" value="@wholeSaleBaseForm("cemail").value">
+                    
+                    <table class="joinWholTable" width="85%" border="0" cellspacing="0" cellpadding="0">
+		                  <tr>
+		                    <td>
+		                    	@Messages("name") <span class="red">*</span><br>
+		                        <input type="text" name="cfullname" value="@wholeSaleBaseForm("cfullname").value">
+		                    </td>
+		                  </tr>
+		                  <tr>
+		                    <td>@Messages("shop.url.or.company.url.etc") <span class="red">*</span><br>
+		                        <input type="text" name="cshipurl" value="@wholeSaleBaseForm("cshipurl").value">
+		                    </td>
+		                  </tr>
+		                  <tr>
+		                    <td>@Messages("phone") <span class="red">*</span><br>
+		                        <input type="text" name="ctelephone" value="@wholeSaleBaseForm("ctelephone").value">
+		                    </td>
+		                  </tr>
+		                  <tr>
+		                    <td class="edit_country">
+		                    	@Messages("country") <span class="red">*</span><br>
+		                        <div class="Countries_box">
+			                        <div class="select_country">
+			                            <h3 class="flag_@wholeSaleBaseForm("ccountrysn").value">
+												<em></em><span>@wholeSaleBaseForm("ccountryname").value</span><em class="ship_xSJ"></em>
+												<input id="current_country" type="hidden"  name="ccountrysn" value="@wholeSaleBaseForm("ccountrysn").value"/>
+											</h3>
+											<div class="country_all">
+												<div class="search_country">
+													<input type="text" name="country_filter" />
+												</div>
+												<div class="country_list">
+													<ul>
+													</ul>
+												</div>
+											</div>
+			                        </div>
+			                        <div class="clear"></div>
+		                        </div>
+		                        <div class="clear"></div>
+		                    </td>
+		                  </tr>
+		                  <tr>
+		                    <td>@Messages("shipping.address")<br>
+		                        <input type="text" name="cshippingaddress" value="@wholeSaleBaseForm("cshippingaddress").value">
+		                    </td>
+		                  </tr>
+		                  <tr>
+		                    <td>@Messages("skype") <span class="red">*</span><br>
+		                        <input type="text" name="cskype" value="@wholeSaleBaseForm("cskype").value">
+		                    </td>
+		                  </tr>
+		                  <tr>
+		                    <td>@Messages("expected.purchase.amount") <span class="red">*</span><br>
+		                        <input type="text" name="fpurchaseamount" value="@wholeSaleBaseForm("fpurchaseamount").value">
+		                    </td>
+		                  </tr>
+		                  <tr>
+		                    <td>@Messages("your.comments")<br>
+		                         <textarea class="wholeTextAR" name="ccommentes" >@wholeSaleBaseForm("ccommentes").value</textarea>
+		                    </td>
+		                  </tr>
+		                  <tr>
+		                    <td>@Messages("wholesale.categories") <span class="red" id="categories">*</span></td>
+		                  </tr>
+		                  <tr>
+		                    <td>
+		                    	<ul class="joinwhol_Ul">
+		                    		@categoryMap.map{ e => 
+		                    				@if(null != categorySelect && categorySelect.size()>0 
+		                    					&& categorySelect.contains(e._1)){
+		                    					<li class="lineBlock" data-id="@e._1"><p class="rightThis"><span class="afters"></span>
+					                    			@e._2
+					                    			<input class="joinCheck" type="checkbox" checked name="icategroyIds" value="@e._1"></p>
+				                    			</li>
+		                    				}else{
+		                    					<li class="lineBlock" data-id="@e._1"><p class="rightThis"><span></span>
+					                    			@e._2
+					                    			<input class="joinCheck" type="checkbox" name="icategroyIds" value="@e._1"></p>
+				                    			</li>
+				                    			
+		                    				}
+		                    		}
+		                        </ul>
+		                    </td>
+		                  </tr>
+		                </table>
+		                <div class="join_bottom_l">
+		                 	<p class="iAgree rightThis"><span class="afters"></span>@Messages("i.agree.to.tomtop.com")
+			                 	<input class="joinCheck" type="checkbox" checked="checked" name="agree">
+			                 	<a class="blue" href="javascript:;">@Messages("term.of.use")</a>
+		                 	</p>
+		                 	<input class="orangeInput shipSub" type="submit" value="@Messages("submit")" id="wholesale_submit">
+		                </div>
+		              }
+		    </div>
+		</div>
+    </div>
+	@services.base.HtmlUtils.misc().addTailOnce{
+	    <script type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.form.js")'></script>
+	    <script type="text/javascript" src='@controllers.base.routes.Assets.at("lib/jquery-validation/jquery.validate.min.js")'></script>
+	    <script type="text/javascript" src='@controllers.base.routes.Assets.at("js/lib/jquery.metadata.js")'></script>
+ 		<script type="text/javascript" src='@controllers.base.routes.Assets.at("js/wholesale/controller/wholesalemember.js")' ></script>
+	}
+}
+

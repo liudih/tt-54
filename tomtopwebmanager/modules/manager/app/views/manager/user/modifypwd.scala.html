@@ -1,0 +1,143 @@
+@()
+
+
+@import views.html.helper._
+
+@views.html.manager.main {
+	@helper.javascriptRouter("js_ModifyPwdRoutes")(
+		controllers.manager.routes.javascript.AdminUser.checkOldPwd,
+		controllers.manager.routes.javascript.AdminUser.modifyPwd
+	)
+
+	<div class="container-fluid">
+		<!-- BEGIN PAGE HEADER-->
+		<div class="row-fluid">
+			<div class="span12">
+			<!-- BEGIN STYLE CUSTOMIZER -->
+			<div class="color-panel hidden-phone">
+				<div class="color-mode-icons icon-color"></div>
+				<div class="color-mode-icons icon-color-close"></div>
+				<div class="color-mode">
+					<p>THEME COLOR</p>
+					<ul class="inline">
+						<li class="color-black current color-default" data-style="default"></li>
+						<li class="color-blue" data-style="blue"></li>
+						<li class="color-brown" data-style="brown"></li>
+						<li class="color-purple" data-style="purple"></li>
+						<li class="color-grey" data-style="grey"></li>
+						<li class="color-white color-light" data-style="light"></li>
+					</ul>
+					<label>
+						<span>Layout</span>
+						<select class="layout-option m-wrap small">
+							<option value="fluid">Fluid</option>
+							<option value="boxed">Boxed</option>
+						</select>
+					</label>
+					<label>
+						<span>Header</span>
+						<select class="header-option m-wrap small">
+							<option value="fixed">Fixed</option>
+							<option value="default">Default</option>
+						</select>
+					</label>
+					<label>
+						<span>Sidebar</span>
+						<select class="sidebar-option m-wrap small">
+							<option value="fixed">Fixed</option>
+							<option value="default">Default</option>
+						</select>
+					</label>
+					<label>
+						<span>Footer</span>
+						<select class="footer-option m-wrap small">
+							<option value="fixed">Fixed</option>
+							<option value="default">Default</option>
+						</select>
+					</label>
+				</div>
+			</div>
+			<!-- END BEGIN STYLE CUSTOMIZER -->  
+			<!-- BEGIN PAGE TITLE & BREADCRUMB-->
+	
+			<h3 class="page-title">
+				个人中心 <small>修改密码</small>
+			</h3>
+			<ul class="breadcrumb">
+				<li>
+					<i class="icon-home"></i>
+					<a href="/sysadmin">Home</a> 
+					<i class="icon-angle-right"></i>
+				</li>
+				<li>
+					<a href="#">个人中心</a>
+					<i class="icon-angle-right"></i>
+				</li>
+				<li><a href="#">修改密码</a></li>
+			</ul>
+			<!-- END PAGE TITLE & BREADCRUMB-->
+	
+			</div>
+		</div>
+		<!-- END PAGE HEADER-->
+
+		<!-- BEGIN PAGE CONTENT-->
+		<div class="row-fluid">
+			<div class="span12">
+				<!-- BEGIN EXAMPLE TABLE PORTLET-->
+				<div class="portlet box blue">
+					<div class="portlet-title">
+						<div class="caption"><i class="icon-edit"></i>修改密码</div>
+						<div class="tools">
+							<a href="javascript:;" class="collapse"></a>
+							<a href="#portlet-config" data-toggle="modal" class="config"></a>
+							<a href="javascript:;" class="reload"></a>
+							<a href="javascript:;" class="remove"></a>
+						</div>
+					</div>
+					<div class="portlet-body">
+						<div class="control-group">
+							<div class='form-label'>旧密码 :</div>
+							<div class='form-input'>
+								<input type='password' id="oldpassword" name="oldpassword" placeholder="old password"/>
+								<div style="display: inline" id="oldPwdTip"></div>
+							</div>
+						</div>
+						<div class="control-group">
+							<div class='form-label'>新密码 :</div>
+							<div class='form-input'>
+								<input type='password' id="newPwdOne" name="newPwdOne"
+									placeholder="length must be 6-18" />
+								<div style="display: inline" id="newPwdOneTip"></div>
+							</div>
+							<div class="control-group">
+								<div class='form-label'>重复密码 :</div>
+								<div class='form-input'>
+									<input type='password' id="newPwdTwo" name="newPwdTwo"
+										placeholder="must match with the first" />
+									<div style="display: inline" id="newPwdTwoTip"></div>
+								</div>
+								<div class="control-group">
+									<div id="modify-btn-tip"></div>
+								</div>
+								<div class="control-group">
+									<button class="btn blue" id="modify-password-btn">修改</button>
+								</div>
+	
+							</div>
+						</div>
+					<!-- END EXAMPLE TABLE PORTLET-->
+					</div>
+			</div>
+				<!-- END PAGE CONTENT -->
+		</div>
+	 </div>
+	 
+</div>
+	 
+				
+	@services.base.HtmlUtils.misc().addTailOnce{
+		<script type="text/javascript" src='@controllers.manager.routes.Assets.at("js/manager/user/modifypwd.js")'></script>
+	}
+				
+}

@@ -1,0 +1,9 @@
+@(display:Boolean,highliht:Boolean)
+@if(display){
+<li @if(highliht){ class="leftAct" } >
+   <a href="@controllers.affiliate.routes.Report.order">Report</a>
+</li>
+<ol class="leftAct"><a href="@controllers.affiliate.routes.Report.order">Order Report</a></ol>
+<ol><a href="@controllers.affiliate.routes.Report.traffic">Traffic Report</a></ol>
+}
+            	

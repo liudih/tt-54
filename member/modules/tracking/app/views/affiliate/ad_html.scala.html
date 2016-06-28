@@ -1,0 +1,49 @@
+@(bn: entity.tracking.AffiliateBanner,
+	aid: String)
+@if(bn!=null){
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>@bn.getCtitle()</title>
+<style type="text/css">
+body {
+	margin: 0;
+	height: 100%;
+	background-color: transparent;
+	width: 100%;
+}
+p {
+	margin: 0;
+}
+</style>
+<script src="@controllers.base.routes.Assets.at("lib/jquery/jquery.min.js")"></script>
+</head>
+<body>
+<div style="width:110px;height:190px;background-color:#EEEEEE;padding:5px;position:relative;">
+	<a class="linkcls" href="" title="@bn.getCtitle()" target="_blank" style="text-decoration:none;">
+  		<h3 style="color:#666666;font-size: 18px;font-family: Tahoma,Arial;margin:0;word-wrap:break-word;">@bn.getCtitle()</h3>
+  	</a>
+  <div>
+  	<a class="linkcls" href="" title="@bn.getCtitle()" target="_blank" style="text-decoration:none;">
+    <p style="font-size:12px;padding-bottom:10px;word-wrap: break-word;color:#666666;padding-top:10px;">@bn.getCdescription()</p>
+    </a>
+    <p><a href="http://www.tomtop.com/aid/@aid" target="_blank" style="color:#085CA8;font: 11px Verdana,Tahoma,Arial;bottom:5px;position:absolute;">http://tomtop.com</a></p>
+  </div>
+</div>
+<script type="text/javascript">
+var link = "@bn.getClink()";
+if(link!=null && (link.indexOf("http://")!=-1||link.indexOf("https://")!=-1)){
+	if(link.indexOf("/",9)>0){
+		var re = /(\w+)\//i;
+		link=link.replace(re,function(d){
+		   	return d+"aid/@aid/";
+		});
+	}else{
+		link += "/aid/@aid/";
+	}
+}
+$(".linkcls").attr("href",link);
+</script>
+</body>
+</html>
+}

@@ -1,0 +1,13 @@
+@(paypalReturn: entity.payment.PaypaiReturn)
+@import views.html.helper._
+@if(paypalReturn != null){
+<div class="order_ll_TxT paypalMsg">
+ 	<p class="order_ll_marT"><span class="order_ll_999">payer email： </span>@paypalReturn.getPayer_email()</p>
+ 	<p class="order_ll_marT"><span class="order_ll_999">payer status: </span>@paypalReturn.getPayer_status()</p>
+ 	<p class="order_ll_marT"><span class="order_ll_999">payer address status:</span>@paypalReturn.getAddress_status()</p>
+</div>
+}else{
+<div class="order_ll_TxT paypalMsg">
+ 	<p class="order_ll_marT"><span class="order_ll_red">找不到反馈信息</span>
+</div>
+}

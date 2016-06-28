@@ -1,0 +1,7 @@
+@(list: List[dto.AttributeValueItem], count: Int)
+
+<select name="list[@count].ivalue">
+	@list.zipWithIndex.map{v =>
+		<option value="@v._1.getIvalueid" @if(v._2 == 0){selected="selected"}>@v._1.getCvaluename</option>
+	}
+</select>
